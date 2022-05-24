@@ -7,7 +7,7 @@ on:
       - main
   schedule:
       # * 10:37 every day – 37 just to not trigger exactly at 10:30 like many other;
-      #  10:37 UTC is 6:30am EST is a bit before the beginning of the day in the US,
+      #  10:37 UTC is 6:30am EST is a bit before the beginning of the day in the US
       - cron:  '37 10  * * *' 
 
 jobs:
