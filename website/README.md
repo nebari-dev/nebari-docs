@@ -21,7 +21,7 @@ $ yarn
 
 ```sh
 # Start the site
-$ yarn start
+$ npm start
 ```
 
 ## Directory Structure
