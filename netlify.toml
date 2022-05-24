@@ -8,7 +8,7 @@ publish = "output/"
 [context.production]
 publish = "output/"
 # Default build command
-command = "nikola build"
+command = "npm build"
 
 # Deploy Preview context: all deploys generated from a pull/merge request will
 # inherit these settings.
