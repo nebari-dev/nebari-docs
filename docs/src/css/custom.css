@@ -63,12 +63,7 @@
   --ifm-color-on-background-2: var(--ifm-color-purple-darker);
   --ifm-color-on-background-3: var(--ifm-color-purple-dark);
   --ifm-color-surface: var(--ifm-color-white-darker);
-  --ifm-color-surface-transparent: rgba(
-      230,
-      230,
-      253,
-      0
-  );
+  --ifm-color-surface-transparent: rgba(230, 230, 253, 0);
   /* https://stackoverflow.com/questions/15597167/css3-opacity-gradient */
   --ifm-color-surface-2: var(--ifm-color-white-darkest);
   --ifm-color-on-surface: var(--ifm-color-black);
@@ -102,46 +97,59 @@
   --ifm-navbar-padding-horizontal: 30px;
   --ifm-dropdown-background-color: var(--ifm-color-background-2);
   --ifm-dropdown-hover-background-color: var(--ifm-color-background-3);
-  font-family: Sen, serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular", "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif; }
+  font-family: Sen, serif, Europa, Avenir, system, -apple-system,
+    ".SFNSText-Regular", "San Francisco", "Segoe UI", "Helvetica Neue",
+    "Lucida Grande", sans-serif;
+}
 
 html,
 body {
-  height: 100%; }
+  height: 100%;
+}
 
 body {
   margin: 0;
-  transition: var(--ifm-transition-fast) ease color; }
+  transition: var(--ifm-transition-fast) ease color;
+}
 
 #__docusaurus {
   min-height: 100%;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 /* Firefox */
 * {
-  scrollbar-color: var(--ifm-color-primary-lightest) var(--ifm-color-primary-darkest);
-  scrollbar-width: thin; }
+  scrollbar-color: var(--ifm-color-primary-lightest)
+    var(--ifm-color-primary-darkest);
+  scrollbar-width: thin;
+}
 
 /* WebKit / Blink */
 ::-webkit-scrollbar {
   width: 7px !important;
-  height: 7px !important; }
+  height: 7px !important;
+}
 
 ::-webkit-scrollbar-track {
-  background: var(--ifm-color-primary-darkest) !important; }
+  background: var(--ifm-color-primary-darkest) !important;
+}
 
 ::-webkit-scrollbar-thumb {
   border-radius: 0 !important;
-  background: var(--ifm-color-primary-lightest) !important; }
+  background: var(--ifm-color-primary-lightest) !important;
+}
 
 ::-webkit-scrollbar-corner {
-  background: var(--ifm-color-primary-dark) !important; }
+  background: var(--ifm-color-primary-dark) !important;
+}
 
 .docusaurus-highlight-code-line {
   background-color: rgba(121, 118, 171, 0.3);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0 var(--ifm-pre-padding); }
+  padding: 0 var(--ifm-pre-padding);
+}
 
 /* style '.admonition:not(.alert)' gets used in production and '.admonition' in develop.. */
 .admonition,
@@ -154,33 +162,40 @@ body {
   border-left: 10px solid;
   /* For default Admonition */
   background-color: var(--ifm-admonition-background-color);
-  border-left-color: var(--ifm-admonition-color); }
-  .admonition h5,
-  .admonition:not(.alert) h5 {
-    margin-top: 0; }
+  border-left-color: var(--ifm-admonition-color);
+}
+.admonition h5,
+.admonition:not(.alert) h5 {
+  margin-top: 0;
+}
 
 .admonition a,
 .admonition:not(.alert) a {
-  color: var(--ifm-color-on-background); }
+  color: var(--ifm-color-on-background);
+}
 
 .admonition-icon {
   display: inline-block;
   vertical-align: middle;
   margin-right: 0.5em;
-  margin-bottom: 4px; }
+  margin-bottom: 4px;
+}
 
 .admonition-success {
   background-color: var(--ifm-admonition-background-color-success);
-  border-left-color: var(--ifm-admonition-color-success); }
+  border-left-color: var(--ifm-admonition-color-success);
+}
 
 .admonition-warning,
 .admonition-caution {
   background-color: var(--ifm-admonition-background-color-warning);
-  border-left-color: var(--ifm-admonition-color-warning); }
+  border-left-color: var(--ifm-admonition-color-warning);
+}
 
 .admonition-danger {
   background-color: var(--ifm-admonition-background-color-error);
-  border-left-color: var(--ifm-admonition-color-error); }
+  border-left-color: var(--ifm-admonition-color-error);
+}
 
 .admonition-secondary,
 .admonition-note,
@@ -188,57 +203,74 @@ body {
 .admonition-tip,
 .admonition-important {
   background-color: var(--ifm-admonition-background-color);
-  border-left-color: var(--ifm-admonition-color); }
+  border-left-color: var(--ifm-admonition-color);
+}
 
 .menu__list .menu__list .menu__link {
   color: var(--ifm-font-color-base);
-  font-weight: normal; }
+  font-weight: normal;
+}
 .menu__list .menu__link--active.active {
   border-left: 5px solid #6c69a0 !important;
   font-weight: 700 !important;
   padding-left: 8px;
-  background-color: rgba(121, 118, 171, 0.2); }
+  background-color: rgba(121, 118, 171, 0.2);
+}
 
 .docusaurus-mt-lg {
-  margin-top: 3rem; }
+  margin-top: 3rem;
+}
 
 .Toastify__toast {
   background-color: var(--ifm-color-primary);
   border-radius: var(--ifm-alert-border-radius);
   color: var(--ifm-surface-text-color);
-  font-size: 0.9em; }
+  font-size: 0.9em;
+}
 
 .Toastify__close-button {
-  color: var(--ifm-surface-text-color); }
+  color: var(--ifm-surface-text-color);
+}
 
 .Toastify__progress-bar {
-  background-color: var(--ifm-color-primary-light) !important; }
+  background-color: var(--ifm-color-primary-light) !important;
+}
 
 .navbar .DocSearch {
-  margin-left: 25px; }
+  margin-left: 25px;
+}
 .navbar .DocSearch-Button {
   border-radius: var(--ifm-global-radius);
-  padding: 0 6px 0 10px; }
-  .navbar .DocSearch-Button .DocSearch-Search-Icon {
-    width: 16px;
-    margin-top: -1px; }
+  padding: 0 6px 0 10px;
+}
+.navbar .DocSearch-Button .DocSearch-Search-Icon {
+  width: 16px;
+  margin-top: -1px;
+}
 .navbar .DocSearch-Button-Placeholder,
 .navbar .DocSearch-Button-Key {
-  font-size: 14px !important; }
+  font-size: 14px !important;
+}
 .navbar .DocSearch-Button-Key {
-  padding-bottom: 0 !important; }
+  padding-bottom: 0 !important;
+}
 .navbar .DocSearch-Button-Key svg {
-  margin-bottom: 1px !important; }
+  margin-bottom: 1px !important;
+}
 
 @media (max-width: 1080px) {
   .navbar .DocSearch {
-    margin-left: 15px; }
+    margin-left: 15px;
+  }
   .navbar .DocSearch-Button {
-    padding: 0 12px; }
+    padding: 0 12px;
+  }
   .navbar .DocSearch-Button-Key,
   .navbar .DocSearch-Button-KeySeparator,
   .navbar .DocSearch-Button-Placeholder {
-    display: none; } }
+    display: none;
+  }
+}
 /* https://codyhouse.co/blog/post/dark-light-switch-css-javascript */
 [data-theme="dark"] {
   --ifm-color-on-primary: var(--ifm-color-black);
@@ -249,12 +281,7 @@ body {
   --ifm-color-on-background-2: var(--ifm-color-purple-lighter);
   --ifm-color-on-background-3: var(--ifm-color-purple-light);
   --ifm-color-surface: var(--ifm-color-gray-darkest);
-  --ifm-color-surface-transparent: rgba(
-      38,
-      38,
-      48,
-      0
-  );
+  --ifm-color-surface-transparent: rgba(38, 38, 48, 0);
   /* https://stackoverflow.com/questions/15597167/css3-opacity-gradient */
   --ifm-color-surface-2: var(--ifm-color-gray-dark);
   --ifm-color-on-surface: var(--ifm-color-white);
@@ -263,6 +290,7 @@ body {
   --ifm-color-success: var(--ifm-color-green);
   --ifm-color-on-success: var(--ifm-color-black);
   --ifm-color-error: var(--ifm-color-red);
-  --ifm-color-on-error: var(--ifm-color-black); }
+  --ifm-color-on-error: var(--ifm-color-black);
+}
 
 /*# sourceMappingURL=custom.css.map */

@@ -17,12 +17,11 @@ const customFields = {
     title: 'Nebari',
     description: 'An opinionated JupyterHub deployment for Data Science teams',
     // TODO: placeholder
-    color: '#6c69a0',
     keywords: [
       'Jupyter',
       'MLOps',
       'Kubernetes',
-      'Python'
+      'Python',
     ],
   },
   domain,
