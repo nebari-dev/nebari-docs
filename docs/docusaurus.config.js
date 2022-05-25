@@ -4,20 +4,44 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+// Adding reusable information
+const githubOrgUrl = 'https://github.com/nebari-dev';
+// TODO: verify this
+const domain = 'https://nebari-docs.netlify.app';
+
+// -----------------------------------------------------------------------------
+// custom Fields for the project
+const customFields = {
+  copyright: `Made with 💜   by the Nebari dev team`,
+  meta: {
+    title: 'Nebari',
+    description: 'An opinionated JupyterHub deployment for Data Science teams',
+    // TODO: placeholder
+    color: '#6c69a0',
+    keywords: [
+      'Jupyter',
+      'MLOps',
+      'Kubernetes',
+      'Python'
+    ],
+  },
+  domain,
+  githubOrgUrl,
+  githubUrl: `${githubOrgUrl}/nebari`,
+  githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+};
+
+// -----------------------------------------------------------------------------
+// Main site config
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Nebari docs',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://nebari-docs.netlify.app',
+  title: customFields.meta.title,
+  tagline: customFields.meta.description,
+  url: customFields.domain,
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'nebari-dev', // Usually your GitHub org/user name.
-  projectName: 'nebari', // Usually your repo name.
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -27,24 +51,30 @@ const config = {
     locales: ['en'],
   },
 
+  // Plugings need installing first then add here
+  plugins: [
+    'docusaurus-plugin-sass',
+  ],
+  customFields: { ...customFields },
+
+  // ---------------------------------------------------------------------------
+  // Edit presets
   presets: [
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          path: 'docs',
+          admonitions: {
+            icons: 'emoji',
+          },
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
+          // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: customFields.githubDocsUrl,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,          // ],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -53,38 +83,73 @@ const config = {
     ],
   ],
 
+  // ---------------------------------------------------------------------------
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Nebari Docs',
+        title: customFields.meta.title,
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Nebari logo - Docs home',
+          // TODO: Replace with logo
           src: 'img/logo.svg',
         },
+        hideOnScroll: true,
         items: [
+          // left side
           {
-            type: 'doc',
+            label: 'Getting Started',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            type: 'doc',
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            label: 'Documentation',
+            position: 'left',
+            to: 'docs/intro'
+          },
+          // right side
+          {
+            label: 'Community',
+            position: 'right',
+            to: 'docs/governance'
+          },
+          {
+            label: 'Tutorials',
+            position: 'right',
+            to: 'docs/tutorials'
+          },
+          {
+            label: 'How-to Guides',
+            position: 'right',
+            to: 'docs/how_tos'
+          },
+          {
+            label: 'Reference',
+            position: 'right',
+            to: 'docs/references'
+          },
+          {
+            label: 'Conceptual guides',
+            position: 'right',
+            to: 'docs/explanations'
+          },
+          {
             label: 'GitHub',
+            href: customFields.githubUrl,
             position: 'right',
           },
         ],
       },
       footer: {
+        copyright: customFields.copyright,
         style: 'dark',
         links: [
           {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Getting Started',
                 to: '/docs/intro',
               },
             ],
@@ -93,16 +158,8 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                label: 'GitHub',
+                href: customFields.githubUrl,
               },
             ],
           },
@@ -113,14 +170,9 @@ const config = {
                 label: 'Blog',
                 to: '/blog',
               },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
