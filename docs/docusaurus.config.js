@@ -112,27 +112,27 @@ const config = {
           {
             label: 'Community',
             position: 'right',
-            to: 'docs/governance'
+            to: 'docs/governance/overview'
           },
           {
             label: 'Tutorials',
             position: 'right',
-            to: 'docs/tutorials'
+            to: 'docs/tutorials/overview'
           },
           {
             label: 'How-to Guides',
             position: 'right',
-            to: 'docs/how_tos'
+            to: 'docs/how_tos/overview'
           },
           {
             label: 'Reference',
             position: 'right',
-            to: 'docs/references'
+            to: 'docs/references/overview'
           },
           {
             label: 'Conceptual guides',
             position: 'right',
-            to: 'docs/explanations'
+            to: 'docs/explanations/overview'
           },
           {
             label: 'GitHub',
@@ -163,15 +163,15 @@ const config = {
               },
             ],
           },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-            ],
-          },
+          // {
+          //   title: 'More',
+          //   items: [
+          //     {
+          //       label: 'Blog',
+          //       to: '/blog',
+          //     },
+          //   ],
+          // },
         ],
       },
       prism: {
