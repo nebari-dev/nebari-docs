@@ -7,11 +7,16 @@
 
 ### Building the site
 
+Install the neccesary packages
+```bash
+cd docs
+npm installl
+```
+
 Run the development server:
 
 ```bash
-cd my-website
-npm run start
+npm start
 ```
 
 The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
