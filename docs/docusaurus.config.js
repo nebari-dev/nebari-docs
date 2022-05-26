@@ -1,5 +1,5 @@
-// @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+// @ts-check
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
@@ -12,7 +12,7 @@ const domain = 'https://nebari-docs.netlify.app';
 // -----------------------------------------------------------------------------
 // custom Fields for the project
 const customFields = {
-  copyright: `Made with 💜   by the Nebari dev team`,
+  copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: 'Nebari',
     description: 'An opinionated JupyterHub deployment for Data Science teams',
@@ -64,17 +64,23 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           path: 'docs',
           admonitions: {
             icons: 'emoji',
           },
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: true,
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: true,
-          showLastUpdateTime: true,          // ],
+          showLastUpdateTime: true,
+          // remarkPlugins: [
+          //   [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
+          // ],
         },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -97,46 +103,42 @@ const config = {
         items: [
           // left side
           {
-            label: 'Getting Started',
-            docId: 'intro',
+            label: 'Quickstart',
+            docId: 'quickstart/nebari-101',
             position: 'left',
             type: 'doc',
           },
-          {
-            label: 'Documentation',
-            position: 'left',
-            to: 'docs/intro'
-          },
           // right side
-          {
-            label: 'Community',
-            position: 'right',
-            to: 'docs/governance/overview'
-          },
           {
             label: 'Tutorials',
             position: 'right',
-            to: 'docs/tutorials/overview'
+            to: 'tutorials/overview'
           },
           {
             label: 'How-to Guides',
             position: 'right',
-            to: 'docs/how_tos/overview'
+            to: 'how-tos/overview'
           },
           {
             label: 'Reference',
             position: 'right',
-            to: 'docs/references/overview'
+            to: 'references/overview'
           },
           {
             label: 'Conceptual guides',
             position: 'right',
-            to: 'docs/explanations/overview'
+            to: 'explanations/overview'
           },
           {
-            label: 'GitHub',
+            label: 'Community',
+            position: 'right',
+            to: 'governance/overview'
+          },
+          {
             href: customFields.githubUrl,
             position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },
@@ -145,11 +147,11 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Open source',
             items: [
               {
-                label: 'Getting Started',
-                to: '/docs/intro',
+                label: 'Quickstart',
+                to: 'quickstart/nebari-101',
               },
             ],
           },
@@ -157,20 +159,23 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'GitHub',
+                label: 'Nebari repository',
                 href: customFields.githubUrl,
               },
             ],
           },
-          // {
-          //   title: 'More',
-          //   items: [
-          //     {
-          //       label: 'Blog',
-          //       to: '/blog',
-          //     },
-          //   ],
-          // },
+          {
+            title: 'Other',
+            items: [
+              {
+                html: `
+                <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                  <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" width="114" height="51" />
+                </a>
+              `,
+              },
+            ],
+          },
         ],
       },
       prism: {
