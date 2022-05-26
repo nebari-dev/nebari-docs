@@ -1,5 +1,5 @@
-// @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+// @ts-check
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
@@ -12,7 +12,7 @@ const domain = 'https://nebari-docs.netlify.app';
 // -----------------------------------------------------------------------------
 // custom Fields for the project
 const customFields = {
-  copyright: `Made with 💜   by the Nebari dev team`,
+  copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: 'Nebari',
     description: 'An opinionated JupyterHub deployment for Data Science teams',
@@ -76,9 +76,9 @@ const config = {
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          remarkPlugins: [
-            [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
-          ],
+          // remarkPlugins: [
+          //   [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
+          // ],
         },
         blog: false,
         theme: {
@@ -135,9 +135,10 @@ const config = {
             to: 'governance/overview'
           },
           {
-            label: 'GitHub',
             href: customFields.githubUrl,
             position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },
@@ -158,8 +159,20 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'GitHub',
+                label: 'Nebari repository',
                 href: customFields.githubUrl,
+              },
+            ],
+          },
+          {
+            title: 'Other',
+            items: [
+              {
+                html: `
+                <a href="https://www.netlify.com" target="_blank" rel="noreferrer noopener" aria-label="Deploys by Netlify">
+                  <img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" width="114" height="51" />
+                </a>
+              `,
               },
             ],
           },
