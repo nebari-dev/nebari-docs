@@ -64,17 +64,23 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           path: 'docs',
           admonitions: {
             icons: 'emoji',
           },
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: true,
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: true,
-          showLastUpdateTime: true,          // ],
+          showLastUpdateTime: true,
+          remarkPlugins: [
+            [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
+          ],
         },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -97,41 +103,36 @@ const config = {
         items: [
           // left side
           {
-            label: 'Getting Started',
-            docId: 'intro',
+            label: 'Quickstart',
+            docId: 'quickstart/nebari-101',
             position: 'left',
             type: 'doc',
           },
-          {
-            label: 'Documentation',
-            position: 'left',
-            to: 'docs/intro'
-          },
           // right side
-          {
-            label: 'Community',
-            position: 'right',
-            to: 'docs/governance/overview'
-          },
           {
             label: 'Tutorials',
             position: 'right',
-            to: 'docs/tutorials/overview'
+            to: 'tutorials/overview'
           },
           {
             label: 'How-to Guides',
             position: 'right',
-            to: 'docs/how_tos/overview'
+            to: 'how-tos/overview'
           },
           {
             label: 'Reference',
             position: 'right',
-            to: 'docs/references/overview'
+            to: 'references/overview'
           },
           {
             label: 'Conceptual guides',
             position: 'right',
-            to: 'docs/explanations/overview'
+            to: 'explanations/overview'
+          },
+          {
+            label: 'Community',
+            position: 'right',
+            to: 'governance/overview'
           },
           {
             label: 'GitHub',
@@ -145,11 +146,11 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Open source',
             items: [
               {
-                label: 'Getting Started',
-                to: '/docs/intro',
+                label: 'Quickstart',
+                to: 'quickstart/nebari-101',
               },
             ],
           },
@@ -162,15 +163,6 @@ const config = {
               },
             ],
           },
-          // {
-          //   title: 'More',
-          //   items: [
-          //     {
-          //       label: 'Blog',
-          //       to: '/blog',
-          //     },
-          //   ],
-          // },
         ],
       },
       prism: {

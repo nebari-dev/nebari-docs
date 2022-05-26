@@ -12,23 +12,25 @@
 :root {
     // ==============================================================================
     // Primitive Colors
+    // TODO: change to Nebari branding
     // ==============================================================================
 
-    --ifm-color-black: #18191a;
-    --ifm-color-black-light: #202026;
-    --ifm-color-black-lighter: #26262f;
-    --ifm-color-white: #ffffff;
-    --ifm-color-white-dark: #f0f0fd;
-    --ifm-color-white-darker: #e6e6fd;
-    --ifm-color-white-darkest: #c5c5e9;
+    --ifm-color-black: #353641;
+    --ifm-color-black-light: #474856;
+    --ifm-color-black-lighter: #595b6a;
+    --ifm-color-white: #FDFDFE;
+    --ifm-color-white-dark: #FBFCFE;
+    --ifm-color-white-darker: #FAFAFD;
+    --ifm-color-white-darkest: #F8F8FD;
     --ifm-color-purple-lightest: #9c9abf;
     --ifm-color-purple-lighter: #8481af;
     --ifm-color-purple-light: #7c79aa;
-    --ifm-color-purple: #6c69a0;
-    --ifm-color-purple-dark: #5f5c92;
-    --ifm-color-purple-darker: #5a578a;
-    --ifm-color-purple-darkest: #4a4872;
-    --ifm-color-purple-opacity-50: rgba(121, 118, 171, 0.5);
+    --ifm-color-purple: #a183e6;
+    --ifm-color-purple-dark: #896dc9;
+    --ifm-color-purple-darker: #7259ac;
+    --ifm-color-purple-darkest: #5c468f;
+    --ifm-color-purple-opacity-50: rgba(161, 131, 230 0.5);
+    // defaults
     --ifm-color-orange: #ee8030;
     --ifm-color-green: #00ccb1;
     --ifm-color-green-dark: #325d52;
