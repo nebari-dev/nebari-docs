@@ -2,7 +2,7 @@ name: Test Website
 on:
   pull_request:
     branches: ["*"]
-    types: "opened", "reopened"]
+    types: ["opened", "reopened"]
 
 jobs:
   publish:
@@ -17,6 +17,19 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
+
+      - name: Get yarn cache directory path 🪄
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache dependencies 🧪
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies 📦
         run: yarn install
