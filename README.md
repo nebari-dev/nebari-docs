@@ -17,7 +17,7 @@
 Install the neccesary packages
 ```bash
 cd docs
-npm installl
+npm install
 ```
 
 Run the development server:
