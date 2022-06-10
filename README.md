@@ -5,12 +5,19 @@
 
 ## Documentation
 
+### Installing  `node`
+- Checking if node is already present in the system (should print the version number)
+    ```bash
+     node -v
+    ```
+- To install node visit [nodejs.org](https://nodejs.org/en/download/)
+
 ### Building the site
 
 Install the neccesary packages
 ```bash
 cd docs
-npm installl
+npm install
 ```
 
 Run the development server:
