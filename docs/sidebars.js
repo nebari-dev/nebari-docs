@@ -38,7 +38,7 @@ module.exports = {
       link: {
         type: 'generated-index',
         title: 'How-to Guides',
-        description: "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
+        description: "The Nebari How To guides are designed to help you achieve specific goals by providing step-by-step details.",
         slug: 'category/how-to',
         keywords: ['how-to'],
       },
