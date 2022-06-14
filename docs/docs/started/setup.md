@@ -1,0 +1,5 @@
+---
+id: setup
+---
+
+# Setup Nebari

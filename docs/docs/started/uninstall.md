@@ -1,0 +1,5 @@
+---
+id: uninstall
+---
+
+# Uninstall Nebari
