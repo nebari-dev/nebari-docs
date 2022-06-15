@@ -18,7 +18,7 @@ yarn install
 
 Then run the following command to start the development server:
 
-``` bash
+```bash
 yarn start
 ```
 
@@ -39,8 +39,9 @@ The deployment is automatically handled by Netlify when content is merged into t
 
 ## Linting
 
-Before opening a PR, run the docs linter to ensure code consistency. From the `docs` directory, run:
+Before opening a PR, run the docs linter and formatterr to ensure code consistency. From the `docs` directory, run:
 
 ```bash
 yarn run lint
+yarn run format
 ```
