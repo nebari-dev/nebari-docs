@@ -1,5 +1,0 @@
----
-id: customization
----
-
-# Customization overview

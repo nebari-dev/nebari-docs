@@ -35,7 +35,13 @@ module.exports = {
         slug: 'category/started',
         keywords: ['started'],
       },
-      items: ['started/installing-nebari', 'started/deploy', 'started/customization', 'started/uninstall', 'started/troubleshooting']
+      items: [
+        'started/deploy',
+        'started/installing-nebari',
+        'started/cloud-providers',
+        'started/uninstall',
+        'started/troubleshooting'
+      ]
     },
     {
       type: 'category',
@@ -61,7 +67,14 @@ module.exports = {
         slug: "category/how-to",
         keywords: ["how-to"],
       },
-      items: ["how-tos/overview"],
+      items: [
+        'how-tos/overview',
+        'how-tos/nebari-gcp',
+        'how-tos/nebari-aws',
+        'how-tos/nebari-do',
+        'how-tos/nebari-azure',
+        'how-tos/nebari-hpc'
+      ]
     },
     {
       type: "category",
