@@ -39,7 +39,7 @@ The deployment is automatically handled by Netlify when content is merged into t
 
 ## Linting
 
-Before opening a PR, run the docs linter and formatterr to ensure code consistency. From the `docs` directory, run:
+Before opening a PR, run the docs linter and formatter to ensure code consistency. From the `docs` directory, run:
 
 ```bash
 yarn run lint
