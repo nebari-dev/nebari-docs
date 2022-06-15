@@ -2,12 +2,6 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-## Installation
-
-```bash
-yarn install
-```
-
 ## Local Development
 
 First make sure to be in the `/docs` directory:
@@ -16,9 +10,15 @@ First make sure to be in the `/docs` directory:
 cd docs
 ```
 
+Install the necessary packages
+
+```bash
+yarn install
+```
+
 Then run the following command to start the development server:
 
-``` bash
+```bash
 yarn start
 ```
 
@@ -36,3 +36,12 @@ This command generates static content into the `docs/build` directory and can be
 ## Deployment
 
 The deployment is automatically handled by Netlify when content is merged into the `main` branch.
+
+## Linting
+
+Before opening a PR, run the docs linter and formatter to ensure code consistency. From the `docs` directory, run:
+
+```bash
+yarn run lint
+yarn run format
+```

@@ -2,21 +2,18 @@ name: Test Website
 on:
   pull_request:
     branches: ["*"]
-    types: ["opened", "reopened"]
 
 jobs:
   publish:
     name: Test Website
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
     steps:
     
       - name: Check out 🛎️
         uses: actions/checkout@v3
-
-      - name: Setup Node 📦
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
 
       - name: Get yarn cache directory path 🪄
         id: yarn-cache-dir-path

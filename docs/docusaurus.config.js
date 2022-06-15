@@ -1,28 +1,23 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 // Adding reusable information
-const githubOrgUrl = 'https://github.com/nebari-dev';
+const githubOrgUrl = "https://github.com/nebari-dev";
 // TODO: verify this
-const domain = 'https://nebari-docs.netlify.app';
+const domain = "https://nebari-docs.netlify.app";
 
 // -----------------------------------------------------------------------------
 // custom Fields for the project
 const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
-    title: 'Nebari',
-    description: 'An opinionated JupyterHub deployment for Data Science teams',
+    title: "Nebari",
+    description: "An opinionated JupyterHub deployment for Data Science teams",
     // TODO: placeholder
-    keywords: [
-      'Jupyter',
-      'MLOps',
-      'Kubernetes',
-      'Python',
-    ],
+    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
   },
   domain,
   githubOrgUrl,
@@ -37,39 +32,37 @@ const config = {
   title: customFields.meta.title,
   tagline: customFields.meta.description,
   url: customFields.domain,
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  baseUrl: "/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/favicon.ico",
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   // Plugings need installing first then add here
-  plugins: [
-    'docusaurus-plugin-sass',
-  ],
+  plugins: ["docusaurus-plugin-sass"],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
-          path: 'docs',
+          routeBasePath: "/",
+          path: "docs",
           admonitions: {
-            icons: 'emoji',
+            icons: "emoji",
           },
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
@@ -82,7 +75,7 @@ const config = {
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./css/custom.css"),
         },
       }),
     ],
@@ -95,77 +88,77 @@ const config = {
       navbar: {
         title: customFields.meta.title,
         logo: {
-          alt: 'Nebari logo - Docs home',
+          alt: "Nebari logo - Docs home",
           // TODO: Replace with logo
-          src: 'img/logo.svg',
+          src: "img/logo.svg",
         },
         hideOnScroll: true,
         items: [
           // left side
-          {
-            label: 'Quickstart',
-            docId: 'quickstart/nebari-101',
-            position: 'left',
-            type: 'doc',
-          },
+          //   {
+          //     label: 'Quickstart',
+          //     docId: 'quickstart',
+          //     position: 'left',
+          //     type: 'doc',
+          //   },
           // right side
           {
-            label: 'Tutorials',
-            position: 'right',
-            to: 'tutorials/overview'
+            label: "Tutorials",
+            position: "right",
+            to: "tutorials/overview",
           },
           {
-            label: 'How-to Guides',
-            position: 'right',
-            to: 'how-tos/overview'
+            label: "How-to Guides",
+            position: "right",
+            to: "how-tos/overview",
           },
           {
-            label: 'Reference',
-            position: 'right',
-            to: 'references/overview'
+            label: "Reference",
+            position: "right",
+            to: "references/overview",
           },
           {
-            label: 'Conceptual guides',
-            position: 'right',
-            to: 'explanations/overview'
+            label: "Conceptual Guides",
+            position: "right",
+            to: "explanations/overview",
           },
           {
-            label: 'Community',
-            position: 'right',
-            to: 'governance/overview'
+            label: "Community",
+            position: "right",
+            to: "governance/overview",
           },
           {
             href: customFields.githubUrl,
-            position: 'right',
-            className: 'header-github-link',
-            'aria-label': 'GitHub repository',
+            position: "right",
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
           },
         ],
       },
       footer: {
         copyright: customFields.copyright,
-        style: 'dark',
+        style: "dark",
         links: [
           {
-            title: 'Open source',
+            title: "Open source",
             items: [
               {
-                label: 'Quickstart',
-                to: 'quickstart/nebari-101',
+                label: "Quickstart",
+                to: "quickstart",
               },
             ],
           },
           {
-            title: 'Community',
+            title: "Community",
             items: [
               {
-                label: 'Nebari repository',
+                label: "Nebari repository",
                 href: customFields.githubUrl,
               },
             ],
           },
           {
-            title: 'Other',
+            title: "Other",
             items: [
               {
                 html: `
