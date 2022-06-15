@@ -35,7 +35,7 @@ module.exports = {
         slug: 'category/started',
         keywords: ['started'],
       },
-      items: ['started/installing-nebari', 'started/customization', 'started/uninstall', 'started/troubleshooting']
+      items: ['started/installing-nebari', 'started/deploy', 'started/customization', 'started/uninstall', 'started/troubleshooting']
     },
     {
       type: 'category',

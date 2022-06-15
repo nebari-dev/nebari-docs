@@ -103,9 +103,14 @@ const config = {
           //   },
           // right side
           {
-            label: "Tutorials",
-            position: "right",
-            to: "tutorials/overview",
+            label: 'Getting Started',
+            position: 'right',
+            to: 'started/installing-nebari'
+          },
+          {
+            label: 'Tutorials',
+            position: 'right',
+            to: 'tutorials/overview'
           },
           {
             label: "How-to Guides",
