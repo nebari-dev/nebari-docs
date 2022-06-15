@@ -16,9 +16,14 @@
 module.exports = {
   sidebar: [
     {
-      type: 'category',
-      label: 'Documentation',
-      items: ['welcome', 'quickstart/nebari-101'],
+      type: 'doc',
+      label: 'Introduction',
+      id: 'welcome',
+    },
+    {
+      type: 'doc',
+      label: 'Quickstart',
+      id: 'quickstart',
     },
     {
       type: 'category',
@@ -46,28 +51,28 @@ module.exports = {
     },
     {
       type: 'category',
-      label: 'Reference',
+      label: 'Conceptual Guides',
       link: {
         type: 'generated-index',
-        title: 'Reference Guides',
-        description: 'Nitty-gritty technical descriptions of how Nebari works. ',
-        slug: 'category/reference',
-        keywords: ['reference'],
-      },
-      items: ['references/overview']
-    },
-    {
-      type: 'category',
-      label: 'Conceptual guides',
-      link: {
-        type: 'generated-index',
-        title: 'Conceptual guides',
+        title: 'Conceptual Guides',
         description: 'Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.',
         slug: 'category/conceptual-guides',
         keywords: ['conceptual-guides'],
       },
       items: ['explanations/overview']
     },
+    {
+        type: 'category',
+        label: 'Reference',
+        link: {
+          type: 'generated-index',
+          title: 'Reference Guides',
+          description: 'Nitty-gritty technical descriptions of how Nebari works. ',
+          slug: 'category/reference',
+          keywords: ['reference'],
+        },
+        items: ['references/overview']
+      },
     {
       type: 'category',
       label: 'Community',
@@ -79,6 +84,16 @@ module.exports = {
         keywords: ['conceptual-guides'],
       },
       items: ['governance/overview']
+    },
+    {
+      type: 'doc',
+      label: 'FAQs / Troubleshooting',
+      id: 'troubleshooting',
+    },
+    {
+      type: 'doc',
+      label: 'Glossary',
+      id: 'glossary',
     },
   ],
 }

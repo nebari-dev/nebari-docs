@@ -102,12 +102,12 @@ const config = {
         hideOnScroll: true,
         items: [
           // left side
-          {
-            label: 'Quickstart',
-            docId: 'quickstart/nebari-101',
-            position: 'left',
-            type: 'doc',
-          },
+        //   {
+        //     label: 'Quickstart',
+        //     docId: 'quickstart',
+        //     position: 'left',
+        //     type: 'doc',
+        //   },
           // right side
           {
             label: 'Tutorials',
@@ -125,7 +125,7 @@ const config = {
             to: 'references/overview'
           },
           {
-            label: 'Conceptual guides',
+            label: 'Conceptual Guides',
             position: 'right',
             to: 'explanations/overview'
           },
@@ -151,7 +151,7 @@ const config = {
             items: [
               {
                 label: 'Quickstart',
-                to: 'quickstart/nebari-101',
+                to: 'quickstart',
               },
             ],
           },

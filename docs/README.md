@@ -2,18 +2,18 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-## Installation
-
-```bash
-yarn install
-```
-
 ## Local Development
 
 First make sure to be in the `/docs` directory:
 
 ```bash
 cd docs
+```
+
+Install the necessary packages
+
+```bash
+yarn install
 ```
 
 Then run the following command to start the development server:
