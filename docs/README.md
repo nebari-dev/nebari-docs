@@ -36,3 +36,11 @@ This command generates static content into the `docs/build` directory and can be
 ## Deployment
 
 The deployment is automatically handled by Netlify when content is merged into the `main` branch.
+
+## Linting
+
+Before opening a PR, run the docs linter to ensure code consistency. From the `docs` directory, run:
+
+```bash
+yarn run lint
+```

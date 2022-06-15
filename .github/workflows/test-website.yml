@@ -2,7 +2,6 @@ name: Test Website
 on:
   pull_request:
     branches: ["*"]
-    types: ["opened", "reopened"]
 
 jobs:
   publish:
