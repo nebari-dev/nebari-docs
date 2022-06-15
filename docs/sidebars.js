@@ -39,7 +39,7 @@ module.exports = {
         type: 'doc',
         id: 'how-tos/how_to_overview',
       },
-      items: ['how-tos/overview'],
+      items: ['tutorials/overview'],
     },
     {
       type: 'category',
