@@ -37,10 +37,10 @@ module.exports = {
         keywords: ["started"],
       },
       items: [
-        "started/deploy",
         "started/installing-nebari",
         "started/cloud-providers",
         "started/uninstall",
+        "started/deploy",
         "started/troubleshooting",
       ],
     },
@@ -70,6 +70,10 @@ module.exports = {
       },
       items: [
         "how-tos/overview",
+        "started/installing-nebari",
+        "started/cloud-providers",
+        "started/uninstall",
+        "started/deploy",
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",
         "how-tos/nebari-do",

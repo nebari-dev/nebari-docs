@@ -45,11 +45,12 @@ The Nebari HPC should be your choice if:
 
 - You expect that your infrastructure will not exceed the existing resources capabilities
 
-If you intend to use Nebari HPC please follow this tutorial on [How to install and setup Nebari HPC on bare metal machines](/how-tos/nebari-hpc).
+For instructions on installing and deploying Nebari HPC, please visit [How to install and setup Nebari HPC on bare metal machines](/how-tos/nebari-hpc).
 
 :::note
 Although it is possible to deploy Nebari HPC on the Cloud, it is not generally recommended due to possible high costs. For more information, check out the base cost section of the docs.
 :::
+
 
 </TabItem>
 <TabItem value="local" label="Local">
@@ -62,6 +63,8 @@ The local version is recommended for testing Nebari’s components due to its si
 - You want to try out Nebari with a quick-install to see how it works, without setting up environment variables
 
 You should choose another installation option if you are starting from scratch (i.e., no clusters yet) and aiming to have a production environment.
+
+For instructions on installing and deploying Nebari Local, please visit [How to install and setup Nebari on an existing Kubernetes infrastructure](/how-tos/nebari-local).
 
 </TabItem>
 </Tabs>
