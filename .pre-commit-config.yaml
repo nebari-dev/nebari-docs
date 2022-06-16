@@ -9,11 +9,21 @@
 # - Register git hooks: pre-commit install --install-hooks
 #
 repos:
-  # Autoformat: markdown, yaml to ensure that it doesn't need to be updated in other repos
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.1
+  # Markdown
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.14
     hooks:
-      - id: prettier
+    - id: mdformat
+      files: ^docs/
+      name: mdformat
+      entry: mdformat --wrap=180 --number --end-of-line=lf
+      language: python
+      types: [markdown]
+      minimum_pre_commit_version: '2.0.0'
+      additional_dependencies:
+      - mdformat-tables
+      - mdformat-toc
+      - mdformat-black
 
   # Codespell: Spell checks the code and documentation
   - repo: https://github.com/codespell-project/codespell
@@ -53,32 +63,6 @@ repos:
     - id: terraform_fmt
       args:
         - --args=-write=true
-
-  # Docker
-  - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.10.0
-    hooks:
-    - id: hadolint-docker
-      entry: hadolint/hadolint:v2.10.0 hadolint
-      args: [
-        "--failure-threshold", "info",    # default: info
-        "--ignore", "DL3048",    # style complaint: Invalid Label Key
-      ]
-
-  # Markdown
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.14
-    hooks:
-    - id: mdformat
-      files: ^docs/
-      name: mdformat
-      entry: mdformat --wrap=180 --number --end-of-line=lf
-      language: python
-      types: [markdown]
-      minimum_pre_commit_version: '2.0.0'
-      additional_dependencies:
-      - mdformat-tables
-
 
   # Misc...
   - repo: https://github.com/pre-commit/pre-commit-hooks
