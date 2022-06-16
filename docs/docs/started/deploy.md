@@ -62,7 +62,7 @@ The local version is recommended for testing Nebari’s components due to its si
 - You have available local compute setup
 - You want to try out Nebari with a quick-install to see how it works, without setting up environment variables
 
-You should choose another installation option if you are starting from scratch (i.e., no clusters yet) and aiming to have a production environment.
+You should choose another installation option if you are starting from scratch (i.e. no clusters yet) and aim to have a production environment.
 
 For instructions on installing and deploying Nebari Local, please visit [How to install and setup Nebari on an existing Kubernetes infrastructure](/how-tos/nebari-local).
 
