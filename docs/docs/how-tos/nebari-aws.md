@@ -8,7 +8,7 @@ title: How to deploy Nebari on AWS
 A basic overview to deploy Nebari on AWS
 
 :::note
-The following steps assumes you have just completed the [Install Nebari](/started/installing-nebari) section, has confirmed that `nebari` is successfully installed in your environment and opted for **AWS** as your cloud provider. If you had any issues in the prior steps please visit our getting started [troubleshooting](/started/troubleshooting) section for extra advice.
+The following steps assumes you have just completed the [Install Nebari](/started/installing-nebari) section, have confirmed that `nebari` is successfully installed in your environment and opted for **AWS** as your cloud provider. If you had any issues in the prior steps, please visit our Getting Started - [Troubleshooting](/started/troubleshooting) section for extra advice.
 :::
 
 ## Authentication
