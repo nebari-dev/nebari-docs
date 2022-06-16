@@ -23,8 +23,9 @@ If you are not sure which option to choose, try this one. It is suitable for mos
 - You aim to have a production environment with GitOps enabled by default
 
 The cloud installation is based on Kubernetes, but knowledge of Kubernetes is NOT required nor is in depth knowledge about the specific provider required either. QHub supports [Amazon AWS](https://docs.qhub.dev/en/latest/source/installation/setup.html#amazon-web-services-aws), [DigitalOcean](https://docs.qhub.dev/en/latest/source/installation/setup.html#digital-ocean), [Google GCP](https://docs.qhub.dev/en/latest/source/installation/setup.html#google-cloud-platform), and [Azure](https://docs.qhub.dev/en/latest/source/installation/setup.html#microsoft-azure).
-  </TabItem>
-  <TabItem value="hpc" label="HPC">
+
+</TabItem>
+<TabItem value="hpc" label="HPC">
 
 Nebari HPC is an opinionated open source deployment of jupyterhub based on an HPC jobscheduler. Nebari HPC is a "distribution" of these packages much like Debian and Ubuntu are distributions of Linux. The high level goal of this distribution is to form a cohesive set of tools that enable:
 
@@ -49,17 +50,18 @@ If you intend to use Nebari HPC please follow this tutorial on [How to install a
 :::note
 Although it is possible to deploy Nebari HPC on the Cloud, it is not generally recommended due to possible high costs. For more information, check out the base cost section of the docs.
 :::
-  </TabItem>
-  <TabItem value="local" label="Local">
-    The local version is recommended for testing Nebari’s components due to its simplicity. Choose the local mode if:
+
+</TabItem>
+<TabItem value="local" label="Local">
+
+The local version is recommended for testing Nebari’s components due to its simplicity. Choose the local mode if:
 
 - You already have Kubernetes clusters
 - You want to test these Kubernetes clusters
 - You have available local compute setup
 - You want to try out Nebari with a quick-install to see how it works, without setting up environment variables
 
-    You should choose another installation option if you are starting from scratch (i.e., no clusters yet) and aiming to have a production environment.
+You should choose another installation option if you are starting from scratch (i.e., no clusters yet) and aiming to have a production environment.
 
-
-  </TabItem>
+</TabItem>
 </Tabs>

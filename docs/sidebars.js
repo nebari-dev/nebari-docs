@@ -26,26 +26,27 @@ module.exports = {
       id: "quickstart",
     },
     {
-      type: 'category',
-      label: 'Getting Started',
+      type: "category",
+      label: "Getting Started",
       link: {
-        type: 'generated-index',
-        title: 'Getting Started',
-        description: 'This section describes how to install and deploy Nebari on a selection of cloud provider options as well as brings details on how Nebari can be configured and customized to fit a variety of deployment requirements.',
-        slug: 'category/started',
-        keywords: ['started'],
+        type: "generated-index",
+        title: "Getting Started",
+        description:
+          "This section describes how to install and deploy Nebari on a selection of cloud provider options as well as brings details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
+        slug: "category/started",
+        keywords: ["started"],
       },
       items: [
-        'started/deploy',
-        'started/installing-nebari',
-        'started/cloud-providers',
-        'started/uninstall',
-        'started/troubleshooting'
-      ]
+        "started/deploy",
+        "started/installing-nebari",
+        "started/cloud-providers",
+        "started/uninstall",
+        "started/troubleshooting",
+      ],
     },
     {
-      type: 'category',
-      label: 'Tutorials',
+      type: "category",
+      label: "Tutorials",
       link: {
         type: "generated-index",
         title: "Tutorials",
@@ -68,13 +69,13 @@ module.exports = {
         keywords: ["how-to"],
       },
       items: [
-        'how-tos/overview',
-        'how-tos/nebari-gcp',
-        'how-tos/nebari-aws',
-        'how-tos/nebari-do',
-        'how-tos/nebari-azure',
-        'how-tos/nebari-hpc'
-      ]
+        "how-tos/overview",
+        "how-tos/nebari-gcp",
+        "how-tos/nebari-aws",
+        "how-tos/nebari-do",
+        "how-tos/nebari-azure",
+        "how-tos/nebari-hpc",
+      ],
     },
     {
       type: "category",

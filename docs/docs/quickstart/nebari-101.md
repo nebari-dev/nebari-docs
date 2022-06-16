@@ -4,7 +4,6 @@ id: nebari-101
 
 # Nebari 101
 
-
 ## What Nebari is
 
 ## What Nebari isn't
@@ -18,4 +17,3 @@ id: nebari-101
 ## Use cases
 
 ## Why use Nebari?
-

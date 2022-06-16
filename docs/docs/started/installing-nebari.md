@@ -21,24 +21,26 @@ Nebari heavily depends on [Terraform](https://www.terraform.io/) and a python ec
 There are two most accessible ways to install Nebari:
 
 You can install Nebari directly from the Python Package Index (PyPi) using pip. For most common architectures and platforms (`Linux x86-64` and `macOS x86-64`), Pip will download and install the most recent version available.
+
 ```bash
     pip install nebari
 ```
+
 Nebari is also available at [conda-forge](https://anaconda.org/conda-forge/qhub) and can be installed using the conda package manager by running the following command:
+
 ```bash
     conda install nebari -c conda-forge
 ```
 
-
 ## Verify installation
 
 Verify that Nebari is installed and you are able to execute the client commands by running:
+
 ```bash
     nebari --help
 ```
 
 ![alt text for screen readers](/img/validate_installation.png "Text to show on mouseover").
-
 
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/started/troubleshooting.md).

@@ -19,6 +19,7 @@ By default, Nebari will try to use the credentials associated with the current A
 - Upon generation, the IAM role will provide a public **access key ID** and a **secret key** which will need to be added to the environment variables.
 
 To define the environment variables paste the commands below with your respective keys.
+
 ```bash
 export AWS_ACCESS_KEY_ID="HAKUNAMATATA"
 export AWS_SECRET_ACCESS_KEY="iNtheJUng1etheMightyJUNgleTHEl10N51eEpsT0n1ghy;"

@@ -17,8 +17,10 @@ Must be able to ssh into each node from the node you are running the ansible com
 Aside from Terraform, Nebari HPC heavily depends on [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) for machine and remote control.
 
 We recommend installing ansible via conda. First you must install conda.
+
 ```bash
 conda create -n qhub-hpc -c conda-forge ansible
 conda activate qhub-hpc
 ```
+
 If you intend to use Nebari HPC please be sure to already have the [necessary dependencies](https://github.com/Quansight/qhub-hpc#dependencies) installed.

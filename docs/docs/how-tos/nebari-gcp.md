@@ -22,6 +22,7 @@ By default, Nebari will try to use the credentials associated with the current G
 Store this credentials file in a well known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command `chmod 600 <filename>` on your terminal.
 
 In this case the environment variables will be such as follows:
+
 ```bash
 export GOOGLE_CREDENTIALS="path/to/JSON/file/with/credentials"
 export PROJECT_ID="projectIDName"
