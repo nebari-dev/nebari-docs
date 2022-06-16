@@ -55,7 +55,7 @@ Although it is possible to deploy Nebari HPC on the Cloud, it is not generally r
 </TabItem>
 <TabItem value="local" label="Local">
 
-The local version is recommended for testing Nebari’s components due to its simplicity. Choose the local mode if:
+The local version is recommended for **testing and development** of Nebari’s components due to its simplicity. Choose the local mode if:
 
 - You already have Kubernetes clusters
 - You want to test these Kubernetes clusters
