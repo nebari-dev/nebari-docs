@@ -1,6 +1,6 @@
 ---
 id: creating-cds-dashboard
-title: How to create a containDS dashboard on nebari? 
+title: How to create a containDS dashboard on nebari?
 ---
 
 # What is a dashboard?
@@ -8,8 +8,8 @@ title: How to create a containDS dashboard on nebari?
 Data provides us with insights, a dashboard stitches these insights together into a meaningful story.
 
 Different tools and technologies could be used to create and deploy a dashboard. In this tutorial
-we will be building a simple dashboard on *nebari* which could be shared with other users and groups via 
-[ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/). 
+we will be building a simple dashboard on _nebari_ which could be shared with other users and groups via
+[ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/).
 
 Currently, this dash-boarding solution supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
 
@@ -49,9 +49,9 @@ hover = HoverTool(tooltips=[("avg diameter", "@avg_diameter_inch"),
 combine_plot = plot_bar.opts(tools=[hover]) + plot_curve.opts(line_dash='dashed')
 
 # creating simple dashboard using panel
-dashboard = pn.template.BootstrapTemplate(    
-           site="About 🌳", 
-           title="Specie info and more", 
+dashboard = pn.template.BootstrapTemplate(
+           site="About 🌳",
+           title="Specie info and more",
            main=[combine_plot]
            )
 dashboard.servable()
@@ -64,24 +64,24 @@ Click on the top left tab choose `file` > `Hub Control Panel` > `Dashboards`. Cl
 
 > Create new dashboard steps
 
-* Add a dashboard name (mandatory)
-* Add a short description (mandatory)
-* Customise user permission (optional)
-* Select the file source, for this tutorial we will select `Jupyter Tree` (mandatory)
+- Add a dashboard name (mandatory)
+- Add a short description (mandatory)
+- Customise user permission (optional)
+- Select the file source, for this tutorial we will select `Jupyter Tree` (mandatory)
 
 > Details section
 
-* Select the framework of your choice, here we will select `voila` (mandatory)
-* Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
-* In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
-* Click on the save button
-* Select the instance size and save, a message should appear stating -> **The dashboard is starting up**
+- Select the framework of your choice, here we will select `voila` (mandatory)
+- Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
+- In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
+- Click on the save button
+- Select the instance size and save, a message should appear stating -> **The dashboard is starting up**
 
-![CDS dashboard configuration](img/cds_details.png)
+![CDS dashboard configuration](/img/cds_details.png)
 
-# Conclusion 
+# Conclusion
 
 We have a working dashboard now 🎉 sharing the link is super simple, copy-paste the URL and voilà.
 It is fast and customisable to your need.
 
-![Our tutorial dashboard](img/dashboard.png)
+![Our tutorial dashboard](/img/dashboard.png)
