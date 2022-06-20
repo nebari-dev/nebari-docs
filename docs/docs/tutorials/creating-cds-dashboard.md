@@ -59,8 +59,8 @@ dashboard.servable()
 
 # Step-by-step guide for building a CDS dashboard
 
-Let's use CDS and create deploy this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
-Click on the top left tab choose `file` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
+Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
+Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
 > Create new dashboard steps
 
