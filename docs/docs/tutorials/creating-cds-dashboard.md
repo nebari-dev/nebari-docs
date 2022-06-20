@@ -1,3 +1,8 @@
+---
+id: creating-cds-dashboard
+title: How to create a containDS dashboard on nebari? 
+---
+
 # What is a dashboard?
 
 Data provides us with insights, a dashboard stitches these insights together into a meaningful story.
