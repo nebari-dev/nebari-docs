@@ -52,7 +52,8 @@ dashboard = pn.template.BootstrapTemplate(
 dashboard.servable()
 ```
 
-# CDS dashboard
+# Step-by-step guide for building a CDS dashboard
+
 Let's use CDS and create deploy this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
 Click on the top left tab choose `file` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
@@ -69,8 +70,13 @@ Click on the top left tab choose `file` > `Hub Control Panel` > `Dashboards`. Cl
 * Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
 * In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
 * Click on the save button
-* Select the instance size and save, a message should appear stating : **The dashboard is starting up**
+* Select the instance size and save, a message should appear stating -> **The dashboard is starting up**
+
+![CDS dashboard configuration](img/cds_details.png)
 
 # Conclusion 
 
-We have a working dashboard now 🎉, sharing the link is super simple. It is fast and customisable to your need.
+We have a working dashboard now 🎉 sharing the link is super simple, copy-paste the URL and voilà.
+It is fast and customisable to your need.
+
+![Our tutorial dashboard](img/dashboard.png)
