@@ -17,7 +17,7 @@ Currently, this dash-boarding solution supports `Panel`, `Bokeh`, `Voila`, `Stre
 
 - Create a notebook in your JupyterLab environment on Nebari with a name of your choice
 - Select an environment from the dropdown (e.g. `dashboard`)
-- Copy the below code to your notebook and execute.
+- Copy the code below to your notebook and execute.
 
 ##### Creating insights using `holoviews`, `panel` and `bokeh` as backend
 
