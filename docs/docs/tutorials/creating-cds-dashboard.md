@@ -62,20 +62,20 @@ dashboard.servable()
 Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
 Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
-> Create new dashboard steps
+> Steps to create new dashboard and publish
 
 - Add a dashboard name (mandatory)
 - Add a short description (mandatory)
 - Customise user permission (optional)
 - Select the file source, for this tutorial we will select `Jupyter Tree` (mandatory)
 
-> Details section
+**Details section**
 
 - Select the framework of your choice, here we will select `voila` (mandatory)
 - Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
 - In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
 - Click on the save button
-- Select the instance size and save, a message should appear stating -> **The dashboard is starting up**
+- Select the instance size and save, a message should appear stating :- **The dashboard is starting up**
 
 ![CDS dashboard configuration](/img/cds_details.png)
 
