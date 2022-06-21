@@ -1,6 +1,6 @@
 ---
 id: creating-cds-dashboard
-title: How to create a containDS dashboard on nebari?
+title: How to create a ContainDS dashboard on Nebari
 ---
 
 # What is a dashboard?
