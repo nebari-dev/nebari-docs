@@ -71,7 +71,7 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 > Details section
 
-- Select the framework of your choice, here we will select `voila` (mandatory)
+- Select the framework of your choice, here we will select `panel` (mandatory)
 - Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
 - In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
 - Click on the save button
