@@ -11,13 +11,20 @@ Different tools and technologies can be used to create and deploy a dashboard. I
 we will be building a simple dashboard on _Nebari_ which can be shared with other users and groups via
 [ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
 
-Currently, this dash-boarding solution supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
+Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
+We will be using `Panel` in this tutorial to create a dashboard.
 
 # Let's get our hands dirty
 
 - Create a notebook in your JupyterLab environment on Nebari with a name of your choice
-- Select an environment from the dropdown (e.g. `dashboard`)
-- Copy the code below to your notebook and execute.
+- Select an environment from the select kernel dropdown (located on the top right: e.g. `dashboard`)
+- Copy the code below to your notebook.
+
+We can now execute the notebook and view our Panel dashboard as output right inside the notebook.
+Making it super easy to rapidly prototype new dashboards. Once we are happy with what we've created,
+we can move on to deploying it with CDS Dashboards.
+
+The code below dives into creating a dashboard from insights.
 
 ##### Creating insights using `holoviews`, `panel` and `bokeh` as backend
 
@@ -32,26 +39,26 @@ import panel as pn
 hv.extension('bokeh')
 
 # creating a sample dataset
-data_trees = { 'specie_name': ['live oak', 'pecan', 'bur oak', 'cedar elm'],
+data_trees = { 'species_name': ['live oak', 'pecan', 'bur oak', 'cedar elm'],
                'avg_diameter_inch': [20, 30, 40, 35]
              }
 
 df = pd.DataFrame(data_trees)
 
 # simple curve/line and bar plots
-plot_bar = hv.Bars(df, 'specie_name', 'avg_diameter_inch')
+plot_bar = hv.Bars(df, 'species_name', 'avg_diameter_inch')
 plot_curve = hv.Curve(df)
 
 # creating hover tooltip
 hover = HoverTool(tooltips=[("avg diameter", "@avg_diameter_inch"),
-                            ("specie", "@specie_name")])
+                            ("species", "@species_name")])
 # plot customization
 combine_plot = plot_bar.opts(tools=[hover]) + plot_curve.opts(line_dash='dashed')
 
 # creating simple dashboard using panel
 dashboard = pn.template.BootstrapTemplate(
            site="About 🌳",
-           title="Specie info and more",
+           title="Species and more",
            main=[combine_plot]
            )
 dashboard.servable()
@@ -81,7 +88,7 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 # Conclusion
 
-We have a working dashboard now 🎉   
+We have a working dashboard now 🎉  
 All that is left to do is to copy the URL and send it to your colleagues!
 
 ![Our tutorial dashboard](/img/dashboard.png)
