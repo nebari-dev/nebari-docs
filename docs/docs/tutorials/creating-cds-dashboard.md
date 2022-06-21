@@ -5,7 +5,7 @@ title: How to create a containDS dashboard on nebari?
 
 # What is a dashboard?
 
-Data provides us with insights, a dashboard stitches these insights together into a meaningful story.
+Analyzing data provides us with insights. A dashboard stitches these insights together into a meaningful story.
 
 Different tools and technologies could be used to create and deploy a dashboard. In this tutorial
 we will be building a simple dashboard on _nebari_ which could be shared with other users and groups via
