@@ -1,23 +1,23 @@
 ---
 id: creating-cds-dashboard
-title: How to create a containDS dashboard on nebari?
+title: How to create a ContainDS dashboard on Nebari
 ---
 
 # What is a dashboard?
 
-Data provides us with insights, a dashboard stitches these insights together into a meaningful story.
+Analyzing data provides us with insights. A dashboard stitches these insights together into a meaningful story.
 
-Different tools and technologies could be used to create and deploy a dashboard. In this tutorial
-we will be building a simple dashboard on _nebari_ which could be shared with other users and groups via
-[ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/).
+Different tools and technologies can be used to create and deploy a dashboard. In this tutorial
+we will be building a simple dashboard on _Nebari_ which can be shared with other users and groups via
+[ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
 
 Currently, this dash-boarding solution supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
 
 # Let's get our hands dirty
 
-- Create a notebook in your jupyterlab environment on nebari with a name of your choice
-- Select an environment from the dropdown (eg: `dashboard`)
-- Copy the below code to your notebook and execute.
+- Create a notebook in your JupyterLab environment on Nebari with a name of your choice
+- Select an environment from the dropdown (e.g. `dashboard`)
+- Copy the code below to your notebook and execute.
 
 ##### Creating insights using `holoviews`, `panel` and `bokeh` as backend
 
@@ -71,9 +71,9 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 **Details section**
 
-- Select the framework of your choice, here we will select `voila` (mandatory)
-- Select the conda env, make sure it is same as jupyter notebook environment (mandatory)
-- In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
+- Select the framework of your choice, here we will select `panel` (mandatory)
+- Select the conda environment, make sure it is same as Jupyter notebook environment (mandatory)
+- In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
 - Click on the save button
 - Select the instance size and save, a message should appear stating :- **The dashboard is starting up**
 
@@ -81,7 +81,7 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 # Conclusion
 
-We have a working dashboard now 🎉 sharing the link is super simple, copy-paste the URL and voilà.
-It is fast and customisable to your need.
+We have a working dashboard now 🎉   
+All that is left to do is to copy the URL and send it to your colleagues!
 
 ![Our tutorial dashboard](/img/dashboard.png)
