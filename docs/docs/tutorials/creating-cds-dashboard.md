@@ -73,7 +73,7 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 - Select the framework of your choice, here we will select `panel` (mandatory)
 - Select the conda environment, make sure it is same as Jupyter notebook environment (mandatory)
-- In the relative path copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
+- In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
 - Click on the save button
 - Select the instance size and save, a message should appear stating -> **The dashboard is starting up**
 
