@@ -8,7 +8,7 @@ title: How to create a ContainDS dashboard on Nebari
 Analyzing data provides us with insights. A dashboard stitches these insights together into a meaningful story.
 
 Different tools and technologies can be used to create and deploy a dashboard. In this tutorial
-we will be building a simple dashboard on _nebari_ which could be shared with other users and groups via
+we will be building a simple dashboard on _Nebari_ which can be shared with other users and groups via
 [ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/).
 
 Currently, this dash-boarding solution supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
