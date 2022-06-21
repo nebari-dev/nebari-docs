@@ -6,7 +6,7 @@ id: deploy
 
 A guide to help deploying Nebari with best suited option.
 
-Nebari can be deployed on a bare-metal server using HPC or on a Cloud provider. Review the options below to discover which option best suits your needs.
+Nebari can be deployed on a bare-metal server using HPC, on a Cloud provider or on a pre-existing kubernetes cluster. Review the options below to discover which option best suits your needs.
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -23,6 +23,9 @@ If you are not sure which option to choose, try this one. It is suitable for mos
 - You aim to have a production environment with GitOps enabled by default
 
 The cloud installation is based on Kubernetes, but knowledge of Kubernetes is NOT required nor is in depth knowledge about the specific provider required either. QHub supports [Amazon AWS](https://docs.qhub.dev/en/latest/source/installation/setup.html#amazon-web-services-aws), [DigitalOcean](https://docs.qhub.dev/en/latest/source/installation/setup.html#digital-ocean), [Google GCP](https://docs.qhub.dev/en/latest/source/installation/setup.html#google-cloud-platform), and [Azure](https://docs.qhub.dev/en/latest/source/installation/setup.html#microsoft-azure).
+
+
+For instructions on installing and deploying Nebari on a Clod provider, please visit ou [Cloud providers](/started/cloud-providers) for a list of the supported cloud providers and their respectful installation guides.
 
 </TabItem>
 <TabItem value="hpc" label="HPC">
@@ -53,9 +56,9 @@ Although it is possible to deploy Nebari HPC on the Cloud, it is not generally r
 
 
 </TabItem>
-<TabItem value="local" label="Local">
+<TabItem value="local" label="Pre-existing">
 
-The local version is recommended for **testing and development** of Nebari’s components due to its simplicity. Choose the local mode if:
+The pre-exisitng (or local) version is recommended for **testing and development** of Nebari’s components due to its simplicity. Choose the local mode if:
 
 - You already have Kubernetes clusters
 - You want to test these Kubernetes clusters
