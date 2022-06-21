@@ -83,6 +83,5 @@ Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards
 
 We have a working dashboard now 🎉   
 All that is left to do is to copy the URL and send it to your colleagues!
-It is fast and customisable to your need.
 
 ![Our tutorial dashboard](/img/dashboard.png)
