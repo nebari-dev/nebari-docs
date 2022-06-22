@@ -79,9 +79,7 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
 - Add a short description (mandatory)
 - Customise user permission (optional)
 - Select the file source, for this tutorial we will select `Jupyter Tree` (mandatory)
-
-**Details section**
-
+- Details section
 - Select the framework of your choice, here we will select `panel` (mandatory)
 - Select the conda environment, make sure it is same as Jupyter notebook environment (mandatory)
 - In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`) (mandatory)
