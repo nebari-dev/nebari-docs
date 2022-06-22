@@ -70,7 +70,8 @@ dashboard.servable()
 # Step-by-step guide for building a CDS dashboard
 
 Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
-Click on the top left tab navigate to `file` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
+
+To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
 > Steps to create new dashboard and publish
 
