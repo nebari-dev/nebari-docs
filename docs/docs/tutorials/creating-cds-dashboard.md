@@ -34,7 +34,6 @@ The code below dives into creating a dashboard from insights.
 ##### Creating insights using `holoviews`, `panel` and `bokeh` as backend
 
 ```python
-# necessary imports
 import numpy as np
 import pandas as pd
 import holoviews as hv
