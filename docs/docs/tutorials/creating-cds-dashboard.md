@@ -73,7 +73,7 @@ Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.
 
 To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
-> Steps to create new dashboard and publish
+### Steps to create new dashboard and publish
 
 - Add a dashboard name (mandatory)
 - Add a short description (mandatory)
