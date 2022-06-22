@@ -61,7 +61,7 @@ dashboard = pn.template.BootstrapTemplate(
            )
 dashboard.servable()
 ```
-
+We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature Panel makes it very easy to rapidly prototype new dashboards. Once we are happy with what we've created, we can move on to deploying it with CDS Dashboards.
 # Step-by-step guide for building a CDS dashboard
 
 Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
