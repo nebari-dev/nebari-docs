@@ -16,7 +16,10 @@ we will be building a simple dashboard on _Nebari_ which can be shared with othe
 Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
 We will be using `Panel` in this tutorial to create a dashboard.
 
-# Let's get our hands dirty
+## Creating the dashboard
+
+*Let's get our hands dirty*
+
 
 - Create a notebook in your JupyterLab environment on Nebari with a name of your choice
 - Select an environment from the select kernel dropdown (located on the top right: e.g. `dashboard`)
