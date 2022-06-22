@@ -5,7 +5,7 @@ title: Create and Deploy a dashboard
 
 # Create a dashboard with Panel and Deploy it with CDS Dashboards
 
-# What is a dashboard?
+## What is a dashboard?
 
 Analyzing data provides us with insights. A dashboard stitches these insights together into a meaningful story.
 
