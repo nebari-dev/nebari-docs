@@ -29,7 +29,6 @@ We can now execute the notebook and view our Panel dashboard as output right ins
 Making it super easy to rapidly prototype new dashboards. Once we are happy with what we've created,
 we can move on to deploying it with CDS Dashboards.
 
-The code below dives into creating a dashboard from insights.
 
 Our dashboard will be creating insights using `holoviews` and `panel` with `bokeh` as backend.
 
