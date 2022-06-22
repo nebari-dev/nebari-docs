@@ -37,7 +37,6 @@ The code below dives into creating a dashboard from insights.
 import pandas as pd
 import holoviews as hv
 from bokeh.models import HoverTool
-from holoviews import opts
 import panel as pn
 hv.extension('bokeh')
 
