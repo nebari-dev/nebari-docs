@@ -75,10 +75,10 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
 
 ### Steps to create new dashboard and publish
 
-- Add a dashboard name (mandatory)
-- Add a short description (mandatory)
+- Add a dashboard name
+- Add a short description
 - Customise user permission (optional)
-- Select the file source, for this tutorial we will select `Jupyter Tree` (mandatory)
+- Select the file source, for this tutorial we will select `Jupyter Tree`
 - Details section
   - Select the framework of your choice, here we will select `panel`
   - Select the conda environment, make sure it is same as Jupyter notebook environment 
