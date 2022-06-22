@@ -32,6 +32,7 @@ import holoviews as hv
 from bokeh.models import HoverTool
 import panel as pn
 hv.extension('bokeh')
+pn.extension()
 
 # creating a sample dataset
 data_trees = { 'species_name': ['live oak', 'pecan', 'bur oak', 'cedar elm'],
