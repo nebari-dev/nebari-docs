@@ -31,7 +31,7 @@ we can move on to deploying it with CDS Dashboards.
 
 The code below dives into creating a dashboard from insights.
 
-##### Creating insights using `holoviews`, `panel` and `bokeh` as backend
+Our dashboard will be creating insights using `holoviews` and `panel` with `bokeh` as backend.
 
 ```python
 import pandas as pd
