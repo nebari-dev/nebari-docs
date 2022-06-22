@@ -25,9 +25,6 @@ We will be using `Panel` in this tutorial to create a dashboard.
 - Select an environment from the select kernel dropdown (located on the top right: e.g. `dashboard`)
 - Copy the code below to your notebook.
 
-We can now execute the notebook and view our Panel dashboard as output right inside the notebook.
-Making it super easy to rapidly prototype new dashboards. Once we are happy with what we've created,
-we can move on to deploying it with CDS Dashboards.
 
 
 Our dashboard will be creating insights using `holoviews` and `panel` with `bokeh` as backend.
