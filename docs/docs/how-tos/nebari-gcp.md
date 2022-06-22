@@ -111,7 +111,7 @@ You can see that Nebari is generating a random password for the root user of Key
 
 The command above also generated the `nebari-config.yaml` file as commented above. This file is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. But at this point it’s just a text file. You could edit it manually if you are unhappy with the choices, or delete it and start over again.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization , see the [Understanding the nebari-config.yaml file](/started/configuration.md) documentation.
+For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization , see the [Understanding the nebari-config.yaml file](/tutorials/overview.md) documentation.
 
 ## Deploying Nebari
 
@@ -122,4 +122,4 @@ nebari deploy -c nebari-config.yaml
 ```
 The terminal will prompt you to press `[enter]` to check auth credentials (which were added in the previous step by the initialization command). That will trigger the deployment which will take around a couple minutes to complete.
 
-Once you reach stage [] you will be prompted to set the **A/CNAME** records manually for your domain name registered nameservers. Please follow the instructions in the [Nebari DNS](/started/dns.md) section for more information regearing the domain `A/CNAME` records and how to automatically generate them.
+Once you reach stage [] you will be prompted to set the **A/CNAME** records manually for your domain name registered nameservers. Please follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regearing the domain `A/CNAME` records and how to automatically generate them.

@@ -75,6 +75,7 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/domain-registry",
       ],
     },
     {
