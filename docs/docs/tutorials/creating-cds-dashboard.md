@@ -64,7 +64,7 @@ dashboard.servable()
 We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature Panel makes it very easy to rapidly prototype new dashboards. Once we are happy with what we've created, we can move on to deploying it with CDS Dashboards.
 ## Deploying with CDS dashboards
 
-Let's use CDS and publish this notebook, visit [CDS docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details.
+Now we'll use CDS Dashboards and publish this notebook. You can visit [CDS Dashboards docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details on this great package.
 
 To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
