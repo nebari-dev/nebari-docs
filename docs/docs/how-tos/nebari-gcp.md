@@ -87,12 +87,13 @@ By default, Nebari will try to use the credentials associated with the current G
 
 ```bash
 export GOOGLE_CREDENTIALS="path/to/JSON/file/with/credentials"
-export PROJECT_ID="projectIDName"
+export PROJECT_ID="Project ID"
 ```
 The **project ID** information can be found at the Google Console homepage, under **Project info**.
 
+:::tip
 This variables applies only to your current shell session. If you want the variable to apply to future shell sessions, set the variable in your shell startup file, for example in the `~/.bashrc` or `~/.profile` file.
-
+:::
 
 :::note
 The following steps assumes you have completed the [Install Nebari](/started/installing-nebari) section, has confirmed that `nebari` is successfully installed in your environment and opted for **GCP** as your cloud provider as well as installed and initialized `gcloud`. If you had any issues during the installation, please visit our getting started [troubleshooting](/started/troubleshooting) section for extra advice.
