@@ -95,10 +95,9 @@ If required the instances could be scaled up/down manually (auto-scaling is not 
 Once the instance is selected, the server is spun. If there are no errors encountered during this process, we will
 be automatically redirected to the dashboard.
 
-::: note
-
+:::Note
 - If the dashboard servers are not shut down manually, it will continue to consume resources and incur additional cost.
-  :::
+:::
 
 ### Where to find published dashboard inside Nebari?
 
@@ -107,6 +106,7 @@ Head to `File` > `Hub Control Panel` which redirects to (_./hub/home_) and lists
 - In order to stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
 - To delete the server and the resources allocated click on the `delete` button.
+- To make any changes to the existing CDS options, click on the `edit` button.
 
 To view all the dashboards published by you and your colleagues head to `File` > `Hub Control Panel` > `Dashboards`
 
