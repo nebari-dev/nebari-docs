@@ -101,14 +101,12 @@ be automatically redirected to the dashboard.
 
 ### Where to find published dashboard inside Nebari?
 
-Head to `File` > `Hub Control Panel` which redirects to (_./hub/home_) and lists the most recent dashboards published.
+Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboards published by you and your colleagues
 
 - In order to stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
 - To delete the server and the resources allocated click on the `delete` button.
 - To make any changes to the existing CDS options, click on the `edit` button.
-
-To view all the dashboards published by you and your colleagues head to `File` > `Hub Control Panel` > `Dashboards`
 
 ![All the published dashboards](/img/all_dashboards.png)
 
