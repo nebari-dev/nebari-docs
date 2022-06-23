@@ -11,7 +11,7 @@ This guide is to help first time users set up a Google Cloud Platform account sp
 
 - [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform);
 - [Create your first project to use within Nebari](#create-your-first-project);
-- [Set up gcloud command line interface](#set-up-the-gcloud-cli)
+- [Set up gcloud command line interface](#set-up-the-gcloud-cli);
 - [Set up a service account for your project](#authentication);
 - [Initialize Nebari with your project credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)

@@ -10,7 +10,8 @@ A basic overview to deploy Nebari on Digital Ocean
 This guide is to help first time users set up an Digital Ocean (DO) account specifically with the intention to use and deploy Nebari at a production scale. In this guide we will walk you through the following steps:
 
 - [Sign up for Digital Ocean](#sign-up-for-google-cloud-platform);
-- [Initialize Nebari with your IAM user credentials](#nebari-initialize);
+- [Set up Digital Ocean access token](#authentication);
+- [Initialize Nebari with your access credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)
 
 For the user already used to DO and ..., feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
@@ -26,7 +27,7 @@ If you are new to Digital Ocean, we advise you to first [sign up for a free acco
 For a more detailed cost estimate, please also refer to our [Conceptual quides] for more information regarding the basic infrastructure provided by Nebari.
 
 :::info
-Please refer to [New pricing](https://www.digitalocean.com/try/new-pricing) documentation for a recent overview of how costs are allocated and applied to an organization’s billing account.
+Please refer to [New pricing](https://www.digitalocean.com/try/new-pricing) documentation for a recent overview of how costs are allocated and applied to your Digital Ocean account.
 :::
 
 :::warning Warning
@@ -67,7 +68,7 @@ In your terminal, we advise you to start by creating a new project folder. Here,
 ```bash
 mkdir data && cd data
 ```
-When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on **Digital Ocean**, named **projectname**, where the domain will be **domain** and the authentication mode set to **password**.
+When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on Digital Ocean (**DO**), named **projectname**, where the domain will be **domain** and the authentication mode set to **password**.
 
 ```bash
 nebari init do --project projectname --domain domain --auth-provider password
