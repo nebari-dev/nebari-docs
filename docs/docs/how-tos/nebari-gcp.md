@@ -96,7 +96,7 @@ This variables applies only to your current shell session. If you want the varia
 :::
 
 :::note
-The following steps assumes you have completed the [Install Nebari](/started/installing-nebari) section, has confirmed that `nebari` is successfully installed in your environment and opted for **GCP** as your cloud provider as well as installed and initialized `gcloud`. If you had any issues during the installation, please visit our getting started [troubleshooting](/started/troubleshooting) section for extra advice.
+The following steps assume you have completed the [Install Nebari](/started/installing-nebari) section, have confirmed that `nebari` is successfully installed in your environment and opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`. If you had any issues during the installation, please visit our getting started [troubleshooting](/started/troubleshooting) section for extra advice.
 :::
 
 ## Nebari Initialize
