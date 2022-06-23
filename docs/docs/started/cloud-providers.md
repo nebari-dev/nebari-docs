@@ -55,3 +55,7 @@ For more information on how to set Nebari for **AWS** please visit [How to deplo
 For more information on how to set Nebari for **Azure** please visit [How to deploy Nebari on Azure](/how-tos/nebari-azure)
 </TabItem>
 </Tabs>
+
+:::warning Warning
+While all of the above cloud providers have a `free-tier` account available for use, some of Nebari infrastructure resources may lie outside the scope of the `free-tier` quotas. Therefore, if your intention is to try out Nebari with a quick-install to see how it works we heavily recommend to use the [Local version of Nebari](/how-tos/nebari-local).
+:::

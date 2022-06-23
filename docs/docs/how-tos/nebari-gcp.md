@@ -21,7 +21,7 @@ For the user already used to Google Cloud Platform and how to set a service acco
 
 ## Sign up for Google Cloud Platform
 
-This documentation assumes that the user already has a **paid** Google Cloud Platform account and has a prior knowledge reggarding GCP billing and cost usage for Kubernetes related services.
+This documentation assumes that the user already has a **paid** Google Cloud Platform account and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related services.
 
 If you are new to Google Cloud Platform, we advise you to first [sign up for a free account](https://cloud.google.com/signup) to get a better understanding of the platform and its features. Please refer to [Create a Google Account](https://support.google.com/accounts/answer/27441) and [Overview of Cloud billing concepts](https://cloud.google.com/billing/docs/concepts#billing_account) for more information on account types and cost usage.
 
