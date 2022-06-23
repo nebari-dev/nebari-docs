@@ -5,7 +5,7 @@ title: How to deploy Nebari on Azure
 
 # How to deploy Nebari on Azure
 
-A basic overview to deploy Nebari on Azure
+A basic overview of deploying Nebari on Azure
 
 :::note
 The following steps assumes you have just completed the [Install Nebari](/started/installing-nebari) section, have confirmed that `nebari` is successfully installed in your environment and opted for **Azure** as your cloud provider. If you had any issues in the prior steps, please visit our Getting Started - [Troubleshooting](/started/troubleshooting) section for extra advice.
