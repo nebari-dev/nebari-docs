@@ -38,7 +38,7 @@ The Nebari deployment on DO will **NOT** fall into `free tier` usage. Therefore,
 
 In order to Nebari make requests against the DO API and create it's infrastructure, an authentication method with the appropriate permissions will be required. The easiest way to do this is using the  [Digital Ocean access token](https://docs.digitalocean.com/reference/api/intro/#oauth-authentication).
 
-Please follow these detailed instructions for [creating a Digital Ocean token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/) for Nebari usage. In addition to a token, a spaces key (similar to AWS S3) credentials is also required. Follow the instructions on the official docs for more information on [how to create a space and generate an access key]((https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key)).
+Please follow these detailed instructions for [creating a Digital Ocean token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/) for Nebari usage. In addition to a token, a spaces key (similar to AWS S3) credentials is also required. Follow the instructions on the official docs for more information on [how to create a space and generate an access key](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key).
 
 :::warning Warning
 As these credentials provides access to your DO account. It should be treated like any other secret credentials. Specifically, it should never be checked into source control.
