@@ -16,7 +16,7 @@ This guide is to help first time users set up a Google Cloud Platform account sp
 - [Initialize Nebari with your project credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)
 
-For the user already used to Google Cloud Platform and how to set a service account, feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
+For those already familiar with Google Cloud Platform and how to setup a service account, feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
 
 
 ## Sign up for Google Cloud Platform
