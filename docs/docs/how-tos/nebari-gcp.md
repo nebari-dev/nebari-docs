@@ -55,7 +55,7 @@ As Nebari executes some preliminary steps to check Kubernetes compatibility with
 
 After installing `gcloud`, start the login process with `gcloud auth login`. Log in using the same GCP account that you created the project with above.
 
-To review `gcloud`'s authentication state:
+To review the `gcloud` authentication state:
 ```bash
 gcloud auth list
 ```
