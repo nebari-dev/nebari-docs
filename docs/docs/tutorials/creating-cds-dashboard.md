@@ -96,7 +96,7 @@ If required the instances could be scaled up/down manually (auto-scaling is not 
 Once the instance is selected, the server is spun. If there are no errors encountered during this process, we will
 be automatically redirected to the dashboard.
 
-:::Note
+:::note
 - If the dashboard servers are not shut down manually, it will continue to consume resources and incur additional cost.
 :::
 
