@@ -51,7 +51,7 @@ You now have created and activated a new project. This means that any resource y
 
 ## Set up the `gcloud` CLI
 
-As Nebari executes some preliminary steps to check Kubernetes compatibility within the GCP infrastructure, it needs to use the [`gcloud` command line interface (CLI)](https://cloud.google.com/sdk/gcloud) to interact with the Google Cloud Platform. You will have to [install the `gcloud` CLI on your system](https://cloud.google.com/sdk/docs/install) and initialize it before you can use Nebari.
+As Nebari executes some preliminary steps to check Kubernetes compatibility within the GCP infrastructure, it needs to use the [`gcloud` command line interface (CLI)](https://cloud.google.com/sdk/gcloud) to interact with the Google Cloud Platform. You will have to [install the `gcloud` CLI on your system](https://cloud.google.com/sdk/docs/install) before you can use Nebari.
 
 After installing `gcloud`, start the login process with `gcloud auth login`. Log in using the same GCP account that you created the project with above.
 
