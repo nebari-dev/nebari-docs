@@ -38,9 +38,8 @@ module.exports = {
       },
       items: [
         "started/installing-nebari",
-        "started/cloud-providers",
-        "started/uninstall",
         "started/deploy",
+        "started/cloud-providers",
         "started/troubleshooting",
       ],
     },
