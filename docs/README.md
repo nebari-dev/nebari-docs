@@ -2,6 +2,16 @@
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
+## Installing `node`
+
+- Checking if node is already present in the system (should print the version number), from the command line:
+
+    ```bash
+     node -v
+    ```
+
+- To install node visit [nodejs.org](https://nodejs.org/en/download/)
+  
 ## Local Development
 
 First make sure to be in the `/docs` directory:

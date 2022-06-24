@@ -5,44 +5,118 @@
  * work well for content-centric websites.
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;700&display=swap");
 
 /* You can override the default Infima variables here. */
-// TODO: placeholder colours for now
 :root {
+    --nebari-teal-0: #0c1516;
+    --nebari-teal-1: #183234;
+    --nebari-teal-2: #1f5156;
+    --nebari-teal-3: #23727a;
+    --nebari-teal-4: #2396a0;
+    --nebari-teal-5: #1dbbc7;
+    --nebari-teal-6: #45d2df;
+    --nebari-teal-7: #74dbe5;
+    --nebari-teal-8: #98e3eb;
+    --nebari-teal-9: #b8ebf0;
+    --nebari-teal-10: #d6f3f6;
+    --nebari-teal-11: #f2fbfc;
+    --nebari-lilac-0: #150b17;
+    --nebari-lilac-1: #2f1839;
+    --nebari-lilac-2: #4a215f;
+    --nebari-lilac-3: #682a87;
+    --nebari-lilac-4: #8732b2;
+    --nebari-lilac-5: #a739df;
+    --nebari-lilac-6: #c052f7;
+    --nebari-lilac-7: #ce75fa;
+    --nebari-lilac-8: #db95fc;
+    --nebari-lilac-9: #e7b4fd;
+    --nebari-lilac-10: #f2d2fe;
+    --nebari-lilac-11: #fbf0ff;
+    --nebari-blue-gray-0: #0e0e11;
+    --nebari-blue-gray-1: #21222a;
+    --nebari-blue-gray-2: #343544;
+    --nebari-blue-gray-3: #484a5e;
+    --nebari-blue-gray-4: #5c5f78;
+    --nebari-blue-gray-5: #717490;
+    --nebari-blue-gray-6: #8789a6;
+    --nebari-blue-gray-7: #9c9eba;
+    --nebari-blue-gray-8: #b1b3cb;
+    --nebari-blue-gray-9: #c6c8db;
+    --nebari-blue-gray-10: #dcdce9;
+    --nebari-blue-gray-11: #f1f1f6;
+    --nebari-magenta-0: #180b18;
+    --nebari-magenta-1: #37163b;
+    --nebari-magenta-2: #5a1d62;
+    --nebari-magenta-3: #7f218c;
+    --nebari-magenta-4: #a621b9;
+    --nebari-magenta-5: #cf1ee7;
+    --nebari-magenta-6: #e841ff;
+    --nebari-magenta-7: #f06fff;
+    --nebari-magenta-8: #f693ff;
+    --nebari-magenta-9: #fbb3ff;
+    --nebari-magenta-10: #fed2ff;
+    --nebari-magenta-11: #fff1ff;
+    --nebari-coral-0: #1a0b0d;
+    --nebari-coral-1: #3d151f;
+    --nebari-coral-2: #631b2f;
+    --nebari-coral-3: #8d1d41;
+    --nebari-coral-4: #b81a53;
+    --nebari-coral-5: #e60f66;
+    --nebari-coral-6: #ff3a7b;
+    --nebari-coral-7: #ff6b91;
+    --nebari-coral-8: #ff90a9;
+    --nebari-coral-9: #ffb1c1;
+    --nebari-coral-10: #ffd1d9;
+    --nebari-coral-11: #fff0f3;
+    --nebari-purple-0: #110917;
+    --nebari-purple-1: #251538;
+    --nebari-purple-2: #391d5c;
+    --nebari-purple-3: #4d2582;
+    --nebari-purple-4: #622cab;
+    --nebari-purple-5: #7834d6;
+    --nebari-purple-6: #904aee;
+    --nebari-purple-7: #a86cf2;
+    --nebari-purple-8: #be8df6;
+    --nebari-purple-9: #d2adf9;
+    --nebari-purple-10: #e5cefc;
+    --nebari-purple-11: #f7effe;
+
     // ==============================================================================
     // Primitive Colors
-    // TODO: change to Nebari branding
     // ==============================================================================
 
-    --ifm-color-black: #353641;
-    --ifm-color-black-light: #474856;
-    --ifm-color-black-lighter: #595b6a;
-    --ifm-color-white: #fdfdfe;
-    --ifm-color-white-dark: #fbfcfe;
-    --ifm-color-white-darker: #fafafd;
-    --ifm-color-white-darkest: #f8f8fd;
-    --ifm-color-purple-lightest: #9c9abf;
-    --ifm-color-purple-lighter: #8481af;
-    --ifm-color-purple-light: #7c79aa;
-    --ifm-color-purple: #a183e6;
-    --ifm-color-purple-dark: #896dc9;
-    --ifm-color-purple-darker: #7259ac;
-    --ifm-color-purple-darkest: #5c468f;
-    --ifm-color-purple-opacity-50: rgba(161, 131, 230 0.5);
-    // defaults
+    --ifm-color-black: var(--nebari-blue-gray-0);
+    --ifm-color-black-light: var(--nebari-blue-gray-1);
+    --ifm-color-black-lighter: var(--nebari-blue-gray-2);
+    --ifm-color-purple-lightest: var(--nebari-purple-9);
+    --ifm-color-purple-lighter: var(--nebari-purple-8);
+    --ifm-color-purple-light: var(--nebari-purple-7);
+    --ifm-color-purple: var(--nebari-purple-5);
+    --ifm-color-purple-dark: var(--nebari-purple-4);
+    --ifm-color-purple-darker: var(--nebari-purple-3);
+    --ifm-color-purple-darkest: var(--nebari-purple-2);
+
+    --ifm-color-white: #ffffff;
+    --ifm-color-white-dark: #f0f0fd;
+    --ifm-color-white-darker: #e6e6fd;
+    --ifm-color-white-darkest: #c5c5e9;
+
+    --ifm-color-purple-opacity-50: rgba(121, 118, 171, 0.5);
     --ifm-color-orange: #ee8030;
-    --ifm-color-green: #00ccb1;
-    --ifm-color-green-dark: #325d52;
+    --ifm-color-green: var(--nebari-teal-5);
+    --ifm-color-green-dark: var(--nebari-teal-6);
     --ifm-color-green-opacity-50: rgba(101, 255, 227, 0.5);
-    --ifm-color-red: #fd7b7b;
-    --ifm-color-red-dark: #793f3f;
+    --ifm-color-red: var(--nebari-coral-5);
+    --ifm-color-red-dark: var(--nebari-coral-6);
     --ifm-color-red-opacity-50: rgba(255, 156, 156, 0.5);
     --ifm-color-yellow: #feec4c;
     --ifm-color-yellow-dark: #c4b325;
     --ifm-color-yellow-opacity-50: rgba(243, 237, 121, 0.5);
-    --ifm-color-gray-darkest: #262630;
-    --ifm-color-gray-dark: #3c3c4c;
+    --ifm-color-gray-darkest: var(--nebari-blue-gray-4);
+    --ifm-color-gray-dark: var(--nebari-blue-gray-5);
+
+    --ifm-hover-overlay: #2d2e381b;
 
     // ==============================================================================
     // Font Sizes
@@ -147,9 +221,42 @@
     --ifm-dropdown-background-color: var(--ifm-color-background-2);
     --ifm-dropdown-hover-background-color: var(--ifm-color-background-3);
 
+    .menu__link,
+    .menu__caret {
+        border-radius: 0;
+    }
+
+    .menu__link--active {
+        border-left: 2px solid #1dbbc7;
+        background-color: var(--ifm-background-color);
+        color: var(--ifm-menu-color);
+        font-weight: bold;
+    }
+
+    .menu__link--active:not(.menu__link--sublist) {
+        border-left: 2px solid #1dbbc7;
+        background-color: var(--ifm-background-color);
+    }
+    .menu__link:hover {
+        font-weight: bold;
+        border-left: 2px solid var(--ifm-menu-color);
+        color: var(--ifm-menu-color);
+    }
+
     // Font
-    font-family: Sen, serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular", "San Francisco", "Segoe UI",
-        "Helvetica Neue", "Lucida Grande", sans-serif;
+    font-family: "DM Sans", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular", "San Francisco",
+        "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--nebari-blue-gray-3);
+    font-family: "Outfit", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular", "San Francisco",
+        "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
 // ==============================================================================
@@ -469,6 +576,7 @@ div[class*="codeBlockTitle_"] {
     --ifm-color-on-primary: var(--ifm-color-black);
 
     // Background
+    --ifm-background-color: var(--ifm-color-black);
     --ifm-color-background: var(--ifm-color-black);
     --ifm-color-background-2: var(--ifm-color-black-light);
     --ifm-color-background-3: var(--ifm-color-black-lighter);
@@ -496,4 +604,47 @@ div[class*="codeBlockTitle_"] {
     // Error
     --ifm-color-error: var(--ifm-color-red);
     --ifm-color-on-error: var(--ifm-color-black);
+
+    // links
+    --nebari-links-dark: var(--nebari-purple-9);
+
+    a {
+        color: var(--nebari-links-dark);
+    }
+
+    .breadcrumbs__item--active .breadcrumbs__link {
+        background: var(--ifm-breadcrumb-item-background-active);
+        color: var(--nebari-links-dark);
+    }
+    .navbar__link {
+        color: var(--ifm-navbar-link-color);
+        font-weight: var(--ifm-font-weight-semibold);
+    }
+
+    // .navbar__link:hover,
+    // .navbar__link--active {
+    //     color: var(--ifm-navbar-link-hover-color);
+    // }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--nebari-blue-gray-11);
+    }
+
+    .menu__link,
+    .menu__caret {
+        border-radius: 0;
+        color: var(--ifm-menu-color);
+    }
+}
+
+// Footer
+.footer {
+    background-color: var(--nebari-blue-gray-0);
+    color: var(--ifm-footer-color);
+    padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
 }
