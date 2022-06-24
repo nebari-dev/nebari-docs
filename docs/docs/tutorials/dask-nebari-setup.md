@@ -24,7 +24,7 @@ Nebari already has the connection information pre-configured for the user.
 In order to view configuration details run the below command:
 
 - using terminal : `cat /etc/dask/gateway.yaml`
-- using notebook: `! cat /etc/dask/gateway.yaml`
+- within a notebook: `! cat /etc/dask/gateway.yaml`
 
 <details>
 <summary> Click to view: Sample output </summary>
