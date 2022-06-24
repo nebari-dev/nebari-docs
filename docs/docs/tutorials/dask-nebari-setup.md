@@ -23,7 +23,7 @@ and provides a secure way to managing dask clusters. We will discuss in detail t
 Nebari already has the connection information pre-configured for the user.
 In order to view configuration details run the below command:
 
-- using terminal : `cat /etc/dask/gateway.yaml`
+- from the terminal : `cat /etc/dask/gateway.yaml`
 - within a notebook: `! cat /etc/dask/gateway.yaml`
 
 <details>
