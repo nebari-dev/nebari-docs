@@ -12,9 +12,12 @@
 
 ---
 
-Nebari is an customizable Data Science and MLOPs Platform designed as a managed integration of open source technologies. It uses an infrastructure-as-code approach to quickly and easily deploy a shared data science environment, on premises or in the cloud of choice. 
+Nebari is an customizable Data Science and MLOPs Platform designed as a managed integration of open source technologies. 
+It uses an infrastructure-as-code approach to quickly and easily deploy a shared data science environment, on premises 
+or in the cloud of choice. 
 
-Nebari is an opinionated open source JupyterHub distribution with a variety of common integrations to help you and your team get set up with all your favorite tools ...  and a few you didn't know you needed! 
+Nebari is an opinionated open source JupyterHub distribution with a variety of common integrations to help you and your 
+team get set up with all your favorite tools ...  and a few you didn't know you needed! 
 
 Check out our full [documentation](https://nebari-docs.netlify.app/)!
 
@@ -34,12 +37,16 @@ Check out our full [documentation](https://nebari-docs.netlify.app/)!
 
 ## Nebari 101
 
-Nebari Cloud deployments use Kubernetes and are is built using [Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and
-[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Terraform manages the infrastructure on the cloud. Helm helps to define, install,
-and manage [Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub Actions is used to automatically create commits (triggered by commits with changes to the 
+Nebari Cloud deployments use Kubernetes and are is built using 
+[Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and
+[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Terraform manages the infrastructure on the 
+cloud. Helm helps to define, install,
+and manage [Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub 
+Actions is used to automatically create commits (triggered by commits with changes to the 
 configuration file, `nebari-config.yaml`) as well as to kick off the deployment action.
 
-Nebari aims to abstract all these complexities for its users. Hence, it is not necessary to know any of the above mentioned technologies to have your project successfully deployed.
+Nebari aims to abstract all these complexities for its users. Hence, it is not necessary to know any of the above 
+mentioned technologies to have your project successfully deployed.
 
 > TLDR: If you know GitHub and feel comfortable generating and using API keys, you should have all it takes to deploy and maintain your system without the need for a dedicated
 > DevOps team. No need to learn Kubernetes, Terraform, or Helm.
@@ -53,9 +60,9 @@ We also have a version of Nebari based on OpenHPC. It can be used to deploy onto
 
 ## :computer: Installation
 
-Nebari is supported by macOS and Linux operating systems (Windows is **NOT** currently supported). It is compatible with Python 3.7+. 
-We also suggest you use virtual environments such as ([`conda`](https://docs.conda.io/en/latest/), 
-[`pipenv`](https://github.com/pypa/pipenv) or
+Nebari is supported by macOS and Linux operating systems (Windows is **NOT** currently supported). It is compatible 
+with Python 3.7+. We also suggest you use virtual environments such as 
+([`conda`](https://docs.conda.io/en/latest/), [`pipenv`](https://github.com/pypa/pipenv) or
   [`venv`](https://docs.python.org/3/library/venv.html))
 
 Depending on where you are planning to deploy Nebari, you may need to set up credentials (e.g. for cloud deployment). 
@@ -71,17 +78,21 @@ Have a look at our [FAQ](docs/source/user_guide/faq.md) to see if your query has
 
 We separate the queries for Nebari into:
 
-- [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is used to raise discussions about a subject, such as: "What is the recommended way to do X with Nebari?"
+- [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is used to raise discussions about a subject, 
+such as: "What is the recommended way to do X with Nebari?"
 
 - [Gitter](https://gitter.im/Quansight/qhub) is used to raise discussions about Nebari usage. 
 
-- [Issues](https://github.com/nebari-dev/nebari/issues/new/choose) for queries, bug reporting, feature requests, documentation, etc.
+- [Issues](https://github.com/nebari-dev/nebari/issues/new/choose) for queries, bug reporting, feature requests, 
+documentation, etc.
 
-> We work around the clock to make Nebari better, but sometimes your query might take a while to get a reply. We apologise in advance and ask you to please, be patient :pray:.
+> We work around the clock to make Nebari better, but sometimes your query might take a while to get a reply. We 
+> apologise in advance and ask you to please, be patient :pray:.
 
 ## :book: Code of Conduct
 
-To guarantee a welcoming and friendly community, we require contributors to follow our [Code of Conduct](https://github.com/Quansight/.github/blob/master/CODE_OF_CONDUCT.md).
+To guarantee a welcoming and friendly community, we require contributors to follow our 
+[Code of Conduct](https://github.com/Quansight/.github/blob/master/CODE_OF_CONDUCT.md).
 
 ## :gear: Installing the Development version of Nebari
 
@@ -95,7 +106,8 @@ To build the docs locally, follow the guide in the [docs readme](docs/README)
 
 ## :raised_hands: Contributions
 
-Thinking about contributing? Check out our [Contribution Guidelines](https://github.com/nebari-dev/nebari/blob/main/CONTRIBUTING.md).
+Thinking about contributing? Check out our 
+[Contribution Guidelines](https://github.com/nebari-dev/nebari/blob/main/CONTRIBUTING.md).
 
 ## License
 
