@@ -60,7 +60,7 @@ We also suggest you use virtual environments such as ([`conda`](https://docs.con
 
 Depending on where you are planning to deploy Nebari, you may need to set up credentials (e.g. for cloud deployment). 
 Once all the necessary credentials are generated, Nebari can be installed and 
-deployed in under 20 minutes! 
+deployed in roughly 30 minutes! 
 
 See our [installation guide]() for a complete guide to intallation. 
 
@@ -72,6 +72,8 @@ Have a look at our [FAQ](docs/source/user_guide/faq.md) to see if your query has
 We separate the queries for Nebari into:
 
 - [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is used to raise discussions about a subject, such as: "What is the recommended way to do X with Nebari?"
+
+- [Gitter](https://gitter.im/Quansight/qhub) is used to raise discussions about Nebari usage. 
 
 - [Issues](https://github.com/nebari-dev/nebari/issues/new/choose) for queries, bug reporting, feature requests, documentation, etc.
 
@@ -88,6 +90,8 @@ To install the latest developer version (unstable) use:
 ```bash
 pip install git+https://github.com/nebari-dev/nebari.git
 ```
+
+To build the docs locally, follow the guide in the [docs readme](docs/README)
 
 ## :raised_hands: Contributions
 
