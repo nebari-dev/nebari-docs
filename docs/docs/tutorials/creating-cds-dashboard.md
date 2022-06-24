@@ -3,14 +3,14 @@ id: creating-cds-dashboard
 title: Create and Deploy a dashboard
 ---
 
-# Create a dashboard with Panel and Deploy it with CDS Dashboards
+# Create a dashboard with `Panel` and deploy it with `CDS Dashboards`
 
 ## What is a dashboard?
 
 Analyzing data provides us with insights. A dashboard stitches these insights together into a meaningful story.
 
 Different tools and technologies can be used to create and deploy a dashboard. In this tutorial
-we will be building a simple dashboard on _Nebari_ which can be shared with other users and groups via
+we will be building a simple dashboard on Nebari which can be shared with other users and groups via
 [ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
 
 Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
@@ -24,7 +24,7 @@ _Let's get our hands dirty_
 - Select an environment from the select kernel dropdown (located on the top right: e.g. `dashboard`)
 - Copy the code below to your notebook.
 
-Our dashboard will be creating insights using `holoviews` and `panel` with `bokeh` as backend.
+Our dashboard will be creating insights using `Holoviews` and `Panel` with `Bokeh` as backend.
 
 ```python
 import pandas as pd
@@ -60,15 +60,22 @@ dashboard = pn.template.BootstrapTemplate(
 dashboard.servable()
 ```
 
-We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature Panel makes it very easy to rapidly prototype new dashboards. Once we are happy with what we've created, we can move on to deploying it with CDS Dashboards.
+We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature of Panel 
+makes it very easy to rapidly prototype new dashboards. 
+
+![Our tutorial dashboard](/img/dashboard.png)
+
+Once we are happy with what we've created, we can move on to 
+deploying it with CDS Dashboards.
 
 ## Deploying with CDS dashboards
 
-Now we'll use CDS Dashboards and publish this notebook. You can visit [CDS Dashboards docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details on this great package.
+Now we'll use CDS Dashboards to publish and share this notebook. You can visit the 
+[CDS Dashboards docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details on this great package.
 
 To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
 
-### Steps to create new dashboard and publish
+### Steps to create new dashboard and deploy
 
 - Add a dashboard name
 - Add a short description
@@ -79,30 +86,36 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
   - Select the conda environment, make sure it is same as Jupyter notebook environment
   - In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/insights.ipynb`)
   - Click on the save button
-  - Select the instance size and save again, a message should appear stating: **The dashboard is starting up**
 
 ![CDS dashboard configuration](/img/cds_details.png)
 
-![The dashboard is starting up](/img/dashboard_starting_up.png)
 
-### More on instance selection and publishing dashboard
 
-When we publish our dashboard, compute and memory resources are allocated. The instance size selected
-will differ based on use-case. Currently, _Nebari_ offers two instance types namely `Small` and `Medium`. This deployment also has added two instance types added as options, `Large` and `Large GPU`.
-If required the instances could be scaled up/down manually (auto-scaling is not supported).
+* Selecting the compute resources
 
-![Instance selection](/img/select_instance.png)
+  * When we publish our dashboard, compute and memory resources are allocated. The instance size required
+    will differ based on usecase. The instances seen on this selection screen will vary depending on your Nebari
+    setup. 
+  ![Instance selection](/img/select_instance.png)
 
-Once the instance is selected, the server is spun up. If there are no errors encountered during this process, we will
-be automatically redirected to the dashboard.
+  * Once the instance is selected, this will trigger the dashboard to begin building. You willl see the following 
+  screen indicating that **the dashboard is starting up**.
+
+  ![The dashboard is starting up](/img/dashboard_starting_up.png)
+
+If there are no errors encountered during this process, we will be automatically redirected to the dashboard!
 
 :::note
-- If the dashboard servers are not shut down manually, it will continue to consume resources and incur additional cost.
+- Please be aware that while the dashboard is running, it will continue to consume resources. You should be mindful
+of the incurring on-going costs while the dashboard is running. 
 :::
 
-### Where to find published dashboard inside Nebari?
+## Accessing the dashboard inside Nebari
 
-Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboards published by you and your colleagues
+Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboards published by you and your colleagues.
+
+Here, you can find the URL of your dashboards which can be shared with other users. You can also control your 
+deployment from this page. 
 
 - In order to stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
@@ -111,9 +124,8 @@ Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboar
 
 ![All the published dashboards](/img/all_dashboards.png)
 
-# Conclusion
+## Conclusion
 
-We have a working dashboard now 🎉  
-All that is left to do is to copy the URL and send it to your colleagues!
+We now have a working, shareable dashboard 🎉  
 
-![Our tutorial dashboard](/img/dashboard.png)
+All that is left to do is to send it to your colleagues!
