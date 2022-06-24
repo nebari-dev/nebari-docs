@@ -38,17 +38,18 @@ Check out our full [documentation](https://nebari-docs.netlify.app/)!
 ## Nebari 101
 
 Nebari Cloud deployments use Kubernetes and are is built using 
-[Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and
-[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Terraform manages the infrastructure on the 
-cloud. Helm helps to define, install,
-and manage [Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub 
-Actions is used to automatically create commits (triggered by commits with changes to the 
+[Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and either 
+[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) or 
+[GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html). Terraform manages the infrastructure on the 
+cloud. Helm helps to define, install, and manage 
+[Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub 
+Actions or GitLab CI/CD is used to automatically create commits (triggered by commits with changes to the 
 configuration file, `nebari-config.yaml`) as well as to kick off the deployment action.
 
 Nebari aims to abstract all these complexities for its users. Hence, it is not necessary to know any of the above 
 mentioned technologies to have your project successfully deployed.
 
-> TLDR: If you know GitHub and feel comfortable generating and using API keys, you should have all it takes to deploy and maintain your system without the need for a dedicated
+> TLDR: If you know GitHub/GitLab and feel comfortable generating and using API keys, you should have all it takes to deploy and maintain your system without the need for a dedicated
 > DevOps team. No need to learn Kubernetes, Terraform, or Helm.
 
 ## Nebari on-prem
