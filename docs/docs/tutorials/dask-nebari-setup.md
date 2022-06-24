@@ -18,7 +18,7 @@ and provides a secure way to managing dask clusters. We will discuss in detail t
 
 - `address` : is the rest API that dask-gateway exposes for managing clusters
 - `proxy_address` : is a secure TLS connection to a user defined dask scheduler
-- `auth` is the form of authentication used, which should always be jupyterhub for Nebari
+- `auth` : is the form of authentication used, which should always be jupyterhub for Nebari
 
 Nebari already has the connection information pre-configured for the user.
 In order to view configuration details run the below command:
