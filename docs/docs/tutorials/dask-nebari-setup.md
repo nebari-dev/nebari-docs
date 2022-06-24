@@ -11,7 +11,7 @@ techniques.
 
 ### Nebari & Dask integration
 
-Nebari uses [dask-gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically configured for the user.
+Nebari uses [dask-gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically configured for the user,
 and provides a secure way to managing dask clusters. We will discuss in detail the pre-defined configuration in later sections of this tutorial.
 
 ### Dask Gateway components:
