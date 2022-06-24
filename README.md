@@ -35,7 +35,7 @@ Check out our full [documentation](https://nebari-docs.netlify.app/)!
 ## Nebari 101
 
 Nebari Cloud deployments use Kubernetes and are is built using [Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and
-[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Terraform handles the build, change, and versioning of the infrastructure. Helm helps to define, install,
+[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions). Terraform manages the infrastructure on the cloud. Helm helps to define, install,
 and manage [Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub Actions is used to automatically create commits (triggered by commits with changes to the 
 configuration file, `nebari-config.yaml`) as well as to kick off the deployment action.
 
@@ -48,14 +48,18 @@ Nebari aims to abstract all these complexities for its users. Hence, it is not n
 
 We also have a version of Nebari based on OpenHPC. It can be used to deploy onto HPC systems or on bare-metal. 
 
-> NOTE: This tool is currently under development. Curious? Check out the [Nebari HPC](https://github.com/Quansight/qhub-hpc) repository.
+> **Note** 
+> This tool is currently under development. Curious? Check out the [Nebari HPC](https://github.com/Quansight/qhub-hpc) repository.
 
 ## :computer: Installation
 
-Nebari is supported by macOS and Linux operating systems (Windows is **NOT** currently supported). It is compatible with Python 3.7+. We also encouraged using virutual environments ([`conda`](https://docs.conda.io/en/latest/), [`pipenv`](https://github.com/pypa/pipenv) or
+Nebari is supported by macOS and Linux operating systems (Windows is **NOT** currently supported). It is compatible with Python 3.7+. 
+We also suggest you use virtual environments such as ([`conda`](https://docs.conda.io/en/latest/), 
+[`pipenv`](https://github.com/pypa/pipenv) or
   [`venv`](https://docs.python.org/3/library/venv.html))
 
-Depending on where you plan to deploy, you may need to set up credentials (e.g. for cloud deployment) Once all the necessary credentials are generated, Nebari can be installed and 
+Depending on where you are planning to deploy Nebari, you may need to set up credentials (e.g. for cloud deployment). 
+Once all the necessary credentials are generated, Nebari can be installed and 
 deployed in under 20 minutes! 
 
 See our [installation guide]() for a complete guide to intallation. 
