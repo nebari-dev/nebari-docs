@@ -6,7 +6,7 @@ id: installing-nebari
 
 A guide to help you install Nebari for your project.
 
-This installation guide provides the basic needs to install and deploy Nebari for the first time and assumes the user is already familiar with the Python package environment (for a quick tutorial on this topic please...). If you are already used to Nebari deployments steps and would like to check the advance configuration, feel free to skip to the "advanced-settings".
+This installation guide provides the basic needs to install and deploy Nebari for the first time and assumes the user is already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar to Nebari and would like to check the advance configuration, feel free to skip to "advanced-settings" section.
 
 :::note
 This guide focus on installing Nebari for `Cloud` usage. For other instructions, please visit [deploying options](/started/deploy.md) for an overview of the available options and its respective installation steps.

@@ -10,13 +10,12 @@ A basic overview of how to deploy Nebari on GCP.
 This guide is to help first time users set up a Google Cloud Platform account specifically with the intention of using and deploying Nebari at a production scale. In this guide we will walk you through the following steps:
 
 - [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform);
-- [Create your first project to use within Nebari](#create-your-first-project);
 - [Set up gcloud command line interface](#set-up-the-gcloud-cli);
 - [Set up a service account for your project](#authentication);
 - [Initialize Nebari with your project credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)
 
-For those already familiar with Google Cloud Platform and how to setup a service account, feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
+For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first steps and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
 
 ## Sign up for Google Cloud Platform
@@ -35,38 +34,19 @@ If you are using a new GCP account, please keep in mind the [quotas](https://clo
 The Nebari deployment on GCP will **NOT** fall into `free tier` usage. Therefore, we recommend that you sign up for a paid account or contact your cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We are not responsible for any charges you may incur.
 :::
 
-## Create your Nebari project
-
-We advise you to create a new project for Nebari deployments as this will allow you to better manage your resources and avoid any potential conflicts with other projects.
-
-Google Cloud projects form the basis for creating, enabling, and using all Google Cloud services including managing APIs, enabling billing, adding and removing collaborators, and managing permissions for Google Cloud resources. Read more about the project resources at Google's [Creating and managing projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects) documentation.
-
-After completing the sign up process from the previous step you will be redirected to Google Cloud Platform welcome page. Click on the “Create Project” button using the [Google Console UI](https://cloud.google.com/resource-manager/docs/creating-managing-projects#console) and enter a name for your project.
-
-In addition to defining a name for your project (which can be changed later), be sure to choose an expressive **project ID** on that screen (the project ID **cannot be changed** after project creation).
-
-After your project creation is complete, you will be redirected to the project dashboard page. From there, you can access APIs, administrative services, security settings, computer services, virtual machines (VMs), storage configurations, and more.
-
-You now have created and activated a new project. This means that any resource you create will be assigned or associated with this project. Remember to check the active project before creating resources, especially if you are handling multiple GCP projects.
-
 ## Set up the `gcloud` CLI
 
 As Nebari executes some preliminary steps to check Kubernetes compatibility within the GCP infrastructure, it needs to use the [`gcloud` command line interface (CLI)](https://cloud.google.com/sdk/gcloud) to interact with the Google Cloud Platform. You will have to [install the `gcloud` CLI on your system](https://cloud.google.com/sdk/docs/install) before you can use Nebari.
-
-After installing `gcloud`, start the login process with `gcloud auth login`. Log in using the same GCP account that you created the project with above.
-
-To review the `gcloud` authentication state:
-```bash
-gcloud auth list
-```
 
 The remaining steps will assume that you are logged in to a GCP account that has admin privileges for the newly created project.
 
 ## Authentication
 
+We advise you to create a new project for Nebari deployments as this will allow you to better manage your resources and avoid any potential conflicts with other projects. This means that any resource you create will be assigned or associated with this project. Read more about project resources at Google's [Creating and managing projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects) documentation.
+
 In order to Nebari make requests against the GCP API and create it's infrastructure, an authentication method with the appropriate permissions will be required. The easiest way to do this is using a [service account](https://cloud.google.com/iam/docs/understanding-service-accounts).
 
-Follow [these detailed instructions](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account) to create a Google Service Account with **Owner** level permissions over the project created in the previous step. For more information about roles and permissions, see the [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles).
+Follow [these detailed instructions](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account) to create a Google Service Account with **Owner** level permissions over the project created in the previous step. For more information about roles and permissions, see the [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if you are handling multiple GCP projects.
 
 After you create your service account, download the [service account key](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts.keys) file following the instructions below:
 
@@ -103,10 +83,10 @@ The following steps assume you have completed the [Install Nebari](/started/inst
 
 Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [Authentication setup](#authentication) steps, and have ensured that all the necessary environment variables have been properly set. It is time to initialize and deploy Nebari!
 
-In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `data`:
+In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `nebari-gcp`:
 
 ```bash
-mkdir data && cd data
+mkdir nebari-gcp && cd nebari-gcp
 ```
 When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on **GCP**, named **projectname**, where the domain will be **domain** and the authetication mode set to **password**.
 
@@ -123,6 +103,10 @@ Securely generated default random password=*** for Keycloak root user
 stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 Fetching server config for us-central1
 ```
+:::tip
+MacOS generates a programmatic directory stored in `/private/var` and defines the `$TMPDIR` environment variable for locating the system temporary folder. We advise the user to look for the `NEBARI_DEFAULT_PASSWORD` file in the following  `/var/folders/xx/xxxxx/T` path.
+:::
+
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak server once Nebari's infrastructure is fully deployed.
 
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. But at this point it’s just a text file. You could edit it manually if you are unhappy with the choices, or delete it and start over again.

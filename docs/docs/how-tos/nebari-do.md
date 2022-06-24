@@ -14,7 +14,7 @@ This guide is to help first time users set up an Digital Ocean (DO) account spec
 - [Initialize Nebari with your access credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)
 
-For the user already used to DO and ..., feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
+For the user already familiar with Digital Ocean, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
 ## Sign up for Digital Ocean
 
@@ -63,10 +63,10 @@ The following steps assumes you have completed the [Install Nebari](/started/ins
 
 Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [Authentication setup](#authentication) steps, and have ensured that all the necessary environment variables have been properly set. It is time to initialize and deploy Nebari!
 
-In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `data`:
+In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `nebari-do`:
 
 ```bash
-mkdir data && cd data
+mkdir nebari-do && cd nebari-do
 ```
 When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on Digital Ocean (**DO**), named **projectname**, where the domain will be **domain** and the authentication mode set to **password**.
 
@@ -82,6 +82,10 @@ Once `nebari init` is executed, you should then be able to see the following out
 Securely generated default random password=*** for Keycloak root user
 stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 ```
+:::tip
+MacOS generates a programmatic directory stored in `/private/var` and defines the `$TMPDIR` environment variable for locating the system temporary folder. We advise the user to look for the `NEBARI_DEFAULT_PASSWORD` file in the following  `/var/folders/xx/xxxxx/T` path.
+:::
+
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak server once Nebari's infrastructure is fully deployed.
 
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. But at this point it’s just a text file. You could edit it manually if you are unhappy with the choices, or delete it and start over again.

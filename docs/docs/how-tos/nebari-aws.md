@@ -14,7 +14,7 @@ This guide is to help first time users set up an Amazon Web Services (AWS) accou
 - [Initialize Nebari with your IAM user credentials](#nebari-initialize);
 - [Deploy Nebari](#deploying-nebari)
 
-For the user already used to AWS and ..., feel free to skip this first step and jump straight to the [Nebari initialization](#nebari-initialize) section of this guide.
+For those already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
 ## Sing up for Amazon Web Services
 
@@ -75,10 +75,10 @@ The following steps assumes you have completed the [Install Nebari](/started/ins
 
 Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [Authentication setup](#authentication) steps, and have ensured that all the necessary environment variables have been properly set. It is time to initialize and deploy Nebari!
 
-In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `data`:
+In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `nebari-aws`:
 
 ```bash
-mkdir data && cd data
+mkdir nebari-aws && cd nebari-aws
 ```
 When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on **AWS**, named **projectname**, where the domain will be **domain** and the authetication mode set to **password**.
 
@@ -95,6 +95,10 @@ Securely generated default random password=*** for Keycloak root user
 stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 INFO:botocore.credentials:Found credentials in environment variables.
 ```
+:::tip
+MacOS generates a programmatic directory stored in `/private/var` and defines the `$TMPDIR` environment variable for locating the system temporary folder. We advise the user to look for the `NEBARI_DEFAULT_PASSWORD` file in the following  `/var/folders/xx/xxxxx/T` path.
+:::
+
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak server once Nebari's infrastructure is fully deployed.
 
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. But at this point it’s just a text file. You could edit it manually if you are unhappy with the choices, or delete it and start over again.
@@ -110,7 +114,7 @@ nebari deploy -c nebari-config.yaml
 ```
 The terminal will prompt you to press `[enter]` to check auth credentials, which were added in the previous step by the initialization command. Once authenticated, the infrastructure deployment process will start and might take around a couple minutes to complete.
 
-Once you reach stage [] you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
+Once you reach stage `04-kubernetes-ingress` you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
 
 If the deployment is successful, you will see the following output:
 ```bash
