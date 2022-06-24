@@ -88,7 +88,7 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
 ### More on instance selection and publishing dashboard
 
 When we publish our dashboard, compute and storage resources are allocated. The selection of right set of resources
-would differ based on use-case. Currently, _Nebari_ offers four instance types namely `Small`, `Medium`, `Large` and `Large GPU`.
+will differ based on use-case. Currently, _Nebari_ offers two instance types namely `Small` and `Medium`. This deployment also has added two instance types added as options, `Large` and `Large GPU`.
 If required the instances could be scaled up/down manually (auto-scaling is not supported).
 
 ![Instance selection](/img/select_instance.png)
