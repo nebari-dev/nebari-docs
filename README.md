@@ -78,10 +78,8 @@ Have a look at our [FAQ](docs/source/user_guide/faq.md) to see if your query has
 
 We separate the queries for Nebari into:
 
-- [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is used to raise discussions about a subject, 
-such as: "What is the recommended way to do X with Nebari?"
-
-- [Gitter](https://gitter.im/Quansight/qhub) is used to raise discussions about Nebari usage. 
+- [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is our user forum. It can be used to raise 
+discussions about a subject, such as: "What is the recommended way to do _X_ with Nebari?"
 
 - [Issues](https://github.com/nebari-dev/nebari/issues/new/choose) for queries, bug reporting, feature requests, 
 documentation, etc.
