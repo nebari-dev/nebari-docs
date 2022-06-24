@@ -169,9 +169,18 @@ array([0.99628925, 0.99659686, 1.00412466, ..., 0.99887597, 1.00219302,
 
 ![dask diagnostic UI](/img/dask_diagostic_UI.png)
 
+### Dask-labextension
+
+[Dask-labextension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters,
+as well as embed Dask's dashboard plots directly into JupyterLab panes.
+Nebari is pre-configured with the extension, elevating the overall developer experience.
+
+![Dask-labextension](/img/dask_labextension.png)
+
 :::note Recommendation
-Wrapping the dask-gateway in a context manager (code below), is a great way to avoid having to write a ton of boilerplate, 
+Wrapping the dask-gateway in a context manager (code below), is a great way to avoid having to write a ton of boilerplate,
 though it comes with an added benefit which ensures the cluster is fully shutdown once the task is complete.
+
 <details>
 <summary> Click to view sample code: Dask context manager configuration </summary>
 
@@ -194,17 +203,17 @@ def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="dask"):
         print(f"Gateway: {gateway}")
         for key, value in options.items():
             print(f"{key} : {value}")
-        
-        cluster = gateway.new_cluster(options)        
+
+        cluster = gateway.new_cluster(options)
         client = Client(cluster)
         if os.getenv("JUPYTERHUB_SERVICE_PREFIX"):
             print(cluster.dashboard_link)
-            
+
         cluster.scale(n_workers)
         client.wait_for_workers(1)
-        
+
         yield client
-        
+
     finally:
         cluster.close()
         client.close()
