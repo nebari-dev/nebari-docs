@@ -93,7 +93,7 @@ If required the instances could be scaled up/down manually (auto-scaling is not 
 
 ![Instance selection](/img/select_instance.png)
 
-Once the instance is selected, the server is spun. If there are no errors encountered during this process, we will
+Once the instance is selected, the server is spun up. If there are no errors encountered during this process, we will
 be automatically redirected to the dashboard.
 
 :::note
