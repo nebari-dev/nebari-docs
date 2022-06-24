@@ -102,7 +102,7 @@ options = gateway.cluster_options()
 options
 ```
 
-Once the `ipywidget` shows up we can customise as per our requirement.
+Once the `ipywidget` shows up, we can customize our cluster.
 
 ![Cluster Options](/img/cluster_options.png)
 
