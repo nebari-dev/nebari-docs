@@ -117,7 +117,7 @@ cluster = gateway.new_cluster(options)
 cluster
 ```
 
-We have the option to choose between `manual` scaling and `adaptive` scaling, the benchmarking stats would be
+We have the option to choose between `manual` scaling and `adaptive` scaling, any existing benchmarking analysis would be
 useful here to decide the right set of configuration.
 Starting with the lowest possible configuration could be another helpful strategy.
 
