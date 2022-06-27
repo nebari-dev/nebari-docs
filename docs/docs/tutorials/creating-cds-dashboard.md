@@ -60,17 +60,17 @@ dashboard = pn.template.BootstrapTemplate(
 dashboard.servable()
 ```
 
-We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature of Panel 
-makes it very easy to rapidly prototype new dashboards. 
+We can now execute the notebook and view our Panel dashboard as output right inside the notebook. This feature of Panel
+makes it very easy to rapidly prototype new dashboards.
 
 ![Our tutorial dashboard](/img/dashboard.png)
 
-Once we are happy with what we've created, we can move on to 
+Once we are happy with what we've created, we can move on to
 deploying it with CDS Dashboards.
 
 ## Deploying with CDS dashboards
 
-Now we'll use CDS Dashboards to publish and share this notebook. You can visit the 
+Now we'll use CDS Dashboards to publish and share this notebook. You can visit the
 [CDS Dashboards docs](https://cdsdashboards.readthedocs.io/en/stable/) for more details on this great package.
 
 To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`.
@@ -89,33 +89,32 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
 
 ![CDS dashboard configuration](/img/cds_details.png)
 
+- Selecting the compute resources
 
-
-* Selecting the compute resources
-
-  * When we publish our dashboard, compute and memory resources are allocated. The instance size required
+  - When we publish our dashboard, compute and memory resources are allocated. The instance size required
     will differ based on usecase. The instances seen on this selection screen will vary depending on your Nebari
-    setup. 
-  ![Instance selection](/img/select_instance.png)
+    setup.
+    ![Instance selection](/img/select_instance.png)
 
-  * Once the instance is selected, this will trigger the dashboard to begin building. You willl see the following 
-  screen indicating that **the dashboard is starting up**.
+  - Once the instance is selected, this will trigger the dashboard to begin building. You willl see the following
+    screen indicating that **the dashboard is starting up**.
 
   ![The dashboard is starting up](/img/dashboard_starting_up.png)
 
 If there are no errors encountered during this process, we will be automatically redirected to the dashboard!
 
 :::note
+
 - Please be aware that while the dashboard is running, it will continue to consume resources. You should be mindful
-of the incurring on-going costs while the dashboard is running. 
-:::
+  of the incurring on-going costs while the dashboard is running.
+  :::
 
 ## Accessing the dashboard inside Nebari
 
 Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboards published by you and your colleagues.
 
-Here, you can find the URL of your dashboards which can be shared with other users. You can also control your 
-deployment from this page. 
+Here, you can find the URL of your dashboards which can be shared with other users. You can also control your
+deployment from this page.
 
 - In order to stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
@@ -126,6 +125,6 @@ deployment from this page.
 
 ## Conclusion
 
-We now have a working, shareable dashboard 🎉  
+We now have a working, shareable dashboard 🎉
 
 All that is left to do is to send it to your colleagues!
