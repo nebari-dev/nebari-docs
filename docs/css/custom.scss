@@ -610,6 +610,7 @@ div[class*="codeBlockTitle_"] {
 
     a {
         color: var(--nebari-links-dark);
+        text-decoration: underline !important;
     }
 
     .breadcrumbs__item--active .breadcrumbs__link {

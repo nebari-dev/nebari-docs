@@ -421,7 +421,8 @@ div[class*="codeBlockTitle_"] {
   --ifm-color-on-error: var(--ifm-color-black);
   --nebari-links-dark: var(--nebari-purple-9); }
   [data-theme="dark"] a {
-    color: var(--nebari-links-dark); }
+    color: var(--nebari-links-dark);
+    text-decoration: underline !important; }
   [data-theme="dark"] .breadcrumbs__item--active .breadcrumbs__link {
     background: var(--ifm-breadcrumb-item-background-active);
     color: var(--nebari-links-dark); }
