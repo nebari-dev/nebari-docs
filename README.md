@@ -12,14 +12,14 @@
 
 ---
 
-Nebari is an customizable Data Science and MLOPs Platform designed as a managed integration of open source technologies. 
+Nebari is a customizable Data Science and MLOPs platform designed as a managed integration of open source technologies. 
 It uses an infrastructure-as-code approach to quickly and easily deploy a shared data science environment, on premises 
 or in the cloud of choice. 
 
 Nebari is an opinionated open source JupyterHub distribution with a variety of common integrations to help you and your 
 team get set up with all your favorite tools ...  and a few you didn't know you needed! 
 
-Check out our full [documentation](https://nebari-docs.netlify.app/)!
+To get started with Nebari right away, check the [Nebari documentation](https://nebari-docs.netlify.app/)!
 
 ---
 
@@ -37,14 +37,11 @@ Check out our full [documentation](https://nebari-docs.netlify.app/)!
 
 ## Nebari 101
 
-Nebari Cloud deployments use Kubernetes and are is built using 
-[Terraform](https://www.terraform.io/), [Helm](https://helm.sh/), and either 
-[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) or 
-[GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html). Terraform manages the infrastructure on the 
-cloud. Helm helps to define, install, and manage 
-[Kubernetes](https://kubernetes.io/ "Automated container deployment, scaling, and management"). GitHub 
-Actions or GitLab CI/CD is used to automatically create commits (triggered by commits with changes to the 
-configuration file, `nebari-config.yaml`) as well as to kick off the deployment action.
+Nebari Cloud can be deployed on any Kubernetes cluster by leveraging these tools:
+- [Terraform modules](https://www.terraform.io/): to automate the provisioning of your cloud infrastructure
+- [Helm](https://helm.sh/): to define, manage, and install Kubernetes applications
+- [GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) or 
+[GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html): to automate the build and deployment of Nebari.
 
 Nebari aims to abstract all these complexities for its users. Hence, it is not necessary to know any of the above 
 mentioned technologies to have your project successfully deployed.
@@ -70,14 +67,14 @@ Depending on where you are planning to deploy Nebari, you may need to set up cre
 Once all the necessary credentials are generated, Nebari can be installed and 
 deployed in roughly 30 minutes! 
 
-See our [installation guide]() for a complete guide to intallation. 
+Check the [Nebari installation guide]() for detailed step-by-step instructions on deploying Nebari.
 
 
 ## :question: Questions?
 
-Have a look at our [FAQ](docs/source/user_guide/faq.md) to see if your query has been answered.
+Have a look at our [Frequently Asked Questions (FAQ)](docs/source/user_guide/faq.md) to see if your query has been answered.
 
-We separate the queries for Nebari into:
+Getting help:
 
 - [GitHub Discussions](https://github.com/nebari-dev/nebari/discussions) is our user forum. It can be used to raise 
 discussions about a subject, such as: "What is the recommended way to do _X_ with Nebari?"
@@ -101,7 +98,7 @@ To install the latest developer version (unstable) use:
 pip install git+https://github.com/nebari-dev/nebari.git
 ```
 
-To build the docs locally, follow the guide in the [docs readme](docs/README)
+To build the docs locally, follow the guide in the [docs readme](docs/README).
 
 ## :raised_hands: Contributions
 
