@@ -14,10 +14,9 @@
 
 Nebari is a customizable Data Science and MLOPs platform designed as a managed integration of open source technologies. 
 It uses an infrastructure-as-code approach to quickly and easily deploy a shared data science environment, on premises 
-or in the cloud of choice. 
-
-Nebari is an opinionated open source JupyterHub distribution with a variety of common integrations to help you and your 
-team get set up with all your favorite tools ...  and a few you didn't know you needed! 
+or in the cloud of choice. Nebari is an opinionated open source JupyterHub distribution with a variety of common 
+integrations to help you and your team get set up with all your favorite tools ...  and a few you didn't know you 
+needed! 
 
 To get started with Nebari right away, check the [Nebari documentation](https://nebari-docs.netlify.app/)!
 
@@ -63,8 +62,7 @@ with Python 3.7+. We also suggest you use virtual environments such as
 ([`conda`](https://docs.conda.io/en/latest/), [`pipenv`](https://github.com/pypa/pipenv) or
   [`venv`](https://docs.python.org/3/library/venv.html))
 
-Depending on where you are planning to deploy Nebari, you may need to set up credentials (e.g. for cloud deployment). 
-Once all the necessary credentials are generated, Nebari can be installed and 
+Depending on where you are planning to deploy, Nebari can be installed and 
 deployed in roughly 30 minutes! 
 
 Check the [Nebari installation guide]() for detailed step-by-step instructions on deploying Nebari.
