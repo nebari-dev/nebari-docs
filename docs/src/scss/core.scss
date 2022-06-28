@@ -1,0 +1,40 @@
+// ==============================================================================
+// Global
+// ==============================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--heading-color);
+    font-family: var(--global-heading-family);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--global-font-family);
+}
+
+#__docusaurus {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+// ==============================================================================
+// Links
+// ==============================================================================
+
+a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    &:hover {
+        text-decoration-thickness: 2px;
+    }
+}

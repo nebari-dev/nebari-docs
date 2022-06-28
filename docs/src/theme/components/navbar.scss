@@ -1,0 +1,66 @@
+// ==============================================================================
+// Navbar
+// ==============================================================================
+
+.navbar__link {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+}
+
+.navbar__brand {
+    text-decoration: none;
+}
+
+// ==============================================================================
+// Searchbar
+// ==============================================================================
+
+.navbar {
+    .DocSearch {
+        margin-left: 25px;
+    }
+
+    .DocSearch-Button {
+        border-radius: var(--ifm-global-radius);
+        padding: 0 6px 0 10px;
+
+        .DocSearch-Search-Icon {
+            width: 16px;
+            margin-top: -1px;
+        }
+    }
+
+    .DocSearch-Button-Placeholder,
+    .DocSearch-Button-Key {
+        font-size: 14px !important;
+    }
+
+    .DocSearch-Button-Key {
+        padding-bottom: 0 !important;
+    }
+
+    .DocSearch-Button-Key svg {
+        margin-bottom: 1px !important;
+    }
+}
+
+@media (max-width: 1080px) {
+    .navbar {
+        .DocSearch {
+            margin-left: 15px;
+        }
+
+        .DocSearch-Button {
+            padding: 0 12px;
+        }
+
+        .DocSearch-Button-Key,
+        .DocSearch-Button-KeySeparator,
+        .DocSearch-Button-Placeholder {
+            display: none;
+        }
+    }
+}
