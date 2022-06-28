@@ -186,6 +186,7 @@ and comes with an added benefit that it ensures the cluster is fully shutdown on
 ```python
 import os
 import time
+import dask.array as da
 from contextlib import contextmanager
 
 import dask
@@ -193,7 +194,7 @@ from distributed import Client
 from dask_gateway import Gateway
 
 @contextmanager
-def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="dask"):
+def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="filesystem/dask"):
     try:
         gateway = Gateway()
         options = gateway.cluster_options()
@@ -218,6 +219,13 @@ def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="dask"):
         client.close()
         del client
         del cluster
+
+with dask_cluster() as client:
+    x = da.random.random((10000, 10000), chunks=(1000, 1000))
+    y = x + x.T
+    z = y[::2, 5000:].mean(axis=1)
+    result = z.compute()
+    print(client.run(os.getpid))
 ```
 
 </details>
