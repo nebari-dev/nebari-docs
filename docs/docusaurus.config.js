@@ -1,8 +1,9 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+// https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
+const lightCodeTheme = require("prism-react-renderer/themes/nightOwlLight");
+const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
@@ -16,7 +17,6 @@ const customFields = {
   meta: {
     title: "Nebari",
     description: "An opinionated JupyterHub deployment for Data Science teams",
-    // TODO: placeholder
     keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
   },
   domain,
@@ -37,9 +37,6 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -75,7 +72,7 @@ const config = {
         },
         blog: false,
         theme: {
-          customCss: require.resolve("./css/custom.css"),
+          customCss: require.resolve("./src/scss/application.scss"),
         },
       }),
     ],
@@ -94,14 +91,6 @@ const config = {
         },
         hideOnScroll: true,
         items: [
-          // left side
-          //   {
-          //     label: 'Quickstart',
-          //     docId: 'quickstart',
-          //     position: 'left',
-          //     type: 'doc',
-          //   },
-          // right side
           {
             label: "Tutorials",
             position: "right",

@@ -107,7 +107,7 @@ If there are no errors encountered during this process, we will be automatically
 
 - Please be aware that while the dashboard is running, it will continue to consume resources. You should be mindful
   of the incurring on-going costs while the dashboard is running.
-  :::
+:::
 
 ## Accessing the dashboard inside Nebari
 
