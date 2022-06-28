@@ -14,7 +14,7 @@
 
 ### Building the site
 
-Install the neccesary packages
+Install the necessary packages
 ```bash
 cd docs
 npm install

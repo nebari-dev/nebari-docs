@@ -1,4 +1,3 @@
----
-slug: /
-title: Welcome to Nebari's documentation
----
+______________________________________________________________________
+
+## slug: / title: Welcome to Nebari's documentation
