@@ -46,15 +46,7 @@ const config = {
   },
 
   // Plugings need installing first then add here
-  plugins: [
-    "docusaurus-plugin-sass",
-    [
-      require.resolve("docusaurus-plugin-search-local"),
-      {
-        hashed: true,
-      },
-    ],
-  ],
+  plugins: ["docusaurus-plugin-sass"],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
