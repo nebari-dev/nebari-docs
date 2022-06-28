@@ -7,7 +7,6 @@ title: Configuring Dask on Nebari
 
 Working with large datasets can pose a few challenges, running into frequent memory issues is one. [Dask](https://docs.dask.org/en/stable/) is a free and `open-source` library for `parallel computing` in Python,
 enabling data scientist and others to use their favorite PyData tools at scale.
-techniques.
 
 ### Nebari & Dask integration
 
