@@ -178,7 +178,7 @@ Nebari is pre-configured with the extension, elevating the overall developer exp
 
 :::note Recommendation
 Wrapping the dask-gateway in a context manager (code below), is a great way to avoid having to write a ton of boilerplate,
-though it comes with an added benefit which ensures the cluster is fully shutdown once the task is complete.
+and comes with an added benefit that it ensures the cluster is fully shutdown once the task is complete.
 
 <details>
 <summary> Click to view sample code: Dask context manager configuration </summary>
