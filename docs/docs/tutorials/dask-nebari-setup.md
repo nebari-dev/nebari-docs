@@ -45,37 +45,6 @@ Nebari has set of pre-defined options for configuring the dask profiles that we 
 
 ```python
 profiles:
-  jupyterlab:
-    - display_name: Small Instance
-      description: Stable environment with 1 cpu / 1 GB ram
-      access: all
-      default: true
-      kubespawner_override:
-        cpu_limit: 1
-        cpu_guarantee: 1
-        mem_limit: 1G
-        mem_guarantee: 1G
-    - display_name: Medium Instance
-      description: Stable environment with 1.5 cpu / 2 GB ram
-      access: yaml
-      groups:
-        - admin
-        - developers
-      users:
-        - bob
-      kubespawner_override:
-        cpu_limit: 1.5
-        cpu_guarantee: 1.25
-        mem_limit: 2G
-        mem_guarantee: 2G
-    - display_name: Large Instance
-      description: Stable environment with 2 cpu / 4 GB ram
-      access: keycloak
-      kubespawner_override:
-        cpu_limit: 2
-        cpu_guarantee: 2
-        mem_limit: 4G
-        mem_guarantee: 4G
   dask_worker:
     "Small Worker":
       worker_cores_limit: 1
