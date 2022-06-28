@@ -49,7 +49,10 @@ module.exports = {
         slug: "category/how-to",
         keywords: ["how-to"],
       },
-      items: ["how-tos/overview"],
+      items: [
+        "how-tos/overview",
+        "how-tos/kbatch-setup"
+      ],
     },
     {
       type: "category",
