@@ -36,7 +36,7 @@ module.exports = {
         slug: "category/tutorials",
         keywords: ["tutorials"],
       },
-      items: ["tutorials/overview", "tutorials/dask-nebari-setup"],
+      items: ["tutorials/overview", "tutorials/creating-cds-dashboard", "tutorials/dask-nebari-setup"],
     },
     {
       type: "category",

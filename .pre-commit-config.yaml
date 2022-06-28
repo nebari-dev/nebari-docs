@@ -1,0 +1,84 @@
+# pre-commit is a tool to perform a predefined set of tasks manually and/or
+# automatically before git commits are made.
+#
+# Config reference: https://pre-commit.com/#pre-commit-configyaml---top-level
+#
+# Common tasks
+#
+# - Run on all files:   pre-commit run --all-files
+# - Register git hooks: pre-commit install --install-hooks
+#
+repos:
+  # Markdown
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.14
+    hooks:
+    - id: mdformat
+      files: ^docs/
+      name: mdformat
+      entry: mdformat --wrap=180 --number --end-of-line=lf
+      language: python
+      types: [markdown]
+      minimum_pre_commit_version: '2.0.0'
+      additional_dependencies:
+      - mdformat-tables
+      - mdformat-toc
+      - mdformat-black
+
+  # Codespell: Spell checks the code and documentation
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - id: codespell
+        # --write (-w) enabled here
+        # see setup.cfg for more config options
+        entry: codespell -w
+        language: python
+
+  # Python
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+    - id: black
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 3.8.4
+    hooks:
+    - id: flake8
+      args: [
+        "--builtins=c"
+      ]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+    - id: isort
+      name: isort
+      args: ["--profile", "black"]
+
+  # Terraform
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.71.0
+    hooks:
+    - id: terraform_fmt
+      args:
+        - --args=-write=true
+
+  # Misc...
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    # ref: https://github.com/pre-commit/pre-commit-hooks#hooks-available
+    hooks:
+      # Autoformat: Makes sure files end in a newline and only a newline.
+      - id: end-of-file-fixer
+
+      # Trims trailing whitespace.
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+      # Lint: Check for files with names that would conflict on a
+      # case-insensitive filesystem like MacOS HFS+ or Windows FAT.
+      - id: check-case-conflict
+
+      # Lint: Checks that non-binary executables have a proper shebang.
+      - id: check-executables-have-shebangs
