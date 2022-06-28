@@ -40,25 +40,6 @@ We will start by creating a Jupyter notebook with name of your choice. Select `d
 
 Nebari has set of pre-defined options for configuring the dask profiles that we have access to. These can be accessed via Dask Gateway options.
 
-<details>
-<summary> Click to view: Dask profile options for Nebari </summary>
-
-```python
-profiles:
-  dask_worker:
-    "Small Worker":
-      worker_cores_limit: 1
-      worker_cores: 1
-      worker_memory_limit: 1G
-      worker_memory: 1G
-    "Medium Worker":
-      worker_cores_limit: 1.5
-      worker_cores: 1.25
-      worker_memory_limit: 2G
-      worker_memory: 2G
-```
-
-</details>
 
 **Accessing cluster options**
 
