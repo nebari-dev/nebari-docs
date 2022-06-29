@@ -36,7 +36,11 @@ module.exports = {
         slug: "category/tutorials",
         keywords: ["tutorials"],
       },
-      items: ["tutorials/overview", "tutorials/creating-cds-dashboard"],
+      items: [
+        "tutorials/overview", 
+        "tutorials/creating-cds-dashboard",
+        "tutorials/cost-estimate-report",
+      ],
     },
     {
       type: "category",
