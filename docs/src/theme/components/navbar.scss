@@ -108,7 +108,7 @@
 .toggle_node_modules-\@docusaurus-theme-classic-lib-next-theme-ColorModeToggle-styles-module {
   width: 2rem;
   height: 2rem;
-  color: var(--nebari-blue-gray-11);
+  color: var(--nebari-blue-gray-11) !important;
   &:hover {
     opacity: 0.8;
     color: var(--ifm-color-black);
