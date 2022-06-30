@@ -36,7 +36,7 @@ A Nebari deployment on DO will **NOT** fall into `free tier` usage. Therefore, w
 
 In order for Nebari to make requests against the DO API and create itss infrastructure, an authentication method with the appropriate permissions will be required. The easiest way to do this is using the [Digital Ocean access token](https://docs.digitalocean.com/reference/api/intro/#oauth-authentication).
 
-If it's your first time creating an access token, please refer to [creating a Digital Ocean token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/) for a detailed description of how to do this. In addition to a token, a spaces key (similar to AWS S3) credentials is also required. See [Creating a Spaces access key on Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key) for more information on how to create a space and generate an access key.
+If it's your first time creating an access token, please refer to [creating a Digital Ocean token](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/) for a detailed description of how to do this. In addition to a token, a [Digital Ocean Spaces](https://www.digitalocean.com/products/spaces) key (similar to AWS S3) credentials is also required. See [Creating a Spaces access key on Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key) for more information on how to create a space and generate an access key.
 
 :::warning Warning
 As these credentials provides access to your DO account. It should be treated like any other secret credentials. In particular, it should *never* be checked into source control.
@@ -56,7 +56,7 @@ These environment variables will apply only to your current shell session. If yo
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/started/troubleshooting) for further guidance.
+The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize

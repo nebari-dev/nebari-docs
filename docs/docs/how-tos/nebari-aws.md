@@ -69,7 +69,7 @@ These environment variables will apply only to your current shell session. If yo
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/started/troubleshooting) for further guidance.
+The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
 

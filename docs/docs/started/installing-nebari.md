@@ -43,5 +43,5 @@ You can verify that Nebari is properly installed and you are able to execute the
 ![alt text for screen readers](/img/validate_installation.png "Text to show on mouseover").
 
 :::note Troubleshooting
-If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/started/troubleshooting.md).
+If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.md).
 :::

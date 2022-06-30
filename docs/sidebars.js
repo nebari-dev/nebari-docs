@@ -40,7 +40,6 @@ module.exports = {
         "started/installing-nebari",
         "started/deploy",
         "started/cloud-providers",
-        "started/troubleshooting",
       ],
     },
     {

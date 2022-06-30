@@ -2,9 +2,8 @@
 id: deploy
 ---
 
-# Deploying options
+# Choosing a deployment platform
 
-A guide to help deploying Nebari with best suited option.
 
 Nebari can be deployed on a bare-metal server using HPC, on one of multiple major cloud providers, or on a pre-existing Kubernetes cluster. Review the options below to determine which option best suits your needs.
 
@@ -20,11 +19,11 @@ If you are not sure which option to choose, a cloud installation is likely your 
 
 - You require scalable infrastructure
 
-- You aim to have a production environment with GitOps enabled by default
+- You aim to have a production environment with [GitOps] enabled by default
 
 - Your team does not have specific expertise with high-performance computing hardware, Kubernetes, Docker, and/or other scalable compute infrastructure technologies
 
-The cloud installation is based on Kubernetes, but knowledge of Kubernetes is NOT required nor is in depth knowledge about the specific provider required either. QHub supports [Amazon AWS](https://docs.qhub.dev/en/latest/source/installation/setup.html#amazon-web-services-aws), [DigitalOcean](https://docs.qhub.dev/en/latest/source/installation/setup.html#digital-ocean), [Google GCP](https://docs.qhub.dev/en/latest/source/installation/setup.html#google-cloud-platform), and [Azure](https://docs.qhub.dev/en/latest/source/installation/setup.html#microsoft-azure).
+The cloud installation is based on Kubernetes, but knowledge of Kubernetes is NOT required nor is in-depth knowledge about the specific provider required either. Nebari supports [Amazon AWS](/how-tos/nebari-aws.md), [DigitalOcean](/how-tos/nebari-do.md), [Google GCP](/how-tos/nebari-gcp.md), and [Azure](/how-tos/nebari-azure.md).
 
 
 For instructions on installing and deploying Nebari on a particular cloud provider, please visit our [cloud providers page](/started/cloud-providers) for a list of the supported cloud providers and their respective installation how-to guides.
@@ -32,7 +31,13 @@ For instructions on installing and deploying Nebari on a particular cloud provid
 </TabItem>
 <TabItem value="hpc" label="HPC">
 
-Nebari HPC is an opinionated open source deployment of jupyterhub based on an HPC jobscheduler. Nebari HPC is a "distribution" of these packages much like Debian and Ubuntu are distributions of Linux. The high level goal of this distribution is to form a cohesive set of tools that enable:
+Nebari HPC is an opinionated open source deployment of JupyterHub based on an HPC jobscheduler (e.g. Slurm). Nebari HPC is a "distribution" of these packages much like Debian and Ubuntu are distributions of Linux.
+
+:::note
+To note, Nebari HPC can be used on other distributed compute hardware, not just HPC hardware specifically. We anticipate that Nebari HPC will be used most often on HPC hardware, however.
+:::
+
+The high level goal of this distribution is to form a cohesive set of tools that enable:
 
 - Environment management via [`conda`](https://docs.conda.io/en/latest/) and [`conda-store`](https://conda-store.readthedocs.io/en/latest/)
 
@@ -53,7 +58,7 @@ Nebari HPC should be your choice if:
 For instructions on installing and deploying Nebari HPC, please visit [How to install and setup Nebari HPC on bare metal machines](/how-tos/nebari-hpc).
 
 :::note
-Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to possible high costs. For more information, check out the [base cost] section of the docs.
+Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to potentially high costs. For more information, check out the [base cost] section of the docs.
 :::
 
 

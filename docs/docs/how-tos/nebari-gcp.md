@@ -57,7 +57,7 @@ After you create your service account, download the [service account key](https:
 - Leave the "Key Type" as `JSON`;
 - Click "Create" to create the key and save the key file to your system.
 
-Store this credentials file in a well known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command `chmod 600 <filename>` on your terminal.
+Store this credentials file in a well-known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command `chmod 600 <filename>` on your terminal.
 
 :::warning Warning
 The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be checked into source control.
@@ -71,14 +71,14 @@ Provide authentication credentials to Nebari by setting the following environmen
 export GOOGLE_CREDENTIALS="path/to/JSON/file/with/credentials"
 export PROJECT_ID="Project ID"
 ```
-The **project ID** information can be found at the Google Console homepage, under **Project info**.
+The **Project ID** information can be found at the Google Console homepage, under **Project Info**.
 
 :::tip
 These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell).
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/started/troubleshooting) for further guidance.
+The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize
