@@ -36,7 +36,7 @@ module.exports = {
         slug: "category/tutorials",
         keywords: ["tutorials"],
       },
-      items: ["tutorials/overview", "tutorials/creating-cds-dashboard"],
+      items: ["tutorials/creating-cds-dashboard"],
     },
     {
       type: "category",
@@ -78,17 +78,9 @@ module.exports = {
       items: ["references/overview"],
     },
     {
-      type: "category",
+      type: "doc",
       label: "Community",
-      link: {
-        type: "generated-index",
-        title: "Community",
-        description:
-          "Welcome to Nebari! The goal of these tutorials is to help you create a mental model for how Nebari works.",
-        slug: "category/community",
-        keywords: ["conceptual-guides"],
-      },
-      items: ["governance/overview"],
+      id: "governance/overview",
     },
     {
       type: "doc",
