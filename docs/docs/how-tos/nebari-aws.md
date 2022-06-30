@@ -22,7 +22,7 @@ This documentation assumes that you are already familiar with [AWS Identity and 
 
 If you are new to AWS, we advise you to first [sign up for a free account](https://aws.amazon.com/free/free-tier/) to get a better understanding of the platform and its features. Please refer to [Amazon VPC (Virtual Private Cloud)](https://aws.amazon.com/vpc/?nc1=h_ls) and [Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html#eks-prereqs) for more information on account types and prerequisites for managing Kubernetes clusters.
 
-For a more detailed cost estimate, please also refer to our [Conceptual guides]() for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our [Conceptual guides] for more information regarding the basic infrastructure provided by Nebari.
 
 :::warning Warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [special charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
@@ -55,7 +55,7 @@ Upon generation, the IAM role will provide a public **Access Key ID** and **Secr
 The **Secret Access Key** provides access to your AWS user account. It should be treated like any other secret credentials. In particular, it should *never* be checked into source control.
 :::
 
-By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides]() for more information on how Nebari's components are secured.
+By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides] for more information on how Nebari's components are secured.
 
 Provide authentication credentials to Nebari by setting the following environment variables:
 
@@ -133,4 +133,4 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on AWS! From here, see [Initial Nebari Configuration]() for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
+Congratulations! You have successfully deployed Nebari on AWS! From here, see [Initial Nebari Configuration] for instructions on the first steps you should take to prepare your Nebari instance for your team's use.

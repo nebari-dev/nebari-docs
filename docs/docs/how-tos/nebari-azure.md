@@ -22,7 +22,7 @@ This documentation assumes that you are already familiar with [Azure accounts an
 
 If you are new to Azure, we advise you to first [sign up for a free account](https://azure.microsoft.com/free/) to get a better understanding of the platform and its features. Billing for Azure services is done on a per-subscription basis. For a list of the available subscription offers by type, see [Microsoft Azure Offer Details](https://azure.microsoft.com/support/legal/offer-details/) and [Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes) for a quick overview of the Kubernetes services.
 
-For a more detailed cost estimate, please also refer to our [Conceptual guides]() for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our [Conceptual guides] for more information regarding the basic infrastructure provided by Nebari.
 
 :::warning Warning
 The Nebari deployment on Azure will **NOT** fall into `free tier` usage as some of its inner components will lead to [special charges](https://azure.microsoft.com/en-us/pricing/calculator/?service=kubernetes-service). Therefore, we recommend that you check [Azure pricing documentation](https://azure.microsoft.com/en-us/pricing/#product-pricing) or contact your cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
@@ -40,7 +40,7 @@ There are three tasks necessary to create a Service Principal using the [Azure P
 
 If it's your first time creating a service principal account, please refer to [these detailed instructions](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#creating-a-service-principal-in-the-azure-portal) for more information on how to create an Azure service principal with necessary level permissions over the Azure subscription.
 
-By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides]() for more information on how Nebari's components are secured.
+By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides] for more information on how Nebari's components are secured.
 
 As we've obtained the credentials for the Service Principal, provide authentication credentials to Nebari by setting the following environment variables:
 
@@ -122,4 +122,4 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on Azure! From here, see [Initial Nebari Configuration]() for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
+Congratulations! You have successfully deployed Nebari on Azure! From here, see [Initial Nebari Configuration] for instructions on the first steps you should take to prepare your Nebari instance for your team's use.

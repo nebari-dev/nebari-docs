@@ -53,7 +53,7 @@ Nebari HPC should be your choice if:
 For instructions on installing and deploying Nebari HPC, please visit [How to install and setup Nebari HPC on bare metal machines](/how-tos/nebari-hpc).
 
 :::note
-Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to possible high costs. For more information, check out the [base cost]() section of the docs.
+Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to possible high costs. For more information, check out the [base cost] section of the docs.
 :::
 
 

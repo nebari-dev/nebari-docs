@@ -22,7 +22,7 @@ This documentation assumes that you are already have a Digital Ocean account and
 
 If you are new to Digital Ocean, we advise you to first [sign up for a free account](https://try.digitalocean.com/freetrialoffer/) to get a better understanding of the platform and its features. [Learn more about Digital Ocean account management](https://docs.digitalocean.com/products/accounts/) and refer to [billing concepts](https://www.digitalocean.com/pricing) for more information on account types and pricing.
 
-For a more detailed cost estimate, please also refer to our [conceptual guides]() for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our [conceptual guides] for more information regarding the basic infrastructure provided by Nebari.
 
 :::info
 Please refer to [New pricing](https://www.digitalocean.com/try/new-pricing) documentation for a recent overview of how costs are allocated and applied to your Digital Ocean account.
@@ -42,7 +42,7 @@ If it's your first time creating an access token, please refer to [creating a Di
 As these credentials provides access to your DO account. It should be treated like any other secret credentials. In particular, it should *never* be checked into source control.
 :::
 
-By default, Nebari will try to use the credentials associated with the current Digital Ocean infrastructure/environment for authentication. Refer to [Conceptual guides]() for more information on how Nebari's components are secured.
+By default, Nebari will try to use the credentials associated with the current Digital Ocean infrastructure/environment for authentication. Refer to [Conceptual guides] for more information on how Nebari's components are secured.
 
 Provide authentication credentials to Nebari by setting the following environment variables:
 
@@ -119,4 +119,4 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on DO! From here, see [Initial Nebari Configuration]() for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
+Congratulations! You have successfully deployed Nebari on DO! From here, see [Initial Nebari Configuration] for instructions on the first steps you should take to prepare your Nebari instance for your team's use.

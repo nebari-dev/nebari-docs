@@ -24,7 +24,7 @@ This documentation assumes that you are already familiar to Google Cloud Platfor
 
 If you are new to Google Cloud Platform, we advise you to first [sign up for a free account](https://cloud.google.com/signup) to get a better understanding of the platform and its features. Please refer to [Create a Google Account](https://support.google.com/accounts/answer/27441) and [Overview of Cloud billing concepts](https://cloud.google.com/billing/docs/concepts#billing_account) for more information on account types and cost usage. Also, please refer to [Cluster management fee and free tier](https://cloud.google.com/kubernetes-engine/pricing#cluster_management_fee_and_free_tier) documentation for an overview of how costs are calculated and applied to an organization’s billing account.
 
-For a more detailed cost estimate, please also refer to our [Conceptual guides]() for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our [Conceptual guides] for more information regarding the basic infrastructure provided by Nebari.
 
 :::note
 If you are using a new GCP account, please keep in mind the [quotas](https://cloud.google.com/docs/quota) of your account. Every new `free tier` account has a limited quota for resources like vCPU/Mem/GPUs per region among others. Refer to [Google's free-tier limits](https://cloud.google.com/free/docs/gcp-free-tier#free-tier-usage-limits) documentation for more information.
@@ -63,7 +63,7 @@ Store this credentials file in a well known location and make sure to set yourse
 The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be checked into source control.
 :::
 
-By default, Nebari will try to use the credentials associated with the current GCP infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides]() for more information on how Nebari's components are secured.
+By default, Nebari will try to use the credentials associated with the current GCP infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides] for more information on how Nebari's components are secured.
 
 Provide authentication credentials to Nebari by setting the following environment variables:
 
@@ -141,4 +141,4 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on GCP! From here, see [Initial Nebari Configuration]() for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
+Congratulations! You have successfully deployed Nebari on GCP! From here, see [Initial Nebari Configuration] for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
