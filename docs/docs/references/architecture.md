@@ -14,8 +14,7 @@ corresponding cli file with the same name in
 This operation `initializes` the YAML configuration that is at the
 core of Nebari. This YAML file `nebari-config.yaml` schema is declared within
 [nebari/schema.py](https://github.com/Quansight/qhub/blob/main/qhub/schema.py). The
-schema is the core object that is used as the source of truth and used for validation before the
-following operations run.
+schema is the core object that is used as the source of truth and used for validation before the following operations run.
 
 ## [nebari/render.py](https://github.com/Quansight/qhub/blob/main/qhub/render.py) 
 
@@ -30,5 +29,5 @@ operation. A `stages` directory is produced.
 
 ## [nebari/destroy.py](https://github.com/Quansight/qhub/blob/main/qhub/destroy.py) 
 
-`destroy` infrastructure and kubernetes resources via [Terraform](https://www.terraform.io/)
+`destroy` infrastructure and kubernetes resources via [Terraform](https://www.terraform.io/). The `destroy` command roughly does the `deploy` command in reverse.
 
