@@ -5,9 +5,9 @@ title: How to deploy Nebari on Azure
 
 # How to deploy Nebari on Azure
 
-A basic overview of deploying Nebari on Azure
+A basic overview of how to deploy Nebari on Azure
 
-This guide is to help first time users set up an Amazon Web Services (AWS) account specifically with the intention to use and deploy Nebari at a production scale. In this guide we will walk you through the following steps:
+This guide is to help first-time users set up an Azure account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will walk you through the following steps:
 
 - [Sign up for Azure](#sign-up-for-azure);
 - [Create an Azure service principal](#authentication)
@@ -18,17 +18,19 @@ For those already familiar to Azure subscriptions and infrastructure services, f
 
 ## Sign up for Azure
 
-This documentation assumes that the user is already familiar with [Azure accounts and subscriptions](https://docs.microsoft.com/en-us/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), and have a prior knowledge regarding [Azure billing and cost usage](https://docs.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview) for Kubernetes related services.
+This documentation assumes that you are already familiar with [Azure accounts and subscriptions](https://docs.microsoft.com/en-us/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), and that you have a prior knowledge regarding [Azure billing and cost usage](https://docs.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview) for Kubernetes related services.
 
 If you are new to Azure, we advise you to first [sign up for a free account](https://azure.microsoft.com/free/) to get a better understanding of the platform and its features. Billing for Azure services is done on a per-subscription basis. For a list of the available subscription offers by type, see [Microsoft Azure Offer Details](https://azure.microsoft.com/support/legal/offer-details/) and [Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/intro-kubernetes) for a quick overview of the Kubernetes services.
 
+For a more detailed cost estimate, please also refer to our [Conceptual guides]() for more information regarding the basic infrastructure provided by Nebari.
+
 :::warning Warning
-The Nebari deployment on Azure will **NOT** fall into `free tier` usage as some of its inner components will lead to [special charges](https://azure.microsoft.com/en-us/pricing/calculator/?service=kubernetes-service). Therefore, we recommend that you check [Azure pricing documentation](https://azure.microsoft.com/en-us/pricing/#product-pricing) or contact your cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges that may incur.
+The Nebari deployment on Azure will **NOT** fall into `free tier` usage as some of its inner components will lead to [special charges](https://azure.microsoft.com/en-us/pricing/calculator/?service=kubernetes-service). Therefore, we recommend that you check [Azure pricing documentation](https://azure.microsoft.com/en-us/pricing/#product-pricing) or contact your cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
 :::
 
 ## Authentication
 
-In order to Nebari make requests against the Azure API and create it's infrastructure, an authentication method with the appropriate permissions will be required. The easiest way to do this is using a [service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals#service-principal-object).
+In order for Nebari to make requests against the Azure API and create its infrastructure, an authentication method with the appropriate permissions will be required. The easiest way to do this is using a [service principal](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals#service-principal-object) with suitable permissions for your Azure subscription.
 
 There are three tasks necessary to create a Service Principal using the [Azure Portal](https://portal.azure.com/):
 
@@ -36,9 +38,11 @@ There are three tasks necessary to create a Service Principal using the [Azure P
 - Generating a Client Secret for the Azure Active Directory Application, which Nebari will use to authenticate;
 - Grant the Service Principal access to manage resources in your Azure subscriptions
 
-Follow [these detailed instructions](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#creating-a-service-principal-in-the-azure-portal) to create an Azure service principal with necessary level permissions over the Azure subscription.
+If it's your first time creating a service principal account, please refer to [these detailed instructions](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret#creating-a-service-principal-in-the-azure-portal) for more information on how to create an Azure service principal with necessary level permissions over the Azure subscription.
 
-By default, Nebari will try to use the credentials associated with the current Azure subscription infrastructure/environment for authentication. As we've obtained the credentials for the Service Principal, provide them to Nebari by setting the following environment variables:
+By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to [Conceptual guides]() for more information on how Nebari's components are secured.
+
+As we've obtained the credentials for the Service Principal, provide authentication credentials to Nebari by setting the following environment variables:
 
 ```bash
 export ARM_CLIENT_ID=""        # application (client) ID
@@ -51,30 +55,30 @@ Having trouble finding your Subscription ID? Please refer to [Azure's official d
 :::
 
 :::tip
-This variables applies only to your current shell session. If you want the variable to apply to future shell sessions, set the variable in your shell startup file, for example in the `~/.bashrc` or `~/.profile` file.
+These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell).
 :::
 
 :::note
-The following steps assumes you have completed the [Install Nebari](/started/installing-nebari) section, has confirmed that `nebari` is successfully installed in your environment and opted for **Azure** as your cloud provider. as well as has already configured the `nebari` environment variables. If you had any issues during the installation, please visit our getting started [troubleshooting](/started/troubleshooting) section for extra advice.
+The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/started/troubleshooting) for further guidance.
 :::
 
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [Authentication setup](#authentication) steps, and have ensured that all the necessary environment variables have been properly set. It is time to initialize and deploy Nebari!
+Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary environment variables have been properly set. It is time to initialize and deploy Nebari!
 
-In your terminal, we advise you to start by creating a new project folder. Here, we will name the new folder as `nebari-azure`:
+In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder as `nebari-azure`:
 
 ```bash
 mkdir nebari-azure && cd nebari-azure
 ```
-When you first initialize Nebari, you will be creating a `nebari-config.yaml` that contains a collection of preferences and settings for your deployment. The command bellow will generate a basic config file with an infrastructure based on **Azure**, named **projectname**, where the domain will be **domain** and the authetication mode set to **password**.
+The Nebari initialization scripts creates a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment. In this case, executing the command bellow will generate a basic config file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
 nebari init azure --project projectname --domain domain --auth-provider password
 ```
 :::note Note
-You will be prompted to enter values for some of the choices above if they are omitted as command line arguments (for example project name and domain)
+You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
@@ -83,25 +87,25 @@ Securely generated default random password=*** for Keycloak root user
 stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 ```
 :::tip
-MacOS generates a programmatic directory stored in `/private/var` and defines the `$TMPDIR` environment variable for locating the system temporary folder. We advise the user to look for the `NEBARI_DEFAULT_PASSWORD` file in the following  `/var/folders/xx/xxxxx/T` path.
+The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 :::
 
-You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak server once Nebari's infrastructure is fully deployed.
+You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak server once Nebari's infrastructure is fully deployed, in order to create the first user accounts for administrator(s).
 
-The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. But at this point it’s just a text file. You could edit it manually if you are unhappy with the choices, or delete it and start over again.
+The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization , see the [Understanding the nebari-config.yaml file](/tutorials/overview.md) documentation.
+For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the [Understanding the nebari-config.yaml file](/tutorials/overview.md) documentation.
 
 ## Deploying Nebari
 
-Finally, with the `nebari-config.yaml` created, Nebari can be deployed for the first time:
+With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time:
 
 ```bash
 nebari deploy -c nebari-config.yaml
 ```
-The terminal will prompt you to press `[enter]` to check auth credentials, which were added in the previous step by the initialization command. Once authenticated, the infrastructure deployment process will start and might take around a couple minutes to complete.
+The terminal will prompt you to press `[enter]` to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is authenticated, it will start its infrastructure deployment process, which will take up to a couple of minutes to complete.
 
-Once you reach stage `04-kubernetes-ingress` you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
+Once you reach the stage `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
 
 If the deployment is successful, you will see the following output:
 ```bash
@@ -117,3 +121,5 @@ Kubernetes kubeconfig located at file:///tmp/NEBARI_KUBECONFIG
 Kubecloak master realm username=root *****
 ...
 ```
+
+Congratulations! You have successfully deployed Nebari on Azure! From here, see [Initial Nebari Configuration]() for instructions on the first steps you should take to prepare your Nebari instance for your team's use.
