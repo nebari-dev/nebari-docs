@@ -111,7 +111,7 @@ const config = {
           {
             label: "Tutorials",
             position: "right",
-            to: "tutorials/overview",
+            to: "tutorials",
           },
           {
             label: "How-to Guides",
