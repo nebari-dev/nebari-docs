@@ -57,5 +57,5 @@ For more information on how to set Nebari for **Azure** please visit [How to dep
 </Tabs>
 
 :::warning Warning
-While all of the above cloud providers have a `free-tier` account available for use, some of Nebari infrastructure resources may lie outside the scope of the `free-tier` quotas. Therefore, if your intention is to try out Nebari with a quick-install to see how it works we heavily recommend to use the [Local version of Nebari](/how-tos/nebari-local).
+While all of the above cloud providers offer free-tier accounts, some of Nebari's infrastructure resources may lie outside the scope of the free-tier quotas of these accounts, and Nebari will not prompt you when these limits are exceeded. Therefore, if your intention is to try out Nebari by carrying out a quick trial installation, you should start with a [local Nebari installation](/how-tos/nebari-local) to be sure to avoid any unexpected charges.
 :::

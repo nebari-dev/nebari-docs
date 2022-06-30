@@ -32,7 +32,7 @@ module.exports = {
         type: "generated-index",
         title: "Getting Started",
         description:
-          "This section describes how to install and deploy Nebari on a selection of cloud provider options as well as brings details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
+          "This section describes how to install and deploy Nebari on a selection of cloud providers, and also provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
         slug: "category/started",
         keywords: ["started"],
       },
