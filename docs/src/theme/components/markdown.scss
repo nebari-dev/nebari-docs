@@ -1,0 +1,56 @@
+.markdown {
+    > p {
+        code {
+            padding: 1px 5px;
+            margin-right: 3px;
+            margin-left: 3px;
+        }
+    }
+
+    blockquote {
+        background-color: var(--nebari-blue-gray-11);
+        border-color: var(--accent-nebari);
+        font-weight: 500;
+        padding: 10px;
+
+        code {
+            background-color: var(--nebari-blue-gray-10);
+            color: var(--ifm-color-black);
+        }
+    }
+
+    code {
+        background-color: var(--nebari-blue-gray-11);
+        font-family: var(--global-block-family-code);
+        border-radius: var(--global-border-radius);
+    }
+
+    pre code {
+        padding: 20px;
+    }
+
+    div[class^="codeBlock_"] {
+        border-radius: 0;
+    }
+
+    .token-line {
+        font-family: var(--global-block-family-code);
+    }
+}
+
+[data-theme="dark"] {
+    .markdown {
+        blockquote {
+            background-color: var(--ifm-color-black-light);
+
+            code {
+                background-color: var(--ifm-color-black-lighter);
+                color: var(--ifm-color-content);
+            }
+        }
+
+        code {
+            background-color: var(--ifm-color-black-lighter);
+        }
+    }
+}

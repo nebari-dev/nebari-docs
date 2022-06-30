@@ -2,16 +2,39 @@
 // Navbar
 // ==============================================================================
 
+.navbar__title {
+    font-size: 1.5rem;
+    color: var(--secondary-nebari);
+}
+
 .navbar__link {
     text-decoration: none;
+    color: var(--nebari-blue-gray-11);
     &:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
+        color: var(--nebari-links-dark);
     }
 }
 
 .navbar__brand {
     text-decoration: none;
+    color: var(--nebari-links-dark);
+    &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        color: var(--nebari-links-dark);
+    }
+}
+
+[data-theme="dark"] {
+    .navbar__link {
+        color: var(--ifm-color-white);
+    }
+
+    .navbar__link:hover {
+        color: var(--nebari-links-dark);
+    }
 }
 
 // ==============================================================================
@@ -62,5 +85,32 @@
         .DocSearch-Button-Placeholder {
             display: none;
         }
+    }
+}
+
+// ==============================================================================
+// Header
+// ==============================================================================
+
+.header-github-link {
+    &::before {
+        content: "";
+        width: 24px;
+        height: 24px;
+        display: flex;
+        content: url("../../static/icons/github-light.svg");
+    }
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.toggle_node_modules-\@docusaurus-theme-classic-lib-next-theme-ColorModeToggle-styles-module {
+    width: 2rem;
+    height: 2rem;
+    color: var(--nebari-blue-gray-11);
+    &:hover {
+        opacity: 0.8;
+        color: var(--ifm-color-black);
     }
 }

@@ -103,16 +103,19 @@
     --ifm-color-white-darker: var(--nebari-blue-gray-9);
     --ifm-color-white-darkest: var(--nebari-blue-gray-8);
 
-    --ifm-color-purple-opacity-50: rgba(120, 52, 214, 0.5);
-    --ifm-color-green: var(--nebari-teal-5);
-    --ifm-color-green-dark: var(--nebari-teal-6);
-    --ifm-color-green-opacity-50: rgba(29, 187, 199, 0.5);
-    --ifm-color-red: var(--nebari-coral-5);
-    --ifm-color-red-dark: var(--nebari-coral-6);
-    --ifm-color-red-opacity-50: rgba(230, 15, 102, 0.5);
     --ifm-color-gray-darkest: var(--nebari-blue-gray-4);
     --ifm-color-gray-dark: var(--nebari-blue-gray-5);
 
+    // Colours to define state
+    --ifm-color-green: var(--nebari-teal-5);
+    --ifm-color-green-dark: var(--nebari-teal-6);
+    --ifm-color-red: var(--nebari-coral-5);
+    --ifm-color-red-dark: var(--nebari-coral-6);
+
+    // Non-solid colours - made off the main colours
+    --ifm-color-purple-opacity-50: rgba(120, 52, 214, 0.5);
+    --ifm-color-green-opacity-50: rgba(29, 187, 199, 0.5);
+    --ifm-color-red-opacity-50: rgba(230, 15, 102, 0.5);
     --ifm-hover-overlay: rgba(45, 46, 56, 0.106);
 
     // ==============================================================================
@@ -127,8 +130,12 @@
     --ifm-code-font-size: 95%;
     --ifm-h4-font-size: 1.3rem;
 
+    /* Base. */
     --heading-color: var(--nebari-blue-gray-3);
-    --ifm-font-color-base: var(--nebari-blue-gray-0);
+    --ifm-color-content: var(--nebari-blue-gray-0);
+    --ifm-color-content-inverse: var(--ifm-color-white);
+    --ifm-color-content-secondary: var(--nebari-blue-gray-4);
+    --ifm-menu-color: var(--nebari-blue-gray-4);
 
     // ==============================================================================
     // General Docusaurus
@@ -169,10 +176,66 @@
     --ifm-admonition-color-error: var(--nebari-coral-5);
 
     // Navbar
-    --ifm-navbar-background-color: var(--ifm-color-background);
+    --ifm-navbar-background-color: var(--ifm-color-black);
     --ifm-navbar-height: 80px;
     --ifm-navbar-item-padding-horizontal: 20px;
     --ifm-navbar-padding-horizontal: 30px;
-    --ifm-dropdown-background-color: var(--ifm-color-background-2);
-    --ifm-dropdown-hover-background-color: var(--ifm-color-background-3);
+    --ifm-dropdown-background-color: var(--ifm-color-on-background-2);
+    --ifm-dropdown-hover-background-color: var(--ifm-color-on-background-3);
+
+    --ifm-global-radius: 3px;
+
+    // links
+    --nebari-links-dark: var(--nebari-purple-9);
+}
+
+html[data-theme="dark"] {
+    --ifm-color-on-primary: var(--ifm-color-black);
+
+    --ifm-color-content: var(--ifm-color-white);
+    --ifm-color-content-secondary: var(--ifm-color-white-dark);
+
+    // Background
+    --ifm-color-background: var(--ifm-color-black);
+    --ifm-color-background-2: var(--ifm-color-black-light);
+    --ifm-color-background-3: var(--ifm-color-black-lighter);
+    --ifm-color-on-background: var(--ifm-color-white);
+    --ifm-color-on-background-2: var(--ifm-color-purple-lighter);
+    --ifm-color-on-background-3: var(--ifm-color-purple-light);
+    // Surface
+    --ifm-color-surface: var(--ifm-color-gray-darkest);
+    --ifm-color-surface-transparent: rgba(
+        38,
+        38,
+        48,
+        0
+    ); /* https://stackoverflow.com/questions/15597167/css3-opacity-gradient */
+    --ifm-color-surface-2: var(--ifm-color-gray-dark);
+    --ifm-color-on-surface: var(--ifm-color-white);
+    --ifm-color-on-surface-2: var(--ifm-color-purple-lightest);
+    --ifm-color-on-surface-3: var(--ifm-color-purple-lighter);
+
+    // Success
+    --ifm-color-success: var(--ifm-color-green);
+    --ifm-color-on-success: var(--ifm-color-black);
+
+    // Error
+    --ifm-color-error: var(--ifm-color-red);
+    --ifm-color-on-error: var(--ifm-color-black);
+
+    // menu
+    --ifm-menu-color: var(--nebari-blue-gray-9);
+
+    // Admonition
+    --ifm-admonition-background-color: var(--nebari-purple-9);
+    --ifm-admonition-color: var(--nebari-purple-4);
+
+    --ifm-admonition-background-color-success: var(--nebari-teal-9);
+    --ifm-admonition-color-success: var(--nebari-teal-4);
+
+    --ifm-admonition-background-color-warning: var(--nebari-coral-8);
+    --ifm-admonition-color-warning: var(--nebari-coral-4);
+
+    --ifm-admonition-background-color-error: var(--nebari-coral-9);
+    --ifm-admonition-color-error: var(--nebari-coral-4);
 }

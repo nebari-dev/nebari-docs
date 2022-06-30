@@ -1,0 +1,19 @@
+.footer__link-item {
+    color: var(--ifm-footer-link-color);
+    text-decoration: none;
+    &:hover {
+        color: var(--nebari-links-dark);
+    }
+}
+
+.footer {
+    background-color: var(--ifm-color-black);
+    color: var(--ifm-footer-color);
+    font-weight: bold;
+}
+
+[data-theme="dark"] {
+    .footer__link-item {
+        color: var(--nebari-blue-gray-9);
+    }
+}

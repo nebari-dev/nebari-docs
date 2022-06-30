@@ -7,8 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
-// TODO: verify this
-const domain = "https://nebari-docs.netlify.app";
+const domain = "https://nebari.dev";
 
 // -----------------------------------------------------------------------------
 // custom Fields for the project
@@ -66,9 +65,6 @@ const config = {
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          // remarkPlugins: [
-          //   [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
-          // ],
         },
         blog: false,
         theme: {
@@ -84,11 +80,11 @@ const config = {
     ({
       navbar: {
         title: customFields.meta.title,
-        logo: {
-          alt: "Nebari logo - Docs home",
-          // TODO: Replace with logo
-          src: "img/logo.svg",
-        },
+        // TODO: Replace with logo
+        // logo: {
+        //   alt: "Nebari logo - Docs home",
+        //   src: "img/logo.svg",
+        // },
         hideOnScroll: true,
         items: [
           {

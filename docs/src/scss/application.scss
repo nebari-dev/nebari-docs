@@ -1,4 +1,5 @@
 /* stylelint-disable docusaurus/copyright-header */
+// Pull in the multiple stylesheets for this site
 
 @import "core";
 
@@ -6,7 +7,9 @@
 @import "utils/global_vars";
 
 // Components
-@import "custom";
 @import "../theme/components/navbar";
 @import "../theme/components/scrollbar";
 @import "../theme/components/menu";
+@import "../theme/components/markdown";
+@import "../theme/components/admonitions";
+@import "../theme/components/footer";
