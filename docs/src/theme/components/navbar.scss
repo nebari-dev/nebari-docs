@@ -3,38 +3,38 @@
 // ==============================================================================
 
 .navbar__title {
-    font-size: 1.5rem;
-    color: var(--secondary-nebari);
+  font-size: 1.5rem;
+  color: var(--secondary-nebari);
 }
 
 .navbar__link {
-    text-decoration: none;
-    color: var(--nebari-blue-gray-11);
-    &:hover {
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        color: var(--nebari-links-dark);
-    }
+  text-decoration: none;
+  color: var(--nebari-blue-gray-11);
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--nebari-links-dark);
+  }
 }
 
 .navbar__brand {
-    text-decoration: none;
+  text-decoration: none;
+  color: var(--nebari-links-dark);
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
     color: var(--nebari-links-dark);
-    &:hover {
-        text-decoration: underline;
-        text-underline-offset: 3px;
-        color: var(--nebari-links-dark);
-    }
+  }
 }
 
 [data-theme="dark"] {
-    .navbar__link {
-        color: var(--ifm-color-white);
-    }
+  .navbar__link {
+    color: var(--ifm-color-white);
+  }
 
-    .navbar__link:hover {
-        color: var(--nebari-links-dark);
-    }
+  .navbar__link:hover {
+    color: var(--nebari-links-dark);
+  }
 }
 
 // ==============================================================================
@@ -42,50 +42,50 @@
 // ==============================================================================
 
 .navbar {
-    .DocSearch {
-        margin-left: 25px;
-    }
+  .DocSearch {
+    margin-left: 25px;
+  }
 
-    .DocSearch-Button {
-        border-radius: var(--ifm-global-radius);
-        padding: 0 6px 0 10px;
+  .DocSearch-Button {
+    border-radius: var(--ifm-global-radius);
+    padding: 0 6px 0 10px;
 
-        .DocSearch-Search-Icon {
-            width: 16px;
-            margin-top: -1px;
-        }
+    .DocSearch-Search-Icon {
+      width: 16px;
+      margin-top: -1px;
     }
+  }
 
-    .DocSearch-Button-Placeholder,
-    .DocSearch-Button-Key {
-        font-size: 14px !important;
-    }
+  .DocSearch-Button-Placeholder,
+  .DocSearch-Button-Key {
+    font-size: 14px !important;
+  }
 
-    .DocSearch-Button-Key {
-        padding-bottom: 0 !important;
-    }
+  .DocSearch-Button-Key {
+    padding-bottom: 0 !important;
+  }
 
-    .DocSearch-Button-Key svg {
-        margin-bottom: 1px !important;
-    }
+  .DocSearch-Button-Key svg {
+    margin-bottom: 1px !important;
+  }
 }
 
 @media (max-width: 1080px) {
-    .navbar {
-        .DocSearch {
-            margin-left: 15px;
-        }
-
-        .DocSearch-Button {
-            padding: 0 12px;
-        }
-
-        .DocSearch-Button-Key,
-        .DocSearch-Button-KeySeparator,
-        .DocSearch-Button-Placeholder {
-            display: none;
-        }
+  .navbar {
+    .DocSearch {
+      margin-left: 15px;
     }
+
+    .DocSearch-Button {
+      padding: 0 12px;
+    }
+
+    .DocSearch-Button-Key,
+    .DocSearch-Button-KeySeparator,
+    .DocSearch-Button-Placeholder {
+      display: none;
+    }
+  }
 }
 
 // ==============================================================================
@@ -93,24 +93,24 @@
 // ==============================================================================
 
 .header-github-link {
-    &::before {
-        content: "";
-        width: 24px;
-        height: 24px;
-        display: flex;
-        content: url("../../static/icons/github-light.svg");
-    }
-    &:hover {
-        opacity: 0.6;
-    }
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    display: flex;
+    content: url("../../static/icons/github-light.svg");
+  }
+  &:hover {
+    opacity: 0.6;
+  }
 }
 
 .toggle_node_modules-\@docusaurus-theme-classic-lib-next-theme-ColorModeToggle-styles-module {
-    width: 2rem;
-    height: 2rem;
-    color: var(--nebari-blue-gray-11);
-    &:hover {
-        opacity: 0.8;
-        color: var(--ifm-color-black);
-    }
+  width: 2rem;
+  height: 2rem;
+  color: var(--nebari-blue-gray-11);
+  &:hover {
+    opacity: 0.8;
+    color: var(--ifm-color-black);
+  }
 }
