@@ -51,7 +51,6 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.6.2"
   },
-  "license": "BSD-3-Clause",
   "browserslist": {
     "production": [
       ">0.5%",
