@@ -13,27 +13,6 @@ enabling data scientist and others to use their favorite PyData tools at scale.
 Nebari uses [dask-gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically configured for the user,
 and provides a secure way to managing dask clusters. We will discuss in detail the pre-defined configuration in later sections of this tutorial.
 
-### Dask Gateway components:
-
-- `address` : is the rest API that dask-gateway exposes for managing clusters
-- `proxy_address` : is a secure TLS connection to a user defined dask scheduler
-- `auth` : is the form of authentication used, which should always be jupyterhub for Nebari
-
-Nebari already has the connection information pre-configured for the user.
-In order to view configuration details run the below command:
-
-- from the terminal : `cat /etc/dask/gateway.yaml`
-- within a notebook: `! cat /etc/dask/gateway.yaml`
-
-<details>
-<summary> Click to view: Sample output </summary>
-
-```shell
-{"gateway":{"address":"http://qhub-dask-gateway-gateway-api.dev:8000","auth":{"type":"jupyterhub"},"proxy_address":"tcp://quansight.qhub.dev:8786","public_address":"https://quansight.qhub.dev/gateway"}}
-```
-
-</details>
-
 ### Starting a dask cluster on Nebari
 
 We will start by creating a Jupyter notebook with name of your choice. Select `dask` environment from the select kernel dropdown (located on the top right)
