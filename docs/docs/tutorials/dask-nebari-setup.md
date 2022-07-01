@@ -51,12 +51,10 @@ Starting with the lowest possible configuration could be another helpful strateg
 
 ![Creating a Cluster](/img/cluster_creation.png)
 
-<details>
-<summary> Click on the dashboard URL to view Dask UI: Sample info </summary>
+**Click on the dashboard URL to view Dask UI**
 
 ![Dask UI resource utilisation](/img/dask_UI.png)
 
-</details>
 
 **Calling dask client to get started**
 
@@ -66,12 +64,9 @@ client = cluster.get_client()
 client
 ```
 
-<details>
-<summary> Click to view sample output: Dask client </summary>
+**Sample output: Dask client**
 
 ![dask client](/img/dask_client.png)
-
-</details>
 
 **Fun part, let's code with dask**
 
@@ -83,15 +78,12 @@ z = y[::2, 5000:].mean(axis=1)
 z.compute()
 ```
 
-<details>
-<summary> Click to view sample output: Dask compute </summary>
-
+**Sample output: Dask compute**
 ```shell
 array([0.99628925, 0.99659686, 1.00412466, ..., 0.99887597, 1.00219302,
        1.0027488 ])
 ```
 
-</details>
 
 ### Dask diagnostic UI
 
@@ -109,9 +101,7 @@ Nebari is pre-configured with the extension, elevating the overall developer exp
 Wrapping the dask-gateway in a context manager (code below), is a great way to avoid having to write a ton of boilerplate,
 and comes with an added benefit that it ensures the cluster is fully shutdown once the task is complete.
 
-<details>
-<summary> Click to view sample code: Dask context manager configuration </summary>
-
+**Example: Dask `context manager` configuration**
 ```python
 import os
 import time
@@ -157,7 +147,6 @@ with dask_cluster() as client:
     print(client.run(os.getpid))
 ```
 
-</details>
 :::
 
 ### Conclusion
