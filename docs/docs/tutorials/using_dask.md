@@ -1,77 +1,100 @@
 ---
-id: dask-nebari-setup
-title: Configuring Dask on Nebari
+id: using_dask
+title: Working with big data using Dask
+description: Introduction to Dask
 ---
 
-# Introduction to Dask
+# Working with big data using Dask
 
-Working with large datasets can pose a few challenges, running into frequent memory issues is one. [Dask](https://docs.dask.org/en/stable/) is a free and `open-source` library for `parallel computing` in Python,
+Working with large datasets can pose a few challenges, running into frequent memory issues is a common issue. 
+[Dask](https://docs.dask.org/en/stable/) is a free and open-source library for parallel computing in Python,
 enabling data scientist and others to use their favorite PyData tools at scale.
 
-### Nebari & Dask integration
+## Dask integration on Nebari
 
-Nebari uses [dask-gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically configured for the user,
-and provides a secure way to managing dask clusters. 
+Nebari uses [Dask Gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically 
+configured for the user, and provides a secure way to managing dask clusters. 
 
-Dask consists 03 main components `client`, `scheduler` and `workers`
-- We as the end user interact with the client, client interacts with both scheduler (sends instructions) and workers (collects outcomes)
-- The scheduler is midpoint between the workers and client, tracks metrics and coordinate workers.
-- The workers are the threads/processes that executes computations.
+<details>
+<summary> Want more information on how that works? </summary>
 
-### Starting a dask cluster on Nebari
+Dask consists of 3 main components `client`, `scheduler` and `workers`.
+- The end users interact with the `client`. 
+- The `scheduler` tracks metrics and coordinate workers.
+- The `workers` are the threads/processes that executes computations.
 
-We will start by creating a Jupyter notebook with name of your choice. Select `dask` environment from the select kernel dropdown (located on the top right)
+The `client` interacts with both `scheduler` (sends instructions) and `workers` (collects results)
 
-Nebari has set of pre-defined options for configuring the dask profiles that we have access to. These can be accessed via Dask Gateway options.
+Check out the [Dask Gateway documentation](https://gateway.dask.org/) for a full explanation.
 
+</details>
 
-**Accessing cluster options**
+## Setting up Dask Gateway
+
+We will start by creating a Jupyter notebook. Select an environment from the `Select kernel` dropdown menu 
+(located on the top right of your notebook). Be sure to select an environment which incudes `Dask`!
+
+Nebari has set of pre-defined options for configuring the Dask profiles that we have access to. These can be 
+accessed via Dask Gateway options.
 
 ```python
 from dask_gateway import Gateway
+# instantiate dask gateway
 gateway = Gateway()
 
+# view the cluster options UI
 options = gateway.cluster_options()
 options
 ```
 
-Once the `ipywidget` shows up, we can customize our cluster.
+![Cluster Options UI](/img/cluster_options.png)
 
-![Cluster Options](/img/cluster_options.png)
+Using the `Cluster Options` interface, we can specify the conda environment, the instance type, and any additional 
+environment variables we'll need. 
 
-:::note
-It’s important that the environment used for your notebook matches the dask worker environment.
+:::warning
+It’s important that the environment used for your notebook matches the Dask worker environment!
+
+The Dask worker environment is specified in your deployment directory under `/image/dask-worker/environment.yaml`
 :::
 
-**Creating a dask cluster**
+## Creating a Dask cluster
 
 ```python
+# create a new cluster with our options
 cluster = gateway.new_cluster(options)
+# view the cluster UI
 cluster
 ```
 
-We have the option to choose between `manual` scaling and `adaptive` scaling, any existing benchmarking analysis would be
-useful here to decide the right set of configuration.
-Starting with the lowest possible configuration could be another helpful strategy.
+![Creating a Gateway Cluster UI](/img/cluster_creation.png)
 
-![Creating a Cluster](/img/cluster_creation.png)
+We have the option to choose between `Manual Scaling` and `Adaptive Scaling`.
 
-**Calling dask client to get started**
+If you know the resources that would be required for the computation, you can select `Manual Scaling` and 
+define a number of workers to spin up. These will remain in the cluster until it is shut down. 
+
+Alternatively, if you aren't sure how many workers you'll need, or if parts of your workflow require more workers
+than others, you can select `Adaptive Scaling`. Dask Gateway will automatically scale the number of workers
+(spinning up new workers or shutting down unused ones) depending on the computational burder. `Adaptive Scaling` is
+a safe way to prevent running out of memory, while not burning excess resources. 
+
+You may also notice a link to the Dask Dashboard in this interface. We'll discuss this in a later section. 
+
+## Viewing the Dask Client
 
 ```python
-
+# get the client for the cluster
 client = cluster.get_client()
+# view the client UI
 client
 ```
 
-**Sample output: Dask client**
+![dask client ui](/img/dask_client.png)
 
-![dask client](/img/dask_client.png)
+The `Dask Client` interface gives us a brief summary of everything we've set up so far. 
 
-Click on the dashboard URL to open the dask diagnostic, we will discuss more about this 
-in later section of this tutorial.
-
-**Fun part, let's code with dask**
+## Now for the fun part - let's code with Dask! 
 
 ```python
 import dask.array as da
@@ -110,25 +133,37 @@ that period of time.
 
 ### Shutting down the cluster
 
+As you you may have noticed, its easy to spin up a lot of compute, really quickly. 
+
+**With Great Power Comes Great Responsibility**
+
+**ALWAYS** remember to shutdown your cluster!! *Resources cost something!!* 
+
 ```python
 cluster.close(shutdown=True)
 ```
-The above immediately shuts the cluster down and detaches the schedular. \
-*An important step to prevent utilisation of additional resources*
 
-### Dask-labextension
+
+## Viewing the dashboard inside of JupyterLab
 
 [Dask-labextension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters,
 as well as embed Dask's dashboard plots directly into JupyterLab panes.
-Nebari is pre-configured with the extension, elevating the overall developer experience.
+Nebari includes this extension by default, elevating the overall developer experience.
 
-![Dask-labextension](/img/dask_labextension.png)
+![Dask-labextension ui](/img/dask_labextension.png)
 
-:::note Recommendation
-Wrapping the dask-gateway in a context manager (code below), is a great way to avoid having to write a ton of boilerplate,
-and comes with an added benefit that it ensures the cluster is fully shutdown once the task is complete.
 
-**Example: Dask `context manager` configuration**
+## Using Dask safely
+
+If you're anything like us, we've forgotten to shut down our cluster a time or two. Wrapping the dask-gateway in a 
+context manager is a great practice that ensures the cluster is fully shutdown once the task is complete! 
+
+### Sample Dask `context manager` configuration
+
+We like to use something like this context manager to help us manager our clusters. It can be written once and 
+included in your codebase. The one we've included here includes some default setup options. You can write your 
+own to adjust to your needs. 
+
 ```python
 import os
 import time
@@ -165,7 +200,12 @@ def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="filesystem/
         client.close()
         del client
         del cluster
+```
 
+Now we can write our compute tasks inside of the context manager and all of the setup and teardown
+is managed for us! 
+
+```python
 with dask_cluster() as client:
     x = da.random.random((10000, 10000), chunks=(1000, 1000))
     y = x + x.T
@@ -176,7 +216,7 @@ with dask_cluster() as client:
 
 :::
 
-### Conclusion
+## Conclusion
 
-Kudos ✨, we now have a working dask cluster inside Nebari.
-Excellent to get started with those large datasets.
+Kudos ✨, we now have a working Dask cluster inside Nebari.  
+Now go load up your own big data!
