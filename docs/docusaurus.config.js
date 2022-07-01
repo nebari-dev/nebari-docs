@@ -85,6 +85,7 @@ const config = {
         //   alt: "Nebari logo - Docs home",
         //   src: "img/logo.svg",
         // },
+        style: "dark",
         hideOnScroll: true,
         items: [
           {
