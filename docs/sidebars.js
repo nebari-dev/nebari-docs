@@ -26,17 +26,14 @@ module.exports = {
       id: "quickstart",
     },
     {
-      type: "category",
-      label: "Tutorials",
-      link: {
-        type: "generated-index",
-        title: "Tutorials",
-        description:
-          "Welcome to Nebari! The goal of these tutorials is to help you create a mental model for how Nebari works.",
-        slug: "category/tutorials",
-        keywords: ["tutorials"],
+        type: 'category',
+        label: 'Tutorials',
+        link: {type: 'doc', id: 'tutorials/index'},
+        items: [
+          'tutorials/creating-cds-dashboard',
+        ],
       },
-      items: ["tutorials/overview", "tutorials/creating-cds-dashboard", "tutorials/dask-nebari-setup"],
+      items: ["tutorials/creating-cds-dashboard", "tutorials/dask-nebari-setup"],
     },
     {
       type: "category",
@@ -78,17 +75,9 @@ module.exports = {
       items: ["references/overview"],
     },
     {
-      type: "category",
+      type: "doc",
       label: "Community",
-      link: {
-        type: "generated-index",
-        title: "Community",
-        description:
-          "Welcome to Nebari! The goal of these tutorials is to help you create a mental model for how Nebari works.",
-        slug: "category/community",
-        keywords: ["conceptual-guides"],
-      },
-      items: ["governance/overview"],
+      id: "governance/overview",
     },
     {
       type: "doc",

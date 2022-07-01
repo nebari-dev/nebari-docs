@@ -85,6 +85,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+          hideable: true,
+        },
+      },
       navbar: {
         title: customFields.meta.title,
         logo: {
@@ -105,7 +111,7 @@ const config = {
           {
             label: "Tutorials",
             position: "right",
-            to: "tutorials/overview",
+            to: "tutorials",
           },
           {
             label: "How-to Guides",
