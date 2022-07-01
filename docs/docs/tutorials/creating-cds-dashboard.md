@@ -1,5 +1,6 @@
 ---
 id: creating-cds-dashboard
+title: Create and deploy a panel dashboard
 description: Quickly build and deploy a panel and CDS Dashboards
 ---
 
