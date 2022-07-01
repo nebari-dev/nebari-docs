@@ -31,7 +31,7 @@ module.exports = {
         link: {type: 'doc', id: 'tutorials/index'},
         items: [
           'tutorials/creating-cds-dashboard',
-          "tutorials/dask-nebari-setup",
+          "tutorials/using_dask",
         ],
     },
     {
