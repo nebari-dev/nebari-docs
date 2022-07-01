@@ -51,11 +51,6 @@ Starting with the lowest possible configuration could be another helpful strateg
 
 ![Creating a Cluster](/img/cluster_creation.png)
 
-**Click on the dashboard URL to view Dask UI**
-
-![Dask UI resource utilisation](/img/dask_UI.png)
-
-
 **Calling dask client to get started**
 
 ```python
@@ -68,26 +63,53 @@ client
 
 ![dask client](/img/dask_client.png)
 
+Click on the dashboard URL to open the dask diagnostic, we will discuss more about this 
+in later section of this tutorial.
+
 **Fun part, let's code with dask**
 
 ```python
 import dask.array as da
-x = da.random.random((10000, 10000), chunks=(1000, 1000))
-y = x + x.T
-z = y[::2, 5000:].mean(axis=1)
+x = da.random.random((100000, 100000), chunks=(1000, 1000))
+y = x * x
+z = y.mean(axis=1)
 z.compute()
 ```
 
 **Sample output: Dask compute**
 ```shell
-array([0.99628925, 0.99659686, 1.00412466, ..., 0.99887597, 1.00219302,
-       1.0027488 ])
+array([0.33349882, 0.33262234, 0.33379292, ..., 0.33177493, 0.33396109,
+       0.33385578])
 ```
 
+In the above code snippet, we are first generating a random array of shape (10000*10000), which is a large array.
+In order to fit it into our memory we specify the argument `chunks` which breaks the underlying array into
+chunks. Here we are using uniform dimension `1000`, meaning chunks of 1000 in each dimension. Storing it in variable
+`x`. Further some simple computations are performed, and finally we compute the column wise mean operation 
+on the array `z`.
+
+![variable x](/img/x_array.png)    ![variable z](/img/z_array.png) 
 
 ### Dask diagnostic UI
 
+Dask comes with an inbuilt dashboard containing multiple plots and tables containing live information as 
+the data gets processed. Let's understand the dashboard plots `Task Stream` and `Progress`. 
+The colours and the interpretation would differ based on the computation we choose.
+
+Each of the computation in split into multiple tasks for parallel execution. From the progress bar we see 04
+distinct colours associated with different computation. Under task stream (a streaming plot) each row represents a thread
+and the small rectangles within are the individual tasks. The tiny white spaces shows that the worker was ideal during 
+that period of time.
+
 ![dask diagnostic UI](/img/dask_diagostic_UI.png)
+
+### Shutting down the cluster
+
+```python
+cluster.close(shutdown=True)
+```
+The above immediately shuts the cluster down and detaches the schedular. \
+*An important step to prevent utilisation of additional resources*
 
 ### Dask-labextension
 
