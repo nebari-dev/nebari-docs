@@ -34,11 +34,6 @@
   }
 }
 
-.menu__list-item-collapsible .menu__link:hover,
-.menu__list-item-collapsible .menu__link--active {
-  color: var(--nebari-links-dark);
-  background: none !important;
-}
 
 [data-theme="dark"] {
   .menu__link,
