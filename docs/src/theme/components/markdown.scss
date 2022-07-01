@@ -38,6 +38,12 @@
   }
 }
 
+div[class^="codeBlockTitle"] {
+  background-color: var(--nebari-blue-gray-10);
+  font-family: var(--global-block-family-code);
+  color: var(--ifm-color-content);
+}
+
 [data-theme="dark"] {
   .markdown {
     blockquote {
@@ -52,5 +58,10 @@
     code {
       background-color: var(--ifm-color-black-lighter);
     }
+  }
+
+  div[class^="codeBlockTitle"] {
+    background-color: var(--ifm-color-black-light);
+    color: var(--ifm-color-content);
   }
 }

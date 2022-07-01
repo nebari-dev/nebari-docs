@@ -116,17 +116,15 @@
   --ifm-color-purple-opacity-50: rgba(120, 52, 214, 0.5);
   --ifm-color-green-opacity-50: rgba(29, 187, 199, 0.5);
   --ifm-color-red-opacity-50: rgba(230, 15, 102, 0.5);
-  --ifm-hover-overlay: rgba(45, 46, 56, 0.106);
+  --ifm-hover-overlay: rgba(113, 116, 144, 0.13); // made from gray-5
 
   // ==============================================================================
   // Typography
   // ==============================================================================
-  --global-font-family: "DM Sans", sans-serif, Europa, Avenir, system,
-    -apple-system, ".SFNSText-Regular", "San Francisco", "Segoe UI",
-    "Helvetica Neue", "Lucida Grande", sans-serif;
-  --global-heading-family: "Outfit", sans-serif, Europa, Avenir, system,
-    -apple-system, ".SFNSText-Regular", "San Francisco", "Segoe UI",
-    "Helvetica Neue", "Lucida Grande", sans-serif;
+  --global-font-family: "DM Sans", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
+    "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
+  --global-heading-family: "Outfit", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
+    "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
   --global-block-family-code: "Red Hat Mono", monospace;
 
   --ifm-code-font-size: 95%;
@@ -204,6 +202,8 @@ html[data-theme="dark"] {
   --ifm-color-on-background: var(--ifm-color-white);
   --ifm-color-on-background-2: var(--ifm-color-purple-lighter);
   --ifm-color-on-background-3: var(--ifm-color-purple-light);
+  --ifm-hover-overlay: rgba(241, 241, 246, 0.06);
+
   // Surface
   --ifm-color-surface: var(--ifm-color-gray-darkest);
   --ifm-color-surface-transparent: rgba(
