@@ -16,7 +16,7 @@ Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `
 For this tutorial, you'll use `Holoviews` and `Panel` with `Bokeh` as backend.
 :::
 
-## Creating the dashboard
+## Step 1- Creating the dashboard
 
 _Let's get our hands dirty_
 
@@ -63,17 +63,17 @@ dashboard.servable()
 
 This interactive feature of Panel makes it possible to rapidly prototype and iterate on dashboards.
 
-![`About 🌳 - Species and more` dashboard screenshot displaying a bar and line chart of avg_diameter_inch vs species_name](/img/dashboard.png)
+![`About 🌳 - Species and more` dashboard screenshot displaying a bar and line chart of avg_diameter_inch vs species_name](/img/tutorials/trees-dashboard-example.png)
 
 At this point, you can add more plots or different styles to your plots, or you can move forward to the deployment section of this tutorial.
 
-## Deploying your `panel` dashboard with `CDS dashboards`
+## Step 2 - Deploying your `panel` dashboard with `CDS dashboards`
 
 In this section, you'll use CDS Dashboards to publish and share your newly created `panel` dashboard.
 
 To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`. You will now be presented with a new window where you'll need to provide additional details for your dashboard (see image below for reference).
 
-![CDS dashboard configuration screenshot](/img/cds_details.png)
+![CDS dashboard configuration screenshot](/img/tutorials/window_dashboard_configuration_example.png)
 
 1. Give your dashboard a name e.g. `Trees`. This name will be the name of your shareable dashboard, so make sure to give this a meaningful name.
 2. Add a short description e.g. `Insights and more`
@@ -93,12 +93,12 @@ Also, the **best instance type** for your dashboard will depend on your specific
 :::
 
 An example of available compute instances available within a Nebari instance is shown in the following image:
-![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1cpu / 4GB ram is selected](/img/select_instance.png)
+![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1cpu / 4GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
 
 For this particular tutorial, a small instance should be enough. Once you have made a selection you can click on the **Save** button at the bottom of the window.
 This will trigger the deployment of your dashboard, and you'll be presented with a screen displaying the of this process.
 
-  ![Nebari window displaying the progress of the Trees dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/dashboard_starting_up.png)
+  ![Nebari window displaying the progress of the Trees' dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/tutorials/nebari_window_dashboard_starting_up.png)
 
 If there are no errors encountered during this process, you will be automatically redirected to the dashboard!
 
@@ -107,22 +107,24 @@ Remember that while the dashboard is running, it will continue to consume resour
 You should be mindful of the incurring ongoing costs while the dashboard is running.
 :::
 
-## Accessing the dashboard inside Nebari
+## Step 3 - Accessing the dashboard inside Nebari
 
-Head to `File` > `Hub Control Panel` > `Dashboards` which lists all the dashboards published by you and your colleagues.
+From JupyterLab click on the `File` menu tab, then select `Hub Control Panel` > `Dashboards`.
 
-Here, you can find the URL of your dashboards which can be shared with other users. You can also control your
-deployment from this page.
+![JupyterLab expanded File menu - Hub Control Panel is highlighted with a surrounding purple box](/img/tutorials/nebari_jupyterlab_file_menu.png)
 
-- In order to stop the dashboard server click on the `stop` button.
+This will redirect you to the Nebari's Dashboard main panel.
+Here, you can find the URL of your dashboards which can be shared with other users as well as managing the status and deployment of your dashboards:
+
+- To stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
 - To delete the server and the resources allocated click on the `delete` button.
 - To make any changes to the existing CDS options, click on the `edit` button.
 
-![All the published dashboards](/img/all_dashboards.png)
+![Nebari dashboard panel - showing a number of dashboards with corresponding start/delete buttons, as well as several URLs under the "Dashboards from others heading"](/img/tutorials/nebari_dashboard_panel.png).
 
 ## Conclusion
 
-We now have a working, shareable dashboard 🎉
+Dashboards can be a very handy tool to share information and insights with colleagues and external customers or collaborators.
 
-All that is left to do is to send it to your colleagues!
+By now you have a working, shareable dashboard 🎉 You can use this basic dashboard to build more complex dashboards, add more dynamic features, and start sharing data insights with others.
