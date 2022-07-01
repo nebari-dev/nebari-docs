@@ -11,7 +11,12 @@ enabling data scientist and others to use their favorite PyData tools at scale.
 ### Nebari & Dask integration
 
 Nebari uses [dask-gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically configured for the user,
-and provides a secure way to managing dask clusters. We will discuss in detail the pre-defined configuration in later sections of this tutorial.
+and provides a secure way to managing dask clusters. 
+
+Dask consists 03 main components `client`, `scheduler` and `workers`
+- We as the end user interact with the client, client interacts with both scheduler (sends instructions) and workers (collects outcomes)
+- The scheduler is midpoint between the workers and client, tracks metrics and coordinate workers.
+- The workers are the threads/processes that executes computations.
 
 ### Starting a dask cluster on Nebari
 
