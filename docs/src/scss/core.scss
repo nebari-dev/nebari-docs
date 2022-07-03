@@ -50,9 +50,11 @@ a {
     timing-function: ease-out;
     duration: 0.3s;
   }
-  &:hover {
-    text-decoration-thickness: 2px;
-  }
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px !important;
 }
 
 [data-theme="dark"]a {
@@ -169,7 +171,13 @@ a {
 }
 
 .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
-  border: 1px solid var(--ifm-color-emphasis-200) !important;
+  border: 1px solid var(--nebari-blue-gray-9) !important;
+  border-bottom: 3px solid var(--accent-nebari) !important;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
+}
+
+.cardContainer_woeA:hover {
+  border: 1px solid var(--nebari-blue-gray-9) !important;
   border-bottom: 3px solid var(--accent-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
@@ -177,4 +185,11 @@ a {
 a.card {
   text-decoration: none;
   color: var(--ifm-color-content);
+}
+
+.collapseSidebarButton_FykI:focus,
+.collapseSidebarButton_FykI:hover,
+.expandButton__5cy:focus,
+.expandButton__5cy:hover {
+  background-color: var(--ifm-hover-overlay);
 }
