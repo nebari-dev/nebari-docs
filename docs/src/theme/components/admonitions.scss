@@ -83,6 +83,10 @@
 [data-theme="dark"] {
   .admonition {
     color: var(--nebari-blue-gray-0);
+    code {
+      background-color: var(--ifm-hover-overlay) !important;
+      color: var(--ifm-color-black) !important;
+    }
   }
   .admonition h5,
   .admonition:not(.alert) h5 {

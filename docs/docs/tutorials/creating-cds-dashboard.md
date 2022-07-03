@@ -25,7 +25,7 @@ _Let's get our hands dirty_
 2. Select an environment from the `select kernel` dropdown (this dropdown menu is located in the top right corner of your notebook).
 3. Copy the code below into a `code` cell of your notebook.
 
-```python
+```python title="panel-trees-dashboard.ipynb"
 import pandas as pd
 import holoviews as hv
 from bokeh.models import HoverTool
@@ -82,7 +82,7 @@ To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `
 4. Select the code source for your panel, e.g. in this tutorial you created a new notebook `panel-trees-dashboard.ipynb`, but you can also point to a Git repository.
 5. Select the appropriate framework for your dashboard, in this example you'll have to select: `panel`.
 6. Select the `conda` environment for your dashboard, make sure it is same as the one you previously selected as your Jupyter notebook environment
-7. In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/panel-trees-dashboard..ipynb`).
+7. In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/panel-trees-dashboard.ipynb`).
 8. Once you have provided all the details above click on the save button
 
 You will then be redirected to a new window where you will be able to select the compute resources for your dashboard.
