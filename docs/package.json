@@ -1,7 +1,19 @@
 {
   "name": "nebari-docs",
   "version": "0.0.1",
+  "description": "The main documentation website for Nebari",
   "private": true,
+  "author": {
+    "name": "Nebari development team",
+    "url": "https://nebari.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nebari-dev/nebari/"
+  },
+  "bugs": {
+    "url": "https://github.com/nebari-dev/nebari/issues"
+  },
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -14,7 +26,7 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "lint": "eslint \"*.{js,jsx}\"",
     "lint:fix": "eslint . --ext js,jsx --fix",
-    "format": "prettier --write \"**/*.{js,jsx,md,css}\""
+    "format": "prettier --write \"**/*.{js,jsx,md,css, scss}\""
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-beta.20",
@@ -28,8 +40,8 @@
     "sass": "^1.52.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.0.0-beta.20",
     "@babel/eslint-parser": "^7.18.2",
+    "@docusaurus/module-type-aliases": "2.0.0-beta.20",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
