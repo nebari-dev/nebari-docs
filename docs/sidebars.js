@@ -106,6 +106,7 @@ module.exports = {
       label: 'Community',
       link: { type: 'doc', id: 'community/index' },
       items: [
+        'community/file-issues',
         'community/doc-contributions',
         'community/style-guide',
         'community/code-contributions',
