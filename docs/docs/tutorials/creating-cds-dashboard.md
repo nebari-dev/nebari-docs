@@ -99,7 +99,7 @@ An example of available compute instances available within a Nebari instance is 
 For this particular tutorial, a small instance should be enough. Once you have made a selection you can click on the **Save** button at the bottom of the window.
 This will trigger the deployment of your dashboard, and you'll be presented with a screen displaying the of this process.
 
-  ![Nebari window displaying the progress of the Trees' dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/tutorials/nebari_window_dashboard_starting_up.png)
+![Nebari window displaying the progress of the Trees' dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/tutorials/nebari_window_dashboard_starting_up.png)
 
 If there are no errors encountered during this process, you will be automatically redirected to the dashboard!
 
