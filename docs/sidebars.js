@@ -20,6 +20,19 @@ module.exports = {
       id: "welcome",
     },
     {
+      type: "doc",
+      label: "Quickstart",
+      id: "quickstart",
+    },
+    {
+      type: 'category',
+      label: 'Tutorials',
+      link: { type: 'doc', id: 'tutorials/index' },
+      items: [
+        'tutorials/creating-cds-dashboard',
+      ],
+    },
+    {
       type: "category",
       label: "Getting Started",
       link: {
@@ -89,9 +102,15 @@ module.exports = {
       items: ["references/overview"],
     },
     {
-      type: "doc",
-      label: "Community",
-      id: "governance/overview",
+      type: 'category',
+      label: 'Community',
+      link: { type: 'doc', id: 'community/index' },
+      items: [
+        'community/doc-contributions',
+        'community/style-guide',
+        'community/code-contributions',
+        'community/reviewer-guidelines',
+      ],
     },
     {
       type: "doc",
