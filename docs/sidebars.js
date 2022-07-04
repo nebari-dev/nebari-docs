@@ -36,36 +36,36 @@ module.exports = {
           'tutorials/creating-cds-dashboard',
         ],
       },
-    {
-        type: 'category',
-        label: 'How-to Guides',
-        link: {
-            type: 'doc', 
-            id: 'how-to/index'
-        },
-        items: [
-        ],
-      },
-    {
-        type: 'category',
-        label: 'Conceptual Guides',
-        link: {
-            type: 'doc', 
-            id: 'explanations/index'
-        },
-        items: [
-        ],
-      },
-    {
-        type: 'category',
-        label: 'References',
-        link: {
-            type: 'doc', 
-            id: 'reference/index'
-        },
-        items: [
-        ],
-      },
+    // {
+    //     type: 'category',
+    //     label: 'How-to Guides',
+    //     link: {
+    //         type: 'doc', 
+    //         id: 'how-to/index'
+    //     },
+    //     items: [
+    //     ],
+    //   },
+    // {
+    //     type: 'category',
+    //     label: 'Conceptual Guides',
+    //     link: {
+    //         type: 'doc', 
+    //         id: 'explanations/index'
+    //     },
+    //     items: [
+    //     ],
+    //   },
+    // {
+    //     type: 'category',
+    //     label: 'References',
+    //     link: {
+    //         type: 'doc', 
+    //         id: 'reference/index'
+    //     },
+    //     items: [
+    //     ],
+    //   },
     {
       type: "doc",
       label: "Community",
