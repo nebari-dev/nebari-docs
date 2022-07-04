@@ -1,5 +1,8 @@
+# build artefacts
+build
+
+# Dependencies
 dist
 node_modules
-build
 .docusaurus
 .yalc

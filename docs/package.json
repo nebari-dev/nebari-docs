@@ -27,7 +27,7 @@
     "lint": "eslint \"*.{js,jsx,css,scss}\"",
     "lint:fix": "yarn run lint -- --fix",
     "format": "prettier --check \"**/*.{md, mdx, json, toml}\"",
-    "format:fix": "prettier --check \"**/*.{md, mdx, json, toml}\"",
+    "format:fix": "prettier --write \"**/*.{md, mdx, json, toml}\"",
     "prepare": "cd .. && husky install front/.husky",
     "lint-staged": "lint-staged"
   },
