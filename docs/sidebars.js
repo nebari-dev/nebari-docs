@@ -29,7 +29,6 @@ module.exports = {
         label: 'Tutorials',
         link: {type: 'doc', id: 'tutorials/index'},
         items: [
-          "tutorials/overview", 
           "tutorials/creating-cds-dashboard",
           "tutorials/cost-estimate-report",
         ],
