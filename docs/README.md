@@ -9,7 +9,7 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
   - [Adding a New Dependency](#adding-a-new-dependency)
   - [Deployment](#deployment)
   - [Linting](#linting)
-  
+
 ## Prerequisites
 
 To build the site you will need to have Node.js installed. To see if you already have Node.js installed, type the following command into your local command line terminal:
@@ -65,7 +65,7 @@ $ yarn --version
 > **Note**
 > By default, this will load your site at <http://localhost:3000/>.
 
-## Building the site 
+## Building the site
 
 To build the static files of your website for production, run:
 
@@ -83,7 +83,7 @@ yarn run serve
 > **Note**
 > By default, this will load your site at <http://localhost:3000/>.
 
-## Adding a New Dependency 
+## Adding a New Dependency
 
 Use the `add` subcommand to add new dependencies:
 
