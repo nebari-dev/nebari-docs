@@ -14,10 +14,10 @@ repos:
     rev: v2.1.0
     hooks:
       - id: codespell
-        # --write (-w) enabled here
         # see setup.cfg for more config options
-        entry: codespell -w
+        entry: codespell
         language: python
+        exclude: ^docs/yarn.lock
 
   # Python
   # Autoformat: Python code, syntax patterns are modernized
@@ -62,11 +62,13 @@ repos:
     rev: v4.0.1
     # ref: https://github.com/pre-commit/pre-commit-hooks#hooks-available
     hooks:
-      # Autoformat: Makes sure files end in a newline and only a newline.
+      # Autoformat: Makes sure files end in a newline and only a newline
       - id: end-of-file-fixer
+        exclude: ^docs/
 
       # Trims trailing whitespace.
       - id: trailing-whitespace
+        exclude: ^docs/
         args: [--markdown-linebreak-ext=md]
 
       # Lint: Check for files with names that would conflict on a
