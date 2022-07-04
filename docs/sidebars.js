@@ -8,7 +8,6 @@
 
  Create as many sidebars as you want.
  */
-
 // @ts-check
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
@@ -30,9 +29,10 @@ module.exports = {
         label: 'Tutorials',
         link: {type: 'doc', id: 'tutorials/index'},
         items: [
-          'tutorials/creating-cds-dashboard',
+          "tutorials/creating-cds-dashboard",
+          "tutorials/cost-estimate-report",
         ],
-      },
+    },
     {
       type: "category",
       label: "How-to Guides",
