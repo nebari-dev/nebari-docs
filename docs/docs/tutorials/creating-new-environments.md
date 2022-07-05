@@ -31,7 +31,7 @@ packages up-to-date while still maintaining compatibility.
 While `conda` manages compatibility between the packages in the environment, we often face a different issue...  
 
 An environment created with a list of packages _today_ can differ from that same environment created with the same
-list of packages _tomorrow_. This can happen because package dependencies have changed, new releases have occured, 
+list of packages _tomorrow_. This can happen because package dependencies have changed, new releases have occurred, 
 or even because a package is no longer available. 
 
 ### What is `conda-store`?
@@ -136,13 +136,13 @@ it will still exist in the store. This ensures admins always have access to envi
 
 Now let's take a closer look at the conda build detail. Click on the build number link. 
 
-At the top of the page, you'll see some metadata about the environemnt including the time, size and status. Also 
+At the top of the page, you'll see some metadata about the environment including the time, size and status. Also 
 included is our original _yaml_ specification an a list of all the packages that were installed into the 
 environment. 
 
 ![build details page top](/img/tutorials/conda_store_build_details_top.png)
 
-There are quite a few packages! Scroll down to the bottom of this list and you'll see the next section callled 
+There are quite a few packages! Scroll down to the bottom of this list and you'll see the next section called 
 `Conda Environment Artifacts`. This is where you can download your own copy of the _yaml_ file, a 
 [conda-lock](https://conda-incubator.github.io/conda-lock/) file, or an archive of the environment. 
 
