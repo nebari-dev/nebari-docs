@@ -21,11 +21,6 @@ module.exports = {
       id: "welcome",
     },
     {
-      type: "doc",
-      label: "Quickstart",
-      id: "quickstart",
-    },
-    {
       type: "category",
       label: "Getting Started",
       link: {
@@ -33,13 +28,14 @@ module.exports = {
         title: "Getting Started",
         description:
           "This section describes how to install and deploy Nebari on a selection of cloud providers, and also provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
-        slug: "category/started",
-        keywords: ["started"],
+        slug: "category/getting-started",
+        keywords: ["getting-started"],
       },
       items: [
-        "started/installing-nebari",
-        "started/deploy",
-        "started/cloud-providers",
+        "getting-started/nebari-101",
+        "getting-started/installing-nebari",
+        "getting-started/deploy",
+        "getting-started/cloud-providers",
       ],
     },
     {

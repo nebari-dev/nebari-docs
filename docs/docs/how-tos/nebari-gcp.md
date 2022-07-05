@@ -23,15 +23,15 @@ this guide.
 This documentation assumes that you are already familiar to Google Cloud Platform accounts and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related
 services.
 
-If you are new to Google Cloud Platform, we advise you to first [sign up for a free account](https://cloud.google.com/signup) to get a better understanding of the platform and its
-features. Please refer to [Create a Google Account](https://support.google.com/accounts/answer/27441) and
+If you are new to the Google Cloud Platform, we advise you to first [sign up for a free account](https://cloud.google.com/signup) to get a better understanding of the platform and its
+features. Check the [Create a Google Account documentation](https://support.google.com/accounts/answer/27441) and
 [Overview of Cloud billing concepts](https://cloud.google.com/billing/docs/concepts#billing_account) for more information on account types and cost usage. Also, please refer to
 [Cluster management fee and free tier](https://cloud.google.com/kubernetes-engine/pricing#cluster_management_fee_and_free_tier) documentation for an overview of how costs are
 calculated and applied to an organization’s billing account.
 
 For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
 
-:::note If you are using a new GCP account, please keep in mind the [quotas](https://cloud.google.com/docs/quota) of your account. Every new `free tier` account has a limited quota
+:::note If you are using a new GCP account, please keep in mind the [GCP quotas](https://cloud.google.com/docs/quota) of your account. Every new `free tier` account has a limited quota
 for resources like vCPU/Mem/GPUs per region among others. Refer to [Google's free-tier limits](https://cloud.google.com/free/docs/gcp-free-tier#free-tier-usage-limits)
 documentation for more information. :::
 
@@ -66,17 +66,18 @@ you are handling multiple GCP projects.
 After you create your service account, download the [service account key](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts.keys) file following the
 instructions below:
 
-- From the [service account key page in the Cloud Console](https://console.cloud.google.com/iam-admin/serviceaccounts) choose your recently created project;
-- Select your service account from the list;
-- Select the "Keys" tab;
-- In the drop down menu, select "Create new key";
-- Leave the "Key Type" as `JSON`;
-- Click "Create" to create the key and save the key file to your system.
+1. From the [service account key page in the Cloud Console](https://console.cloud.google.com/iam-admin/serviceaccounts) choose your recently created project;
+2. Select your service account from the list;
+3. Select the "Keys" tab;
+4. In the drop-down menu, select "Create new key";
+5. Leave the "Key Type" as `JSON`;
+6. Click "Create" to create the key and save the key file to your system.
 
 Store this credentials file in a well-known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command
 `chmod 600 <filename>` on your terminal.
 
-:::warning Warning The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be
+:::warning
+The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be
 checked into source control. :::
 
 By default, Nebari will try to use the credentials associated with the current GCP infrastructure/environment for authentication. Please keep in mind that Nebari will only use
@@ -95,28 +96,29 @@ The **Project ID** information can be found at the Google Console homepage, unde
 :::tip These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell
 startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). :::
 
-:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
+:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
 installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the `nebari`
 environment variables. If you had any issues during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further
 guidance. :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](/started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
-In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder as `nebari-gcp`:
+1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
+	  ```bash
+	  mkdir nebari-gcp && cd nebari-gcp
+	  ```
+
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+
+2. Executing the command below will generate a basic config file with an infrastructure based on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
-mkdir nebari-gcp && cd nebari-gcp
-```
-
-The Nebari initialization scripts creates a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment. In this case, executing
-the command below will generate a basic config file with an infrastructure based on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication
-mode set to **password**.
-
-```bash
-nebari init gcp --project projectname --domain domain --auth-provider password
+nebari init gcp --project projectname \
+	--domain domain \
+	--auth-provider password
 ```
 
 :::note Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain) :::
@@ -129,7 +131,8 @@ stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 Fetching server config for us-central1
 ```
 
-:::tip The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
+:::tip
+The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
 with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T` :::
 
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
@@ -143,16 +146,16 @@ For additional information about the `nebari-config.yaml` file and extra flags t
 
 ## Deploying Nebari
 
-With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time:
+With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
 nebari deploy -c nebari-config.yaml
 ```
 
-The terminal will prompt you to press `[enter]` to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
-authenticated, it will start its infrastructure deployment process, which will take up to a couple of minutes to complete.
+The terminal will prompt you to press <kbd>enter<kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
-Once you reach the stage `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
+Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
 follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
 
 If the deployment is successful, you will see the following output:
