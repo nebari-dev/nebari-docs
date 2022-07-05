@@ -1,23 +1,101 @@
 ---
 id: creating-new-environments
 title: Creating a new environment on Nebari
+description: Using conda-store for environment creation
 ---
 
-## Introduction
+## :convenience_store: Introduction
 
-Conda store serves identical conda environments in as many ways as possible by controlling the environment lifecycle. It ensures that the management, builds, and serving of environments is as identical as possible and seamless for the end users.
+In this tutorial, we will create a new environment on Nebari using `conda-store`, look into how we can 
+install new conda packages, manage multiple environments, and also share the environment with other Nebari users.
 
-With Conda store, you can track specific files or directories for changes in environment filename specifications, manage environments using a REST API, and have a command-line utility along with a web interface to fully capitalize on all its capabilities.
 
-In this tutorial, we will be initializing a new environment on Nebari using Conda store, looking into how we can install new conda packages, manage multiple environments and also share the environment with other Nebari users.
+### Why have environments?
 
-## Quickstart
+Environments give developers and analysts a "sandbox" to play in. They create isolated spaces to separate 
+dependencies on a per-project basis. In general, environments solve several common issues:
 
-To get started with Conda store, you need to have a running instance of Nebari. The traditional way of managing the Conda environments on Nebari has been via directly editing the `environments:` key within the  `nebari-config.yaml`   configuration file. With Conda store, you can manage the environments using a YAML specification over a user interface which can be then used with your server.
+* Onboard new developers/contributors
+* Packages update frequently
+* There are often incompatibilities between certain package versions
+* The larger the environment, the harder it is to share with others
+* Reproducibility
 
-To get started, navigate to `https://<nebari-domain>/conda-store/`. You will be asked to authorize with Keycloak, after which you will have access to the Conda store dashboard. On the Conda store dashboard, you can explore various environments and create new ones.
+### What is `conda`?
 
-To create a new one, navigate to `Create New Environment` on the left of the navigation bar. You will be presented with an option to upload a new YAML specification or write your own. To get started, we provide the following specification:
+[Conda](https://docs.conda.io/projects/conda) is and open source package management system that allows us to create 
+environments and install packages into them. It allows the creators of a package to specify required dependencies 
+which `conda` can then solve into an environment. `Conda` can run an update on the environment to pull all of the 
+packages up-to-date while still maintaining compatibility. 
+
+While `conda` manages compatibility between the packages in the environment, we often face a different issue...  
+
+An environment created with a list of packages _today_ can differ from that same environment created with the same
+list of packages _tomorrow_. This can happen because package dependencies have changed, new releases have occured, 
+or even because a package is no longer available. 
+
+### What is `conda-store`?
+
+As developers and analysts, we have all experienced the `it works on my machine ¯ \_(ツ)_/¯` conundrum.
+
+[`conda-store`](https://conda-store.readthedocs.io/) serves _identical_ `conda` environments by controlling the 
+environment lifecycle. It ensures that the management, building, and serving of environments is as identical as 
+possible and seamless for the end users.
+
+All environments in Nebari are served through `conda-store`.
+
+Using `conda-store`, Nebari admins can track specific files or directories for changes in environment specifications. 
+They can manage environments using the REST API or the command-line utility (CLI). For this tutorial, we will focus on 
+the web interface to interact with our environments.
+
+## :open_file_folder: Exploring the conda-store web interface
+
+To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. https://quansight.qhub.dev/conda-store). 
+
+You will need to login in order to authenticate to the `conda-store` interface. Most of the site is disabled from 
+view until users are logged in. 
+
+![conda-store login ui](/img/tutorials/conda_store_login.png)
+
+This will lead you through a series of windows to authorize with Keycloak, after which you will have access to the 
+`conda-store` dashboard.
+
+![conda-store dashboard ui](/img/tutorials/conda_store_dashboard.png)
+
+Great! Now we can see a high-level view of our user's conda environments.
+
+### User
+
+The `User` subsection allows users to explicitly logout of the interface.
+
+### Namespaces
+
+`Namespaces` are an important part of the `conda-store` 
+[authorization model](https://conda-store.readthedocs.io/en/latest/contributing.html#authorization-model). They
+control what level of access users are provided to the individual environments. In other words, based on your 
+permissions in each namespace, your ability to create, read, update, or delete and environment will differ. 
+
+### Permissions
+
+The `Permissions` subsection let's you view the permissions that your user has for each namespace. Here, you can 
+see that your user has full control over the environment in your own namespace, but limited control over the root
+filesystem environments. 
+
+That is, unless your admin has configured your namespace differently :wink: You can see here that the `conda-store` 
+authorization model is able to provide admins with a fine-grained level of control. 
+
+## :pencil2: Creating a new environment
+
+:boom: Now for the action! :boom: 
+
+To create a new environment, click on the `Create New Environment` on the top right of the navigation bar. You will 
+be presented with an option to upload a 
+[conda _yaml_ file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file) 
+or write your own. 
+
+![conda store create environment ui](/img/tutorials/conda_store_create_env.png)
+
+For this tutorial, we provide you with an example specification:
 
 ```yaml
 channels:
@@ -25,73 +103,102 @@ channels:
 dependencies:
 - python=3.9
 - numpy
-- toolz
 - matplotlib
-- dill
 - pandas
-- partd
-- bokeh
+- panel
 - ipykernel
-- ipywidget
+- ipywidgets
 name: example-environment
 prefix: null
 ```
 
-Click on `Submit` and scroll down over the Conda store dashboard to see the new environment being built. You can click on the individual build to see the status of the build. After the conda environment is built, you will be able to access the logs and check all the conda packages that were installed. You can also see various artifacts which includes a conda lockfile, YAML and an archive.
+After you copy the above into the UI, go ahead and click `Submit`. 
 
-Click on `Full Logs` to see the logs and how to activate the environment. On your Nebari dashboard, start a terminal and activate the Conda environment using:
+You'll be brought to the environments overview page (#TODO should i describe this somewhere explicitly?).
+Find the card with the name of the new environment under your user's namespace (e.g. 
+`<your-username>/example-environment`).
 
-```shell 
-conda activate <name-of-environment>
-```
+![Newly create environment card](/img/tutorials/conda_store_new_env.png)
 
-To use the environment over a JupyterLab instance, navigate to `Kernel` and select `Change Kernel`. From the drop-down menu, select the kernel that you wish to work with. In order for your new environment to be properly visible in the list of available kernels, you will need to include  `ipykernel` and `ipywidgets` in your environment’s dependency list.
+Click on the card for your environment. You'll be brought the details page for this environment. 
 
-## Structure of the YAML file
+![Environment details page](/img/tutorials/conda_store_env_details.png)
 
-A pinned YAML file is generated for each environment is built. This includes pinning of the `pip` packages as well. Note that there are cases where the completely pinned packages do not solve. Packages are routinely marked as broken and removed.
+When you first arrive at this page, the environment may still be in the process of building. The page will 
+automatically update when the build is complete. 
 
-However conda-forge has a policy that packages are never removed but are marked as broken. Most channels do not obey this policy. When you click the yaml button a YAML file will then be downloaded. To install the environment locally run the following:
+From this page, we can `Edit` our _yaml_ specification, or even `Delete` the environment. 
 
-```shell
-conda env create -f <environment-filename>
-```
+:::note
+`conda-store` is tracking all the environments behind the scenes for us. Even if a user "deletes" an environment,
+it will still exist in the store. This ensures admins always have access to environment history. 
+:::
 
-## Modifying an existing environment
+Now let's take a closer look at the conda build detail. Click on the build number link. 
 
-To modify the existing environment, navigate to your environment on the Conda store dashboard and click on `Edit`. You will be presented to either upload a new file by browsing your machine or edit the existing specification. Let us try installing `scipy` to our existing environment.
+At the top of the page, you'll see some metadata about the environemnt including the time, size and status. Also 
+included is our original _yaml_ specification an a list of all the packages that were installed into the 
+environment. 
 
-We will add a new entry in the YAML's `dependencies` section and click on `Submit`. You can navigate back to your environment and see the new build in progress. Every build is versioned and you can easily roll-back to using your previous environment.
+![build details page top](/img/tutorials/conda_store_build_details_top.png)
 
-Click on `Full Logs` to see the logs and how to activate the new environment. You can now use your new environment on your JupyterLab instance or a terminal.
+There are quite a few packages! Scroll down to the bottom of this list and you'll see the next section callled 
+`Conda Environment Artifacts`. This is where you can download your own copy of the _yaml_ file, a 
+[conda-lock](https://conda-incubator.github.io/conda-lock/) file, or an archive of the environment. 
+
+![build details page bottom](/img/tutorials/conda_store_build_details_bottom.png)
+
+Lastly, click on `Full Logs` to view the full output from the conda build. 
+
+:::note
+If you want to use your new environment in a Jupyter Notebook, don't forget to include `ipykernel` and `ipywidgets` in 
+your environment’s _yaml_ file or it may not be visible in the list of available kernels! 
+:::
 
 ## Installing packages via `conda` or `pip`
 
-To install new packages in your Conda store environment from your JupyterLab instance or your terminal, you can use the `conda` or `pip` commands.
+To install new packages through either `conda` or `pip` you'll need to navigate back to `Edit` page of your environment 
+in the `conda-store` web interface. 
 
-To install `pandas` via conda, you can run the following on Nebari terminal:
+Adding `conda` packages to a `conda-store` environment via the command line, is not possible since the files are 
+read-only in that context. 
 
-```shell
-conda install pandas
+Additionally, adding `pip` packages via the command line is strongly discouraged. Not only do `conda` and `pip` not 
+always play nice together, it creates environment inconsistency. This happens because when you `pip` install a 
+package from the command line, it goes into your user's `.local` folder. Other uses appear to be using the same 
+environment, but they don't have the packages you've `pip` installed. This defeats the purpose and drive behind 
+`conda-store`.
+
+:::note
+One exception to this rule is packages that you are actively developing. As you are building a package, you will likely
+want to install it as a _dev_ package. This can be done using:
+
+```bash
+pip install --no-build-isolation --user -e .
 ```
 
-To install packages via `pip`, run the following on Nebari terminal:
+Or, if you’re using a flit package, you can install with
 
-```shell
-conda install pip
-pip install wordcloud
+```bash
+flit install -s
 ```
 
-However, do note that issues may arise when using `pip` and `conda` together. Use `pip` to install any packages only when you have added all your packages via `conda`.
+Please keep in mind that these are _NOT_ available to Dask workers! 
+:::
 
-## Administering environments on Nebari
+## Investigating failures
 
-One of the two (`dashboard` or `dask`) Conda store environments created during the initial Nebari deployment fails to appear as options when logged into JupyterHub. If your user has access to Conda store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
+If you have an environment that fails to build properly, you'll be able to see this failure on the build status page. 
 
-The reason for this issue is due to how these environments are simultaneously built. Under the hood, Conda store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML. If they both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build. This causes the first build to fail.
+Navigate to the `Full Logs` to investigate in more detail. Also, from the build status page you can trigger re-build in
+case you hit issues with intermittent outages, etc. 
 
-To resolve this issue, navigate to `<your_nebari_domain>.com/conda-store`, find the environment build that failed and trigger it to re-build.
+## Troubleshooting notes
 
-If you are using Dask, you will need to include [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock) to maintain version compatibility between the Dask client and server. Example: `qhub-dask==0.5.0.dev27+g58870fc`. This replaces distributed, dask, and dask-gateway with the correct pinned versions.
+:::note What if I want to use Dask?
+In order to use Dask, we highly recommend you include the 
+[QHub Dask metapackage](https://anaconda.org/conda-forge/qhub-dask) to maintain version compatibility between the Dask 
+client and server. This replaces `distributed`, `dask`, and `dask-gateway` with the correctly pinned versions.
 
-Additionally, environment, even global ones, created from the `/conda-store` user interface cannot be used when running dashboards via the CDSDashboard interface. Users can use only those environments added via the `nebari-config.yaml` during deployment.
+Example: qhub-dask==0.4.3. 
+:::
