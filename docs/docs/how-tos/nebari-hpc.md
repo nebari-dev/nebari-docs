@@ -3,7 +3,6 @@ id: nebari-hpc
 title: How to install Nebari HPC on bare metal machines
 ---
 
-## TODO: this needs to be totally rewritten
 
 ## Requirements
 

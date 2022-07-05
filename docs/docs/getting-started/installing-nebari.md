@@ -25,20 +25,21 @@ There are currently two ways to install Nebari:
 
 1. You can install Nebari directly from the Python Package Index (PyPI) using `pip`. For most common architectures and platforms (`Linux x86-64` and `macOS x86-64`), `pip` will download and install the most recent version available.
 
-```bash
-python3 pip install nebari
-```
+    ```bash
+    python3 pip install nebari
+    ```
 
 2. Nebari is also available at [conda-forge](https://anaconda.org/conda-forge/qhub) and can be installed using the `conda` package manager by running the following command:
 
-```bash
-conda install nebari -c conda-forge
-```
-if you prefer [mamba](https://github.com/mamba-org/mamba#mamba), you can use the following command:
+    ```bash
+    conda install nebari -c conda-forge
+    ```
 
-```bash
-mamba install nebari
-```
+    if you prefer [mamba](https://github.com/mamba-org/mamba#mamba), you can use the following command:
+
+    ```bash
+    mamba install nebari
+    ```
 
 ## Verify installation
 

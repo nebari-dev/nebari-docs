@@ -1,10 +1,8 @@
-______________________________________________________________________
-
-## id: nebari-do title: How to deploy Nebari on Digital Ocean
-
-# How to deploy Nebari on Digital Ocean
-
-A basic overview of how to deploy Nebari on Digital Ocean
+---
+id: nebari-do
+title: How to deploy Nebari on Digital Ocean
+description: A basic overview of how to deploy Nebari on Digital Ocean
+---
 
 This guide is to help first-time users set up a Digital Ocean (DO) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will
 walk you through the following steps:
@@ -48,7 +46,8 @@ information on how to create a space and generate an access key.
 
 :::warning
 As these credentials provides access to your DO account. It should be treated like any other secret credentials. In particular, it should *never* be checked into
-source control. :::
+source control.
+:::
 
 By default, Nebari will try to use the credentials associated with the current Digital Ocean infrastructure/environment for authentication. Refer to \[Conceptual guides\] for more
 information on how Nebari's components are secured.
@@ -61,12 +60,15 @@ export SPACES_ACCESS_KEY_ID=""        # public access key for access spaces
 export SPACES_SECRET_ACCESS_KEY=""    # the private key for access spaces
 ```
 
-:::tip These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell
-startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). :::
+:::tip
+These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell
+startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables.
+:::
 
 :::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
 installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues
-during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance. :::
+during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
+:::
 
 ## Nebari Initialize
 
@@ -78,17 +80,17 @@ environment variables have been properly set. It is time to initialize and deplo
 	  mkdir nebari-do && cd nebari-do
 	  ```
 
-The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
-
 2. Executing the command below will generate a basic config file with an infrastructure based on **DO**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-```bash
-nebari init do --project projectname \
-	--domain domain \
-	--auth-provider password
-```
+    ```bash
+    nebari init do --project projectname \
+	    --domain domain \
+	    --auth-provider password
+    ```
 
-:::note Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain) :::
+:::note
+Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+:::
 
 Once `nebari init` is executed, you should then be able to see the following output:
 
@@ -97,11 +99,15 @@ Securely generated default random password=*** for Keycloak root user
 stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 ```
 
-:::tip The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
-with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T` :::
+:::tip
+The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
+with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
+:::
 
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, in order to create the first user accounts for administrator(s).
+
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
@@ -117,7 +123,7 @@ With the `nebari-config.yaml` configuration file now created, Nebari can be depl
 nebari deploy -c nebari-config.yaml
 ```
 
-The terminal will prompt you to press <kbd>enter<kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please

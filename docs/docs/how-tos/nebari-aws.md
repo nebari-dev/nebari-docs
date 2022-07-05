@@ -1,10 +1,8 @@
-______________________________________________________________________
-
-## id: nebari-aws title: How to deploy Nebari on AWS
-
-# How to deploy Nebari on AWS
-
-A basic overview of how to deploy Nebari on AWS
+---
+id: nebari-aws
+title: How to deploy Nebari on AWS
+description: A basic overview of how to deploy Nebari on AWS
+---
 
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
@@ -31,7 +29,8 @@ For a more detailed cost estimate, please also refer to our \[Conceptual guides\
 :::warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your
 cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this
-happens. :::
+happens.
+:::
 
 ## Authentication
 
@@ -66,7 +65,8 @@ Upon generation, the IAM role will provide a public `Access Key ID` and `Secret 
 
 :::warning
 The **Secret Access Key** provides access to your AWS user account. It should be treated like any other secret credentials. In particular, it should *never* be
-checked into source control. :::
+checked into source control.
+:::
 
 By default, Nebari will try to use the credentials associated with the current AWS infrastructure/environment for authentication. Please keep in mind that Nebari will only use
 these credentials to create the first roles and stricter permissions for Nebari's internal components. Refer to \[Conceptual guides\] for more information on how Nebari's
@@ -79,12 +79,16 @@ export AWS_ACCESS_KEY_ID="Access Key ID"
 export AWS_SECRET_ACCESS_KEY="Secret Access Key"
 ```
 
-:::tip These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell
-startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables. :::
+:::tip
+These environment variables will apply only to your current shell session. If you want the variables to apply to future shell sessions also, set the variables in your shell
+startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables.
+:::
 
-:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
+:::note
+The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
 installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the
-installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance. :::
+installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
+:::
 
 ## Nebari Initialize
 
@@ -96,15 +100,14 @@ environment variables have been properly set. It is time to initialize and deplo
 	  mkdir nebari-aws && cd nebari-aws
 	  ```
 
-The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-```bash
-nebari init aws --project projectname \
-	--domain domain \
-	--auth-provider password
-```
+  ```bash
+  nebari init aws --project projectname \
+	  --domain domain \
+	  --auth-provider password
+  ```
 
 ::: note
 You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
@@ -119,11 +122,15 @@ stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
 INFO:botocore.credentials:Found credentials in environment variables.
 ```
 
-:::tip The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
-with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T` :::
+:::tip
+The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
+with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
+:::
 
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, to create the first user accounts for administrator(s).
+
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
@@ -139,7 +146,7 @@ With the `nebari-config.yaml` configuration file now created, Nebari can be depl
 nebari deploy -c nebari-config.yaml
 ```
 
-The terminal will prompt you to press <kbd>enter<kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
