@@ -97,7 +97,7 @@ const config = {
           {
             label: "Getting Started",
             position: "right",
-            to: "started/installing-nebari",
+            to: "getting-started/installing-nebari",
           },
           {
             label: "Tutorials",
