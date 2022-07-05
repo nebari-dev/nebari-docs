@@ -7,10 +7,10 @@ description: A basic overview of how to deploy Nebari on AWS
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
 
-- [Sign up for Amazon Web Services](#sing-up-for-amazon-web-services);
-- [Set up IAM user and access keys](#authentication);
-- [Initialize Nebari with your IAM user credentials](#nebari-initialize);
-- [Deploy Nebari](#deploying-nebari)
+- [Sign up for Amazon Web Services](#sign-up-for-amazon-web-services)
+- [Authentication](#authentication)
+- [Nebari Initialize](#nebari-initialize)
+- [Deploying Nebari](#deploying-nebari)
 
 If you are already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 

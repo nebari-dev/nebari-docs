@@ -7,10 +7,10 @@ description: A basic overview of how to deploy Nebari on Digital Ocean
 This guide is to help first-time users set up a Digital Ocean (DO) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will
 walk you through the following steps:
 
-- [Sign up for Digital Ocean](#sign-up-for-digital-ocean);
-- [Set up Digital Ocean access token](#authentication);
-- [Initialize Nebari with your access credentials](#nebari-initialize);
-- [Deploy Nebari](#deploying-nebari)
+- [Sign up for Digital Ocean](#sign-up-for-digital-ocean)
+- [Authentication](#authentication)
+- [Nebari Initialize](#nebari-initialize)
+- [Deploying Nebari](#deploying-nebari)
 
 For those already familiar to Digital Ocean, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
