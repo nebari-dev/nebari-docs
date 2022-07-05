@@ -44,7 +44,11 @@ module.exports = {
         slug: "category/how-to",
         keywords: ["how-to"],
       },
-      items: ["how-tos/overview"],
+      items: [
+        "how-tos/overview",
+        "how-tos/login-keycloak",
+        "how-tos/configuring-keycloak"
+      ],
     },
     {
       type: "category",
