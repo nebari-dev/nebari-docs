@@ -140,8 +140,8 @@ const config = {
             title: "Open source",
             items: [
               {
-                label: "Quickstart",
-                to: "quickstart",
+                label: "Getting Started",
+                to: "getting-started/installing-nebari",
               },
             ],
           },
