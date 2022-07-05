@@ -13,7 +13,7 @@ jobs:
     environment: docs-prod
     name: "Trigger Netlify build"
     steps:
-      - name: Check out 🛎️
+      - name: Check out repository 🛎️
         uses: actions/checkout@v3
 
       - name: Trigger Netlify build  🚀

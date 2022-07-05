@@ -1,0 +1,128 @@
+name: "Bug report 🐛"
+description: "Create a report to help us reproduce and correct the bug"
+title: "[BUG] - <title>"
+labels: ["type: bug 🐛", "needs: triage 🚦"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Welcome 👋
+
+        Thanks for using Nebari and taking some time to contribute to this project.
+
+        Please fill out each section below. This info allows Nebari maintainers to diagnose (and fix!) your issue as
+        quickly as possible.
+        Before submitting a bug, please make sure the issue hasn't been already addressed by searching through
+        [the past issues](https://github.com/nebari-dev/nebari/issues).
+
+        Useful links:
+
+        - Documentation: https://www.nebari.dev
+        - Contributing: https://www.nebari.dev/community/
+
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: |
+        A clear and concise description of what the bug is.
+        We suggest using bullets (indicated by * or -).
+      placeholder: Be as precise as you can.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: |
+        A clear and concise description of what you expected to happen.
+        We suggest using bullets (indicated by * or -).
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: OS system and architecture in which you are running Nebari
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: How to Reproduce the problem?
+      description: |
+        Please provide a minimal code example to reproduce the error.
+        Be as succinct as possible, and provide detailed step by step guidelines to reproduce the bug (using numbered items).
+        If you have created a GitHub gist, you can paste the link in this box instead.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Command output
+      render: bash session
+      description: |
+        Provide the output of the steps above, including the commands
+        themselves and any tracebacks/logs. If you're familiar with
+        Markdown, this block will have triple backticks added automatically
+        around it -- you don't have to add them.
+
+        If you want to present output from multiple commands, please present
+        that as a shell session (commands you run get prefixed with `$ `).
+        Please also ensure that the "How to reproduce the problem?" section contains matching
+        instructions for reproducing this.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Versions and dependencies used.
+      description: |
+        Describe your environment:
+        - Conda version (use `conda --version`)
+        - Kubernetes version (use `kubectl version`)
+        - Nebari version
+    validations:
+      required: false
+
+  - type: dropdown
+    attributes:
+      label: Compute environment
+      description: Are you using a public cloud provider or testing locally with minikube? Select the option that applies.
+      multiple: false
+      options:
+        - "Azure"
+        - "GCP"
+        - "AWS"
+        - "Digital Ocean"
+        - "minikube"
+    validations:
+      required: false
+
+  - type: dropdown
+    attributes:
+      label: Integrations
+      description: Is this issue related to onay of the Nebari integrations?
+      multiple: true
+      options:
+        - "Prefect"
+        - "Keycloak"
+        - "conda-store"
+        - "Dask"
+        - "dashboards"
+        - "Grafana"
+        - "Argo"
+
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context about the issue you are encountering!
+
+        Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: >
+        Thanks for contributing 🎉!
