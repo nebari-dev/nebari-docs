@@ -11,7 +11,7 @@ You might see some references to `qhub` mainly in the context of commands or ins
 
 # Installing Nebari
 
-This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are is already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the [advanced-settings] section.
+This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
 This guide focuses on installing Nebari for cloud usage. For other alternatives, please visit [deploying options](/getting-started/deploy.md) for an overview of the available options and their respective installation steps.
@@ -32,7 +32,7 @@ There are currently two ways to install Nebari:
 1. You can install Nebari directly from the Python Package Index (PyPI) using `pip`. For most common architectures and platforms (`Linux x86-64` and `macOS x86-64`), `pip` will download and install the most recent version available.
 
    ```bash
-   python3 pip install qhub
+   python3 -m pip install qhub
    ```
 
 2. Nebari is also available at [conda-forge](https://anaconda.org/conda-forge/qhub) and can be installed using the `conda` package manager by running the following command:

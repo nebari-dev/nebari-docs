@@ -126,7 +126,7 @@ For additional information about the `qhub-config.yaml` file and extra flags tha
 With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c qhub-config.yaml
+qhub deploy -c qhub-config.yaml
 ```
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is

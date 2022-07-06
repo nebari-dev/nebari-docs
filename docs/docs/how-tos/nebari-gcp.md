@@ -27,6 +27,7 @@ features. Check the [Create a Google Account documentation](https://support.goog
 [Cluster management fee and free tier](https://cloud.google.com/kubernetes-engine/pricing#cluster_management_fee_and_free_tier) documentation for an overview of how costs are
 calculated and applied to an organization's billing account.
 
+<!-- TODO: add link to conceptual guides -->
 For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
 
 :::note
@@ -74,8 +75,12 @@ instructions below:
 5. Leave the "Key Type" as `JSON`;
 6. Click "Create" to create the key and save the key file to your system.
 
-Store this credentials file in a well-known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command
-`chmod 600 <filename>` on your terminal.
+Store these credentials file in a well-known location and make sure to set yourself exclusive permissions.
+You can change the file permissions by running the following command on your terminal:
+
+```bash
+chmod 600 <filename>
+```
 
 :::warning
 The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should _never_ be
@@ -159,7 +164,7 @@ For additional information about the `qhub-config.yaml` file and extra flags tha
 With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c qhub-config.yaml
+qhub deploy -c qhub-config.yaml
 ```
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
@@ -184,5 +189,6 @@ Kubecloak master realm username=root *****
 ...
 ```
 
+<!-- TODO: add link to initial config -->
 Congratulations! You have successfully deployed Nebari on GCP! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
