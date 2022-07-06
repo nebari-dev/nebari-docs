@@ -14,6 +14,12 @@ walk you through the following steps:
 
 For those already familiar to Digital Ocean, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 ## Sign up for Digital Ocean
 
 This documentation assumes that you are already have a Digital Ocean account and that you have prior knowledge regarding Digital Ocean billing and cost usage for Kubernetes related
@@ -133,7 +139,7 @@ follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: Nebari deployed successfully
+[terraform]: QHub deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/

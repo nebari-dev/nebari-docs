@@ -14,6 +14,12 @@ we will walk you through the following steps:
 
 If you are already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 ## Sign up for Amazon Web Services
 
 This documentation assumes that you are already familiar with [AWS Identity and Access Management (IAM)](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) and
@@ -23,6 +29,8 @@ If you are new to AWS, we advise you to first [sign up for a free account](https
 Please refer to [Amazon VPC (Virtual Private Cloud)](https://aws.amazon.com/vpc/?nc1=h_ls) and
 [Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html#eks-prereqs) for more information on account types and prerequisites for
 managing Kubernetes clusters.
+
+<!-- TODO: add link to conceptual guide -->
 
 For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
 
@@ -154,7 +162,7 @@ follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: Nebari deployed successfully
+[terraform]: QHub deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/

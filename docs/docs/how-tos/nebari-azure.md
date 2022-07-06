@@ -15,6 +15,12 @@ through the following steps:
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 ## Sign up for Azure
 
 This documentation assumes that you are already familiar with [Azure accounts and subscriptions](https://docs.microsoft.com/en-us/azure/guides/developer/azure-developer-guide#understanding-accounts-subscriptions-and-billing), and that you have prior knowledge regarding [Azure billing and cost usage](https://docs.microsoft.com/en-us/azure/cost-management-billing/cost-management-billing-overview) for Kubernetes related services.

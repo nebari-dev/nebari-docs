@@ -16,6 +16,12 @@ will walk you through the following steps:
 For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 ## Sign up for Google Cloud Platform
 
 This documentation assumes that you are already familiar to Google Cloud Platform accounts and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related
@@ -28,6 +34,7 @@ features. Check the [Create a Google Account documentation](https://support.goog
 calculated and applied to an organization's billing account.
 
 <!-- TODO: add link to conceptual guides -->
+
 For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
 
 :::note
@@ -176,7 +183,7 @@ follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: Nebari deployed successfully
+[terraform]: QHub deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/
@@ -190,5 +197,6 @@ Kubecloak master realm username=root *****
 ```
 
 <!-- TODO: add link to initial config -->
+
 Congratulations! You have successfully deployed Nebari on GCP! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
