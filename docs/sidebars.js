@@ -48,14 +48,7 @@ module.exports = {
     {
       type: "category",
       label: "How-to Guides",
-      link: {
-        type: "generated-index",
-        title: "How-to Guides",
-        description:
-          "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-        slug: "category/how-to",
-        keywords: ["how-to"],
-      },
+      link: { type: "doc", id: "how-tos/index" },
       items: [
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",

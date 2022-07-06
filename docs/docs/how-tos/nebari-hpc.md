@@ -1,6 +1,7 @@
 ---
 id: nebari-hpc
 title: How to install Nebari HPC on bare metal machines
+description: HPC-based Nebari deployments
 ---
 
 ## Requirements
