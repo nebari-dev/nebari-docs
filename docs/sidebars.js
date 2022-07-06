@@ -37,9 +37,9 @@ module.exports = {
       ],
     },
     {
-      type: 'category',
-      label: 'Tutorials',
-      link: { type: 'doc', id: 'tutorials/index' },
+      type: "category",
+      label: "Tutorials",
+      link: { type: "doc", id: "tutorials/index" },
       items: [
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",

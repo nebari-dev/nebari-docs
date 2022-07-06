@@ -57,7 +57,7 @@ repos:
         args:
           - --args=-write=true
 
-  # Markdown, json, toml - only outside from docs
+  # Markdown, json, toml
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
