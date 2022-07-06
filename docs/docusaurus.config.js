@@ -95,6 +95,11 @@ const config = {
         hideOnScroll: true,
         items: [
           {
+            label: "Getting Started",
+            position: "right",
+            to: "getting-started/installing-nebari",
+          },
+          {
             label: "Tutorials",
             position: "right",
             to: "tutorials",
@@ -135,8 +140,8 @@ const config = {
             title: "Open source",
             items: [
               {
-                label: "Quickstart",
-                to: "quickstart",
+                label: "Getting Started",
+                to: "getting-started/installing-nebari",
               },
             ],
           },
