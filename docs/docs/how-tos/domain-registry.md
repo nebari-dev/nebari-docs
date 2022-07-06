@@ -1,6 +1,7 @@
 ---
 id: domain-registry
 title: How to set Nebari's DNS Domain Registry
+description: Setting a custom DNS Domain Registry
 ---
 
 # Nebari domain registry setup
