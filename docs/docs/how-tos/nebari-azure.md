@@ -89,7 +89,7 @@ environment variables have been properly set. It is time to initialize and deplo
 2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
    ```bash
-   nebari init azure --project projectname \
+   qhub init azure --project projectname \
        --domain domain \
        --auth-provider password
    ```
@@ -98,7 +98,7 @@ environment variables have been properly set. It is time to initialize and deplo
 You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
-Once `nebari init` is executed, you should then be able to see the following output:
+Once `qhub init` is executed, you should then be able to see the following output:
 
 ```bash
 Securely generated default random password=*** for Keycloak root user
@@ -113,23 +113,23 @@ with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, in order to create the first user accounts for administrator(s).
 
-The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+The qhub initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
+The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
+simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the nebari-config.yaml file](/tutorials) documentation.
+For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the qhub-config.yaml file](/tutorials) documentation.
 
 ## Deploying Nebari
 
-With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
+With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c nebari-config.yaml
+nebari deploy -c qhub-config.yaml
 ```
 
-The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please

@@ -3,6 +3,12 @@ title: Installing Nebari
 description: A guide to help you install Nebari for your team.
 ---
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 # Installing Nebari
 
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are is already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the [advanced-settings] section.
@@ -26,19 +32,19 @@ There are currently two ways to install Nebari:
 1. You can install Nebari directly from the Python Package Index (PyPI) using `pip`. For most common architectures and platforms (`Linux x86-64` and `macOS x86-64`), `pip` will download and install the most recent version available.
 
    ```bash
-   python3 pip install nebari
+   python3 pip install qhub
    ```
 
 2. Nebari is also available at [conda-forge](https://anaconda.org/conda-forge/qhub) and can be installed using the `conda` package manager by running the following command:
 
    ```bash
-   conda install nebari -c conda-forge
+   conda install qhub -c conda-forge
    ```
 
    if you prefer [mamba](https://github.com/mamba-org/mamba#mamba), you can use the following command:
 
    ```bash
-   mamba install nebari
+   mamba install qhub
    ```
 
 ## Verify installation
@@ -46,7 +52,7 @@ There are currently two ways to install Nebari:
 You can verify that Nebari is properly installed and you are able to execute the client commands by running:
 
 ```bash
-nebari --help
+qhub --help
 ```
 
 ![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output").
