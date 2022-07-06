@@ -26,7 +26,7 @@ module.exports = {
         type: "generated-index",
         title: "Getting Started",
         description:
-          "This section describes how to install and deploy Nebari on a selection of cloud providers, and also provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
+          "This section describes how to install and deploy Nebari on a selection of cloud providers, and provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
         slug: "category/getting-started",
         keywords: ["getting-started"],
       },
@@ -37,13 +37,13 @@ module.exports = {
       ],
     },
     {
-        type: 'category',
-        label: 'Tutorials',
-        link: {type: 'doc', id: 'tutorials/index'},
-        items: [
-          "tutorials/creating-cds-dashboard",
-          "tutorials/cost-estimate-report",
-        ],
+      type: "category",
+      label: "Tutorials",
+      link: { type: "doc", id: "tutorials/index" },
+      items: [
+        "tutorials/creating-cds-dashboard",
+        "tutorials/cost-estimate-report",
+      ],
     },
     {
       type: "category",
@@ -57,7 +57,6 @@ module.exports = {
         keywords: ["how-to"],
       },
       items: [
-        "how-tos/overview",
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",
         "how-tos/nebari-do",

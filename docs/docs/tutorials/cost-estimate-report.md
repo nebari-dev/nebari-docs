@@ -11,12 +11,11 @@ import TabItem from '@theme/TabItem';
 
 [Infracost](https://www.infracost.io/) is a tool that enables developers to analyze their cloud cost estimates using their Terraform templates. Nebari wraps the `infracost` command-line interface, which is free and open-source, to provide cost estimates for your Nebari deployments across major cloud providers.
 
-This tutorial will generate a cost report for our Nebari deployment, which you can share with other users and groups via a simple Infracost link. We will also be looking into how Infracost can be configured on your local machine. 
+This tutorial will generate a cost report for our Nebari deployment, which you can share with other users and groups via a simple Infracost link. We will also be looking into how Infracost can be configured on your local machine.
 
 Infracost natively supports Amazon Web Services, Azure, and Google Cloud Platform. For this tutorial, we will be using the Google Cloud Platform (GCP) deployment to generate the cost report.
 
 ## Installing Infracost
-
 
 To install the `infracost` command-line interface, run the following command on your terminal:
 
@@ -59,14 +58,14 @@ The Nebari cost estimate tool will look for the `stages` directory within your d
 It will be visible in the following manner:
 
 ```sh
-         Cost Breakdown          
+         Cost Breakdown
 ┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
 ┃               Name ┃ Cost ($) ┃
 ┡━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
 │ Total Monthly Cost │       XX │
 │  Total Hourly Cost │       XX │
 └────────────────────┴──────────┘
-           Resource Breakdown           
+           Resource Breakdown
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
 ┃                         Name ┃ Number ┃
 ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
@@ -76,27 +75,27 @@ It will be visible in the following manner:
 │   Total Non-Priced Resources │      X │
 │ Total Usage-Priced Resources │      X │
 └──────────────────────────────┴────────┘
-Access the dashboard here: 
+Access the dashboard here:
 https://dashboard.infracost.io/share/XXXXXXXXXX
 
-Nebari relies upon node pools which is a usage resource that doesn't get captured in 
+Nebari relies upon node pools which is a usage resource that doesn't get captured in
 the above report. A general node pool will always have one node running will add
-an additional charge. Please check with your cloud provider to see the 
-associated costs with node pools.                                               
+an additional charge. Please check with your cloud provider to see the
+associated costs with node pools.
 
- • Total Monthly Cost: The total monthly cost of the deployment of supported    
-   resources.                                                                   
- • Total Hourly Cost: The total hourly cost of the deployment of supported      
-   resources.                                                                   
- • Total Detected Costs: The total number of resources detected by Infracost.   
- • Total Supported Resources: The total number of resources supported by        
-   Infracost.                                                                   
- • Total Unsupported Resources: The total number of resources unsupported by  
-   Infracost.                                            
- • Total Non-Priced Resources: The total number of resources that are not       
-   priced.                                               
- • Total Usage-Priced Resources: The total number of resources that are priced  
-   based on usage.                                                              
+ • Total Monthly Cost: The total monthly cost of the deployment of supported
+   resources.
+ • Total Hourly Cost: The total hourly cost of the deployment of supported
+   resources.
+ • Total Detected Costs: The total number of resources detected by Infracost.
+ • Total Supported Resources: The total number of resources supported by
+   Infracost.
+ • Total Unsupported Resources: The total number of resources unsupported by
+   Infracost.
+ • Total Non-Priced Resources: The total number of resources that are not
+   priced.
+ • Total Usage-Priced Resources: The total number of resources that are priced
+   based on usage.
 ```
 
 You can share the URL of your Infracost dashboard `https://dashboard.infracost.io/share/XXXXXXXXXX`

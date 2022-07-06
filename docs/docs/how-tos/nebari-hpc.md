@@ -3,7 +3,6 @@ id: nebari-hpc
 title: How to install Nebari HPC on bare metal machines
 ---
 
-
 ## Requirements
 
 Nebari-HPC currently requires ubuntu bare metal machines. There are plans to support additional OSs such as RHEL. We actively test on the latest stable Ubuntu release. We require:

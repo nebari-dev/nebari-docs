@@ -4,7 +4,6 @@ title: How to deploy Nebari on GCP
 description: A basic overview of how to deploy Nebari on GCP.
 ---
 
-
 This guide is to help first-time users set up a Google Cloud Platform account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we
 will walk you through the following steps:
 
@@ -17,6 +16,12 @@ will walk you through the following steps:
 For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
 
+:::warning
+We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+
+You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
+:::
+
 ## Sign up for Google Cloud Platform
 
 This documentation assumes that you are already familiar to Google Cloud Platform accounts and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related
@@ -27,6 +32,8 @@ features. Check the [Create a Google Account documentation](https://support.goog
 [Overview of Cloud billing concepts](https://cloud.google.com/billing/docs/concepts#billing_account) for more information on account types and cost usage. Also, please refer to
 [Cluster management fee and free tier](https://cloud.google.com/kubernetes-engine/pricing#cluster_management_fee_and_free_tier) documentation for an overview of how costs are
 calculated and applied to an organization's billing account.
+
+<!-- TODO: add link to conceptual guides -->
 
 For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
 
@@ -75,11 +82,15 @@ instructions below:
 5. Leave the "Key Type" as `JSON`;
 6. Click "Create" to create the key and save the key file to your system.
 
-Store this credentials file in a well-known location and make sure to set yourself exclusive permissions. You can change the file permissions by running the command
-`chmod 600 <filename>` on your terminal.
+Store these credentials file in a well-known location and make sure to set yourself exclusive permissions.
+You can change the file permissions by running the following command on your terminal:
+
+```bash
+chmod 600 <filename>
+```
 
 :::warning
-The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be
+The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should _never_ be
 checked into source control.
 :::
 
@@ -114,24 +125,24 @@ Great, you’ve gone through the [Nebari Installation](/getting-started/installi
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
-	  ```bash
-	  mkdir nebari-gcp && cd nebari-gcp
-	  ```
 
+   ```bash
+   mkdir nebari-gcp && cd nebari-gcp
+   ```
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-    ```bash
-    nebari init gcp --project projectname \
-	    --domain domain \
-	    --auth-provider password
-    ```
+   ```bash
+   qhub init gcp --project projectname \
+       --domain domain \
+       --auth-provider password
+   ```
 
 :::note
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
-Once `nebari init` is executed, you should then be able to see the following output:
+Once `qhub init` is executed, you should then be able to see the following output:
 
 ```bash
 Securely generated default random password=*** for Keycloak root user
@@ -147,23 +158,23 @@ with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, in order to create the first user accounts for administrator(s).
 
-The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+The qhub initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
+The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
+simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the nebari-config.yaml file](/tutorials) documentation.
+For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the qhub-config.yaml file](/tutorials) documentation.
 
 ## Deploying Nebari
 
-With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
+With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c nebari-config.yaml
+qhub deploy -c qhub-config.yaml
 ```
 
-The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
@@ -172,7 +183,7 @@ follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: Nebari deployed successfully
+[terraform]: QHub deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/
@@ -184,6 +195,8 @@ Kubernetes kubeconfig located at file:///tmp/NEBARI_KUBECONFIG
 Kubecloak master realm username=root *****
 ...
 ```
+
+<!-- TODO: add link to initial config -->
 
 Congratulations! You have successfully deployed Nebari on GCP! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
