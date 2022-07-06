@@ -81,17 +81,18 @@ Great, you’ve gone through the [Nebari Installation](/getting-started/installi
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:
-	  ```bash
-	  mkdir nebari-azure && cd nebari-azure
-	  ```
+
+   ```bash
+   mkdir nebari-azure && cd nebari-azure
+   ```
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-    ```bash
-    nebari init azure --project projectname \
-	    --domain domain \
-	    --auth-provider password
-    ```
+   ```bash
+   nebari init azure --project projectname \
+       --domain domain \
+       --auth-provider password
+   ```
 
 :::note
 You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)

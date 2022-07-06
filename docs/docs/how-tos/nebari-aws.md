@@ -58,13 +58,13 @@ Follow these steps to set up your access keys and user accounts:
 ![Account setup steps for setting your first IAM user on AWS, the image contains a input for creating your user name and two item boxes for selecting the type of credential needed for this account](/img/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
 4. Select **Attach existing policies directly**, then select `AdministratorAccess` from the list of policies. For more information, please refer to
-  [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
+   [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
 5. Then proceed with the new user creation setup.
 
 Upon generation, the IAM role will provide a public `Access Key ID` and `Secret Access Key`. Download this file for reference later.
 
 :::warning
-The **Secret Access Key** provides access to your AWS user account. It should be treated like any other secret credentials. In particular, it should *never* be
+The **Secret Access Key** provides access to your AWS user account. It should be treated like any other secret credentials. In particular, it should _never_ be
 checked into source control.
 :::
 
@@ -96,23 +96,22 @@ Great, you’ve gone through the [Nebari Installation](/getting-started/installi
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-aws`:
-	  ```bash
-	  mkdir nebari-aws && cd nebari-aws
-	  ```
 
+   ```bash
+   mkdir nebari-aws && cd nebari-aws
+   ```
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-  ```bash
-  nebari init aws --project projectname \
+```bash
+nebari init aws --project projectname \
 	  --domain domain \
 	  --auth-provider password
-  ```
+```
 
 ::: note
 You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
-
 
 Once `nebari init` is executed, you should then be able to see the following output:
 

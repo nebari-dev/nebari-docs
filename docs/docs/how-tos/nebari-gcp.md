@@ -4,7 +4,6 @@ title: How to deploy Nebari on GCP
 description: A basic overview of how to deploy Nebari on GCP.
 ---
 
-
 This guide is to help first-time users set up a Google Cloud Platform account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we
 will walk you through the following steps:
 
@@ -79,7 +78,7 @@ Store this credentials file in a well-known location and make sure to set yourse
 `chmod 600 <filename>` on your terminal.
 
 :::warning
-The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should *never* be
+The **service account key** file provides access to your GCP project. It should be treated like any other secret credentials. In particular, it should _never_ be
 checked into source control.
 :::
 
@@ -114,18 +113,18 @@ Great, you’ve gone through the [Nebari Installation](/getting-started/installi
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
-	  ```bash
-	  mkdir nebari-gcp && cd nebari-gcp
-	  ```
 
+   ```bash
+   mkdir nebari-gcp && cd nebari-gcp
+   ```
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-    ```bash
-    nebari init gcp --project projectname \
-	    --domain domain \
-	    --auth-provider password
-    ```
+   ```bash
+   nebari init gcp --project projectname \
+       --domain domain \
+       --auth-provider password
+   ```
 
 :::note
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)

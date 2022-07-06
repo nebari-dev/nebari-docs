@@ -45,7 +45,7 @@ also required. See [Creating a Spaces access key on Digital Ocean](https://www.d
 information on how to create a space and generate an access key.
 
 :::warning
-As these credentials provides access to your DO account. It should be treated like any other secret credentials. In particular, it should *never* be checked into
+As these credentials provides access to your DO account. It should be treated like any other secret credentials. In particular, it should _never_ be checked into
 source control.
 :::
 
@@ -76,17 +76,18 @@ Great, you’ve gone through the [Nebari Installation](/getting-started/installi
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-do`:
-	  ```bash
-	  mkdir nebari-do && cd nebari-do
-	  ```
+
+   ```bash
+   mkdir nebari-do && cd nebari-do
+   ```
 
 2. Executing the command below will generate a basic config file with an infrastructure based on **DO**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
-    ```bash
-    nebari init do --project projectname \
-	    --domain domain \
-	    --auth-provider password
-    ```
+   ```bash
+   nebari init do --project projectname \
+       --domain domain \
+       --auth-provider password
+   ```
 
 :::note
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)

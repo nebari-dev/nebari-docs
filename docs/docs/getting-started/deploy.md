@@ -4,7 +4,6 @@ id: deploy
 
 # Choosing a deployment platform
 
-
 Nebari can be deployed on a bare-metal server using HPC, as well as on the major public cloud provider, or on a pre-existing Kubernetes cluster. Review the options below to determine which option best suits your needs.
 
 import Tabs from '@theme/Tabs';
@@ -24,7 +23,6 @@ If you are not sure which option to choose, a cloud installation is likely your 
 - Your team does not have specific expertise within high-performance computing hardware, Kubernetes, Docker, and/or other cloud-native or scalable compute infrastructure technologies
 
 The cloud installation is based on Kubernetes, but knowledge of Kubernetes is **NOT** required nor is in-depth knowledge about the specific provider required either. Currently, Nebari supports [Amazon AWS](/how-tos/nebari-aws.md), [DigitalOcean](/how-tos/nebari-do.md), [Google GCP](/how-tos/nebari-gcp.md), and [Azure](/how-tos/nebari-azure.md).
-
 
 For instructions on installing and deploying Nebari on a particular cloud provider, visit our [cloud providers page](/getting-started/cloud-providers) for a list of the supported cloud providers and their respective installation how-to guides.
 
@@ -60,7 +58,6 @@ For instructions on installing and deploying Nebari HPC, visit the [How to insta
 :::note
 Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to potentially high costs. For more information, check out the [base cost] section of the docs.
 :::
-
 
 </TabItem>
 <TabItem value="local" label="Pre-existing Kubernetes cluster">
