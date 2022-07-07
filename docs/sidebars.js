@@ -51,6 +51,7 @@ module.exports = {
       label: "How-to Guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
+        "how-tos/kbatch-howto",
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",
         "how-tos/nebari-do",
