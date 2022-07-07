@@ -11,8 +11,7 @@ jobs:
       run:
         working-directory: ./docs
     steps:
-    
-      - name: Check out 🛎️
+      - name: Check out repository 🛎️
         uses: actions/checkout@v3
 
       - name: Get yarn cache directory path 🪄
