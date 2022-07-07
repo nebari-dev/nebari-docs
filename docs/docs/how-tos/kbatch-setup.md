@@ -1,9 +1,9 @@
 ---
-id: kbatch-setup
-title: How to setup kbatch
+id: kbatch-howto
+title: How to submit batch jobs
 ---
 
-# How to: setup `kbatch`
+# How to: submit batch jobs
 
 ## Introduction
 
@@ -70,7 +70,7 @@ To submit a job, you will need to specify:
 ```shell
 $ kbatch job submit \
   --name="my-job" \
-  --image="ghcr.io/iameskild/my-image:latest" \
+  --image="ghcr.io/username/my-image:latest" \
   --command="['papermill', 'my-nb.ipynb']" \
   --code="./my-job.ipynb"
 ```
@@ -81,7 +81,7 @@ All of these command line arguments can be consolidated into one configuration f
 
 ```yml
 name: my-job
-image: "ghcr.io/iameskild/my-image:latest"
+image: "ghcr.io/username/my-image:latest"
 command:
   - papermill
   - my-nb.ipynb
@@ -113,7 +113,7 @@ What if you wanted to submit a job to run a schedule, for example, to run once a
 
 ```yml
 name: my-cronjob
-image: "ghcr.io/iameskild/my-image:latest"
+image: "ghcr.io/username/my-image:latest"
 command:
   - papermill
   - my-nb.ipynb
@@ -121,7 +121,7 @@ code: my-nb.ipynb
 schedule: "0 2 * * 7*
 ```
 
-The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every Sunday at 2:00AM. For those unfamiliar, have a read through the Kubernetes CronJob - cron schedule syntax. The website [crontab.guru](crontab.guru) is a nifty tool that tries to translate the schedule syntax into “plain” English.
+The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every Sunday at 2:00AM. For those unfamiliar, have a read through the Kubernetes CronJob - cron schedule syntax. The website [crontab.guru](https://crontab.guru) is a nifty tool that tries to translate the schedule syntax into “plain” English.
 
 ```shell
 $ kbatch cronjob submit -f my-cronjob.yaml
