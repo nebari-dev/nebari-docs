@@ -9,7 +9,7 @@ title: How to setup kbatch
 
 The ability to run a notebook or a script from within the QHub terminal is now possible with the addition of [`kbatch`](https://github.com/kbatch-dev/kbatch). `kbatch` is a small project that let's the user submit jobs or cronjobs to the kubernetes API. Or in other words, this CLI tool allows a user to submit their notebook or script to run in a "headless" manner. 
 
-The idea of batch jobs is useful in situations where you need no human interaction, besides submitting it as a job, and the results can be efficently saved to the cloud or other similar storage locations. Batch jobs can also be submitted to run on a schedule, these are known as cronjobs, more on `kbatch cronjob` below.
+The idea of batch jobs is useful in situations where you need no human interaction, besides submitting it as a job, and the results can be efficiently saved to the cloud or other similar storage locations. Batch jobs can also be submitted to run on a schedule, these are known as cronjobs, more on `kbatch cronjob` below.
 
 There are a few known limitations at the moment, these include:
 - no integration with the local QHub filesystem, besides the notebook or script itself
@@ -124,7 +124,7 @@ code: my-nb.ipynb
 schedule: "0 2 * * 7*
 ```
 
-The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run onces every Sunday at 2:00AM. 
+The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every Sunday at 2:00AM. 
 
 ```shell
 $ kbatch cronjob submit -f my-cronjob.yaml
