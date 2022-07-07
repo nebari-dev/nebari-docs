@@ -54,19 +54,18 @@ Wrote config to /home/<username>/.config/kbatch/config.json
 
 ## Submit a job
 
-When submitting a job to `kbatch`, there are a handful of required arguments. These arguments can be passed directly from the command-line or, you can create a configuration file and pass that to `kbatch`. 
+When submitting a job to `kbatch`, there are a handful of required arguments. These arguments can be passed directly from the command-line or you can create a configuration file and pass that to `kbatch`. 
 
 For more details on how to use `kbatch` please refer to [their documentation page](https://kbatch.readthedocs.io/en/latest/user-guide.html).
 
 To submit a job, you will need to specify:
-- `--name` - give your job a name.
-- `--image` - specify the container image used to run your job.
-  - this should include all the packages and libraries you need.
-- `--command` - the command that will start the job.
-- `--code` - (optional) the path to the file or notebook used by the job.
-  - necessary if trying to specify a particular notebook or script.
+- `name` - give your job a name.
+- `image` - specify the container image used to run your job.
+  - this should include all the packages and libraries needed to run your job.
+- `command` - the command that will start the job.
+- `code` - (optional) the path to the file or notebook used by the job.
 
-> NOTE: If trying to submit a notebook as a job, the `command` would be something like `--command="['papermill', 'my-nb.ipynb']"`, where [`papermill`](https://papermill.readthedocs.io/en/latest/) is a tool for parameterizing and executing Jupyter notebooks and should be in your `image`. 
+> NOTE: If trying to submit a notebook as a job, the `command` would be something like `--command="['papermill', 'my-nb.ipynb']"`, where [`papermill`](https://papermill.readthedocs.io/en/latest/) is a tool for parameterizing and executing Jupyter notebooks and should be included in your `image`. 
 
 ```shell
 $ kbatch job submit \
@@ -76,7 +75,7 @@ $ kbatch job submit \
   --code="./my-job.ipynb"
 ```
 
-This should output a Kubernetes manifest (or resource specification) for the job being submitted.
+This should output the full Job specification that was submitted to Kubernetes.
 
 All of these command line arguments can be consolidated into one configuration file.
 
@@ -95,7 +94,7 @@ If the above YAML configuration file is saved as `my-job.yaml`, then it can be s
 $ kbatch job submit -f my-job.yaml
 ```
 
-This job will now be run without any direct feedback to the user. However if you're interested in checking the status of your job, you can list the running jobs as follows.
+This job will now run without any feedback to the user. However if you're interested in checking the status of your job, you can list the recently submitted jobs as follows.
 
 ```shell
 $ kbatch job list --output table
@@ -110,9 +109,7 @@ $ kbatch job list --output table
 
 ## Submit a cronjob
 
-Now what if you want to submit a job to run a schedule, for example you want a job to run once a week? This is where `kbatch cronjob` comes in handy. 
-
-The only difference between `job` and `cronjob` is that the latter requires you to specify a `schedule`. 
+What if you wanted to submit a job to run a schedule, for example, to run once a week? This is where `kbatch cronjob` comes in handy and luckily the interface is almost exactly the same. The only difference between `job` and `cronjob` is that the latter requires you to specify a `schedule`. 
 
 ```yml
 name: my-cronjob
@@ -124,7 +121,7 @@ code: my-nb.ipynb
 schedule: "0 2 * * 7*
 ```
 
-The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every Sunday at 2:00AM. 
+The same job that we submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every Sunday at 2:00AM. For those unfamiliar, have a read through the Kubernetes CronJob - cron schedule syntax. The website [crontab.guru](crontab.guru) is a nifty tool that tries to translate the schedule syntax into “plain” English.
 
 ```shell
 $ kbatch cronjob submit -f my-cronjob.yaml
