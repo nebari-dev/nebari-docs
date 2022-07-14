@@ -5,7 +5,7 @@ contact_links:
     about: Check out the Nebari documentation
   - name: Nebari Discussions - our user forum
     url: https://github.com/orgs/nebari-dev/discussions
-    about: Ask questions, discuss RFCs and help other Nebari's users
+    about: Ask questions, discuss RFDs and help other Nebari's users
   - name: (maintainers only) - Blank issue
     url: https://github.com/nebari-dev/nebari/issues/new
     about: For maintainers only - should be used sparingly
