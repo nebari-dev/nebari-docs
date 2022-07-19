@@ -22,6 +22,14 @@ components.
 
 ### How to configure dask gateway profiles?
 
+Nebari allows for the configuration of the Dask workers. Similar to the JupyterLab instances, you only need to configure the cores and memory.
+
+When configuring the memory and CPUs for profiles, some important considerations exist. Two essential terms to understand are:
+
+-  `limit` is the absolute max memory a given pod can consume. Suppose a process within the pod consumes more than the  `limit`  memory. In that case, the Linux OS will kill the process. `limit` is not used for scheduling purposes with Kubernetes.
+    
+-  `guarantee`: is the amount of memory the Kubernetes scheduler uses to place a given pod. In general, the `guarantee`  will be less than the limit. Often the node itself has less available memory than the node specification. See this  [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/#allocatable-memory), which generally applies to other clouds.
+
 ```python
 jupyterlab:
     - display_name: Small Instance
@@ -54,4 +62,21 @@ jupyterlab:
         cpu_guarantee: 2
         mem_limit: 4G
         mem_guarantee: 4G
+```
+
+### How to configure dask scheduler?
+
+In a few instances, the dask worker node-group might be running on quite a large instance, perhaps with 8 CPUs and 32 GB of memory (or more). In this case, you might also want to increase the resource levels associated with the dask scheduler.
+
+```python
+dask_worker:
+    "Huge Worker":
+      worker_cores_limit: 7
+      worker_cores: 6
+      worker_memory_limit: 30G
+      worker_memory: 28G
+      scheduler_cores_limit: 7
+      scheduler_cores: 6
+      scheduler_memory_limit: 30G
+      scheduler_memory: 28G
 ```
