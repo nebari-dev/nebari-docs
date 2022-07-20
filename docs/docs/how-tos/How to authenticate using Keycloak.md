@@ -1,6 +1,6 @@
 ---
 id: login-keycloak
-title: How to authenticate using Keycloak
+title: How to authenticate using Keycloak and launch your server
 description: |
   This is a how-to for authenticating using Keycloak.
 ---
@@ -15,10 +15,10 @@ the login page shown in the image below.
 
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
-Nebari now uses an open source tool called Keycloak for user management. This makes it a little challenging to detail the exact process as it might differ greatly between
-authentication providers (LDAP, OAuth 2.0, passwordless authentication, password-based authentication and many others). For more information on how to configure Keycloak, and add new users, make sure to check [How to configure Keycloak and add new users](/how-tos/configuring-keycloak) sections of our docs.
+Nebari now uses an open source tool called [Keycloak](https://www.keycloak.org/) for user management. This makes it a little challenging to detail the exact process as it might differ greatly between
+authentication providers ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others). For more information on how to configure Keycloak, and add new users, make sure to check [How to configure Keycloak and add new users](/how-tos/configuring-keycloak) sections of our docs.
 
-2. Authentication will differ based on the Identity providers chosen by your organization, in this example, we will use a simple password-based authentication.
+2. Authentication will differ based on the [Identity providers](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) chosen by your organization, in this example, we will use a simple password-based authentication.
 
 ![Nebari Keycloak auth screen](/img/how-tos/keycloak_nebari_login.png)
 
