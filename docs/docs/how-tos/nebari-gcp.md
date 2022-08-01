@@ -174,6 +174,18 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 qhub deploy -c qhub-config.yaml
 ```
 
+:::note
+If you have account on any [cloud provider](https://www.nebari.dev/getting-started/cloud-providers) you can create a domain name of your choice. Taking Cloud Flare as a choice you can create a domain name with some restrictions obviously, ***for eg: any-domain-name.qhub.dev***. please keep in mind that after creating your own domain name you need to run  
+
+```bash
+qhub deploy -c qhub-config.yaml --disable-prompt --dns-provider cloudflare --dns-auto-provision
+```
+
+```bash
+export CLOUDFLARE_TOKEN="cloudflare token"
+```
+:::
+
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
