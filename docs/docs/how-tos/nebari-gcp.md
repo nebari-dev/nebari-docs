@@ -175,7 +175,7 @@ qhub deploy -c qhub-config.yaml
 ```
 
 :::note
-If you have account on any [cloud provider](https://www.nebari.dev/getting-started/cloud-providers) you can create a domain name of your choice. Taking Cloud Flare as a choice you can create a domain name with some restrictions obviously, ***for eg: any-domain-name.qhub.dev***. please keep in mind that after creating your own domain name you need to run  
+If you have account on any [Cloud provider](https://www.nebari.dev/getting-started/cloud-providers) you can create a domain name of your choice, if you are not selecting CloudFlare for [automatic DNS registration](https://www.nebari.dev/how-tos/domain-registry). Taking Cloud Flare as a choice you can create a domain name with some restrictions obviously, for example: `any-domain-name.qhub.dev`. Please keep in mind that after creating your own domain name you need to run  
 
 ```bash
 qhub deploy -c qhub-config.yaml --disable-prompt --dns-provider cloudflare --dns-auto-provision
