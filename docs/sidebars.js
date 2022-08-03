@@ -8,7 +8,6 @@
 
  Create as many sidebars as you want.
  */
-
 // @ts-check
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
@@ -21,31 +20,46 @@ module.exports = {
       id: "welcome",
     },
     {
-      type: "doc",
-      label: "Quickstart",
-      id: "quickstart",
+      type: "category",
+      label: "Getting Started",
+      link: {
+        type: "generated-index",
+        title: "Getting Started",
+        description:
+          "This section describes how to install and deploy Nebari on a selection of cloud providers, and provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
+        slug: "category/getting-started",
+        keywords: ["getting-started"],
+      },
+      items: [
+        "getting-started/installing-nebari",
+        "getting-started/deploy",
+        "getting-started/cloud-providers",
+      ],
     },
     {
-        type: 'category',
-        label: 'Tutorials',
-        link: {type: 'doc', id: 'tutorials/index'},
-        items: [
-          'tutorials/creating-cds-dashboard',
-          "tutorials/using_dask",
-        ],
+      type: "category",
+      label: "Tutorials",
+      link: { type: "doc", id: "tutorials/index" },
+      items: [
+        "tutorials/creating-cds-dashboard",
+        "tutorials/cost-estimate-report",
+        "tutorials/creating-new-environments",
+        "tutorials/using_dask",
+      ],
     },
     {
       type: "category",
       label: "How-to Guides",
-      link: {
-        type: "generated-index",
-        title: "How-to Guides",
-        description:
-          "Practical step-by-step guides to help you achieve a specific goal. Most useful when you're trying to get something done.",
-        slug: "category/how-to",
-        keywords: ["how-to"],
-      },
-      items: ["how-tos/overview"],
+      link: { type: "doc", id: "how-tos/index" },
+      items: [
+        "how-tos/kbatch-howto",
+        "how-tos/nebari-gcp",
+        "how-tos/nebari-aws",
+        "how-tos/nebari-do",
+        "how-tos/nebari-azure",
+        "how-tos/nebari-hpc",
+        "how-tos/domain-registry",
+      ],
     },
     {
       type: "category",
