@@ -32,7 +32,7 @@ Check out the [Dask Gateway documentation](https://gateway.dask.org/) for a full
 ## Setting up Dask Gateway
 
 We will start by creating a Jupyter notebook. Select an environment from the `Select kernel` dropdown menu 
-(located on the top right of your notebook). Be sure to select an environment which incudes `Dask`!
+(located on the top right of your notebook). Be sure to select an environment which includes `Dask`!
 
 Nebari has set of pre-defined options for configuring the Dask profiles that we have access to. These can be 
 accessed via Dask Gateway options.
