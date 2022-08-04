@@ -96,27 +96,38 @@ The `Dask Client` interface gives us a brief summary of everything we've set up 
 
 ## Now for the fun part - let's code with Dask! 
 
+We will perform some basic analysis on the well-known New York city yellow taxi dataset, a subset of which we have copied over to a Google Cloud Storage bucket `gs://nebari-public/yellow_taxi_NYC`. 
+
+:::note 
+This dataset is saved in parquet format, a column-oriented file format commonly used for large datasets saved in the cloud. 
+
+To get started, we will load the data using dask dataframe. This will lazily load the dataset.
+
 ```python
-import dask.array as da
-x = da.random.random((100000, 100000), chunks=(1000, 1000))
-y = x * x
-z = y.mean(axis=1)
-z.compute()
+import dask.dataframe as dd
+
+nyc_taxi_dask_df = dd.read_parquet(
+    path='gs://nebari-public/yellow_taxi_NYC/*/*.parquet', 
+    storage_options={'anon':True},
+)
 ```
 
-**Sample output: Dask compute**
+From here we can start analyzing the data. First let's check the size of the overall dataset.
+
+```python
+dataset_size = nyc_taxi_dask_df.memory_usage(deep=True).compute().sum()
+dataset_size
+```
+
+**Output:**
 ```shell
-array([0.33349882, 0.33262234, 0.33379292, ..., 0.33177493, 0.33396109,
-       0.33385578])
+32426244980
 ```
 
-In the above code snippet, we are first generating a random array of shape (10000*10000), which is a large array.
-In order to fit it into our memory we specify the argument `chunks` which breaks the underlying array into
-chunks. Here we are using uniform dimension `1000`, meaning chunks of 1000 in each dimension. Storing it in variable
-`x`. Further some simple computations are performed, and finally we compute the column wise mean operation 
-on the array `z`.
+This corresponds to 32.43GB of data. Running this one-liner would be impossible on most single machines but running this on a dask cluster with 4 works, this can be calculated in under a minute.
 
-![variable x](/img/x_array.png)    ![variable z](/img/z_array.png) 
+...
+
 
 ### Dask diagnostic UI
 
