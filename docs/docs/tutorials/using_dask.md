@@ -99,7 +99,9 @@ The `Dask Client` interface gives us a brief summary of everything we've set up 
 We will perform some basic analysis on the well-known New York city yellow taxi dataset, a subset of which we have copied over to a Google Cloud Storage bucket `gs://nebari-public/yellow_taxi_NYC`. 
 
 :::note 
-This dataset is saved in parquet format, a column-oriented file format commonly used for large datasets saved in the cloud. 
+This dataset is saved in parquet format, a column-oriented file format commonly used for large datasets saved in the cloud.
+:::
+
 
 To get started, we will load the data using dask dataframe. This will lazily load the dataset.
 
@@ -225,7 +227,6 @@ with dask_cluster() as client:
     print(client.run(os.getpid))
 ```
 
-:::
 
 ## Conclusion
 
