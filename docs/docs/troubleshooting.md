@@ -6,6 +6,7 @@ Invariably you will encounter behavior that does not match your expectations. Th
 
  - DNS domain=1your_nebari_domain1 record does not exist
  - User instances on AWS occasionally die ~30 minutes after spinning up a large dask cluster
+ - Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
 
 [_Errors_](#errors)
  
@@ -38,6 +39,10 @@ At this point, feel free to cancel the deployment and rerun the same deployment 
 AWS uses Elastic Kubernetes Service for hosting the Kubernetes cluster. [It requires the use of at least two availability zones](https://docs.aws.amazon.com/eks/latest/userguide/infrastructure-security.html). The Nebari cluster has an autoscaler with a default service that automatically balances the number of EC2 instances between the two availability zones. When large dask clusters are initialized and destroyed, the autoscaler attempts to reschedule a user pod. This reschedule operation occurs in the other availability zone. Unfortunately, Kubernetes doesn't successfully transfer the active pod to the other zone, and the pod dies.
 
 To stop this from happening, the autoscaler service "AZRebalance" needs to be manually suspended. You can [follow the steps in the AWS documentation to suspend the AZRebalance service](https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-suspend-resume-processes.html).
+
+### Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
+
+Nebari regenerates this file on every run. Yes, it will be trashed by the operating system's tmpdir cleanup, but it will be repopulated.
 
 ## Errors
 
