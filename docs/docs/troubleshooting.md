@@ -5,6 +5,7 @@ Invariably you will encounter behavior that does not match your expectations. Th
 [_Behavior_](#behavior)
 
  - DNS domain=1your_nebari_domain1 record does not exist
+ - User instances on AWS occasionally die ~30 minutes after spinning up a large dask cluster
 
 [_Errors_](#errors)
  
@@ -14,6 +15,7 @@ Invariably you will encounter behavior that does not match your expectations. Th
 
  - Get kubernetes context
  - Debug your kubernetes cluster
+ - Deploy an arbitrary pod
 
 ## Behavior
 
@@ -30,6 +32,12 @@ Without going into a deep dive of what DNS is or how it works, the issue encount
 As the output message mentions, it will ask if you want it to retry this DNS lookup again after another wait period; this wait period keeps increasing after each retry. However, it's possible that after waiting 15 or more minutes that the DNS still won't resolve.
 
 At this point, feel free to cancel the deployment and rerun the same deployment command again in an hour or two. Although not guaranteed, it's extremely likely that the DNS will resolve correctly after this prolonged wait period.
+
+### User instances on AWS occasionally die ~30 minutes after spinning up a large dask cluster
+
+AWS uses Elastic Kubernetes Service for hosting the Kubernetes cluster. [It requires the use of at least two availability zones](https://docs.aws.amazon.com/eks/latest/userguide/infrastructure-security.html). The Nebari cluster has an autoscaler with a default service that automatically balances the number of EC2 instances between the two availability zones. When large dask clusters are initialized and destroyed, the autoscaler attempts to reschedule a user pod. This reschedule operation occurs in the other availability zone. Unfortunately, Kubernetes doesn't successfully transfer the active pod to the other zone, and the pod dies.
+
+To stop this from happening, the autoscaler service "AZRebalance" needs to be manually suspended. You can [follow the steps in the AWS documentation to suspend the AZRebalance service](https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-suspend-resume-processes.html).
 
 ## Errors
 
@@ -80,3 +88,17 @@ By default, `k9s` starts with the standard directory that's set as the context (
 > **NOTE**: In some circumstances, you will be confronted with the need to inspect any services launched by your cluster at your `localhost`. For instance, if your cluster has problem with the network traffic tunnel configuration, it may limit or block the user’s access to destination resources over the connection.
 
 `k9s` port-forward option <kbd>shift</kbd> + <kbd>f</kbd> allows you to access and interact with internal Kubernetes cluster processes from your localhost you can then use this method to investigate issues and adjust your services locally without the need to expose them beforehand.
+
+### Deploy an arbitrary pod
+
+As a user, you can add extensions as follows:
+
+```sh
+extensions:
+  - name: echo-test
+    image: inanimate/echo-server:latest
+    urlslug: echo
+    private: true
+```
+
+This deploys a simple service based on the image provided. `name` must be a simple terraform-friendly string. The pod is available on your Nebari site at the `/echo` URL, or whatever URL slug you provide. Users will need login credentials if `private` is `true`.
