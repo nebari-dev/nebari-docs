@@ -1,6 +1,6 @@
 ---
-name: "👀 - Request for Discussion"
-about: Open discussion about a feature or design project in nebari.
+name: "Request for Discussion (RFD) 💬"
+about: Open discussion about a feature or design project in Nebari.
 labels:
   - "type: RFD"
 title: "RFD - Title"

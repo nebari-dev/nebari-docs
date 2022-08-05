@@ -1,4 +1,4 @@
-name: General issue 💡
+name: "General issue 💡"
 description: "A general template for many kinds of issues."
 title: "<title>"
 labels: ["needs: triage 🚦"]
