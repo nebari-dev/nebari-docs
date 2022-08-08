@@ -173,14 +173,12 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 ```bash
 qhub deploy -c qhub-config.yaml
 ```
-
 :::note
-If you have account on any [Cloud provider](https://www.nebari.dev/getting-started/cloud-providers) you can create a domain name of your choice, if you are not selecting CloudFlare for [automatic DNS registration](https://www.nebari.dev/how-tos/domain-registry). Taking Cloud Flare as a choice you can create a domain name with some restrictions obviously, for example: `any-domain-name.qhub.dev`. Please keep in mind that after creating your own domain name you need to run  
+During Qhub deployment DNS record is required. You are advised to follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section to set up the DNS record and for more information regarding the domain A/CNAME records and how to automatically generate them. If you already have a Cloudflare account, Please add the following flags:  `--dns-provider cloudflare` and `--dns-auto-provison` to the Qhub deployment command above and be sure to export your Cloudflare token as commented below:
 
 ```bash
 qhub deploy -c qhub-config.yaml --disable-prompt --dns-provider cloudflare --dns-auto-provision
 ```
-
 ```bash
 export CLOUDFLARE_TOKEN="cloudflare token"
 ```
@@ -188,9 +186,6 @@ export CLOUDFLARE_TOKEN="cloudflare token"
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
-
-Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
-follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
 
 If the deployment is successful, you will see the following output:
 
