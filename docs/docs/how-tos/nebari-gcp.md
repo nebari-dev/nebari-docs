@@ -173,16 +173,7 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 ```bash
 qhub deploy -c qhub-config.yaml
 ```
-:::note
-During Qhub deployment DNS record is required. You are advised to follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section to set up the DNS record and for more information regarding the domain A/CNAME records and how to automatically generate them. If you already have a Cloudflare account, Please add the following flags:  `--dns-provider cloudflare` and `--dns-auto-provison` to the Qhub deployment command above and be sure to export your Cloudflare token as commented below:
-
-```bash
-qhub deploy -c qhub-config.yaml --disable-prompt --dns-provider cloudflare --dns-auto-provision
-```
-```bash
-export CLOUDFLARE_TOKEN="cloudflare token"
-```
-:::
+During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps. 
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
