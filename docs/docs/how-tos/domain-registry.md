@@ -74,13 +74,13 @@ The amount of time you might need to wait varies from each DNS provider. Validat
 
 ## Automatically DNS provision
 
-Qhub has an extra flag for deployments that grants management and creation of the DNS records for you automatically, for automatically DNS provision add --dns-auto-provision to your qhub deploy command:
+Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatically DNS provision add `--dns-auto-provision` to your qhub deploy command:
 
-qhub deploy -c qhub-config --dns-provider cloudflare --dns-auto-provision
+qhub deploy -c qhub-config `--dns-provider cloudflare --dns-auto-provision`
 This will set the DNS provider as Cloudflare and automatically handle the creation or updates for Qhub domain DNS records on Cloudflare.
 
 :::warning
-The usage of --dns-auto-provision is restricted to Cloudflare as it is the only fully integrated DNS provider that Qhub currently supports.
+The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Qhub currently supports.
 :::
 
 When you are done setting up the domain name, you can switch back to the [Nebari deployment documentation](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari) and further continue the remaining steps.
