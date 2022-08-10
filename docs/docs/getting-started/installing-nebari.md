@@ -9,8 +9,6 @@ We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Neba
 You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
 :::
 
-# Installing Nebari
-
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
@@ -56,6 +54,21 @@ qhub --help
 ```
 
 ![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output").
+
+## Nebari commands
+
+The `nebari` command is the primary interface for interacting with Nebari. It can:
+
+- Initialize a Nebari configuration file for any supported platform
+- Manage and validate your Nebari instance
+- Render recent changes into Terraform infrastructure files
+- Create new users using the 'keycloak' command
+
+For full usage of each command, including abbreviations, see [Command reference](/references/cli-command-reference). You can see the same information at the command line by viewing the command-line help.
+
+## Next steps
+
+Now that you have Nebari successfully installed, you can proceed on choosing the best platform deployment option for your team. For more information, please visit [deploying options](/getting-started/deploy.mdx) for an overview of the available options and their respective installation steps.
 
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.md).

@@ -11,6 +11,7 @@ through the following steps:
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
 - [Deploying Nebari](#deploying-nebari)
+- [Next Steps](#next-steps)
 
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
@@ -157,5 +158,7 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on Azure! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
+## Next Steps
+
+Congratulations! You have successfully deployed Nebari on Azure! From here, see [Nebari 101](/tutorials/nebari-101) for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.

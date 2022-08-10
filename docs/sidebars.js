@@ -33,7 +33,6 @@ module.exports = {
       items: [
         "getting-started/installing-nebari",
         "getting-started/deploy",
-        "getting-started/cloud-providers",
       ],
     },
     {
@@ -84,7 +83,10 @@ module.exports = {
         slug: "category/reference",
         keywords: ["reference"],
       },
-      items: ["references/overview"],
+      items: [
+        "references/overview",
+        "references/cli-command-reference",
+      ],
     },
     {
       type: "doc",
