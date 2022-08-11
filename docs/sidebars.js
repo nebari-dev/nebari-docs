@@ -87,7 +87,6 @@ module.exports = {
       },
       items: [
         "references/overview",
-        "references/cli-command-reference",
       ],
     },
     {

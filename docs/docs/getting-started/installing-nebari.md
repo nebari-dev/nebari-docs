@@ -53,18 +53,7 @@ You can verify that Nebari is properly installed and you are able to execute the
 qhub --help
 ```
 
-![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output").
-
-## Nebari commands
-
-The `nebari` command is the primary interface for interacting with Nebari. It can:
-
-- Initialize a Nebari configuration file for any supported platform
-- Manage and validate your Nebari instance
-- Render recent changes into Terraform infrastructure files
-- Create new users using the 'keycloak' command
-
-For full usage of each command, including abbreviations, see [Command reference](/references/cli-command-reference). You can see the same information at the command line by viewing the command-line help.
+![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output")
 
 ## Next steps
 
