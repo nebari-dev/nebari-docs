@@ -7,6 +7,7 @@ Invariably you will encounter behavior that does not match your expectations. Th
  - DNS domain=1your_nebari_domain1 record does not exist
  - User instances on AWS occasionally die ~30 minutes after spinning up a large dask cluster
  - Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
+ - Required pins for dask environments
 
 [_Errors_](#errors)
  
@@ -17,6 +18,10 @@ Invariably you will encounter behavior that does not match your expectations. Th
  - Get kubernetes context
  - Debug your kubernetes cluster
  - Deploy an arbitrary pod
+ - Upgrade the instance size the `general` node group
+ - Use a DNS provider other than CloudFlare
+ - Add system packages to the user's (jupyterlab) image
+ - Provide individual users with unique environments and cloud instance types
 
 ## Behavior
 
@@ -43,6 +48,25 @@ To stop this from happening, the autoscaler service "AZRebalance" needs to be ma
 ### Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
 
 Nebari regenerates this file on every run. Yes, it will be trashed by the operating system's tmpdir cleanup, but it will be repopulated.
+
+### Required pins for dask environments
+
+The best way to manage dask pins is to use the `qhub-dask` [metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask). Usage will look something like this:
+
+```yaml
+environments:
+  environment-dask.yaml:
+    name: dask
+    channels:
+    - conda-forge
+    dependencies:
+    - python
+    - ipykernel
+    - ipywidgets
+    - qhub-dask ==0.2.3
+```
+
+The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/qhub-dask-meta-feedstock/blob/master/recipe/meta.yaml).
 
 ## Errors
 
@@ -107,3 +131,41 @@ extensions:
 ```
 
 This deploys a simple service based on the image provided. `name` must be a simple terraform-friendly string. The pod is available on your Nebari site at the `/echo` URL, or whatever URL slug you provide. Users will need login credentials if `private` is `true`.
+
+### Upgrade the instance size the `general` node group
+
+The `general` node group, or node pool, is the (usually only one) node that hosts most of the pods that Nebari relies on for its core services: `hub`, `conda-store`, `proxy` and so on. We have attempted to "min-max" the instance size of the node: large enough so that the initial deployment will work out of the box, while keeping total cloud compute costs to a minimum.
+
+Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
+
+> Given the possible destructive nature of resizing this node group, we **highly recommend** [backing up your cluster](../admin_guide/backup.md) before attempting.
+
+Based on some testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size. Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in a catastrophic destruction of your cluster.
+
+| Cloud Provider | `general` node upgrade possible? |
+| :------------- | :------------------------------- |
+| AWS            | No (Danger!)                     |
+| Azure          | No (Danger!)                     |
+| Digital Ocean  | No                               |
+| GCP            | Yes                              |
+
+If modifying the resource allocation for the `general` node in-place is absolutely necessary, try increasing the maximum number of nodes for the `general` node group. This will mean two nodes (reserved for the `general` node group) will always be running, ultimately increasing the operating cost of the cluster.
+
+Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `qhub-config.yaml`, and redeploy.
+
+### Use a DNS provider other than CloudFlare
+
+CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the *only* DNS provider Nebari supports. This is NOT the case! Please check out our "How to" section, paying particular attention to the [domain registry](how-tos/domain-registry.md) section.
+
+### Add system packages to a user's (jupyterlab) image
+
+In some cases, you may wish to customize the default user's JupyterLab image, including installing some system packages via apt (or other OS package manager) or adding some JupyterLab extensions.
+
+Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupyterlab` services by default, but this can be changed by:
+
+ 1. Building your own docker images, and
+ 2. Including the DockerHub register hash into `qhub-config.yaml`.
+
+### Provide individual users with unique environments and cloud instance types
+
+It is common for the user base of a common Nebari deployment to need vastly differing environments and, therefore, cloud instance types for their environments. Users can choose both instance types as well as environments at server launch time, provided you have performed some setup ahead of time. 
