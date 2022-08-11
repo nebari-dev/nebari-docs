@@ -18,6 +18,8 @@ repos:
         entry: codespell
         language: python
         exclude: ^docs/yarn.lock
+        args:
+          - --uri-ignore-words-list=aks
 
   # Python
   # Autoformat: Python code, syntax patterns are modernized
