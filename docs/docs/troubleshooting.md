@@ -4,7 +4,7 @@ Invariably you will encounter behavior that does not match your expectations. Th
 
 [_Behavior_](#behavior)
 
- - DNS domain=1your_nebari_domain1 record does not exist
+ - DNS domain=`your_nebari_domain` record does not exist
  - User instances on AWS occasionally die ~30 minutes after spinning up a large dask cluster
  - Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
  - Required pins for dask environments
@@ -27,11 +27,11 @@ Invariably you will encounter behavior that does not match your expectations. Th
 
 ### DNS domain=`your_nebari_domain` record does not exist
 
-During your initial Nebari deployment, at the end of the `04-kubernetes-ingress` stage, you may receive an output message stating that the DNS record for `your_qhub_domain` "appears not to exist, has recently been updated, or has yet to fully propagate."
+During your initial Nebari deployment, at the end of the `04-kubernetes-ingress` stage, you may receive an output message stating that the DNS record for `your_nebari_domain` "appears not to exist, has recently been updated, or has yet to fully propagate."
 
 As the output message mentions, this is likely the result of the non-deterministic behavior of DNS.
 
-Without going into a deep dive of what DNS is or how it works, the issue encountered here is that when Nebari tries to look up the IP address associated with the DNS record, `your_qhub_domain`, nothing is returned. Unfortunately, this "lookup" is not as straightforward as it sounds. To lookup the correct IP associated with this domain, many intermediate servers (root, top level domain, and authoritative nameservers) are checked, each with their own cache, and each cache has its own update schedule (usually on the order of minutes, but not always).
+Without going into a deep dive of what DNS is or how it works, the issue encountered here is that when Nebari tries to look up the IP address associated with the DNS record, `your_nebari_domain`, nothing is returned. Unfortunately, this "lookup" is not as straightforward as it sounds. To lookup the correct IP associated with this domain, many intermediate servers (root, top level domain, and authoritative nameservers) are checked, each with their own cache, and each cache has its own update schedule (usually on the order of minutes, but not always).
 
 (If you are so inclined to learn more about DNS, [see this interesting comic](https://howdns.works/))
 
@@ -74,11 +74,11 @@ The pins for the metapackage can be found in the [conda-forge recipe](https://gi
 
 One of the two Conda-Store environments created during the initial Nebari deployment (`dashboard` or `dask`) may fail to appear as options when logged into JupyterHub.
 
-If your user has access to Conda-Store, you can verify this by visiting `<your_qhub_domain>.com/conda-store` and having a look at the build status of the missing environment.
+If your user has access to Conda-Store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
 
 The reason for this issue is due to how these environments are simultaneously built. Under the hood, Conda-Store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML. If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build. This causes the first build to fail.
 
-To resolve this issue, navigate to `<your_qhub_domain>.com/conda-store`, find the environment build that failed and trigger it to re-build.
+To resolve this issue, navigate to `<your_nebari_domain>.com/conda-store`, find the environment build that failed and trigger it to re-build.
 
 ## How do I...?
 
