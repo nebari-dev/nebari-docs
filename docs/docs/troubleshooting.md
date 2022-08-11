@@ -112,7 +112,7 @@ If you need more information about your Kubernetes cluster, [`k9s`](https://k9sc
 
 By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
 
-![Image of the k9s terminal UI](../static/images/k9s_UI.png)
+![Image of the k9s terminal UI](../static/img/k9s_UI.png)
 
 > **NOTE**: In some circumstances, you will be confronted with the need to inspect any services launched by your cluster at your `localhost`. For instance, if your cluster has problem with the network traffic tunnel configuration, it may limit or block the user’s access to destination resources over the connection.
 
