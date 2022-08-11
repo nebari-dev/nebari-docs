@@ -9,7 +9,7 @@ description: An indepth guide to advanced configuration options.
 # Advanced configuration
 
 This is a page dedicated to the `qhub-config.yaml` file, the file that `qhub` uses to deploy and redeploy changes to your infrastructure. The `qhub-config.yaml` configuration file
-is split into several sections and in this page, we detail the requirements necessary for this YAML-formatted configuration file. In the [Usage](usage.md) section we covered how
+is split into several sections and in this page, we detail the requirements necessary for this YAML-formatted configuration file. In the [Usage] section we covered how
 you can auto-generate this file using `qhub init` (and properly set options/flags and environment variables).
 
 > NOTE: The configuration file is always validated by a [pydantic schema](https://pydantic-docs.helpmanual.io/) in
@@ -25,7 +25,7 @@ domain: "do.qhub.dev" # top level URL exposure to monitor JupyterLab
 ```
 
 - `project_name`: should be compatible with the Cloud provider naming convention. Generally only use `A-Z`, `a-z`, `-`, and `_` (see
-  [Project Naming Conventions](./usage.md#project-naming-convention) for more details).
+  [Project Naming Conventions] for more details).
 
 - `namespace`: is used in combination with `project_name` to label resources. In addition `namespace` also determines the `namespace` that used when deploying kubernetes resources
   for qhub.
@@ -177,7 +177,7 @@ Otherwise here are docs on [creating an Auth0 Application](https://auth0.com/doc
 `auth0_subdomain` field which must be only the `<auth0_subdomain>.auth0.com`. So for the following `qhub-dev.auth0.com` the subdomain would be `qhub-dev`. Note that all the
 usernames will be the email addresses of users (not usernames).
 
-> NOTE: This is a different and distinct step from one outlined in the [Setup](setup.md#auth0) stage.
+> NOTE: This is a different and distinct step from one outlined in the [Setup] stage.
 
 ```yaml
 security:
@@ -222,7 +222,7 @@ The `security.keycloak` section allows you to specify an initial password for th
 We strongly recommend changing this `initial_root_password` after your initial deployment and deleting this value from your `qhub-config.yaml`. Any changes to this value on the
 `qhub-config.yaml` after the initial deployment will have no affect.
 
-For more information on how to do this, see the ["Change Keycloak root password"](./login.md#change-keycloak-root-password) section.
+For more information on how to do this, see the ["Change Keycloak root password"] section.
 
 It's also possible to provide overrides to the [Keycloak Helm deployment](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 
@@ -240,7 +240,7 @@ security:
 Groups and users of QHub are all defined in Keycloak. As above, access Keycloak as the `root` user, noting that the `root` user is not actually a QHub user - you cannot access the
 main features of QHub such as JupyterLab with at user. It is only for Keycloak management.
 
-Follow this links for more detailed information on [Keycloak user management](./login.md#add-user-using-keycloak-console) and [Keycloak group management](./login.md#groups).
+Follow this links for more detailed information on [Keycloak user management] and [Keycloak group management].
 
 ## Provider Infrastructure
 
@@ -265,7 +265,7 @@ For any of the providers (besides local), adding a node group is as easy as the 
 > NOTE: For each provider, details such as **instance names**, **availability zones**, and **Kubernetes versions** will be DIFFERENT.
 
 > NOTE: upgrading the `general` node instance type may not be possible for your chosen provider.
-> [See FAQ.](../user_guide/faq.md#i-want-to-upgrade-the-instance-size-the-general-node-group-is-this-possible)
+> [See FAQ.]
 
 ### Providers
 
@@ -395,7 +395,7 @@ Originally designed for QHub deployments on a "local" minikube cluster, this fea
 options for a `local` deployment are still set deploy QHub to a minikube cluster.
 
 If you wish to deploy QHub to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the
-[Deploy QHub to an Existing Kubernetes Cluster](./existing.md).
+[Deploy QHub to an Existing Kubernetes Cluster].
 
 Deploying to a local existing kubernetes cluster has different options than the cloud providers. `kube_context` is an optional key that can be used to deploy to a non-default
 context. The default node selectors will allow pods to be scheduled anywhere. This can be adjusted to schedule pods on different labeled nodes. Allowing for similar functionality
@@ -686,7 +686,7 @@ All `qhub-config.yaml` files must now contain a `qhub_version` field displaying 
 
 QHub will refuse to deploy if it doesn't contain the same version as that of the `qhub` command.
 
-Typically, you can upgrade the qhub-config.yaml file itself using the [`qhub upgrade` command](../admin_guide/upgrade.md). This will update image numbers, plus updating
+Typically, you can upgrade the qhub-config.yaml file itself using the [`qhub upgrade` command]. This will update image numbers, plus updating
 qhub_version to match the installed version of `qhub`, as well as any other bespoke changes required.
 
 ## JupyterHub
