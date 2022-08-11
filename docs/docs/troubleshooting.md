@@ -138,7 +138,7 @@ The `general` node group, or node pool, is the (usually only one) node that host
 
 Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
 
-> Given the possible destructive nature of resizing this node group, we **highly recommend** [backing up your cluster](../admin_guide/backup.md) before attempting.
+> Given the possible destructive nature of resizing this node group, we **highly recommend** backing up your cluster before attempting.
 
 Based on some testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size. Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in a catastrophic destruction of your cluster.
 
@@ -155,7 +155,7 @@ Alternatively, you can backup your cluster, destroy it, specify the new instance
 
 ### Use a DNS provider other than CloudFlare
 
-CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the *only* DNS provider Nebari supports. This is NOT the case! Please check out our "How to" section, paying particular attention to the [domain registry](how-tos/domain-registry.md) section.
+CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the *only* DNS provider Nebari supports. This is NOT the case! Please check out our "How to" section, paying particular attention to the domain registry section.
 
 ### Add system packages to a user's (jupyterlab) image
 
