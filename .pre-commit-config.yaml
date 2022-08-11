@@ -17,7 +17,7 @@ repos:
         # see setup.cfg for more config options
         entry: codespell
         language: python
-        exclude: ^docs/yarn.lock
+        exclude: ^docs/yarn.lock|^docs/package-lock.json
 
   # Python
   # Autoformat: Python code, syntax patterns are modernized
