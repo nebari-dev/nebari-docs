@@ -43,6 +43,7 @@ module.exports = {
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
+        "tutorials/nebari-local-development",
       ],
     },
     {
@@ -57,6 +58,7 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
         "how-tos/domain-registry",
+        "how-tos/nebari-kubernetes",
       ],
     },
     {
