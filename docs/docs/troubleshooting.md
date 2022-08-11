@@ -169,3 +169,7 @@ Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupy
 ### Provide individual users with unique environments and cloud instance types
 
 It is common for the user base of a common Nebari deployment to need vastly differing environments and, therefore, cloud instance types for their environments. Users can choose both instance types as well as environments at server launch time, provided you have performed some setup ahead of time. 
+
+First, you will need to create new node groups, one for each type of GPU instance you would like to provide users.
+
+Second, you will need to create a new JupyterLab profile to select the GPU node. In this way, you'll have a separate profile for GPUs which users can select.
