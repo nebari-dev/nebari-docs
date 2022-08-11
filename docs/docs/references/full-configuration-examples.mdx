@@ -1,0 +1,151 @@
+---
+title: Full configuration examples
+id: full-configuration-examples
+description: Default samples for Nebari initial configuration files.
+---
+
+[qhub_version]: "0.4.3"
+
+Full configuration examples for Nebari. Can be used as reference for expected parameters and values.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="do" label="Digital Ocean" default>
+
+```yaml
+project_name: do-sample
+provider: do
+domain: "do-sample.qhub.dev"
+
+ci_cd:
+  type: github-actions
+  branch: main
+  commit_render: true
+
+certificate:
+  type: self-signed
+
+security:
+  keycloak:
+    initial_root_password: initpasswd
+    overrides:
+      image:
+        repository: quansight/qhub-keycloak
+
+  authentication:
+    type: GitHub
+    config:
+      client_id: CLIENT_ID
+      client_secret: CLIENT_SECRET
+
+  shared_users_group: true
+
+digital_ocean:
+  region: nyc3
+  kubernetes_version: "1.21.10-do.0"
+  node_groups:
+    general:
+      instance: "g-4vcpu-16gb"
+      min_nodes: 1
+      max_nodes: 1
+    user:
+      instance: "g-2vcpu-8gb"
+      min_nodes: 1
+      max_nodes: 5
+    worker:
+      instance: "g-2vcpu-8gb"
+      min_nodes: 1
+      max_nodes: 5
+
+default_images:
+  jupyterhub: "quansight/qhub-jupyterhub:v[QHUB_VERSION]"
+  jupyterlab: "quansight/qhub-jupyterlab:v||QHUB_VERSION||"
+  dask_worker: "quansight/qhub-dask-worker:v||QHUB_VERSION||"
+
+theme:
+  jupyterhub:
+    hub_title: QHub - thisisatest
+    hub_subtitle: Autoscaling Compute Environment
+    welcome: |
+      Welcome to jupyter.github-actions.qhub.dev. It's maintained by <a href="http://quansight.com">Quansight
+      staff</a>. The hub's configuration is stored in a github repository based on
+      <a href="https://github.com/Quansight/qhub/">https://github.com/Quansight/qhub/</a>.
+      To provide feedback and report any technical problems, please use the
+      <a href="https://github.com/Quansight/qhub/issues">github issue tracker</a>.
+    logo: /hub/custom/images/jupyter_qhub_logo.svg
+    primary_color: '#4f4173'
+    secondary_color: '#957da6'
+    accent_color: '#32C574'
+    text_color: '#111111'
+    h1_color: '#652e8e'
+    h2_color: '#652e8e'
+
+profiles:
+  jupyterlab:
+    - display_name: Small Instance
+      description: Stable environment with 1 cpu / 1 GB ram
+      access: yaml
+      groups:
+        - admin
+      kubespawner_override:
+        cpu_limit: 1
+        cpu_guarantee: 1
+        mem_limit: 1G
+        mem_guarantee: 1G
+    - display_name: Medium Instance
+      description: Stable environment with 1.5 cpu / 2 GB ram
+      default: true
+      kubespawner_override:
+        cpu_limit: 1.5
+        cpu_guarantee: 1.25
+        mem_limit: 2G
+        mem_guarantee: 2G
+
+  dask_worker:
+    "Small Worker":
+      worker_cores_limit: 1
+      worker_cores: 1
+      worker_memory_limit: 1G
+      worker_memory: 1G
+    "Medium Worker":
+      worker_cores_limit: 1.5
+      worker_cores: 1.25
+      worker_memory_limit: 2G
+      worker_memory: 2G
+
+environments:
+  "environment-default.yaml":
+    name: default
+    channels:
+      - conda-forge
+      - defaults
+    dependencies:
+      - python=3.8
+      - ipykernel
+      - ipywidgets
+      - qhub-dask==||QHUB_VERSION||
+      - numpy
+      - numba
+      - pandas
+
+  "environment-example-2.yaml":
+    name: example-2
+    channels:
+      - conda-forge
+      - defaults
+    dependencies:
+      - python=3.8
+      - ipykernel
+      - ipywidgets
+      - qhub-dask==||QHUB_VERSION||
+      - numpy
+      - numba
+      - pandas
+      - jinja2
+      - pyyaml
+```
+
+  </TabItem>
+</Tabs>
