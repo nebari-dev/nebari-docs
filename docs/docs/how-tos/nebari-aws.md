@@ -152,12 +152,12 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 ```bash
 qhub deploy -c qhub-config.yaml
 ```
+:::note
+During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps. 
+:::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
-
-Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
-follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
 
 If the deployment is successful, you will see the following output:
 
