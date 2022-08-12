@@ -54,12 +54,12 @@ To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. htt
 You will need to login in order to authenticate to the `conda-store` interface. Most of the site is disabled from
 view until users are logged in.
 
-![conda-store login ui](/img/tutorials/conda_store_login.png)
+![A screenshot of the conda-store login UI - containing the Login and Create Environemt buttons in upper left side and a list of public environments](/img/tutorials/conda_store_login.png "conda-store login ui")
 
 This will lead you through a series of windows to authorize with Keycloak, after which you will have access to the
 `conda-store` dashboard.
 
-![conda-store dashboard ui](/img/tutorials/conda_store_dashboard.png)
+![A screenshot containing the conda-store user dashboard view, presenting a Logout and Manage Namespaces buttons as well as a list of Permissions granted for each available Namespace](/img/tutorials/conda_store_dashboard.png "conda-store dashboard ui")
 
 Great! Now we can see a high-level view of our user's conda environments.
 
@@ -92,7 +92,7 @@ be presented with an option to upload a
 [conda _yaml_ file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file)
 or write your own.
 
-![conda store create environment ui](/img/tutorials/conda_store_create_env.png)
+![A screenshot of the conda-store management creation UI, it contains a dropdown box for Namespace selection and a Specification field for writing the conda environment yaml details](/img/tutorials/conda_store_create_env.png "conda-store create environment ui")
 
 For this tutorial, we provide you with an example specification:
 
@@ -117,11 +117,11 @@ You'll be brought to the environments overview page (#TODO should i describe thi
 Find the card with the name of the new environment under your user's namespace (e.g.
 `<your-username>/example-environment`).
 
-![Newly create environment card](/img/tutorials/conda_store_new_env.png)
+![A white box showing the newly created environment name, composed of namespace / environment name](/img/tutorials/conda_store_new_env.png "newly created environment card")
 
 Click on the card for your environment. You'll be brought the details page for this environment.
 
-![Environment details page](/img/tutorials/conda_store_env_details.png)
+![A screenshot of the conda-store environemt details page, has a yaml box presenting the environemt specifications with Button and Delete options as well as the build status](/img/tutorials/conda_store_env_details.png "environment details page")
 
 When you first arrive at this page, the environment may still be in the process of building. The page will
 automatically update when the build is complete.
@@ -139,13 +139,13 @@ At the top of the page, you'll see some metadata about the environment including
 included is our original _yaml_ specification an a list of all the packages that were installed into the
 environment.
 
-![build details page top](/img/tutorials/conda_store_build_details_top.png)
+![A screenshot of the environment build details: scheduled-on , started-on, ended-on, status and a list of the installed conda packages for that build.](/img/tutorials/conda_store_build_details_top.png "build details page top")
 
 There are quite a few packages! Scroll down to the bottom of this list and you'll see the next section called
 `Conda Environment Artifacts`. This is where you can download your own copy of the _yaml_ file, a
 [conda-lock](https://conda-incubator.github.io/conda-lock/) file, or an archive of the environment.
 
-![build details page bottom](/img/tutorials/conda_store_build_details_bottom.png)
+![A screenshot of the environment build details, containing the build artifacts: Environment YAML, Lockfile and tar.gz files](/img/tutorials/conda_store_build_details_bottom.png "build details page bottom")
 
 Lastly, click on `Full Logs` to view the full output from the conda build.
 
