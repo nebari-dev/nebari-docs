@@ -147,20 +147,6 @@ security:
 In previous QHub versions (prior to `v0.4.0`), users and groups were added directly into the `qhub-config.yaml`. Starting with `v0.4.0`, user and group management is handled by
 [Keycloak as described below](#keycloak).
 
-### Omitting sensitive values
-
-If you wish to avoid storing secrets etc. directly in the config yaml file you can instead set the values in environment variables. This substitution is triggered by setting config
-values to "QHUB_SECRET\_" followed by the environment variable name. For example, you could set the environment variables "github_client_id" and "github_client_key" and write the
-following in your config file:
-
-```yaml
-security:
-  authentication:
-    type: GitHub
-    config:
-      client_id: QHUB_SECRET_github_client_id
-      client_secret: QHUB_SECRET_github_client_key
-```
 
 ### Authentication
 
@@ -680,14 +666,6 @@ Each environment configuration is a `environment.<filename>` mapping to a conda 
 definition. One current requirement is that each environment include `ipykernel`, `ipywidgets`, `qhub-dask==0.2.3`. Upon changing the environment definition expect 1-10 minutes
 upon deployment of the configuration for the environment to appear.
 
-## qhub_version
-
-All `qhub-config.yaml` files must now contain a `qhub_version` field displaying the version of QHub which it's intended to be deployed with.
-
-QHub will refuse to deploy if it doesn't contain the same version as that of the `qhub` command.
-
-Typically, you can upgrade the qhub-config.yaml file itself using the [`qhub upgrade` command]. This will update image numbers, plus updating
-qhub_version to match the installed version of `qhub`, as well as any other bespoke changes required.
 
 ## JupyterHub
 
