@@ -28,9 +28,11 @@ QHub supports Cloudflare as a DNS provider. If you choose to use Cloudflare, fir
 
 1. You can register your application domain name on it, using the [Cloudflare nameserver](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup) (recommended).
 
-2. You can outright buy a new domain with Cloudflare (this action isn’t particularly recommended).
+2. You can purchase a new domain with Cloudflare.
 
-To generate a token [follow these steps](https://developers.cloudflare.com/api/tokens/create).
+To generate a token follow the steps below. For additional information, see the [CloudFlare docs](https://developers.cloudflare.com/api/tokens/create).
+
+### Setting up an API token on CloudFlare
 
 - Under Profile, select the API Tokens menu and click on Create API Token.
 
@@ -46,8 +48,9 @@ To generate a token [follow these steps](https://developers.cloudflare.com/api/t
 
 - Click on the Create Token button and set the token generated as an environment variable on your machine.
  
+### Setup API token locally
 
-Finally, set the environment variable such as:
+Finally, set the token value as an environment variable:
 
 ```bash
  export CLOUDFLARE_TOKEN="cloudflaretokenvalue"
@@ -57,30 +60,29 @@ Also, add the flag `--dns-provider=cloudflare` to the [Qhub deploy command.](htt
 
 ## Using other DNS providers
 
-Currently, QHub only supports CloudFlare for automatic DNS registration. If an alternate DNS provider is desired, change the `--dns-provider` flag from `cloudflare` to `none` on the qhub deploy command.
+Currently, QHub only supports CloudFlare for [automatic DNS registration](link to automatic section below). If an alternate DNS provider is desired, change the `--dns-provider` flag from `cloudflare` to `none` on the qhub deploy command.
 
 Below are the links to detailed documentation on how to create and manage DNS records on a few providers:
 
-1. [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider.
-2. [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider.
-3. [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider.
-4. [Digital Ocean DNS](https://docs.digitalocean.com/products/networking/dns/quickstart/) provider.
+* [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider
+* [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider
+* [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider
+* [Digital Ocean DNS](https://docs.digitalocean.com/products/networking/dns/quickstart/) provider
 
 :::note
-Once your new DNS domain is created, it might take time for the records and related certs to fully propagate over the internet.
-
-The amount of time you might need to wait varies from each DNS provider. Validate such information in the related documentation for your chosen provider.
+Once your new DNS domain is created, it might take time for the records and related certificates to fully propagate.
+The amount of time this takes varies for each DNS provider. Validate such information in the related documentation for your chosen provider.
 :::
 
-## Automatically DNS provision
+## Automatic DNS provision
 
-Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatically DNS provision add `--dns-auto-provision` to your qhub deploy command:
+Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your qhub deploy command:
 
-qhub deploy -c qhub-config `--dns-provider cloudflare --dns-auto-provision`
-This will set the DNS provider as Cloudflare and automatically handle the creation or updates for Qhub domain DNS records on Cloudflare.
+`qhub deploy -c qhub-config --dns-provider cloudflare --dns-auto-provision`
+This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Qhub domain DNS records on Cloudflare.
 
 :::warning
 The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Qhub currently supports.
 :::
 
-When you are done setting up the domain name, you can switch back to the [Nebari deployment documentation](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari) and further continue the remaining steps.
+When you are done setting up the domain name, you can refer back to the [Nebari deployment documentation](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari) and continue the remaining steps.
