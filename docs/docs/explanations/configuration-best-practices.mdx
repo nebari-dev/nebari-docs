@@ -1,0 +1,23 @@
+---
+title: Configuration best practices
+id: config-best-practices
+description: A guide to best practices for configuring Nebari
+---
+
+This document highlights and consolidates configuration best practices that are introduced throughout the Getting Started, How To's, and Advanced Settings sections of the documentation.
+
+## Naming conventions
+
+When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc... for these resources.
+As Nebari mainly uses the project name from config to populate those attributes, we must ensure that for such cases, the resource attribute/name meets the bound conventions for the chosen cloud provider.
+
+To avoid any burden on the user, on keeping track of each new namming rule for all infrastructrue related resources that Nebari creates, we have automate the process to ensure that all resources are named in a consistent manner.
+We then sumarize the necessary restrictions for each cloud provider in a list presented below.
+
+When initializing Nebari ensure your project name is compatible with the following format requirements:
+
+- Letters from A to Z (upper and lower case) and numbers;
+- Maximum accepted length of the name string is **16** characters.
+- If using `AWS`: names should not start with the string "aws";
+- If using `Azure`: names should not contain "-".
+
