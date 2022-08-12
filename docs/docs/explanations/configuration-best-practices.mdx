@@ -6,7 +6,7 @@ description: A guide to best practices for configuring Nebari
 
 This document highlights and consolidates configuration best practices that are introduced throughout the Getting Started, How To's, and Advanced Settings sections of the documentation.
 
-## Naming conventions
+### Naming conventions
 
 When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc... for these resources.
 As Nebari mainly uses the project name from config to populate those attributes, we must ensure that for such cases, the resource attribute/name meets the bound conventions for the chosen cloud provider.
@@ -21,3 +21,43 @@ When initializing Nebari ensure your project name is compatible with the followi
 - If using `AWS`: names should not start with the string "aws";
 - If using `Azure`: names should not contain "-".
 
+
+### Omitting sensitive values
+
+If you wish to avoid storing secrets directly in the config yaml file you can instead set the values in environment variables. This substitution is triggered by setting config
+values to `QHUB_SECRET_` followed by the environment variable name.
+
+For example, you could set the environment variables `github_client_id` and `github_client_key` and write the
+following in your config file:
+
+```yaml
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: QHUB_SECRET_github_client_id
+      client_secret: QHUB_SECRET_github_client_key
+```
+
+### Nebari version assertion
+
+All qhub-config.yaml files must contain a `qhub_version` field displaying the version of Nebari which it’s intended to be deployed with.
+
+Typically, you can upgrade the qhub-config.yaml file itself by manually adding the intended version to the file. And validating that the version matches the version of Nebari you are deploying with `qhub --version`.
+
+If available, you may also update the configuration using the qhub upgrade command. This will update image numbers, plus updating `qhub_version` to match the installed version of qhub, as well as any other bespoke changes required.
+
+:::warning
+Nebari will refuse to deploy if it doesn’t contain the same version as that of the qhub command.
+```
+Error: The schema validation of the qhub-config.yaml failed.
+The following error message may be helpful in determining what went wrong:
+
+qhub_version
+  qhub_version in the config file must be equivalent to <installed version> to be
+  processed by this version of qhub (your config file version is <qhub_version>).
+  Install a different version of qhub or run qhub upgrade to ensure your config
+  file is compatible.
+(type=value_error)
+```
+:::

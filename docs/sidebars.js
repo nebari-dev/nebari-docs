@@ -71,7 +71,11 @@ module.exports = {
         slug: "category/conceptual-guides",
         keywords: ["conceptual-guides"],
       },
-      items: ["explanations/overview"],
+      items: [
+        "explanations/overview",
+        "explanations/config-best-practices",
+        "explanations/advanced-configuration",
+      ],
     },
     {
       type: "category",
@@ -87,7 +91,6 @@ module.exports = {
       items: [
         "references/overview",
         "references/cli-command-reference",
-        "references/advanced-configuration",
         "references/full-configuration-examples"
       ],
     },
