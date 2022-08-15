@@ -6,17 +6,20 @@ description: Introduction to Dask
 
 # Working with big data using Dask
 
-Working with large datasets can pose a few challenges, running into frequent memory issues is a common issue. 
-[Dask](https://docs.dask.org/en/stable/) is a free and open-source library for parallel computing in Python,
-enabling data scientist and others to use their favorite PyData tools at scale.
+Working with large datasets can pose a few challenges - perhaps the most common is memory limitations on the 
+user's machine. 
+
+[Dask](https://docs.dask.org/en/stable/) is a flexible, Open-Source library for parallel computing in Python. Dask 
+allows data scientists the ability able to scale analyses from a sample dataset to the full, large-scale dataset 
+with almost no code changes. Its a powerful tool that can revolutionize how you do analytics!
 
 ## Dask integration on Nebari
 
 Nebari uses [Dask Gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically 
-configured for the user, and provides a secure way to managing dask clusters. 
+configured for the user, and it provides a secure way to managing dask clusters. 
 
 <details>
-<summary> Want more information on how that works? </summary>
+<summary> Click here for more information on how that works! </summary>
 
 Dask consists of 3 main components `client`, `scheduler` and `workers`.
 - The end users interact with the `client`. 
@@ -32,7 +35,9 @@ Check out the [Dask Gateway documentation](https://gateway.dask.org/) for a full
 ## Setting up Dask Gateway
 
 We will start by creating a Jupyter notebook. Select an environment from the `Select kernel` dropdown menu 
-(located on the top right of your notebook). Be sure to select an environment which includes `Dask`!
+(located on the top right of your notebook). 
+
+:heavy_exclamation_mark:Be sure to select an environment which includes `Dask`:heavy_exclamation_mark:
 
 Nebari has set of pre-defined options for configuring the Dask profiles that we have access to. These can be 
 accessed via Dask Gateway options.
@@ -126,7 +131,7 @@ dataset_size
 32426244980
 ```
 
-This corresponds to 32.43GB of data. Running this one-liner would be impossible on most single machines but running this on a dask cluster with 4 works, this can be calculated in under a minute.
+This corresponds to 32.43GB of data. Running this one-liner would be impossible on most single machines but running this on a dask cluster with 4 workers, this can be calculated in under a minute.
 
 ...
 
@@ -137,10 +142,9 @@ Dask comes with an inbuilt dashboard containing multiple plots and tables contai
 the data gets processed. Let's understand the dashboard plots `Task Stream` and `Progress`. 
 The colours and the interpretation would differ based on the computation we choose.
 
-Each of the computation in split into multiple tasks for parallel execution. From the progress bar we see 04
-distinct colours associated with different computation. Under task stream (a streaming plot) each row represents a thread
-and the small rectangles within are the individual tasks. The tiny white spaces shows that the worker was ideal during 
-that period of time.
+Each of the computation in split into multiple tasks for parallel execution. From the progress bar we see 4
+distinct colors associated with different computation. Under task stream (a streaming plot) each row represents a thread
+and the small rectangles within are the individual tasks. 
 
 ![dask diagnostic UI](/img/dask_diagostic_UI.png)
 
