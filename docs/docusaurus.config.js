@@ -1,13 +1,13 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+// https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
+const lightCodeTheme = require("prism-react-renderer/themes/nightOwlLight");
+const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
-// TODO: verify this
-const domain = "https://nebari-docs.netlify.app";
+const domain = "https://nebari.dev";
 
 // -----------------------------------------------------------------------------
 // custom Fields for the project
@@ -16,7 +16,6 @@ const customFields = {
   meta: {
     title: "Nebari",
     description: "An opinionated JupyterHub deployment for Data Science teams",
-    // TODO: placeholder
     keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
   },
   domain,
@@ -38,16 +37,16 @@ const config = {
   favicon: "img/favicon.ico",
   staticDirectories: ['static'],
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
   },
 
   // Plugings need installing first then add here
-  plugins: ["docusaurus-plugin-sass"],
+  plugins: [
+    "docusaurus-plugin-sass",
+    require.resolve('docusaurus-lunr-search'),
+  ],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
@@ -70,13 +69,10 @@ const config = {
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          // remarkPlugins: [
-          //   [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
-          // ],
         },
         blog: false,
         theme: {
-          customCss: require.resolve("./css/custom.css"),
+          customCss: require.resolve("./src/scss/application.scss"),
         },
       }),
     ],
@@ -86,32 +82,36 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+          hideable: true,
+        },
+      },
       navbar: {
         title: customFields.meta.title,
-        logo: {
-          alt: "Nebari logo - Docs home",
-          // TODO: Replace with logo
-          src: "img/logo.svg",
-        },
+        // TODO: Replace with logo
+        // logo: {
+        //   alt: "Nebari logo - Docs home",
+        //   src: "img/logo.svg",
+        // },
+        style: "dark",
         hideOnScroll: true,
         items: [
-          // left side
-          //   {
-          //     label: 'Quickstart',
-          //     docId: 'quickstart',
-          //     position: 'left',
-          //     type: 'doc',
-          //   },
-          // right side
+          {
+            label: "Getting Started",
+            position: "right",
+            to: "getting-started/installing-nebari",
+          },
           {
             label: "Tutorials",
             position: "right",
-            to: "tutorials/overview",
+            to: "tutorials",
           },
           {
             label: "How-to Guides",
             position: "right",
-            to: "how-tos/overview",
+            to: "how-tos",
           },
           {
             label: "Reference",
@@ -144,8 +144,8 @@ const config = {
             title: "Open source",
             items: [
               {
-                label: "Quickstart",
-                to: "quickstart",
+                label: "Getting Started",
+                to: "getting-started/installing-nebari",
               },
             ],
           },

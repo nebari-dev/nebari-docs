@@ -128,7 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
 # Dependencies
 /node_modules
 docs/node_modules
@@ -136,10 +135,6 @@ dist
 yalc.lock
 /.yalc
 .eslintcache
-
-# Production
-/build
-
 
 # Editor directories and files
 .idea
@@ -157,6 +152,8 @@ sync.js
 .cache-loader
 src/*.js
 src/*.js.map
+# Production
+docs/build
 
 # Misc
 .DS_Store
@@ -169,3 +166,12 @@ src/*.js.map
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Yarn leftovers
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
