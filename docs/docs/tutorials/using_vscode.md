@@ -1,6 +1,6 @@
 # Using Visual Studio (VS) Code
 
-How to use VS Code as your development environment.
+## Using VS Code as your development environment
 
 VS Code can be used as an IDE (integrated development environment) which
 provides helpful tooling (including debugging) to assist developers in writing
@@ -91,3 +91,40 @@ only take a few seconds to install.
 Now let's run some code!
 
 ## Running Python code
+
+In the `Explorer` pane, selected the `New File` icon:
+
+![VS Code select new file](/img/vscode_new_file.png)
+
+You can name it anything you'd like, here we've named it `example.py`. The 
+`*.py` extension let's VS Code know that its a Python file and you can set up
+some automatic linting tasks through Preferences if you'd like. 
+
+Add some sample code to your file:
+
+![VS Code new file contents](/img/vscode_new_file_contents.png)
+
+We also see the VS Code `Terminal` in the previous image. This can be 
+opened with `File -> Terminal -> New Terminal`.
+
+Before we run our file, we need to select what Conda environment it should run 
+inside.
+
+![VS Code select conda env](/img/vscode_select_env.png)
+
+Now we can run our code through the VS Code UI by selecting either 
+`Run Python File` or `Debug Python File` in the top right. 
+
+![VS Code run or debug env](/img/vscode_run_debug_buttons.png)
+
+We can see output in the terminal:
+
+![VS Code view output](/img/vscode_output.png)
+
+As another alternative, we could run code directly from the terminal as well.
+
+## Conclusion
+
+We've covered the basic setup and run some arbitrary code. If you're curious 
+about more advanced features or specific questions, you can always refer back 
+to the [VS Code Documentation](https://code.visualstudio.com/). 
