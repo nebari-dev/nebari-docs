@@ -15,7 +15,7 @@ to Nebari and spin up a JupyterLab instance.
 Next, bring up the `New Launcher` window by clicking the `+` in the top left of
 the screen. Now click on the VS Code logo on the Launcher window.
 
-![JupyterLab Launcher window with VS Code](/img/vscode_launcher.png)
+![JupyterLab Launcher window with VS Code](/img/tutorials/vscode_launcher.png)
 
 You will now have been redirected to a new web browser page showing the VS
 Code platform. If you're starting VS Code for the first time, you'll see a
@@ -23,7 +23,7 @@ Welcome Page with some helpful links and tips.
 
 Feel free to explore!
 
-![VS code Welcome screen](/img/vscode_welcome.png)
+![VS code Welcome screen](/img/tutorials/vscode_welcome.png)
 
 ## VS Code components
 
@@ -41,12 +41,12 @@ available in VS Code. Below is a brief overview of the icons on the
 
 | Icon                                                             | Name           | Description                                                               |
 | ---------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------- |
-| ![VS code hamburger button](/img/vscode_hamburger.png)           | File Menu      | Like every other file menu - create files, run files, edit preferences... |
-| ![VS code files button](/img/vscode_files.png)                   | File Explorer  | View list of files, navigate folder structures                            |
-| ![VS code search button](/img/vscode_search.png)                 | Search         | Search for words in the contents of files                                 |
-| ![VS code source control button](/img/vscode_source_control.png) | Source Control | Source Control Management (SCM) features (e.g. git)                        |
-| ![VS code debug button](/img/vscode_debug.png)                   | Debug          | Run code using the debugger                                               |
-| ![VS code extensions button](/img/vscode_extensions.png)         | Extensions     | Add plugins to extend VS Code functionality                               |
+| ![VS code hamburger button](/img/tutorials/vscode_hamburger.png)           | File Menu      | Like every other file menu - create files, run files, edit preferences... |
+| ![VS code files button](/img/tutorials/vscode_files.png)                   | File Explorer  | View list of files, navigate folder structures                            |
+| ![VS code search button](/img/tutorials/vscode_search.png)                 | Search         | Search for words in the contents of files                                 |
+| ![VS code source control button](/img/tutorials/vscode_source_control.png) | Source Control | Source Control Management (SCM) features (e.g. git)                        |
+| ![VS code debug button](/img/tutorials/vscode_debug.png)                   | Debug          | Run code using the debugger                                               |
+| ![VS code extensions button](/img/tutorials/vscode_extensions.png)         | Extensions     | Add plugins to extend VS Code functionality                               |
 
 ## File editing
 
@@ -63,7 +63,7 @@ hides these files in it's Explorer view.
 Let's click on a file we all have, `.bashrc`. This file was created by Nebari
 for us.
 
-![VS code bashrc file](/img/vscode_bashrc.png)
+![VS code bashrc file](/img/tutorials/vscode_bashrc.png)
 
 We now have an `Editor` window in which we can modify the file. The default
 VS Code preferences include an auto-save feature which will continually save
@@ -77,7 +77,7 @@ installed by you, and a list of "Popular" extensions you may want to try.
 Through this interface we can also search the Marketplace for a particular
 extension.
 
-![VS code extensions list](/img/vscode_extensions_list.png)
+![VS code extensions list](/img/tutorials/vscode_extensions_list.png)
 
 The Python extension is at the top of the list in our example (rightly so!),
 but if you don't see it here, you can search for it.
@@ -94,7 +94,7 @@ Now let's run some code!
 
 In the `Explorer` pane, selected the `New File` icon:
 
-![VS Code select new file](/img/vscode_new_file.png)
+![VS Code select new file](/img/tutorials/vscode_new_file.png)
 
 You can name it anything you'd like, here we've named it `example.py`. The 
 `*.py` extension let's VS Code know that its a Python file and you can set up
@@ -102,7 +102,7 @@ some automatic linting tasks through Preferences if you'd like.
 
 Add some sample code to your file:
 
-![VS Code new file contents](/img/vscode_new_file_contents.png)
+![VS Code new file contents](/img/tutorials/vscode_new_file_contents.png)
 
 We also see the VS Code `Terminal` in the previous image. This can be 
 opened with `File -> Terminal -> New Terminal`.
@@ -110,16 +110,16 @@ opened with `File -> Terminal -> New Terminal`.
 Before we run our file, we need to select what Conda environment it should run 
 inside.
 
-![VS Code select conda env](/img/vscode_select_env.png)
+![VS Code select conda env](/img/tutorials/vscode_select_env.png)
 
 Now we can run our code through the VS Code UI by selecting either 
 `Run Python File` or `Debug Python File` in the top right. 
 
-![VS Code run or debug env](/img/vscode_run_debug_buttons.png)
+![VS Code run or debug env](/img/tutorials/vscode_run_debug_buttons.png)
 
 We can see output in the terminal:
 
-![VS Code view output](/img/vscode_output.png)
+![VS Code view output](/img/tutorials/vscode_output.png)
 
 As another alternative, we could run code directly from the terminal as well.
 
