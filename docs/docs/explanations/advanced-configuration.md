@@ -4,7 +4,9 @@ id: advanced-configuration
 description: An indepth guide to advanced configuration options.
 ---
 
-[qhub_version]: "0.4.3"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 
 # Advanced configuration
 
@@ -12,43 +14,41 @@ This is a page dedicated to the `qhub-config.yaml` file, the file that `qhub` us
 is split into several sections and in this page, we detail the requirements necessary for this YAML-formatted configuration file. In the [Usage] section we covered how
 you can auto-generate this file using `qhub init` (and properly set options/flags and environment variables).
 
-> NOTE: The configuration file is always validated by a [pydantic schema](https://pydantic-docs.helpmanual.io/) in
-> [qhub/schema.py](https://github.com/Quansight/qhub/blob/main/qhub/schema.py)
+## General configuration
 
-## General
+The `qhub-config.yaml` file can be split into several sections. The first section relates to Nebari inner mechanics when first deploying and should be seen as the most important section of the configuration file.
 
 ```yaml
-project_name: dojupyterhub # name of the kubernetes/Cloud deployment
+### General configuration ###
+project_name: dojupyterhub
 namespace: dev
-provider: <provider_alias> # determines the choice of cloud provider for the deployment
-domain: "do.qhub.dev" # top level URL exposure to monitor JupyterLab
+provider: local
+domain: dojupyterhub.com
 ```
 
-- `project_name`: should be compatible with the Cloud provider naming convention. Generally only use `A-Z`, `a-z`, `-`, and `_` (see
-  [Project Naming Conventions] for more details).
+- `project_name`: Determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/explanations/config-best-practices#naming-conventions) for more details.
 
-- `namespace`: is used in combination with `project_name` to label resources. In addition `namespace` also determines the `namespace` that used when deploying kubernetes resources
-  for qhub.
-
-  - Default value: `dev`
-
-- `provider`: possible values are
-
+- `namespace` (Optional): Used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [*namespace*](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
+- `provider`: Determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
   - `do` for DigitalOcean
   - `aws` for Amazon AWS
   - `gcp` for Google Could Provider
   - `azure` for Microsoft Azure
-  - `local` for a local or existing kubernetes deployment
+  - `existing` for deploying on an existing kubernetes infrastructure
+  - `local` for Kind local cluster deployment
 
-- `domain`: is the top level URL to put JupyterLab and future services under (such a monitoring). For example `qhub.dev` would be the domain for JupyterHub to be exposed under.
+- `domain`: Is the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/explanations/config-best-practices#domain-format).
 
-## Continuous integration and continuous deployment
 
-`ci_cd`: is optional and specifies the continuous integration and continuous deployment framework to use. QHub uses infrastructure-as-code to allow developers and users of QHub to
-request change to the environment via pull requests (PRs) which then get approved by administration. You may configure CI/CD process to watch for pull-requests or commits on
-specific branches. Currently CI/CD can be setup for either GitHub Actions or GitLab CI.
+### Continuous integration and continuous deployment
+
+`ci_cd` (Optional): This field is used to enable continuous integration and continuous deployment (CI/CD) frameworks on Nebari.
+
+QHub uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to allow developers and users of QHub to request changes to the environment via pull requests (PRs) which then get approved by administration.
+You may configure CI/CD process to watch for pull-requests or commits on specific branches. Currently CI/CD can be setup for either [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI](https://docs.gitlab.com/ee/ci/).
 
 ```yaml
+### Continuous integration ###
 ci_cd:
   type: gitlab-ci
   branch: main
@@ -71,21 +71,26 @@ ci_cd:
 If `ci_cd` is not supplied, no CI/CD will be auto-generated, however, we advise employing an infrastructure-as-code approach. This allows teams to more quickly modify their QHub
 deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
 
-## Certificate
+### Certificates
+
+`certificate`: This field is used to update the certificate provider used by Nebari. Below we provide the list of supported certificate providers.
+
+<Tabs>
+  <TabItem label="Traefik" value="traefik" default="true">
 
 By default, to simplify initial deployment `qhub` uses traefik to create a self-signed certificate. In order to create a certificate that's signed so that web browsers don't throw
-errors we currently support [Let's Encrypt](https://letsencrypt.org/).
+errors we currently support **Let's Encrypt**.
 
 ```yaml
 certificate:
   type: self-signed
 ```
+  </TabItem>
+  <TabItem label="Let's Encrypt" value="letsencrypt">
 
-To use Let's Encrypt you must specify an email address that Let's Encrypt will associate the generated certificate with and whether to use the
+To use [Let's Encrypt](https://letsencrypt.org/) you must specify an email address that Let's Encrypt will associate the generated certificate with and whether to use the
 [staging server](https://acme-staging-v02.api.letsencrypt.org/directory) or [production server](https://acme-v02.api.letsencrypt.org/directory). In general you should use the
 production server, as seen below.
-
-> NOTE: Let's Encrypt heavily rate limits their production endpoint and provisioning https certificates can often fail due to this limit.
 
 ```yaml
 certificate:
@@ -93,11 +98,14 @@ certificate:
   acme_email: <your-email-address>
   acme_server: https://acme-v02.api.letsencrypt.org/directory
 ```
+:::note
+The above snippet will already be present if you provided an `--ssl-cert-email` when you ran `qhub init`.
+:::
 
-Note the above snippet will already be present if you provided an `--ssl-cert-email` when you ran `qhub init`.
+  </TabItem>
+  <TabItem label="Custom" value="Custom">
 
-You may also supply a custom self-signed certificate and secret key. Note that the kubernetes default namespace that QHub uses is `dev`. Otherwise, it will be your `namespace`
-defined in the `qhub-config.yaml`.
+You may also supply a custom self-signed certificate and secret key.
 
 ```yaml
 certificate:
@@ -113,20 +121,23 @@ kubectl create secret tls <secret-name> \
   --cert=path/to/cert/file --key=path/to/key/file
 ```
 
-> NOTE: the default kubernetes namespace that QHub uses is `dev`, however you can change the `namespace` key in the `qhub-config.yaml`.
+:::note
+The kubernetes default namespace that QHub uses is `dev`. Otherwise, it will be your `namespace`
+defined in the `qhub-config.yaml`.
+:::
+  </TabItem>
+</Tabs>
 
-### Wildcard certificates
+#### Wildcard certificates
 
 Some of QHub services might require special subdomains under your certificate, Wildcard certificates allow you to secure all subdomains of a domain with a single certificate.
 Defining a wildcard certificate decreases the amount of CN names you would need to define under the certificate configuration and reduces the chance of generating a wrong
 subdomain.
 
-> NOTE: It's not possible to request a double wildcard certificate for a domain (for example _._.local.com). As a default behavior of
-> [Traefik](https://doc.traefik.io/traefik/https/tls/#default-certificate), if the Domain Name System (DNS) and Common Name (CN) name doesn't match, Traefik generates and uses a
-> self-signed certificate. This may lead to some unexpected [TLS](https://www.internetsociety.org/deploy360/tls/basics) issues, so as alternative to including each specific domain
-> under the certificate CN list, you may also define a wildcard certificate.
+It's not possible to request a double wildcard certificate for a domain (for example \*.\*.local.com). As a default behavior of [Traefik](https://doc.traefik.io/traefik/https/tls/#default-certificate), if the Domain Name System (DNS) and Common Name (CN) name doesn't match, Traefik generates and uses a self-signed certificate. This may lead to some unexpected [TLS](https://www.internetsociety.org/deploy360/tls/basics) issues, so as alternative to including each specific domain under the certificate CN list, you may also define a wildcard certificate.
 
-## Security
+
+### Authentication methods
 
 This section walks through security and user authentication as it relates to QHub deployments. There are a few different ways to handle user authentication:
 
@@ -143,16 +154,16 @@ security:
       client_id: <CLIENT_ID>
       client_secret: <CLIENT_SECRET>
 ```
-
-In previous QHub versions (prior to `v0.4.0`), users and groups were added directly into the `qhub-config.yaml`. Starting with `v0.4.0`, user and group management is handled by
+:::note
+In previous QHub versions (prior to `v0.4.0`), users and groups were added directly into the `qhub-config.yaml`. Starting with `v0.4.0`, users and group management are now handled by
 [Keycloak as described below](#keycloak).
+:::
+
+`security.authentication`: is for configuring the OAuth and GitHub Provider, password based authentication, or custom authentication.
 
 
-### Authentication
-
-`security.authentication` is for configuring the OAuth and GitHub Provider, password based authentication, or custom authentication.
-
-#### Auth0 based authentication
+<Tabs>
+  <TabItem label="Auth0" value="auth0">
 
 [Auth0](https://auth0.com/#!) can be used for authentication. While it is not free, there is a reasonable free tier that allows deployment of QHub clusters using many different
 social providers, passwordless, and email based authentication methods.
@@ -163,7 +174,9 @@ Otherwise here are docs on [creating an Auth0 Application](https://auth0.com/doc
 `auth0_subdomain` field which must be only the `<auth0_subdomain>.auth0.com`. So for the following `qhub-dev.auth0.com` the subdomain would be `qhub-dev`. Note that all the
 usernames will be the email addresses of users (not usernames).
 
-> NOTE: This is a different and distinct step from one outlined in the [Setup] stage.
+:::note
+This is a different and distinct step from one outlined in the [Setup] stage.
+:::
 
 ```yaml
 security:
@@ -174,8 +187,8 @@ security:
       client_secret: ...
       auth0_subdomain: ...
 ```
-
-#### GitHub based authentication
+  </TabItem>
+  <TabItem label="GitHub" value="github">
 
 GitHub has instructions for [creating OAuth applications](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app). Note that QHub usernames will be
 their GitHub usernames.
@@ -188,8 +201,8 @@ security:
       client_id: ...
       client_secret: ...
 ```
-
-#### Password based authentication
+  </TabItem>
+  <TabItem label="Password" value="password" default="true">
 
 This is the simplest authentication method. This just defers to however Keycloak is configured. That's also true for GitHub/Auth0 cases, except that for the single-sign on
 providers the deployment will also configure those providers in Keycloak to save manual configuration. But it's also possible to add GitHub, or Google etc, as an Identity Provider
@@ -200,6 +213,9 @@ security:
   authentication:
     type: password
 ```
+  </TabItem>
+</Tabs>
+
 
 ### Keycloak
 
@@ -228,7 +244,7 @@ main features of QHub such as JupyterLab with at user. It is only for Keycloak m
 
 Follow this links for more detailed information on [Keycloak user management] and [Keycloak group management].
 
-## Provider Infrastructure
+## Provider configuration
 
 Finally, the Kubernetes infrastructure deployment. Although quite similar, each provider has a slightly different configuration.
 
@@ -248,10 +264,13 @@ For any of the providers (besides local), adding a node group is as easy as the 
     ...
 ```
 
-> NOTE: For each provider, details such as **instance names**, **availability zones**, and **Kubernetes versions** will be DIFFERENT.
+:::note
+For each provider, details such as **instance names**, **availability zones**, and **Kubernetes versions** will differ.
+:::
 
-> NOTE: upgrading the `general` node instance type may not be possible for your chosen provider.
-> [See FAQ.]
+:::warning
+Upgrading the `general` node instance type may not be possible for your chosen provider. [See FAQ.]
+:::
 
 ### Providers
 
@@ -265,65 +284,9 @@ Listed below are the cloud providers QHub currently supports.
 Many of the cloud providers regularly update their internal Kubernetes versions so if you wish to specify a particular version, please check the following resources. This is _completely optional_ as QHub will, by default, select the most recent version available for your preferred cloud provider. [Digital Ocean](https://docs.digitalocean.com/products/kubernetes/changelog/) [Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable) [Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html) [Microsoft Azure](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli)
 :::
 
-#### DigitalOcean
+<Tabs>
 
-DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the cheapest provider even accounting for spot/preemptible
-instances. In addition Digital Ocean doesn't have accelerator/gpu support. Digital Ocean is a great default choice for tying out QHub. Below is the recommended setup.
-
-> NOTE: DigitalOcean regularly updates Kubernetes versions hence, the field `kubernetes_version` will most likely have to be changed.
-> [See available instance types for DigitalOcean](https://www.digitalocean.com/docs/droplets/). If you used `qhub init` this version will automatically be computed for you. Do not
-> copy the version you see below.
-
-To see available instance types refer to [Digital Ocean Instance Types](https://www.digitalocean.com/docs/droplets/). Additionally the Digital Ocean cli `doctl` has
-[support for listing droplets](https://www.digitalocean.com/docs/apis-clis/doctl/reference/compute/droplet/list/).
-
-```yaml
-digital_ocean:
-  region: nyc3
-  kubernetes_version: "1.21.10-do.0"
-  node_groups:
-    general:
-      instance: "g-4vcpu-16gb"
-      min_nodes: 1
-      max_nodes: 1
-    user:
-      instance: "g-2vcpu-8gb"
-      min_nodes: 1
-      max_nodes: 5
-    worker:
-      instance: "g-2vcpu-8gb"
-      min_nodes: 1
-      max_nodes: 5
-```
-
-#### Google cloud provider
-
-Google Cloud has the best support for QHub and is a great default choice for a production deployment. It allows auto-scaling to zero within the node group. There are no major
-restrictions.
-
-To see available instance types refer to [GCP docs](https://cloud.google.com/compute/docs/machine-types).
-
-```yaml
-google_cloud_platform:
-  project: test-test-test
-  region: us-central1
-  kubernetes_version: "1.18.16-gke.502"
-  node_groups:
-    general:
-      instance: n1-standard-4
-      min_nodes: 1
-      max_nodes: 1
-    user:
-      instance: n1-standard-2
-      min_nodes: 0
-      max_nodes: 5
-    worker:
-      instance: n1-standard-2
-      min_nodes: 0
-      max_nodes: 5
-```
-
-#### Amazon Web Services (AWS)
+<TabItem value="aws" label="AWS">
 
 Amazon Web Services has similar support to DigitalOcean and doesn't allow auto-scaling below 1 node.
 
@@ -348,7 +311,9 @@ amazon_web_services:
       max_nodes: 5
 ```
 
-#### Azure
+</TabItem>
+
+<TabItem value="azure" label="Azure">
 
 Microsoft Azure has similar settings for Kubernetes version, region, and instance names - using Azure's available values of course.
 
@@ -375,17 +340,101 @@ azure:
   storage_account_postfix: t65ft6q5
 ```
 
-#### Local (existing) Kubernetes cluster
+</TabItem>
+
+<TabItem value="do" label="DigitalOcean">
+
+DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the cheapest provider even accounting for spot/preemptible
+instances. In addition Digital Ocean doesn't have accelerator/gpu support. Digital Ocean is a great default choice for tying out QHub. Below is the recommended setup.
+
+:::note
+DigitalOcean regularly updates Kubernetes versions hence, the field `kubernetes_version` will most likely have to be changed. [See available instance types for DigitalOcean](https://www.digitalocean.com/docs/droplets/). If you used `qhub init` this version will automatically be computed for you. Do not copy the version you see below.
+:::
+
+To see available instance types refer to [Digital Ocean Instance Types](https://www.digitalocean.com/docs/droplets/). Additionally the Digital Ocean cli `doctl` has
+[support for listing droplets](https://www.digitalocean.com/docs/apis-clis/doctl/reference/compute/droplet/list/).
+
+```yaml
+digital_ocean:
+  region: nyc3
+  kubernetes_version: "1.21.10-do.0"
+  node_groups:
+    general:
+      instance: "g-4vcpu-16gb"
+      min_nodes: 1
+      max_nodes: 1
+    user:
+      instance: "g-2vcpu-8gb"
+      min_nodes: 1
+      max_nodes: 5
+    worker:
+      instance: "g-2vcpu-8gb"
+      min_nodes: 1
+      max_nodes: 5
+```
+
+</TabItem>
+
+<TabItem value="existing" label="Existing Kubernetes">
 
 Originally designed for QHub deployments on a "local" minikube cluster, this feature has now expanded to allow users to deploy QHub to any existing kubernetes cluster. The default
-options for a `local` deployment are still set deploy QHub to a minikube cluster.
+options for a `existing` deployment are still set deploy QHub to a minikube cluster.
 
-If you wish to deploy QHub to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the
-[Deploy QHub to an Existing Kubernetes Cluster].
+If you wish to deploy QHub to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the [Deploy QHub to an Existing Kubernetes Cluster].
 
 Deploying to a local existing kubernetes cluster has different options than the cloud providers. `kube_context` is an optional key that can be used to deploy to a non-default
 context. The default node selectors will allow pods to be scheduled anywhere. This can be adjusted to schedule pods on different labeled nodes. Allowing for similar functionality
 to node groups in the cloud.
+
+```yaml
+existing:
+  kube_context: minikube
+  node_selectors:
+    general:
+      key: kubernetes.io/os
+      value: linux
+    user:
+      key: kubernetes.io/os
+      value: linux
+    worker:
+      key: kubernetes.io/os
+      value: linux
+```
+
+</TabItem>
+
+<TabItem value="gcp" label="GCP" default="true" >
+
+Google Cloud has the best support for QHub and is a great default choice for a production deployment. It allows auto-scaling to zero within the node group. There are no major
+restrictions.
+
+To see available instance types refer to [GCP docs](https://cloud.google.com/compute/docs/machine-types).
+
+```yaml
+google_cloud_platform:
+  project: test-test-test
+  region: us-central1
+  kubernetes_version: "1.18.16-gke.502"
+  node_groups:
+    general:
+      instance: n1-standard-4
+      min_nodes: 1
+      max_nodes: 1
+    user:
+      instance: n1-standard-2
+      min_nodes: 0
+      max_nodes: 5
+    worker:
+      instance: n1-standard-2
+      min_nodes: 0
+      max_nodes: 5
+```
+
+</TabItem>
+
+<TabItem value="local" label="Local">
+
+This is a local deployment. It is intended for QHub deployments on a "local" cluster created and management by Kind.
 
 ```yaml
 local:
@@ -401,8 +450,13 @@ local:
       key: kubernetes.io/os
       value: linux
 ```
+</TabItem>
 
-## Terraform state
+</Tabs>
+
+## Custom settings
+
+### Terraform state
 
 Terraform manages the state of all the deployed resources via [backends](https://www.terraform.io/language/settings/backends). Terraform requires storing the state in order to keep
 track of the names, ids, and states of deployed resources. The simplest approach is storing the state on the local filesystem but isn't recommended and isn't the default of QHub.
@@ -435,7 +489,7 @@ terraform_state:
     region: "us-east-1"
 ```
 
-## Default Images
+### Default Images
 
 Default images are to the default image run if not specified in a profile (described in the next section). The `jupyterhub` key controls the jupyterhub image run. These control the
 docker image used to run JupyterHub, the default JupyterLab image, and the default Dask worker image.
@@ -447,7 +501,7 @@ default_images:
   dask_worker: "quansight/qhub-dask-worker:v||QHUB_VERSION||"
 ```
 
-## Storage
+### Storage
 
 Control the amount of storage allocated to shared filesystem.
 
@@ -593,13 +647,10 @@ profiles:
         ...
 ```
 
-## Themes
-
-### Customizing JupyterHub theme
+## Customizing JupyterHub theme
 
 JupyterHub can be customized since QHub uses [Quansight/qhub-jupyterhub-theme](https://github.com/quansight/qhub-jupyterhub-theme). Available theme options.
 
-> NOTE: if you want to change the logo it must be an accessible URL to the logo.
 
 ```yaml
 theme:
@@ -621,10 +672,26 @@ theme:
     h2_color: '#652e8e'
 ```
 
+:::note
+To properly update the image logo, you will must ensure that the provided logo field contains an accessible **URL** to the logo.
+:::
+
 Its also possible to display the current version of qhub by using the `display_version: 'True'` in the above `theme.jupyterhub` configuration. If no extra information is passed,
 the displayed version will be the same as `qhub_version`, an overwrite can be done by passing the `version: v.a.b.c` key as well.
 
-## Environments
+## Filesystem environments
+
+QHub is experimenting with a new way of distributing environments using [conda-store](https://github.com/quansight/conda-store). Please expect this environment distribution method
+to change over time.
+
+Each environment configuration is a `environment.<filename>` mapping to a conda environment definition file. If you need to pin a specific version, please include it in the
+definition. One current requirement is that each environment include `ipykernel`, `ipywidgets`, `qhub-dask==0.2.3`. Upon changing the environment definition expect 1-10 minutes
+upon deployment of the configuration for the environment to appear.
+
+Nebari comes with two default filesystem environments that are built during deployment.
+
+- filesystem/dask
+- filesystem/dashboard
 
 ```yaml
 environments:
@@ -659,15 +726,21 @@ environments:
       - pyyaml
 ```
 
-QHub is experimenting with a new way of distributing environments using [conda-store](https://github.com/quansight/conda-store). Please expect this environment distribution method
-to change over time.
-
-Each environment configuration is a `environment.<filename>` mapping to a conda environment definition file. If you need to pin a specific version, please include it in the
-definition. One current requirement is that each environment include `ipykernel`, `ipywidgets`, `qhub-dask==0.2.3`. Upon changing the environment definition expect 1-10 minutes
-upon deployment of the configuration for the environment to appear.
+:::warning
+By default conda-store restricts the environment channels to only accept `defaults` and `conda-forge`, you can check out [Managing conda environment] for more details.
+:::
 
 
-## JupyterHub
+
+## Overrides
+
+Overrides allows you to override the default configuration for a given resource pn Nebari without having to directlu modify the infrastructure components.
+
+Below we show the available resources that can be overridden in the configuration.
+
+<Tabs>
+
+<TabItem label="Jupyterhub" value="jupyterhub" >
 
 JupyterHub uses the [zero to jupyterhub helm chart](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/). This chart has many options that are not configured in the QHub default
 installation. You can override specific values in the [values.yaml](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/main/jupyterhub/values.yaml). `jupyterhub.overrides`
@@ -680,7 +753,9 @@ jupyterhub:
       users: true
 ```
 
-## Terraform Overrides
+</TabItem>
+
+<TabItem label="terraform" value="Terraform">
 
 The QHub configuration file provides a huge number of configuration options for customizing your QHub Infrastructure, while these options are sufficient for an average user, but
 aren't exhaustive by any means. There are still a plenty of things you might want to achieve which cannot be configured directly by the above mentioned options, hence we've
@@ -753,3 +828,9 @@ gcloud compute routers nats create nat-config --router qhub-nat-router  --nat-al
 Deployment inside a virtual network is slightly different from deploying inside a public network, as the name suggests, since its a virtual private network, you need to be inside
 the network to able to deploy and access QHub. One way to achieve this is by creating a Virtual Machine inside the virtual network, just select the virtual network and subnet name
 under the networking settings of your cloud provider while creating the VM and then follow the usual deployment instructions as you would deploy from your local machine.
+
+</TabItem>
+
+</Tabs>
+
+
