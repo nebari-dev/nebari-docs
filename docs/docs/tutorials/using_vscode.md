@@ -3,7 +3,7 @@
 How to use VS Code as your development environment.
 
 VS Code can be used as an IDE (integrated development environment) which
-provides helpful tooling (including debuging) to assist developers in writing
+provides helpful tooling (including debugging) to assist developers in writing
 code. It also has many other functions which non-developers may also find
 useful such a text editing and markdown rendering.
 
@@ -36,7 +36,7 @@ Let's review some of the most useful features.
 ### The Activity Bar components
 
 The `Activity Bar` is where you'll go to switch between the main tools
-availiable in VS Code. Below is a brief overview of the icons on the
+available in VS Code. Below is a brief overview of the icons on the
 `Activity Bar` (adding extensions may add additional icons your menu).
 
 | Icon                                                             | Name           | Description                                                               |
@@ -44,7 +44,7 @@ availiable in VS Code. Below is a brief overview of the icons on the
 | ![VS code hamburger button](/img/vscode_hamburger.png)           | File Menu      | Like every other file menu - create files, run files, edit preferences... |
 | ![VS code files button](/img/vscode_files.png)                   | File Explorer  | View list of files, navigate folder structures                            |
 | ![VS code search button](/img/vscode_search.png)                 | Search         | Search for words in the contents of files                                 |
-| ![VS code source control button](/img/vscode_source_control.png) | Source Control | Souce Control Management (SCM) features (e.g. git)                        |
+| ![VS code source control button](/img/vscode_source_control.png) | Source Control | Source Control Management (SCM) features (e.g. git)                        |
 | ![VS code debug button](/img/vscode_debug.png)                   | Debug          | Run code using the debugger                                               |
 | ![VS code extensions button](/img/vscode_extensions.png)         | Extensions     | Add plugins to extend VS Code functionality                               |
 
