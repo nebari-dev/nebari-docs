@@ -4,10 +4,6 @@ Invariably you will encounter behavior that does not match your expectations. Th
 
 ## Configuration
 
-### Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
-
-Nebari regenerates this file on every run. Yes, it will be removed by the operating system during its cleanup process, but running the `qhub deploy` command again as Nebari will update/create a `NEBARI_KUBECONFIG` file for you.
-
 ### Required pins for Dask environments
 
 The best way to manage dask pins is to use the `qhub-dask` [metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask). Usage will look something like this:
@@ -131,7 +127,7 @@ Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupy
 
 ### Provide individual users with unique environments and cloud instance types
 
-Nebari allows for admins to set up user groups which each have access to specific environments and server instance types. This allows for a fine-tuned management of your cloud resources. For example, you can create a special user group for a team of ML engineers which provides access to GPUs and a PyTorch environment. This will prevent inexperienced users from accidentally consuming expensive resources. Provided you have performed some setup ahead of time, users can chooose both instance types as well as environments at server launch time.
+Nebari allows for admins to set up user groups which each have access to specific environments and server instance types. This allows for a fine-tuned management of your cloud resources. For example, you can create a special user group for a team of ML engineers which provides access to GPUs and a PyTorch environment. This will prevent inexperienced users from accidentally consuming expensive resources. Provided you have performed some setup ahead of time, users can choose both instance types as well as environments at server launch time.
 
 First, you will need to create new node groups, one for each type of GPU instance you would like to provide users.
 
