@@ -93,17 +93,7 @@ By default, `k9s` starts with the standard directory that's set as the context (
 
 ### Deploy an arbitrary pod
 
-As a user, you can add extensions as follows:
-
-```sh
-extensions:
-  - name: echo-test
-    image: inanimate/echo-server:latest
-    urlslug: echo
-    private: true
-```
-
-This deploys a simple service based on the image provided. `name` must be a simple terraform-friendly string. The pod is available on your Nebari site at the `/echo` URL, or whatever URL slug you provide. Users will need login credentials if `private` is `true`.
+The simplest way to deploy arbitrary pods would be to use `kubectl apply` on the pod manifest.
 
 ### Upgrade the instance size for the `general` node group
 
