@@ -108,7 +108,7 @@ To get started, we will load the data using dask dataframe. This will lazily loa
 ```python
 import dask.dataframe as dd
 
-nyc_taxi_dask_df = dd.read_parquet(
+df = dd.read_parquet(
     path='gs://nebari-public/yellow_taxi_NYC/*/*.parquet', 
     storage_options={'anon':True},
 )
@@ -117,7 +117,7 @@ nyc_taxi_dask_df = dd.read_parquet(
 From here we can start analyzing the data. First let's check the size of the overall dataset.
 
 ```python
-dataset_size = nyc_taxi_dask_df.memory_usage(deep=True).compute().sum()
+dataset_size = df.memory_usage(deep=True).compute().sum()
 dataset_size
 ```
 
@@ -128,7 +128,59 @@ dataset_size
 
 This corresponds to 32.43GB of data. Running this one-liner would be impossible on most single machines but running this on a dask cluster with 4 works, this can be calculated in under a minute.
 
-...
+Now, let's perform some actual analysis! We will attempt to compare the number of taxi rides from before, during and after the COVID-19 pandemic. 
+To do this, we are going to aggregate the number of rides per day, calculate a 7-day rolling average and then compare these numbers for the same day (April 15th) across three different years, 2019, 2020 and 2022.
+
+```python
+# get the pickup date, ignoring pickup time
+df["pickup_date"] = df.tpep_pickup_datetime.dt.date.astype(str)
+# aggregate rides by pickup date
+gb_date = df.groupby(by="pickup_date").agg("count")
+# calculate a 7-day rolling average of the number of taxi rides
+gb_date["num_rides_7_rolling_ave"] = gb_date.tpep_pickup_datetime.rolling(7).mean()
+```
+
+Now we can compare number of taxi rides on April 15th across three different years.
+
+**For April 15th, 2019 - pre-pandemic**
+```python
+gb_date.loc["2019-04-15"].num_rides_7_rolling_ave.compute()
+```
+
+**Output:**
+```shell
+pickup_date
+2019-04-15    259901.142857
+Name: num_rides_7_rolling_ave, dtype: float64
+```
+
+**or April 15th, 2020 - during the height of the pandemic**
+```python
+gb_date.loc["2020-04-15"].num_rides_7_rolling_ave.compute()
+```
+
+**Output:**
+```shell
+pickup_date
+2020-04-15    7161.857143
+Name: num_rides_7_rolling_ave, dtype: float64
+```
+
+**For April 15th, 2022 - post-pandemic**
+```python
+gb_date.loc["2022-04-15"].num_rides_7_rolling_ave.compute()
+```
+
+**Output:**
+```shell
+pickup_date
+2022-04-15    119405.142857
+Name: num_rides_7_rolling_ave, dtype: float64
+```
+
+There were about 260,000 taxi rides a day in middle of April 2019 and that number plummeted to just over 7,100 rides a year later, a full two orders of magnitude fewer riders. Wild!
+
+Performing this kind of analysis on such a large dataset would not be possible without a tool like Dask. On Nebari, Dask comes out-of-the-box ready to help you handle these larger-than-memory (out-of-core) datasets.
 
 
 ### Dask diagnostic UI
