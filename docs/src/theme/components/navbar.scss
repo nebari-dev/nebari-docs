@@ -116,8 +116,8 @@
 div[class^="announcementBar_"] {
   font-weight: 500;
   height: 70px;
-  background-color: var(--ifm-color-primary-lighter);
-  border-bottom: 1px solid var(--ifm-color-black-lighte);
+  background-color: var(--nebari-blue-gray-11);
+  border: 2px solid var(--accent-nebari);
 }
 
 div[class^="announcementBarContent_"] {

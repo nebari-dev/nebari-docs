@@ -26,10 +26,8 @@ If you are not sure which option to choose, a cloud installation is likely your 
 :::note
 The cloud installation is based on Kubernetes, but knowledge of Kubernetes is **NOT** required nor is in-depth knowledge about the specific provider required either.
 
-Currently, Nebari supports [Amazon AWS](/how-tos/nebari-aws.md), [DigitalOcean](/how-tos/nebari-do.md), [Google GCP](/how-tos/nebari-gcp.md), and [Azure](/how-tos/nebari-azure.md).
+Currently, Nebari supports [Amazon AWS][nebari-aws], [DigitalOcean][nebari-do], [Google GCP][nebari-gcp], and [Azure][nebari-azure].
 :::
-
-For instructions on installing and deploying Nebari on a particular cloud provider, visit the [Choosing cloud providers](/getting-started/cloud-providers) section in this documentation where you will find more details about the supported cloud providers and their respective installation how-to guides.
 
 </TabItem>
 
@@ -60,7 +58,7 @@ Nebari HPC should be your choice if:
 
 - You expect that your projects will not exceed the resources/capabilities of your current infrastructure
 
-For instructions on installing and deploying Nebari HPC, visit the [How to install and setup Nebari HPC on bare metal machines](/how-tos/nebari-hpc) section of the documentation.
+For instructions on installing and deploying Nebari HPC, visit the [How to install and setup Nebari HPC on bare metal machines][nebari-hpc] section of the documentation.
 
 :::note
 Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to potentially high costs. For more information, check out the [base cost] section of the docs.
@@ -82,3 +80,26 @@ For instructions on installing and deploying Nebari Local, please visit [How to 
 
 </TabItem>
 </Tabs>
+
+---
+
+## What's next?
+
+For instructions on installing and deploying Nebari on a particular cloud provider, check out our handy how-to-guides:
+
+- [Deploying Nebari on AWS][nebari-aws]
+- [Deploying Nebari on Azure][nebari-azure]
+- [Deploying Nebari on Digital Ocean][nebari-do]
+- [Deploying Nebari on GCP][nebari-gcp]
+
+<!-- Internal links -->
+
+[nebari-aws]: /how-tos/nebari-aws.md
+[nebari-azure]: /how-tos/nebari-azure.md
+[nebari-do]: /how-tos/nebari-do.md
+[nebari-gcp]: /how-tos/nebari-gcp.md
+[nebari-hpc]: /how-tos/nebari-hpc.md
+[nebari-local]: /how-tos/nebari-local.md
+[nebari-deploy]: /getting-started/deploy.mdx
+[nebari-troubleshooting]: /troubleshooting.md
+[supported-cloud-providers]: /getting-started/cloud-providers.mdx
