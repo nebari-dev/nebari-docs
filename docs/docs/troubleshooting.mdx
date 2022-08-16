@@ -1,3 +1,8 @@
+---
+title: Troubleshooting
+description: Guidance for troubleshooting common issues in Nebari.
+---
+
 # Troubleshooting
 
 Invariably you will encounter behavior that does not match your expectations. This guide is meant to explain that behavior, help you diagnose it, and if possible resolve it.
@@ -55,21 +60,51 @@ If you are interested in learning more about DNS, [see this interesting comic](h
 
 Depending on a variety of factors, `kubectl` may not be able to access your Kubernetes cluster. To configure this utility for access, depending on your cloud provider:
 
-=== "[Digital Ocean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)"
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="gcp" label="Google Cloud" default>
+
+<div class="text--center">
+  <img src="/img/started-google-cloud-logo.png" width={420} />
+</div>
+
+[Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
+
+1. Download the [GCP SDK](https://cloud.google.com/sdk/downloads).
+2. Authenticate with GCP: `gcloud init`
+3. Run the following command: `gcloud container clusters get-credentials <project-name>-<namespace> --region <region>`
+
+</TabItem>
+<TabItem value="do" label="Digital Ocean">
+
+<div class="text--center">
+  <img src="/img/started-digital-ocean-logo.png" width={420} />
+</div>
+
+[DigitalOcean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)
+
 1. [Download the Digital Ocean command line utility](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
 2. If you haven't already, create a [Digital Ocean API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
 3. [Authenticate via the API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/): `doctl auth init`
 4. Run the following command: `doctl kubernetes cluster kubeconfig save "<project-name>-<namespace>"`
 
-=== "[Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)"
-1. Download the [GCP SDK](https://cloud.google.com/sdk/downloads).
-2. Authenticate with GCP: `gcloud init`
-3. Run the following command: `gcloud container clusters get-credentials <project-name>-<namespace> --region <region>`
+</TabItem>
+<TabItem value="aws" label="Amazon AWS">
 
-=== "[Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)"
+<div class="text--center">
+  <img src="/img/started-amazon-web-services-logo.png" width={420} />
+</div>
+
+[Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+
 1. Download the [AWS CLI](https://aws.amazon.com/cli/).
 2. If you haven't already, [create an AWS Access Key and Secret Key](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/).
 3. Run the following command: `aws eks --region <region-code> update-kubeconfig --name <project-name>-<namespace>`
+
+</TabItem>
+</Tabs>
 
 After completing these steps according to your cloud provider, `kubectl` should be able to access your Kubernetes cluster.
 
