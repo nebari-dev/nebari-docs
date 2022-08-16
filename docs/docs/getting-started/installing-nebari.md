@@ -11,17 +11,22 @@ You might see some references to `qhub` mainly in the context of commands or ins
 
 # Installing Nebari
 
-This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
+This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems.
+
+<!-- TODO: add link to advanced-settings section -->
+If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
-This guide focuses on installing Nebari for cloud usage. For other alternatives, please visit [deploying options](/getting-started/deploy.mdx) for an overview of the available options and their respective installation steps.
+This guide focuses on installing Nebari for **cloud usage**.
+
+For other alternatives, please visit the [deploying options](/getting-started/deploy.mdx) section for an overview of the available options and their respective installation steps.
 :::
 
 ## Pre-requisites
 
-Nebari heavily depends on [Terraform](https://www.terraform.io/) and a Python ecosystem. The installation of the Terraform binary is built-in within the Nebari source code and it is automatically downloaded during the first execution. Currently, only `Linux` and `macOS` are supported. `Windows` is only supported through the “Windows Subsystem for Linux” (see "WSL").
+Nebari heavily depends on [Terraform](https://www.terraform.io/) and Python. The installation of the Terraform binary is built-in within the Nebari source code, and it is automatically downloaded during the first execution. Currently, only `Linux` and `macOS` are supported. `Windows` is only supported through the “Windows Subsystem for Linux” (see "WSL").
 
-- Currently, Nebari supports Python `3.8+`
+- Currently, Nebari supports Python`>= 3.8`
 - For more details on Terraform and its dependencies, visit the [official Terraform documentation](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 - To install conda, visit the [official conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), or if you prefer, visit the [mamba installation documentation](https://github.com/mamba-org/mamba#installation)
 
