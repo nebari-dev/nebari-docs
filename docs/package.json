@@ -32,7 +32,7 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.{js,jsx,scss,css}": [
+    "**/*.{js,jsx,css}": [
       "yarn run lint:fix"
     ],
     "**/*.{json,md,mdx,toml}": [

@@ -129,6 +129,7 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 ```bash
 qhub deploy -c qhub-config.yaml
 ```
+
 :::note
 During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-do#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps.
 :::
