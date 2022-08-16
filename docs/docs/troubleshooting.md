@@ -59,18 +59,18 @@ If you are interested in learning more about DNS, [see this interesting comic](h
 
 Depending on a variety of factors, `kubectl` may not be able to access your Kubernetes cluster. To configure this utility for access, depending on your cloud provider:
 
-#### [Digital Ocean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)
+=== "[Digital Ocean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)"
 1. [Download the Digital Ocean command line utility](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
 2. If you haven't already, create a [Digital Ocean API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
 3. [Authenticate via the API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/): `doctl auth init`
 4. Run the following command: `doctl kubernetes cluster kubeconfig save "<project-name>-<namespace>"`
 
-#### [Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
+=== "[Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)"
 1. Download the [GCP SDK](https://cloud.google.com/sdk/downloads).
 2. Authenticate with GCP: `gcloud init`
 3. Run the following command: `gcloud container clusters get-credentials <project-name>-<namespace> --region <region>`
 
-#### [Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+=== "[Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)"
 1. Download the [AWS CLI](https://aws.amazon.com/cli/).
 2. If you haven't already, [create an AWS Access Key and Secret Key](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/).
 3. Run the following command: `aws eks --region <region-code> update-kubeconfig --name <project-name>-<namespace>`
@@ -130,6 +130,7 @@ Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupy
  2. Including the DockerHub register hash into `qhub-config.yaml`.
 
 ### Provide individual users with unique environments and cloud instance types
+
 Nebari allows for admins to set up user groups which each have access to specific environments and server instance types. This allows for a fine-tuned management of your cloud resources. For example, you can create a special user group for a team of ML engineers which provides access to GPUs and a PyTorch environment. This will prevent inexperienced users from accidentally consuming expensive resources. Provided you have performed some setup ahead of time, users can chooose both instance types as well as environments at server launch time.
 
 First, you will need to create new node groups, one for each type of GPU instance you would like to provide users.
