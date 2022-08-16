@@ -7,13 +7,17 @@
   color: var(--secondary-nebari);
 }
 
+.navbar--dark {
+  --ifm-navbar-link-hover-color: var(--nebari-links-dark) !important;
+}
+
 .navbar__link {
   text-decoration: none;
   color: var(--nebari-blue-gray-11);
   &:hover {
     text-decoration: underline;
     text-underline-offset: 3px;
-    color: var(--secondary-nebari);
+    color: var(--nebari-links-dark);
   }
 }
 
@@ -34,6 +38,10 @@
 
   .navbar__link:hover {
     color: var(--nebari-links-dark);
+  }
+
+  div[class^="announcementBar_"] {
+    background-color: var(--nebari-blue-gray-11);
   }
 }
 
@@ -103,4 +111,16 @@
   &:hover {
     opacity: 0.6;
   }
+}
+
+div[class^="announcementBar_"] {
+  font-weight: 500;
+  height: 70px;
+  background-color: var(--ifm-color-primary-lighter);
+  border-bottom: 1px solid var(--ifm-color-black-lighte);
+}
+
+div[class^="announcementBarContent_"] {
+  font-size: 1rem;
+  padding: 20px 0;
 }

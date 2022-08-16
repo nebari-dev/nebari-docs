@@ -135,6 +135,12 @@ const config = {
           },
         ],
       },
+      announcementBar: {
+        id: 'rename_announcement',
+        content:
+          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHUb</a> to Nebari ⚠️ </br>You might see some references to <b>QHub</b> mainly in the context of commands or installation/setup in the meantime.',
+        isCloseable: false,
+      },
       footer: {
         copyright: customFields.copyright,
         style: "dark",

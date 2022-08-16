@@ -3,12 +3,6 @@ title: Installing Nebari
 description: A guide to help you install Nebari for your team.
 ---
 
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
-
 # Installing Nebari
 
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems.

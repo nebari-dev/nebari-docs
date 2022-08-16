@@ -16,12 +16,6 @@ will walk you through the following steps:
 For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
 
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
-
 ## Sign up for Google Cloud Platform
 
 This documentation assumes that you are already familiar to Google Cloud Platform accounts and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related
@@ -174,7 +168,7 @@ With the `qhub-config.yaml` configuration file now created, Nebari can be deploy
 qhub deploy -c qhub-config.yaml
 ```
 :::note
-During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps. 
+During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
