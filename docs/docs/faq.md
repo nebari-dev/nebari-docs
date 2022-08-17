@@ -4,37 +4,30 @@
 
 Nebari regenerates this file on every run. Yes, it will be removed by the operating system during its cleanup process, but running the `qhub deploy` command again as Nebari will update/create a `NEBARI_KUBECONFIG` file for you.
 
-## How are QHub conda user environments created? Who creates them?
+### How are Nebari conda user environments created? Who creates them?
 
-The environment specifications are available in `qhub_config.yml` in the deployment repo, which serves to the QHub deployment using
-[conda-store](https://conda-store.readthedocs.io/). When the user manages their environments in this way, they get all of the benefits of environment versioning that QHub does
-under the hood, including future features, such as convenient environment rollback and environment encapsulation in containers.
+The environment specifications are made in `qhub_config.yml` in the deployment repo, which Nebari incorporates using [conda-store](https://conda-store.readthedocs.io/). When users manage their environments with Conda-Store, they get all the same benefits of environment versioning that Nebari does such as convenient environment rollback and environment encapsulation in containers.
 
-Anyone with access to the QHub deployment repo can add an environment, and there are no limits to the number of included environments.
+Anyone with access to the Nebari deployment repo can add new environments, and there is no limit to the number of included environments.
 
-> Be careful of the YAML indentation as it differs from the conda `environment.yml`
+> Be careful of the YAML indentation as it differs from the conda `environment.yml`.
 
-### What to do when the user requires `X` package and it's not available in the environment?
+### What if the user requires package `X` and it's not available in the environment?
 
-The proper solution is to add the package to the `qhub_config.yml` (See #1). If they don't have access to the deployment repo, the user needs to contact their QHub maintainer to
-get the required package. They *can* do a user install for pip packages if necessary (this is not recommended) but they won't be available to Dask workers.
+You can simply add the package to the `qhub_config.yml`. If the user doesn't have access to the deployment repo, they'll need to contact their Nebari admin to
+include the required package.
 
-### What's included in the user environment if a user wants to use Dask?
+### What's included in the user's environment if a user wants to use Dask?
 
-The user needs to include the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`. This replaces `distributed`,
-`dask`, and `dask-gateway` with the correct pinned versions.
+There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`.
 
 ### Why can't a user just create their own local conda environment or edit the existing conda environments?
 
-The version of [conda-store](https://conda-store.readthedocs.io/) used in QHub versions 0.3.11 and earlier is an alpha version. It doesn't support using local conda environments or
-editing pre-exising environments directly.
+The version of [conda-store](https://conda-store.readthedocs.io/) used in Nebari versions 0.3.11 and earlier is an alpha version. It doesn't support using local conda environments or editing pre-exising environments directly.
 
-> See the answer to #2 for information on how to modify environments properly. In the near future, the support for user-defined environments via conda-store is going to be
-> implemented.
+### How can a user install a package locally? Is it available to the user's Dask workers?
 
-### How can a user install a local package? Is it available to the user's Dask workers?
-
-If the user is using a `setuptools` package, they can install it into their local user environment using:
+If the user is using a `setuptools` package, they can install it into their local user environment by:
 
 ```shell
 pip install --no-build-isolation --user -e .
@@ -48,14 +41,13 @@ flit install -s
 
 These aren't available to the Dask workers.
 
-### How to use .bashrc on QHub?
+### How can users use .bashrc on Nebari?
 
-Users can use `.bashrc` on QHub, but it's important to note that by default QHub sources `.bash_profile`. The users might need to be sure to source the `.bashrc` inside of the
-`.bash_profile`. It's important to note that if they set environment variables in this way, they aren't available inside the notebooks.
+The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. It's important to note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
 
 ### How to use environment variables on dask workers which aren't loaded via a package?
 
-It's achieved through the UI:
+It's achieved through the web interface:
 
 ```python
 import dask_gateway
@@ -64,7 +56,7 @@ options = gateway.cluster_options()
 options
 ```
 
-It's achieved in the same way programmatically:
+It can also be accessed in the same way programmatically:
 
 ```python
 env_vars = {
@@ -84,7 +76,6 @@ Set the `changeps1` value in the conda config:
 conda config --set changeps1 true
 ```
 
-### What if a user wants to use the QHub server to compute a new pinned environment, which the user serves via the `qhub_config.yml`?
+### What if a user wants to use the Nebari server to compute a new pinned environment, which the user serves via the `qhub_config.yml`?
 
-If the user needs to solve a conda env on a QHub server, they need to specify the prefix. For example, `conda env create -f env_test.yml --prefix/tmp/test-env` where `test-env` is
-the env name. It's not recommended, but there are valid use cases of this operation.
+If the user needs to solve a conda env on a Nebari server, they'll need to specify the prefix. For example, `conda env create -f env_test.yml --prefix/tmp/test-env` where `test-env` is the env name. This is not recommended, but there are valid use cases of this operation.
