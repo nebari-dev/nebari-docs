@@ -1,8 +1,10 @@
 ---
 id: nebari-do
-title: How to deploy Nebari on Digital Ocean
+title: Deploy Nebari on Digital Ocean
 description: A basic overview of how to deploy Nebari on Digital Ocean
 ---
+
+## Introduction
 
 This guide is to help first-time users set up a Digital Ocean (DO) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will
 walk you through the following steps:

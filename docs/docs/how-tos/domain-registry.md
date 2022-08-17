@@ -1,10 +1,10 @@
 ---
 id: domain-registry
-title: How to set Nebari's DNS Domain Registry
+title: Setup Nebari domain registry
 description: Setting a custom DNS Domain Registry
 ---
 
-# Nebari domain registry setup
+# Setup Nebari domain registry
 
 ## What is a DNS?
 

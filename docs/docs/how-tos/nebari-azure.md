@@ -1,8 +1,10 @@
 ---
 id: nebari-azure
-title: How to deploy Nebari on Azure
+title: Deploy Nebari on Azure
 description: A basic overview of how to deploy Nebari on Azure
 ---
+
+## Introduction
 
 This guide is to help first-time users set up an Azure account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will walk you
 through the following steps:

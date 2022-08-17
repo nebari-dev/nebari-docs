@@ -1,8 +1,10 @@
 ---
 id: nebari-aws
-title: How to deploy Nebari on AWS
+title: Deploy Nebari on AWS
 description: A basic overview of how to deploy Nebari on AWS
 ---
+
+## Introduction
 
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
