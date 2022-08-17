@@ -28,7 +28,8 @@ Your QHub platform comes with `kbatch`, and all the necessary back-end component
 
 - `kbatch` is available on QHub version `0.4.3` and greater
 - `kbatch` is currently only available on `pip`, not `conda`
-  :::
+
+:::
 
 ### `kbatch configure`
 
@@ -89,12 +90,12 @@ This should output the full Job specification that was submitted to Kubernetes.
 Alternatively, all of these command line arguments can be consolidated into one configuration file.
 
 ```yml title="Sample kbatch configuration yaml file"
-name: my-job
+name:" my-job"
 image: "ghcr.io/username/my-image:latest"
 command:
-  - papermill
-  - my-nb.ipynb
-code: my-nb.ipynb
+  - "papermill"
+  - "my-nb.ipynb"
+code: "my-nb.ipynb"
 ```
 
 If the above YAML configuration file is saved as `my-job.yaml`, then it can be submitted with the following command to produce the same effect as above.
@@ -120,13 +121,13 @@ $ kbatch job list --output table
 What if you wanted to submit a job to run a schedule, for example, to run once a week? This is where `kbatch cronjob` comes in handy and luckily the interface is almost exactly the same. The only difference between `job` and `cronjob` is that the latter requires you to specify a `schedule`.
 
 ```yml title="Sample kbatch configuration yaml file with schedule"
-name: my-cronjob
+name: "my-cronjob"
 image: "ghcr.io/username/my-image:latest"
 command:
-  - papermill
-  - my-nb.ipynb
-code: my-nb.ipynb
-schedule: "0 2 * * 7*
+  - "papermill"
+  - "my-nb.ipynb"
+code: "my-nb.ipynb"
+schedule: "0 2 * * 7*"
 ```
 
 The same job that you submitted above now can be submitted to run on a schedule. A cron schedule of `0 2 * * 7` means the job will run once every `Sunday at 2:00AM`.

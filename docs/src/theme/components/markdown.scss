@@ -1,18 +1,22 @@
 .markdown {
   > p {
     code {
-      padding: 1px 5px;
+      padding: 0px 2px;
       margin-right: 3px;
       margin-left: 3px;
+      vertical-align: bottom;
     }
     a:hover {
       text-decoration-thickness: 2px;
+      text-decoration-color: var(--ifm-color-primary);
     }
   }
 
+  // lists in markdown - style when it's a URL
   > li {
     a:hover {
       text-decoration-thickness: 2px;
+      text-decoration-color: var(--nebari-links);
     }
   }
 
@@ -21,6 +25,10 @@
     border-color: var(--accent-nebari);
     font-weight: 500;
     padding: 10px;
+    &::before,
+    &::after {
+      content: '"';
+    }
 
     code {
       background-color: var(--nebari-blue-gray-10);
@@ -29,15 +37,16 @@
   }
 
   code {
-    background-color: var(--nebari-blue-gray-11);
     font-family: var(--global-block-family-code);
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: transparent;
+    border: 0px;
+    color: var(--nebari-code-color);
   }
 
   pre code {
-    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: var(--global-border-radius);
+    padding: 20px;
   }
 
   div[class^="codeBlock_"] {
@@ -67,8 +76,11 @@ div[class^="codeBlockTitle"] {
     }
 
     code {
+      color: var(--nebari-code-color-dark);
+    }
+
+    pre code {
       background-color: var(--ifm-color-black-lighter);
-      color: var(--ifm-color-white);
     }
   }
 

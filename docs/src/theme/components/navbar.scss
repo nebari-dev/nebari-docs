@@ -46,57 +46,6 @@
 }
 
 // ==============================================================================
-// Searchbar
-// ==============================================================================
-
-.navbar {
-  .DocSearch {
-    margin-left: 25px;
-  }
-
-  .DocSearch-Button {
-    border-radius: var(--ifm-global-radius);
-    padding: 0 6px 0 10px;
-
-    .DocSearch-Search-Icon {
-      width: 16px;
-      margin-top: -1px;
-    }
-  }
-
-  .DocSearch-Button-Placeholder,
-  .DocSearch-Button-Key {
-    font-size: 14px !important;
-  }
-
-  .DocSearch-Button-Key {
-    padding-bottom: 0 !important;
-  }
-
-  .DocSearch-Button-Key svg {
-    margin-bottom: 1px !important;
-  }
-}
-
-@media (max-width: 1080px) {
-  .navbar {
-    .DocSearch {
-      margin-left: 15px;
-    }
-
-    .DocSearch-Button {
-      padding: 0 12px;
-    }
-
-    .DocSearch-Button-Key,
-    .DocSearch-Button-KeySeparator,
-    .DocSearch-Button-Placeholder {
-      display: none;
-    }
-  }
-}
-
-// ==============================================================================
 // Header
 // ==============================================================================
 
@@ -117,7 +66,7 @@ div[class^="announcementBar_"] {
   font-weight: 500;
   height: 70px;
   background-color: var(--nebari-blue-gray-11);
-  border: 2px solid var(--accent-nebari);
+  border-bottom: 2px solid var(--secondary-nebari);
 }
 
 div[class^="announcementBarContent_"] {

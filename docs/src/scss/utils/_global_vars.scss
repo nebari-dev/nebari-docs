@@ -127,7 +127,7 @@
     "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
   --global-block-family-code: "Red Hat Mono", monospace;
 
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 100%;
   --ifm-h4-font-size: 1.3rem;
 
   /* Base. */
@@ -136,6 +136,10 @@
   --ifm-color-content-inverse: var(--ifm-color-white);
   --ifm-color-content-secondary: var(--nebari-blue-gray-4);
   --ifm-menu-color: var(--nebari-blue-gray-4);
+
+  // inline code colours
+  --nebari-code-color: var(--accent-nebari);
+  --nebari-code-color-dark: var(--accent-nebari);
 
   // ==============================================================================
   // General Docusaurus
@@ -186,6 +190,7 @@
   --ifm-global-radius: 3px;
 
   // links
+  --nebari-links: var(--ifm-color-content);
   --nebari-links-dark: var(--nebari-purple-9);
 }
 
