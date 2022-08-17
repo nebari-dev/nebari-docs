@@ -15,18 +15,19 @@ There are a few known limitations at the moment, these include:
 
 - No integration with the local QHub filesystem, besides the notebook or script itself
 - The need to specify an image which contains all your required packages and libraries
-    - `conda-store` built images are perfectly suited to solve this issue
+  - `conda-store` built images are perfectly suited to solve this issue
 - No artifact management
-    - If you need to save the output, make sure to save it to cloud storage, a hosted git repos, etc.
+  - If you need to save the output, make sure to save it to cloud storage, a hosted git repos, etc.
 
 ## Initial configuration
 
 Your QHub platform comes with `kbatch`, and all the necessary back-end components, pre-enabled. Consult your platform administrator or your `qhub-config.yaml` if you are unsure. Or you can create another `conda` env using `conda-store` and add `kbatch` to it.
 
 :::note
+
 - `kbatch` is available on QHub version `0.4.3` and greater
 - `kbatch` is currently only available on `pip`, not `conda`
-:::
+  :::
 
 ### `kbatch configure`
 

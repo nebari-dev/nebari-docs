@@ -8,6 +8,7 @@ description: A guide to help you install Nebari for your team.
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems.
 
 <!-- TODO: add link to advanced-settings section -->
+
 If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
@@ -57,6 +58,7 @@ qhub --help
 ![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available positional arguments and their use.](/img/validate_installation.png "Nebari's help command line output")
 
 <!-- TODO: update link once merged -->
+
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide][nebari-troubleshooting].
 :::
@@ -80,6 +82,7 @@ Already made your mind about deployment? Check our handy how-to-guides:
 - [Deploying Nebari on a local cluster][nebari-local]- using [`kind`](https://kind.sigs.k8s.io/) no cloud required
 
 <!-- Internal links -->
+
 [nebari-aws]: /how-tos/nebari-aws.md
 [nebari-azure]: /how-tos/nebari-azure.md
 [nebari-do]: /how-tos/nebari-do.md

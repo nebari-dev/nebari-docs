@@ -15,10 +15,10 @@ Development environments give developers and Data Scientists a "sandbox" to work
 Environment and package managers such as `conda` enables you to create isolated spaces to separate dependencies on a per-project basis.
 They also add other benefits such as:
 
-* Reduce friction to install and upgrade dependencies without affecting other projects or users
-* Reduce the risk of dependency conflicts
-* Promote reproducibility and replicability through dependencies pinning
-* Reduce the "works on my machine" risk - thus working towards reproducible builds across multiple machines
+- Reduce friction to install and upgrade dependencies without affecting other projects or users
+- Reduce the risk of dependency conflicts
+- Promote reproducibility and replicability through dependencies pinning
+- Reduce the "works on my machine" risk - thus working towards reproducible builds across multiple machines
 
 ### What is `conda`?
 
@@ -53,7 +53,7 @@ This tutorial focuses on using the web interface to interact with our environmen
    ![conda-store login UI - before authentication](/img/tutorials/conda_store_login.png)
 
 3. This will lead you through a series of windows to authorize with Keycloak, after which you will have access to the
-`conda-store` dashboard. By default, you will be directed to the user page containing information about your account and the associated permissions.
+   `conda-store` dashboard. By default, you will be directed to the user page containing information about your account and the associated permissions.
 
    ![conda-store dashboard UI - after authentication](/img/tutorials/conda_store_dashboard.png)
 
@@ -61,9 +61,9 @@ Some useful sections to notice in the `user` page are:
 
 - **User**: this section of the dashboard allows users to explicitly logout of the interface.
 - **Namespaces**: `Namespaces` are an important part of the `conda-store`
-[authorization model](https://conda-store.readthedocs.io/en/latest/contributing.html#authorization-model). They
-control what level of access users are provided to the individual environments. In other words, based on your
-permissions in each namespace, your ability to create, read, update, or delete and environment will differ.
+  [authorization model](https://conda-store.readthedocs.io/en/latest/contributing.html#authorization-model). They
+  control what level of access users are provided to the individual environments. In other words, based on your
+  permissions in each namespace, your ability to create, read, update, or delete and environment will differ.
 - **Permissions**: your current permissions in each namespace.
 
 That is, unless your admin has configured your namespace differently :wink: You can see here that the `conda-store`
@@ -71,63 +71,63 @@ authorization model is able to provide admins with a fine-grained level of contr
 
 ## Step 2 - Creating a new environment
 
-1. To create a new environment, click on the `Create New Environment` button on the top right of the navigation bar. You will
-be presented with an option to upload a
-[conda _yaml_ file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file)
-or write your own.
+1.  To create a new environment, click on the `Create New Environment` button on the top right of the navigation bar. You will
+    be presented with an option to upload a
+    [conda _yaml_ file](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-from-an-environment-yml-file)
+    or write your own.
 
-   ![conda-store create environment UI](/img/tutorials/conda_store_create_env.png)
+    ![conda-store create environment UI](/img/tutorials/conda_store_create_env.png)
 
-    For this tutorial, you can copy and paste the following environment specification:
+        For this tutorial, you can copy and paste the following environment specification:
 
-    ```yaml title="Sample environment specification"
-    channels:
-    - conda-forge
-    dependencies:
-    - python=3.9
-    - numpy
-    - matplotlib
-    - pandas
-    - panel
-    - ipykernel
-    - ipywidgets
-    name: example-environment
-    prefix: null
-    ```
+        ```yaml title="Sample environment specification"
+        channels:
+        - conda-forge
+        dependencies:
+        - python=3.9
+        - numpy
+        - matplotlib
+        - pandas
+        - panel
+        - ipykernel
+        - ipywidgets
+        name: example-environment
+        prefix: null
+        ```
 
-2. After you copy the above into the UI, go ahead and click the `Submit` button.
+2.  After you copy the above into the UI, go ahead and click the `Submit` button.
 
-3. You will be redirected to the environments overview page. Find the card with the name of the new environment under your user's namespace (e.g.
-`<your-username>/example-environment`).
+3.  You will be redirected to the environments overview page. Find the card with the name of the new environment under your user's namespace (e.g.
+    `<your-username>/example-environment`).
 
-   ![Newly create environment card](/img/tutorials/conda_store_new_env.png)
+    ![Newly create environment card](/img/tutorials/conda_store_new_env.png)
 
-4. Click on the card for your newly created environment. The UI will display the environment specification:
+4.  Click on the card for your newly created environment. The UI will display the environment specification:
 
-   ![conda-store - Environment details page](/img/tutorials/conda_store_env_details.png)
+    ![conda-store - Environment details page](/img/tutorials/conda_store_env_details.png)
 
-   If this is the first time visiting this page, the environment may still be in the process of building.
-   The page will automatically update when the build is complete.
+    If this is the first time visiting this page, the environment may still be in the process of building.
+    The page will automatically update when the build is complete.
 
-   From this page, you can `Edit` our _yaml_ specification, or even `Delete` the environment.
+    From this page, you can `Edit` our _yaml_ specification, or even `Delete` the environment.
 
-   :::note
-   `conda-store` tracks all the environments behind the scenes for the users. Even if a user "deletes" an environment,
-   it will still exist in the store. This ensures admins always have access to environment history.
-   :::
+    :::note
+    `conda-store` tracks all the environments behind the scenes for the users. Even if a user "deletes" an environment,
+    it will still exist in the store. This ensures admins always have access to environment history.
+    :::
 
-5. Now let's take a closer look at the `conda` build detail, to do this, click on the build number link in the `conda-store` interface.
-   This will display a new page with the metadata about the environment including the time, size and status.
-   Also included is yourour original _yaml_ specification and a list of all the installed dependencies, their version and the used `conda` channels.
+5.  Now let's take a closer look at the `conda` build detail, to do this, click on the build number link in the `conda-store` interface.
+    This will display a new page with the metadata about the environment including the time, size and status.
+    Also included is yourour original _yaml_ specification and a list of all the installed dependencies, their version and the used `conda` channels.
 
-   ![conda-store UI - Sample environment build details page: showing build details, specification file, and conda packages](/img/tutorials/conda_store_build_details_top.png)
+    ![conda-store UI - Sample environment build details page: showing build details, specification file, and conda packages](/img/tutorials/conda_store_build_details_top.png)
 
     Scroll down to the bottom of this list, and you'll see a section called `Conda Environment Artifacts`.
     This is where you can download your own copy of the _yaml_ file, a [conda-lock](https://conda-incubator.github.io/conda-lock/) file, and a `tar.gz` archive of the environment.
 
-   ![conda-store UI - Sample environment build details page: showing conda environment artifacts](/img/tutorials/conda_store_build_details_bottom.png)
+    ![conda-store UI - Sample environment build details page: showing conda environment artifacts](/img/tutorials/conda_store_build_details_bottom.png)
 
-6. Lastly, click on `Full Logs` to view the full output from the `conda` build.
+6.  Lastly, click on `Full Logs` to view the full output from the `conda` build.
 
 :::note
 If you want to use your new environment in a Jupyter Notebook, don't forget to include `ipykernel` and `ipywidgets` in
@@ -169,7 +169,7 @@ Please keep in mind that these are _NOT_ available to Dask workers!
 1. If you have an environment that fails to build properly, you'll be able to see this failure on the build status page.
 
    Navigate to the `Full Logs` to investigate in more detail. Also, from the build status page you can trigger re-build in
-case you hit issues with intermittent outages, etc.
+   case you hit issues with intermittent outages, etc.
 
 2. If you need to use Dask
 

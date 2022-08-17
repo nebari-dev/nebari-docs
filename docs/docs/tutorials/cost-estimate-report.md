@@ -4,7 +4,6 @@ title: Create a cost estimate report
 description: A guide to Nebari's cost estimate tool
 ---
 
-
 ## Introduction
 
 [Infracost](https://www.infracost.io/) is a tool that enables developers to analyze their cloud cost estimates using their Terraform templates. Nebari wraps the `infracost` command-line interface, which is free and open-source, to provide cost estimates for your Nebari deployments across major cloud providers.

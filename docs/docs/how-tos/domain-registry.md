@@ -47,7 +47,7 @@ To generate a token follow the steps below. For additional information, see the 
 - Click continue to summary.![screenshot Cloudflare summary](../source/images/cloudflare_summary.png)
 
 - Click on the Create Token button and set the token generated as an environment variable on your machine.
- 
+
 ### Setup API token locally
 
 Finally, set the token value as an environment variable:
@@ -55,8 +55,8 @@ Finally, set the token value as an environment variable:
 ```bash
  export CLOUDFLARE_TOKEN="cloudflaretokenvalue"
 ```
-Also, add the flag `--dns-provider=cloudflare` to the [Qhub deploy command.](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari)
 
+Also, add the flag `--dns-provider=cloudflare` to the [Qhub deploy command.](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari)
 
 ## Using other DNS providers
 
@@ -64,10 +64,10 @@ Currently, QHub only supports CloudFlare for [automatic DNS registration](link t
 
 Below are the links to detailed documentation on how to create and manage DNS records on a few providers:
 
-* [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider
-* [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider
-* [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider
-* [Digital Ocean DNS](https://docs.digitalocean.com/products/networking/dns/quickstart/) provider
+- [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider
+- [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider
+- [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider
+- [Digital Ocean DNS](https://docs.digitalocean.com/products/networking/dns/quickstart/) provider
 
 :::note
 Once your new DNS domain is created, it might take time for the records and related certificates to fully propagate.
