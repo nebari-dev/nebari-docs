@@ -55,7 +55,7 @@ The Nebari cost estimate tool will look for the `stages` directory within your d
 
 The report should look something like this:
 
-```sh
+```sh title="Sample Infracost generated report"
          Cost Breakdown
 ┏━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
 ┃               Name ┃ Cost ($) ┃
