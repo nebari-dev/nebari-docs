@@ -5,13 +5,19 @@ description: Guidance for troubleshooting common issues in Nebari.
 
 # Troubleshooting
 
-Invariably you will encounter behavior that does not match your expectations. This guide is meant to explain that behavior, help you diagnose it, and if possible resolve it.
+Invariably you will encounter behavior that does not match your expectations. 
+This guide is meant to explain that behavior, give you some context around
+why it's happening, help you diagnose it, and if possible resolve it.
 
 ## Configuration
 
 ### Required pins for Dask environments
 
-The best way to manage dask pins is to use the `qhub-dask` [metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask). Usage will look something like this:
+There are some pins that are required for the Nebari Dask environment to function correctly.
+
+The best way to manage dask pins is to use the `qhub-dask` 
+[metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask). 
+Usage will look something like this:
 
 ```yaml
 environments:
@@ -120,7 +126,7 @@ The `general` node group, or node pool, is (usually) the node that hosts most of
 
 Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
 
-> Given the possible destructive nature of resizing this node group, we **highly recommend** backing up your cluster before attempting.
+> Given the possible destructive nature of resizing this node group, we **highly recommend** backing up your cluster before attempting this.
 
 Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size. Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in the catastrophic destruction of your cluster.
 
@@ -137,7 +143,7 @@ Alternatively, you can backup your cluster, destroy it, specify the new instance
 
 ### Use a DNS provider other than CloudFlare
 
-CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the *only* DNS provider Nebari supports. This is NOT the case! Please check out our "How to" section, paying particular attention to the domain registry section.
+CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the *only* DNS provider Nebari supports. This is NOT the case! Please check out our "How to" documentation, paying particular attention to the domain registry section.
 
 ### Add system packages to a user's JupyterLab image
 
