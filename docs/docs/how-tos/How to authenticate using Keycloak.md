@@ -63,7 +63,11 @@ During this time you might see some log messages regarding the autoscaling proce
 
 </details>
 
-### Next Steps
+:::warning
+The starting up sequence can take up to several minutes, depending on the size of the cluster. If the server is not accessible **after 10 minutes**, an error will be shown and you will be redirected to the main hub page. Please check the troubleshooting section of our docs for more information.
+:::
+
+## Next Steps
 
 Now you are ready to fully use all the features of your Jupyterlab instance. Please check our [Nebari 101] section for more information.
 
