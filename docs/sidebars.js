@@ -45,6 +45,7 @@ module.exports = {
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
+        "tutorials/using_dask",
       ],
     },
     {
