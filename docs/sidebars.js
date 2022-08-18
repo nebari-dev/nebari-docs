@@ -15,8 +15,8 @@
 module.exports = {
   sidebar: [
     {
-      type: "doc",
       label: "Introduction",
+      type: "doc",
       id: "welcome",
     },
     {
@@ -90,7 +90,7 @@ module.exports = {
     {
       type: "doc",
       label: "Community",
-      id: "governance/overview",
+      id: "community/overview",
     },
     {
       type: "doc",

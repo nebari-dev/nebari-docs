@@ -8,6 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
 const domain = "https://nebari.dev";
+const githubForum = "https://github.com/orgs/nebari-dev/discussions"
 
 // -----------------------------------------------------------------------------
 // custom Fields for the project
@@ -22,6 +23,7 @@ const customFields = {
   githubOrgUrl,
   githubUrl: `${githubOrgUrl}/nebari`,
   githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+  githubForum,
 };
 
 // -----------------------------------------------------------------------------
@@ -96,37 +98,32 @@ const config = {
         //   src: "img/logo.svg",
         // },
         style: "dark",
-        hideOnScroll: true,
+        hideOnScroll: false,
         items: [
+          // right navbar items
           {
             label: "Getting Started",
             position: "right",
-            to: "getting-started/installing-nebari",
+            items: [
+              {
+                label: "Install Nebari",
+                to: "getting-started/installing-nebari",
+              },
+              {
+                label: "Cloud providers",
+                to: "getting-started/cloud-providers",
+              },
+            ]
           },
           {
-            label: "Tutorials",
+            label: "Documentation",
             position: "right",
-            to: "tutorials",
-          },
-          {
-            label: "How-to Guides",
-            position: "right",
-            to: "how-tos",
-          },
-          {
-            label: "Reference",
-            position: "right",
-            to: "references/overview",
-          },
-          {
-            label: "Conceptual Guides",
-            position: "right",
-            to: "explanations/overview",
+            to: "/",
           },
           {
             label: "Community",
             position: "right",
-            to: "governance/overview",
+            to: "community/overview",
           },
           {
             href: customFields.githubUrl,
@@ -147,25 +144,33 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Open source",
+            title: "Documentation",
             items: [
               {
                 label: "Getting Started",
                 to: "getting-started/installing-nebari",
               },
+              {
+                label: "Tutorials",
+                to: "tutorials/index",
+              },
             ],
           },
           {
-            title: "Community",
+            title: 'Community',
             items: [
               {
                 label: "Nebari repository",
                 href: customFields.githubUrl,
               },
+              {
+                label: "User forum",
+                href: customFields.githubForum,
+              },
             ],
           },
           {
-            title: "Other",
+            title: "More",
             items: [
               {
                 html: `
