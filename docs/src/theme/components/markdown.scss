@@ -1,22 +1,23 @@
 .markdown {
   > p {
     code {
-      padding: 0px 2px;
-      margin-right: 3px;
-      margin-left: 3px;
       vertical-align: bottom;
     }
-    a:hover {
-      text-decoration-thickness: 2px;
-      text-decoration-color: var(--ifm-color-primary);
+    a {
+      @include link-hover(--ifm-color-primary);
     }
   }
 
+  img {
+    border-radius: var(--global-border-radius);
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 1.5px 3px 0px;
+    border: 1px solid var(--ifm-color-emphasis-300);
+  }
   // lists in markdown - style when it's a URL
   > li {
-    a:hover {
-      text-decoration-thickness: 2px;
-      text-decoration-color: var(--nebari-links);
+    a {
+      @include link-hover(--ifm-color-primary);
     }
   }
 
@@ -30,6 +31,7 @@
       content: '"';
     }
 
+    // assigning colour otherwise it is too dark
     code {
       background-color: var(--nebari-blue-gray-10);
       color: var(--ifm-color-black);
@@ -37,11 +39,7 @@
   }
 
   code {
-    font-family: var(--global-block-family-code);
-    background-color: transparent;
-    border: 0px;
-    color: var(--nebari-code-color);
-    vertical-align: bottom;
+    @include code-block-style;
   }
 
   pre code {
@@ -88,5 +86,17 @@ div[class^="codeBlockTitle"] {
   div[class^="codeBlockTitle"] {
     background-color: var(--ifm-color-black-light);
     color: var(--ifm-color-content);
+  }
+}
+
+table {
+  thead {
+    background-color: var(--ifm-color-background);
+  }
+  tr:nth-child(2n) {
+    background-color: var(--ifm-color-background);
+  }
+  tr {
+    background-color: var(--ifm-color-background2);
   }
 }

@@ -163,8 +163,8 @@
   --ifm-color-background-2: var(--ifm-color-white-dark);
   --ifm-color-background-3: var(--ifm-color-white-darker);
   --ifm-color-on-background: var(--ifm-color-black);
-  --ifm-color-on-background-2: var(--ifm-color-purple-darker);
-  --ifm-color-on-background-3: var(--ifm-color-purple-dark);
+  --ifm-color-on-background-2: var(--ifm-color-black-light);
+  --ifm-color-on-background-3: var(--ifm-color-black-lighter);
 
   // Admonition
   --ifm-admonition-background-color: var(--nebari-purple-11);
@@ -197,6 +197,7 @@
 html[data-theme="dark"] {
   --ifm-color-on-primary: var(--ifm-color-black);
 
+  /* Base */
   --ifm-color-content: var(--ifm-color-white);
   --ifm-color-content-secondary: var(--ifm-color-white-dark);
 
@@ -204,9 +205,9 @@ html[data-theme="dark"] {
   --ifm-color-background: var(--ifm-color-black);
   --ifm-color-background-2: var(--ifm-color-black-light);
   --ifm-color-background-3: var(--ifm-color-black-lighter);
-  --ifm-color-on-background: var(--ifm-color-white);
-  --ifm-color-on-background-2: var(--ifm-color-purple-lighter);
-  --ifm-color-on-background-3: var(--ifm-color-purple-light);
+  // --ifm-color-on-background: var(--ifm-color-white);
+  // --ifm-color-on-background-2: var(--ifm-color-purple-lighter);
+  // --ifm-color-on-background-3: var(--ifm-color-purple-light);
   --ifm-hover-overlay: rgba(241, 241, 246, 0.06);
 
   // Surface
