@@ -5,7 +5,6 @@ description: |
   This is a how-to for configuring Keycloak and add new users.
 ---
 
-
 ## Configuring Keycloak
 
 [Keycloak](https://www.keycloak.org/) is the name of the open-source user management software that's automatically deployed within Nebari. It's used to store the database of all
@@ -37,23 +36,23 @@ From this point on, the `security.keycloak.initial_root_password` field in `neba
 
 1. To change the `root` user password, go to your Nebari instance's admin dashboard - e.g., something like <https://mydomain.com/auth/admin/> — and log in with the password provided.
 
-    ![Nebari admin view - Root Login to Keycloak form](/img/how-tos/keycloak_master_login.png)
+   ![Nebari admin view - Root Login to Keycloak form](/img/how-tos/keycloak_master_login.png)
 
 2. From there, click on the **Root** dropdown in the top right of the screen, and select **Manage account**.
 
-    ![Keycloak root user page - manage account tab selected](/img/how-tos/keycloak_root_user_manage_account.png)
+   ![Keycloak root user page - manage account tab selected](/img/how-tos/keycloak_root_user_manage_account.png)
 
 3. Under **Account Security** click **Signing In**.
 
-    ![Keycloak root user page - account security](/img/how-tos/keycloak_root_user_account_security.png)
+   ![Keycloak root user page - account security](/img/how-tos/keycloak_root_user_account_security.png)
 
 4. In the Password section, click the **Update** button. This will guide you through entering your existing root password, and then creating a new password.
 
-    ![Keycloak root user page - account security, update password](/img/how-tos/keycloak_root_user_update_password.png)
+   ![Keycloak root user page - account security, update password](/img/how-tos/keycloak_root_user_update_password.png)
 
 ## Adding a Nebari user
 
-You will need to add a Nebari user in order to log in to your Nebari platform. If you have chosen to use GitHub or Auth0 single-sign-on, you must ensure the value you enter in Keycloak under ``Username`` exactly matches the usernames from GitHub or Auth0, respectively.
+You will need to add a Nebari user in order to log in to your Nebari platform. If you have chosen to use GitHub or Auth0 single-sign-on, you must ensure the value you enter in Keycloak under `Username` exactly matches the usernames from GitHub or Auth0, respectively.
 
 ### Add user using Keycloak console
 
@@ -73,33 +72,30 @@ Steps to create a new user:
 
 2. Click the **Add user** button and you will see the new user form:
 
-    ![Keycloak add user tab screenshot - new user form](/img/how-tos/keycloak_add_users.png)
+   ![Keycloak add user tab screenshot - new user form](/img/how-tos/keycloak_add_users.png)
 
 3. Fill out the three fields outlined above. These are **Username**, **Email**, and **Groups**. (We explain these fields below.) Then click **save**.
 
    - Username: Depending on the authentication provider selected ('password', 'GitHub' or 'Auth0'), the values entered into the **Username** field will differ slightly. The following table outlines
-those differences:
+     those differences:
 
-  |          | Password          | GitHub            | Auth0                 |
-  | -------- | ----------------- | ----------------- | --------------------- |
-  | Username | *unique username* | *GitHub username* | *Email to login with* |
+|          | Password          | GitHub            | Auth0                 |
+| -------- | ----------------- | ----------------- | --------------------- |
+| Username | _unique username_ | _GitHub username_ | _Email to login with_ |
 
-   - Once the **Username** field is updated, please add a valid email address in the **Email** field.
+- Once the **Username** field is updated, please add a valid email address in the **Email** field.
 
-    :::note
-    Although not required, users may not be able to log in to Grafana if this field isn't properly set.
-    :::
+  :::note
+  Although not required, users may not be able to log in to Grafana if this field isn't properly set.
+  :::
 
-   - Associate the user with one or more of the **Groups**. Out of the box, Nebari is deployed with the following groups: ``admin``, ``analyst``, and ``developer`` (see the [Roles x Groups](#roles-x-groups) section below for more details).
+- Associate the user with one or more of the **Groups**. Out of the box, Nebari is deployed with the following groups: `admin`, `analyst`, and `developer` (see the [Roles x Groups](#roles-x-groups) section below for more details).
 
 4. Click **Save**.
 
-
 If you are using the password authentication provider, you will also need to define a password for the user. Keep in mind that, if using Auth0 or Github the password field is not required. It's best to put the **Temporary** toggle in the **OFF** position. Otherwise the user will be forced to change the password on first login.
 
-
-  ![Keycloak add user > credentials tab screenshot - set password](/img/how-tos/keycloak_user_password.png)
-
+![Keycloak add user > credentials tab screenshot - set password](/img/how-tos/keycloak_user_password.png)
 
 ### Add user from the command line
 
@@ -109,7 +105,7 @@ To make adding users easier for new Nebari deployments, the following client com
 nebari keycloak -c nebari-config.yaml adduser <username> <password>
 ```
 
-This will create a new user `<username>` under the ``analyst`` group, with the initial password provided. Omit the password completely if you are using GitHub or Auth0.
+This will create a new user `<username>` under the `analyst` group, with the initial password provided. Omit the password completely if you are using GitHub or Auth0.
 
 :::note
 If you [changed the initial root password for Keycloak](#change-keycloak-root-password) this method will not work.
@@ -123,14 +119,14 @@ Your new user can now log in to Nebari, visit your provided Nebari domain URI wh
 
 ## Roles x Groups
 
-Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: ``admin``,
-``developer``, ``analyst`` and ``viewer`` (in roughly descending order of power).
+Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: `admin`,
+`developer`, `analyst` and `viewer` (in roughly descending order of power).
 
-| Group       | Access to Nebari Resources                                                                    | Roles | Permissions Description |
-| ----------- | ------------------------------------------------------------------------------------------- | ----- | -------------------- |
-| ``admin``     | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana</li></ul> |   <ul><li>``conda_store_admin``</li><li>``dask_admin``</li><li>``jupyterhub_admin``</li><li>``grafana_admin``</li></ul> | Blank |
-| ``developer`` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana Developer</li></ul> | <ul><li>``conda_store_developer``</li><li>``dask_developer``</li><li>``jupyterhub_developer``</li><li>``grafana_developer``</li></ul> | Blank |
-| ``analyst``   | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Grafana</li></ul>  | <ul><li>``conda_store_developer``</li><li>``jupyterhub_developer``</li><li>``grafana_viewer``</li></ul> | Blank |
+| Group       | Access to Nebari Resources                                                              | Roles                                                                                                                         | Permissions Description |
+| ----------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `admin`     | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana</li></ul>           | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`grafana_admin`</li></ul>                 | Blank                   |
+| `developer` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_developer`</li></ul> | Blank                   |
+| `analyst`   | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Grafana</li></ul>                        | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_viewer`</li></ul>                             | Blank                   |
 
 To create new groups or modify (or delete) existing groups, log in as `root` and click **Groups** on the left-hand side.
 
@@ -138,18 +134,18 @@ As an example, we create a new group named `conda-store-manager`. This group wil
 
 1. Click **New** in the upper-right hand corner under **Groups**.
 
-  ![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
+![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
 
-   - Then, give the new group an appropriate name.
+- Then, give the new group an appropriate name.
 
-  ![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
+![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
 
 2. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
 
-  ![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
+![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
 
 In this example, the new group only has one mapped role (`conda_store_admin`); however it's possible to attached multiple **Client Roles** to a single group.
 
-  ![Keycloak group conda-store-manager form - role mappings tab focused ](/img/how-tos/keycloak_new_group3.png)
+![Keycloak group conda-store-manager form - role mappings tab focused ](/img/how-tos/keycloak_new_group3.png)
 
 Once complete, return to the **Users** section in the dashboard and add the relevant users to this newly created group.
