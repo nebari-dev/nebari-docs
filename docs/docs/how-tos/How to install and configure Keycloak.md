@@ -103,7 +103,7 @@ If you are using the password authentication provider, you will also need to def
 
 ### Add user from the command line
 
-To make adding users easier for new Nebari deployments, the follwoing client command will help you with this.
+To make adding users easier for new Nebari deployments, the following client command will help you with this.
 
 ```shell
 nebari keycloak -c nebari-config.yaml adduser <username> <password>
