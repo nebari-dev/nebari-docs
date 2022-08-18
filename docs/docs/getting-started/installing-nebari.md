@@ -55,7 +55,7 @@ You can verify that Nebari is properly installed, and you are able to execute th
 qhub --help
 ```
 
-![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available positional arguments and their use.](/img/validate_installation.png "Nebari's help command line output")
+![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available positional arguments and their use.](/img/getting-started/validate_installation.png "Nebari's help command line output")
 
 <!-- TODO: update link once merged -->
 

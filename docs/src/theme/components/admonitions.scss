@@ -91,6 +91,22 @@
 }
 
 // ==============================================================================
+// Details - dropdown
+// ==============================================================================
+
+.details_node_modules-\@docusaurus-theme-classic-lib-next-theme-Details-styles-module {
+  --docusaurus-details-decoration-color: var(--ifm-color-primary) !important;
+  border: 1px solid var(--ifm-color-primary) !important;
+  background-color: var(--ifm-color-on-primary) !important;
+}
+
+[data-theme="dark"] {
+  .details_node_modules-\@docusaurus-theme-classic-lib-next-theme-Details-styles-module {
+    --docusaurus-details-decoration-color: var(--ifm-color-primary-light) !important;
+    border: 1px solid var(--ifm-color-primary-light) !important;
+  }
+}
+// ==============================================================================
 // Pagination
 // ==============================================================================
 

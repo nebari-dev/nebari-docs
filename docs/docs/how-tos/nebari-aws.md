@@ -59,7 +59,7 @@ Follow these steps to set up your access keys and user accounts:
 2. Give the user a name, and tick **Access Key - Programmatic access**
 3. Click **Next**
 
-   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos-aws-new-iam-user.png "Creating your IAM user account")
+   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
 4. Select **Attach existing policies directly**, then select `AdministratorAccess` from the list of policies. For more information, please refer to
    [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
