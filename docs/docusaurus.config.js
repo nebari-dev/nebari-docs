@@ -90,6 +90,9 @@ const config = {
           hideable: true,
         },
       },
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       navbar: {
         title: customFields.meta.title,
         // TODO: Replace with logo
@@ -129,7 +132,7 @@ const config = {
             href: customFields.githubUrl,
             position: "right",
             className: "header-github-link",
-            "aria-label": "GitHub repository",
+            "aria-label": "Nebari GitHub repository",
           },
         ],
       },
