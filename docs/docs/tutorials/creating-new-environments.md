@@ -9,7 +9,7 @@ description: Using conda-store for environment creation
 In this tutorial, you will learn how to create a new environment on Nebari using `conda-store`,
 install new `conda` packages in your environment, manage multiple environments, and also share the environment with other Nebari users.
 
-### Why using`conda` environments
+### Why using `conda` environments
 
 Development environments give developers and Data Scientists a "sandbox" to work in, experiment with new packages, work across multiple projects, and collaborate with their peers.
 Environment and package managers such as `conda` enables you to create isolated spaces to separate dependencies on a per-project basis.
