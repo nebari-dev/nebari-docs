@@ -28,11 +28,11 @@
     "lint:fix": "yarn run lint -- --fix",
     "format": "prettier --check \"**/*.{md, mdx, json, toml}\"",
     "format:fix": "prettier --write \"**/*.{md, mdx, json, toml}\"",
-    "prepare": "cd .. && husky install front/.husky",
+    "prepare": "cd .. && husky install docs/.husky",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.{js,jsx,scss,css}": [
+    "**/*.{js,jsx,css}": [
       "yarn run lint:fix"
     ],
     "**/*.{json,md,mdx,toml}": [
@@ -44,6 +44,7 @@
     "@docusaurus/preset-classic": "2.0.0-beta.20",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
+    "docusaurus-lunr-search": "^2.1.15",
     "docusaurus-plugin-sass": "^0.2.2",
     "prism-react-renderer": "^1.3.5",
     "react": "^17.0.2",

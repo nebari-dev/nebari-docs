@@ -35,6 +35,7 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
+  staticDirectories: ['static'],
 
   i18n: {
     defaultLocale: "en",
@@ -42,7 +43,10 @@ const config = {
   },
 
   // Plugings need installing first then add here
-  plugins: ["docusaurus-plugin-sass"],
+  plugins: [
+    "docusaurus-plugin-sass",
+    require.resolve('docusaurus-lunr-search'),
+  ],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
@@ -95,6 +99,11 @@ const config = {
         hideOnScroll: true,
         items: [
           {
+            label: "Getting Started",
+            position: "right",
+            to: "getting-started/installing-nebari",
+          },
+          {
             label: "Tutorials",
             position: "right",
             to: "tutorials",
@@ -102,7 +111,7 @@ const config = {
           {
             label: "How-to Guides",
             position: "right",
-            to: "how-tos/overview",
+            to: "how-tos",
           },
           {
             label: "Reference",
@@ -135,8 +144,8 @@ const config = {
             title: "Open source",
             items: [
               {
-                label: "Quickstart",
-                to: "quickstart",
+                label: "Getting Started",
+                to: "getting-started/installing-nebari",
               },
             ],
           },
