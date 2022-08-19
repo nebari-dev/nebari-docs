@@ -40,7 +40,7 @@ This directory contains the following
 
 # `docs/`
 
-This is the top-level directory for the documentation. It contains the following:
+This is the top-level directory for the documentation. It contains the following files and directories.
 
 ## `docs`
 
@@ -106,7 +106,7 @@ To keep things tidy the images are organized in the same way as the main documen
 - `yarn.lock`: lock file for the dependencies
 - `.editorconfig`: configuration file to help everyone achieve style consistency
 
-## Files in `.` - the root directory
+## Files in `./` - the root directory of this repository
 
 - `.gitignore`: `.git` configuration file with files and patters not to be committed to version control
 - `.gitpod.yml`: gitpod configuration file
