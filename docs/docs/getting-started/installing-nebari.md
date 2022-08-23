@@ -58,5 +58,5 @@ qhub --help
 ![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output").
 
 :::note Troubleshooting
-If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.md).
+If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.mdx).
 :::
