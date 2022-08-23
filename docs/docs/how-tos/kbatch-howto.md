@@ -1,6 +1,6 @@
 ---
 id: kbatch-howto
-title: Submit batch jobs with `kbatch`
+title: Submit batch jobs with kbatch
 description: Using kbatch to submit batch jobs
 ---
 
