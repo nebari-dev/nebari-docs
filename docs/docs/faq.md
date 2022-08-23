@@ -26,6 +26,12 @@ The version of [conda-store](https://conda-store.readthedocs.io/) used in Nebari
 
 ### How can a user install a package locally? Is it available to the user's Dask workers?
 
+:::caution
+
+We *strongly recommend* installing packages by adding them through the Conda-Store UI. In an emergency situation, the following approach may be used.
+
+:::
+
 If the user is using a `setuptools` package, they can install it into their local user environment by:
 
 ```shell
@@ -43,29 +49,6 @@ These aren't available to the Dask workers.
 ### How can users use .bashrc on Nebari?
 
 The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. Also note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
-
-### How to use environment variables on dask workers which aren't loaded via a package?
-
-It's achieved through the web interface:
-
-```python
-import dask_gateway
-gateway = dask_gateway.Gateway()
-options = gateway.cluster_options()
-options
-```
-
-It can also be accessed in the same way programmatically:
-
-```python
-env_vars = {
-"ENV_1": "VALUE_1",
-"ENV_2": "VALUE_2"
-}
-options.environment_vars = env_vars
-```
-
-This feature is available in release 0.3.12 or later.
 
 ### What if a user can't see the active conda environment in the terminal?
 
