@@ -42,7 +42,7 @@ These aren't available to the Dask workers.
 
 ### How can users use .bashrc on Nebari?
 
-The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. It's important to note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
+The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. Also note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
 
 ### How to use environment variables on dask workers which aren't loaded via a package?
 
