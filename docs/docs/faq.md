@@ -44,7 +44,7 @@ If they're using a `flit` package, they can install with
 flit install -s
 ```
 
-These aren't available to the Dask workers.
+These aren't available to the Dask workers. See our [Dask tutorial](tutorials/using_dask.md) for more information.
 
 ### How can users use .bashrc on Nebari?
 
