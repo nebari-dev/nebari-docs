@@ -10,7 +10,6 @@ The environment specifications are made in `qhub_config.yml` in the deployment r
 
 Anyone with access to the Nebari deployment repo can add new environments, and there is no limit to the number of included environments.
 
-> Be careful of the YAML indentation as it differs from the conda `environment.yml`.
 
 ### What if the user requires package `X` and it's not available in the environment?
 
