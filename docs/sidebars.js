@@ -95,7 +95,7 @@ module.exports = {
     },
     {
       type: "doc",
-      label: "FAQs / Troubleshooting",
+      label: "Troubleshooting",
       id: "troubleshooting",
     },
     {
