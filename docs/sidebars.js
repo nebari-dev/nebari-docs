@@ -15,8 +15,8 @@
 module.exports = {
   sidebar: [
     {
-      type: "doc",
       label: "Introduction",
+      type: "doc",
       id: "welcome",
     },
     {
@@ -54,7 +54,7 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/using_vscode",
+        "tutorials/using-vscode",
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
@@ -115,7 +115,7 @@ module.exports = {
     },
     {
       type: "doc",
-      label: "FAQs / Troubleshooting",
+      label: "Troubleshooting",
       id: "troubleshooting",
     },
     {
