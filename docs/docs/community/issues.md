@@ -38,7 +38,7 @@ For bug reports, include in your issue:
 If an issue is affecting you, start at the top of this list and complete as many tasks on the list as you can:
 
 1. Check the issue tracker, if there is an open issue for this same problem, add a reaction or more details to the issue
-   to indicate that it’s affecting you (tip: make sure to also check the open [Pull Requests][nebari-PRs] for ongoing work)
+   to indicate that it’s affecting you (tip: make sure to also check the open [Pull Requests][nebari-prs] for ongoing work)
 2. You should also check the troubleshooting guide to see if your problem is already listed there.
 3. If there is an open issue, and you can add more detail, write a comment describing how the problem is affecting you,
    OR if you can, write up a work-around or improvement for the issue
@@ -48,4 +48,4 @@ If an issue is affecting you, start at the top of this list and complete as many
 
 [nebari-issues]: https://github.com/nebari-dev/nebari/issues
 [nebari-labels]: https://github.com/nebari-dev/nebari/labels
-[nebari-PRs]: https://github.com/nebari-dev/nebari/pulls
+[nebari-prs]: https://github.com/nebari-dev/nebari/pulls
