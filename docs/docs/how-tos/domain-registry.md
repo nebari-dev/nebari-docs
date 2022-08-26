@@ -1,10 +1,10 @@
 ---
 id: domain-registry
-title: How to set Nebari's DNS Domain Registry
+title: Setup Nebari domain registry
 description: Setting a custom DNS Domain Registry
 ---
 
-# Nebari domain registry setup
+# Setup Nebari domain registry
 
 ## What is a DNS?
 
@@ -36,15 +36,15 @@ To generate a token follow the steps below. For additional information, see the 
 
 - Under Profile, select the API Tokens menu and click on Create API Token.
 
-- On Edit zone DNS click on Use Template.![screenshot Cloudflare edit Zone DNS](../source/images/cloudflare_auth_1.png).
+- On Edit zone DNS click on Use Template.![screenshot Cloudflare edit Zone DNS](/img/how-tos/cloudflare_auth_1.png).
 
-- Configure Permissions such as the image below:![screenshot Cloudflare Permissions edit](../source/images/cloudflare_permissions_2.1.1.png)
+- Configure Permissions such as the image below:![screenshot Cloudflare Permissions edit](/img/how-tos/cloudflare_permissions_2.1.1.png)
 
-- On Account Resources set the configuration to include your desired account.![screenshot Cloudflare account resources](../source/images/cloudflare_account_resources_scr.png)
+- On Account Resources set the configuration to include your desired account.![screenshot Cloudflare account resources](/img/how-tos/cloudflare_account_resources_scr.png)
 
-- On Zone Resources set it to Include | Specific zone and your domain name.![screenshot Cloudflare zone resources](../source/images/cloudflare_zone_resources.png)
+- On Zone Resources set it to Include | Specific zone and your domain name.![screenshot Cloudflare zone resources](/img/how-tos/cloudflare_zone_resources.png)
 
-- Click continue to summary.![screenshot Cloudflare summary](../source/images/cloudflare_summary.png)
+- Click continue to summary.![screenshot Cloudflare summary](/img/how-tos/cloudflare_summary.png)
 
 - Click on the Create Token button and set the token generated as an environment variable on your machine.
 
