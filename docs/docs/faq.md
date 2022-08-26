@@ -6,10 +6,11 @@ Nebari regenerates this file on every run. Yes, it will be removed by the operat
 
 ### How are Nebari conda user environments created? Who creates them?
 
-The environment specifications are made in `qhub_config.yml` in the deployment repo, which Nebari incorporates using [conda-store](https://conda-store.readthedocs.io/). When users manage their environments with Conda-Store, they get all the same benefits of environment versioning that Nebari does such as convenient environment rollback and environment encapsulation in containers.
+The short answer: there are currently *two* ways of creating environments, as we are in the process of migrating Nebari to Conda-Store, and so which way depends on your use-case.
 
-Anyone with access to the Nebari deployment repo can add new environments, and there is no limit to the number of included environments.
+The longer answer: for global environments, you can specify the environment in `qhub_config.yml` and it will be made available for all users and services (e.g., CDSDashboards). Creating the environments in Conda-Store, by comparison, will provide more granular control over certain settings and permissions.
 
+As Nebari and Conda-Store mature, the intent is to migrate exclusively to Conda-Store for environment creation and management.
 
 ### What if the user requires package `X` and it's not available in the environment?
 
@@ -19,10 +20,6 @@ include the required package.
 ### What's included in the user's environment if a user wants to use Dask?
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`.
-
-### Why can't a user just create their own local conda environment or edit the existing conda environments?
-
-The version of [conda-store](https://conda-store.readthedocs.io/) used in Nebari versions 0.3.11 and earlier is an alpha version. It doesn't support using local conda environments or editing pre-exising environments directly.
 
 ### How can a user install a package locally? Is it available to the user's Dask workers?
 
@@ -58,6 +55,10 @@ Set the `changeps1` value in the conda config:
 conda config --set changeps1 true
 ```
 
-### What if a user wants to use the Nebari server to compute a new pinned environment, which the user serves via the `qhub_config.yml`?
+### How do I clean up or delete the Conda-Store pod, if I need to?
 
-If the user needs to solve a conda env on a Nebari server, they'll need to specify the prefix. For example, `conda env create -f env_test.yml --prefix/tmp/test-env` where `test-env` is the env name. This is not recommended, but there are valid use cases of this operation.
+There are potentially two similar questions here with very different answers.
+
+If you want to delete old builds of your environment on Conda-Store, you simply need to click the "delete" button in the Conda-Store UI.
+
+If you want to *purge* old builds of your environment entirely from the system, you will need to go to the NFS mount on the server, as these builds are cached there. You can then manually delete the cached builds. This can be done either through k9s, or ssh-ing into the Conda-Store pods.
