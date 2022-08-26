@@ -57,8 +57,4 @@ conda config --set changeps1 true
 
 ### How do I clean up or delete the Conda-Store pod, if I need to?
 
-There are potentially two similar questions here with very different answers.
-
-If you want to delete old builds of your environment on Conda-Store, you simply need to click the "delete" button in the Conda-Store UI.
-
-If you want to *purge* old builds of your environment entirely from the system, you will need to go to the NFS mount on the server, as these builds are cached there. You can then manually delete the cached builds. This can be done either through k9s, or ssh-ing into the Conda-Store pods.
+You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on Conda-Store, you simply need to click the "delete" button in the Conda-Store UI.
