@@ -90,5 +90,5 @@ Already made your mind about deployment? Check our handy how-to-guides:
 [nebari-hpc]: /how-tos/nebari-hpc.md
 [nebari-local]: /how-tos/nebari-local.md
 [nebari-deploy]: /getting-started/deploy.mdx
-[nebari-troubleshooting]: /troubleshooting.md
+[nebari-troubleshooting]: /troubleshooting.mdx
 [supported-cloud-providers]: /getting-started/cloud-providers.mdx
