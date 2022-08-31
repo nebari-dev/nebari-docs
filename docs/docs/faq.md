@@ -1,31 +1,34 @@
 # Frequently asked questions
 
-### Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
+## Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
 
-Nebari regenerates this file on every run. This means it will be removed by the operating system during its cleanup process, but running the `qhub deploy` command again as Nebari will update/create a `NEBARI_KUBECONFIG` file for you.
+Nebari regenerates this file on every run. This means it will be removed by the operating system during its cleanup process, but running the `qhub deploy` command again as a Nebari administrator will update/create a `NEBARI_KUBECONFIG` file for you.
 
-### How are Nebari conda user environments created? Who creates them?
+## How are Nebari conda user environments created? Who creates them?
 
-The short answer: there are currently *two* ways of creating environments, as we are in the process of migrating Nebari to Conda-Store, and so which way depends on your use-case.
+The short answer: there are currently *two* ways of creating environments, as we are in the process of migrating Nebari to conda-store, and so which way depends on your use-case.
 
-The longer answer: for global environments, you can specify the environment in `qhub_config.yml` and it will be made available for all users and services (e.g., CDSDashboards). Creating the environments in Conda-Store, by comparison, will provide more granular control over certain settings and permissions.
+The longer answer:
 
-As Nebari and Conda-Store mature, the intent is to migrate exclusively to Conda-Store for environment creation and management.
+ - For global environments, you can specify the environment in `qhub_config.yml`, and it will be made available for all users and services (e.g., CDSDashboards). 
+ - By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
 
-### What if the user requires package `X` and it's not available in the environment?
+As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
 
-You can simply add the package to the `qhub_config.yml`. If the user doesn't have access to the deployment repo, they'll need to contact their Nebari admin to
+## What if the user requires package `X` and it's not available in the environment?
+
+You can add the package to the `qhub_config.yml`. If the user doesn't have access to the deployment repo, they'll need to contact their Nebari administrator to
 include the required package.
 
-### What's included in the user's environment if a user wants to use Dask?
+## What's included in the user's environment if a user wants to use Dask?
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`.
 
-### How can a user install a package locally? Is it available to the user's Dask workers?
+## How can a user install a package locally? Is it available to the user's Dask workers?
 
 :::caution
 
-We *strongly recommend* installing packages by adding them through the Conda-Store UI. In an emergency situation, the following approach may be used.
+We *strongly recommend* installing packages by adding them through the conda-store UI. If you're developing a package and need to install the package through `pip`, `conda`, or similar, the following approach may be used.
 
 :::
 
@@ -41,9 +44,9 @@ If they're using a `flit` package, they can install with
 flit install -s
 ```
 
-These aren't available to the Dask workers. See our [Dask tutorial](tutorials/using_dask.md) for more information.
+It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial](tutorials/using_dask.md) for more information.
 
-### How can users use .bashrc on Nebari?
+## How can users use .bashrc on Nebari?
 
 The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. Also note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
 
@@ -55,6 +58,6 @@ Set the `changeps1` value in the conda config:
 conda config --set changeps1 true
 ```
 
-### How do I clean up or delete the Conda-Store pod, if I need to?
+## How do I clean up or delete the conda-store pod, if I need to?
 
-You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on Conda-Store, you simply need to click the "delete" button in the Conda-Store UI.
+You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
