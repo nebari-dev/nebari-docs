@@ -46,7 +46,15 @@ flit install -s
 
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial](tutorials/using_dask.md) for more information.
 
-## How can users use .bashrc on Nebari?
+## Can users modify `.bashrc` on Nebari?
+
+Regular Nebari users do not have write permissions to modify the `.bashrc` file.
+
+Nebari automatically creates and manages `.bashrc` and `.profile`, so if the intent of using the `.bashrc` file is to populate environment variables in bash scripts, the users can source the file in any scripts they create by including the following line in their scripts:
+
+```bash
+source ~/.bashrc
+```
 
 The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. Also note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
 
@@ -57,6 +65,8 @@ Set the `changeps1` value in the conda config:
 ```shell
 conda config --set changeps1 true
 ```
+
+The conda config is located in the `/home/{user}/.condarc` file. The user can change the conda config with a text editor (for example: `nano`, which is included in Nebari by default) and the changes will be applied on saving the file.
 
 ## How do I clean up or delete the conda-store pod, if I need to?
 
