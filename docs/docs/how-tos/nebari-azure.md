@@ -1,8 +1,10 @@
 ---
 id: nebari-azure
-title: How to deploy Nebari on Azure
+title: Deploy Nebari on Azure
 description: A basic overview of how to deploy Nebari on Azure
 ---
+
+## Introduction
 
 This guide is to help first-time users set up an Azure account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will walk you
 through the following steps:
@@ -14,12 +16,6 @@ through the following steps:
 
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
-
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
 
 ## Sign up for Azure
 

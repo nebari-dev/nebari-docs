@@ -39,12 +39,12 @@ The `Activity Bar` is where you'll go to switch between the main tools
 available in VS Code. Below is a brief overview of the icons on the
 `Activity Bar` (adding extensions may add additional icons your menu).
 
-| Icon                                                             | Name           | Description                                                               |
-| ---------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------- |
+| Icon                                                                       | Name           | Description                                                               |
+| -------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------- |
 | ![VS code hamburger button](/img/tutorials/vscode_hamburger.png)           | File Menu      | Like every other file menu - create files, run files, edit preferences... |
 | ![VS code files button](/img/tutorials/vscode_files.png)                   | File Explorer  | View list of files, navigate folder structures                            |
 | ![VS code search button](/img/tutorials/vscode_search.png)                 | Search         | Search for words in the contents of files                                 |
-| ![VS code source control button](/img/tutorials/vscode_source_control.png) | Source Control | Source Control Management (SCM) features (e.g. git)                        |
+| ![VS code source control button](/img/tutorials/vscode_source_control.png) | Source Control | Source Control Management (SCM) features (e.g. git)                       |
 | ![VS code debug button](/img/tutorials/vscode_debug.png)                   | Debug          | Run code using the debugger                                               |
 | ![VS code extensions button](/img/tutorials/vscode_extensions.png)         | Extensions     | Add plugins to extend VS Code functionality                               |
 
@@ -96,24 +96,24 @@ In the `Explorer` pane, selected the `New File` icon:
 
 ![VS Code select new file](/img/tutorials/vscode_new_file.png)
 
-You can name it anything you'd like, here we've named it `example.py`. The 
+You can name it anything you'd like, here we've named it `example.py`. The
 `*.py` extension let's VS Code know that its a Python file and you can set up
-some automatic linting tasks through Preferences if you'd like. 
+some automatic linting tasks through Preferences if you'd like.
 
 Add some sample code to your file:
 
 ![VS Code new file contents](/img/tutorials/vscode_new_file_contents.png)
 
-We also see the VS Code `Terminal` in the previous image. This can be 
+We also see the VS Code `Terminal` in the previous image. This can be
 opened with `File -> Terminal -> New Terminal`.
 
-Before we run our file, we need to select what Conda environment it should run 
+Before we run our file, we need to select what Conda environment it should run
 inside.
 
 ![VS Code select conda env](/img/tutorials/vscode_select_env.png)
 
-Now we can run our code through the VS Code UI by selecting either 
-`Run Python File` or `Debug Python File` in the top right. 
+Now we can run our code through the VS Code UI by selecting either
+`Run Python File` or `Debug Python File` in the top right.
 
 ![VS Code run or debug env](/img/tutorials/vscode_run_debug_buttons.png)
 
@@ -125,6 +125,6 @@ As another alternative, we could run code directly from the terminal as well.
 
 ## Conclusion
 
-We've covered the basic setup and run some arbitrary code. If you're curious 
-about more advanced features or specific questions, you can always refer back 
-to the [VS Code Documentation](https://code.visualstudio.com/). 
+We've covered the basic setup and run some arbitrary code. If you're curious
+about more advanced features or specific questions, you can always refer back
+to the [VS Code Documentation](https://code.visualstudio.com/).

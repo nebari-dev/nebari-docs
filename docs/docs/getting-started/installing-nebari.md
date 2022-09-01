@@ -3,25 +3,26 @@ title: Installing Nebari
 description: A guide to help you install Nebari for your team.
 ---
 
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
+# Installing Nebari
 
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
+This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems.
 
 # Installing the Nebari package
+<!-- TODO: add link to advanced-settings section -->
 
-This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
+If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
-This guide focuses on installing Nebari for cloud usage. For other alternatives, please visit [deploying options](/getting-started/deploy.mdx) for an overview of the available options and their respective installation steps.
+This guide focuses on installing Nebari for **cloud usage**.
+
+For other alternatives, visit the [Choosing a deployment platform][nebari-deploy] section for an overview of the available options and their respective installation steps.
 :::
 
 ## Pre-requisites
 
-Nebari heavily depends on [Terraform](https://www.terraform.io/) and a Python ecosystem. The installation of the Terraform binary is built-in within the Nebari source code and it is automatically downloaded during the first execution. Currently, only `Linux` and `macOS` are supported. `Windows` is only supported through the “Windows Subsystem for Linux” (see "WSL").
+Nebari heavily depends on [Terraform](https://www.terraform.io/) and Python. The installation of the Terraform binary is built-in within the Nebari source code, and it is automatically downloaded during the first execution. Currently, only `Linux` and `macOS` are supported. `Windows` is only supported through the “Windows Subsystem for Linux” (see "WSL").
 
-- Currently, Nebari supports Python `3.8+`
+- Currently, Nebari supports `Python >= 3.8`
 - For more details on Terraform and its dependencies, visit the [official Terraform documentation](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 - To install conda, visit the [official conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), or if you prefer, visit the [mamba installation documentation](https://github.com/mamba-org/mamba#installation)
 
@@ -49,30 +50,46 @@ There are currently two ways to install Nebari:
 
 ## Verify installation
 
-You can verify that Nebari package is properly installed and you are able to execute the client commands by running:
+You can verify that Nebari package is properly installed, and you are able to execute the client commands by running the following command on your command line:
 
 ```bash
 qhub --help
 ```
 
-![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output").
+![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available positional arguments and their use.](/img/getting-started/validate_installation.png "Nebari's help command line output")
+
+<!-- TODO: update link once merged -->
 
 :::note Troubleshooting
-If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.md).
+If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide][nebari-troubleshooting].
 :::
 
-## What's Next?
+---
 
-You are now ready to move on to deploying Nebari! First, review your deployment options.
+## What's next?
 
-First, you'll need to [choose a deployment platform](/getting-started/deploy.mdx) (Cloud, HPC, or pre-existing k8s cluster).
-Then, if you've chosen `cloud`, you'll also need to [choose a cloud provider](/getting-started/cloud-providers.mdx).
+Need more information before deploying Nebari? Check out the following sections in the documentation:
 
-Finally, after making those choices, you can move on to the deployment itself:
+- To get more insights on the **multiple deployment methods for Nebari** - check out the [Choosing a deployment platform][nebari-deploy] guide
+- To learn more about the currently **supported public cloud providers** - check out the [Supported cloud providers][supported-cloud-providers] guide
 
-- [How to deploy Nebari on GCP](/how-tos/nebari-gcp.md)
-- [How to deploy Nebari on AWS](/how-tos/nebari-aws.md)
-- [How to deploy Nebari on Azure](/how-tos/nebari-azure.md)
-- [How to deploy Nebari on DO](/how-tos/nebari-do.md)
-- [How to deploy Nebari on HPC](/how-tos/nebari-hpc.md)
-- [How to deploy Nebari on existing k8s](/how-tos/nebari-local.md)
+Already made your mind about deployment? Check our handy how-to-guides:
+
+- [Deploying Nebari on AWS][nebari-aws]
+- [Deploying Nebari on Azure][nebari-azure]
+- [Deploying Nebari on Digital Ocean][nebari-do]
+- [Deploying Nebari on GCP][nebari-gcp]
+- [Deploying Nebari on HPC][nebari-hpc]
+- [Deploying Nebari on a local cluster][nebari-local]- using [`kind`](https://kind.sigs.k8s.io/) no cloud required
+
+<!-- Internal links -->
+
+[nebari-aws]: /how-tos/nebari-aws.md
+[nebari-azure]: /how-tos/nebari-azure.md
+[nebari-do]: /how-tos/nebari-do.md
+[nebari-gcp]: /how-tos/nebari-gcp.md
+[nebari-hpc]: /how-tos/nebari-hpc.md
+[nebari-local]: /how-tos/nebari-local.md
+[nebari-deploy]: /getting-started/deploy.mdx
+[nebari-troubleshooting]: /troubleshooting.mdx
+[supported-cloud-providers]: /getting-started/cloud-providers.mdx

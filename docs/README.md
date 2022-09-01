@@ -101,9 +101,9 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 Once you have the pre-commits and the dependencies installed, you can get started with the documentation.
 To see a live local version of the docs run the following command:
 
-   ```bash
-   yarn start
-   ```
+```bash
+yarn start
+```
 
 This command starts a local development server and opens up a browser window.
 Most changes are reflected live without having to restart the server.
@@ -151,4 +151,5 @@ yarn run format
 ```
 
 <!-- links -->
+
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
