@@ -9,7 +9,7 @@ We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Neba
 You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
 :::
 
-# Installing Nebari
+# Installing the Nebari package
 
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
@@ -49,7 +49,7 @@ There are currently two ways to install Nebari:
 
 ## Verify installation
 
-You can verify that Nebari is properly installed and you are able to execute the client commands by running:
+You can verify that Nebari package is properly installed and you are able to execute the client commands by running:
 
 ```bash
 qhub --help
@@ -60,3 +60,19 @@ qhub --help
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide](/troubleshooting.md).
 :::
+
+## What's Next?
+
+You are now ready to move on to deploying Nebari! First, review your deployment options.
+
+First, you'll need to [choose a deployment platform](/getting-started/deploy.mdx) (Cloud, HPC, or pre-existing k8s cluster).
+Then, if you've chosen `cloud`, you'll also need to [choose a cloud provider](/getting-started/cloud-providers.mdx).
+
+Finally, after making those choices, you can move on to the deployment itself:
+
+- [How to deploy Nebari on GCP](/how-tos/nebari-gcp.md)
+- [How to deploy Nebari on AWS](/how-tos/nebari-aws.md)
+- [How to deploy Nebari on Azure](/how-tos/nebari-azure.md)
+- [How to deploy Nebari on DO](/how-tos/nebari-do.md)
+- [How to deploy Nebari on HPC](/how-tos/nebari-hpc.md)
+- [How to deploy Nebari on existing k8s](/how-tos/nebari-local.md)

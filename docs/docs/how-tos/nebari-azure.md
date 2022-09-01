@@ -81,10 +81,12 @@ installed in your environment, (iii) opted for **Azure** as your cloud provider,
 installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
-## Nebari Initialize
+## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation](/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
-environment variables have been properly set. It is time to initialize and deploy Nebari!
+environment variables have been properly set.
+
+In this step, you'll run `qhub init` to create the `qhub-config.yaml`.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:
 
@@ -92,12 +94,10 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-azure && cd nebari-azure
    ```
 
-2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**. The `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created). The `domain` will the domain endpoint for your Nebari instance. The `auth-provider` sets your authentication provider that you plan to use inside of Keycloak, options are Github, Auth0, and password. For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `qhub-config.yaml`.
 
    ```bash
-   qhub init azure --project projectname \
-       --domain domain \
-       --auth-provider password
+   qhub init azure --project projectname --domain domain --auth-provider password
    ```
 
 :::note
