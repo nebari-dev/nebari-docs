@@ -15,7 +15,7 @@ The longer answer:
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
 
-## What if the user requires package `X` and it's not available in the environment?
+## What if I need to install package `X` and it's not available in the environment?
 
 You can add the package to the `qhub_config.yml`. If the user doesn't have access to the deployment repo, they'll need to contact their Nebari administrator to
 include the required package.
