@@ -17,7 +17,7 @@ As Nebari and conda-store mature, the intent is to migrate exclusively to conda-
 
 ## What if I need to install package `X` and it's not available in the environment?
 
-You can add the package to the `qhub_config.yml`. If the user doesn't have access to the deployment repo, they'll need to contact their Nebari administrator to
+You can add the package to the `qhub_config.yml`. If you don't have access to the deployment repo, you'll need to contact your Nebari administrator to
 include the required package.
 
 ## What's included in the user's environment if a user wants to use Dask?
