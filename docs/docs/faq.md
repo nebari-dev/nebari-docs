@@ -20,7 +20,7 @@ As Nebari and conda-store mature, the intent is to migrate exclusively to conda-
 You can add the package to the `qhub_config.yml`. If you don't have access to the deployment repo, you'll need to contact your Nebari administrator to
 include the required package.
 
-## What's included in the user's environment if a user wants to use Dask?
+## What's included in the conda environment if I want to use Dask?
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`.
 
