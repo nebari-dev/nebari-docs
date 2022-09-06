@@ -46,7 +46,7 @@ flit install -s
 
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial](tutorials/using_dask.md) for more information.
 
-## Can users modify `.bashrc` on Nebari?
+## Can I modify the `.bashrc` on Nebari?
 
 Regular Nebari users do not have write permissions to modify the `.bashrc` file.
 
