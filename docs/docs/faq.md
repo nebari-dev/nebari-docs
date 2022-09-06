@@ -24,7 +24,7 @@ include the required package.
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `qhub-dask==||QHUB_VERSION||`.
 
-## How can a user install a package locally? Is it available to the user's Dask workers?
+## How can I install a package locally? Will this package be available to Dask workers?
 
 :::caution
 
