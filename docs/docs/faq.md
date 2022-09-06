@@ -66,7 +66,7 @@ Set the `changeps1` value in the conda config:
 conda config --set changeps1 true
 ```
 
-The conda config is located in the `/home/{user}/.condarc` file. The user can change the conda config with a text editor (for example: `nano`, which is included in Nebari by default) and the changes will be applied on saving the file.
+The conda config is located in the `/home/{user}/.condarc` file. You can change the conda config with a text editor (for example: `nano`, which is included in Nebari by default), and the changes will be applied on saving the file.
 
 ## How do I clean up or delete the conda-store pod, if I need to?
 
