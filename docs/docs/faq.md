@@ -56,7 +56,7 @@ Nebari automatically creates and manages `.bashrc` and `.profile`, so if the int
 source ~/.bashrc
 ```
 
-The user can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. The user should double-check to source the `.bashrc` inside of the `.bash_profile`. Also note that if the user sets environment variables in this way, these variables aren't available inside the notebooks.
+You can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. You should double-check to source the `.bashrc` inside of the `.bash_profile`. Also, note that if you set environment variables in this way, these variables aren't available inside the notebooks.
 
 ### What if a user can't see the active conda environment in the terminal?
 
