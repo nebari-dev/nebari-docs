@@ -38,7 +38,7 @@ If you are using a `setuptools` package, you can install it into your local user
 pip install --no-build-isolation --user -e .
 ```
 
-If they're using a `flit` package, they can install with
+If you're using a `flit` package, you can install it through the following command:
 
 ```shell
 flit install -s
