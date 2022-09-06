@@ -50,7 +50,7 @@ It's important to note that packages installed this way aren't available to the 
 
 Regular Nebari users do not have write permissions to modify the `.bashrc` file.
 
-Nebari automatically creates and manages `.bashrc` and `.profile`, so if the intent of using the `.bashrc` file is to populate environment variables in bash scripts, the users can source the file in any scripts they create by including the following line in their scripts:
+Nebari automatically creates and manages `.bashrc` and `.profile`, so if the intent of using the `.bashrc` file is to populate environment variables in bash scripts or similar, you can source the file in any scripts you create by including the following line in your scripts:
 
 ```bash
 source ~/.bashrc
