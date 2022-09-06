@@ -32,7 +32,7 @@ We *strongly recommend* installing packages by adding them through the conda-sto
 
 :::
 
-If the user is using a `setuptools` package, they can install it into their local user environment by:
+If you are using a `setuptools` package, you can install it into your local user environment by:
 
 ```shell
 pip install --no-build-isolation --user -e .
