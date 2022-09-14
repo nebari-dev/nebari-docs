@@ -1,0 +1,24 @@
+name: Deploy Nebari website
+
+on:
+  workflow_dispatch:
+  schedule:
+    # * 10:37 every day – 37 just to not trigger exactly at 10:30 like many other;
+    #  10:37 UTC is 6:30am EST is a bit before the beginning of the day in the US,
+    - cron: "37 10  * * *"
+
+jobs:
+  build_site:
+    runs-on: ubuntu-latest
+    environment: docs-prod
+    name: "Trigger Netlify build"
+    steps:
+      - name: Check out repository 🛎️
+        uses: actions/checkout@v3
+
+      - name: Trigger Netlify build  🚀
+        uses: wei/curl@v1.1.1
+        env:
+          WEBHOOK: ${{ secrets.NETLIFY_WEBHOOK }}
+        with:
+          args: -X POST ${WEBHOOK}

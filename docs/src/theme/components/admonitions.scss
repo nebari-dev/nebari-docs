@@ -1,0 +1,125 @@
+// ==============================================================================
+// Admonitions
+// ==============================================================================
+
+/* style '.admonition:not(.alert)' gets used in production and '.admonition' in develop.. */
+.admonition,
+.admonition:not(.alert) {
+  color: var(--ifm-color-on-background);
+  border-radius: var(--ifm-global-radius);
+  border-bottom: 0 solid;
+  border-top: 0 solid;
+  border-right: 0 solid;
+  border-left: 10px solid;
+
+  /* For default Admonition */
+  background-color: var(--ifm-admonition-background-color);
+  border-left-color: var(--ifm-admonition-color);
+
+  h5 {
+    margin-top: 0;
+  }
+}
+
+.admonition a {
+  @include link-style;
+}
+
+.admonition-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  margin-bottom: 4px;
+}
+
+.admonition-success {
+  background-color: var(--ifm-admonition-background-color-success);
+  border-left-color: var(--ifm-admonition-color-success);
+}
+
+.admonition-warning,
+.admonition-caution {
+  background-color: var(--ifm-admonition-background-color-warning);
+  border-left-color: var(--ifm-admonition-color-warning);
+}
+
+.admonition-danger {
+  background-color: var(--ifm-admonition-background-color-error);
+  border-left-color: var(--ifm-admonition-color-error);
+}
+
+.admonition-secondary,
+.admonition-note,
+.admonition-info,
+.admonition-tip,
+.admonition-important {
+  background-color: var(--ifm-admonition-background-color);
+  border-left-color: var(--ifm-admonition-color);
+}
+
+[data-theme="dark"] {
+  .admonition-secondary,
+  .admonition-note,
+  .admonition-info,
+  .admonition-tip,
+  .admonition-important {
+    background-color: var(--ifm-admonition-background-color);
+    border-left-color: var(--ifm-admonition-color);
+  }
+}
+
+[data-theme="dark"] {
+  .admonition {
+    color: var(--nebari-blue-gray-0);
+    code {
+      background-color: var(--ifm-hover-overlay) !important;
+      color: var(--ifm-color-black) !important;
+    }
+  }
+  .admonition h5,
+  .admonition:not(.alert) h5 {
+    margin-top: 0;
+    color: var(--nebari-blue-gray-0);
+  }
+  .admonition a {
+    color: var(--nebari-gray-blue-0);
+  }
+
+  .admonition code {
+    color: var(--nebari-teal-3) !important;
+  }
+}
+
+// ==============================================================================
+// Details - dropdown
+// ==============================================================================
+
+.details_node_modules-\@docusaurus-theme-classic-lib-next-theme-Details-styles-module {
+  --docusaurus-details-decoration-color: var(--ifm-color-primary) !important;
+  border: 1px solid var(--ifm-color-primary) !important;
+  background-color: var(--ifm-color-on-primary) !important;
+}
+
+[data-theme="dark"] {
+  .details_node_modules-\@docusaurus-theme-classic-lib-next-theme-Details-styles-module {
+    --docusaurus-details-decoration-color: var(--ifm-color-primary-light) !important;
+    border: 1px solid var(--ifm-color-primary-light) !important;
+  }
+}
+// ==============================================================================
+// Pagination
+// ==============================================================================
+
+.pagination-nav__link {
+  text-decoration: none;
+  &:hover {
+    border: 1px solid var(--nebari-blue-gray-9);
+    border-bottom: 2px solid var(--ifm-color-primary);
+  }
+}
+
+[data-theme="dark"] {
+  .pagination-nav__link {
+    text-decoration: none;
+  }
+}

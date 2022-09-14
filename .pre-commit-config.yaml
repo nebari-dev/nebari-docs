@@ -5,75 +5,78 @@
 #
 # Common tasks
 #
-# - Run on all files:   pre-commit run --all-files
 # - Register git hooks: pre-commit install --install-hooks
+# - Run on all files:   pre-commit run --all-files
 #
 repos:
-  # Markdown
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.14
-    hooks:
-    - id: mdformat
-      files: ^docs/
-      name: mdformat
-      entry: mdformat --wrap=180 --number --end-of-line=lf
-      language: python
-      types: [markdown]
-      minimum_pre_commit_version: '2.0.0'
-      additional_dependencies:
-      - mdformat-tables
-      - mdformat-toc
-      - mdformat-black
-
   # Codespell: Spell checks the code and documentation
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
       - id: codespell
-        # --write (-w) enabled here
         # see setup.cfg for more config options
-        entry: codespell -w
+        entry: codespell
         language: python
+        exclude: ^docs/yarn.lock
 
   # Python
+  # Autoformat: Python code, syntax patterns are modernized
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.34.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py36-plus
+
+  # Autoformat: Python code
   - repo: https://github.com/psf/black
     rev: 22.3.0
     hooks:
-    - id: black
+      - id: black
 
+  # Lint: Python code
   - repo: https://github.com/pycqa/flake8
     rev: 3.8.4
     hooks:
-    - id: flake8
-      args: [
-        "--builtins=c"
-      ]
+      - id: flake8
+        args: ["--builtins=c"]
 
+  # Autoformat: Python code - sort imports
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
     hooks:
-    - id: isort
-      name: isort
-      args: ["--profile", "black"]
+      - id: isort
+        name: isort
+        args: ["--profile", "black"]
 
   # Terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.71.0
     hooks:
-    - id: terraform_fmt
-      args:
-        - --args=-write=true
+      - id: terraform_fmt
+        args:
+          - --args=-write=true
+
+  # Markdown, json, toml
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        types: [markdown, mdx, json, toml]
+        exclude: ^docs/
 
   # Misc...
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     # ref: https://github.com/pre-commit/pre-commit-hooks#hooks-available
     hooks:
-      # Autoformat: Makes sure files end in a newline and only a newline.
+      # Autoformat: Makes sure files end in a newline and only a newline
       - id: end-of-file-fixer
+        exclude: ^docs/
 
       # Trims trailing whitespace.
       - id: trailing-whitespace
+        exclude: ^docs/
         args: [--markdown-linebreak-ext=md]
 
       # Lint: Check for files with names that would conflict on a

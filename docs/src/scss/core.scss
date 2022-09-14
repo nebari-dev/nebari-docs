@@ -1,0 +1,185 @@
+// ==============================================================================
+// Global
+// ==============================================================================
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: var(--global-heading-family);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--global-font-family);
+}
+
+[data-theme="dark"] {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--nebari-blue-gray-11);
+  }
+}
+
+// ==============================================================================
+// Links
+// ==============================================================================
+
+@mixin link-style($text-color: var(--nebari-links), $decoration-color: var(--ifm-color-primary)) {
+  text-decoration: underline;
+  color: $text-color;
+  text-decoration-color: $decoration-color;
+  text-underline-offset: 3px;
+  transition: {
+    property: text-decoration;
+    timing-function: ease-out;
+    duration: 0.3s;
+  }
+  @include link-hover($decoration-color);
+}
+
+@mixin link-hover($decoration-color) {
+  &:hover {
+    text-decoration: underline;
+    color: $decoration-color;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: $decoration-color;
+  }
+}
+
+a {
+  @include link-style;
+}
+
+[data-theme="dark"]a {
+  @include link-style(var(--ifm-color-content), var(--nebari-links-dark));
+}
+
+// ==============================================================================
+// Edit page
+// ==============================================================================
+
+.theme-edit-this-page {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  color: var(--ifm-menu-color);
+  svg {
+    display: none;
+  }
+  &::before,
+  &::after {
+    content: "";
+    display: inline-block;
+    transform: translateX(0);
+    transition: transform var(--ifm-transition-fast) linear;
+  }
+  &::before {
+    margin-right: 0.5rem;
+    content: url("../../static/icons/edit-dark.svg");
+    width: 24px;
+    height: 24px;
+    opacity: 0.8;
+  }
+  &::after {
+    margin-left: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    margin-bottom: -0.25rem;
+  }
+  @include link-hover(var(--ifm-color-primary));
+}
+
+[data-theme="dark"] {
+  .breadcrumbs__item--active .breadcrumbs__link {
+    background: var(--ifm-breadcrumb-item-background-active);
+    color: var(--nebari-links-dark);
+  }
+
+  .theme-edit-this-page {
+    color: var(--ifm-menu-color);
+    &::before,
+    &::after {
+      content: "";
+      display: inline-block;
+      transform: translateX(0);
+      transition: transform var(--ifm-transition-fast) linear;
+    }
+    &::before {
+      content: url("../../static/icons/edit.svg");
+      opacity: 0.8;
+    }
+    @include link-hover(var(--nebari-links-dark));
+  }
+}
+
+// ==============================================================================
+// Doc Page Footer
+// ==============================================================================
+
+.card {
+  background-color: transparent;
+  border-radius: var(--ifm-global-radius);
+}
+
+.cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
+  --ifm-link-hover-decoration: none;
+  box-shadow: 0 1.5px 3px 0 rgb(0 0 0 / 15%);
+  transition: all var(--ifm-transition-fast) ease;
+  transition-property: box-shadow;
+}
+
+.cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
+  border: 1px solid var(--nebari-blue-gray-9) !important;
+  border-bottom: 3px solid var(--accent-nebari) !important;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
+}
+
+.cardContainer_woeA:hover {
+  border: 1px solid var(--nebari-blue-gray-9) !important;
+  border-bottom: 3px solid var(--accent-nebari) !important;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
+}
+
+a.card {
+  text-decoration: none;
+  color: var(--ifm-color-content);
+}
+
+.collapseSidebarButton_FykI:focus,
+.collapseSidebarButton_FykI:hover,
+.expandButton__5cy:focus,
+.expandButton__5cy:hover {
+  background-color: var(--ifm-hover-overlay);
+}
+
+.truncate-overflow {
+  max-height: calc(var(--lh) * var(--max-lines));
+  overflow: hidden;
+}
+
+// ==============================================================================
+// code blocks
+// ==============================================================================
+@mixin code-block-style {
+  font-family: var(--global-block-family-code);
+  background-color: transparent;
+  border: 0px;
+  color: var(--nebari-code-color);
+  vertical-align: bottom;
+}
+
+code {
+  @include code-block-style;
+}
