@@ -94,12 +94,10 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: customFields.meta.title,
-        // TODO: Replace with logo
-        // logo: {
-        //   alt: "Nebari logo - Docs home",
-        //   src: "img/logo.svg",
-        // },
+        logo: {
+          alt: "Nebari logo - Docs home",
+          src: "https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup-White-text.svg",
+        },
         style: "dark",
         hideOnScroll: false,
         items: [
@@ -155,7 +153,7 @@ const config = {
               },
               {
                 label: "Tutorials",
-                to: "tutorials/index",
+                to: "tutorials",
               },
             ],
           },
