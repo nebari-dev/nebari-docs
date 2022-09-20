@@ -2,11 +2,13 @@
 
 ## Why is the `NEBARI_KUBECONFIG` file in `/tmp`?
 
-Nebari regenerates this file on every run. This means it will be removed by the operating system during its cleanup process, but running the `qhub deploy` command again as a Nebari administrator will update/create a `NEBARI_KUBECONFIG` file for you.
+Nebari regenerates this file on every run. This means it will be removed by the operating system during its cleanup process,
+but running the `qhub deploy` command again as a Nebari administrator will update/create a `NEBARI_KUBECONFIG` file for you.
 
 ## How are Nebari conda user environments created? Who creates them?
 
-The short answer: there are currently _two_ ways of creating environments, as we are in the process of migrating Nebari to conda-store, and so which way depends on your use-case.
+The short answer: there are currently _two_ ways of creating environments, as we are in the process of migrating Nebari to conda-store,
+and so which way depends on your use-case.
 
 The longer answer:
 
@@ -15,10 +17,10 @@ The longer answer:
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
 
-## What if I need to install package `X` and it's not available in the environment?
+## What if I need to install package `X`, and it's not available in the environment?
 
-You can add the package to the `qhub_config.yml`. If you don't have access to the deployment repo, you'll need to contact your Nebari administrator to
-include the required package.
+You can add the package to the `qhub_config.yml`. If you don't have access to the deployment repo,
+you'll need to contact your Nebari administrator to include the required package.
 
 ## What's included in the conda environment if I want to use Dask?
 
