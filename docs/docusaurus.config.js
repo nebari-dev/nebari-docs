@@ -36,7 +36,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "logo/favicon.ico",
   staticDirectories: ['static'],
 
   i18n: {
