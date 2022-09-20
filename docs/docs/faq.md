@@ -6,12 +6,12 @@ Nebari regenerates this file on every run. This means it will be removed by the 
 
 ## How are Nebari conda user environments created? Who creates them?
 
-The short answer: there are currently *two* ways of creating environments, as we are in the process of migrating Nebari to conda-store, and so which way depends on your use-case.
+The short answer: there are currently _two_ ways of creating environments, as we are in the process of migrating Nebari to conda-store, and so which way depends on your use-case.
 
 The longer answer:
 
- - For global environments, you can specify the environment in `qhub_config.yml`, and it will be made available for all users and services (e.g., CDSDashboards). 
- - By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
+- For global environments, you can specify the environment in `qhub_config.yml`, and it will be made available for all users and services (e.g., CDSDashboards).
+- By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
 
@@ -28,7 +28,7 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 
 :::caution
 
-We *strongly recommend* installing packages by adding them through the conda-store UI. If you're developing a package and need to install the package through `pip`, `conda`, or similar, the following approach may be used.
+We _strongly recommend_ installing packages by adding them through the conda-store UI. If you're developing a package and need to install the package through `pip`, `conda`, or similar, the following approach may be used.
 
 :::
 
