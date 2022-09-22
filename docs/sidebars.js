@@ -62,19 +62,20 @@ module.exports = {
         "how-tos/domain-registry",
       ],
     },
-    {
-      type: "category",
-      label: "Conceptual Guides",
-      link: {
-        type: "generated-index",
-        title: "Conceptual Guides",
-        description:
-          "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
-        slug: "category/conceptual-guides",
-        keywords: ["conceptual-guides"],
-      },
-      items: ["explanations/overview"],
-    },
+    // TODO - uncomment once populated
+    // {
+    //   type: "category",
+    //   label: "Conceptual Guides",
+    //   link: {
+    //     type: "generated-index",
+    //     title: "Conceptual Guides",
+    //     description:
+    //       "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
+    //     slug: "category/conceptual-guides",
+    //     keywords: ["conceptual-guides"],
+    //   },
+    //   items: ["explanations/overview"],
+    // },
     // TODO - uncomment once populated
     // {
     //   type: "category",
