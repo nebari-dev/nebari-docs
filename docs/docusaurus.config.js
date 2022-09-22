@@ -69,7 +69,7 @@ const config = {
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
-          showLastUpdateAuthor: true,
+          showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
         blog: false,
