@@ -54,7 +54,9 @@ This one-time setup command is listed below, and requires two arguments:
 Once completed, you should see a confirmation message that shows where this config file was saved:
 
 ```shell
-$ kbatch configure --token <JUPYTERHUB_API_TOKEN> --kbatch-url http://kbatch-kbatch-proxy.dev.svc.cluster.local
+$ kbatch configure --token <JUPYTERHUB_API_TOKEN> \
+  --kbatch-url http://kbatch-kbatch-proxy.dev.svc.cluster.local
+
 Wrote config to /home/<username>/.config/kbatch/config.json
 ```
 
@@ -108,6 +110,7 @@ This job will now run without any feedback to the user. However, if you're inter
 
 ```shell
 $ kbatch job list --output table
+
                           Jobs
 ┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
 ┃ name             ┃ submitted                 ┃ status ┃

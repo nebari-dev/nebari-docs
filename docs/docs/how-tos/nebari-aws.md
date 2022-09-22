@@ -113,7 +113,7 @@ qhub init aws --project projectname \
 	  --auth-provider password
 ```
 
-::: note
+:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
@@ -135,8 +135,8 @@ server once Nebari's infrastructure is fully deployed, to create the first user 
 
 The qhub initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
+The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step.
+Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
 
 For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
 [Understanding the qhub-config.yaml file](/tutorials) documentation.

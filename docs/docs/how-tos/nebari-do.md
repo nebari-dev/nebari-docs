@@ -29,7 +29,8 @@ For a more detailed cost estimate, refer to our \[conceptual guides\] for more i
 
 :::info
 Make sure to check [Digital Ocean's New pricing](https://www.digitalocean.com/try/new-pricing) documentation for a recent overview of how costs are allocated and applied to your Digital Ocean
-account. :::
+account.
+:::
 
 :::warning
 A Nebari deployment on DO will **NOT** fall into `free tier` usage. Therefore, we recommend that you sign up for a paid account or contact your cloud
@@ -112,8 +113,8 @@ server once Nebari's infrastructure is fully deployed, in order to create the fi
 
 The qhub initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
+The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step.
+Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
 
 For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
 [Understanding the qhub-config.yaml file](/tutorials) documentation.
