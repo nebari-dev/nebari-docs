@@ -46,7 +46,7 @@ This tutorial focuses on using the web interface to interact with our environmen
 
 ## Step 1 - Exploring the `conda-store` web interface
 
-1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. <https://quansight.qhub.dev/conda-store>).
+1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. <https://quansight.nebari.dev/conda-store>).
 
 2. You will need to log in order to authenticate to the `conda-store` interface - this is required to be able to access most of `conda-store` functionalities.
 

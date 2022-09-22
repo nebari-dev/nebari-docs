@@ -18,8 +18,8 @@ Aside from Terraform, Nebari HPC heavily depends on [Ansible](https://docs.ansib
 We recommend installing ansible via conda. First you must install conda.
 
 ```bash
-conda create -n qhub-hpc -c conda-forge ansible
-conda activate qhub-hpc
+conda create -n nebari-hpc -c conda-forge ansible
+conda activate nebari-hpc
 ```
 
 If you intend to use Nebari HPC please be sure to already have the [necessary dependencies](https://github.com/Quansight/qhub-hpc#dependencies) installed.
