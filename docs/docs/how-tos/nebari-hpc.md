@@ -22,4 +22,4 @@ conda create -n nebari-hpc -c conda-forge ansible
 conda activate nebari-hpc
 ```
 
-If you intend to use Nebari HPC please be sure to already have the [necessary dependencies](https://github.com/Quansight/qhub-hpc#dependencies) installed.
+If you intend to use Nebari HPC please be sure to already have the [necessary dependencies](https://github.com/Quansight/nebari-hpc#dependencies) installed.

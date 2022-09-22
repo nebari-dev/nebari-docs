@@ -26,7 +26,7 @@ you'll need to contact your Nebari administrator to include the required package
 
 <!-- TODO: will need to update the conda-feedstock -->
 
-There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [QHub Dask metapackage](https://github.com/conda-forge/qhub-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
+There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
 
 ## How can I install a package locally? Will this package be available to Dask workers?
 

@@ -172,5 +172,5 @@ Please keep in mind that these are _NOT_ available to Dask workers!
 
 2. If you need to use Dask
 
-   We highly recommend you include the [QHub Dask metapackage](https://anaconda.org/conda-forge/qhub-dask) to maintain version compatibility between the Dask client and server.
+   We highly recommend you include the [Nebari Dask metapackage](https://anaconda.org/conda-forge/nebari-dask) to maintain version compatibility between the Dask client and server.
    This replaces `distributed`, `dask`, and `dask-gateway` with the correctly pinned versions.
