@@ -15,7 +15,7 @@ Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a m
 
 ## Setting your local development environment
 
-1. Make a fork of the [Nebari-docs repository][nebari-docs-repo] to your GitHub account
+1. Make a fork of the [`Nebari-docs` repository][nebari-docs-repo] to your GitHub account
 2. Clone the repository to your local machine:
 
    ```bash
@@ -131,7 +131,7 @@ yarn run serve
 
 ## Adding a New Dependency
 
-Use the `add` subcommand to add new dependencies:
+Use the `add` sub command to add new dependencies:
 
 ```bash
 yarn add package-name

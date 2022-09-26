@@ -1,6 +1,6 @@
 // Default variables are defined in this stylesheet
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Outfit:wght@400;700&family=Red+Hat+Mono:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Mono:wght@400;500&display=swap");
 
 :root {
   // nebari colours definition - the base colour is denoted by the `5` number i.e. --nebari-teal-5
@@ -121,9 +121,9 @@
   // ==============================================================================
   // Typography
   // ==============================================================================
-  --global-font-family: "DM Sans", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
+  --global-font-family: "Atkinson Hyperlegible", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
     "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
-  --global-heading-family: "Outfit", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
+  --global-heading-family: "Poppins", sans-serif, Europa, Avenir, system, -apple-system, ".SFNSText-Regular",
     "San Francisco", "Segoe UI", "Helvetica Neue", "Lucida Grande", sans-serif;
   --global-block-family-code: "Red Hat Mono", monospace;
 

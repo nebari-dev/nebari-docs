@@ -75,24 +75,25 @@ module.exports = {
       },
       items: ["explanations/overview"],
     },
-    {
-      type: "category",
-      label: "Reference",
-      link: {
-        type: "generated-index",
-        title: "Reference Guides",
-        description:
-          "Nitty-gritty technical descriptions of how Nebari works. ",
-        slug: "category/reference",
-        keywords: ["reference"],
-      },
-      items: ["references/overview"],
-    },
-    {
-      type: "doc",
-      label: "Community",
-      id: "community/overview",
-    },
+    // TODO - uncomment once populated
+    // {
+    //   type: "category",
+    //   label: "Reference",
+    //   link: {
+    //     type: "generated-index",
+    //     title: "Reference Guides",
+    //     description:
+    //       "Nitty-gritty technical descriptions of how Nebari works. ",
+    //     slug: "category/reference",
+    //     keywords: ["reference"],
+    //   },
+    //   items: ["references/overview"],
+    // },
+    // {
+    //   type: "doc",
+    //   label: "Community",
+    //   id: "community/overview",
+    // },
     {
       type: "doc",
       label: "Troubleshooting",
@@ -100,8 +101,14 @@ module.exports = {
     },
     {
       type: "doc",
-      label: "Glossary",
-      id: "glossary",
+      label: "FAQ",
+      id: "faq",
     },
+    // TODO - uncomment once populated
+    // {
+    //   type: "doc",
+    //   label: "Glossary",
+    //   id: "glossary",
+    // },
   ],
 };
