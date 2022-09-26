@@ -90,15 +90,21 @@ In this step, you'll run `qhub init` to create the `qhub-config.yaml`.
    mkdir nebari-azure && cd nebari-azure
    ```
 
-2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**. The `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created). The `domain` will the domain endpoint for your Nebari instance. The `auth-provider` sets your authentication provider that you plan to use inside of Keycloak, options are Github, Auth0, and password. For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `qhub-config.yaml`.
+2. Executing the command below will generate a basic config file with an infrastructure based on **AWS**. 
 
-   ```bash
-   qhub init azure --project projectname --domain domain --auth-provider password
-   ```
+    - `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created). 
+    - `domain` will be the domain endpoint for your Nebari instance. 
+    - `auth-provider` sets your authentication provider that you plan to use inside of Keycloak, options are Github, Auth0, and password. 
 
-:::note
-You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
-:::
+    For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `qhub-config.yaml`.
+
+    ```bash
+    qhub init aws --project projectname --domain domain --auth-provider password
+    ```
+
+    :::note
+    You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
+    :::
 
 Once `qhub init` is executed, you should then be able to see the following output:
 

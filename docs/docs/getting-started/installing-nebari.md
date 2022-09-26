@@ -2,15 +2,13 @@
 title: Installing Nebari
 description: A guide to help you install Nebari for your team.
 ---
+# Installing the Nebari package
 
 # Installing Nebari
 
 This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems.
 
-# Installing the Nebari package
-<!-- TODO: add link to advanced-settings section -->
-
-If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
+This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, feel free to skip to the advanced-settings section in this documentation.
 
 :::note
 This guide focuses on installing Nebari for **cloud usage**.
@@ -50,7 +48,7 @@ There are currently two ways to install Nebari:
 
 ## Verify installation
 
-You can verify that Nebari package is properly installed, and you are able to execute the client commands by running the following command on your command line:
+You can verify that the Nebari package is properly installed and you can execute the client commands by running:
 
 ```bash
 qhub --help
