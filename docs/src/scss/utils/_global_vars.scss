@@ -15,8 +15,6 @@
   --nebari-teal-7: hsl(173.41, 62.76%, 71.57%);
   --nebari-teal-8: hsl(171.43, 63.64%, 82.75%);
   --nebari-teal-9: hsl(171, 66.67%, 94.12%);
-  --nebari-teal-10: #d6f3f6;
-  --nebari-teal-11: #f2fbfc;
 
   // base
   --nebari-blue-gray-0: #0f1015;
@@ -43,8 +41,6 @@
   --nebari-magenta-7: hsl(284.52, 79.49%, 77.06%);
   --nebari-magenta-8: hsl(281.54, 74.29%, 86.27%);
   --nebari-magenta-9: hsl(276.67, 69.23%, 94.9%);
-  --nebari-magenta-10: #fed2ff;
-  --nebari-magenta-11: #fff1ff;
 
   // named colours
   --global-colors-coral: #e60f66;
@@ -67,8 +63,6 @@
   --nebari-coral-7: #ff6b91;
   --nebari-coral-8: #ff90a9;
   --nebari-coral-9: #ffb1c1;
-  --nebari-coral-10: #ffd1d9;
-  --nebari-coral-11: #fff0f3;
 
   // ==============================================================================
   // Primitive Colors - default from infima replaced with nebari's colours
@@ -147,7 +141,7 @@
   --ifm-color-on-background-3: var(--ifm-color-black-lighter);
 
   // Admonition
-  --ifm-admonition-background-color: var(--nebari-blue-gray-10);
+  --ifm-admonition-background-color: var(--nebari-blue-gray-11);
   --ifm-admonition-color: var(--global-colors-purple);
   --ifm-admonition-color-success: var(--ifm-color-green);
   --ifm-admonition-color-warning: var(--ifm-color-red);

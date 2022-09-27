@@ -125,7 +125,7 @@ a {
 }
 
 // ==============================================================================
-// Doc Page Footer
+// Card containers
 // ==============================================================================
 
 .card {
@@ -146,15 +146,12 @@ a {
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
-.cardContainer_woeA:hover {
-  border: 1px solid var(--ifm-color-emphasis-300) !important;
-  border-bottom: 3px solid var(--secondary-nebari) !important;
-  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
-}
-
 a.card {
   text-decoration: none;
   color: var(--ifm-color-content);
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .collapseSidebarButton_FykI:focus,
@@ -162,6 +159,11 @@ a.card {
 .expandButton__5cy:focus,
 .expandButton__5cy:hover {
   background-color: var(--ifm-hover-overlay);
+}
+
+.text--truncate.cardTitle_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
+  white-space: pre-wrap;
+  -webkit-line-clamp: 2;
 }
 
 // ==============================================================================
