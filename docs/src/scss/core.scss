@@ -28,7 +28,7 @@ body {
   h4,
   h5,
   h6 {
-    color: var(--nebari-blue-gray-11);
+    color: var(--ifm-color-white-dark);
   }
 }
 
@@ -141,14 +141,14 @@ a {
 }
 
 .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
+  border: 1px solid var(--ifm-color-emphasis-300) !important;
+  border-bottom: 3px solid var(--secondary-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
 .cardContainer_woeA:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
+  border: 1px solid var(--ifm-color-emphasis-300) !important;
+  border-bottom: 3px solid var(--secondary-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
@@ -162,11 +162,6 @@ a.card {
 .expandButton__5cy:focus,
 .expandButton__5cy:hover {
   background-color: var(--ifm-hover-overlay);
-}
-
-.truncate-overflow {
-  max-height: calc(var(--lh) * var(--max-lines));
-  overflow: hidden;
 }
 
 // ==============================================================================
