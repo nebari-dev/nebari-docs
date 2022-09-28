@@ -52,10 +52,10 @@ There are currently two ways to install Nebari:
 You can verify that Nebari is properly installed, and you are able to execute the client commands by running the following command on your command line:
 
 ```bash
-qhub --help
+nebari --help
 ```
 
-![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available positional arguments and their use.](/img/getting-started/validate_installation.png "Nebari's help command line output")
+![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available commands and their use.](/img/getting-started/nebari-help-command.png "Nebari's help command line output")
 
 <!-- TODO: update link once merged -->
 
@@ -64,8 +64,30 @@ If you are unable to successfully validate the Nebari installation above, you ma
 :::
 
 ---
-
 ## What's next?
+
+### Nebari Init and Guided Init
+
+You can run help command for init to check for all the arguments and options available for it.
+
+```bash
+nebari init --help
+```
+
+![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-init-help.png "Nebari's init help command line output")
+
+If you are new to Nebari you can run the nebari guided-init help command as the init command option and see all the options available to it.
+
+```bash
+nebari init guided-init --help
+```
+
+![A representation of the output generated when Nebari guided init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-guided-init-help.png "Nebari's guided init help command line output")
+
+
+
+
+## Next steps?
 
 Need more information before deploying Nebari? Check out the following sections in the documentation:
 
