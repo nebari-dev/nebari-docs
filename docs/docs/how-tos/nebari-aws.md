@@ -123,7 +123,7 @@ nebari init aws --project projectname \
 	  --auth-provider password
 ```
 
-::: note
+:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
