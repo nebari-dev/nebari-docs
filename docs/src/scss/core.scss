@@ -28,7 +28,7 @@ body {
   h4,
   h5,
   h6 {
-    color: var(--nebari-blue-gray-11);
+    color: var(--ifm-color-white-dark);
   }
 }
 
@@ -125,7 +125,7 @@ a {
 }
 
 // ==============================================================================
-// Doc Page Footer
+// Card containers
 // ==============================================================================
 
 .card {
@@ -141,20 +141,17 @@ a {
 }
 
 .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
-  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
-}
-
-.cardContainer_woeA:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
+  border: 1px solid var(--ifm-color-emphasis-300) !important;
+  border-bottom: 3px solid var(--secondary-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
 a.card {
   text-decoration: none;
   color: var(--ifm-color-content);
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .collapseSidebarButton_FykI:focus,
@@ -164,9 +161,9 @@ a.card {
   background-color: var(--ifm-hover-overlay);
 }
 
-.truncate-overflow {
-  max-height: calc(var(--lh) * var(--max-lines));
-  overflow: hidden;
+.text--truncate.cardTitle_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
+  white-space: pre-wrap;
+  -webkit-line-clamp: 2;
 }
 
 // ==============================================================================
@@ -178,6 +175,7 @@ a.card {
   border: 0px;
   color: var(--nebari-code-color);
   vertical-align: bottom;
+  font-weight: 500;
 }
 
 code {

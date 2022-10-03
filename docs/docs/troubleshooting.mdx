@@ -36,17 +36,20 @@ The pins for the metapackage can be found in the [conda-forge recipe](https://gi
 
 ## Errors
 
-### Default Conda-Store environment fails to build on initial deployment
+### Default conda-store environment fails to build on initial deployment
 
-One of the two Conda-Store environments created during the initial Nebari deployment (`dashboard` or `dask`) may fail to appear as options when logged into JupyterHub.
+One of the two conda-store environments created during the initial Nebari deployment (`dashboard` or `dask`) may fail to appear as options when logged into JupyterHub.
 
-If your user has access to Conda-Store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
+If your user has access to conda-store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
 
-The reason for this issue is due to how these environments are simultaneously built. Under the hood, Conda-Store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML. If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build. This causes the first build to fail.
+The reason for this issue is due to how these environments are simultaneously built.
+Under the hood, conda-store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML.
+If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build.
+This causes the first build to fail.
 
 To resolve this issue, navigate to `<your_nebari_domain>.com/conda-store`, find the environment build that failed and trigger it to re-build.
 
-### DNS domain={{ your_nebari_domain }} record does not exist
+### DNS `domain={{ your_nebari_domain }}` record does not exist
 
 During your initial Nebari deployment, at the end of the `04-kubernetes-ingress` stage, you may receive an output message stating that the DNS record for `your_nebari_domain` "appears not to exist, has recently been updated, or has yet to fully propagate."
 
@@ -58,13 +61,14 @@ As the output message mentions, it will ask if you want it to retry this DNS loo
 
 At this point, feel free to cancel the deployment and rerun the same deployment command again in an hour or two. Although not guaranteed, it's likely that the DNS will resolve correctly after this prolonged wait period.
 
-If you are interested in learning more about DNS, [see this interesting comic](https://howdns.works/).
+If you are interested in learning more about DNS, [this "How DNS works comic" by dnsimple](https://howdns.works/) is a great resource to get started.
 
 ## How do I...?
 
-### Get kubernetes context
+### Get the Kubernetes context
 
-Depending on a variety of factors, `kubectl` may not be able to access your Kubernetes cluster. To configure this utility for access, depending on your cloud provider:
+Depending on a variety of factors, `kubectl` may not be able to access your Kubernetes cluster.
+To configure this utility for access, depending on your cloud provider:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -72,49 +76,89 @@ import TabItem from '@theme/TabItem';
 <Tabs>
   <TabItem value="gcp" label="Google Cloud" default>
 
-[Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl)
+Check the [Google Cloud Platform documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl) for more information.
 
 1. Download the [GCP SDK](https://cloud.google.com/sdk/downloads).
-2. Authenticate with GCP: `gcloud init`
-3. Run the following command: `gcloud container clusters get-credentials <project-name>-<namespace> --region <region>`
+2. Initialize the gcloud CLI with `gcloud init`. This will prompt you to log in to your GCP account.
+
+3. Fetch your cluster credentials with:
+
+```bash
+gcloud container clusters \
+  get-credentials "<your-cluster-name>" \
+  --region "<region>"
+```
 
 </TabItem>
 <TabItem value="do" label="Digital Ocean">
 
-[DigitalOcean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)
+Check the [DigitalOcean documentation](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/) for more information.
 
 1. [Download the Digital Ocean command line utility](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
 2. If you haven't already, create a [Digital Ocean API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
-3. [Authenticate via the API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/): `doctl auth init`
-4. Run the following command: `doctl kubernetes cluster kubeconfig save "<project-name>-<namespace>"`
+3. [Authenticate via the API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/) with`doctl auth init`
+4. Create a `kubeconfig` file with:
+
+```bash
+doctl kubernetes cluster kubeconfig \
+  save "<your-cluster-name>"
+```
 
 </TabItem>
 <TabItem value="aws" label="Amazon AWS">
 
-[Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+Check the [Amazon Web Services documentation](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html) for more information.
 
 1. Download the [AWS CLI](https://aws.amazon.com/cli/).
 2. If you haven't already, [create an AWS Access Key and Secret Key](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/).
-3. Run the following command: `aws eks --region <region-code> update-kubeconfig --name <project-name>-<namespace>`
+3. Create a `kubeconfig` file with:
+
+```bash
+aws eks update-kubeconfig --region "<region-code>" \
+  --name "<your-cluster-name>"
+```
 
 </TabItem>
 </Tabs>
 
-After completing these steps according to your cloud provider, `kubectl` should be able to access your Kubernetes cluster.
+Once you have created a `kubeconfig` file `kubectl` should be able to access your Kubernetes cluster.
+
+### Debug the Kubernetes Cluster
+
+If you need more information about your Kubernetes cluster, [`k9s`](https://k9scli.io/) is an extremely handy terminal-based UI for debugging.
+It simplifies navigating, observing, and managing your applications in Kubernetes.
+`k9s` continuously monitors Kubernetes clusters for changes and provides shortcut commands to interact with the observed resources.
+It's a fast way to review and resolve day-to-day issues in Kubernetes, a huge improvement to the general workflow,
+and a best-to-have tool for debugging your Kubernetes cluster sessions.
+
+[Installation instructions for macOS, Windows, and Linux](https://github.com/derailed/k9s) are available.
+
+By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
+
+![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/k9s_UI.png)
+
+:::note
+In some circumstances, you will need to inspect any services launched by your cluster at your `localhost`.
+For instance, if your cluster has problems with the network traffic tunnel configuration, it may limit or block the user’s access to destination resources over the connection.
+
+`k9s` port-forward option <kbd>shift</kbd> + <kbd>f</kbd> allows you to access and interact with internal Kubernetes cluster processes from your localhost,
+so you can then use this method to investigate issues and adjust your services locally without the need to expose them beforehand.
+:::
 
 ### Deploy an arbitrary pod
 
-The simplest way to deploy arbitrary pods would be to use `kubectl apply` on the pod manifest.
+A straightforward way to deploy arbitrary pods would be to use `kubectl apply` on the pod manifest.
 
 ### Upgrade the instance size for the `general` node group
 
-The `general` node group, or node pool, is (usually) the node that hosts most of the pods that Nebari relies on for its core services: `hub`, `conda-store`, `proxy` and so on. We have attempted to "min-max" the instance size of the node: large enough so that the initial deployment will work out of the box, while keeping total cloud compute costs to a minimum.
+The `general` node group, or node pool, is (usually) the node that hosts most of the pods that Nebari relies on for its core services: `hub`, `conda-store`, `proxy` and so on.
+The instance by default, follows a "min-max" approach to determine the instance size: large enough so that the initial deployment will work out of the box,
+while keeping total cloud compute costs to a minimum.
 
 Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
 
-> Given the possible destructive nature of resizing this node group, we **highly recommend** backing up your cluster before attempting this.
-
-Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size. Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in the catastrophic destruction of your cluster.
+Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size.
+Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in the catastrophic destruction of your cluster.
 
 | Cloud Provider | `general` node upgrade possible? |
 | :------------- | :------------------------------- |
@@ -123,13 +167,21 @@ Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to b
 | Digital Ocean  | No                               |
 | GCP            | Yes                              |
 
-If modifying the resource allocation for the `general` node in-place is absolutely necessary, try increasing the maximum number of nodes for the `general` node group. This will mean two nodes (reserved for the `general` node group) will always be running, ultimately increasing the operating cost of the cluster.
+If modifying the resource allocation for the `general` node in-place is absolutely necessary, try increasing the maximum number of nodes for the `general` node group.
+This will mean two nodes (reserved for the `general` node group) will always be running, ultimately increasing the operating cost of the cluster.
+
+:::warning
+Given the possible destructive nature of resizing this node group, it is **highly recommended** to back up your cluster before attempting this.
+:::
 
 Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `qhub-config.yaml`, and redeploy.
 
 ### Use a DNS provider other than CloudFlare
 
-CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the _only_ DNS provider Nebari supports. This is NOT the case! Please check out our "How to" documentation, paying particular attention to the domain registry section.
+CloudFlare is one of the most commonly used DNS providers for Nebari, so to some it may seem as if it is the _only_ DNS provider Nebari supports.
+This is **not** the case.
+
+The [Setup Nebari domain registry](./how-tos/domain-registry) section in these docs contain detailed instructions on how to change or set a new DNS provider.
 
 ### Add system packages to a user's JupyterLab image
 
@@ -146,4 +198,5 @@ Nebari allows for admins to set up user groups which each have access to specifi
 
 First, you will need to create new node groups, one for each type of GPU instance you would like to provide users.
 
-Second, you will need to create a new JupyterLab profile to select the GPU node. In this way, you'll have a separate profile for GPUs which users can select.
+Second, you will need to create a new JupyterLab profile to select the GPU node.
+In this way, you'll have a separate profile for GPUs which users can select.
