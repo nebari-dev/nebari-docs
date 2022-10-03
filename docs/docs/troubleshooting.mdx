@@ -15,7 +15,7 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 There are some pins that are required for the Nebari Dask environment to function correctly.
 
-The best way to manage dask pins is to use the `qhub-dask`
+The best way to manage Dask pins is to use the `qhub-dask`
 [metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask).
 Usage will look something like this:
 
@@ -42,7 +42,7 @@ One of the two conda-store environments created during the initial Nebari deploy
 
 If your user has access to conda-store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
 
-The reason for this issue is due to how these environments are simultaneously built.
+The reason for this issue is how these environments are simultaneously built.
 Under the hood, conda-store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML.
 If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build.
 This causes the first build to fail.
