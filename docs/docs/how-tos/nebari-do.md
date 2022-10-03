@@ -92,7 +92,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 :::note
-Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `qhub init` is executed, you should then be able to see the following output:
