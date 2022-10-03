@@ -131,6 +131,12 @@ a {
 .card {
   background-color: transparent;
   border-radius: var(--ifm-global-radius);
+  // for now a workaround to have all cards the same height
+  height: 100%;
+}
+.row {
+  // for now a workaround to have all cards the same height
+  align-items: stretch;
 }
 
 .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
@@ -140,7 +146,8 @@ a {
   transition-property: box-shadow;
 }
 
-.cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
+.cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover,
+.cardContainer_woeA:hover {
   border: 1px solid var(--ifm-color-emphasis-300) !important;
   border-bottom: 3px solid var(--secondary-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
@@ -161,9 +168,19 @@ a.card {
   background-color: var(--ifm-hover-overlay);
 }
 
-.text--truncate.cardTitle_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
+.text--truncate {
   white-space: pre-wrap;
-  -webkit-line-clamp: 2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+[data-theme="dark"] a,
+a.card {
+  color: var(--ifm-color-content);
+  text-decoration: none;
 }
 
 // ==============================================================================
