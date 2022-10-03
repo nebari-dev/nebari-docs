@@ -146,8 +146,7 @@ a {
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
-[data-theme="dark"] a,
-a.card {
+[data-theme="dark"] a.card {
   text-decoration: none;
   color: var(--ifm-color-content);
   &:hover {
