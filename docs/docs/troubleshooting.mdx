@@ -123,28 +123,6 @@ aws eks update-kubeconfig --region "<region-code>" \
 
 Once you have created a `kubeconfig` file `kubectl` should be able to access your Kubernetes cluster.
 
-### Debug the Kubernetes Cluster
-
-If you need more information about your Kubernetes cluster, [`k9s`](https://k9scli.io/) is an extremely handy terminal-based UI for debugging.
-It simplifies navigating, observing, and managing your applications in Kubernetes.
-`k9s` continuously monitors Kubernetes clusters for changes and provides shortcut commands to interact with the observed resources.
-It's a fast way to review and resolve day-to-day issues in Kubernetes, a huge improvement to the general workflow,
-and a best-to-have tool for debugging your Kubernetes cluster sessions.
-
-[Installation instructions for macOS, Windows, and Linux](https://github.com/derailed/k9s) are available.
-
-By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
-
-![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/k9s_UI.png)
-
-:::note
-In some circumstances, you will need to inspect any services launched by your cluster at your `localhost`.
-For instance, if your cluster has problems with the network traffic tunnel configuration, it may limit or block the user’s access to destination resources over the connection.
-
-`k9s` port-forward option <kbd>shift</kbd> + <kbd>f</kbd> allows you to access and interact with internal Kubernetes cluster processes from your localhost,
-so you can then use this method to investigate issues and adjust your services locally without the need to expose them beforehand.
-:::
-
 ### Deploy an arbitrary pod
 
 A straightforward way to deploy arbitrary pods would be to use `kubectl apply` on the pod manifest.
