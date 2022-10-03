@@ -4,13 +4,15 @@ title: Debug Nebari deployment
 description: Debug your Nebari deployment
 ---
 
-## Debug the Kubernetes Cluster
+The beauty of Nebari is that most Dev Ops management is already handled for you. However, there will likely come a time that you will need to debug your Nebari instance. This debug guide contains some tips and tricks to help you in your debug endeavors.
+
+## Debugging the Kubernetes Cluster using k9s
 
 If you need more information about your Kubernetes cluster, [`k9s`](https://k9scli.io/) is a terminal-based UI that is extremely useful for debugging. It simplifies navigating, observing, and managing your applications in Kubernetes. `k9s` continuously monitors Kubernetes clusters for changes and provides shortcut commands to interact with the observed resources. It's a fast way to review and resolve day-to-day issues in Kubernetes, a huge improvement to the general workflow, and a best-to-have tool for debugging your Kubernetes cluster sessions.
 
 [Installation instructions for macOS, Windows, and Linux](https://github.com/derailed/k9s) are available.
 
-By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
+By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current processes press 0:
 
 ![Image of the k9s terminal UI](/img/k9s_UI.png)
 
