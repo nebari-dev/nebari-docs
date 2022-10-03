@@ -79,7 +79,9 @@ The amount of time this takes varies for each DNS provider. Validate such inform
 Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your qhub deploy command:
 
 ```console
-qhub deploy -c qhub-config.yaml --dns-provider cloudflare --dns-auto-provision
+qhub deploy -c qhub-config.yaml \
+  --dns-provider cloudflare \
+  --dns-auto-provision
 ```
 
 This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Qhub domain DNS records on Cloudflare.
