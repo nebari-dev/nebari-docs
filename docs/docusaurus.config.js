@@ -7,7 +7,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
-const domain = "https://nebari.dev";
+const domain = "nebari.dev";
+const url = "https://nebari.dev";
 const githubForum = "https://github.com/orgs/nebari-dev/discussions"
 
 // -----------------------------------------------------------------------------
@@ -24,6 +25,7 @@ const customFields = {
   githubUrl: `${githubOrgUrl}/nebari`,
   githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
   githubForum,
+  url,
 };
 
 // -----------------------------------------------------------------------------
@@ -32,7 +34,7 @@ const customFields = {
 const config = {
   title: customFields.meta.title,
   tagline: customFields.meta.description,
-  url: customFields.domain,
+  url: customFields.url,
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
