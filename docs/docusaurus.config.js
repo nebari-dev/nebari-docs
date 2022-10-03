@@ -36,7 +36,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "logo/favicon.ico",
   staticDirectories: ['static'],
 
   i18n: {
@@ -69,7 +69,7 @@ const config = {
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
-          showLastUpdateAuthor: true,
+          showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
         blog: false,
@@ -94,12 +94,10 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: customFields.meta.title,
-        // TODO: Replace with logo
-        // logo: {
-        //   alt: "Nebari logo - Docs home",
-        //   src: "img/logo.svg",
-        // },
+        logo: {
+          alt: "Nebari logo - Docs home",
+          src: "https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup-White-text.svg",
+        },
         style: "dark",
         hideOnScroll: false,
         items: [
@@ -155,7 +153,7 @@ const config = {
               },
               {
                 label: "Tutorials",
-                to: "tutorials/index",
+                to: "tutorials",
               },
             ],
           },

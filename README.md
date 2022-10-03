@@ -1,4 +1,10 @@
-# Nebari
+<p align="center">
+  <a href="https://www.nebari.dev">
+    <img alt="Nebari horizontal logo mark - black text" src="https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup.svg#gh-light-mode-only" height="100" />
+
+  <img alt="Nebari horizontal logo mark - white text" src="https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup-White-text.svg#gh-dark-mode-only" height="100" />
+  </a>
+</p>
 
 | Information | Links                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | :---------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -20,16 +26,15 @@ To get started with Nebari right away, check the [Nebari documentation][nebari-d
 
 ## Table of contents
 
-- [Nebari](#nebari)
-  - [Table of contents](#table-of-contents)
-  - [Nebari 101 :zap:](#nebari-101-zap)
-    - [Nebari on-prem](#nebari-on-prem)
-  - [Installation :computer:](#installation-computer)
-  - [Contributing to Nebari :woman_technologist:](#contributing-to-nebari-woman_technologist)
-    - [Installing the Development version of Nebari :gear:](#installing-the-development-version-of-nebari-gear)
-    - [Questions? :thinking:](#questions-thinking)
-  - [Code of Conduct :book:](#code-of-conduct-book)
-  - [License](#license)
+- [Nebari 101 :zap:](#nebari-101-zap)
+  - [Nebari on-prem](#nebari-on-prem)
+- [Installation :computer:](#installation-computer)
+- [Contributing to Nebari :woman_technologist:](#contributing-to-nebari-woman_technologist)
+  - [Installing the Development version of Nebari :gear:](#installing-the-development-version-of-nebari-gear)
+  - [Contributing to the documentation :pencil:](#contributing-to-the-documentation-pencil)
+  - [Questions? :thinking:](#questions-thinking)
+- [Code of Conduct :book:](#code-of-conduct-book)
+- [License](#license)
 
 ## Nebari 101 :zap:
 
