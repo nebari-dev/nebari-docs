@@ -12,22 +12,22 @@ install new `conda` packages in your environment, manage multiple environments, 
 ### Why using `conda` environments
 
 Development environments give developers and Data Scientists a "sandbox" to work in, experiment with new packages, work across multiple projects, and collaborate with their peers.
-Environment and package managers such as `conda` enables you to create isolated spaces to separate dependencies on a per-project basis.
+Environment and package managers such as `conda` enable you to create isolated spaces to separate dependencies on a per-project basis.
 They also add other benefits such as:
 
 - Reduce friction to install and upgrade dependencies without affecting other projects or users
 - Reduce the risk of dependency conflicts
-- Promote reproducibility and replicability through dependencies pinning
+- Promote reproducibility and replicability through dependency pinning
 - Reduce the "works on my machine" risk - thus working towards reproducible builds across multiple machines
 
 ### What is `conda`?
 
-[Conda](https://docs.conda.io/projects/conda) is and open source package management system that allows you to create
+[Conda](https://docs.conda.io/projects/conda) is an open source package management system that allows you to create
 environments and install packages into them. It allows the creators of a package to specify required dependencies
 which `conda` can then solve into an environment. `Conda` can then run an update on the environment to pull all the
-packages up-to-date while still maintaining compatibility.
+latest versions of the packages while still maintaining compatibility.
 
-While `conda` manages compatibility between the packages in the environment this does not, by default guarantee reproducible builds over time.
+While `conda` manages compatibility between the packages in the environment, by default, this does not guarantee reproducible builds over time.
 An environment created with a list of packages _today_ can differ from that same environment created with the same
 list of packages _tomorrow_. This can happen because package dependencies have changed, new releases have occurred,
 or even because a package is no longer available.
@@ -41,14 +41,14 @@ It ensures that the management, building, and serving of environments is as iden
 All environments in Nebari are served through `conda-store`.
 
 Using `conda-store`, Nebari admins can track specific files or directories for changes in environment specifications.
-They can manage environments using the REST API or the command-line utility (CLI).
+They can manage environments using the web interface, REST API, or the command-line utility (CLI).
 This tutorial focuses on using the web interface to interact with our environments.
 
 ## Step 1 - Exploring the `conda-store` web interface
 
-1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. <https://quansight.qhub.dev/conda-store>).
+1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (for example, <https://quansight.qhub.dev/conda-store>).
 
-2. You will need to log in order to authenticate to the `conda-store` interface - this is required to be able to access most of `conda-store` functionalities.
+2. You will need to log in to authenticate to the `conda-store` interface - this is required to be able to access most of `conda-store` functionalities.
 
    ![conda-store login UI - before authentication](/img/tutorials/conda_store_login.png)
 
@@ -170,7 +170,7 @@ Please keep in mind that these are _NOT_ available to Dask workers!
    Navigate to the `Full Logs` to investigate in more detail. Also, from the build status page you can trigger re-build in
    case you hit issues with intermittent outages, etc.
 
-2. If you need to use Dask
+2. If you need to use Dask.
 
    We highly recommend you include the [QHub Dask metapackage](https://anaconda.org/conda-forge/qhub-dask) to maintain version compatibility between the Dask client and server.
    This replaces `distributed`, `dask`, and `dask-gateway` with the correctly pinned versions.

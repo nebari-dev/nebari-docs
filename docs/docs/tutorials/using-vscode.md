@@ -37,7 +37,7 @@ Let's review some of the most useful features.
 
 The `Activity Bar` is where you'll go to switch between the main tools
 available in VS Code. Below is a brief overview of the icons on the
-`Activity Bar` (adding extensions may add additional icons your menu).
+`Activity Bar` (adding extensions may add additional icons to your menu).
 
 | Icon                                                                       | Name           | Description                                                               |
 | -------------------------------------------------------------------------- | -------------- | ------------------------------------------------------------------------- |
@@ -126,5 +126,5 @@ As another alternative, we could run code directly from the terminal as well.
 ## Conclusion
 
 We've covered the basic setup and run some arbitrary code. If you're curious
-about more advanced features or specific questions, you can always refer back
+about more advanced features or have specific questions, you can always refer back
 to the [VS Code Documentation](https://code.visualstudio.com/).
