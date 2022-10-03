@@ -7,10 +7,10 @@
 .admonition:not(.alert) {
   color: var(--ifm-color-on-background);
   border-radius: var(--ifm-global-radius);
-  border-bottom: 1 solid;
   border-top: 0 solid;
   border-right: 0 solid;
   border-left: 10px solid;
+  border-bottom: none;
 
   /* For default Admonition */
   background-color: var(--ifm-admonition-background-color);
