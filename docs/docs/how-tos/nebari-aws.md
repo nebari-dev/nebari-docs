@@ -105,7 +105,8 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-aws && cd nebari-aws
    ```
 
-2. Executing the command below will generate the set of questions that needs the suitable values to generate the qhub-config file with an infrastructure based on based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+2. Executing the `nebari init --guided-init` command prompt you to respond to a set of questions, which will be used to generate the 
+`nebari-config.yaml` file with an infrastructure based on **AWS**.
 
 ```bash
    nebari init --guided-init
@@ -114,14 +115,17 @@ environment variables have been properly set. It is time to initialize and deplo
 
 ![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-guided-init-end-part.png)
 
+:::tip
+If you prefer not using the `guided-init` command then you can simply run `init` command.
 
-3. (Optional) Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
 nebari init aws --project projectname \
 	  --domain domain \
 	  --auth-provider password
 ```
+:::
 
 :::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
@@ -154,7 +158,7 @@ server once Nebari's infrastructure is fully deployed, to create the first user 
 The nebari initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
 The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
+plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
 
 For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
 [Understanding the qhub-config.yaml file](/tutorials) documentation.
@@ -168,7 +172,7 @@ nebari deploy -c qhub-config.yaml
 ```
 
 :::note
-During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](/how-tos/domain-registry) for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
