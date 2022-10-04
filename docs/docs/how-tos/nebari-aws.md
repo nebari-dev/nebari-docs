@@ -128,7 +128,7 @@ nebari init aws --project projectname \
 :::
 
 :::note
-You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
