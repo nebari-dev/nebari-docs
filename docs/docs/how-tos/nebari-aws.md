@@ -118,7 +118,7 @@ environment variables have been properly set. It is time to initialize and deplo
 :::tip
 If you prefer not using the `guided-init` command then you can simply run `init` command.
 
-Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
 nebari init aws --project projectname \
