@@ -41,7 +41,6 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/using-vscode",
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
@@ -60,6 +59,7 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
         "how-tos/domain-registry",
+        "how-tos/using-vscode",
       ],
     },
     {
@@ -89,11 +89,17 @@ module.exports = {
     //   },
     //   items: ["references/overview"],
     // },
-    // {
-    //   type: "doc",
-    //   label: "Community",
-    //   id: "community/overview",
-    // },
+    {
+      type: "category",
+      label: "Community",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/index",
+        "community/file-issues",
+      ],
+    },
     {
       type: "doc",
       label: "Troubleshooting",
