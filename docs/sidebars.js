@@ -89,11 +89,17 @@ module.exports = {
     //   },
     //   items: ["references/overview"],
     // },
-    // {
-    //   type: "doc",
-    //   label: "Community",
-    //   id: "community/overview",
-    // },
+    {
+      type: "category",
+      label: "Community",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/index",
+        "community/file-issues",
+      ],
+    },
     {
       type: "doc",
       label: "Troubleshooting",

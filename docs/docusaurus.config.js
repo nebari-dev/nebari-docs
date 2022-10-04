@@ -128,7 +128,7 @@ const config = {
           {
             label: "Community",
             position: "right",
-            to: "community/overview",
+            to: "community",
           },
           {
             href: customFields.githubUrl,
