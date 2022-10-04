@@ -16,7 +16,6 @@ Our detailed contribution guidelines can be found [on Nebari's main documentatio
 Make sure to check the guidelines before you start contributing.
 
 <!-- Links -->
-
 [nebari-repo]: https://github.com/nebari-dev/nebari
 [nebari-issues]: https://github.com/nebari-dev/nebari/issues
 [nebari-community]: https://nebari.dev/community
