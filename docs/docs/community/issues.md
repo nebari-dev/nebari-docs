@@ -61,6 +61,7 @@ The following actions are typically useful:
 - Suggesting better use of code formatting
 - Suggesting reformulating the title and description to make them more explicit about the problem to be solved
 - Linking to related issues or discussions while briefly describing how they are related, for instance “See also #xyz for a similar attempt at this” or “See also #xyz where the same thing happened in another cloud provider" provides context and helps the discussion.
+- Summarising long discussions on issues to help new and existing contributors quickly understand the background, current status, and course of action for the issue.
 
 <!-- links -->
 
