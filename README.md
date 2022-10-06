@@ -6,6 +6,8 @@
 </picture>
 </p>
 
+---
+
 | Information | Links                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | :---------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Project     | [![License](https://img.shields.io/badge/License-BSD%203--Clause-gray.svg?colorA=2D2A56&colorB=5936D9&style=flat.svg)](https://opensource.org/licenses/BSD-3-Clause)[![Nebari documentation](https://img.shields.io/badge/%F0%9F%93%96%20Read-the%20docs-gray.svg?colorA=2D2A56&colorB=5936D9&style=flat.svg)](https://nebari.dev) [![PyPI version](https://badge.fury.io/py/qhub.svg)](https://badge.fury.io/py/qhub) |
