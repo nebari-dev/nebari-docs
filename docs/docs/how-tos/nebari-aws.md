@@ -164,7 +164,7 @@ For additional information about the `qhub-config.yaml` file and extra flags tha
 
 ## Deploying Nebari
 
-To see all the options available for the deploy command, run `nebari deploy --help`
+To see all the options available for the deploy command, run the following command:
 
 ```bash 
 nebari deploy --help
