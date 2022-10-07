@@ -7,7 +7,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
-const domain = "https://nebari.dev";
+const domain = "nebari.dev";
+const url = "https://nebari.dev";
 const githubForum = "https://github.com/orgs/nebari-dev/discussions"
 
 // -----------------------------------------------------------------------------
@@ -24,6 +25,7 @@ const customFields = {
   githubUrl: `${githubOrgUrl}/nebari`,
   githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
   githubForum,
+  url,
 };
 
 // -----------------------------------------------------------------------------
@@ -32,7 +34,7 @@ const customFields = {
 const config = {
   title: customFields.meta.title,
   tagline: customFields.meta.description,
-  url: customFields.domain,
+  url: customFields.url,
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -51,6 +53,8 @@ const config = {
   ],
   customFields: { ...customFields },
 
+  // Add plausible as script
+  scripts: [{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': customFields.domain }],
   // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
@@ -69,7 +73,7 @@ const config = {
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
-          showLastUpdateAuthor: true,
+          showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
         blog: false,
@@ -124,7 +128,7 @@ const config = {
           {
             label: "Community",
             position: "right",
-            to: "community/overview",
+            to: "community",
           },
           {
             href: customFields.githubUrl,
@@ -137,7 +141,7 @@ const config = {
       announcementBar: {
         id: 'rename_announcement',
         content:
-          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHUb</a> to Nebari ⚠️ </br>You might see some references to <b>QHub</b> mainly in the context of commands or installation/setup in the meantime.',
+          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHub</a> to Nebari ⚠️ </br>You might see some references to <b>QHub</b> mainly in the context of commands or installation/setup in the meantime.',
         isCloseable: false,
       },
       footer: {

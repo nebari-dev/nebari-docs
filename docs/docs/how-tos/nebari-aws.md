@@ -118,10 +118,9 @@ In this step, you'll run `qhub init` to create the `qhub-config.yaml`.
     ```bash
     qhub init aws --project projectname --domain domain --auth-provider password
     ```
-
-    :::note
-    You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
-    :::
+:::note
+You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
+:::
 
 Once `qhub init` is executed, you should then be able to see the following output:
 
