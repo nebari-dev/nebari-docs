@@ -205,7 +205,7 @@ Nebari instance for your team's use.
 
 ## Destroying Nebari
 
-To see all the options available for the destroy command, run `nebari destroy --help`
+To see all the options available for the destroy command, type the following command on your command line:
 
 ```bash 
 nebari destroy --help
