@@ -55,7 +55,7 @@ You can verify that Nebari is properly installed, and you are able to execute th
 nebari --help
 ```
 
-![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available commands and their use.](/img/getting-started/nebari-help-command.png "Nebari's help command line output")
+![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available commands and their use.](/img/getting-started/nebari-help.png "Nebari's help command line output")
 
 <!-- TODO: update link once merged -->
 
@@ -73,21 +73,14 @@ Nebari Init create and initialize your Nebari configuration. Guided init does th
 You can pass the `--help` flag to the `init` command to check all the arguments and options available for it.
 
 ```bash
-nebari init --help
+nebari init --help 
 ```
 
-![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-init-help.png "Nebari's init help command line output")
+![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-init-help-2.png "Nebari's init help command line output")
 
-If you are new to Nebari you can run the nebari `guided-init` with the `help` command to see all the arguments and options available.
-
-```bash
-nebari init guided-init --help
-```
-
-![A representation of the output generated when Nebari guided init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-guided-init-help.png "Nebari's guided init help command line output")
-
-
-
+:::tip
+You can pass the `--help` flag with the `--guided-init` flag to the `init` command to check all the arguments and options available for it.
+:::
 
 ## Next steps?
 

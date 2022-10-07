@@ -13,6 +13,7 @@ we will walk you through the following steps:
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
 - [Deploying Nebari](#deploying-nebari)
+- [Destroying Nebari](#destroying-nebari)
 
 If you are already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
 
@@ -111,9 +112,7 @@ environment variables have been properly set. It is time to initialize and deplo
 ```bash
    nebari init --guided-init
    ```
-![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-guided-init-aws.png)
-
-![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-guided-init-end-part.png)
+![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-aws.png)
 
 :::tip
 If you prefer not using the `guided-init` command then you can simply run `init` command.
@@ -165,6 +164,13 @@ For additional information about the `qhub-config.yaml` file and extra flags tha
 
 ## Deploying Nebari
 
+To see all the options available for the deploy command, run `nebari deploy --help`
+
+```bash 
+nebari deploy --help
+```
+![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
+
 With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
@@ -196,3 +202,18 @@ Kubecloak master realm username=root *****
 
 Congratulations! You have successfully deployed Nebari on AWS! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
+
+## Destroying Nebari
+
+To see all the options available for the destroy command, run `nebari destroy --help`
+
+```bash 
+nebari destroy --help
+```
+![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+
+Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
+
+```bash
+nebari destroy -c qhub-config.yaml
+```
