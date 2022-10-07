@@ -133,8 +133,6 @@ environment variables have been properly set. It is time to initialize and deplo
 ```bash
    nebari init --guided-init
    ```
-![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-guided-init-aws.png)
-
 ![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-gcp.png)
 
 :::tip
