@@ -23,6 +23,7 @@ Nebari's documentation follows the [Google developer documentation style guide](
 - **Avoid abbreviations** like "e.g.", "i.e.", and "etc.". Use full words like "for example", "that is", and "and so on" respectively.
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
 - Leave **only one black space between sentences**.
+- Break long lines in code snippets with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
 
 ### Date and time
 
