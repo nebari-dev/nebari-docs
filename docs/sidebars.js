@@ -99,7 +99,7 @@ module.exports = {
         "community/file-issues",
         // TODO - uncomment once populated
         // "community/code-contributions",
-        // "community/docs-contributions",
+        // "community/doc-contributions",
         "community/style-guide",
       ],
     },

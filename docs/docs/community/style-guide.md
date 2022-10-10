@@ -17,13 +17,13 @@ Nebari's documentation follows the [Google developer documentation style guide](
 - **Use second person** instead of first person. Address the reader directly with "you" instead of "the user/they". For example, "In this tutorial, you learn how to use Dask from within Nebari".
 - If *absolutely necessary* - use first person plural like "we recommend."
 - Prefer **present tense**. For example: "nebari-config.yaml is created." instead of "nebari-config.yaml will be created".
-- Use **active voice** throughout the documentation. For example: "" instead of "."
-- If necessary, always capitalized \*_use gender-neutral pronouns_.
+- Use **active voice** throughout the documentation. For example: "Save the file" instead of "The file is saved".
+- If necessary, always capitalized **use gender-neutral pronouns**.
 - **Avoid unnecessary jargon, memes, jokes** or any other type of content that will not be widely applicable for a global audience.
 - **Avoid abbreviations** like "e.g.", "i.e.", and "etc.". Use full words like "for example", "that is", and "and so on" respectively.
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
 - Leave **only one black space between sentences**.
-- Break long lines in code snippets with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
+- **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
 
 ### Date and time
 
@@ -40,28 +40,36 @@ Use unambiguous and explicit styles:
 
 ### Captalization
 
-- **Use sentence case** for page and section titles - only the first letter of the first word is capitalized.
-- Some terms and libraries have special capitalization preferences:
+**Use sentence case** for page and section titles - only the first letter of the first word is capitalized.
 
-| TERM             | CAPITALIZATION                                                    |
-| ---------------- | ----------------------------------------------------------------- |
-| Nebari           | First letter always capitalized, unless referring to CLI commands |
-| Dask             | First letter always capitalized, unless referring to CLI commands |
-| DataFrame        | 'D' and 'F' always capitalized                                    |
-| pandas           | never capitalized                                                 |
-| Conda            | First letter capitalized only at the beginning of sentences       |
-| Panel            | TBD                                                               |
-| VS Code          | TBD                                                               |
-| Jupyter          | First letter always capitalized, unless referring to CLI commands |
-| Jupyter Notebook | TBD                                                               |
-| JupyterLab       | 'J' and 'L' always capitalized, unless referring to CLI commands  |
-| Kubernetes       | TBD                                                               |
-| Docker           | TBD                                                               |
-| Terraform        | TBD                                                               |
+Some terms and libraries have special capitalization preferences:
+
+| TERM             | CAPITALIZATION                                                                           |
+| ---------------- | ---------------------------------------------------------------------------------------- |
+| Nebari           | First letter always capitalized                                                          |
+| Dask             | First letter always capitalized                                                          |
+| DataFrame        | 'D' and 'F' always capitalized                                                           |
+| pandas           | Never capitalized                                                                        |
+| NumPy            | 'N' and 'P' always capitalized                                                           |
+| Conda            | First letter capitalized only at the beginning of sentences                              |
+| Panel            | First letter always capitalized                                                          |
+| VS Code          | 'V', 'S', and 'C' always capitalized; always use one blank space between 'VS' and 'Code' |
+| Jupyter          | First letter always capitalized                                                          |
+| Jupyter Notebook | 'J' and 'N' always capitalized                                                           |
+| JupyterLab       | 'J' and 'L' always capitalized                                                           |
+| Kubernetes       | First letter always capitalized                                                          |
+| Docker           | First letter always capitalized                                                          |
+| Terraform        | First letter always capitalized                                                          |
+
+:::note
+The capitalization guidelines only apply to narrative documentation. When reffering to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
+
+For example: "To start JupyterLab, you run `jupyter lab`."
+:::
 
 ## Additional resources
 
-- The [Microsoft Writing Style Guide](https://learn.microsoft.com/en-gb/style-guide/welcome/) is also a very thorough style guide. The A-Z word list is a handy reference if you're unsur about a specific term.
+- The [Microsoft Writing Style Guide](https://learn.microsoft.com/en-gb/style-guide/welcome/) is also a very thorough style guide. The included A-Z word list is a handy reference if you're unsure about a specific term.
 - [Write the Docs collection of accessibility resources](https://www.writethedocs.org/guide/writing/accessibility/).
 - [Digital Ocean tutorail style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines)
 - Google technical guide - [accessibility considerations](https://developers.google.com/style/accessibility)
