@@ -1,22 +1,37 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ---
 id: doc-contributions
 title: Contribute to Nebari's documentation
 description: Guidelines for contributing to Nebari's documentation
 ---
 
-Thank you for your interest in contributing to Nebari's documentation. We have a few different types of docs:
+A complete and accessible set of documentation is essential for an open source project's success. Thank you for making Nebari's documentation better!
 
-- Narrative docs hosted on `nebari.dev` (this website).
-- Docstrings and READMEs part of the codebase and GitHub repositories respetively.
-- Demos and examples developed at `nebari/nebari-demo`.
+Nebari has the following (broad) types of documentation:
+
+- **Narrative documentation** in the form of tutorials, how-to's, and more, hosted on `nebari.dev` (this website). Keep reading this page to learn how you can contribute!
+- **Docstrings and READMEs** that are a part of the [nebari codebase][nebari-repo] and other GitHub repositories in the [nebari-dev][nebari-org] respetively. To contribute to these, check out [Contribute to Nebari's codebase](doc-contributions.md).
+- **Demos and examples** for community self-study and conference presentations hosted at [nebari/nebari-demo][nebari-demo]. To contribute examples, start at the [Nebari Demo README](https://github.com/nebari-dev/nebari-demo#readme).
+
+## Documentation style guide
+
+We follow some style guidelines across the Nebari documentation resources to maintain consistency and keep our documentation accessible to everyone. Take a few minutes to go through the key principles before contributing. We encourage you to read the complete style guide when you get a chance. Many suggestions in the style guide are good practices to follow in regular written communication as well.
 
 <!-- TODO: Add link to style guide -->
 
-We follow a documentation style guide (add link) across these spaces for consistency.
+[Read the Nebari documentation style guide →]
 
-Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+## Documentation tool
 
-## Setting your local development environment
+Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a modern static website generator. You author documentation using a friendly Markdown format, that are converted to consistent documentation pages by Docusaurus. If you are not familiar with Markdown, check out ...
+
+Docusaurs has some helpful special features like tabs and admonitions, go through the [Markdown Features section of the Docusaurus documentation](https://docusaurus.io/docs/markdown-features) to learn about them!
+
+The deployment is automatically handled by Netlify when your content is merged into the `nebari-docs/main` branch.
+
+## Set up your local repository
 
 1. Make a fork of the [`Nebari-docs` repository][nebari-docs-repo] to your GitHub account
 2. Clone the forked repository to your local machine:
@@ -25,40 +40,66 @@ Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a m
    git clone https://github.com/<your-username>/nebari-docs.git
    ```
 
-<!-- TODO: Add docs for conda env? -->
+## Set up your local development environment
+### Optional: Create an isolated environment
 
-### Prerequisites
+1. To create an environment with `conda`:
+
+```bash
+conda create -n nebari-docs python=3.9
+```
+
+:::note
+You need Python 3.7 or higher to complete the setup.
+:::
+
+2. Activate the environment:
+
+```bash
+conda activate nebari-docs
+```
+
+### Prerequisites: Node.js
 
 To build the site you will need to have Node.js installed. To see if you already have Node.js installed, type the following command into your local command line terminal:
 
-```console
-$ node -v
-v14.17.0
+```bash
+node -v
+# v18.10.0
 ```
 
-If you see a version number, such as `v14.17.0` printed, you have Node.js installed. If you get a `command not found` error (or similar phrasing), please install Node.js before continuing.
+If you see a version number, such as `v18.10.0` printed, you have Node.js installed, you can move to the next section!
+
+If you get a `command not found` error (or similar phrasing), install Node.js before continuing.
 
 To install node visit [nodejs.org](https://nodejs.org/en/download/) or check any of these handy tutorials for [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04), [Debian](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-10), or [macOS](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-and-create-a-local-development-environment-on-macos).
 
-Once you have Node.js installed you can proceed to install Yarn. Yarn has a unique way of installing and running itself in your JavaScript projects. First you install the yarn command globally, then you use the global yarn command to install a specific local version of Yarn into your project directory.
+If you created an environment with `conda`, you can install Node.js with:
 
-The Yarn maintainers recommend installing Yarn globally by using the `NPM` package manager, which is included by default with all Node.js installations.
-Use the `-g` flag with `npm` install to do this:
+```bash
+conda install -c conda-forge nodejs
+```
+
+### Prerequisites: Yarn
+
+Once you have Node.js installed you can proceed to install Yarn. Yarn has a unique way of installing and running itself in your JavaScript projects. First, you install the yarn command globally, then you use the global yarn command to install a specific local version of Yarn into your project directory.
+
+The Yarn maintainers recommend installing Yarn globally by using the `NPM` package manager, which is included by default with all Node.js installations. Use the `-g` flag with `npm` install to do this:
 
 ```bash
 npm install -g yarn
 ```
 
-After the package installs, have the yarn command print its own version number. This will let you verify it was installed properly:
+After the package installs, have the `yarn` command print its own version number to verify if it was installed properly:
 
-```console
-$ yarn --version
-1.22.11
+```bash
+yarn --version
+# 1.22.11
 ```
 
-### Installing docs dependencies
+### Installing documentation dependencies
 
-1. First make sure to be in the `/docs` directory:
+1. Move to the `/docs` directory:
 
    ```bash
    cd docs
@@ -72,28 +113,39 @@ $ yarn --version
 
 ### Pre-commit hooks
 
-This repository uses a number of [pre-commit hooks](https://pre-commit.com/) to standardize our YAML and markdown structure.
-**Note** - You will need to have Python>= 3.7 installed in your local machine.
+The `nebari-docs` repository uses a number of [pre-commit hooks](https://pre-commit.com/) to standardize our YAML and Markdown structure.
+
+:::note
+You will need to have Python>= 3.7 installed in your local machine.
+:::
 
 1. Before you can run the hooks, you need to install the pre-commit package manager:
+
+<Tabs>
+  <TabItem value="pip" label="pip" default>
 
    ```bash
    python -m pip install pre-commit
    ```
+  </TabItem>
 
-   or, if you prefer conda:
+  <TabItem value="conda" label="conda">
 
    ```
    conda install -c conda-forge pre-commit
    ```
+  </TabItem>
+</Tabs>
 
-2. From the root of this project, install the git hook scripts:
+2. Navigate to the root of this project. If you're in the `docs` subdirectory, you can run "`cd ..`" to go back to the root.
+
+3. Install the git hook scripts:
 
    ```bash
    pre-commit install
    ```
 
-3. Optional- run the hooks against the files in this repository
+4. (Optional) Run the hooks against the files in this repository:
 
    ```bash
    pre-commit run --all-files
@@ -103,8 +155,9 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 
 ### Working on the docs
 
-Once you have the pre-commits and the dependencies installed, you can get started with the documentation.
-To see a live local version of the docs run the following command:
+Once you have the pre-commit hooks and the dependencies installed, you can start writing and updating the documentation.
+
+To see a live local version of the docs while editing, run the following command:
 
 ```bash
 yarn start
@@ -115,42 +168,47 @@ Most changes are reflected live without having to restart the server.
 
 :::note
 By default, this will load your site at <http://localhost:3000/>.
+
+You can specify a different port with `yarn start --port <port-number>`.
 :::
 
-### Building the site locally
+### (Optional) Building the site locally
 
-To build the static files of the documentation (and see how they would look once deployed to `www.nebari.dev`), run:
+You can build the static files of the documentation to see how they would look once deployed to `nebari.dev`:
 
 ```bash
 yarn build
 ```
 
 This command generates static content into the `docs/build` directory and can be served using any static contents hosting service.
-You can check the new build site with the following command:
+
+You can check the newly built site with the following command:
 
 ```bash
 yarn run serve
 ```
 
 :::note
-By default, this will load your site at <http://localhost:3000/>.
+By default, this will also load your site at <http://localhost:3000/>.
+
+You can specify a different port with `yarn start --port <port-number>`.
 :::
 
-## Adding a New Dependency
+## Adding a new dependency
 
-Use the `add` sub command to add new dependencies:
+Use the `add` sub command to add new dependencies to the project:
 
 ```bash
 yarn add package-name
 ```
 
-## Deployment
-
-The deployment is automatically handled by Netlify when content is merged into the `main` branch.
-
 ## Linting
 
-Before opening a PR, run the docs linter and formatter to ensure code consistency. From the `docs` directory, run:
+Before opening a PR, you can run the docs linter and formatter to ensure code consistency.
+
+1. Navigate to the `docs` directory.
+
+2. Run the following commands:
 
 ```bash
 yarn run lint
@@ -160,3 +218,6 @@ yarn run format
 <!-- links -->
 
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
+[nebari-repo]: https://github.com/nebari-dev/nebari
+[nebari-org]: https://github.com/nebari-dev
+[nebari-demo]: https://github.com/nebari-dev/nebari-demo
