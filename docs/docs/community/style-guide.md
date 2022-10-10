@@ -69,7 +69,7 @@ Some terms and libraries have special capitalization preferences:
 | Terraform        | First letter always capitalized                                                          |
 
 :::note
-The capitalization guidelines only apply to narrative documentation. When reffering to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
+The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
 
 For example: "To start JupyterLab, you run `jupyter lab`."
 :::
