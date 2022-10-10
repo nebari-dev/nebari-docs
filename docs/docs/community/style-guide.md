@@ -41,7 +41,7 @@ Use unambiguous and explicit styles:
 - Practice **\*inclusive and bias-free communication**. Learn more in:
   - [Write inclusive documentation, Google developer documentation style guide](https://developers.google.com/style/inclusive-documentation)
   - [Bias-free communication, Microsoft writing style guide](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication)
-  - [Gender indentity, Apple style guide](https://support.apple.com/en-gb/guide/applestyleguide/apd2a7af8d36/web)
+  - [Gender identity, Apple style guide](https://support.apple.com/en-gb/guide/applestyleguide/apd2a7af8d36/web)
 
 Go through the [Write accessible documentation section of the Google developer documentation style guide](https://developers.google.com/style/accessibility) for a more detailed set of accessibility guidelines.
 
