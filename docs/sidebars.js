@@ -96,8 +96,11 @@ module.exports = {
         type: "doc", id: "community/index"
       },
       items: [
-        "community/index",
         "community/file-issues",
+        "community/code-contributions",
+        "community/doc-contributions",
+        // TODO - uncomment once populated
+        // "community/style-guide",
       ],
     },
     {
