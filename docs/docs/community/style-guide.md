@@ -18,7 +18,7 @@ Nebari's documentation follows the [Google developer documentation style guide](
 - If *absolutely necessary* - use first person plural like "we recommend."
 - Prefer **present tense**. For example: "nebari-config.yaml is created." instead of "nebari-config.yaml will be created".
 - Use **active voice** throughout the documentation. For example: "Save the file" instead of "The file is saved".
-- If necessary, always capitalized **use gender-neutral pronouns**.
+- If necessary, always **use gender-neutral pronouns**.
 - **Avoid unnecessary jargon, memes, jokes** or any other type of content that will not be widely applicable for a global audience.
 - **Avoid abbreviations** like "e.g.", "i.e.", and "etc.". Use full words like "for example", "that is", and "and so on" respectively.
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
@@ -37,10 +37,15 @@ Use unambiguous and explicit styles:
 - Write in **"plain english" for users of all levels and background**. Never assume your readers' technical or English level. Learn more: [Microsoft's guidelines on writing for all abilities](https://docs.microsoft.com/en-gb/style-guide/accessibility/writing-all-abilities).
 - Make sure your documentation page has **appropriate headings and a consistent hierarchy of header tags** (`<h1>` or `#`, followed by `<h2>` or `##`, and so on). People who use screen readers rely on headings to navigate the page.
 - Always use **text to describe where links go**. For example, instead of "read more", write "read more about accessible writing in the style guide".
-- Take the time to [**write good alt-text**](https://developers.google.com/style/images#text-associated-with-images) for images, diagrams, and graphics. The alt text should describe the setting (for example, "A JupyterLab window showing ...") as well as the overarching message that the graphic conveys (for example, "... denotes consistency across the Dask dashboard plots".)
-- Practice [inclusive](https://developers.google.com/style/inclusive-documentation) and [bias-free](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication) communication.
+- Take the time to **write good alt-text** for images, diagrams, and graphics. The alt text should describe the setting (for example, "A JupyterLab window showing ...") as well as the overarching message that the graphic conveys (for example, "... denotes consistency across the Dask dashboard plots"). Read the [Text associated with images section of the Google Developer Style Guide](https://developers.google.com/style/images#text-associated-with-images) for more details.
+- Practice **\*inclusive and bias-free communication**. Learn more in:
+  - [Write inclusive documentation, Google developer documentation style guide](https://developers.google.com/style/inclusive-documentation)
+  - [Bias-free communication, Microsoft writing style guide](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication)
+  - [Gender indentity, Apple style guide](https://support.apple.com/en-gb/guide/applestyleguide/apd2a7af8d36/web)
 
-### Captalization
+Go through the [Write accessible documentation section of the Google developer documentation style guide](https://developers.google.com/style/accessibility) for a more detailed set of accessibility guidelines.
+
+### Capitalization
 
 **Use sentence case** for page and section titles - only the first letter of the first word is capitalized.
 
@@ -72,7 +77,5 @@ For example: "To start JupyterLab, you run `jupyter lab`."
 ## Additional resources
 
 - The [Microsoft Writing Style Guide](https://learn.microsoft.com/en-gb/style-guide/welcome/) is also a very thorough style guide. The included A-Z word list is a handy reference if you're unsure about a specific term.
-- [Write the Docs collection of accessibility resources](https://www.writethedocs.org/guide/writing/accessibility/).
-- [Digital Ocean tutorail style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines)
-- Google technical guide - [accessibility considerations](https://developers.google.com/style/accessibility)
-- Apple guidelines [on inclusive gender identity](https://help.apple.com/applestyleguide/#/apd2a7af8d36)
+- [Digital Ocean's tutorail style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines).
+- [Write the Docs collection of resources for accessible writing](https://www.writethedocs.org/guide/writing/accessibility/).
