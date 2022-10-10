@@ -34,9 +34,11 @@ Use unambiguous and explicit styles:
 
 ### Accessibility
 
-- Use "plain english" to write for users of all levels and background. Never assume your reader’s technical or English level. See [MSFT guidelines on writing for all abilities](https://docs.microsoft.com/en-gb/style-guide/accessibility/writing-all-abilities).
+- Write in **"plain english" for users of all levels and background**. Never assume your readers' technical or English level. Learn more: [Microsoft's guidelines on writing for all abilities](https://docs.microsoft.com/en-gb/style-guide/accessibility/writing-all-abilities).
+- Make sure your documentation page has **appropriate headings and a consistent hierarchy of header tags** (`<h1>` or `#`, followed by `<h2>` or `##`, and so on). People who use screen readers rely on headings to navigate the page.
+- Always use **text to describe where links go**. For example, instead of "read more", write "read more about accessible writing in the style guide".
+- Take the time to [**write good alt-text**](https://developers.google.com/style/images#text-associated-with-images) for images, diagrams, and graphics. The alt text should describe the setting (for example, "A JupyterLab window showing ...") as well as the overarching message that the graphic conveys (for example, "... denotes consistency across the Dask dashboard plots".)
 - Practice [inclusive](https://developers.google.com/style/inclusive-documentation) and [bias-free](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication) communication.
-- Take the time to [write good alt-text](https://developers.google.com/style/images#text-associated-with-images) for images, diagrams, and graphics. The alt text should describe the setting (for example, "A JupyterLab window showing ...") as well as the overarching message that the graphic conveys (for example, "... denotes consistency across the Dask dashboard plots".)
 
 ### Captalization
 
