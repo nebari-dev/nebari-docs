@@ -12,7 +12,7 @@ Nebari development happens on GitHub, at [nebari-dev/neabri](nebari-repo).
 
 New to Nebari? The issues marked with the [type: good first issue](https://github.com/nebari-dev/nebari/labels/type%3A%20good%20first%20issue) label are an excellent place to start. These bugs reports and feature requests have a low entry-barrier, need little historical context, and are self-contained. Select a "good first issue" that matches your interest and skill set.
 
-If you feel comfortable contributing the fix/feature directly, write a comment to let the community know that you are working on it. If you need more context or help with the issue (at any point in your contribution), feel free to ask questions on the same issue. The project maintaners are always happy to support you! Keep in mind that many developers and maintainers are volunteers, so be patient while they get back to your questions. You can drop a reminder after about 4 working days if no one has replied. :)
+If you feel comfortable contributing the fix/feature directly, write a comment to let the community know that you are working on it. If you need more context or help with the issue (at any point in your contribution), feel free to ask questions on the same issue. The project maintainers are always happy to support you! Keep in mind that many developers and maintainers are volunteers, so be patient while they get back to your questions. You can drop a reminder after about 4 working days if no one has replied. :)
 
 ## Set up your local Nebari repository
 
@@ -105,7 +105,7 @@ Beyond changes to a function's docstring and possible description in the general
 
 <!-- TODO: Add link to release notes -->
 
-TODO: Since we have a sepatate documetnation repo, link to docs guidelines.
+TODO: Since we have a separate documentation repo, link to docs guidelines.
 
 ## Cross referencing issues
 
