@@ -90,7 +90,7 @@ In this step, you'll run `qhub init` to create the `qhub-config.yaml`.
    mkdir nebari-azure && cd nebari-azure
    ```
 
-2. Executing the command below will generate a basic config file with an infrastructure based on **AWS**. 
+2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**. 
 
     - `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created). 
     - `domain` will be the domain endpoint for your Nebari instance. 
@@ -99,7 +99,7 @@ In this step, you'll run `qhub init` to create the `qhub-config.yaml`.
     For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `qhub-config.yaml`.
 
     ```bash
-    qhub init aws --project projectname --domain domain --auth-provider password
+    qhub init azure --project projectname --domain domain --auth-provider password
     ```
 
     :::note
