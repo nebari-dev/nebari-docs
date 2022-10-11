@@ -21,14 +21,14 @@ After upgrading to `0.4.5`, the base names for the follow namespaces that are bu
 - `filesystem` -> `nebari-git`
 
 Due to this change, you will need to migrate the environments from the old `default` into the new `global` namespace,
-this is a manual process that consists in copying over the yaml specifications from the `default` namespace to the `global` namespace and rebuilding the environments.
+this is a manual process that consists in copying over the yaml specifications for each environment to the `global` namespace and rebuilding them.
 
 Right after the upgrade, the new `nebari-git` namespace will be available, but it will be empty.  To re-build the environments contained in the `nebari-config.yaml`
 you will need to do a trivial change to the target environment contained in the yaml, and re-deploy Nebari to trigger its build.
 Unfortunately, this manual process needs to be performed for each one of the environments **individually** due to how conda-store handles asynchronous operations.
 
-Once all environments are migrated, you will need to update the permission level for these namespaces following the steps described in the [How to handle access restricted namespaces](/troubleshooting#handle-access-restricted-namespaces) section.
-After this, you will be able to delete the old namespaces using the `delete` options from the conda-store UI `/conda-store/namespace/`.
+Once all environments are migrated, you will need to update the permission level for the old namespaces following the steps described in the [How to handle access restricted namespaces](/troubleshooting#handle-access-restricted-namespaces) section.
+After this, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI `/conda-store/namespace/`.
 
 
 
