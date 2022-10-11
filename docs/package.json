@@ -1,7 +1,19 @@
 {
   "name": "nebari-docs",
   "version": "0.0.1",
+  "description": "The main documentation website for Nebari",
   "private": true,
+  "author": {
+    "name": "Nebari development team",
+    "url": "https://nebari.dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nebari-dev/nebari/"
+  },
+  "bugs": {
+    "url": "https://github.com/nebari-dev/nebari/issues"
+  },
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
@@ -12,24 +24,36 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "lint": "eslint \"*.{js,jsx}\"",
-    "lint:fix": "eslint . --ext js,jsx --fix",
-    "format": "prettier --write \"**/*.{js,jsx,md,css}\""
+    "lint": "eslint \"*.{js,jsx,css,scss}\"",
+    "lint:fix": "yarn run lint -- --fix",
+    "format": "prettier --check \"**/*.{md, mdx, json, toml}\"",
+    "format:fix": "prettier --write \"**/*.{md, mdx, json, toml}\"",
+    "prepare": "cd .. && husky install docs/.husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,css}": [
+      "yarn run lint:fix"
+    ],
+    "**/*.{json,md,mdx,toml}": [
+      "yarn run format:fix"
+    ]
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-beta.20",
     "@docusaurus/preset-classic": "2.0.0-beta.20",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
+    "docusaurus-lunr-search": "^2.1.15",
     "docusaurus-plugin-sass": "^0.2.2",
-    "prism-react-renderer": "^1.3.1",
+    "prism-react-renderer": "^1.3.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.52.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.0.0-beta.20",
     "@babel/eslint-parser": "^7.18.2",
+    "@docusaurus/module-type-aliases": "2.0.0-beta.20",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -37,6 +61,9 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.3",
+    "netlify-plugin-cache": "^1.0.3",
     "prettier": "^2.6.2"
   },
   "browserslist": {

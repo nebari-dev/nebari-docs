@@ -1,13 +1,15 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 // @ts-check
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+// https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
+const lightCodeTheme = require("prism-react-renderer/themes/nightOwlLight");
+const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
-// TODO: verify this
-const domain = "https://nebari-docs.netlify.app";
+const domain = "nebari.dev";
+const url = "https://nebari.dev";
+const githubForum = "https://github.com/orgs/nebari-dev/discussions"
 
 // -----------------------------------------------------------------------------
 // custom Fields for the project
@@ -16,13 +18,14 @@ const customFields = {
   meta: {
     title: "Nebari",
     description: "An opinionated JupyterHub deployment for Data Science teams",
-    // TODO: placeholder
     keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
   },
   domain,
   githubOrgUrl,
   githubUrl: `${githubOrgUrl}/nebari`,
   githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+  githubForum,
+  url,
 };
 
 // -----------------------------------------------------------------------------
@@ -31,24 +34,27 @@ const customFields = {
 const config = {
   title: customFields.meta.title,
   tagline: customFields.meta.description,
-  url: customFields.domain,
+  url: customFields.url,
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
-  favicon: "img/favicon.ico",
+  favicon: "logo/favicon.ico",
+  staticDirectories: ['static'],
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
   },
 
   // Plugings need installing first then add here
-  plugins: ["docusaurus-plugin-sass"],
+  plugins: [
+    "docusaurus-plugin-sass",
+    require.resolve('docusaurus-lunr-search'),
+  ],
   customFields: { ...customFields },
 
+  // Add plausible as script
+  scripts: [{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': customFields.domain }],
   // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
@@ -67,15 +73,12 @@ const config = {
           // points to the Nebari repo
           // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
-          showLastUpdateAuthor: true,
+          showLastUpdateAuthor: false,
           showLastUpdateTime: true,
-          // remarkPlugins: [
-          //   [require('@fec/remark-a11y-emoji/gatsby'), { sync: true }],
-          // ],
         },
         blog: false,
         theme: {
-          customCss: require.resolve("./css/custom.css"),
+          customCss: require.resolve("./src/scss/application.scss"),
         },
       }),
     ],
@@ -85,80 +88,94 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+          hideable: true,
+        },
+      },
+      colorMode: {
+        respectPrefersColorScheme: true,
+      },
       navbar: {
-        title: customFields.meta.title,
         logo: {
           alt: "Nebari logo - Docs home",
-          // TODO: Replace with logo
-          src: "img/logo.svg",
+          src: "https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup-White-text.svg",
         },
-        hideOnScroll: true,
+        style: "dark",
+        hideOnScroll: false,
         items: [
-          // left side
-          //   {
-          //     label: 'Quickstart',
-          //     docId: 'quickstart',
-          //     position: 'left',
-          //     type: 'doc',
-          //   },
-          // right side
+          // right navbar items
           {
-            label: "Tutorials",
+            label: "Getting Started",
             position: "right",
-            to: "tutorials/overview",
+            items: [
+              {
+                label: "Install Nebari",
+                to: "getting-started/installing-nebari",
+              },
+              {
+                label: "Cloud providers",
+                to: "getting-started/cloud-providers",
+              },
+            ]
           },
           {
-            label: "How-to Guides",
+            label: "Documentation",
             position: "right",
-            to: "how-tos/overview",
-          },
-          {
-            label: "Reference",
-            position: "right",
-            to: "references/overview",
-          },
-          {
-            label: "Conceptual Guides",
-            position: "right",
-            to: "explanations/overview",
+            to: "/",
           },
           {
             label: "Community",
             position: "right",
-            to: "governance/overview",
+            to: "community",
           },
           {
             href: customFields.githubUrl,
             position: "right",
             className: "header-github-link",
-            "aria-label": "GitHub repository",
+            "aria-label": "Nebari GitHub repository",
           },
         ],
+      },
+      announcementBar: {
+        id: 'rename_announcement',
+        content:
+          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHub</a> to Nebari ⚠️ </br>You might see some references to <b>QHub</b> mainly in the context of commands or installation/setup in the meantime.',
+        isCloseable: false,
       },
       footer: {
         copyright: customFields.copyright,
         style: "dark",
         links: [
           {
-            title: "Open source",
+            title: "Documentation",
             items: [
               {
-                label: "Quickstart",
-                to: "quickstart",
+                label: "Getting Started",
+                to: "getting-started/installing-nebari",
+              },
+              {
+                label: "Tutorials",
+                to: "tutorials",
               },
             ],
           },
           {
-            title: "Community",
+            title: 'Community',
             items: [
               {
                 label: "Nebari repository",
                 href: customFields.githubUrl,
               },
+              {
+                label: "User forum",
+                href: customFields.githubForum,
+              },
             ],
           },
           {
-            title: "Other",
+            title: "More",
             items: [
               {
                 html: `
