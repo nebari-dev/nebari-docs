@@ -4,6 +4,9 @@ title: Contribute to Nebari's codebase
 description: Guidelines and instruction for contributing to Nebari
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Thanks for contributing to Nebari's codebase. If you're new to open source software and looking to start your journey or a seasoned contributor with an issue in mind, we're glad you're here!
 
 Nebari development happens on GitHub, at [nebari-dev/nebari][nebari-repo].
@@ -41,7 +44,57 @@ Now using the command `git remote -v` will show two remote repositories:
 - `upstream`: which refers to the `nebari` repository on Github.
 - `origin`: which refers to your personal fork.
 
-## Set up your development environment (WIP)
+## Set up your development environment
+
+1. You can use `conda` to create an isolated environment to work on Nebari. The `environment-dev.yaml` file in the root directory lists the required dependencies.
+
+```bash
+conda env create -f environment-dev.yaml
+```
+
+You may need to press "Y" + "Enter"/"Return" to complete the environment build.
+
+2. Activate the environment with:
+
+```bash
+conda activate nebari-dev
+```
+
+### Pre-commit hooks
+
+The `nebari` repository uses [pre-commit hooks](https://pre-commit.com/) to lint and format your code before each commit. We encourage regular contributors to install the hooks.
+
+1. Before you can run the hooks, you need to install the pre-commit package manager:
+
+<Tabs>
+   <TabItem value="conda" label="conda">
+
+   ```
+   conda install -c conda-forge pre-commit
+   ```
+  </TabItem>
+
+  <TabItem value="pip" label="pip" default>
+
+   ```bash
+   python -m pip install pre-commit
+   ```
+  </TabItem>
+</Tabs>
+
+2. Install the pre-commit hooks:
+
+   ```bash
+   pre-commit install
+   ```
+
+3. (Optional) Run the hooks against the files in this repository:
+
+   ```bash
+   pre-commit run --all-files
+   ```
+
+Once installed, the pre-commit hooks will run automatically when you make a commit in version control.
 
 ## Develop your contribution
 

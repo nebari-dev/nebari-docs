@@ -1,11 +1,11 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 ---
 id: doc-contributions
 title: Contribute to Nebari's documentation
 description: Guidelines for contributing to Nebari's documentation
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 A complete and accessible set of documentation is essential for an open source project's success. Thank you for making Nebari's documentation better!
 
