@@ -1,6 +1,6 @@
 ---
 id: source-code-architecture
-title: Reference for Nebari source code architecture
+title: Nebari source code architecture
 ---
 
 # Nebari source code architecture
