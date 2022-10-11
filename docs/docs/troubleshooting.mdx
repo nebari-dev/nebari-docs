@@ -11,6 +11,25 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 ## Configuration
 
+## Conda-store compatibility migration steps when upgrading to 0.4.5
+
+If you are upgrading from a version of Nebari prior to 0.4.5, you will need to manually update your conda-store namespaces
+to be compatible with the new Nebari version. This is a one-time migration step that will need to be performed after upgrading to continue using the service.
+
+After upgrading to `0.4.5`, the base namesfor the follow namespaces that are built in with Nebari were changed as follows:
+- `default` -> `global`
+- `filesystem` -> `nebari-git`
+
+Due to this change, you will need to migrate the environments from the `default` into the new `global` namespace,
+this is a manual process that consists in copying over the yaml specifications from the `default` namespace to the `global` namespace and rebuilding the environments.
+
+Right after the upgrade, the new `nebari-git` namespace will be available, but it will be empty.  To re-build the environments contained in the nebari-config.yaml
+you will need to do a trivial change to the target environment contained in the yaml, and re-deploy Nebari to trigger its build.
+Unfortunately, this manual process needs to be performed for each one of the environments **individually** due to how conda-store handles assyncronous operations.
+
+Once all environments are migrated, you can delete the `default` and `filesystem` namespaces following the steps described in the [How to handle access restricted namespaces](#how-to-handle-access-restricted-namespaces) section.
+
+
 ### Required pins for Dask environments
 
 There are some pins that are required for the Nebari Dask environment to function correctly.
@@ -200,3 +219,41 @@ First, you will need to create new node groups, one for each type of GPU instanc
 
 Second, you will need to create a new JupyterLab profile to select the GPU node.
 In this way, you'll have a separate profile for GPUs which users can select.
+
+### Migrate existing environments from a namespaces to another
+
+When the user creates a new environment, it requires selecting a namespace. This namespace is used to identify the group permissions to
+that environment and the location where the such environment needs to be stored.
+To migrate environments from one namespace to another, the user must manually build all environments in the new namespace.
+Once migrated, the user can delete the old namespace, permanently deleting all existing environments built against it.
+
+### Handle Access restricted namespaces
+
+The built in namespace (`nebari-git`) is used to store the environments contained in the nebari-config.yaml file.
+As this namespace is controlled by the Nebari conda-store server and not the user, it is not possible to modify
+or delete it without proper permissions.
+
+To modify this namespace, the user need to manually update the `conda-store-config.py` configmap located in the
+kubernetes cluster. Follow the steps below to do so: (`kubectl` or `k9s` are required)
+
+With `kubectl`:
+
+```bash
+kubectl edit configmap conda-store-config -n nebari
+```
+Once the editor opens, look for the `role_bindings` map and update
+the `default_namespace` value from `{"viewer"}` to `{"admin"}`. And restart the conda-store
+pods to fully propagate the changes.
+
+With `k9s`:
+
+1.  Type <kbd>:configmap</kbd> to list the available configmaps.
+2.  Search for `conda-store-config` using the shortcut <kbd>/conda-store-config</kbd>.
+3.  When hovering over the `configmap`, press <kbd>e</kbd> to open the editor. (defaults to `vim`)
+4.  Look for the `role_bindings` map and update the `default_namespace` value from `{"viewer"}` to `{"admin"}`.
+5.  Save and exit the editor. (`:wq`)
+6.  Restart the conda-store pods to fully propagate the changes.
+
+:::warning
+Based on the Nebari and conda-store security model, the `default_namespace` value should be set to `{"viewer"}` after the migration is complete.
+:::
