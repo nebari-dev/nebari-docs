@@ -11,23 +11,23 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 ## Configuration
 
-## Conda-store compatibility migration steps when upgrading to 0.4.5
+### Conda-store compatibility migration steps when upgrading to 0.4.5
 
-If you are upgrading from a version of Nebari prior to 0.4.5, you will need to manually update your conda-store namespaces
+If you are upgrading from a version of Nebari prior to `0.4.5`, you will need to manually update your conda-store namespaces
 to be compatible with the new Nebari version. This is a one-time migration step that will need to be performed after upgrading to continue using the service.
 
-After upgrading to `0.4.5`, the base namesfor the follow namespaces that are built in with Nebari were changed as follows:
+After upgrading to `0.4.5`, the base names for the follow namespaces that are built in with Nebari were changed as follows:
 - `default` -> `global`
 - `filesystem` -> `nebari-git`
 
-Due to this change, you will need to migrate the environments from the `default` into the new `global` namespace,
+Due to this change, you will need to migrate the environments from the old `default` into the new `global` namespace,
 this is a manual process that consists in copying over the yaml specifications from the `default` namespace to the `global` namespace and rebuilding the environments.
 
-Right after the upgrade, the new `nebari-git` namespace will be available, but it will be empty.  To re-build the environments contained in the nebari-config.yaml
+Right after the upgrade, the new `nebari-git` namespace will be available, but it will be empty.  To re-build the environments contained in the `nebari-config.yaml`
 you will need to do a trivial change to the target environment contained in the yaml, and re-deploy Nebari to trigger its build.
-Unfortunately, this manual process needs to be performed for each one of the environments **individually** due to how conda-store handles assyncronous operations.
+Unfortunately, this manual process needs to be performed for each one of the environments **individually** due to how conda-store handles asynchronous operations.
 
-Once all environments are migrated, you can delete the `default` and `filesystem` namespaces following the steps described in the [How to handle access restricted namespaces](#how-to-handle-access-restricted-namespaces) section.
+Once all environments are migrated, you can delete the `default` and `filesystem` namespaces following the steps described in the [How to handle access restricted namespaces](/troubleshooting#handle-access-restricted-namespaces) section.
 
 
 ### Required pins for Dask environments
