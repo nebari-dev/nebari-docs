@@ -20,7 +20,7 @@ the login page shown in the image below.
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
 Nebari uses [Keycloak](https://www.keycloak.org/), an open source tool for user management. This makes it a little challenging provide thorough instructions for all use cases as it might differ significantly between
-authentication providers ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others). For more information on how to configure Keycloak, and add new users, make sure to check [How to configure Keycloak](/how-tos/configuring-keycloak) sections of our docs.
+authentication providers ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others). For more information on how to configure Keycloak, and add new users, make sure to check the [How to configure Keycloak](/how-tos/configuring-keycloak) sections of our docs.
 
 :::warning
 As Nebari **does not** create a Keycloak user for you during deployment, the following steps assumes that your Nebari administrator have already created a Keycloak user in the admin console for you. If not, follow the steps in [Adding new users to Keycloak](/how-tos/configuring-keycloak#adding-a-nebari-user) to create a Keycloak user.
