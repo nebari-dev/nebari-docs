@@ -67,6 +67,7 @@ Some terms and libraries have special capitalization preferences:
 | Kubernetes       | First letter always capitalized                                                          |
 | Docker           | First letter always capitalized                                                          |
 | Terraform        | First letter always capitalized                                                          |
+| YAML | Always capitalized |
 
 :::note
 The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
