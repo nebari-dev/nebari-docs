@@ -2,7 +2,7 @@
 id: login-keycloak
 title: Authenticate using Keycloak and launch your server
 description: |
-  This is a how-to for authenticating using Keycloak.
+  A step-by-step guide to authenticating using Keycloak.
 ---
 
 # How to authenticate using Keycloak and launch your server
