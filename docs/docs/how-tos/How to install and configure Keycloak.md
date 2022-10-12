@@ -125,7 +125,7 @@ Your new user can now log in to Nebari, visit your provided Nebari domain URI wh
 ## In-depth look at Roles and Groups
 
 Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: `admin`,
-`developer`, `analyst` and `viewer` (in roughly descending order of power).
+`developer`, `analyst` and `viewer` (in roughly descending order of permissions and scope).
 
 | Group       | Access to Nebari Resources                                                              | Roles                                                                                                                         | Permissions Description |
 | ----------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
