@@ -44,7 +44,8 @@ Use unambiguous and explicit styles:
   - [Write inclusive documentation, Google developer documentation style guide](https://developers.google.com/style/inclusive-documentation)
   - [Bias-free communication, Microsoft writing style guide](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication)
   - [Gender identity, Apple style guide](https://support.apple.com/en-gb/guide/applestyleguide/apd2a7af8d36/web)
-
+- When using acronyms, always introduce the full term on first use. For example, "The Domain Name System (DNS)..."
+- Avoid using alienating terms like "simply", "just", "trivial", "merely", "naturally", or "obviously" (this goes hand in hand with not assuming your reader's technical level).
 Go through the [Write accessible documentation section of the Google developer documentation style guide](https://developers.google.com/style/accessibility) for a more detailed set of accessibility guidelines.
 
 ### Capitalization
