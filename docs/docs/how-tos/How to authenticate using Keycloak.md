@@ -34,7 +34,7 @@ Authentication will differ based on the [Identity providers](https://www.keycloa
 
 Once authenticated, you will be forwarded to the main JupyterHub page where you have access to `Token` management, JupyterLab server access, and other `Dashboards`. If you are an admin, you'll also have access to `Admin` management.
 
-![Nebari main hub screen](/img/how-tos/nebari_main_hub_page.png)
+![Nebari dashboard main screen - displays a button "Start my server"](/img/how-tos/nebari_main_hub_page.png)
 
 ## 3. Selecting a Profile
 
