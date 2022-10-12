@@ -8,6 +8,8 @@ As an open source project, we understand the many people with a variety of diffe
 
 Nebari's documentation follows the [Google developer documentation style guide](https://developers.google.cn/style). This style guide is very thorough, and therefore very large. We have a shorter list of guidelines in the following sections for a quick reference.
 
+These are not rules, they are suggestions. Follow your best judgment and feel free to add to this document!
+
 ## Guiding principle :sparkles:
 
 **Stay conversational, and use friendly yet formal language, that readers from all backgrounds can understand.**
