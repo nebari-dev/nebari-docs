@@ -1,6 +1,6 @@
 ---
 id: login-keycloak
-title: How to authenticate using Keycloak and launch your server
+title: Authenticate using Keycloak and launch your server
 description: |
   This is a how-to for authenticating using Keycloak.
 ---
