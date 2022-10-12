@@ -30,7 +30,7 @@ As Nebari **does not** create a Keycloak user for you during deployment, the fol
 
 Authentication will differ based on the [Identity providers](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) chosen by your organization, in this example, we will use a simple password-based authentication.
 
-![Nebari Keycloak auth screen](/img/how-tos/keycloak_nebari_login.png)
+![Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through GitHub](/img/how-tos/keycloak_nebari_login.png)
 
 Once authenticated, you will be forwarded to the main JupyterHub page where you have access to `Token` management, JupyterLab server access, and other `Dashboards`. If you are an admin, you'll also have access to `Admin` management.
 
