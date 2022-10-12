@@ -5,21 +5,21 @@ Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a m
 - [Contributing to the documentation 📝](#contributing-to-the-documentation-)
   - [Setting your local development environment](#setting-your-local-development-environment)
     - [Prerequisites](#prerequisites)
-    - [Installing the dependencies](#installing-the-dependencies)
+    - [Installing docs dependencies](#installing-docs-dependencies)
     - [Pre-commit hooks](#pre-commit-hooks)
     - [Working on the docs](#working-on-the-docs)
-  - [Building the site](#building-the-site)
+    - [Building the site locally](#building-the-site-locally)
   - [Adding a New Dependency](#adding-a-new-dependency)
   - [Deployment](#deployment)
   - [Linting](#linting)
 
 ## Setting your local development environment
 
-1. Make a fork of the [Nebari-docs repository][nebari-docs-repo] to your GitHub account
-2. Clone the repository to your local machine:
+1. Make a fork of the [`Nebari-docs` repository][nebari-docs-repo] to your GitHub account
+2. Clone the forked repository to your local machine:
 
    ```bash
-   git clone https://github.com/nebari-dev/nebari-docs.git
+   git clone https://github.com/<your-username>/nebari-docs.git
    ```
 
 ### Prerequisites
@@ -101,9 +101,9 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 Once you have the pre-commits and the dependencies installed, you can get started with the documentation.
 To see a live local version of the docs run the following command:
 
-   ```bash
-   yarn start
-   ```
+```bash
+yarn start
+```
 
 This command starts a local development server and opens up a browser window.
 Most changes are reflected live without having to restart the server.
@@ -131,7 +131,7 @@ yarn run serve
 
 ## Adding a New Dependency
 
-Use the `add` subcommand to add new dependencies:
+Use the `add` sub command to add new dependencies:
 
 ```bash
 yarn add package-name
@@ -151,4 +151,5 @@ yarn run format
 ```
 
 <!-- links -->
+
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs

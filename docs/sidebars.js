@@ -15,8 +15,8 @@
 module.exports = {
   sidebar: [
     {
-      type: "doc",
       label: "Introduction",
+      type: "doc",
       id: "welcome",
     },
     {
@@ -41,7 +41,6 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/using_vscode",
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
@@ -62,6 +61,7 @@ module.exports = {
         "how-tos/domain-registry",
         "how-tos/login-keycloak",
         "how-tos/configuring-keycloak",
+        "how-tos/using-vscode",
       ],
     },
     {
@@ -91,19 +91,34 @@ module.exports = {
       items: ["references/overview"],
     },
     {
-      type: "doc",
+      type: "category",
       label: "Community",
-      id: "governance/overview",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/file-issues",
+        // TODO - uncomment once populated
+        // "community/code-contributions",
+        // "community/doc-contributions",
+        "community/style-guide",
+      ],
     },
     {
       type: "doc",
-      label: "FAQs / Troubleshooting",
+      label: "Troubleshooting",
       id: "troubleshooting",
     },
     {
       type: "doc",
-      label: "Glossary",
-      id: "glossary",
+      label: "FAQ",
+      id: "faq",
     },
+    // TODO - uncomment once populated
+    // {
+    //   type: "doc",
+    //   label: "Glossary",
+    //   id: "glossary",
+    // },
   ],
 };

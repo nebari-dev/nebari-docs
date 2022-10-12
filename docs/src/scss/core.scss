@@ -21,12 +21,6 @@ body {
   font-family: var(--global-font-family);
 }
 
-#__docusaurus {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 [data-theme="dark"] {
   h1,
   h2,
@@ -34,7 +28,7 @@ body {
   h4,
   h5,
   h6 {
-    color: var(--nebari-blue-gray-11);
+    color: var(--ifm-color-white-dark);
   }
 }
 
@@ -42,23 +36,34 @@ body {
 // Links
 // ==============================================================================
 
-a {
+@mixin link-style($text-color: var(--nebari-links), $decoration-color: var(--ifm-color-primary)) {
   text-decoration: underline;
+  color: $text-color;
+  text-decoration-color: $decoration-color;
   text-underline-offset: 3px;
   transition: {
     property: text-decoration;
     timing-function: ease-out;
     duration: 0.3s;
   }
+  @include link-hover($decoration-color);
 }
 
-a:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px !important;
+@mixin link-hover($decoration-color) {
+  &:hover {
+    text-decoration: underline;
+    color: $decoration-color;
+    text-decoration-thickness: 2px !important;
+    text-decoration-color: $decoration-color;
+  }
+}
+
+a {
+  @include link-style;
 }
 
 [data-theme="dark"]a {
-  color: var(--nebari-links-dark);
+  @include link-style(var(--ifm-color-content), var(--nebari-links-dark));
 }
 
 // ==============================================================================
@@ -93,13 +98,7 @@ a:hover {
     height: 1rem;
     margin-bottom: -0.25rem;
   }
-  &:hover {
-    color: var(--ifm-color-primary);
-    text-decoration-thickness: 2px;
-    &::after {
-      transform: translateX(0.25rem);
-    }
-  }
+  @include link-hover(var(--ifm-color-primary));
 }
 
 [data-theme="dark"] {
@@ -121,42 +120,13 @@ a:hover {
       content: url("../../static/icons/edit.svg");
       opacity: 0.8;
     }
-    &:hover {
-      color: var(--nebari-links-dark);
-      text-decoration-thickness: 2px;
-      &::after {
-        transform: translateX(0.25rem);
-      }
-    }
+    @include link-hover(var(--nebari-links-dark));
   }
 }
 
 // ==============================================================================
-// Toastify
+// Card containers
 // ==============================================================================
-
-.Toastify__toast {
-  background-color: var(--ifm-color-primary);
-  border-radius: var(--ifm-alert-border-radius);
-  color: var(--ifm-surface-text-color);
-  font-size: 0.9em;
-}
-
-.Toastify__close-button {
-  color: var(--ifm-surface-text-color);
-}
-
-.Toastify__progress-bar {
-  background-color: var(--ifm-color-primary-light) !important;
-}
-
-// ==============================================================================
-// Doc Page Footer
-// ==============================================================================
-
-.docusaurus-mt-lg {
-  margin-top: 3rem;
-}
 
 .card {
   background-color: transparent;
@@ -171,20 +141,17 @@ a:hover {
 }
 
 .cardContainer_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
+  border: 1px solid var(--ifm-color-emphasis-300) !important;
+  border-bottom: 3px solid var(--secondary-nebari) !important;
   box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
 }
 
-.cardContainer_woeA:hover {
-  border: 1px solid var(--nebari-blue-gray-9) !important;
-  border-bottom: 3px solid var(--accent-nebari) !important;
-  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 20%);
-}
-
-a.card {
+[data-theme="dark"] a.card {
   text-decoration: none;
   color: var(--ifm-color-content);
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .collapseSidebarButton_FykI:focus,
@@ -192,4 +159,25 @@ a.card {
 .expandButton__5cy:focus,
 .expandButton__5cy:hover {
   background-color: var(--ifm-hover-overlay);
+}
+
+.text--truncate.cardTitle_node_modules-\@docusaurus-theme-classic-lib-next-theme-DocCard-styles-module {
+  white-space: pre-wrap;
+  -webkit-line-clamp: 2;
+}
+
+// ==============================================================================
+// code blocks
+// ==============================================================================
+@mixin code-block-style {
+  font-family: var(--global-block-family-code);
+  background-color: transparent;
+  border: 0px;
+  color: var(--nebari-code-color);
+  vertical-align: bottom;
+  font-weight: 500;
+}
+
+code {
+  @include code-block-style;
 }

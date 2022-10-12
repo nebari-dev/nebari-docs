@@ -1,8 +1,10 @@
 ---
 id: nebari-aws
-title: How to deploy Nebari on AWS
+title: Deploy Nebari on AWS
 description: A basic overview of how to deploy Nebari on AWS
 ---
+
+## Introduction
 
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
@@ -13,12 +15,6 @@ we will walk you through the following steps:
 - [Deploying Nebari](#deploying-nebari)
 
 If you are already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
-
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
 
 ## Sign up for Amazon Web Services
 
@@ -63,7 +59,7 @@ Follow these steps to set up your access keys and user accounts:
 2. Give the user a name, and tick **Access Key - Programmatic access**
 3. Click **Next**
 
-   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos-aws-new-iam-user.png "Creating your IAM user account")
+   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
 4. Select **Attach existing policies directly**, then select `AdministratorAccess` from the list of policies. For more information, please refer to
    [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
@@ -117,7 +113,7 @@ qhub init aws --project projectname \
 	  --auth-provider password
 ```
 
-::: note
+:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 

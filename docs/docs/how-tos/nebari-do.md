@@ -1,8 +1,10 @@
 ---
 id: nebari-do
-title: How to deploy Nebari on Digital Ocean
+title: Deploy Nebari on Digital Ocean
 description: A basic overview of how to deploy Nebari on Digital Ocean
 ---
+
+## Introduction
 
 This guide is to help first-time users set up a Digital Ocean (DO) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will
 walk you through the following steps:
@@ -13,12 +15,6 @@ walk you through the following steps:
 - [Deploying Nebari](#deploying-nebari)
 
 For those already familiar to Digital Ocean, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
-
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
 
 ## Sign up for Digital Ocean
 
@@ -96,7 +92,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 :::note
-Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `qhub init` is executed, you should then be able to see the following output:
