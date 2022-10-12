@@ -75,20 +75,19 @@ module.exports = {
       },
       items: ["explanations/overview"],
     },
-    // TODO - uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Reference",
-    //   link: {
-    //     type: "generated-index",
-    //     title: "Reference Guides",
-    //     description:
-    //       "Nitty-gritty technical descriptions of how Nebari works. ",
-    //     slug: "category/reference",
-    //     keywords: ["reference"],
-    //   },
-    //   items: ["references/overview"],
-    // },
+    {
+      type: "category",
+      label: "Reference",
+      link: {
+        type: "generated-index",
+        title: "Reference Guides",
+        description:
+          "Nitty-gritty technical descriptions of how Nebari works. ",
+        slug: "category/reference",
+        keywords: ["reference"],
+      },
+      items: ["references/overview"],
+    },
     {
       type: "category",
       label: "Community",
