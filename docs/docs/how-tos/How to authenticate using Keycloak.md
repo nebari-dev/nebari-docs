@@ -19,7 +19,7 @@ the login page shown in the image below.
 
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
-Nebari now uses an open source tool called [Keycloak](https://www.keycloak.org/) for user management. This makes it a little challenging to detail the exact process as it might differ greatly between
+Nebari uses [Keycloak](https://www.keycloak.org/), an open source tool for user management. This makes it a little challenging provide thorough instructions for all use cases as it might differ significantly between
 authentication providers ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others). For more information on how to configure Keycloak, and add new users, make sure to check [How to configure Keycloak](/how-tos/configuring-keycloak) sections of our docs.
 
 :::warning
