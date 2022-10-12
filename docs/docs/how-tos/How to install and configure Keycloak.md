@@ -149,7 +149,7 @@ As an example, we create a new group named `conda-store-manager`. This group wil
 
 ![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
 
-In this example, the new group only has one mapped role, `conda_store_admin`; however it's possible to attached multiple **Client Roles** to a single group.
+In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
 
 ![Keycloak group conda-store-manager form - role mappings tab focused ](/img/how-tos/keycloak_new_group3.png)
 
