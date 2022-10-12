@@ -26,7 +26,7 @@ These are not rules but rather best practices we have built over time. Follow yo
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
 - Leave **only one black space between sentences**.
 - **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
-- Try and use [semantic line breaks](https://sembr.org/) to help with documentation and contribution reviews. 
+- Try and use [semantic line breaks](https://sembr.org/) to help with documentation and contribution reviews.
 
 ### Date and time
 
@@ -63,6 +63,7 @@ Some terms and libraries have special capitalization preferences:
 | pandas           | Never capitalized                                                                        |
 | NumPy            | 'N' and 'P' always capitalized                                                           |
 | Conda            | First letter capitalized only at the beginning of sentences                              |
+| pip              | Never capitalized                                                                        |
 | Panel            | First letter always capitalized                                                          |
 | VS Code          | 'V', 'S', and 'C' always capitalized; always use one blank space between 'VS' and 'Code' |
 | Jupyter          | First letter always capitalized                                                          |
@@ -71,7 +72,8 @@ Some terms and libraries have special capitalization preferences:
 | Kubernetes       | First letter always capitalized                                                          |
 | Docker           | First letter always capitalized                                                          |
 | Terraform        | First letter always capitalized                                                          |
-| YAML | Always capitalized |
+| YAML             | Always capitalized                                                                       |
+| conda-store      | Never capitalized                                                                        |
 
 :::note
 The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
