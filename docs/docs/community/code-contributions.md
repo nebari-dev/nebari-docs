@@ -52,7 +52,7 @@ Now using the command `git remote -v` will show two remote repositories:
 conda env create -f environment-dev.yaml
 ```
 
-You may need to press "Y" + "Enter"/"Return" to complete the environment build.
+You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the environment build.
 
 2. Activate the environment with:
 
