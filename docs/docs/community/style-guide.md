@@ -4,11 +4,16 @@ title: Documentation style guide
 description: Guidelines for writing consistent technical documentation.
 ---
 
-As an open source project, we understand the many people with a variety of different backgrounds contribute to Nebari's documentation. A style guide helps us maintain consistency in the language used and allows us to clearly communicate our accessibility standards. We want all our users to find the documentation helpful and get the information they need without hurdles.
+As an open source project, we understand the many people with a variety of different backgrounds contribute to Nebari's documentation.
+A style guide helps us maintain consistency in the language used and allows us to clearly communicate our accessibility standards.
+We want all our users to find the documentation helpful and get the information they need without hurdles.
 
-Nebari's documentation follows the [Google developer documentation style guide](https://developers.google.cn/style). This style guide is very thorough, and therefore very large. We have a shorter list of guidelines in the following sections for a quick reference.
+Nebari's documentation follows the [Google developer documentation style guide](https://developers.google.cn/style).
+This style guide is very thorough, and therefore very large.
+We have a shorter list of guidelines in the following sections for a quick reference.
 
-These are not rules but rather best practices we have built over time. Follow your best judgment, and feel free to add to this document following our contribution guidelines!
+These are not rules but rather best practices we have built over time.
+Follow your best judgment, and feel free to add to this document following our contribution guidelines!
 
 ## Guiding principle :sparkles:
 
@@ -26,7 +31,7 @@ These are not rules but rather best practices we have built over time. Follow yo
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
 - Leave **only one black space between sentences**.
 - **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
-- Try and use [semantic line breaks](https://sembr.org/) to help with documentation and contribution reviews.
+- Try and **use [semantic line breaks](https://sembr.org/)** to help with documentation and contribution reviews.
 
 ### Date and time
 
@@ -41,12 +46,13 @@ Use unambiguous and explicit styles:
 - Make sure your documentation page has **appropriate headings and a consistent hierarchy of header tags** (`<h1>` or `#`, followed by `<h2>` or `##`, and so on). People who use screen readers rely on headings to navigate the page.
 - Always use **text to describe where links go**. For example, instead of "read more", write "read more about accessible writing in the style guide".
 - Take the time to **write good alt-text** for images, diagrams, and graphics. The alt text should describe the setting (for example, "A JupyterLab window showing ...") as well as the overarching message that the graphic conveys (for example, "... denotes consistency across the Dask dashboard plots"). Read the [Text associated with images section of the Google Developer Style Guide](https://developers.google.com/style/images#text-associated-with-images) for more details.
-- Practice **\*inclusive and bias-free communication**. Learn more in:
+- Practice **inclusive and bias-free communication**. Learn more in:
   - [Write inclusive documentation, Google developer documentation style guide](https://developers.google.com/style/inclusive-documentation)
   - [Bias-free communication, Microsoft writing style guide](https://learn.microsoft.com/en-gb/style-guide/bias-free-communication)
   - [Gender identity, Apple style guide](https://support.apple.com/en-gb/guide/applestyleguide/apd2a7af8d36/web)
-- When using acronyms, always introduce the full term on first use. For example, "The Domain Name System (DNS)..."
-- Avoid using alienating terms like "simply", "just", "trivial", "merely", "naturally", or "obviously" (this goes hand in hand with not assuming your reader's technical level).
+- When using acronyms, always **introduce the full term on first use**. For example, "The Domain Name System (DNS)..."
+- **Avoid using alienating terms** like "simply", "just", "trivial", "merely", "naturally", or "obviously" (this goes hand in hand with not assuming your reader's technical level).
+
 Go through the [Write accessible documentation section of the Google developer documentation style guide](https://developers.google.com/style/accessibility) for a more detailed set of accessibility guidelines.
 
 ### Capitalization
