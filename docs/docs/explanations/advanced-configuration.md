@@ -8,7 +8,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-# Advanced configuration
+# Advanced configuration guide
 
 Nebari uses a configuration file, `qhub-config.yaml`, to deploy and redeploy changes to your infrastructure. The `qhub-config.yaml` configuration file
 is split into several sections and in this guide, we will detail the requirements necessary for this YAML-formatted configuration file. In the "How to deploy Nebari on ..." sections we covered how
