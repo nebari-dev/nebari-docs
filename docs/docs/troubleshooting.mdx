@@ -25,7 +25,7 @@ This is a manual process that consists in copying over the yaml specifications f
 
 Once all environments are migrated, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI:
 
-Here comes an image
+![delete-namespace](/img/troubleshooting/delete_namespace.png)
 
 :::warning
 Both the `filesystem` and `nebari-git` are built-in namespaces that are used by Nebari.
@@ -259,5 +259,6 @@ With `k9s`:
 6.  Restart the conda-store pods to fully propagate the changes.
 
 :::warning
-Based on the Nebari and conda-store security model, the `default_namespace` value should be set to `{"viewer"}` after the migration is complete.
+Based on the Nebari and conda-store security model, the `default_namespace` value should be set to `{"viewer"}` after the migration is complete. Or followed by a re-deployment of Nebari
+to restore the default value.
 :::
