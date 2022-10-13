@@ -34,7 +34,6 @@ The `init` command also saves the root user password to your `nebari-config.yaml
 
 After the initial deployment, it is **highly** recommended that you change the Keycloak `root` user password as soon as possible.
 
-
 1. To change the `root` user password, go to your Nebari instance's admin dashboard - e.g., something like `https://{your-nebari-domain}/auth/admin/` and log in with the root password provided.
 
    ![Nebari admin view - Root Login to Keycloak form](/img/how-tos/keycloak_master_login.png)
@@ -84,9 +83,9 @@ Steps to create a new user:
    - Username: Depending on the authentication provider selected ('password', 'GitHub' or 'Auth0'), the values entered into the **Username** field will differ slightly. The following table outlines
      those differences:
 
-      |          | Password          | GitHub            | Auth0                 |
-      | -------- | ----------------- | ----------------- | --------------------- |
-      | Username | _unique username_ | _GitHub username_ | _Email to login with_ |
+     |          | Password          | GitHub            | Auth0                 |
+     | -------- | ----------------- | ----------------- | --------------------- |
+     | Username | _unique username_ | _GitHub username_ | _Email to login with_ |
 
 - Once the **Username** field is updated, add a valid email address in the **Email** field.
 
@@ -127,11 +126,11 @@ Your new user can now log in to Nebari, visit your provided Nebari domain URI wh
 Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: `admin`,
 `developer`, `analyst` and `viewer` (in roughly descending order of permissions and scope).
 
-| Group       | Access to Nebari Resources                                                              | Roles                                                                                                                         | Permissions Description |
-| ----------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| `admin`     | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana</li></ul>           | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`grafana_admin`</li></ul>                 | Blank                   |
-| `developer` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_developer`</li></ul> | Blank                   |
-| `analyst`   | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Grafana</li></ul>                        | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_viewer`</li></ul>                             | Blank                   |
+| Group       | Access to Nebari Resources                                                              | Roles                                                                                                                         | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `admin`     | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana</li></ul>           | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`grafana_admin`</li></ul>                 | <ul><li>Has full access to all available namespaces/environments. Check [Conda-store authorization model](https://conda-store.readthedocs.io/en/latest/contributing.html#authorization-model) for more details. </li><li>Has same Dask permissions as developer</li><li>Has access to Nebari Admin page, privileges to access JupyterLab users spaces. Has access to all shared group mounts, including `admin, developer` and `analyst`</li><li>Inherent Grafana permissions from [Grafana administrator scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul> |
+| `developer` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_developer`</li></ul> | <ul><li>Has access to developer namespace</li><li>Has permissions to spawn Dask-Gateway clusters</li><li>Same permission level as analyst. Has access to shared `developer` folder group mount </li><li>Inherent Grafana permissions from [Grafana editor scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                                                                                                                                                                                                                 |
+| `analyst`   | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Grafana</li></ul>                        | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`grafana_viewer`</li></ul>                             | <ul><li>Has access to analyst namespace</li><li>Has permission to fully use Dask distributed, but does not have access to Dask-Gateway clusters</li><li>Has default user permissions, start a server instance or Dashboard and generate access tokens. Access to shared `analyst` folder group mount</li><li>Inherent Grafana permissions from [Grafana viewer scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                                                                                                            |
 
 To create new groups or modify (or delete) existing groups, log in as `root` and click **Groups** on the left-hand side.
 
