@@ -1,7 +1,7 @@
 ---
 title: Advanced Configuration
 id: advanced-configuration
-description: An indepth guide to advanced configuration options.
+description: An in-depth guide to advanced configuration options.
 ---
 
 import Tabs from '@theme/Tabs';
