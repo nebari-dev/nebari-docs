@@ -96,13 +96,29 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Reference",
+      link: {
+        type: "generated-index",
+        title: "Reference Guides",
+        description:
+          "Nitty-gritty technical descriptions of how Nebari works. ",
+        slug: "category/reference",
+        keywords: ["reference"],
+      },
+      items: ["references/overview"],
+    },
+    {
+      type: "category",
       label: "Community",
       link: {
         type: "doc", id: "community/index"
       },
       items: [
-        "community/index",
         "community/file-issues",
+        // TODO - uncomment once populated
+        // "community/code-contributions",
+        // "community/doc-contributions",
+        "community/style-guide",
       ],
     },
     {
