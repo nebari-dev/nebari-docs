@@ -20,7 +20,7 @@ import TabItem from '@theme/TabItem';
 
 ### Google Cloud Platform (GCP)
 
-![GCP Architecture Diagram](/img/architecture-diagram-gcp.png)
+![GCP Architecture Diagram](/img/explanations/architecture-diagram-gcp.png)
 
 </TabItem>
 <TabItem value="do" label="Digital Ocean">
@@ -34,14 +34,14 @@ limitation of Digital Ocean auto-scaling is that it only scales down
 to one. Once Nebari is fully deployed a load-balancer is connected to
 the Kubernetes cluster through [Traefik](https://traefik.io/).
 
-![DO Architecture Diagram](/img/architecture-diagram-do.png)
+![DO Architecture Diagram](/img/explanations/architecture-diagram-do.png)
 
 </TabItem>
 <TabItem value="aws" label="Amazon AWS">
 
 ### Amazon Web Services (AWS)
 
-![AWS Architecture Diagram](/img/architecture-diagram-aws.png)
+![AWS Architecture Diagram](/img/explanations/architecture-diagram-aws.png)
 
 AWS is the most complex of the cloud deployments with significant
 effort being put into networking. An EKS managed kubernetes cluster is
@@ -54,14 +54,9 @@ instances, auto-scaling to zero, and GPU instances.
 
 ### Azure
 
-![Azure Architecture Diagram](/img/architecture-diagram-azure.png)
+![Azure Architecture Diagram](/img/explanations/architecture-diagram-azure.png)
 
 </TabItem>
 </Tabs>
 
-## Kubernetes services
-
-![Kubernetes Architecture Diagram](/img/architecture-diagram-kubernetes.png)
-
-The most significant effort in Nebari is deploying the services within
-the Kubernetes cluster. All of the infrastructure diagrams before
+## User context workflow
