@@ -20,16 +20,18 @@ After upgrading to `0.4.5`, the base names for the following namespaces that are
 - `default` -> `global`
 - `filesystem` -> `nebari-git`
 
-Due to this change, you will need to migrate the environments from the old `default` into the new `global` namespace,
-this is a manual process that consists in copying over the yaml specifications for each environment to the `global` namespace and rebuilding them.
+Due to this change, you will need to migrate the environments from the old `default` and `filesystem` namespaces into the new `global` and `nebari-git` respectively.
+This is a manual process that consists in copying over the yaml specifications for each environment to the new namespaces and rebuilding them.
 
-Right after the upgrade, the new `nebari-git` namespace will be available, but it will be empty.  To re-build the environments contained in the `nebari-config.yaml`
-you will need to do a trivial change to the target environment contained in the yaml, and re-deploy Nebari to trigger its build.
-Unfortunately, this manual process needs to be performed for each one of the environments **individually** due to how conda-store handles asynchronous operations.
+Once all environments are migrated, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI:
 
-Once all environments are migrated, you will need to update the permission level for the old namespaces following the steps described in the [How to handle access restricted namespaces](/troubleshooting#handle-access-restricted-namespaces) section.
-After this, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI `/conda-store/namespace/`.
+Here comes an image
 
+:::warning
+Both the `filesystem` and `nebari-git` are built-in namespaces that are used by Nebari.
+Deleting or modifying these namespaces will require special permission levels that are not granted by default.
+Follow the instructions in the [Handle Access to restricted namespaces](/troubleshooting#handle-access-to-restricted-namespaces) to grant the necessary permissions.
+:::
 
 
 ### Required pins for Dask environments
@@ -229,14 +231,14 @@ that environment and the location where the such environment needs to be stored.
 To migrate environments from one namespace to another, you must manually build all environments in the new namespace.
 Once migrated, you can delete the old namespace, permanently deleting all existing environments built against it.
 
-### Handle Access restricted namespaces
+### Handle Access to restricted namespaces
 
-The built in namespace (`nebari-git`) is used to store the environments contained in the nebari-config.yaml file.
-As this namespace is controlled by the Nebari conda-store server and not the user, it is not possible to modify
-or delete it without proper permissions.
+The built in namespace `nebari-git` is used to build the environments from the nebari-config.yaml file.
+As its use is reserved for conda-store server, and is directly controlled by Nebari, modifying or deleting the contents of such namespaces without system permission level
+will result in a permission denied message from conda-store.
 
-To modify this namespace, the user need to manually update the `conda-store-config.py` configmap located in the
-kubernetes cluster. Follow the steps below to do so: (`kubectl` or `k9s` are required)
+As the conda-store system permission level is not granted to any user on Nebari, to modify this namespace, you will need to manually update the `conda-store-config.py` configmap located in the
+kubernetes cluster to lift the restriction. Follow the steps below to do so: (`kubectl` or `k9s` are required)
 
 With `kubectl`:
 
