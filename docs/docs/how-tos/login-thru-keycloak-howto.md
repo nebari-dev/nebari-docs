@@ -18,7 +18,7 @@ the login page shown in the image below.
 
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
-Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see [ADD SECTION HERE](LINK).
+Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see the [How to Configure Keycloak](/how-tos/configure-keycloak-howto.md) docs.
 
 :::warning
 As Nebari **does not** create a "regular" user for you during deployment, only the `root` Keycloak admin user. The following steps assume that your Nebari administrator has already created a Keycloak user in the Keycloak admin console () for you. If not, follow the steps in [Adding new users to Keycloak](/how-tos/configuring-keycloak#adding-a-nebari-user) to create a Keycloak user.
