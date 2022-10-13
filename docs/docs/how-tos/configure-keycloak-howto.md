@@ -16,7 +16,7 @@ Although Nebari comes hooks to connect with GitHub and Auth0 from the `nebari-co
 In Keycloak, as with many admin tools, you start with an initial login user (`root`) that has the ability to administer and create new users. The `root` user is a Keycloak-specific user. It can only be used to login and manage the Keycloak identity management section of Nebari.
 
 :::warning
-Trying to login to JupyterHub using this `root` user will fail. Currently this is the only user specifc to the Keycloak admininstration console, therefore anyone wanting to add users, new groups, etc, will need to use this user and login here: `https://{your-nebari-domain}/auth/admin/`.
+Trying to login to JupyterHub using this `root` user will fail. Currently this is the only user specific to the Keycloak admininstration console, therefore anyone wanting to add users, new groups, etc, will need to use this user and login here: `https://{your-nebari-domain}/auth/admin/`.
 :::
 
 ## Change Keycloak root password
