@@ -14,7 +14,7 @@ Nebari uses a configuration file, `qhub-config.yaml`, to deploy and redeploy cha
 is split into several sections and in this guide, we will detail the requirements necessary for this YAML-formatted configuration file. In the "How to deploy Nebari on ..." sections we covered how
 you can auto-generate this file using `qhub init` (and properly set options/flags and environment variables).
 
-## General configuration
+## General configuration settings
 
 The `qhub-config.yaml` file can be split into several sections. The first section relates to Nebari inner mechanics when first deploying and should be seen as the most important section of the configuration file.
 
