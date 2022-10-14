@@ -5,12 +5,52 @@ title: Nebari architecture and conceptual guide
 
 # Nebari architecture and conceptual guide
 
+Nebari relies on a few core concepts to make it work.
+This guide will help you understand how Nebari works and how to use it.
+
+Some of the most important concepts that Nebari relies on are Terraform and Kubernetes.
+
+![Nebari core concepts](/img/explanations/core-concepts.png)
+
+## Terraform
+
+Terraform is an excellent option for deploying and managing cloud
+infrastructure. It allows you to easily configure any number of
+cloud servers as well as all the required connections and features
+to ensure security, redundancy and scalability
+
+Nebari uses Terraform for managing its infrastructure in configuration
+files that are easily accessible and extendable in our code base, these
+files acts as the single source of truth for all the components required
+in the Infrastructure, such as Load Balancers, Virtual Machines, Gateways,
+etc. Such methodology is usualy referred to as Infrastructure as code (IaC).
+
+For more information about Terraform, IaC and the features it provides, refer to
+[Infrastructure as Code with Terraform](https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code).
+
+![Terraform](/img/explanations/terraform.png)
+
+## Kubernetes
+
+Kubernetes is a powerful open-source system, initially developed by Google,
+for managing containerized applications in a clustered environment. It aims
+to provide better ways of managing related, distributed components and services
+across varied infrastructure.
+
+Kubernetes provides fine-grained control in applications and container lifecycles,
+especially in dynamic environments. Tasks such as pod tracking, availability, and
+deployment are simplified by the use of controllers, which are control loops that
+monitor your Kubernetes cluster and make changes as needed to maintain the expected
+state.
+
+![Kubernetes overall structure levels](/img/explanations/kubernetes-concepts-architecture.jpg)
+
+## Infrastructure
+
 Below are diagrams to help show the architecture and design behind
 Nebari. The diagrams are meant to show different levels. There are
 cloud specific infrastructure diagrams along with a single diagram to
 outline the Kubernetes services.
-
-## Infrastructure
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -18,14 +58,10 @@ import TabItem from '@theme/TabItem';
 <Tabs>
   <TabItem value="gcp" label="Google GCP" default>
 
-### Google Cloud Platform (GCP)
-
 ![GCP Architecture Diagram](/img/explanations/architecture-diagram-gcp.png)
 
 </TabItem>
 <TabItem value="do" label="Digital Ocean">
-
-### Digital Ocean (DO)
 
 The Digital Ocean deployment is the simplest of the cloud
 providers. We deploy a managed Kubernetes not within a virtual
@@ -39,8 +75,6 @@ the Kubernetes cluster through [Traefik](https://traefik.io/).
 </TabItem>
 <TabItem value="aws" label="Amazon AWS">
 
-### Amazon Web Services (AWS)
-
 ![AWS Architecture Diagram](/img/explanations/architecture-diagram-aws.png)
 
 AWS is the most complex of the cloud deployments with significant
@@ -52,11 +86,27 @@ instances, auto-scaling to zero, and GPU instances.
 </TabItem>
 <TabItem value="azure" label="Azure">
 
-### Azure
-
 ![Azure Architecture Diagram](/img/explanations/architecture-diagram-azure.png)
 
 </TabItem>
 </Tabs>
+
+### Stages
+
+#### Stage 1: Terraform state
+
+#### Stage 2: Infrastructure (Kubernetes cluster)
+
+#### Stage 3: network services (Traefik, Cert-manager, etc)
+
+#### Stage 4: Keycloak (user management and authentication)
+
+#### Stage 5: Keycloak configuration (Create Nebari realm and service clients)
+
+#### Stage 6: Services
+
+### Kubernetes
+
+![Kubernetes architecture](/img/explanations/components-of-kubernetes.svg)
 
 ## User context workflow
