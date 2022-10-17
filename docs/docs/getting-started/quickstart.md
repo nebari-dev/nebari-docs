@@ -4,7 +4,7 @@ title: Quickstart
 description: A cheat-sheet of Neabri commands for returning users.
 ---
 
-This quickstart is a reference for experienced and returning users.
+This quickstart is a Nebari commands reference for experienced and returning users.
 If you're new to Nebari, start at [Installing Nebari](installing-nebari.md).
 
 ## Install
@@ -80,13 +80,87 @@ Create the `nebari-config.yaml` file using the guided init wizard:
 qhub init --guided-int
 ```
 
-:::note
-If you know the initialization requirements and have set up the environment variables, you can direct run the `qhub init` command with the necessary flags.
+**Or**, if you know the initialization requirements and have set up the environment variables, you can directly run the `qhub init` command with the necessary flags.
 
-Run `nebari init --help` to see the list of available options and flags.
-:::
+<Tabs>
+  <TabItem value="gcp" label="GCP" default>
 
-<!-- TODO: Create commands guide for each provider using Tabs -->
+  Download the service account key file for your Nebari project, and set the following environment variables:
+
+  ```bash
+  export GOOGLE_CREDENTIALS="path/to/JSON/file/with/credentials"
+  export PROJECT_ID="Project ID"
+  ```
+
+  Create `nebari-config.yaml` with:
+
+  ```bash
+  qhub init gcp --project projectname \
+    --domain domain \
+    --auth-provider password
+  ```
+
+  </TabItem>
+  <TabItem value="aws" label="AWS" default>
+
+  Download the file with the Access Key ID and Secret Access Key provided by your IAM role, and set the following environment variables:
+
+  ```bash
+  export AWS_ACCESS_KEY_ID="Access Key ID"
+  export AWS_SECRET_ACCESS_KEY="Secret Access Key"
+  ```
+
+  Create `nebari-config.yaml` with:
+
+  ```bash
+  qhub init aws --project projectname \
+      --domain domain \
+      --auth-provider password
+  ```
+
+  </TabItem>
+  <TabItem value="do" label="Digital Ocean" default>
+
+  Provide authentication credentials to Nebari by setting the following environment variables:
+
+  ```bash
+  export DIGITALOCEAN_TOKEN=""          # API token required to generate resources
+  export SPACES_ACCESS_KEY_ID=""        # public access key for access spaces
+  export SPACES_SECRET_ACCESS_KEY=""    # the private key for access spaces
+  ```
+
+  Create `nebari-config.yaml` with:
+
+  ```bash
+  qhub init do --project projectname \
+    --domain domain \
+    --auth-provider password
+  ```
+
+  </TabItem>
+  <TabItem value="azure" label="Azure" default>
+
+  Provide authentication credentials to Nebari by setting the following environment variables:
+
+  ```bash
+  export ARM_CLIENT_ID=""        # application (client) ID
+  export ARM_CLIENT_SECRET=""    # client's secret
+  export ARM_SUBSCRIPTION_ID=""  # Available at the `Subscription` section under the `Overview` tab
+  export ARM_TENANT_ID=""        # Available under `Azure Active Directories`>`Properties`>`Tenant ID`
+  ```
+
+  Create `nebari-config.yaml` with:
+
+  ```bash
+  qhub init azure --project projectname \
+    --domain domain \
+    --auth-provider password
+  ```
+
+  </TabItem>
+</Tabs>
+
+<!-- TODO: Add commands for HPC and local cluster. -->
 
 ## Deploy
 
@@ -128,8 +202,14 @@ Run `nebari init --help` to see the list of available options and flags.
 
 It can take up to 30 mins for the `deploy` command to execute.
 
-<!-- TODO: Add details about the destroy command -->
-<!-- ## Destroy -->
+## Destroy
 
+To delete all your Nebari resources, while preserving the `nebari-config.yaml file`, run:
 
-[Read the Troubleshooting guide →](../troubleshooting.mdx)
+```bash
+qhub destroy -c qhub-config.yaml
+```
+
+<!-- TODO: Add more details about the destroy command -->
+
+If you face any issues with the commands, check out the [Troubleshooting guide](../troubleshooting.mdx).

@@ -29,7 +29,8 @@ For a more detailed cost estimate, refer to our \[conceptual guides\] for more i
 
 :::info
 Make sure to check [Digital Ocean's New pricing](https://www.digitalocean.com/try/new-pricing) documentation for a recent overview of how costs are allocated and applied to your Digital Ocean
-account. :::
+account.
+:::
 
 :::warning
 A Nebari deployment on DO will **NOT** fall into `free tier` usage. Therefore, we recommend that you sign up for a paid account or contact your cloud
