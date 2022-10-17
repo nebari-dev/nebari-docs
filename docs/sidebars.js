@@ -31,6 +31,7 @@ module.exports = {
         keywords: ["getting-started"],
       },
       items: [
+        "getting-started/quickstart",
         "getting-started/installing-nebari",
         "getting-started/deploy",
         "getting-started/cloud-providers",
