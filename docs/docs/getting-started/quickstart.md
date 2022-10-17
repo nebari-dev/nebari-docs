@@ -132,4 +132,4 @@ It can take up to 30 mins for the `deploy` command to execute.
 <!-- ## Destroy -->
 
 
-[Read the Troubleshooting guide →](../troubleshooting.md)
+[Read the Troubleshooting guide →](../troubleshooting.mdx)
