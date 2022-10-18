@@ -10,7 +10,7 @@ description: Quickly build and deploy a panel and CDS Dashboards
 
 Analyzing data provides insights, and a dashboard stitches these insights into a meaningful story. Fortunately, there are many great open source dashboards tools out there that you can use to organize and display your data in an engaging and digestible way.
 
-In this tutorial, you'll learn how to create a new dashboard with [Panel](https://panel.holoviz.org/) within Nebari. You'll also learn how to share your newly created dashboard with other users with [ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
+In this tutorial, you'll learn how to create a new dashboard with [Panel](https://panel.holoviz.org/) within Nebari. You'll also learn how to share your newly created dashboard with other users with [CDSDashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
 
 :::note
 Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
@@ -94,7 +94,7 @@ Also, the **best instance type** for your dashboard will depend on your specific
 :::
 
 An example of available compute instances available within a Nebari instance is shown in the following image:
-![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1cpu / 4GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
+![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1 CPU / 4 GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
 
 For this particular tutorial, a small instance should be enough. Once you have made a selection you can click on the **Save** button at the bottom of the window.
 This will trigger the deployment of your dashboard, and you'll be presented with a screen displaying the of this process.

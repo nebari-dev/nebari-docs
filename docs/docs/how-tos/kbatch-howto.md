@@ -8,13 +8,13 @@ description: Using kbatch to submit batch jobs
 
 ## Introduction
 
-The ability to run a notebook or a script from within the QHub terminal is now possible with the addition of [`kbatch`](https://github.com/kbatch-dev/kbatch). `kbatch` is a small project that enables the user submit jobs or cronjobs to the Kubernetes API. Or in other words, this CLI tool allows a user to submit their notebook or script to run in a "headless" manner.
+The ability to run a notebook or a script from within the Nebari terminal is now possible with the addition of [`kbatch`](https://github.com/kbatch-dev/kbatch). `kbatch` is a small project that enables the user submit jobs or cronjobs to the Kubernetes API. Or in other words, this CLI tool allows a user to submit their notebook or script to run in a "headless" manner.
 
 The idea of batch jobs is useful in situations where you need no human interaction, besides submitting it as a job, and the results can be efficiently saved to the cloud or other similar storage locations. Batch jobs can also be submitted to run on a schedule, these are known as cronjobs, more on `kbatch cronjob` below.
 
 There are a few known limitations at the moment, these include:
 
-- No integration with the local QHub filesystem, besides the notebook or script itself
+- No integration with the local Nebari filesystem, besides the notebook or script itself
 - The need to specify an image which contains all your required packages and libraries
   - `conda-store` built images are perfectly suited to solve this issue
 - No artifact management
@@ -22,11 +22,11 @@ There are a few known limitations at the moment, these include:
 
 ## Initial configuration
 
-Your QHub platform comes with `kbatch`, and all the necessary back-end components, pre-enabled. Consult your platform administrator or your `qhub-config.yaml` if you are unsure. Or you can create another `conda` env using `conda-store` and add `kbatch` to it.
+Your Nebari platform comes with `kbatch`, and all the necessary back-end components, pre-enabled. Consult your platform administrator or your `nebari-config.yaml` if you are unsure. Or you can create another `conda` env using `conda-store` and add `kbatch` to it.
 
 :::note
 
-- `kbatch` is available on QHub version `0.4.3` and greater
+- `kbatch` is available on Nebari version `0.4.3` and greater
 - `kbatch` is currently only available on `pip`, not `conda`
 
 :::
@@ -47,14 +47,16 @@ For JupyterHub to authenticate your future `kbatch` requests, you will need to p
 
 This one-time setup command is listed below, and requires two arguments:
 
-- `--token`: generate a `JUPYTERHUB_API_TOKEN` from your `https://<qhub_domain>/hub/token`
-- `--kbatch-url`: copy this exact URL (specific to QHub deployments)
+- `--token`: generate a `JUPYTERHUB_API_TOKEN` from your `https://<nebari_domain>/hub/token`
+- `--kbatch-url`: copy this exact URL (specific to Nebari deployments)
   - `http://kbatch-kbatch-proxy.dev.svc.cluster.local`
 
 Once completed, you should see a confirmation message that shows where this config file was saved:
 
 ```shell
-$ kbatch configure --token <JUPYTERHUB_API_TOKEN> --kbatch-url http://kbatch-kbatch-proxy.dev.svc.cluster.local
+$ kbatch configure --token <JUPYTERHUB_API_TOKEN> \
+  --kbatch-url http://kbatch-kbatch-proxy.dev.svc.cluster.local
+
 Wrote config to /home/<username>/.config/kbatch/config.json
 ```
 
@@ -108,6 +110,7 @@ This job will now run without any feedback to the user. However, if you're inter
 
 ```shell
 $ kbatch job list --output table
+
                           Jobs
 ┏━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
 ┃ name             ┃ submitted                 ┃ status ┃
