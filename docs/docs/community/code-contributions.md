@@ -211,6 +211,7 @@ We require the CI tests to pass before your PR can be merged.
 If CI fails, you can find why by clicking on the "failed" icon (red cross) and inspecting the build and test log.
 If you need help to fix the test failures, you may push your changes anyway and ask for help in a PR comment.
 
+<!-- TODO: Add link to our governance docs @trallard -->
 We also require a PR to be approved by at least one core team member.
 Approval means the core team member has carefully reviewed the changes, and the PR is ready for merging.
 
