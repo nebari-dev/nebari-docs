@@ -92,7 +92,7 @@ conda activate nebari-dev
 
 ### Pre-commit hooks
 
-The `nebari` repository uses [pre-commit hooks](https://pre-commit.com/) to keep the code format consistent across the codebse.
+The `nebari` repository uses [pre-commit hooks](https://pre-commit.com/) to keep the code format consistent across the codebase.
 We encourage regular contributors to install the pre-commit hooks to help with development workflows.
 
 1. Before you can run the hooks, you need to install the `pre-commit` package manager:
