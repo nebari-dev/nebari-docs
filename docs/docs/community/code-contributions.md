@@ -186,7 +186,7 @@ If you do so, add `WIP` (work in progress) in the PR title and mark it as a draf
 
 2. Enter your GitHub username and password (repeat contributors or advanced users can remove this step by connecting to GitHub with SSH).
 
-3. Go to [GitHub][nebari-repo]. You will see a green **Pull Request** button. Make sure the title and message are clear, concise, and self-explanatory. Complete the checklist and read the notes in the PR template, then click the button to submit it.
+3. Go to the [Nebari repository on GitHub][nebari-repo]. You will see a green **Pull Request** button. Make sure the title and message are clear, concise, and self-explanatory. Complete the checklist and read the notes in the PR template, then click the button to submit it.
 
 :::note
 If the PR relates to any issues, you can add the text `xref gh-xxxx` where `xxxx` is the issue number to GitHub comments.
