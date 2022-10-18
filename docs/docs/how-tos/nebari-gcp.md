@@ -171,7 +171,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](/how-tos/domain-registry) for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is

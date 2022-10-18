@@ -14,7 +14,7 @@ DNS name servers are used to locate the IP address of a domain name using words 
 
 ## Setting up a DNS
 
-During deployment, Qhub will generate an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) IP for connection with the Kubernetes cluster and all related services that Qhub runs. If not automatically handled, Qhub will request the user to generate the necessary [DNS records](https://www.cloudflare.com/en-gb/learning/dns/dns-records/) and update the domain within the newly created IP:
+During deployment, Nebari will generate an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) IP for connection with the Kubernetes cluster and all related services that Nebari runs. If not automatically handled, Nebari will request the user to generate the necessary [DNS records](https://www.cloudflare.com/en-gb/learning/dns/dns-records/) and update the domain within the newly created IP:
 
 ```bash
 Take IP Address 12.312.312.312 and update DNS to point to "your.domain" [Press Enter when Complete]
@@ -56,7 +56,7 @@ Finally, set the token value as an environment variable:
  export CLOUDFLARE_TOKEN="cloudflaretokenvalue"
 ```
 
-Also, add the flag `--dns-provider=cloudflare` to the [Qhub deploy command.](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari)
+Also, add the flag `--dns-provider=cloudflare` to the [Nebari `deploy` command.](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari)
 
 ## Using other DNS providers
 
@@ -76,7 +76,7 @@ The amount of time this takes varies for each DNS provider. Validate such inform
 
 ## Automatic DNS provision
 
-Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your Nebari `deploy` command:
+Nebari has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your Nebari `deploy` command:
 
 ```bash
 nebari deploy -c nebari-config \
@@ -84,10 +84,10 @@ nebari deploy -c nebari-config \
     --dns-auto-provision
 ```
 
-This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Qhub domain DNS records on Cloudflare.
+This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Nebari domain DNS records on Cloudflare.
 
 :::warning
-The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Qhub currently supports.
+The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
 :::
 
 When you are done setting up the domain name, you can refer back to the [Nebari deployment documentation](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari) and continue the remaining steps.
