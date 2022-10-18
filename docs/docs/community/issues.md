@@ -1,8 +1,8 @@
 ---
 id: file-issues
+title: Bug triaging and issue curation
+description: Best practices for opening and triaging issues
 ---
-
-# Bug triaging and issue curation
 
 The [Nebari issue tracker][nebari-issues] is the preferred channel for bug reports, documentation requests, and
 submitting Pull Requests.
@@ -17,7 +17,7 @@ possible:
 
 ## Best practices
 
-When opening an issue, use a descriptive title and include your environment (operating system, Python version, Nebari version).
+When opening an issue, use a **descriptive title** and include your environment (operating system, Python version, Nebari version).
 Our issue template helps you remember the most important details to include. A few more tips:
 
 - **Describing your issue**: Try to provide as many details as possible. What exactly goes wrong? How is it failing?
@@ -57,9 +57,9 @@ If an issue is affecting you, start at the top of this list and complete as many
 Improving issues increases their chances of being successfully resolved. A third party can give useful feedback or even add comments on the issue.
 The following actions are typically useful:
 
-- Documenting issues that are missing elements to reproduce the problem such as code samples
-- Suggesting better use of code formatting
-- Suggesting reformulating the title and description to make them more explicit about the problem to be solved
+- Documenting issues that are missing elements to reproduce the problem such as code samples.
+- Suggesting better use of code formatting.
+- Suggesting reformulating the title and description to make them more explicit about the problem to be solved.
 - Linking to related issues or discussions while briefly describing how they are related, for instance “See also #xyz for a similar attempt at this” or “See also #xyz where the same thing happened in another cloud provider" provides context and helps the discussion.
 - Summarising long discussions on issues to help new and existing contributors quickly understand the background, current status, and course of action for the issue.
 
