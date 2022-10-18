@@ -107,7 +107,7 @@ const config = {
         items: [
           // right navbar items
           {
-            label: "Getting Started",
+            label: "Get Started",
             position: "right",
             items: [
               {
@@ -121,7 +121,7 @@ const config = {
             ]
           },
           {
-            label: "Documentation",
+            label: "Docs",
             position: "right",
             to: "/",
           },
