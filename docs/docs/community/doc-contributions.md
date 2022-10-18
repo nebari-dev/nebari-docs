@@ -35,6 +35,7 @@ In addition to general Markdown, Docusaurs has some helpful special features lik
 go through the [Markdown Features section of the Docusaurus documentation](https://docusaurus.io/docs/markdown-features) to learn about them!
 
 We use Netlify for deploying the documentation. The deployment to `nebari.dev` is automatically handled by Netlify when your content is merged into the `nebari-docs/main` branch.
+Netlify will also add a nifty preview link to any PR as a comment. This way you can make sure everything is working as expected.
 
 ## Documentation framework
 
