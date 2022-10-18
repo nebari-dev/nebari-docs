@@ -209,7 +209,7 @@ Various continuous integration (CI) pipelines are triggered after each PR update
 To avoid overuse of this resource, test your work locally before committing.
 We require the CI tests to pass before your PR can be merged.
 If CI fails, you can find why by clicking on the "failed" icon (red cross) and inspecting the build and test log.
-If you have need help to fix the test failures, you may push your changes anyway and ask for help in a PR comment.
+If you need help to fix the test failures, you may push your changes anyway and ask for help in a PR comment.
 
 We also require a PR to be approved by at least one core team member.
 Approval means the core team member has carefully reviewed the changes, and the PR is ready for merging.
