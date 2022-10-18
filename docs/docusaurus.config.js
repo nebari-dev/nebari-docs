@@ -63,7 +63,6 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
           path: "docs",
           admonitions: {
             icons: "emoji",
@@ -80,6 +79,10 @@ const config = {
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
         },
+        pages: {
+          path: "src/pages",
+          routeBasePath: "/",
+        }
       }),
     ],
   ],
@@ -112,23 +115,23 @@ const config = {
             items: [
               {
                 label: "Install Nebari",
-                to: "getting-started/installing-nebari",
+                to: "docs/getting-started/installing-nebari",
               },
               {
                 label: "Cloud providers",
-                to: "getting-started/cloud-providers",
+                to: "docs/getting-started/cloud-providers",
               },
             ]
           },
           {
             label: "Docs",
             position: "right",
-            to: "/",
+            to: "/docs",
           },
           {
             label: "Community",
             position: "right",
-            to: "community/overview",
+            to: "docs/community",
           },
           {
             href: customFields.githubUrl,
@@ -153,11 +156,11 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                to: "getting-started/installing-nebari",
+                to: "docs/getting-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "tutorials",
+                to: "docs/tutorials",
               },
             ],
           },
