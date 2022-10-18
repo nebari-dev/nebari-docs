@@ -34,12 +34,12 @@ account.
 
 :::warning
 A Nebari deployment on DO will **NOT** fall into `free tier` usage. Therefore, we recommend that you sign up for a paid account or contact your cloud
-administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
+administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
 :::
 
 ## Authentication
 
-In order for Nebari to make requests against the DO API and create itss infrastructure, an authentication method with the appropriate permissions will be required. The easiest way
+In order for Nebari to make requests against the DO API and create its infrastructure, an authentication method with the appropriate permissions will be required. The easiest way
 to do this is using the [Digital Ocean access token](https://docs.digitalocean.com/reference/api/intro/#oauth-authentication).
 
 If it's your first time creating an access token, make sure to check the [creating a Digital Ocean token documentation](https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/)
@@ -68,8 +68,8 @@ These environment variables will apply only to your current shell session. If yo
 startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables.
 :::
 
-:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
-installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues
+:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues
 during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
@@ -93,7 +93,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 :::note
-You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:

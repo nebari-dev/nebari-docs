@@ -60,7 +60,7 @@ Also, add the flag `--dns-provider=cloudflare` to the [Qhub deploy command.](htt
 
 ## Using other DNS providers
 
-Currently, Nebari only supports CloudFlare for [automatic DNS registration](link to automatic section below). If an alternate DNS provider is desired, change the `--dns-provider` flag from `cloudflare` to `none` on the nebari deploy command.
+Currently, Nebari only supports CloudFlare for [automatic DNS registration](link to automatic section below). If an alternate DNS provider is desired, change the `--dns-provider` flag from `cloudflare` to `none` on the Nebari `deploy` command.
 
 Below are the links to detailed documentation on how to create and manage DNS records on a few providers:
 
@@ -76,7 +76,7 @@ The amount of time this takes varies for each DNS provider. Validate such inform
 
 ## Automatic DNS provision
 
-Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your nebari deploy command:
+Qhub has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your Nebari `deploy` command:
 
 ```bash
 nebari deploy -c nebari-config \

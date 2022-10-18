@@ -72,8 +72,8 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
-installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the
+The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
 installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
@@ -92,8 +92,8 @@ environment variables have been properly set. It is time to initialize and deplo
 
    ```bash
    nebari init azure --project projectname \
-       --domain domain \
-       --auth-provider password
+      --domain domain \
+      --auth-provider password
    ```
 
 :::note

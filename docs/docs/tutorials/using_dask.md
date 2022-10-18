@@ -142,7 +142,7 @@ This dataset is saved in parquet format, a column-oriented file format commonly 
    32426244980
    ```
 
-   This corresponds to 32.43GB of data. Running this one-liner would be impossible on most single machines but running this on a Dask cluster with 4 workers, this can be calculated in under a minute.
+   This corresponds to 32.43 GB of data. Running this one-liner would be impossible on most single machines but running this on a Dask cluster with 4 workers, this can be calculated in under a minute.
 
 3. Now, let's perform some actual analysis! We can for example, compare the number of taxi rides from before, during and after the COVID-19 pandemic.
    To do this, you'll need to aggregate the number of rides per day, calculate a 7-day rolling average and then compare these numbers for the same day (April 15th) across three different years, 2019, 2020, and 2022:
@@ -200,7 +200,7 @@ This dataset is saved in parquet format, a column-oriented file format commonly 
    Name: num_rides_7_rolling_ave, dtype: float64
    ```
 
-   There were about 260,000 taxi rides a day in middle of April 2019 and that number plummeted to just over 7,100 rides a year later, a full two orders of magnitude fewer riders. Wild!
+   There were about 260,000 taxi rides a day in middle of April 2019 and that number plummeted to over 7,100 rides a year later, a full two orders of magnitude fewer riders. Wild!
 
 Performing this kind of analysis on such a large dataset would not be possible without a tool like Dask. On Nebari, Dask comes out-of-the-box ready to help you handle these larger-than-memory (out-of-core) datasets.
 
@@ -216,11 +216,11 @@ and the small rectangles within are the individual tasks.
 
 Check out the [Dask Documentation](https://docs.dask.org/en/stable/dashboard.html) for more information.
 
-![Dask diagnostic UI -  showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
+![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
 
 ### Shutting down the cluster
 
-As you you have noticed, you can spin up a lot of compute really quickly using Dask.
+As will you have noticed, you can spin up a lot of compute really quickly using Dask.
 
 :::warning
 **With great power comes great responsibility**
@@ -240,7 +240,7 @@ The [Dask-labextension](https://github.com/dask/dask-labextension) provides a Ju
 as well as embed Dask's dashboard plots directly into JupyterLab panes.
 Nebari includes this extension by default, elevating the overall developer experience.
 
-![Dask-labextension UI In JupyterLab -  displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
+![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
 
 ## Step 6 - Using Dask safely
 
