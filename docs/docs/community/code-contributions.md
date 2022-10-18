@@ -56,7 +56,7 @@ This allows us to discuss the details and confirm the changes beforehand, and re
 
 Now the command `git remote -v` shows two remote repositories:
 
-- `upstream`: which refers to the `nebari` repository on Github.
+- `upstream`: which refers to the `nebari` repository on GitHub.
 - `origin`: which refers to your personal fork.
 
 ## Set up your development environment
