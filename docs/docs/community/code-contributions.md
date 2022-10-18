@@ -156,7 +156,7 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 Tests are an important part of development.
 In your contributions, always include tests that fail before your change and pass afterwards.
 Run all the tests locally and make sure that they pass before submitting your contribution.
-If you are need help with a test case, you can create a draft pull request and message the maintainers for help.
+If you need help with a test case, you can create a draft pull request and message the maintainers for help.
 
 <!-- [Read Test your contributions for tips and best practices ->] -->
 
