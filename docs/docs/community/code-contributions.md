@@ -190,7 +190,7 @@ If you do so, add `WIP` (work in progress) in the PR title and mark it as a draf
 
 :::note
 If the PR relates to any issues, you can add the text `xref gh-xxxx` where `xxxx` is the issue number to GitHub comments.
-Likewise, if the PR solves an issue, replace the `xref` with `closes`, `fixes` or any other flavours [github accepts](https://help.github.com/en/articles/closing-issues-using-keywords).
+Likewise, if the PR solves an issue, replace the `xref` with `closes`, `fixes` or any other flavours [GitHub accepts](https://help.github.com/en/articles/closing-issues-using-keywords).
 GitHub will automatically close the corresponding issue(s) when youy PR gets merged.
 :::
 
