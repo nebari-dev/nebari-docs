@@ -110,7 +110,7 @@ const config = {
         items: [
           // right navbar items
           {
-            label: "Getting Started",
+            label: "Get Started",
             position: "right",
             items: [
               {
@@ -124,7 +124,7 @@ const config = {
             ]
           },
           {
-            label: "Documentation",
+            label: "Docs",
             position: "right",
             to: "/docs",
           },
@@ -156,11 +156,11 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                to: "getting-started/installing-nebari",
+                to: "docs/getting-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "tutorials",
+                to: "docs/tutorials",
               },
             ],
           },

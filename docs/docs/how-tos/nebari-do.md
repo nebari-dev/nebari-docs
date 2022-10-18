@@ -67,14 +67,14 @@ These environment variables will apply only to your current shell session. If yo
 startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables.
 :::
 
-:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
+:::note The steps in the following sections assume you have (i) completed the [Install Nebari](docs/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
 installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues
-during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
+during the installation, please visit the "Getting Started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](docs/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-do`:
@@ -116,7 +116,7 @@ The generated `qhub-config.yaml` is the configuration file that will determine h
 simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
 
 For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the qhub-config.yaml file](/tutorials) documentation.
+[Understanding the qhub-config.yaml file](docs/tutorials) documentation.
 
 ## Deploying Nebari
 
@@ -127,7 +127,7 @@ qhub deploy -c qhub-config.yaml
 ```
 
 :::note
-During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-do#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Qhub will require you to set a DNS record for the domain defined during [initialize](docs/how-tos/nebari-do#nebari-initialize). Follow the instructions on [How to set a DNS record for Qhub](docs/how-tos/domain-registry) for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is

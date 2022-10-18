@@ -21,7 +21,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Getting Started",
+      label: "Get Started",
       link: {
         type: "generated-index",
         title: "Getting Started",

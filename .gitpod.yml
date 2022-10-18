@@ -1,5 +1,5 @@
 tasks:
-  - init: yarn install
+  - init: cd docs && yarn install
     command: yarn start
 ports:
   - port: 3000
