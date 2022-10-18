@@ -165,7 +165,7 @@ If you are need help with a test case, you can create a draft pull request and m
 Prioritize including relevant documentation with your contributions to help your code reviewers, Nebari users, as well as other contributors who may interact with your code.
 
 * Add **comments** to explain intricacies in your code and share "why" it is needed. If you reference a particular GitHub issue or PR, use `gh-xxxx` (where `xxxx` indicated the issue/PR number.)
-* If your contribution changes the behaviour of a function, be sure to document it in the **funtion's docstring**.
+* If your contribution changes the behaviour of a function, be sure to document it in the **function's docstring**. As a reminder, we follow the [Google Style Guide](https://google.github.io/styleguide/pyguide.html#381-docstrings) for docstrings formatting.
 * Update any relevant pages on narrative documentation on `nebari.dev`. Read [Contribute to Nebari's documentation](doc-contributions.md) for more details.
 * If your change introduces any user-facing modifications, mention in the release notes.
 
