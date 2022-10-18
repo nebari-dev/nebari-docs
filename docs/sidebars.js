@@ -41,7 +41,6 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/using-vscode",
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
@@ -60,41 +59,49 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
         "how-tos/domain-registry",
+        "how-tos/using-vscode",
       ],
     },
-    // TODO - uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Conceptual Guides",
-    //   link: {
-    //     type: "generated-index",
-    //     title: "Conceptual Guides",
-    //     description:
-    //       "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
-    //     slug: "category/conceptual-guides",
-    //     keywords: ["conceptual-guides"],
-    //   },
-    //   items: ["explanations/overview"],
-    // },
-    // TODO - uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Reference",
-    //   link: {
-    //     type: "generated-index",
-    //     title: "Reference Guides",
-    //     description:
-    //       "Nitty-gritty technical descriptions of how Nebari works. ",
-    //     slug: "category/reference",
-    //     keywords: ["reference"],
-    //   },
-    //   items: ["references/overview"],
-    // },
-    // {
-    //   type: "doc",
-    //   label: "Community",
-    //   id: "community/overview",
-    // },
+    {
+      type: "category",
+      label: "Conceptual Guides",
+      link: {
+        type: "generated-index",
+        title: "Conceptual Guides",
+        description:
+          "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
+        slug: "category/conceptual-guides",
+        keywords: ["conceptual-guides"],
+      },
+      items: ["explanations/overview"],
+    },
+    {
+      type: "category",
+      label: "Reference",
+      link: {
+        type: "generated-index",
+        title: "Reference Guides",
+        description:
+          "Nitty-gritty technical descriptions of how Nebari works. ",
+        slug: "category/reference",
+        keywords: ["reference"],
+      },
+      items: ["references/overview"],
+    },
+    {
+      type: "category",
+      label: "Community",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/file-issues",
+        // TODO - uncomment once populated
+        // "community/code-contributions",
+        // "community/doc-contributions",
+        "community/style-guide",
+      ],
+    },
     {
       type: "doc",
       label: "Troubleshooting",

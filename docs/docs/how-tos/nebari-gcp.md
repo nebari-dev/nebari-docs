@@ -20,7 +20,7 @@ this guide.
 
 ## Sign up for Google Cloud Platform
 
-This documentation assumes that you are already familiar to Google Cloud Platform accounts and has a prior knowledge regarding GCP billing and cost usage for Kubernetes related
+This documentation assumes that you are already familiar with Google Cloud Platform accounts, and that you have prior knowledge regarding GCP billing and cost usage for Kubernetes related
 services.
 
 If you are new to the Google Cloud Platform, we advise you to first [sign up for a free account](https://cloud.google.com/signup) to get a better understanding of the platform and its
@@ -63,7 +63,7 @@ to do this is using a [service account](https://cloud.google.com/iam/docs/unders
 management.
 
 If it's your first time creating a service account, please follow
-[these detailed instructions](https://cloud.google.com/docs/authentication/getting-started#creating_a_service_account) to create a Google Service Account with **Owner** level
+[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with **Owner** level
 permissions over the project created in the previous step. For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
 you are handling multiple GCP projects.
@@ -135,7 +135,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 :::note
-Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:

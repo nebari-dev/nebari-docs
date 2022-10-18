@@ -15,10 +15,8 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 There are some pins that are required for the Nebari Dask environment to function correctly.
 
-<!-- TODO: will need to update the confa-feedstock -->
-
-The best way to manage dask pins is to use the `nebari-dask`
-[metapackage on conda-forge](https://anaconda.org/conda-forge/nebari-dask).
+The best way to manage Dask pins is to use the `qhub-dask`
+[metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask).
 Usage will look something like this:
 
 ```yaml
@@ -44,7 +42,7 @@ One of the two conda-store environments created during the initial Nebari deploy
 
 If your user has access to conda-store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
 
-The reason for this issue is due to how these environments are simultaneously built.
+The reason for this issue is how these environments are simultaneously built.
 Under the hood, conda-store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML.
 If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build.
 This causes the first build to fail.
@@ -137,7 +135,7 @@ and a best-to-have tool for debugging your Kubernetes cluster sessions.
 
 By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
 
-![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/k9s_UI.png)
+![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/troubleshooting/k9s_UI.png)
 
 :::note
 In some circumstances, you will need to inspect any services launched by your cluster at your `localhost`.

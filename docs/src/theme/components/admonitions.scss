@@ -7,10 +7,10 @@
 .admonition:not(.alert) {
   color: var(--ifm-color-on-background);
   border-radius: var(--ifm-global-radius);
-  border-bottom: 0 solid;
   border-top: 0 solid;
   border-right: 0 solid;
   border-left: 10px solid;
+  border-bottom: none;
 
   /* For default Admonition */
   background-color: var(--ifm-admonition-background-color);
@@ -33,18 +33,18 @@
 }
 
 .admonition-success {
-  background-color: var(--ifm-admonition-background-color-success);
+  background-color: var(--ifm-admonition-background-color);
   border-left-color: var(--ifm-admonition-color-success);
 }
 
 .admonition-warning,
 .admonition-caution {
-  background-color: var(--ifm-admonition-background-color-warning);
+  background-color: var(--ifm-admonition-background-color);
   border-left-color: var(--ifm-admonition-color-warning);
 }
 
 .admonition-danger {
-  background-color: var(--ifm-admonition-background-color-error);
+  background-color: var(--ifm-admonition-background-color);
   border-left-color: var(--ifm-admonition-color-error);
 }
 
@@ -70,23 +70,16 @@
 
 [data-theme="dark"] {
   .admonition {
-    color: var(--nebari-blue-gray-0);
-    code {
-      background-color: var(--ifm-hover-overlay) !important;
-      color: var(--ifm-color-black) !important;
-    }
+    color: var(--ifm-color-white);
   }
   .admonition h5,
   .admonition:not(.alert) h5 {
     margin-top: 0;
-    color: var(--nebari-blue-gray-0);
-  }
-  .admonition a {
-    color: var(--nebari-gray-blue-0);
+    color: var(--ifm-color-white);
   }
 
   .admonition code {
-    color: var(--nebari-teal-3) !important;
+    color: var(--nebari-code-color-dark) !important;
   }
 }
 
@@ -113,13 +106,22 @@
 .pagination-nav__link {
   text-decoration: none;
   &:hover {
-    border: 1px solid var(--nebari-blue-gray-9);
+    border: 1px solid var(--ifm-color-emphasis-300);
     border-bottom: 2px solid var(--ifm-color-primary);
   }
 }
 
 [data-theme="dark"] {
   .pagination-nav__link {
+    a {
+      color: blue;
+    }
+  }
+}
+
+a.pagination-nav__link {
+  text-decoration: none;
+  &:hover {
     text-decoration: none;
   }
 }
