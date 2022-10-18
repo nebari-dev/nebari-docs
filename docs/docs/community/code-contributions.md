@@ -16,8 +16,10 @@ To contribute to the documentation, read [Contribute to Nebari's documentation](
 
 ## Select an issue to work on
 
+<!-- TODO: Add link to "good first issue" labels after the qhub -> Nebari rename -->
+
 New to Nebari?
-The issues marked with the [type: good first issue](https://github.com/nebari-dev/nebari/labels/type%3A%20good%20first%20issue) label are an excellent place to start.
+The issues marked with the [good first issue] label are an excellent place to start.
 These bug reports and feature requests have a low entry-barrier, need little historical context, and are self-contained.
 Select a "good first issue" that matches your interest and skill set.
 
