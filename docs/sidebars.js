@@ -60,6 +60,7 @@ module.exports = {
         "how-tos/nebari-hpc",
         "how-tos/domain-registry",
         "how-tos/using-vscode",
+        "how-tos/nebari-tests",
       ],
     },
     {
