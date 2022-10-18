@@ -13,7 +13,7 @@ Thank you for making Nebari's documentation better!
 Nebari has the following (broad) types of documentation:
 
 - **Narrative documentation** in the form of tutorials, how-to's, and more, hosted on `nebari.dev` (this website). Keep reading this page to learn how you can contribute!
-- **Docstrings and READMEs** that are a part of the [nebari codebase][nebari-repo] and other GitHub repositories in the [nebari-dev][nebari-org] respetively. To contribute to these, check out [Contribute to Nebari's codebase](doc-contributions.md).
+- **Docstrings and READMEs** that are a part of the [nebari codebase][nebari-repo] and other GitHub repositories in the [nebari-dev][nebari-org], respectively. To contribute to these, check out [Contribute to Nebari's codebase](doc-contributions.md).
 - **Demos and examples** for community self-study and conference presentations hosted at [nebari/nebari-demo][nebari-demo]. To contribute examples, start at the [Nebari Demo README](https://github.com/nebari-dev/nebari-demo#readme).
 
 ## Documentation style guide
