@@ -32,7 +32,7 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.{js,jsx,scss,css}": [
+    "**/*.{js,jsx,css}": [
       "yarn run lint:fix"
     ],
     "**/*.{json,md,mdx,toml}": [
@@ -63,6 +63,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
+    "netlify-plugin-cache": "^1.0.3",
     "prettier": "^2.6.2"
   },
   "browserslist": {

@@ -15,8 +15,8 @@
 module.exports = {
   sidebar: [
     {
-      type: "doc",
       label: "Introduction",
+      type: "doc",
       id: "welcome",
     },
     {
@@ -44,6 +44,7 @@ module.exports = {
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
+        "tutorials/using_dask",
       ],
     },
     {
@@ -58,6 +59,7 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
         "how-tos/domain-registry",
+        "how-tos/using-vscode",
       ],
     },
     {
@@ -95,19 +97,33 @@ module.exports = {
       ],
     },
     {
-      type: "doc",
+      type: "category",
       label: "Community",
-      id: "governance/overview",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/file-issues",
+        "community/code-contributions",
+        "community/doc-contributions",
+        "community/style-guide",
+      ],
     },
     {
       type: "doc",
-      label: "FAQs / Troubleshooting",
+      label: "Troubleshooting",
       id: "troubleshooting",
     },
     {
       type: "doc",
-      label: "Glossary",
-      id: "glossary",
+      label: "FAQ",
+      id: "faq",
     },
+    // TODO - uncomment once populated
+    // {
+    //   type: "doc",
+    //   label: "Glossary",
+    //   id: "glossary",
+    // },
   ],
 };

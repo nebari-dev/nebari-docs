@@ -1,8 +1,10 @@
 ---
 id: nebari-aws
-title: How to deploy Nebari on AWS
+title: Deploy Nebari on AWS
 description: A basic overview of how to deploy Nebari on AWS
 ---
+
+## Introduction
 
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
@@ -13,12 +15,6 @@ we will walk you through the following steps:
 - [Deploying Nebari](#deploying-nebari)
 
 If you are already familiar to AWS services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of this guide.
-
-:::warning
-We are currently undergoing a rename from [QHub](https://docs.qhub.dev/) to Nebari.
-
-You might see some references to `qhub` mainly in the context of commands or installation/setup in the meantime.
-:::
 
 ## Sign up for Amazon Web Services
 
@@ -36,7 +32,7 @@ For a more detailed cost estimate, please also refer to our \[Conceptual guides\
 
 :::warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your
-cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this
+cloud administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this
 happens.
 :::
 
@@ -63,7 +59,7 @@ Follow these steps to set up your access keys and user accounts:
 2. Give the user a name, and tick **Access Key - Programmatic access**
 3. Click **Next**
 
-   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos-aws-new-iam-user.png "Creating your IAM user account")
+   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
 4. Select **Attach existing policies directly**, then select `AdministratorAccess` from the list of policies. For more information, please refer to
    [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
@@ -93,8 +89,8 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
-installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the
+The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
 installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
@@ -112,16 +108,16 @@ environment variables have been properly set. It is time to initialize and deplo
 2. Executing the command below will generate a basic config file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
-qhub init aws --project projectname \
-	  --domain domain \
-	  --auth-provider password
+nebari init aws --project projectname \
+   --domain domain \
+   --auth-provider password
 ```
 
-::: note
+:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
-Once `qhub init` is executed, you should then be able to see the following output:
+Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
 Securely generated default random password=*** for Keycloak root user
@@ -137,32 +133,33 @@ with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, to create the first user accounts for administrator(s).
 
-The qhub initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-simple text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `qhub init`.
+The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step.
+Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
 
-For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the qhub-config.yaml file](/tutorials) documentation.
+For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](/tutorials) documentation.
 
 ## Deploying Nebari
 
-With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
+With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-qhub deploy -c qhub-config.yaml
+nebari deploy -c nebari-config.yaml
 ```
 
-The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
-authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
+:::note
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](/how-tos/domain-registry) for an overview of the required steps.
+:::
 
-Once you reach the `04-kubernetes-ingress` stage of the deploy process you will be prompted to set the **A/CNAME** records manually for your registered domain name. Please
-follow the instructions in the [Nebari DNS](/how-tos/domain-registry.md) section for more information regarding the domain `A/CNAME` records and how to automatically generate them.
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
+authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: QHub deployed successfully
+[terraform]: Nebari deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/

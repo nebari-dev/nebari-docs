@@ -1,16 +1,28 @@
-# Website
+# Contributing to the documentation 📝
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
 
-- [Website](#website)
-  - [Prerequisites](#prerequisites)
-  - [Documentation local Development](#documentation-local-development)
-  - [Build](#build)
+- [Contributing to the documentation 📝](#contributing-to-the-documentation-)
+  - [Setting your local development environment](#setting-your-local-development-environment)
+    - [Prerequisites](#prerequisites)
+    - [Installing docs dependencies](#installing-docs-dependencies)
+    - [Pre-commit hooks](#pre-commit-hooks)
+    - [Working on the docs](#working-on-the-docs)
+    - [Building the site locally](#building-the-site-locally)
   - [Adding a New Dependency](#adding-a-new-dependency)
   - [Deployment](#deployment)
   - [Linting](#linting)
 
-## Prerequisites
+## Setting your local development environment
+
+1. Make a fork of the [`Nebari-docs` repository][nebari-docs-repo] to your GitHub account
+2. Clone the forked repository to your local machine:
+
+   ```bash
+   git clone https://github.com/<your-username>/nebari-docs.git
+   ```
+
+### Prerequisites
 
 To build the site you will need to have Node.js installed. To see if you already have Node.js installed, type the following command into your local command line terminal:
 
@@ -39,7 +51,7 @@ $ yarn --version
 1.22.11
 ```
 
-## Local development
+### Installing docs dependencies
 
 1. First make sure to be in the `/docs` directory:
 
@@ -53,21 +65,55 @@ $ yarn --version
    yarn install
    ```
 
-3. Then run the following command to start the development server:
+### Pre-commit hooks
+
+This repository uses a number of [pre-commit hooks](https://pre-commit.com/) to standardize our YAML and markdown structure.
+**Note** - You will need to have Python>= 3.7 installed in your local machine.
+
+1. Before you can run the hooks, you need to install the pre-commit package manager:
 
    ```bash
-   yarn start
+   # using pip
+   pip install pre-commit
+
+   # if you prefer using conda
+   conda install -c conda-forge pre-commit
    ```
 
-   This command starts a local development server and opens up a browser window.
-   Most changes are reflected live without having to restart the server.
+2. From the root of this project, install the git hook scripts:
+
+   ```bash
+   # install the pre-commit hooks
+   pre-commit install
+   ```
+
+3. Optional- run the hooks against the files in this repository
+
+   ```bash
+   # run the pre-commit hooks
+   pre-commit run --all-files
+   ```
+
+Once installed, the pre-commit hooks will run automatically when you make a commit in version control.
+
+### Working on the docs
+
+Once you have the pre-commits and the dependencies installed, you can get started with the documentation.
+To see a live local version of the docs run the following command:
+
+```bash
+yarn start
+```
+
+This command starts a local development server and opens up a browser window.
+Most changes are reflected live without having to restart the server.
 
 > **Note**
 > By default, this will load your site at <http://localhost:3000/>.
 
-## Building the site
+### Building the site locally
 
-To build the static files of your website for production, run:
+To build the static files of the documentation (and see how they would look once deployed to `www.nebari.dev`), run:
 
 ```bash
 yarn build
@@ -85,7 +131,7 @@ yarn run serve
 
 ## Adding a New Dependency
 
-Use the `add` subcommand to add new dependencies:
+Use the `add` sub command to add new dependencies:
 
 ```bash
 yarn add package-name
@@ -103,3 +149,7 @@ Before opening a PR, run the docs linter and formatter to ensure code consistenc
 yarn run lint
 yarn run format
 ```
+
+<!-- links -->
+
+[nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
