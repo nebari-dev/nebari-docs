@@ -176,7 +176,7 @@ Prioritize including relevant documentation with your contributions to help your
 When you feel comforatble with your contribution, you can open a Pull Request (PR) to submit it for review!
 
 You can also submit partial work to get early feedback on your contribution or discuss some implementation details.
-If you do so, add `WIP` (work in progress) in the PR title and marked it as a draft.
+If you do so, add `WIP` (work in progress) in the PR title and mark it as a draft.
 
 1. Push your changes back to your fork on GitHub:
 
