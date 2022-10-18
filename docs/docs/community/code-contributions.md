@@ -71,7 +71,7 @@ Now the command `git remote -v` shows two remote repositories:
 
 ### Create a virtual environment
 
-The requirements for developing Nebari are listed in the `environment-dev.yaml` file in the root directory.
+The requirements for developing Nebari are listed in the `environment-dev.yaml` file in the repository's root directory.
 The following steps describe how to create and use a `conda` environment.
 
 1. If you don't have `conda` installed, you can follow the [installation instructions in the conda user guide](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
