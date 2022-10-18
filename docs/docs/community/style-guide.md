@@ -79,8 +79,12 @@ Some terms and libraries have specific capitalization preferences:
 | Kubernetes       | First letter always capitalized                                                          |
 | Docker           | First letter always capitalized                                                          |
 | Terraform        | First letter always capitalized                                                          |
+| Ansible          | First letter always capitalized                                                          |
 | YAML             | Always capitalized                                                                       |
 | conda-store      | Never capitalized                                                                        |
+| CPU              | Always capitalized                                                                       |
+| RAM              | Always capitalized                                                                       |
+| GB               | Always capitalized                                                                       |
 
 :::note
 The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
