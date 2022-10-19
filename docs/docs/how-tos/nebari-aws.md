@@ -9,6 +9,7 @@ description: A basic overview of how to deploy Nebari on AWS
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
 we will walk you through the following steps:
 
+- [Introduction](#introduction)
 - [Sign up for Amazon Web Services](#sign-up-for-amazon-web-services)
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
@@ -117,7 +118,7 @@ environment variables have been properly set. It is time to initialize and deplo
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
 
-Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a `nebari-config.yaml` file with the Nebari cluster deployed on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
 nebari init aws --project projectname \

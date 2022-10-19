@@ -129,7 +129,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 2. Executing the `nebari init --guided-init` command prompt you to respond to a set of questions, which will be used to generate the 
-`nebari-config.yaml` file with an infrastructure based on **GCP**.
+`nebari-config.yaml` file with the Nebari cluster deployed on **GCP**.
 
 ```bash
    nebari init --guided-init
@@ -139,7 +139,7 @@ environment variables have been properly set. It is time to initialize and deplo
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
 
-Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a `nebari-config.yaml` file with the Nebari cluster deployed on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
 ```bash
 nebari init gcp --project projectname \

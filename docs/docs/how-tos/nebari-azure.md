@@ -91,7 +91,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the 
-`nebari-config.yaml` file with an infrastructure based on **Azure**.
+`nebari-config.yaml` file with the Nebari cluster deployed on **Azure**.
 
 ```bash
    nebari init --guided-init
