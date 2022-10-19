@@ -98,9 +98,8 @@ module.exports = {
       },
       items: [
         "community/file-issues",
-        // TODO - uncomment once populated
-        // "community/code-contributions",
-        // "community/doc-contributions",
+        "community/code-contributions",
+        "community/doc-contributions",
         "community/style-guide",
       ],
     },
