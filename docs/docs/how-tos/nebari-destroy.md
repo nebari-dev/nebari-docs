@@ -84,9 +84,8 @@ Here, we outline how to find and destroy resources from the AWS console.
 
 <img src="/img/how-tos/aws_tag_editor_1.png" alt="Search for Tag Editor in the AWS console" width="700"/>
 
-1. From the `Resource Groups & Tag Editor` page, navigate to `Tag Editor` from the left most panel
+2. From the `Resource Groups & Tag Editor` page, navigate to `Tag Editor` from the left most panel
 
-<!-- ![Navigate to the Tag Editor in the AWS console](../../static/img/how-tos/aws_tag_editor_2.png) -->
 <img src="/img/how-tos/aws_tag_editor_2.png" alt="Navigate to the Tag Editor in the AWS console" width="200"/>
 
 3. Fill out the form as follows:
@@ -180,3 +179,11 @@ gcloud container clusters delete <project-name>-<namespace> --region <region>
 
 If you wish to destroy the cloud storage bucket from the GCP console, [follow these instructions on Deleting buckets](https://cloud.google.com/storage/docs/deleting-buckets). And to destroy the Kubernetes cluster from the GCP console, [follow these instructions on Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster#console).
 
+:::info
+When running the destroy command on a GCP, you might encounter a message that states:
+```bash
+ERROR:nebari.destroy:ERROR: not all Nebari stages were destroyed properly. For cloud deployments of QHub typically only stages 01 and 02 need to succeed to properly destroy everything
+```
+In general, this is not a problem. This happens because the destroy command thinks it needs to destroy resources that likely no longer exist. Double check from your GCP console to be sure all resources have indeed been destroyed.
+
+:::
