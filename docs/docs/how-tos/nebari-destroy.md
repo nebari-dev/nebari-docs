@@ -114,7 +114,7 @@ This method of destroying lingering AWS resources requires cloning down the Neba
 git clone https://github.com/Quansight/qhub.git
 ```
 
-Once cloned, you can a script which will attempt to destroy all lingering AWS resources.
+Once cloned, you can run a script which will attempt to destroy all lingering AWS resources.
 
 ```bash
 python /path/to/qhub/scripts/aws-force-destroy.py -c /path/to/nebari-config.yaml
