@@ -32,12 +32,13 @@ Follow your best judgment, and feel free to add to this document following our c
 - Leave **only one black space between sentences**.
 - **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
 - Try and **use [semantic line breaks](https://sembr.org/)** to help with documentation and contribution reviews.
+- We prefer American English over British or other English variant to keep spelling consistency.
 
 ### Date and time
 
 Use unambiguous and explicit styles:
 
-- Time: **12 hour** clock with AM/PM capitalized. Include a timezone (preferably in UTC or GMT) when relevant. For example, "2 PM UTC".
+- Time: **12-hour** clock with AM/PM capitalized. Include a timezone (preferably in UTC or GMT) when relevant. For example, "2 PM UTC".
 - Date: Write **full dates** and spell out the months, for example: "July 8, 2022".
 
 ### Accessibility
@@ -59,7 +60,7 @@ Go through the [Write accessible documentation section of the Google developer d
 
 **Use sentence case** for page and section titles - only the first letter of the first word is capitalized.
 
-Some terms and libraries have special capitalization preferences:
+Some terms and libraries have specific capitalization preferences:
 
 | TERM             | CAPITALIZATION                                                                           |
 | ---------------- | ---------------------------------------------------------------------------------------- |
@@ -78,8 +79,12 @@ Some terms and libraries have special capitalization preferences:
 | Kubernetes       | First letter always capitalized                                                          |
 | Docker           | First letter always capitalized                                                          |
 | Terraform        | First letter always capitalized                                                          |
+| Ansible          | First letter always capitalized                                                          |
 | YAML             | Always capitalized                                                                       |
 | conda-store      | Never capitalized                                                                        |
+| CPU              | Always capitalized                                                                       |
+| RAM              | Always capitalized                                                                       |
+| GB               | Always capitalized                                                                       |
 
 :::note
 The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.
@@ -90,5 +95,5 @@ For example: "To start JupyterLab, you run `jupyter lab`."
 ## Additional resources
 
 - The [Microsoft Writing Style Guide](https://learn.microsoft.com/en-gb/style-guide/welcome/) is also a very thorough style guide. The included A-Z word list is a handy reference if you're unsure about a specific term.
-- [Digital Ocean's tutorail style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines).
+- [Digital Ocean's tutorial style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines).
 - [Write the Docs collection of resources for accessible writing](https://www.writethedocs.org/guide/writing/accessibility/).

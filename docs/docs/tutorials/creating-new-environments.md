@@ -46,7 +46,7 @@ This tutorial focuses on using the web interface to interact with our environmen
 
 ## Step 1 - Exploring the `conda-store` web interface
 
-1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (for example, <https://quansight.qhub.dev/conda-store>).
+1. To get started, navigate to `https://<your-nebari-domain>/conda-store` (e.g. <https://quansight.nebari.dev/conda-store>).
 
 2. You will need to log in to authenticate to the `conda-store` interface - this is required to be able to access most of `conda-store` functionalities.
 
@@ -172,5 +172,5 @@ Please keep in mind that these are _NOT_ available to Dask workers!
 
 2. If you need to use Dask.
 
-   We highly recommend you include the [QHub Dask metapackage](https://anaconda.org/conda-forge/qhub-dask) to maintain version compatibility between the Dask client and server.
+   We highly recommend you include the [Nebari Dask metapackage](https://anaconda.org/conda-forge/nebari-dask) to maintain version compatibility between the Dask client and server.
    This replaces `distributed`, `dask`, and `dask-gateway` with the correctly pinned versions.
