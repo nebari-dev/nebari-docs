@@ -6,30 +6,175 @@ description: A basic overview to destroying your Nebari deployment and associate
 
 ## Introduction
 
-This guide is to help first-time users destroy Nebari resources that have been previous deployed while setting up Nebari at the production scale. With your `qhub-config.yaml` configuration file, you can use a handy `destroy` command to automatically destroy resources with Nebari. We will also take a look at how you can manually destroy resources on individual cloud providers in case the automation fails.
+This is a guide on how to destroy your Nebari cluster, this includes all resources created the first time you deployed it. With your `nebari-config.yaml` configuration file, you can use a handy `destroy` command to automatically destroy resources with Nebari. 
+
+You will need to export your cloud credentials, as you would for a `nebari deploy`, before you can destroy these cloud resources.
+
+:::warning
+When working with cloud resources, it's important to always double check that everything has been fully destroyed.
+
+Further below, we will also take a look at how you can manually destroy resources on individual cloud providers in case the automation fails.
+
+The Nebari team takes no responsibility for any incurred cloud costs. Please take care!
+:::
 
 ## Destroying Nebari
 
-You can specify the `qhub-config.yaml` configuration file created while deploying Nebari to destroy the resources as well. Type the following command on your command line:
+You can specify the `nebari-config.yaml` configuration file created while deploying Nebari to destroy the resources as well. Type the following command on your command line:
+
+:::warning
+If you have any data stored on your Nebari cluster you would like to keep - either files on the filesystem, conda environments in conda-store or an exported `json` of the users and groups from Keycloak - now is the time to back those up **off of the cluster**. 
+:::
 
 ```bash
-qhub destroy -c qhub-config.yaml
+nebari destroy -h
+```
+
+```bash
+ Usage: nebari destroy [OPTIONS]
+
+ Destroy the Nebari cluster from your nebari-config.yaml file.
+
+╭─ Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --config          -c      TEXT  qhub configuration file path [default: None] [required]                                │
+│    --output          -o      TEXT  output directory [default: ./]                                                         │
+│    --disable-render                Disable auto-rendering before destroy                                                  │
+│    --disable-prompt                Destroy entire Nebari cluster without confirmation request. Suggested for CI use.      │
+│    --help            -h            Show this message and exit.                                                            │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 :::note
-The above command will not delete your `qhub-config.yaml` and related rendered files thus a re-deployment via deploy is possible afterwards.
+The above command will not delete your `nebar-config.yaml` or the rendered files thus a re-deployment with `nebari deploy` is possible afterwards. 
 :::
 
-The terminal will prompt you to press `enter` to verify that you wish to delete your Nebari deployment by rendering the resources. To disable the rendering, you can pass the flag `--disable-render` to the above command.
-
-If the deletion is successful, you will see the following output:
+Once you've decided to destroy your cluster and have read through the `nebari destroy --help` command, you are you now ready.
 
 ```bash
-<!-- TODO -->
+nebari destroy -c nebari-config.yaml
+```
+
+The terminal will prompt you to press `enter` to verify that you wish to destroy your Nebari cluster.
+
+:::info
+This destruction process can take up to 30 minutes for some cloud providers.
+:::
+
+If the destruction is successful, you will see the following output:
+
+```bash
+[terraform]: Nebari properly destroyed all resources without error
 ```
 
 Congratulations! You have successfully destroyed your Nebari deployment and the associated resources!
 
-## Manually deleting the resources
+## Manually destroying the resources
 
-## Troubleshooting
+### Amazon Web Services (AWS)
+
+Unfortunately of all the cloud providers supported, AWS seems to make it the most difficult to destroy lingering resources. They often times requiring resources be destroyed in a particular order as well.
+
+#### Destroy resources from the AWS console
+
+Here, we outline how to find and destroy resources from the AWS console. 
+
+1. Sign into your AWS account and in the search bar type `Tag Editor`
+
+<img src="/img/how-tos/aws_tag_editor_1.png" alt="Search for Tag Editor in the AWS console" width="700"/>
+
+1. From the `Resource Groups & Tag Editor` page, navigate to `Tag Editor` from the left most panel
+
+<!-- ![Navigate to the Tag Editor in the AWS console](../../static/img/how-tos/aws_tag_editor_2.png) -->
+<img src="/img/how-tos/aws_tag_editor_2.png" alt="Navigate to the Tag Editor in the AWS console" width="200"/>
+
+3. Fill out the form as follows:
+   - `Regions` - the region you deployed your Nebari cluster (or select `all regions`)
+   - `Resource types` - select `All supported resource types`
+   - `Tags`
+     - select `Environment` for key (on the left)
+     - enter the namespace you chose for your Nebari cluster (on the right)
+
+<img src="/img/how-tos/aws_tag_editor_3.png" alt="Use the Tag Editor to filter for lingering Nebari resources" width="700"/>
+
+4. From here you can filter further if needed by entering the name of your Nebari cluster.
+
+5. At this point, select the resource you wish to destroy. This will open another tab for you to destroy that resource.
+
+:::info
+The details on how to destroy each specific resource is beyond the scope of this guide however here is a helpful tip if you get stuck in the messy web of AWS dependencies. 
+
+Try destroying resources like `EFS`, the `EC2 Load Balancer` or resources that might be connected to the `VPC` before deleting the `VPC` or any other network related resources.
+:::
+
+#### Destroy AWS resources using a dev tool script
+
+This method of destroying lingering AWS resources requires cloning down the Nebari repo.
+
+```bash
+git clone https://github.com/Quansight/qhub.git
+```
+
+Once cloned, you can a script which will attempt to destroy all lingering AWS resources.
+
+```bash
+python /path/to/qhub/scripts/aws-force-destroy.py -c /path/to/nebari-config.yaml
+```
+
+This will print to the terminal the resources it has destroyed. **This scripts often needs to be run multiple times before all the resources are fully destroyed.**
+
+:::info
+Even with this script, AWS on occasion will find itself in some resource dependency conflict and you might need to destroy these resources manually from the AWS console as shown [above](#delete-resources-from-the-aws-console).
+:::
+
+
+### Azure
+
+If you deployed your Nebari cluster on Azure and the `nebari destroy` command failed, you will need to destroy one resources, the resource group.
+
+You will need [Azure's CLI `az`](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed and configured. Then run the following.
+
+```bash
+az group delete --resource-group "<project-name>-<namespace>"
+```
+
+Or if you'd prefer, you can destroy the resource group from the Azure portal, [follow these instructions](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#delete-resource-groups).
+
+### Digital Ocean
+
+If you deployed your Nebari cluster on Digital Ocean and the `nebari destroy` command failed, you will need to destroy two resources, the Kubernetes cluster (DOKS) and the S3 bucket (a Digital Ocean resource, not AWS).
+
+Digital Ocean offers an S3-compatible cloud object storage and requires the use of the [`aws` CLI](https://aws.amazon.com/cli/) to destroy it.
+
+```bash
+aws s3 rb s3://<project-name>-<namespace>-terraform-state --force --endpoint=https://<region>.digitaloceanspaces.com
+```
+
+Finally, you will need to destroy the Kubernetes cluster with [Digital Ocean's CLI tool, `doctl`](https://docs.digitalocean.com/reference/doctl/).
+
+```bash
+doctl kubernetes cluster delete <project-name>-<namespace> -f
+```
+
+Or, if you wish to destroy your Digital Ocean resources from the Digital Ocean control panel and follow these instructions to destroy your [Kubernetes cluster](https://docs.digitalocean.com/products/kubernetes/how-to/destroy-clusters/) and these instructions to destroy the associated [space (i.e. S3)](https://docs.digitalocean.com/products/spaces/how-to/destroy/). 
+
+
+### Google Cloud Platform (GCP)
+
+If you deployed your Nebari cluster on GCP and the `nebari destroy` command failed, you will need to destroy two resources, the Kubernetes cluster (GKE) and cloud storage bucket (GCS).
+
+You will need Google's [`gcloud`](https://cloud.google.com/sdk/gcloud) and [`gsutil`](https://cloud.google.com/storage/docs/gsutil).
+
+To destroy the cloud storage bucket, run the following.
+
+```bash
+gsutil -m rm -r gs://<project-name>-<namespace>-terraform-state
+```
+
+And to destroy the Kubernetes cluster, run the following.
+
+```bash
+gcloud container clusters delete <project-name>-<namespace> --region <region>
+```
+
+If you wish to destroy the cloud storage bucket from the GCP console, [follow these instructions](https://cloud.google.com/storage/docs/deleting-buckets). And to destroy the Kubernetes cluster from the GCP console, [follow these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster#console).
+
