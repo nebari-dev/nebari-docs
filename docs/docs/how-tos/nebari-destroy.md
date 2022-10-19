@@ -72,7 +72,9 @@ Congratulations! You have successfully destroyed your Nebari deployment and the 
 
 ### Amazon Web Services (AWS)
 
-Unfortunately of all the cloud providers supported, AWS seems to make it the most difficult to destroy lingering resources. They often times requiring resources be destroyed in a particular order as well.
+:::note
+Destroying lingering resources on AWS can be tricky because the resources often need to be destroyed in a particular order.
+:::
 
 #### Destroy resources from the AWS console
 
