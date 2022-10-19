@@ -92,7 +92,7 @@ Steps to create a new user:
      | -------- | ----------------- | ----------------- | --------------------- |
      | Username | _unique username_ | _GitHub username_ | _Email to login with_ |
 
-- Once the **Username** field is updated, add a valid email address in the **Email** field.
+   - Once the **Username** field is updated, add a valid email address in the **Email** field.
 
   :::note
   Although not required, users may not be able to log in to Grafana if this field isn't properly set.
