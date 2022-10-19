@@ -1,7 +1,7 @@
 ---
 id: nebari-destroy
 title: Destroy your Nebari deployment
-description: A basic overview to destroying your Nebari deployment and associated resources
+description: how to destroy your Nebari deployment and associated resources
 ---
 
 ## Introduction
