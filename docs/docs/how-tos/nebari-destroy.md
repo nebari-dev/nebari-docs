@@ -178,5 +178,5 @@ And to destroy the Kubernetes cluster, run the following.
 gcloud container clusters delete <project-name>-<namespace> --region <region>
 ```
 
-If you wish to destroy the cloud storage bucket from the GCP console, [follow these instructions](https://cloud.google.com/storage/docs/deleting-buckets). And to destroy the Kubernetes cluster from the GCP console, [follow these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster#console).
+If you wish to destroy the cloud storage bucket from the GCP console, [follow these instructions on Deleting buckets](https://cloud.google.com/storage/docs/deleting-buckets). And to destroy the Kubernetes cluster from the GCP console, [follow these instructions on Deleting a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/deleting-a-cluster#console).
 
