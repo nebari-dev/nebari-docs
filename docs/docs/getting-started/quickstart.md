@@ -7,6 +7,10 @@ description: A cheat sheet of Neabri commands for returning users.
 This quickstart is a Nebari commands reference for experienced and returning users.
 If you're new to Nebari, start at [Installing Nebari](installing-nebari.md).
 
+<div align="center">
+  <img src="/img/getting-started/nebari-cli-commands.png" alt="A diagram showing the different Nebari CLI commands. The first step is 'nebari init' which creates the 'nebari-config.yaml' file. The second step is 'nebari deploy' which deploys the Nebari instance on the cloud. The third step is 'nebari destroy' which destroys the deployed instance. These second and third steps run 'nebari validate' and 'nebari render' internally. 'nebari validate' verifies the 'nebari-config.yaml' file. 'nebari render' generates the 8-stage terraform deployment scripts." width="60%"/>
+</div>
+
 ## Install
 
 You need a MacOS or Linux machine with Python >= 3.8 to install Nebari.
@@ -167,7 +171,7 @@ nebari init --guided-int
 <Tabs>
   <TabItem value="regular-deploy" label="Regular deploy" default>
 
-  You can deploy your Nebari instance to the cloud (selected in the provious step) with:
+  You can deploy your Nebari instance to the cloud (selected in the previous step) with:
 
   ```bash
   nebari deploy -c nebari-config.yaml
@@ -210,6 +214,38 @@ To delete all your Nebari resources, while preserving the `nebari-config.yaml fi
 nebari destroy -c nebari-config.yaml
 ```
 
-<!-- TODO: Add more details about the destroy command -->
+It can take up to 30 mins for the `destroy` command to complete.
+
+:::tip
+If you deployed Nebari on the cloud, verify if the relevant resources were destroyed and manually delete anything that was not destroyed.
+:::
+
+## Validate (optional)
+
+After creating the `nebari-config.yaml` file, you can customize it. To ensure your customizations are valid, run:
+
+```bash
+nebari validate -c nebari-config.yaml
+```
+
+:::note
+This command is automatically run when you `deploy`.
+:::
+
+## Render (optional)
+
+You can generate the (Terraform) deployment workflow scripts with:
+
+```bash
+nebari render -c nebari-config.yaml
+```
+
+This is useful if you use a GitOps workflow with GitHub (or GitLab) Actions.
+
+:::note
+This command is automatically run when you `deploy`.
+:::
+
+---
 
 If you face any issues with the commands, check out the [Troubleshooting guide](../troubleshooting.mdx).
