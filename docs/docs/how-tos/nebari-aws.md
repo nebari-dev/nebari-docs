@@ -106,7 +106,7 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-aws && cd nebari-aws
    ```
 
-2. Executing the `nebari init --guided-init` command prompt you to respond to a set of questions, which will be used to generate the 
+2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the 
 [`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
 
 ```bash
@@ -115,7 +115,7 @@ environment variables have been properly set. It is time to initialize and deplo
 ![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-aws.png)
 
 :::tip
-If you prefer not using the `guided-init` command then you can simply run `init` command.
+If you prefer not using the `guided-init` command then you can directly run the `init` command.
 
 Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **AWS**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
 
@@ -136,14 +136,20 @@ Once `nebari init` is executed, you should then be able to see the following out
 Securely generated default random password=*** for Keycloak root user stored at path=/tmp/QHUB_DEFAULT_PASSWORD
 Congratulations, you have generated the all important nebari-config.yaml file 🎉
 
-You can always edit your nebari-config.yaml file by editing the file directly.
+You can always make changes to your nebari-config.yaml file by editing the file directly.
 If you do make changes to it you can ensure its still a valid configuration by running:
 
                 nebari validate --config path/to/nebari-config.yaml
 
-Here is the previous Guided Init if it was converted into a nebari init command:
+For reference, if the previous Guided Init answers were converted into a direct nebari init command, it would be: 
 
-                nebari init <cloud-provider> --project-name <project-name> --domain-name <domain-name> --namespace dev --auth-provider password
+               nebari init <cloud-provider> --project-name <project-name> --domain-name <domain-name> --namespace dev --auth-provider password
+
+You can now deploy your Nebari instance with:
+
+        nebari deploy -c nebari-config.yaml
+
+For more information, run nebari deploy --help or check out the documentation: https://www.nebari.dev/how-tos/
 ```
 
 :::tip
