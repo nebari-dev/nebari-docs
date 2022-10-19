@@ -61,8 +61,6 @@ Ultimately this autoscaling feature helps reduce costs when the cluster is idle.
 
 During this time you might see some log messages that detail the autoscaling process. To view all the logs, click the **Event Log** button. They should look similar to the following:
 
-<!-- Needs to cut down this image -->
-
 ![Nebari event log](/img/how-tos/keycloak_start_event_logs.png)
 
 </details>
