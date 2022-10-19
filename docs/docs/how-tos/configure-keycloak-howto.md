@@ -10,7 +10,7 @@ description: |
 [Keycloak](https://www.keycloak.org/) is the open-source identity and access management tool that comes standard with Nebari. It is used as a centralized location to add new users, create user groups and update roles and permissions. Keycloak can be configured to work with your existing identity provider services such as GitHub, Auth0 and many others.
 
 :::note
-Although Nebari comes hooks to connect with GitHub and Auth0 from the `nebari-config.yaml`, any identity provider that Keycloak can connect to will work. See these [Keycloak docs](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) for more information.
+Although Nebari allows you to connect with GitHub and Auth0 from the `nebari-config.yaml`, any identity provider that Keycloak can connect to will work. See these [Keycloak docs](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) for more information.
 :::
 
 In Keycloak, as with many admin tools, you start with an initial login user (`root`) that has the ability to administer and create new users. The `root` user is a Keycloak-specific user. It can only be used to login and manage the Keycloak identity management section of Nebari.
