@@ -50,7 +50,7 @@ You are now ready to run the cost estimate tool.
    nebari cost-estimate
    ```
 
-The Nebari cost estimate tool will look for the `stages` directory within your deployment file structure and analyze the Terraform templates to generate a cost report. It will consist of two tables describing the cost and resources breakdown, a publicly-accessible Infracost dashboard URL and additional documentation on the edge cases that the cost estimate tool currently misses.
+The Nebari cost estimate tool will look for the `stages` directory within your deployment file structure and analyze the Terraform templates to generate a cost report. It will consist of two tables describing the cost and resources breakdown, a publicly-accessible Infracost dashboard URL, and additional documentation on the edge cases that the cost estimate tool currently misses.
 
 The report should look something like this:
 
