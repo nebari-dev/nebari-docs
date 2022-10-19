@@ -100,7 +100,7 @@ Steps to create a new user:
 
 - Associate the user with one or more of the **Groups**. Out of the box, Nebari is deployed with the following groups: `admin`, `developer` and `analyst` (see the [Roles x Groups](#roles-x-groups) section below for more details).
 
-1. Click **Save**.
+4. Click **Save**.
 
 If you are using the password authentication provider, you will also need to define a password for the user. It's best to put the **Temporary** toggle in the **OFF** position. Otherwise the user will be forced to change the password on first login.
 
