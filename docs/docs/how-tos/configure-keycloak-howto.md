@@ -98,7 +98,7 @@ Steps to create a new user:
   Although not required, users may not be able to log in to Grafana if this field isn't properly set.
   :::
 
-- Associate the user with one or more of the **Groups**. Out of the box, Nebari is deployed with the following groups: `admin`, `developer` and `analyst` (see the [Roles x Groups](#roles-x-groups) section below for more details).
+   - Associate the user with one or more of the **Groups**. Out of the box, Nebari is deployed with the following groups: `admin`, `developer` and `analyst` (see the [Roles x Groups](#roles-x-groups) section below for more details).
 
 4. Click **Save**.
 
