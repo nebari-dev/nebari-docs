@@ -65,7 +65,7 @@ If you have chosen to use GitHub, Auth0 or any other single-sign-on, you must en
 
 ### Add user using Keycloak admin console
 
-To add a Nebari user from the Keycloak admin console, visit https://{your-nebari-domain}/auth/admin/ and login using the username `root`, as shown above.
+To add a Nebari user from the Keycloak admin console, visit `https://{your-nebari-domain}/auth/admin/` and login using the username `root`, as shown above.
 
 Keycloak uses [realms](https://www.keycloak.org/docs/latest/server_admin/#configuring-realms) to separate their permission scopes under the Keycloak admin console. The realm for Nebari is `nebari` and all Nebari users will be part of the `nebari` realm, on the other hand, the realm for the Keycloak admin console is `master`.
 
