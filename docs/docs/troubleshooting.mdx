@@ -15,8 +15,8 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 There are some pins that are required for the Nebari Dask environment to function correctly.
 
-The best way to manage dask pins is to use the `qhub-dask`
-[metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask).
+The best way to manage Dask pins is to use the `nebari-dask`
+[metapackage on conda-forge](https://anaconda.org/conda-forge/nebari-dask).
 Usage will look something like this:
 
 ```yaml
@@ -29,10 +29,10 @@ environments:
     - python
     - ipykernel
     - ipywidgets
-    - qhub-dask ==0.2.3
+    - nebari-dask ==0.2.3
 ```
 
-The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/qhub-dask-meta-feedstock/blob/master/recipe/meta.yaml).
+The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/nebari-dask-meta-feedstock/blob/master/recipe/meta.yaml).
 
 ## Errors
 
@@ -42,7 +42,7 @@ One of the two conda-store environments created during the initial Nebari deploy
 
 If your user has access to conda-store, you can verify this by visiting `<your_nebari_domain>.com/conda-store` and having a look at the build status of the missing environment.
 
-The reason for this issue is due to how these environments are simultaneously built.
+The reason for this issue is how these environments are simultaneously built.
 Under the hood, conda-store relies on Mamba/Conda to resolve and download the specific packages listed in the environment YAML.
 If both environment builds try to download the same package with different versions, the build that started first will have their package overwritten by the second build.
 This causes the first build to fail.
@@ -135,7 +135,7 @@ and a best-to-have tool for debugging your Kubernetes cluster sessions.
 
 By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
 
-![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/k9s_UI.png)
+![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/troubleshooting/k9s_UI.png)
 
 :::note
 In some circumstances, you will need to inspect any services launched by your cluster at your `localhost`.
@@ -155,7 +155,7 @@ The `general` node group, or node pool, is (usually) the node that hosts most of
 The instance by default, follows a "min-max" approach to determine the instance size: large enough so that the initial deployment will work out of the box,
 while keeping total cloud compute costs to a minimum.
 
-Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
+Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `nebari-config.yaml` has 2 vCPU and 8 GB of memory.
 
 Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size.
 Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in the catastrophic destruction of your cluster.
@@ -174,7 +174,7 @@ This will mean two nodes (reserved for the `general` node group) will always be 
 Given the possible destructive nature of resizing this node group, it is **highly recommended** to back up your cluster before attempting this.
 :::
 
-Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `qhub-config.yaml`, and redeploy.
+Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `nebari-config.yaml`, and redeploy.
 
 ### Use a DNS provider other than CloudFlare
 
@@ -190,7 +190,7 @@ In some cases, you may wish to customize the default user's JupyterLab image, su
 Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupyterlab` services by default, but this can be changed by:
 
 1.  Building your own docker images, and
-2.  Including the DockerHub register hash into `qhub-config.yaml`.
+2.  Including the DockerHub register hash into `nebari-config.yaml`.
 
 ### Provide individual users with unique environments and cloud instance types
 

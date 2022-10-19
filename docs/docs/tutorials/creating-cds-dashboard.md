@@ -10,7 +10,7 @@ description: Quickly build and deploy a panel and CDS Dashboards
 
 Analyzing data provides insights, and a dashboard stitches these insights into a meaningful story. Fortunately, there are many great open source dashboards tools out there that you can use to organize and display your data in an engaging and digestible way.
 
-In this tutorial, you'll learn how to create a new dashboard with [Panel](https://panel.holoviz.org/) within Nebari. You'll also learn how to share your newly created dashboard with other users with [ContainDS Dashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
+In this tutorial, you'll learn how to create a new dashboard with [Panel](https://panel.holoviz.org/) within Nebari. You'll also learn how to share your newly created dashboard with other users with [CDSDashboards](https://cdsdashboards.readthedocs.io/en/stable/) (CDS Dashboards).
 
 :::note
 Currently, CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
@@ -72,18 +72,18 @@ At this point, you can add more plots or different styles to your plots, or you 
 
 In this section, you'll use CDS Dashboards to publish and share your newly created `panel` dashboard.
 
-To begin, click on the top left tab navigate to `File` > `Hub Control Panel` > `Dashboards`. Click on the button `New Dashboard`. You will now be presented with a new window where you'll need to provide additional details for your dashboard (see image below for reference).
+To begin, click on the top left tab navigate to `File` -> `Hub Control Panel` -> `Dashboards`. Click on the button `New Dashboard`. You will now be presented with a new window where you'll need to provide additional details for your dashboard (see image below for reference).
 
 ![CDS dashboard configuration screenshot](/img/tutorials/window_dashboard_configuration_example.png)
 
-1. Give your dashboard a name e.g. `Trees`. This name will be the name of your shareable dashboard, so make sure to give this a meaningful name.
-2. Add a short description e.g. `Insights and more`
+1. Give your dashboard a name, for example, `Trees`. This name will be the name of your shareable dashboard, so make sure to give this a meaningful name.
+2. Add a short description, for example, `Insights and more`.
 3. Set the correct user-access permission (optional). This setting allows you to share your dashboard with all the other users on your Nebari deployment or select specific users.
-4. Select the code source for your panel, e.g. in this tutorial you created a new notebook `panel-trees-dashboard.ipynb`, but you can also point to a Git repository.
+4. Select the code source for your panel. For example, in this tutorial you created a new notebook `panel-trees-dashboard.ipynb`, but you can also point to a Git repository.
 5. Select the appropriate framework for your dashboard, in this example you'll have to select: `panel`.
 6. Select the `conda` environment for your dashboard, make sure it is same as the one you previously selected as your Jupyter notebook environment
 7. In the `relative path` box, copy your notebook's path (example: `demo-dashboards/tutorial/panel-trees-dashboard.ipynb`).
-8. Once you have provided all the details above click on the save button
+8. Once you have provided all the details above click on the save button.
 
 You will then be redirected to a new window where you will be able to select the compute resources for your dashboard.
 
@@ -94,7 +94,7 @@ Also, the **best instance type** for your dashboard will depend on your specific
 :::
 
 An example of available compute instances available within a Nebari instance is shown in the following image:
-![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1cpu / 4GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
+![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1 CPU / 4 GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
 
 For this particular tutorial, a small instance should be enough. Once you have made a selection you can click on the **Save** button at the bottom of the window.
 This will trigger the deployment of your dashboard, and you'll be presented with a screen displaying the of this process.
@@ -110,12 +110,12 @@ You should be mindful of the incurring ongoing costs while the dashboard is runn
 
 ## Step 3 - Accessing the dashboard inside Nebari
 
-From JupyterLab click on the `File` menu tab, then select `Hub Control Panel` > `Dashboards`.
+From JupyterLab click on the `File` menu tab, then select `Hub Control Panel` -> `Dashboards`.
 
 ![JupyterLab expanded File menu - Hub Control Panel is highlighted with a surrounding purple box](/img/tutorials/nebari_jupyterlab_file_menu.png)
 
-This will redirect you to the Nebari's Dashboard main panel.
-Here, you can find the URL of your dashboards which can be shared with other users as well as managing the status and deployment of your dashboards:
+This will redirect you to Nebari's Dashboard main panel.
+Here, you can find the URL of your dashboards which can be shared with other users, as well as manage the status and deployment of your dashboards:
 
 - To stop the dashboard server click on the `stop` button.
 - To start the dashboard server click on the `start` button.
@@ -128,4 +128,4 @@ Here, you can find the URL of your dashboards which can be shared with other use
 
 Dashboards can be a very handy tool to share information and insights with colleagues and external customers or collaborators.
 
-By now you have a working, shareable dashboard 🎉 You can use this basic dashboard to build more complex dashboards, add more dynamic features, and start sharing data insights with others.
+Now you have a working shareable dashboard 🎉 You can use this basic dashboard to build more complex dashboards, add more dynamic features, and start sharing data insights with others.

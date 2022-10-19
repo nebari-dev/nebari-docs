@@ -9,11 +9,12 @@ description: A basic overview of how to deploy Nebari on Azure
 This guide is to help first-time users set up an Azure account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will walk you
 through the following steps:
 
+- [Introduction](#introduction)
 - [Sign up for Azure](#sign-up-for-azure)
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
 - [Deploying Nebari](#deploying-nebari)
-- [Destroying Nebari](#destroying-nebari)
+- [Destroting Nebari](#destroting-nebari)
 
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
@@ -73,8 +74,8 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
-installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the
+The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
 installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
@@ -110,7 +111,7 @@ nebari init azure --project projectname \
 :::
 
 :::note
-You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
@@ -143,13 +144,13 @@ with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, in order to create the first user accounts for administrator(s).
 
-The nebari initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
-The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
-plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
+The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step.
+Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
 
-For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the qhub-config.yaml file](/tutorials) documentation.
+For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](/tutorials) documentation.
 
 ## Deploying Nebari
 
@@ -160,17 +161,17 @@ nebari deploy --help
 ```
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
 
-With the `qhub-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
+With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c qhub-config.yaml
+nebari deploy -c nebari-config.yaml
 ```
 
 :::note
 During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-azure#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](/how-tos/domain-registry) for an overview of the required steps.
 :::
 
-The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `qhub init` command. Once Nebari is
+The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
 authenticated, it will start its infrastructure deployment process, which will take a few minutes to complete.
 
 If the deployment is successful, you will see the following output:

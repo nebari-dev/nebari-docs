@@ -33,7 +33,7 @@ For a more detailed cost estimate, please also refer to our \[Conceptual guides\
 
 :::warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your
-cloud administrator for more information. If you provision resources outside of the free tier, you may be charged. We're not responsible for any charges you may incur if this
+cloud administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this
 happens.
 :::
 
@@ -90,8 +90,8 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that `nebari` is successfully
-installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the `nebari` environment variables. If you had any issues during the
+The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
 installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
 :::
 
@@ -165,8 +165,8 @@ The nebari initialization scripts create a `qhub-config.yaml` file that contains
 The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
 
-For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the qhub-config.yaml file](/tutorials) documentation.
+For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](/tutorials) documentation.
 
 ## Deploying Nebari
 
@@ -193,7 +193,7 @@ authenticated, it will start its infrastructure deployment process, which will t
 If the deployment is successful, you will see the following output:
 
 ```bash
-[terraform]: QHub deployed successfully
+[terraform]: Nebari deployed successfully
 Services:
  - argo-workflows -> https://projectname.domain/argo/
  - conda_store -> https://projectname.domain/conda-store/
