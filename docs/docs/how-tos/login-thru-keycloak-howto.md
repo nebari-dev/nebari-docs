@@ -26,7 +26,7 @@ Nebari **does not** create a "regular" user for you during deployment, it only c
 
 ## 2. Authenticate with your provider
 
-At this stage, it is a little challenging to provide thorough instructions the particulars will depend on your [identity provider](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) / authentication provider ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others).
+At this stage, it is a little challenging to provide thorough instructions because the particulars will depend on your [identity provider](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) / authentication provider ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others).
 
 For more information on how to configure Keycloak, and add new users, review the [How to configure Keycloak](/how-tos/configuring-keycloak) sections of the docs.
 
