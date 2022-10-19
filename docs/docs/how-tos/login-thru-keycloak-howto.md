@@ -40,7 +40,7 @@ Once authenticated, you will be forwarded to the main JupyterHub page. On this p
 
 ## 3. Selecting a Profile
 
-Now, click in `Start My Server` and you will be prompted with a set of available for this particular user.
+Now, click on `Start My Server` and you will be prompted with a set of available profiles for this particular user.
 
 The customized profiles will give you access to fixed cloud resources. In this example, you could choose a resource with 1 CPUs and 4 GB of RAM or a resource with 2 CPU and 8 GB of RAM.
 These options are configured by your administrator. A more detailed explanation of dedicated profiles can be found in the [Profiles] section of
