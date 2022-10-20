@@ -181,7 +181,7 @@ nebari deploy --help
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
 ```bash
-nebari deploy -c qhub-config.yaml
+nebari deploy -c nebari-config.yaml
 ```
 
 :::note
