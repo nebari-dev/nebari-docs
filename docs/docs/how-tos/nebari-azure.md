@@ -205,4 +205,4 @@ nebari destroy --help
 Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
 
 ```bash
-nebari destroy -c qhub-config.yaml
+nebari destroy -c nebari-config.yaml
