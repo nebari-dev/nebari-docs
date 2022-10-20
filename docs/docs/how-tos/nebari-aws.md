@@ -161,7 +161,7 @@ with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 You can see that Nebari is generating a random password for the root user of Keycloak. This password is stored in a temporary file and will be used to authenticate to the Keycloak
 server once Nebari's infrastructure is fully deployed, to create the first user accounts for administrator(s).
 
-The nebari initialization scripts create a `qhub-config.yaml` file that contains a collection of default preferences and settings for your deployment.
+The Nebari initialization scripts create a `nebari-config.yaml` file that contains a collection of default preferences and settings for your deployment.
 
 The generated `qhub-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
