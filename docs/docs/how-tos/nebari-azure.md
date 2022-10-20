@@ -193,7 +193,7 @@ Kubecloak master realm username=root *****
 Congratulations! You have successfully deployed Nebari on Azure! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
 
-## Destroting Nebari
+## Destroying Nebari
 
 To see all the options available for the destroy command, type the following command on your command line:
 
