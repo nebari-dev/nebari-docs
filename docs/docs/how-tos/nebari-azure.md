@@ -14,7 +14,7 @@ through the following steps:
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
 - [Deploying Nebari](#deploying-nebari)
-- [Destroting Nebari](#destroting-nebari)
+- [Destroying Nebari](#destroying-nebari)
 
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
