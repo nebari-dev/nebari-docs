@@ -88,7 +88,10 @@ module.exports = {
         slug: "category/reference",
         keywords: ["reference"],
       },
-      items: ["references/overview"],
+      items: [
+        "references/overview",
+        "references/api_docs"
+    ],
     },
     {
       type: "category",

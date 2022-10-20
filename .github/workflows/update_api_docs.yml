@@ -1,0 +1,38 @@
+name: Update API docs
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update_api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+        working-directory: ./docs
+    steps:
+      - name: Check out repository 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install conda dependencies
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: "3.10"
+          activate-environment: autogen_doc_mod
+          environment-file: environment.yml
+          auto-activate-base: true
+
+      - name: Conda list
+        run: conda list
+
+      - name: Get qhub repo
+        run: |
+          cd docs
+          git clone https://github.com/Quansight/qhub
+          pydoc-markdown -I "." -p qhub --render-toc > api_temp.md
+
+          python api_doc_mods.py --autogen_path api_tmp.md --outpath docs/references/api_docs.mdd
