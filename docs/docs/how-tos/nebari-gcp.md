@@ -187,13 +187,8 @@ The nebari initialization scripts create a `nebari-config.yaml` file that contai
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
 
-<<<<<<< HEAD
-For additional information about the `qhub-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the qhub-config.yaml file](docs/tutorials) documentation.
-=======
 For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the `nebari-config.yaml` file](/tutorials) documentation.
->>>>>>> main
+[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation.
 
 ## Deploying Nebari
 
