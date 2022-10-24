@@ -1,7 +1,0 @@
-name: autogen_doc_mod
-channels:
-  - conda-forge
-dependencies:
-  - python>=3.9
-  - pip
-  - novella
