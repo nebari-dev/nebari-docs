@@ -84,6 +84,8 @@ It will be easier to debug, may be quicker to deploy, and is likely to be less e
 ## Automated CI tests with Cypress
 
 We use [Cypress](https://www.cypress.io/) to automate Nebari testing within a web browser environment.
+Cypress is an open source test automation tool for interactive web applications.
+We use it to test everything from the authentication process to JupyterHub integrations like Grafana monitoring.
 
 It's integrated into the GitHub Actions `tests.yaml` workflow in the `nebari-dev/nebari` repository.
 You can also run it locally.
@@ -104,7 +106,7 @@ npm install
 
 ```bash
 export CYPRESS_BASE_URL=http://127.0.0.1:8000/
-export NEBARI_CONFIG_PATH=/Users/dan/qhub/data-mk/qhub-config.yaml
+export NEBARI_CONFIG_PATH=/Users/<name>/<path>/nebari-config.yaml
 export CYPRESS_EXAMPLE_USER_PASSWORD=<password>
 ```
 
