@@ -9,10 +9,12 @@ description: A basic overview of how to deploy Nebari on Azure
 This guide is to help first-time users set up an Azure account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we will walk you
 through the following steps:
 
+- [Introduction](#introduction)
 - [Sign up for Azure](#sign-up-for-azure)
 - [Authentication](#authentication)
 - [Nebari Initialize](#nebari-initialize)
 - [Deploying Nebari](#deploying-nebari)
+- [Destroying Nebari](#destroying-nebari)
 
 For those already familiar to Azure subscriptions and infrastructure services, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication)
 section of this guide.
@@ -88,13 +90,25 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-azure && cd nebari-azure
    ```
 
-2. Executing the command below will generate a basic config file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the 
+`nebari-config.yaml` file with the Nebari cluster deployed on **Azure**.
 
-   ```bash
-   nebari init azure --project projectname \
-      --domain domain \
-      --auth-provider password
+```bash
+   nebari init --guided-init
    ```
+![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-azure.png)
+
+:::tip
+If you prefer not using the `guided-init` command then you can directly run the `init` command.
+
+Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+
+```bash
+nebari init azure --project projectname \
+	  --domain domain \
+	  --auth-provider password
+```
+:::
 
 :::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
@@ -103,8 +117,23 @@ You will be prompted to enter values for some choices above if they are absent f
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
-Securely generated default random password=*** for Keycloak root user
-stored at path=/tmp/NEBARI_DEFAULT_PASSWORD
+Securely generated default random password=*** for Keycloak root user stored at path=/tmp/QHUB_DEFAULT_PASSWORD
+Congratulations, you have generated the all important nebari-config.yaml file 🎉
+
+You can always make changes to your nebari-config.yaml file by editing the file directly.
+If you do make changes to it you can ensure its still a valid configuration by running:
+
+                nebari validate --config path/to/nebari-config.yaml
+
+For reference, if the previous Guided Init answers were converted into a direct nebari init command, it would be: 
+
+               nebari init <cloud-provider> --project-name <project-name> --domain-name <domain-name> --namespace dev --auth-provider password
+
+You can now deploy your Nebari instance with:
+
+        nebari deploy -c nebari-config.yaml
+
+For more information, run nebari deploy --help or check out the documentation: https://www.nebari.dev/how-tos/
 ```
 
 :::tip
@@ -124,6 +153,13 @@ For additional information about the `nebari-config.yaml` file and extra flags t
 [Understanding the `nebari-config.yaml` file](/tutorials) documentation.
 
 ## Deploying Nebari
+
+To see all the options available for the deploy command, run the following command:
+
+```bash 
+nebari deploy --help
+```
+![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
@@ -156,3 +192,17 @@ Kubecloak master realm username=root *****
 
 Congratulations! You have successfully deployed Nebari on Azure! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
+
+## Destroying Nebari
+
+To see all the options available for the destroy command, type the following command on your command line:
+
+```bash 
+nebari destroy --help
+```
+![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+
+Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
+
+```bash
+nebari destroy -c nebari-config.yaml

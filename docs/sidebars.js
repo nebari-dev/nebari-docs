@@ -31,6 +31,7 @@ module.exports = {
         keywords: ["getting-started"],
       },
       items: [
+        "getting-started/quickstart",
         "getting-started/installing-nebari",
         "getting-started/deploy",
         "getting-started/cloud-providers",
@@ -58,6 +59,7 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/using-vscode",
       ],
@@ -93,7 +95,8 @@ module.exports = {
       items: [
         "references/overview",
         "references/cli-command-reference",
-        "references/full-configuration-examples"
+        "references/full-configuration-examples",
+        "references/RELEASE",
       ],
     },
     {
