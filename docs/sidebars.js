@@ -102,6 +102,7 @@ module.exports = {
       items: [
         "community/file-issues",
         "community/code-contributions",
+        "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
       ],
