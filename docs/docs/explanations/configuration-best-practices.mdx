@@ -8,18 +8,16 @@ This document highlights and consolidates configuration best practices that are 
 
 ### Naming conventions
 
-When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc... for these resources.
+When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc. for these resources.
 As Nebari mainly uses the project name from config to populate those attributes, we must ensure that for such cases, the resource attribute/name meets the bound conventions for the chosen cloud provider.
 
-To avoid any burden on the user, on keeping track of each new namming rule for all infrastructrue related resources that Nebari creates, we have automate the process to ensure that all resources are named in a consistent manner.
-We then sumarize the necessary restrictions for each cloud provider in a list presented below.
+To avoid any burden on the user, on keeping track of each new naming rule for all infrastructure related resources that Nebari creates, we have automated the process to ensure that all resources are named in a consistent manner.
+The necessary restrictions for each cloud provider are presented below:
 
-When initializing Nebari ensure your project name is compatible with the following format requirements:
-
-- Letters from A to Z (upper and lower case) and numbers;
-- Maximum accepted length of the name string is **16** characters.
-- If using `AWS`: names should not start with the string "aws";
-- If using `Azure`: names should not contain "-".
+- Letters from A to Z (upper and lower case) and numbers
+- Maximum accepted length of the name string is **16** characters
+- If using `AWS`: names should not start with the string "aws"
+- If using `Azure`: names should not contain "-"
 
 
 ### Domain Format
@@ -43,11 +41,11 @@ security:
 
 ### Nebari version assertion
 
-All qhub-config.yaml files must contain a `qhub_version` field displaying the version of Nebari which it’s intended to be deployed with.
+All `qhub-config.yaml` files must contain a `qhub_version` field displaying the version of Nebari which it’s intended to be deployed with.
 
-Typically, you can upgrade the qhub-config.yaml file itself by manually adding the intended version to the file. And validating that the version matches the version of Nebari you are deploying with `qhub --version`.
+Typically, you can upgrade the `qhub-config.yaml` file itself by manually adding the intended version to the file and validating that the version matches the version of Nebari you are deploying with by calling `qhub --version`.
 
-If available, you may also update the configuration using the qhub upgrade command. This will update image numbers, plus updating `qhub_version` to match the installed version of qhub, as well as any other bespoke changes required.
+If available, you may also update the configuration using the `qhub upgrade` command. This will update image numbers, plus updating `qhub_version` to match the installed version of qhub, as well as any other bespoke changes required.
 
 :::warning
 Nebari will refuse to deploy if it doesn’t contain the same version as that of the qhub command.
