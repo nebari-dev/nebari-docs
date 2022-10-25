@@ -14,7 +14,7 @@ is merged. See https://github.com/blog/1506-closing-issues-via-pull-requests
 
 ## What does this implement/fix?
 
-_Put an `x` in the boxes that apply_
+_Put a `x` in the boxes that apply_
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds a feature)

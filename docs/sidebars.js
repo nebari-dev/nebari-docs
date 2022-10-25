@@ -89,9 +89,9 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/overview",
-        "references/api_docs"
-    ],
+        "references/api_docs",
+        "references/RELEASE",
+      ],
     },
     {
       type: "category",
