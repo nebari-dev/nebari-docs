@@ -90,6 +90,7 @@ module.exports = {
       },
       items: [
         "references/overview",
+        "references/RELEASE",
       ],
     },
     {
