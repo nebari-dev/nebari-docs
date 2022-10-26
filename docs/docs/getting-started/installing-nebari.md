@@ -64,7 +64,7 @@ The `nebari` command is the primary interface for interacting with Nebari. It ca
 
 For full usage of each command, including abbreviations, see [Command reference](/references/cli-command-reference). You can see the same information at the command line by viewing the command-line help.
 
-![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/validate_installation.png "Nebari's help command line output")
+![A representation of the output generated when nebari help command argument is executed, the output contains a list of the available positional arguments and usage.](/img/getting-started/validate_installation.png "Nebari's help command line output")
 
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide][nebari-troubleshooting].
