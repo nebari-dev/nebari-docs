@@ -89,7 +89,6 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/overview",
         "references/RELEASE",
       ],
     },
