@@ -62,6 +62,7 @@ If you are unable to successfully validate the Nebari installation above, you ma
 :::
 
 ---
+
 ## What's next?
 
 ### Nebari Init and Guided Init
@@ -71,7 +72,7 @@ Nebari Init creates and initializes your Nebari configuration. Guided init does 
 You can pass the `--help` flag to the `init` command to check all the arguments and options available for it.
 
 ```bash
-nebari init --help 
+nebari init --help
 ```
 
 ![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-init-help-2.png "Nebari's init help command line output")

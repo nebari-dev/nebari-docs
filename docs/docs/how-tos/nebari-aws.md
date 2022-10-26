@@ -108,7 +108,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the
-[`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
+   [`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
 
    ```bash
    nebari init --guided-init
@@ -126,6 +126,7 @@ nebari init aws --project projectname \
    --domain domain \
    --auth-provider password
 ```
+
 :::
 
 :::note
@@ -177,6 +178,7 @@ To see all the options available for the deploy command, run the following comma
 ```bash
 nebari deploy --help
 ```
+
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
@@ -218,6 +220,7 @@ To see all the options available for the destroy command, type the following com
 ```bash
 nebari destroy --help
 ```
+
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
 
 Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.

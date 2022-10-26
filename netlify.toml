@@ -1,0 +1,12 @@
+[build]
+base = "docs"
+command = "yarn run build"
+publish = "docs/build"
+
+# Adding redirects
+[[redirects]]
+from = "https://nebari.dev"
+to = "https://nebari.dev/docs"
+# The default HTTP status code is 301, but you can define a different one.
+status = 301
+force = true

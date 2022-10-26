@@ -81,7 +81,6 @@ const config = {
         },
         pages: {
           path: "src/pages",
-          routeBasePath: "/",
         }
       }),
     ],
