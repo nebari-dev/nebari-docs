@@ -1,9 +1,9 @@
 [build]
-base = "docs"
+base = "docs/"
 command = "yarn run build"
-publish = "docs/build"
+publish = "docs/build/"
 
-# Adding redirects
+# Adding redirects - to be deleted when landing page is ready
 [[redirects]]
 from = "https://nebari.dev"
 to = "https://nebari.dev/docs"
