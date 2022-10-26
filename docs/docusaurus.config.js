@@ -17,13 +17,13 @@ const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: "Nebari",
-    description: "An opinionated JupyterHub deployment for Data Science teams",
-    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
+    description: "Your open source data science platform. Built for scale, designed for collaboration.",
+    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python", "Dask"],
   },
   domain,
   githubOrgUrl,
-  githubUrl: `${githubOrgUrl}/nebari`,
-  githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+  githubUrl: `${githubOrgUrl}/nebari-docs`,
+  githubDocsUrl: `${githubOrgUrl}/nebari-docs/tree/main/docs`,
   githubForum,
   url,
 };
