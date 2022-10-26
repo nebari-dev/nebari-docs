@@ -88,7 +88,10 @@ module.exports = {
         slug: "category/reference",
         keywords: ["reference"],
       },
-      items: ["references/overview"],
+      items: [
+        "references/overview",
+        "references/RELEASE",
+      ],
     },
     {
       type: "category",
@@ -99,6 +102,7 @@ module.exports = {
       items: [
         "community/file-issues",
         "community/code-contributions",
+        "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
       ],

@@ -92,6 +92,20 @@ You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the env
 conda activate nebari-dev
 ```
 
+### Install Nebari in "editable" mode
+
+With an "editable" installation, all the changes you make to the Nebari codebase will be available in your developmnet environment in real-time.
+
+You can do this with:
+
+```bash
+python -m pip install -e .[dev]
+```
+
+:::note
+If you use `zsh`, you may need to escape the square brackets: `\[dev\]`.
+:::
+
 ### Pre-commit hooks
 
 The `nebari` repository uses [pre-commit hooks](https://pre-commit.com/) to keep the code format consistent across the codebase.
@@ -155,14 +169,12 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 
 ### Testing
 
-<!-- TODO: Add link to testing docs and update this section. Reg: gh-161 -->
-
 Tests are an important part of development.
 In your contributions, always include tests that fail before your change and pass afterwards.
 Run all the tests locally and make sure that they pass before submitting your contribution.
 If you need help with a test case, you can create a draft pull request and message the maintainers for help.
 
-<!-- [Read Test your contributions for tips and best practices ->] -->
+[For tips and best practices, read Test your Nebari contribution ->](nebari-tests)
 
 ### Document changes
 
