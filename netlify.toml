@@ -6,7 +6,7 @@ publish = "docs/build/"
 # Adding redirects - to be deleted when landing page is ready
 [[redirects]]
 from = "https://nebari.dev"
-to = "https://nebari.dev/docs"
+to = "https://nebari.dev/docs/welcome"
 # The default HTTP status code is 301, but you can define a different one.
 status = 301
 force = true
