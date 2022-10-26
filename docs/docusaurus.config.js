@@ -70,7 +70,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo
-          // Remove this to remove the "edit this page" links.
+          // Remove this to remove the "edit this page" links.\
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -81,6 +81,7 @@ const config = {
         },
         pages: {
           path: "src/pages",
+          routeBasePath: "/",
         }
       }),
     ],
@@ -114,18 +115,18 @@ const config = {
             items: [
               {
                 label: "Install Nebari",
-                to: "docs/getting-started/installing-nebari",
+                to: "docs/get-started/installing-nebari",
               },
               {
                 label: "Cloud providers",
-                to: "docs/getting-started/cloud-providers",
+                to: "docs/get-started/cloud-providers",
               },
             ]
           },
           {
             label: "Docs",
             position: "right",
-            to: "/docs",
+            to: "/docs/welcome",
           },
           {
             label: "Community",
@@ -154,8 +155,8 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Getting Started",
-                to: "docs/getting-started/installing-nebari",
+                label: "Get Started",
+                to: "docs/get-started/installing-nebari",
               },
               {
                 label: "Tutorials",

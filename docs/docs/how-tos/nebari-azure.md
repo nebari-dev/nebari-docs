@@ -74,14 +74,14 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](docs/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
-installation, please visit the "Getting Started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
+installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](docs/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:

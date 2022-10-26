@@ -25,7 +25,7 @@ that you have prior knowledge regarding [AWS billing and cost usage](https://aws
 
 If you are new to AWS, we advise you to first [sign up for a free account](https://aws.amazon.com/free/free-tier/) to get a better understanding of the platform and its features.
 Please refer to [Amazon VPC (Virtual Private Cloud)](https://aws.amazon.com/vpc/?nc1=h_ls) and
-[Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html#eks-prereqs) for more information on account types and prerequisites for
+[Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/get-started-console.html#eks-prereqs) for more information on account types and prerequisites for
 managing Kubernetes clusters.
 
 <!-- TODO: add link to conceptual guide -->
@@ -52,7 +52,7 @@ If you are using an already existing IAM user, please refer to
 manage your IAM user's access keys.
 
 If it's your first time creating a new IAM user, please refer to
-[Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) for more information. Otherwise, see
+[Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/get-started_create-admin-group.html) for more information. Otherwise, see
 [Creating an IAM user in your AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) for more information on how to create an IAM user.
 
 Follow these steps to set up your access keys and user accounts:
@@ -91,14 +91,14 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](docs/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
-installation, please visit the "Getting Started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
+installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](docs/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-aws`:
