@@ -1,7 +1,7 @@
 [build]
 base = "docs/"
 command = "yarn run build"
-publish = "docs/build/"
+publish = "build/"
 
 # Adding redirects - to be deleted when landing page is ready
 [[redirects]]
