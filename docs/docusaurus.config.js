@@ -145,7 +145,7 @@ const config = {
       announcementBar: {
         id: 'rename_announcement',
         content:
-          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHub</a> to Nebari ⚠️ </br>These docs have been now updated to reflect the new name.',
+          '🪴 This project has been officially renamed to Nebari and migrated to the <a rel="noopener noreferrer" href="https://github.com/nebari-dev">nebari-dev</a> organization in GitHub.</br> Shall you encounter any issues or need support, you can find us in our <a rel="noopener noreferrer" href="https://github.com/nebari-dev/nebari"> new repository</a>.',
         isCloseable: false,
       },
       footer: {
