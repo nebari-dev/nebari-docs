@@ -64,6 +64,7 @@ const config = {
       ({
         docs: {
           path: "docs",
+          routeBasePath: "docs",
           admonitions: {
             icons: "emoji",
           },
@@ -81,7 +82,7 @@ const config = {
         },
         pages: {
           path: "src/pages",
-          routeBasePath: "/",
+          include: ["**/*.md", "**/*.mdx"],
         }
       }),
     ],
