@@ -31,6 +31,7 @@ module.exports = {
         keywords: ["getting-started"],
       },
       items: [
+        "getting-started/quickstart",
         "getting-started/installing-nebari",
         "getting-started/deploy",
         "getting-started/cloud-providers",
@@ -41,7 +42,6 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/using-vscode",
         "tutorials/creating-cds-dashboard",
         "tutorials/cost-estimate-report",
         "tutorials/creating-new-environments",
@@ -59,8 +59,10 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
+        "how-tos/using-vscode",
       ],
     },
     {
@@ -76,25 +78,36 @@ module.exports = {
       },
       items: ["explanations/overview"],
     },
-    // TODO - uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Reference",
-    //   link: {
-    //     type: "generated-index",
-    //     title: "Reference Guides",
-    //     description:
-    //       "Nitty-gritty technical descriptions of how Nebari works. ",
-    //     slug: "category/reference",
-    //     keywords: ["reference"],
-    //   },
-    //   items: ["references/overview"],
-    // },
-    // {
-    //   type: "doc",
-    //   label: "Community",
-    //   id: "community/overview",
-    // },
+    {
+      type: "category",
+      label: "Reference",
+      link: {
+        type: "generated-index",
+        title: "Reference Guides",
+        description:
+          "Nitty-gritty technical descriptions of how Nebari works. ",
+        slug: "category/reference",
+        keywords: ["reference"],
+      },
+      items: [
+        "references/overview",
+        "references/RELEASE",
+      ],
+    },
+    {
+      type: "category",
+      label: "Community",
+      link: {
+        type: "doc", id: "community/index"
+      },
+      items: [
+        "community/file-issues",
+        "community/code-contributions",
+        "community/nebari-tests",
+        "community/doc-contributions",
+        "community/style-guide",
+      ],
+    },
     {
       type: "doc",
       label: "Troubleshooting",
