@@ -228,7 +228,7 @@ There is no need to TAR anything up since the only file required to be backed up
 Now we just need to upload the file to S3. You might want to [install the AWS CLI tool](#installations) as we did before, however, as the Hub container is a rather restricted
 environment the recommended approach is to upload files to AWS S3 buckets using curl.
 
-For more details please refer to the [using curl to access AWS S3 buckets](./awss3curl.md) documentation.
+For more details please refer to the [using curl to access AWS S3 buckets] documentation.
 
 ### Restoring JupyterHub DB
 
