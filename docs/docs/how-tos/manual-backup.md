@@ -240,7 +240,7 @@ You should restart the pod:
 kubectl delete -n dev pod hub-765c9488d6-8z4nj
 ```
 
-As for uploads, [you may need to use curl to download items from an AWS S3 bucket](./awss3curl.md).
+As for uploads, [you may need to use curl to download items from an AWS S3 bucket]
 
 ## Keycloak user/group database
 
