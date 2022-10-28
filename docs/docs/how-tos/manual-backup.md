@@ -269,7 +269,7 @@ You may wish to upload the Keycloak export to the same S3 location where you upl
 
 ### Import Keycloak
 
-To re-import your users and groups, [login to the /auth/ URL](../installation/login.md) using the root username and password.
+To re-import your users and groups, [login to the /auth/ URL] using the root username and password.
 
 Under 'Manage' on the left-hand side, click 'Import'. Locate the `exported-keycloak.json` file and select it. Then click the 'Import' button.
 
