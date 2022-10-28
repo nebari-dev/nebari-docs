@@ -11,7 +11,7 @@ This page has some tips for testing your contributions to make sure it works as 
 
 ### Test CLI manually
 
-If you have an [editable installation of Nebari](code-contributions#install-nebari-in-editable-mode), you can test your changes by running the [Nebari CLI commands](../getting-started/quickstart) from within your development environment.
+If you have an [editable installation of Nebari](code-contributions#install-nebari-in-editable-mode), you can test your changes by running the [Nebari CLI commands](../get-started/quickstart) from within your development environment.
 For example, you can run `nebari init` and make sure it builds the `nebari-config.yaml` file without errors.
 
 ### Test CLI with `pytest`
@@ -65,7 +65,7 @@ Re-deploying Nebari after every change can be tedious, so we recommend using [`k
 It can help you review and resolve day-to-day issues in the deployed clusters quickly.
 
 You can install `k9s` on macOS, Windows, and Linux with [these instructions project's README](https://github.com/derailed/k9s)
-For more details on using `k9s`, check out the [Troubleshooting documentation](troubleshooting#debug-the-kubernetes-cluster).
+For more details on using `k9s`, check out the [Troubleshooting documentation](../troubleshooting#debug-the-kubernetes-cluster).
 
 ### Cloud testing
 
@@ -102,6 +102,7 @@ cd tests_e2e
 ```bash
 npm install
 ```
+
 3. Set the following environment variables:
 
 ```bash
@@ -116,7 +117,7 @@ The `NEBARI_CONFIG_PATH` should point to the associated YAML file for that websi
 The tests will inspect the YAML file to understand which tests are relevant.
 It first checks `security.authentication.type` to determine what should be available on the login page, and how to test it.
 If the login type is 'password' then it uses the value in `CYPRESS_EXAMPLE_USER_PASSWORD` as the password.
-The default username is `example-user`, but it can be changed by setting the  `CYPRESS_EXAMPLE_USER_NAME` environment variable.
+The default username is `example-user`, but it can be changed by setting the `CYPRESS_EXAMPLE_USER_NAME` environment variable.
 
 4. Open the Cypress UI where you can run the tests manually and see the actions in the browser:
 

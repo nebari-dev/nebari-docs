@@ -55,13 +55,14 @@ You can verify that Nebari is properly installed, and you are able to execute th
 nebari --help
 ```
 
-![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available commands and their use.](/img/getting-started/nebari-help.png "Nebari's help command line output")
+![A representation of the output generated when Nebari help command argument is executed, the output contains a list of the available commands and their use.](/img/get-started/nebari-help.png "Nebari's help command line output")
 
 :::note Troubleshooting
 If you are unable to successfully validate the Nebari installation above, you may want to check out our [troubleshooting guide][nebari-troubleshooting].
 :::
 
 ---
+
 ## What's next?
 
 ### Nebari Init and Guided Init
@@ -71,10 +72,10 @@ Nebari Init creates and initializes your Nebari configuration. Guided init does 
 You can pass the `--help` flag to the `init` command to check all the arguments and options available for it.
 
 ```bash
-nebari init --help 
+nebari init --help
 ```
 
-![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/getting-started/nebari-init-help-2.png "Nebari's init help command line output")
+![A representation of the output generated when Nebari init help command is executed, the output contains a list of the available options and arguments and their use.](/img/get-started/nebari-init-help-2.png "Nebari's init help command line output")
 
 :::tip
 You can pass the `--guided-init` flag to the `init` command to interact with Guided Init Wizard.
@@ -104,6 +105,6 @@ Already made your mind about deployment? Check our handy how-to-guides:
 [nebari-gcp]: /how-tos/nebari-gcp.md
 [nebari-hpc]: /how-tos/nebari-hpc.md
 [nebari-local]: /how-tos/nebari-local.md
-[nebari-deploy]: /getting-started/deploy.mdx
+[nebari-deploy]: /get-started/deploy.mdx
 [nebari-troubleshooting]: /troubleshooting.mdx
-[supported-cloud-providers]: /getting-started/cloud-providers.mdx
+[supported-cloud-providers]: /get-started/cloud-providers.mdx

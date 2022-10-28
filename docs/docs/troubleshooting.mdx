@@ -17,6 +17,7 @@ If you are upgrading from a version of Nebari prior to `0.4.5`, you will need to
 to be compatible with the new Nebari version. This is a one-time migration step that will need to be performed after upgrading to continue using the service.
 
 After upgrading to `0.4.5`, the base names for the following namespaces that are built in with Nebari were changed as follows:
+
 - `default` -> `global`
 - `filesystem` -> `nebari-git`
 
@@ -30,9 +31,8 @@ Once all environments are migrated, you will be able to delete the `default` and
 :::warning
 Both the `filesystem` and `nebari-git` are built-in namespaces that are used by Nebari.
 Deleting or modifying these namespaces will require special permission levels that are not granted by default.
-Follow the instructions in the [Handle Access to restricted namespaces](/troubleshooting#handle-access-to-restricted-namespaces) to grant the necessary permissions.
+Follow the instructions in the [Handle Access to restricted namespaces](docs/troubleshooting#handle-access-to-restricted-namespaces) to grant the necessary permissions.
 :::
-
 
 ### Required pins for Dask environments
 
@@ -245,6 +245,7 @@ With `kubectl`:
 ```bash
 kubectl edit configmap conda-store-config -n nebari
 ```
+
 Once the editor opens, look for the `role_bindings` map and update
 the `default_namespace` value from `{"viewer"}` to `{"admin"}`. And restart the conda-store
 pods to fully propagate the changes.
