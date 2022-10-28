@@ -22,14 +22,14 @@ Follow your best judgment, and feel free to add to this document following our c
 ## Quick reference
 
 - **Use second person** instead of first person. Address the reader directly with "you" instead of "the user/they". For example, "In this tutorial, you learn how to use Dask from within Nebari".
-- If *absolutely necessary* - use first person plural like "we recommend."
+- If *absolutely necessary* - use first-person plural like "we recommend."
 - Prefer **present tense**. For example: "nebari-config.yaml is created." instead of "nebari-config.yaml will be created".
 - Use **active voice** throughout the documentation. For example: "Save the file" instead of "The file is saved".
 - If necessary, always **use gender-neutral pronouns**.
 - **Avoid unnecessary jargon, memes, jokes** or any other type of content that will not be widely applicable for a global audience.
 - **Avoid abbreviations** like "e.g.", "i.e.", and "etc.". Use full words like "for example", "that is", and "and so on" respectively.
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
-- Leave **only one black space between sentences**.
+- Leave **only one blank space between sentences**.
 - **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
 - Try and **use [semantic line breaks](https://sembr.org/)** to help with documentation and contribution reviews.
 - We prefer American English over British or other English variant to keep spelling consistency.

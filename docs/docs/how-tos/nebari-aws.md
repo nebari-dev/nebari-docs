@@ -25,7 +25,7 @@ that you have prior knowledge regarding [AWS billing and cost usage](https://aws
 
 If you are new to AWS, we advise you to first [sign up for a free account](https://aws.amazon.com/free/free-tier/) to get a better understanding of the platform and its features.
 Please refer to [Amazon VPC (Virtual Private Cloud)](https://aws.amazon.com/vpc/?nc1=h_ls) and
-[Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/get-started-console.html#eks-prereqs) for more information on account types and prerequisites for
+[Amazon EKS Prerequisites](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-console.html#eks-prereqs) for more information on account types and prerequisites for
 managing Kubernetes clusters.
 
 <!-- TODO: add link to conceptual guide -->
@@ -52,7 +52,7 @@ If you are using an already existing IAM user, please refer to
 manage your IAM user's access keys.
 
 If it's your first time creating a new IAM user, please refer to
-[Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/get-started_create-admin-group.html) for more information. Otherwise, see
+[Creating your first IAM admin user and user group](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) for more information. Otherwise, see
 [Creating an IAM user in your AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) for more information on how to create an IAM user.
 
 Follow these steps to set up your access keys and user accounts:

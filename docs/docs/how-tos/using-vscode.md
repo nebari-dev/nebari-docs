@@ -7,7 +7,7 @@ provides helpful tooling (including debugging) to assist developers in writing
 code. It also has many other functions which non-developers may also find
 useful such a text editing and markdown rendering.
 
-## Get started
+## Getting started
 
 VS Code comes built-in with every installation of Nebari. To start, log in
 to Nebari and spin up a JupyterLab instance.
