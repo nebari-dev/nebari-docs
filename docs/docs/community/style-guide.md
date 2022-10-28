@@ -32,7 +32,7 @@ Follow your best judgment, and feel free to add to this document following our c
 - Leave **only one blank space between sentences**.
 - **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
 - Try and **use [semantic line breaks](https://sembr.org/)** to help with documentation and contribution reviews.
-- We prefer American English over British or other English variant to keep spelling consistency.
+- **Prefer American English** over British or other English variant to keep spelling consistency.
 
 ### Date and time
 
