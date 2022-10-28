@@ -251,7 +251,7 @@ If you have a heavily customized Keycloak configuration, some details may be omi
 
 ### Export Keycloak
 
-The export script is at [`nebari/scripts/keycloak-export.py`](https://github.com/Quansight/qhub/blob/main/scripts/keycloak-export.py).
+The export script is at [`nebari/scripts/keycloak-export.py`](https://github.com/nebari-dev/nebari/blob/main/scripts/keycloak-export.py).
 
 Locate your `nebari-config.yaml` file, for example by checking out of your Git repo for you Nebari. Activate a virtual environment with the `nebari` Python package installed.
 
