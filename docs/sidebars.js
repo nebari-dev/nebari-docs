@@ -62,6 +62,7 @@ module.exports = {
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/using-vscode",
+        "how-tos/manual-backup",
       ],
     },
     {
