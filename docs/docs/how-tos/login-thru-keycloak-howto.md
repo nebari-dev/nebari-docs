@@ -30,9 +30,11 @@ At this stage, it is a little challenging to provide thorough instructions becau
 
 For more information on how to configure Keycloak, and add new users, review the [How to configure Keycloak](/how-tos/configuring-keycloak) sections of the docs.
 
-In this example, GitHub is acting as our identity provider. To continue the login process, the user selects the `GitHub` button and logs into github.com.
+In this example, Auth0 is acting as our identity provider. To continue the login process, the user selects the `Auth0` button and logs into through Auth0.
 
-![Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through GitHub](/img/how-tos/keycloak_nebari_login.png)
+<p align="center">
+<img src="/img/how-tos/keycloak_nebari_login.png" alt="Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through Auth0" width="400"/>
+</p>
 
 Once authenticated, you will be forwarded to the main JupyterHub page. On this page, you will find links to all of Nebari's core features and it is where you can launch your JupyterLab pod. If you are an admin, you'll also have access to the JupyterHub `Admin` management.
 
