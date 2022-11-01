@@ -1,0 +1,277 @@
+/*
+
+Styles for the Nebari home page
+
+*/
+
+.main {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.sectionHeading {
+  font-size: 45px;
+  text-align: center;
+  color: inherit;
+}
+
+/*
+  Hero
+*/
+
+.heroSection {
+  background-color: var(--ifm-color-black);
+  color: var(--ifm-color-white);
+  padding: 150px 0 219px 0;
+  text-align: center;
+}
+
+.heroSectionContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tagline1 {
+  margin: 0;
+  margin-top: 2em;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.tagline2 {
+  margin: 0;
+  margin-bottom: 1.5em;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.getStartedLink {
+  display: inline-flex;
+  background-color: var(--ifm-color-primary-dark);
+  color: var(--ifm-color-white);
+  border-radius: 4px;
+  padding: 0.8em 2em;
+  font-weight: 700;
+  align-items: baseline;
+  text-decoration: none;
+}
+
+.getStartedLink:hover {
+  background-color: var(--ifm-color-primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+  Why choose Nebari?
+*/
+
+.pitchSection {
+  padding: 75px;
+}
+
+.pitchList {
+  display: flex;
+  flex-flow: row wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.pitchItem {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  width: 33.33%;
+  text-align: center;
+  align-items: center;
+  font-size: 19px;
+  line-height: 26px;
+  padding: 35px;
+}
+
+@media screen and (max-width: 996px) {
+  .pitchItem {
+    flex: 0 1 543px;
+  }
+}
+
+.pitchItemHeading {
+  font-size: var(--ifm-h4-font-size);
+  margin-bottom: 1em;
+  font-weight: 600;
+}
+
+/* Deploy anywhere */
+
+.platformsSection {
+  background-color: var(--ifm-color-white);
+  color: var(--ifm-color-black);
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.platformsHeading {
+  text-align: left;
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.platformsLeft {
+  width: 50%;
+  padding: 75px;
+}
+
+/* This is to put a max-width on the text-column so it stays
+about the same height as the column of logos to the right */
+.platformsTextColumn {
+  max-width: 540px;
+  font-size: 19px;
+  line-height: 36px;
+}
+
+.platformsRight {
+  width: 50%;
+  padding: 75px;
+}
+
+.platformsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.platformsItem {
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  height: 88px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  flex: 1 1 397px;
+  width: 397px;
+  max-width: 397px;
+  min-width: 292px;
+}
+
+.platformsItem:nth-child(2n) {
+  position: relative;
+  left: 59px;
+}
+
+@media screen and (max-width: 996px) {
+  .platformsLeft {
+    width: 100%;
+    padding-bottom: 0;
+  }
+  .platformsRight {
+    width: 100%;
+  }
+  .platformsList {
+    justify-content: flex-end;
+  }
+}
+
+/*
+  Get started
+*/
+
+.getStartedSection {
+  background-color: var(--ifm-color-black);
+  color: var(--ifm-color-white);
+  padding: 82px;
+  text-align: center;
+}
+
+.getStartedLink2 {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--ifm-color-white);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 36px;
+  text-decoration: none;
+  text-align: center;
+  border-bottom: transparent 1px solid;
+  margin: 2em 0;
+}
+.getStartedLink2:hover {
+  text-decoration: none;
+  color: #fff;
+  border-bottom: #fff solid 1px;
+}
+
+/*
+  Integrations
+*/
+
+.integrationsSection {
+  background-color: var(--ifm-color-white);
+  color: var(--ifm-color-black);
+  padding: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.integrationsSubheading {
+  text-align: center;
+  max-width: 540px;
+  margin: auto;
+  font-size: 21px;
+  line-height: 36px;
+}
+
+.integrationsList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 76px auto;
+  padding: 0;
+  list-style-type: none;
+  justify-items: center;
+}
+
+.integrationsItem {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 36px;
+
+  background-color: #fff;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 10px;
+  width: 125px;
+  height: 125px;
+}
+
+.integrationsItem:nth-child(2n) {
+  position: relative;
+  top: 143px;
+  margin-bottom: 90px;
+}
+
+@media screen and (max-width: 996px) {
+  .integrationsList {
+    width: auto;
+    grid-template-columns: 150px 150px;
+    grid-template-rows: auto auto;
+    row-gap: 1em;
+  }
+
+  .integrationsItem:nth-child(2n) {
+    top: 0;
+    margin-bottom: 0;
+  }
+}
