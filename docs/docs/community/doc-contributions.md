@@ -55,6 +55,7 @@ Nebari uses the [Diátaxis framework for technical documentation](https://diatax
    ```
 
 ## Set up your local development environment
+
 ### Optional: Create an isolated environment
 
 1. To create an environment with `conda`:
@@ -143,6 +144,7 @@ Similar to the Nebari codebase, the `nebari-docs` repository uses a number of [p
 Once you have the dependencies and the pre-commit hooks installed, you can start writing and updating the documentation.
 
 The workflow to develop your contribution is similar to contributing code. The difference is that you're writing or updating Markdown files. Go through the following sections to learn about creating branches, making pull requests, and how the contribution review process works:
+
 - [Develop your contribution →](code-contributions.md#develop-your-contribution)
 - [Submitting your contribution →](code-contributions.md#submitting-your-contribution)
 - [Review process →](code-contributions.md#review-process)

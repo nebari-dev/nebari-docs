@@ -6,7 +6,7 @@ description: how to destroy your Nebari deployment and associated resources
 
 ## Introduction
 
-This is a guide on how to destroy your Nebari cluster, this includes all resources created the first time you deployed it. With your `nebari-config.yaml` configuration file, you can use a handy `destroy` command to automatically destroy resources with Nebari. 
+This is a guide on how to destroy your Nebari cluster, this includes all resources created the first time you deployed it. With your `nebari-config.yaml` configuration file, you can use a handy `destroy` command to automatically destroy resources with Nebari.
 
 You will need to export your cloud credentials, as you would for a `nebari deploy`, before you can destroy these cloud resources.
 
@@ -23,7 +23,7 @@ The Nebari team takes no responsibility for any incurred cloud costs. Please tak
 You can specify the `nebari-config.yaml` configuration file created while deploying Nebari to destroy the resources as well. Type the following command on your command line:
 
 :::warning
-If you have any data stored on your Nebari cluster you would like to keep - either files on the filesystem, conda environments in conda-store or an exported `json` of the users and groups from Keycloak - now is the time to back those up **off of the cluster**. 
+If you have any data stored on your Nebari cluster you would like to keep - either files on the filesystem, conda environments in conda-store or an exported `json` of the users and groups from Keycloak - now is the time to back those up **off of the cluster**.
 :::
 
 ```bash
@@ -45,7 +45,7 @@ nebari destroy -h
 ```
 
 :::note
-The above command will not delete your `nebar-config.yaml` or the rendered files thus a re-deployment with `nebari deploy` is possible afterwards. 
+The above command will not delete your `nebar-config.yaml` or the rendered files thus a re-deployment with `nebari deploy` is possible afterwards.
 :::
 
 Once you've decided to destroy your cluster and have read through the `nebari destroy --help` command, you are you now ready.
@@ -78,7 +78,7 @@ Destroying lingering resources on AWS can be tricky because the resources often 
 
 #### Destroy resources from the AWS console
 
-Here, we outline how to find and destroy resources from the AWS console. 
+Here, we outline how to find and destroy resources from the AWS console.
 
 1. Sign into your AWS account and in the search bar type `Tag Editor`
 
@@ -102,7 +102,7 @@ Here, we outline how to find and destroy resources from the AWS console.
 5. At this point, select the resource you wish to destroy. This will open another tab for you to destroy that resource.
 
 :::info
-The details on how to destroy each specific resource is beyond the scope of this guide however here is a helpful tip if you get stuck in the messy web of AWS dependencies. 
+The details on how to destroy each specific resource is beyond the scope of this guide however here is a helpful tip if you get stuck in the messy web of AWS dependencies.
 
 Try destroying resources like `EFS`, the `EC2 Load Balancer` or resources that might be connected to the `VPC` before deleting the `VPC` or any other network related resources.
 :::
@@ -126,7 +126,6 @@ This will print to the terminal the resources it has destroyed. **This scripts o
 :::info
 Even with this script, AWS on occasion will find itself in some resource dependency conflict and you might need to destroy these resources manually from the AWS console as shown [above](#delete-resources-from-the-aws-console).
 :::
-
 
 ### Azure
 
@@ -156,8 +155,7 @@ Finally, you will need to destroy the Kubernetes cluster with [Digital Ocean's C
 doctl kubernetes cluster delete <project-name>-<namespace> -f
 ```
 
-Or, if you wish to destroy your Digital Ocean resources from the Digital Ocean control panel and follow these instructions to destroy your [Kubernetes cluster](https://docs.digitalocean.com/products/kubernetes/how-to/destroy-clusters/) and these instructions to destroy the associated [space (i.e. S3)](https://docs.digitalocean.com/products/spaces/how-to/destroy/). 
-
+Or, if you wish to destroy your Digital Ocean resources from the Digital Ocean control panel and follow these instructions to destroy your [Kubernetes cluster](https://docs.digitalocean.com/products/kubernetes/how-to/destroy-clusters/) and these instructions to destroy the associated [space (i.e. S3)](https://docs.digitalocean.com/products/spaces/how-to/destroy/).
 
 ### Google Cloud Platform (GCP)
 
@@ -181,9 +179,11 @@ If you wish to destroy the cloud storage bucket from the GCP console, [follow th
 
 :::info
 When running the destroy command on a GCP, you might encounter a message that states:
+
 ```bash
 ERROR:nebari.destroy:ERROR: not all Nebari stages were destroyed properly. For cloud deployments of QHub typically only stages 01 and 02 need to succeed to properly destroy everything
 ```
+
 In general, this is not a problem. This happens because the destroy command thinks it needs to destroy resources that likely no longer exist. Double check from your GCP console to be sure all resources have indeed been destroyed.
 
 :::
