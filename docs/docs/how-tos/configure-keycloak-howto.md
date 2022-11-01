@@ -39,7 +39,9 @@ After the initial deployment, it is **highly** recommended that you change the K
 
 1. To change the `root` user password, go to your Nebari instance's admin dashboard - e.g., something like `https://{your-nebari-domain}/auth/admin/` and log in with the root password provided.
 
-   ![Nebari admin view - Root Login to Keycloak form](/img/how-tos/keycloak_master_login.png)
+   <p align="center">
+   <img src="/img/how-tos/keycloak_master_login.png" alt="Nebari admin view - Root Login to Keycloak form" width="400"/>
+   </p>
 
 2. From there, click on the **Root** dropdown in the top right of the screen, and select **Manage account**.
 
