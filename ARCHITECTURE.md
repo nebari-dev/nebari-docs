@@ -5,6 +5,8 @@ This is a short overview of the general architecture and structure of the reposi
 This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Documentation README](./docs/README.md)
 
 The structure of this repository is as follows:
+
+```
 .
 ├── .github
 ├── docs
@@ -29,6 +31,7 @@ The structure of this repository is as follows:
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
+```
 
 ## `.github` - GitHub-related files
 
@@ -89,7 +92,7 @@ To keep things tidy the images are organized in the same way as the main documen
 - `references`
 - `explanations`
 - `community`
-- `getting-started`: getting started sections of the documentation
+- `get-started`: getting started sections of the documentation
 - `welcome`: our main page
 
 ## Other miscellaneous files in `/docs`
