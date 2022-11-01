@@ -65,7 +65,7 @@ Re-deploying Nebari after every change can be tedious, so we recommend using [`k
 It can help you review and resolve day-to-day issues in the deployed clusters quickly.
 
 You can install `k9s` on macOS, Windows, and Linux with [these instructions project's README](https://github.com/derailed/k9s)
-For more details on using `k9s`, check out the [Troubleshooting documentation](troubleshooting#debug-the-kubernetes-cluster).
+For more details on using `k9s`, check out the [documentation on debugging Nebari](how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s).
 
 ### Cloud testing
 
