@@ -62,6 +62,8 @@ module.exports = {
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
+        "how-tos/login-keycloak",
+        "how-tos/configuring-keycloak",
         "how-tos/using-vscode",
         "how-tos/manual-backup",
       ],
