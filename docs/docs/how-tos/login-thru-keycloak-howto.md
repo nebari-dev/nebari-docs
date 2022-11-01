@@ -18,17 +18,17 @@ the login page shown in the image below.
 
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
-Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see the [How to Configure Keycloak](/how-tos/configure-keycloak-howto.md) docs.
+Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see the [How to Configure Keycloak](/docs/how-tos/configure-keycloak-howto.md) docs.
 
 :::warning
-Nebari **does not** create a "regular" user for you during deployment, it only creates the `root` Keycloak admin user. The following steps assume that your Nebari administrator has already created a Keycloak user in the Keycloak admin console for you. If not, follow the steps in [Adding new users to Keycloak](/how-tos/configuring-keycloak#adding-a-nebari-user) to create a Keycloak user.
+Nebari **does not** create a "regular" user for you during deployment, it only creates the `root` Keycloak admin user. The following steps assume that your Nebari administrator has already created a Keycloak user in the Keycloak admin console for you. If not, follow the steps in [Adding new users to Keycloak](/docs/how-tos/configuring-keycloak#adding-a-nebari-user) to create a Keycloak user.
 :::
 
 ## 2. Authenticate with your provider
 
 At this stage, it is a little challenging to provide thorough instructions because the particulars will depend on your [identity provider](https://www.keycloak.org/docs/latest/server_admin/#_identity_broker) / authentication provider ([LDAP](https://pt.wikipedia.org/wiki/LDAP), [OAuth 2.0](https://oauth.net/2/), passwordless authentication, password-based authentication and many others).
 
-For more information on how to configure Keycloak, and add new users, review the [How to configure Keycloak](/how-tos/configuring-keycloak) sections of the docs.
+For more information on how to configure Keycloak, and add new users, review the [How to configure Keycloak](/docs/how-tos/configuring-keycloak) sections of the docs.
 
 In this example, Auth0 is acting as our identity provider. To continue the login process, the user selects the `Auth0` button and logs into through Auth0.
 
