@@ -21,20 +21,20 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Getting Started",
+      label: "Get Started",
       link: {
         type: "generated-index",
-        title: "Getting Started",
+        title: "Get started",
         description:
           "This section describes how to install and deploy Nebari on a selection of cloud providers, and provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
-        slug: "category/getting-started",
-        keywords: ["getting-started"],
+        slug: "category/get-started",
+        keywords: ["get-started"],
       },
       items: [
-        "getting-started/quickstart",
-        "getting-started/installing-nebari",
-        "getting-started/deploy",
-        "getting-started/cloud-providers",
+        "get-started/quickstart",
+        "get-started/installing-nebari",
+        "get-started/deploy",
+        "get-started/cloud-providers",
       ],
     },
     {
@@ -63,6 +63,7 @@ module.exports = {
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
         "how-tos/using-vscode",
+        "how-tos/manual-backup",
       ],
     },
     {
@@ -90,7 +91,6 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/overview",
         "references/RELEASE",
       ],
     },

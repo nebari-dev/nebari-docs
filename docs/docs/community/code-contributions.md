@@ -119,16 +119,18 @@ import TabItem from '@theme/TabItem';
 <Tabs>
    <TabItem value="conda" label="conda">
 
-   ```
-   conda install -c conda-forge pre-commit
-   ```
+```
+conda install -c conda-forge pre-commit
+```
+
   </TabItem>
 
   <TabItem value="pip" label="pip" default>
 
-   ```bash
-   python -m pip install pre-commit
-   ```
+```bash
+python -m pip install pre-commit
+```
+
   </TabItem>
 </Tabs>
 
@@ -178,10 +180,10 @@ If you need help with a test case, you can create a draft pull request and messa
 
 Prioritize including relevant documentation with your contributions to help your code reviewers, Nebari users, as well as other contributors who may interact with your code.
 
-* Add **comments** to explain intricacies in your code and share "why" it is needed. If you reference a particular GitHub issue or PR, use `gh-xxxx` (where `xxxx` indicated the issue/PR number.)
-* If your contribution changes the behaviour of a function, be sure to document it in the **function's docstring**. As a reminder, we follow the [Google Style Guide](https://google.github.io/styleguide/pyguide.html#381-docstrings) for docstrings formatting.
-* Update any relevant pages on narrative documentation on `nebari.dev`. Read [Contribute to Nebari's documentation](doc-contributions.md) for more details.
-* If your change introduces any user-facing modifications, mention in the release notes.
+- Add **comments** to explain intricacies in your code and share "why" it is needed. If you reference a particular GitHub issue or PR, use `gh-xxxx` (where `xxxx` indicated the issue/PR number.)
+- If your contribution changes the behaviour of a function, be sure to document it in the **function's docstring**. As a reminder, we follow the [Google Style Guide](https://google.github.io/styleguide/pyguide.html#381-docstrings) for docstrings formatting.
+- Update any relevant pages on narrative documentation on `nebari.dev`. Read [Contribute to Nebari's documentation](doc-contributions.md) for more details.
+- If your change introduces any user-facing modifications, mention in the release notes.
 
 <!-- TODO: Add link to release notes and guidelines for how to update it. -->
 
@@ -226,12 +228,13 @@ If CI fails, you can find why by clicking on the "failed" icon (red cross) and i
 If you need help to fix the test failures, you may push your changes anyway and ask for help in a PR comment.
 
 <!-- TODO: Add link to our governance docs @trallard -->
+
 We also require a PR to be approved by at least one core team member.
 Approval means the core team member has carefully reviewed the changes, and the PR is ready for merging.
 
 ## Additional resources
 
-* [GitHub documentation on Contributing to projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects)
+- [GitHub documentation on Contributing to projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects)
 
 <!-- Links -->
 
