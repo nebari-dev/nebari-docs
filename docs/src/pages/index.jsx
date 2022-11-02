@@ -28,7 +28,7 @@ export default function HomePage() {
     >
       <main className={styles.main}>
         <section className={styles.heroSection}>
-          <div className={styles.heroSectionContent}>
+          <div className={styles.sectionContent}>
             <NebariLogoSvg width="158px" />
             <p className={styles.tagline1}>
               Your open source data science platform.
@@ -49,8 +49,8 @@ export default function HomePage() {
         </section>
 
         <section className={styles.pitchSection}>
-          <h2 className={styles.sectionHeading}>Why choose Nebari?</h2>
-          <div>
+          <div className={styles.sectionContent}>
+            <h2 className={styles.sectionHeading}>Why choose Nebari?</h2>
             <ol className={styles.pitchList}>
               <li className={styles.pitchItem}>
                 <LeavesCircleSvg aria-hidden="true" height="150px" />
@@ -116,94 +116,100 @@ export default function HomePage() {
         </section>
 
         <section className={styles.platformsSection}>
-          <div className={styles.platformsLeft}>
-            <div className={styles.platformsTextColumn}>
-              <h2
-                className={[
-                  styles.sectionHeading,
-                  styles.platformsHeading,
-                ].join(" ")}
-              >
-                Deploy anywhere
-              </h2>
-              <p>
-                Try Nebari on your local machine or deploy it on your cloud of
-                choice. Nebari is designed to be flexible, extensible, and
-                vendor-agnostic.
-              </p>
-              <p>
-                Nebari can be seamlessly deployed to the major public cloud
-                providers, including AWS, Azure, GCP, and Digital Ocean or to
-                bare-metal HPC clusters.
-              </p>
+          <div className={[styles.sectionContent, styles.platformsSectionContent].join(" ")}>
+            <div className={styles.platformsLeft}>
+              <div className={styles.platformsTextColumn}>
+                <h2
+                  className={[
+                    styles.sectionHeading,
+                    styles.platformsHeading,
+                  ].join(" ")}
+                >
+                  Deploy anywhere
+                </h2>
+                <p>
+                  Try Nebari on your local machine or deploy it on your cloud of
+                  choice. Nebari is designed to be flexible, extensible, and
+                  vendor-agnostic.
+                </p>
+                <p>
+                  Nebari can be seamlessly deployed to the major public cloud
+                  providers, including AWS, Azure, GCP, and Digital Ocean or to
+                  bare-metal HPC clusters.
+                </p>
+              </div>
             </div>
-          </div>
-          <div className={styles.platformsRight}>
-            <ul className={styles.platformsList}>
-              <li className={styles.platformsItem}>
-                <AwsSvg />
-              </li>
-              <li className={styles.platformsItem}>
-                <AzureSvg />
-              </li>
-              <li className={styles.platformsItem}>
-                <GcloudSvg />
-              </li>
-              <li className={styles.platformsItem}>
-                <DigitalOceanSvg />
-              </li>
-            </ul>
+            <div className={styles.platformsRight}>
+              <ul className={styles.platformsList}>
+                <li className={styles.platformsItem}>
+                  <AwsSvg />
+                </li>
+                <li className={styles.platformsItem}>
+                  <AzureSvg />
+                </li>
+                <li className={styles.platformsItem}>
+                  <GcloudSvg />
+                </li>
+                <li className={styles.platformsItem}>
+                  <DigitalOceanSvg />
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
         <section className={styles.getStartedSection}>
-          <h2 className={styles.sectionHeading}>Get started with Nebari</h2>
-          <p>
-            <a
-              href="/docs/category/get-started"
-              className={styles.getStartedLink2}
-            >
-              Learn how to deploy a Nebari instance&nbsp;&nbsp;
-              <RightArrowSvg />
-            </a>
-          </p>
-          <div>
-            <img src="/img/home/dashboard.png" alt="Nebari dashboard" />
+          <div className={styles.sectionContent}>
+            <h2 className={styles.sectionHeading}>Get started with Nebari</h2>
+            <p>
+              <a
+                href="/docs/category/get-started"
+                className={styles.getStartedLink2}
+              >
+                Learn how to deploy a Nebari instance&nbsp;&nbsp;
+                <RightArrowSvg />
+              </a>
+            </p>
+            <div>
+              <img src="/img/home/dashboard.png" alt="Nebari dashboard" />
+            </div>
           </div>
         </section>
 
         <section className={styles.integrationsSection}>
-          <h2 className={styles.sectionHeading}>Integrations</h2>
-          <p className={styles.integrationsSubheading}>
-            Nebari comes with out-of-the-box integrations to multiple tools in
-            the Data Science ecosystem.
-          </p>
-          <ul className={styles.integrationsList}>
-            <li className={styles.integrationsItem}>
-              <CondaStoreSvg aria-hidden="true" />
-              conda-store
-            </li>
-            <li className={styles.integrationsItem}>
-              <VSCodeSvg aria-hidden="true" />
-              VSCode
-            </li>
-            <li className={styles.integrationsItem}>
-              <GrafanaSvg aria-hidden="true" />
-              Grafana
-            </li>
-            <li className={styles.integrationsItem}>
-              <ClearMLSvg aria-hidden="true" />
-              ClearML
-            </li>
-            <li className={styles.integrationsItem}>
-              <PrefectSvg aria-hidden="true" />
-              Prefect
-            </li>
-            <li className={styles.integrationsItem}>
-              <JupyterSvg aria-hidden="true" />
-              Jupyter
-            </li>
-          </ul>
+          <div className={styles.sectionContent}>
+            <h2 className={styles.sectionHeading}>Integrations</h2>
+            <p className={styles.integrationsSubheading}>
+              Nebari comes with out-of-the-box integrations to multiple tools in
+              the Data Science ecosystem.
+            </p>
+            <ul className={styles.integrationsList}>
+              <li className={styles.integrationsItem}>
+                <CondaStoreSvg aria-hidden="true" />
+                conda-store
+              </li>
+              <li className={styles.integrationsItem}>
+                <VSCodeSvg aria-hidden="true" />
+                VSCode
+              </li>
+              <li className={styles.integrationsItem}>
+                <GrafanaSvg aria-hidden="true" />
+                Grafana
+              </li>
+              <li className={styles.integrationsItem}>
+                <ClearMLSvg aria-hidden="true" />
+                ClearML
+              </li>
+              <li className={styles.integrationsItem}>
+                <PrefectSvg aria-hidden="true" />
+                Prefect
+              </li>
+              <li className={styles.integrationsItem}>
+                <JupyterSvg aria-hidden="true" />
+                Jupyter
+              </li>
+            </ul>
+          </div>
         </section>
       </main>
     </Layout>

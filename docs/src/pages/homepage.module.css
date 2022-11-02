@@ -4,7 +4,9 @@ Styles for the Nebari home page
 
 */
 
-.main {
+/* Create max-width single column for the page's content */
+.sectionContent {
+  align-items: center;
   max-width: 1440px;
   margin: 0 auto;
 }
@@ -24,12 +26,6 @@ Styles for the Nebari home page
   color: var(--ifm-color-white);
   padding: 150px 0 219px 0;
   text-align: center;
-}
-
-.heroSectionContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .tagline1 {
@@ -104,11 +100,16 @@ Styles for the Nebari home page
   font-weight: 600;
 }
 
-/* Deploy anywhere */
+/*
+  Deploy anywhere
+*/
 
 .platformsSection {
   background-color: var(--ifm-color-white);
   color: var(--ifm-color-black);
+}
+
+.platformsSectionContent {
   display: flex;
   flex-flow: row wrap;
 }
@@ -124,8 +125,8 @@ Styles for the Nebari home page
   padding: 75px;
 }
 
-/* This is to put a max-width on the text-column so it stays
-about the same height as the column of logos to the right */
+/* This is to put a max-width on the text-column so it stays about the same
+height as the column of logos to the right */
 .platformsTextColumn {
   max-width: 540px;
   font-size: 19px;
@@ -215,9 +216,6 @@ about the same height as the column of logos to the right */
   background-color: var(--ifm-color-white);
   color: var(--ifm-color-black);
   padding: 82px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .integrationsSubheading {
