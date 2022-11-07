@@ -2,18 +2,25 @@
 
 Styles for the Nebari home page
 
+Note: only use color variables like --ifm-color-white in this file and not
+semantic variables like --ifm-color-primary because otherwise the page will
+respond to dark/light theme toggling, but the home page only has one mode
+because it mixes dark and light sections.
+
 */
 
 /* Create max-width single column for the page's content */
 .sectionContent {
-  align-items: center;
   max-width: 1440px;
   margin: 0 auto;
 }
 
-.sectionHeading {
+.sectionHeading,
+[data-theme=dark] .sectionHeading {
   font-size: 45px;
   text-align: center;
+  /* the heading is inside the section so inherit the text color set by the
+  section */
   color: inherit;
 }
 
@@ -42,9 +49,10 @@ Styles for the Nebari home page
   font-size: 24px;
 }
 
-.getStartedLink {
+.getStartedLink,
+[data-theme=dark] .getStartedLink {
   display: inline-flex;
-  background-color: var(--ifm-color-primary-dark);
+  background-color: var(--nebari-magenta-4);
   color: var(--ifm-color-white);
   border-radius: 4px;
   padding: 0.8em 2em;
@@ -53,10 +61,19 @@ Styles for the Nebari home page
   text-decoration: none;
 }
 
-.getStartedLink:hover {
-  background-color: var(--ifm-color-primary);
+.getStartedLink [stroke="#fff"] {
+  stroke: var(--ifm-color-white);
+}
+
+.getStartedLink:hover,
+[data-theme=dark] .getStartedLink:hover {
+  background-color: var(--nebari-magenta-5);
   color: #fff;
   text-decoration: none;
+}
+
+.getStartedLink:hover [stroke="#fff"] {
+  stroke: #fff
 }
 
 /*
@@ -64,7 +81,9 @@ Styles for the Nebari home page
 */
 
 .pitchSection {
+  background-color: #fff;
   padding: 75px;
+  color: var(--ifm-color-black);
 }
 
 .pitchList {
@@ -114,7 +133,8 @@ Styles for the Nebari home page
   flex-flow: row wrap;
 }
 
-.platformsHeading {
+.platformsHeading,
+[data-theme=dark] .platformsHeading {
   text-align: left;
   margin-top: 0.5em;
   margin-bottom: 1.5em;
@@ -190,7 +210,8 @@ height as the column of logos to the right */
   text-align: center;
 }
 
-.getStartedLink2 {
+.getStartedLink2,
+[data-theme=dark] .getStartedLink2 {
   display: inline-flex;
   align-items: baseline;
   color: var(--ifm-color-white);
@@ -202,11 +223,22 @@ height as the column of logos to the right */
   border-bottom: transparent 1px solid;
   margin: 2em 0;
 }
-.getStartedLink2:hover {
-  text-decoration: none;
-  color: #fff;
-  border-bottom: #fff solid 1px;
+
+.getStartedLink2 [stroke="#fff"] {
+  stroke: var(--ifm-color-white);
 }
+
+.getStartedLink2:hover,
+[data-theme=dark] .getStartedLink2:hover  {
+  text-decoration: none;
+  color: var(--nebari-magenta-7);
+  border-bottom: var(--nebari-magenta-7) 1px solid;
+}
+
+.getStartedLink2:hover [stroke="#fff"] {
+  stroke: var(--nebari-magenta-7);
+}
+
 
 /*
   Integrations

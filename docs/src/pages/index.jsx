@@ -14,11 +14,9 @@ import GcloudSvg from "@site/static/img/home/gcloud.svg";
 import DigitalOceanSvg from "@site/static/img/home/digital-ocean.svg";
 import CondaStoreSvg from "@site/static/img/home/conda-store.svg";
 import VSCodeSvg from "@site/static/img/home/vscode.svg";
-import GrafanaSvg from "@site/static/img/home/grafana.svg";
-import ClearMLSvg  from "@site/static/img/home/clear-ml.svg";
-import PrefectSvg from "@site/static/img/home/prefect.svg";
+import ClearMLSvg from "@site/static/img/home/clear-ml.svg";
 import JupyterSvg from "@site/static/img/home/jupyter.svg";
-import styles from "./homepage.module.css";
+import styles from "./index.module.css";
 
 export default function HomePage() {
   return (
@@ -29,7 +27,7 @@ export default function HomePage() {
       <main className={styles.main}>
         <section className={styles.heroSection}>
           <div className={styles.sectionContent}>
-            <NebariLogoSvg width="158px" />
+            <NebariLogoSvg width="158px" role="img" aria-label="Nebari logo" />
             <p className={styles.tagline1}>
               Your open source data science platform.
             </p>
@@ -42,7 +40,7 @@ export default function HomePage() {
                 className={styles.getStartedLink}
               >
                 Get Started&nbsp;&nbsp;
-                <RightArrowSvg />
+                <RightArrowSvg aria-hidden="true" />
               </a>
             </p>
           </div>
@@ -116,7 +114,12 @@ export default function HomePage() {
         </section>
 
         <section className={styles.platformsSection}>
-          <div className={[styles.sectionContent, styles.platformsSectionContent].join(" ")}>
+          <div
+            className={[
+              styles.sectionContent,
+              styles.platformsSectionContent,
+            ].join(" ")}
+          >
             <div className={styles.platformsLeft}>
               <div className={styles.platformsTextColumn}>
                 <h2
@@ -142,16 +145,16 @@ export default function HomePage() {
             <div className={styles.platformsRight}>
               <ul className={styles.platformsList}>
                 <li className={styles.platformsItem}>
-                  <AwsSvg />
+                  <AwsSvg role="img" aria-label="AWS" />
                 </li>
                 <li className={styles.platformsItem}>
-                  <AzureSvg />
+                  <AzureSvg role="img" aria-label="Microsoft Azure" />
                 </li>
                 <li className={styles.platformsItem}>
-                  <GcloudSvg />
+                  <GcloudSvg role="img" aria-label="Google Cloud" />
                 </li>
                 <li className={styles.platformsItem}>
-                  <DigitalOceanSvg />
+                  <DigitalOceanSvg role="img" aria-label="Digital Ocean" />
                 </li>
               </ul>
             </div>
@@ -166,8 +169,8 @@ export default function HomePage() {
                 href="/docs/category/get-started"
                 className={styles.getStartedLink2}
               >
-                Learn how to deploy a Nebari instance&nbsp;&nbsp;
-                <RightArrowSvg />
+                Learn how to deploy&nbsp;
+                <RightArrowSvg aria-hidden="true" />
               </a>
             </p>
             <div>
@@ -193,7 +196,7 @@ export default function HomePage() {
                 VSCode
               </li>
               <li className={styles.integrationsItem}>
-                <GrafanaSvg aria-hidden="true" />
+                <img alt="" src="/img/home/grafana.svg" />
                 Grafana
               </li>
               <li className={styles.integrationsItem}>
@@ -201,7 +204,7 @@ export default function HomePage() {
                 ClearML
               </li>
               <li className={styles.integrationsItem}>
-                <PrefectSvg aria-hidden="true" />
+                <img alt="" src="/img/home/prefect.svg" />
                 Prefect
               </li>
               <li className={styles.integrationsItem}>
