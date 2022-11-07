@@ -181,7 +181,7 @@ export default function HomePage() {
             <h2 className={styles.sectionHeading}>Integrations</h2>
             <p className={styles.integrationsSubheading}>
               Nebari comes with out-of-the-box integrations to multiple tools in
-              the Data Science ecosystem.
+              the data science ecosystem.
             </p>
             <ul className={styles.integrationsList}>
               <li className={styles.integrationsItem}>
