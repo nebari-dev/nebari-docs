@@ -26,7 +26,7 @@ provider: local
 domain: dojupyterhub.com
 ```
 
-- `project_name`: determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/explanations/config-best-practices#naming-conventions) for more details.
+- `project_name`: determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/explanations/config-best-practices) for more details.
 
 - `namespace` (Optional): used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [*namespace*](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
 - `provider`: determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
@@ -37,7 +37,7 @@ domain: dojupyterhub.com
   - `existing` for deploying on an existing kubernetes infrastructure
   - `local` for Kind local cluster deployment
 
-- `domain`: the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/explanations/config-best-practices#domain-format).
+- `domain`: the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/explanations/config-best-practices).
 
 
 ### Continuous integration and continuous deployment
@@ -348,7 +348,7 @@ azure:
 <TabItem value="do" label="DigitalOcean">
 
 DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the least expensive provider even accounting for spot/pre-emptible
-instances. In addition Digital Ocean doesn't have accelerator/gpu support. Digital Ocean is a great default choice for trying out Nebari. 
+instances. In addition Digital Ocean doesn't have accelerator/gpu support. Digital Ocean is a great default choice for trying out Nebari.
 
 :::note
 DigitalOcean regularly updates Kubernetes versions; therefore, the field `kubernetes_version` will most likely have to be changed. [See available instance types for DigitalOcean](https://www.digitalocean.com/docs/droplets/). If you used `qhub init` this version will automatically be computed for you. Do not copy the version you see below.
@@ -437,7 +437,7 @@ google_cloud_platform:
 
 <TabItem value="local" label="Local">
 
-Local deployment is intended for QHub deployments on a "local" cluster created and management by Kind. It is great for experimentation and development. 
+Local deployment is intended for QHub deployments on a "local" cluster created and management by Kind. It is great for experimentation and development.
 
 ```yaml
 local:
