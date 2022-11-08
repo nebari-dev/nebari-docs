@@ -17,13 +17,13 @@ const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: "Nebari",
-    description: "An opinionated JupyterHub deployment for Data Science teams",
-    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
+    description: "Your open source data science platform. Built for scale, designed for collaboration.",
+    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python", "Dask"],
   },
   domain,
   githubOrgUrl,
-  githubUrl: `${githubOrgUrl}/nebari`,
-  githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+  githubUrl: `${githubOrgUrl}/nebari-docs`,
+  githubDocsUrl: `${githubOrgUrl}/nebari-docs/tree/main/docs`,
   githubForum,
   url,
 };
@@ -63,15 +63,15 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
           path: "docs",
+          routeBasePath: "docs",
           admonitions: {
             icons: "emoji",
           },
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo
-          // Remove this to remove the "edit this page" links.
+          // Remove this to remove the "edit this page" links.\
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -80,6 +80,10 @@ const config = {
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
         },
+        pages: {
+          path: "src/pages",
+          include: ["**/*.md", "**/*.mdx"],
+        }
       }),
     ],
   ],
@@ -107,28 +111,28 @@ const config = {
         items: [
           // right navbar items
           {
-            label: "Getting Started",
+            label: "Get Started",
             position: "right",
             items: [
               {
                 label: "Install Nebari",
-                to: "getting-started/installing-nebari",
+                to: "docs/get-started/installing-nebari",
               },
               {
                 label: "Cloud providers",
-                to: "getting-started/cloud-providers",
+                to: "docs/get-started/cloud-providers",
               },
             ]
           },
           {
-            label: "Documentation",
+            label: "Docs",
             position: "right",
-            to: "/",
+            to: "/docs/welcome",
           },
           {
             label: "Community",
             position: "right",
-            to: "community",
+            to: "docs/community",
           },
           {
             href: customFields.githubUrl,
@@ -141,7 +145,7 @@ const config = {
       announcementBar: {
         id: 'rename_announcement',
         content:
-          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHub</a> to Nebari ⚠️ </br>These docs have been now updated to reflect the new name.',
+          '🪴 This project has been officially renamed to Nebari and migrated to the <a rel="noopener noreferrer" href="https://github.com/nebari-dev">nebari-dev</a> organization in GitHub.</br> Shall you encounter any issues or need support, you can find us in our <a rel="noopener noreferrer" href="https://github.com/nebari-dev/nebari"> new repository</a>.',
         isCloseable: false,
       },
       footer: {
@@ -152,12 +156,12 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Getting Started",
-                to: "getting-started/installing-nebari",
+                label: "Get Started",
+                to: "docs/get-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "tutorials",
+                to: "docs/tutorials",
               },
             ],
           },

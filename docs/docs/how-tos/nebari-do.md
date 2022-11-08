@@ -70,14 +70,14 @@ These environment variables will apply only to your current shell session. If yo
 startup file (for example, for example in the `~/.bashrc` or `~/.profile` for the bash shell). You can also opt for [`direnv`](https://direnv.net/) as a shell extension for managing your environment variables.
 :::
 
-:::note The steps in the following sections assume you have (i) completed the [Install Nebari](/getting-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+:::note The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **Digital Ocean** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues
-during the installation, please visit the "Getting Started" section of our [troubleshooting page](/troubleshooting) for further guidance.
+during the installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](/getting-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-do`:
@@ -86,12 +86,13 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-do && cd nebari-do
    ```
 
-2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the 
-`nebari-config.yaml` file with the Nebari cluster deployed on **DO**.
+2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the
+   `nebari-config.yaml` file with the Nebari cluster deployed on **DO**.
 
 ```bash
    nebari init --guided-init
-   ```
+```
+
 ![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-do.png)
 
 :::tip
@@ -104,6 +105,7 @@ nebari init do --project projectname \
 	  --domain domain \
 	  --auth-provider password
 ```
+
 :::
 
 :::note
@@ -121,7 +123,7 @@ If you do make changes to it you can ensure its still a valid configuration by r
 
                 nebari validate --config path/to/nebari-config.yaml
 
-For reference, if the previous Guided Init answers were converted into a direct nebari init command, it would be: 
+For reference, if the previous Guided Init answers were converted into a direct nebari init command, it would be:
 
                 nebari init <cloud-provider> --project-name <project-name> --domain-name <domain-name> --namespace dev --auth-provider password
 
@@ -146,15 +148,16 @@ The generated `nebari-config.yaml` is the configuration file that will determine
 Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
 
 For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the nebari-config.yaml file](/tutorials) documentation.
+[Understanding the nebari-config.yaml file](docs/tutorials) documentation.
 
 ## Deploying Nebari
 
 To see all the options available for the deploy command, run the following command:
 
-```bash 
+```bash
 nebari deploy --help
 ```
+
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
@@ -164,7 +167,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](/how-tos/nebari-do#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](docs/how-tos/nebari-do#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](docs/how-tos/domain-registry) for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
@@ -193,12 +196,14 @@ Nebari instance for your team's use.
 
 To see all the options available for the destroy command, type the following command on your command line:
 
-```bash 
+```bash
 nebari destroy --help
 ```
+
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
 
 Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
 
 ```bash
 nebari destroy -c nebari-config.yaml
+```

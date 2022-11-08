@@ -19,7 +19,7 @@ repos:
         language: python
         exclude: ^docs/yarn.lock
         args:
-          - --uri-ignore-words-list=aks
+          - -L aks
 
   # Python
   # Autoformat: Python code, syntax patterns are modernized
