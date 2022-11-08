@@ -7,7 +7,6 @@ description: An in-depth guide to advanced configuration options.
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
 # Advanced configuration guide
 
 Nebari uses a configuration file, `qhub-config.yaml`, to deploy and redeploy changes to your infrastructure. The `qhub-config.yaml` configuration file
@@ -26,10 +25,11 @@ provider: local
 domain: dojupyterhub.com
 ```
 
-- `project_name`: determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/explanations/config-best-practices) for more details.
+- `project_name`: determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/docs/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
 
-- `namespace` (Optional): used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [*namespace*](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
+- `namespace` (Optional): used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
 - `provider`: determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
+
   - `do` for DigitalOcean
   - `aws` for Amazon AWS
   - `gcp` for Google Could Provider
@@ -37,8 +37,7 @@ domain: dojupyterhub.com
   - `existing` for deploying on an existing kubernetes infrastructure
   - `local` for Kind local cluster deployment
 
-- `domain`: the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/explanations/config-best-practices).
-
+- `domain`: the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/docs/explanations/config-best-practices#domain-format).
 
 ### Continuous integration and continuous deployment
 
@@ -85,6 +84,7 @@ errors we currently support **Let's Encrypt**.
 certificate:
   type: self-signed
 ```
+
   </TabItem>
   <TabItem label="Let's Encrypt" value="letsencrypt">
 
@@ -98,6 +98,7 @@ certificate:
   acme_email: <your-email-address>
   acme_server: https://acme-v02.api.letsencrypt.org/directory
 ```
+
 :::note
 The above snippet will already be present if you provided an `--ssl-cert-email` when you ran `qhub init`.
 :::
@@ -125,7 +126,7 @@ kubectl create secret tls <secret-name> \
 The kubernetes default namespace that QHub uses is `dev`. Otherwise, it will be your `namespace`
 defined in `qhub-config.yaml`.
 :::
-  </TabItem>
+</TabItem>
 </Tabs>
 
 #### Wildcard certificates
@@ -135,7 +136,6 @@ Defining a wildcard certificate decreases the amount of CN names you would need 
 subdomain.
 
 It's not possible to request a double wildcard certificate for a domain (for example \*.\*.local.com). As a default behavior of [Traefik](https://doc.traefik.io/traefik/https/tls/#default-certificate), if the Domain Name System (DNS) and Common Name (CN) name doesn't match, Traefik generates and uses a self-signed certificate. This may lead to some unexpected [TLS](https://www.internetsociety.org/deploy360/tls/basics) issues, so as alternative to including each specific domain under the certificate CN list, you may also define a wildcard certificate.
-
 
 ### Authentication methods
 
@@ -154,13 +154,13 @@ security:
       client_id: <CLIENT_ID>
       client_secret: <CLIENT_SECRET>
 ```
+
 :::note
 In previous Nebari versions (prior to `v0.4.0`), users and groups were added directly into the `qhub-config.yaml`. Starting with `v0.4.0`, users and group management are now handled by
 [Keycloak as described below](#keycloak).
 :::
 
 `security.authentication`: is for configuring the OAuth and GitHub Provider, password based authentication, or custom authentication.
-
 
 <Tabs>
   <TabItem label="Auth0" value="auth0">
@@ -187,6 +187,7 @@ security:
       client_secret: ...
       auth0_subdomain: ...
 ```
+
   </TabItem>
   <TabItem label="GitHub" value="github">
 
@@ -201,6 +202,7 @@ security:
       client_id: ...
       client_secret: ...
 ```
+
   </TabItem>
   <TabItem label="Password" value="password" default="true">
 
@@ -208,7 +210,7 @@ Username/Password is the simplest authentication method. It defers to however Ke
 providers the deployment will also configure those providers in Keycloak to save you from manual configuration.
 
 :::note
-Even if you formally select `password` authentication in the `qhub-config.yaml` file,  it's still possible to add GitHub, or Google etc, as an Identity Provider in Keycloak.
+Even if you formally select `password` authentication in the `qhub-config.yaml` file, it's still possible to add GitHub, or Google etc, as an Identity Provider in Keycloak.
 :::
 
 ```yaml
@@ -216,9 +218,9 @@ security:
   authentication:
     type: password
 ```
+
   </TabItem>
 </Tabs>
-
 
 ### Keycloak
 
@@ -453,6 +455,7 @@ local:
       key: kubernetes.io/os
       value: linux
 ```
+
 </TabItem>
 
 </Tabs>
@@ -654,7 +657,6 @@ profiles:
 
 Nebari uses a custom JupyterHub theme, [Quansight/qhub-jupyterhub-theme](https://github.com/quansight/qhub-jupyterhub-theme). Users can further customize the theme through these available options:
 
-
 ```yaml
 theme:
   jupyterhub:
@@ -687,7 +689,7 @@ the displayed version will be the same as `qhub_version`, an overwrite can be do
 Nebari is using a new way of distributing environments using [conda-store](https://github.com/quansight/conda-store). Since conda-store is under active development, be aware that the following details may change over time.
 
 Each environment configuration is a `environment.<filename>` mapping to a conda environment definition file. If you need to pin a specific version, please include it in the
-definition. One current requirement is that each environment *must* include `ipykernel`, `ipywidgets`, `qhub-dask==0.2.3`. Upon changing the environment definition expect 1-10 minutes
+definition. One current requirement is that each environment _must_ include `ipykernel`, `ipywidgets`, `qhub-dask==0.2.3`. Upon changing the environment definition expect 1-10 minutes
 upon deployment of the configuration for the environment to appear.
 
 Nebari comes with two default filesystem environments that are built during deployment.
@@ -731,8 +733,6 @@ environments:
 :::warning
 By default conda-store restricts the environment channels to only accept `defaults` and `conda-forge`, you can check out [Managing conda environment] for more details.
 :::
-
-
 
 ## Overrides
 
@@ -834,5 +834,3 @@ under the networking settings of your cloud provider while creating the VM and t
 </TabItem>
 
 </Tabs>
-
-
