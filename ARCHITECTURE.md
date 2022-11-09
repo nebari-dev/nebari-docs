@@ -47,7 +47,7 @@ This is the top-level directory for the documentation. It contains the following
 
 ## `docs`
 
-The main content for the Nebari documentation. Since we follow the Diátaxis documentation framework the content is organised to follow the Diátaxis structure:
+The main content for the Nebari documentation. Since we follow the Diátaxis documentation framework the content is organized to follow the Diátaxis structure:
 
 - `tutorials`: Step-by-step tutorials that cover how to do a particular thing from beginning to end.
 - `how-tos`: How-tos that are intended to be used in the context of a particular project.
@@ -111,7 +111,7 @@ To keep things tidy the images are organized in the same way as the main documen
 
 ## Files in `./` - the root directory of this repository
 
-- `.gitignore`: `.git` configuration file with files and patters not to be committed to version control
+- `.gitignore`: `.git` configuration file with files and patterns not to be committed to version control
 - `.gitpod.yml`: gitpod configuration file
 - `.pre-commit.yaml`: configuration for the multiple non-JavaScript pre-commits used
 - `CONTRIBUTING.md`: this project's contribution guidelines
