@@ -2,11 +2,11 @@
 
 This is a short overview of the general architecture and structure of the repository, to help you orient yourself.
 
-This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Documentation README](./docs/README.md)
+This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Contributing to Nebari's documentation section in our community guidelines](https://www.nebari.dev/docs/community/doc-contributions).
 
 The structure of this repository is as follows:
 
-```
+```bash
 .
 ├── .github
 ├── docs
@@ -41,6 +41,9 @@ This directory contains the following
 - `PULL_REQUEST_TEMPLATE`: this project's pull request template
 - `workflows/`: GitHub actions workflows for this repository
 
+> **Note**
+> The issue and pull request templates are located in the (nebari-dev/.github)[https://github.com/nebari-dev/.github] repository and are synced across repositories through a GitHub action.
+
 # `docs/`
 
 This is the top-level directory for the documentation. It contains the following files and directories.
@@ -62,7 +65,7 @@ Plus additional sections such as `glossary, troubleshooting, welcome, etc.`
 This folder contains all the source files for the documentation theme:
 The team uses `scss` to work on the stylesheets to benefit from the syntactic sugar this offers over `css`. The stylesheets are organized as follows:
 
-```ascii
+```bash
 .
 ├── scss
 │   ├── utils
