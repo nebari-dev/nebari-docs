@@ -169,7 +169,7 @@ export default function HomePage() {
                 href="/docs/category/get-started"
                 className={styles.getStartedLink2}
               >
-                Learn how to deploy&nbsp;
+                Learn how to deploy a Nebari instance&nbsp;&nbsp;
                 <RightArrowSvg aria-hidden="true" />
               </a>
             </p>

@@ -87,7 +87,7 @@ const config = {
           customCss: require.resolve("./src/scss/application.scss"),
         },
         pages: {
-          path: "src/pages"
+          path: "src/pages",
         },
       }),
     ],
@@ -115,11 +115,13 @@ const config = {
         hideOnScroll: false,
         items: [
           // right navbar items
-          {
-            label: "Home",
-            position: "right",
-            to: "/",
-          },
+
+          // when landing page is ready, uncomment the Home nav bar link
+          // {
+          //   label: "Home",
+          //   position: "right",
+          //   to: "/",
+          // },
           {
             label: "Get Started",
             position: "right",
