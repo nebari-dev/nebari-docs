@@ -1,6 +1,6 @@
 ---
 id: file-issues
-title: Bug triaging and issue curation
+title: Opening issues
 description: Best practices for opening and triaging issues
 ---
 
