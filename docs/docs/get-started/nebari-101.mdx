@@ -1,0 +1,73 @@
+---
+title: Nebari 101
+description: An introduction to using Nebari as a dev platform
+---
+
+import nebari_logo from '/logo/Nebari-logo-square.png';
+
+# Nebari 101 <img src={nebari_logo} style={{height: 60, border: 0, boxShadow: "none", verticalAlign: "text-top"}} />
+
+This guide is intended to walk new users through the process of getting started
+using Nebari as a development platform. You may be here as a software developer,
+or
+
+## Logging into Nebari
+
+To get started, we'll begin by navigating to the Nebari URL. Once there, you
+can click on `Sign in with Keycloak`.
+
+![Front page of nebari with button to sign in with keycloak](/img/get-started/101-front-page.png)
+
+This will take you to to [Keycloak](https://www.keycloak.org/) for
+authentication. Depending on how your admin has set up authentication, you may
+need to log in with a username and password, [auth0](https://auth0.com/), or
+[GitHub](https://github.com/). You may also be able to register for access
+via Keycloak if your admin has allowed that feature.
+
+![Login screen for keycloak](/img/get-started/101-keycloak-login.png)
+
+Once you proceed through the Keycloak login, you will be redirected back to
+the main Nebari instance homepage. Click on `Start My Server` to see the list
+of available servers.
+
+![Nebari homescreen with button for starting my server](/img/get-started/101-start-server.png)
+
+Select a server size, then click `Start` to launch your server.
+
+![Server optons with radio buttons for server type and a start button to launch](/img/get-started/101-server-options.png)
+
+When you launch a new server, unless you are using a local cluster, Nebari will
+go through the process of spinning up a new pod and building the docker image
+which will be running inside the pod. This may take a few moments, so be
+patient :wink:
+
+![Loading screen seen when user instance is spinning up](/img/get-started/101-server-starting-up.png)
+
+Once the server is ready, you'll be redirected to the
+[JupyterLab](https://jupyterlab.readthedocs.io/) interface.
+
+![Jupyterlab view once logged in to nebari](/img/get-started/101-jupyterlab_interface.png)
+
+Congrats :tada: ! You are ready to get to work!
+
+## Working on Nebari
+
+Nebari has many different integrations that are provided out-of-the-box. We
+encourage you to explore the available integrations and see what might be
+useful to you.
+
+:seedling: Environments are served via the [conda-store](https://conda.store/) UI. It's
+definitely worth it to check out the tutorial on
+[Creating New Environments](/docs/tutorials/creating-new-environments).
+
+:seedling: Another popular topic is the guide on [Using Visual Studio (VS) Code](/docs/how-tos/using-vscode).
+
+:seedling: If you work with Machine Learning models, you may be interested in the ClearML
+integration, providing MLOps to help you manage and compare your model simulations.
+
+:seedling: If you need a workflow manager, check out [Prefect](https://www.prefect.io/)!
+
+:seedling: Both admins and other devs can find usage for Grafana dashboards to assist with
+data monitoring.
+
+Or just jump right in and explore!
