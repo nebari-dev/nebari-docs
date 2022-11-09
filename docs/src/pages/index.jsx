@@ -174,7 +174,11 @@ export default function HomePage() {
               </a>
             </p>
             <div>
-              <img src="/img/home/dashboard.png" alt="Nebari dashboard" />
+              <img
+                src="/img/home/nebari-deploy.gif"
+                alt="Deploy Nebari from a YAML file, generated using the Guided Init"
+                width="80%"
+              />
             </div>
           </div>
         </section>
