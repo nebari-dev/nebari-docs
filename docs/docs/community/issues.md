@@ -63,34 +63,6 @@ The following actions are typically useful:
 - Linking to related issues or discussions while briefly describing how they are related, for instance “See also #xyz for a similar attempt at this” or “See also #xyz where the same thing happened in another cloud provider" provides context and helps the discussion.
 - Summarizing long discussions on issues to help new and existing contributors quickly understand the background, current status, and course of action for the issue.
 
-## Issue triaging guidelines
-
-Issue triage is a process by which Nebari maintainers and contributors intake and reviews new GitHub issues and requests,
-and organize them to be actioned. Triaging involves categorizing issues and Pull Requests based on factors such as priority, area of ownership of the issue (tags), and the issue kind (bug, feature, and so on).
-
-Triage can happen asynchronously and continuously, or in regularly scheduled meetings.
-
-### Why Is Triaging Beneficial?
-
-Projects that triage regularly say it offers a number of benefits, such as:
-
-- Speeding up issue management
-- Keeping contributors engaged by shortening response times
-- Preventing work from lingering endlessly
-- Replacing niche requests and one-offs with a neutral process that acts like a boundary
-- Greater transparency, interesting discussions, and more collaborative, informed decision-making
-- Building prioritization, negotiation and decision-making skills, which are critical to most tech roles
-- Reinforcement of the project's community and culture
-
-People who enjoy product management and iterating on processes tend to enjoy triaging because it empowers their project to maintain a steady,
-continuous flow of work that is assessed and prioritized based on feedback, impact, and value.
-
-### Permissions
-
-Opening new issues and leaving comments on other people's issues are possible for all contributors.
-However, permission to assign specific labels (such as `type: enhancement 💅🏼`), change milestones,
-or close other contributors issues is only granted to the author of an issue, assignees, and organization members.
-
 <!-- links -->
 
 [nebari-issues]: https://github.com/nebari-dev/nebari/issues
