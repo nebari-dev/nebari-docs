@@ -298,6 +298,7 @@ height as the column of logos to the right */
     grid-template-columns: 150px 150px;
     grid-template-rows: auto auto;
     row-gap: 1em;
+    justify-content: center;
   }
 
   .integrationsItem:nth-child(2n) {
