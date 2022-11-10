@@ -1,6 +1,7 @@
 ---
 title: GitHub conventions
 description: Guidelines and tips for maintaining Nebari
+id: github-conventions
 ---
 
 This page describes some common conventions and guidelines that we follow in all of our GitHub repositories within the `nebari-dev` organization.
