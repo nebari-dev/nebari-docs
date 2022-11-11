@@ -113,7 +113,7 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::note
 The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the Nebari
-environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshoothing] for further
+environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further
 guidance.
 :::
 
@@ -256,5 +256,5 @@ nebari destroy -c nebari-config.yaml
 <!-- internal links -->
 
 [nebari-install]: /get-started/installing-nebari.md
-[nebari-troubleshoothing]: /troubleshooting.mdx
+[nebari-troubleshooting]: /troubleshooting.mdx
 [domain-registry]: /how-tos/domain-registry.md

@@ -65,7 +65,7 @@ Wrote config to /home/<username>/.config/kbatch/config.json
 When submitting a job to `kbatch`, there are a handful of required arguments you will need to provide.
 These arguments can be passed directly from the command-line, or you can create a configuration file and pass that to `kbatch`.
 
-For more details on how to use `kbatch` please refer to [the `kbatch`s documentation page](https://kbatch.readthedocs.io/en/latest/user-guide.html).
+For more details on how to use `kbatch` please refer to [the `kbatch` documentation page](https://kbatch.readthedocs.io/en/latest/user-guide.html).
 
 To submit a job, you will need to specify:
 

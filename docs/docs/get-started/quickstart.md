@@ -252,8 +252,8 @@ This command is automatically run when you `deploy`.
 
 ---
 
-If you face any issues with the commands, check out the [Troubleshooting guide][nebari-troubleshoothing].
+If you face any issues with the commands, check out the [Troubleshooting guide][nebari-troubleshooting].
 
 <!-- internal links -->
 [install-nebari]: /get-started/installing-nebari.md
-[nebari-troubleshoothing]: /troubleshooting.mdx
+[nebari-troubleshooting]: /troubleshooting.mdx
