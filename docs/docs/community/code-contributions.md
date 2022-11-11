@@ -246,4 +246,4 @@ Approval means the core team member has carefully reviewed the changes, and the 
 
 [docs-contributions]: community/doc-contributions.md
 [community-issues]: community/issues.md
-[community-tests]: community/nebari-test.md
+[community-tests]: community/nebari-tests.md
