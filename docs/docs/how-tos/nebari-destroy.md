@@ -11,7 +11,7 @@ This is a guide on how to destroy your Nebari cluster, this includes all resourc
 You will need to export your cloud credentials, as you would for a `nebari deploy`, before you can destroy these cloud resources.
 
 :::warning
-When working with cloud resources, it's important to always double check that everything has been fully destroyed.
+When working with cloud resources, it's important to always double-check that everything has been fully destroyed.
 
 Further below, we will also take a look at how you can manually destroy resources on individual cloud providers in case the automation fails.
 
@@ -23,7 +23,7 @@ The Nebari team takes no responsibility for any incurred cloud costs. Please tak
 You can specify the `nebari-config.yaml` configuration file created while deploying Nebari to destroy the resources as well. Type the following command on your command line:
 
 :::warning
-If you have any data stored on your Nebari cluster you would like to keep - either files on the filesystem, conda environments in conda-store or an exported `json` of the users and groups from Keycloak - now is the time to back those up **off of the cluster**.
+If you have any data stored on your Nebari cluster you would like to keep - either files on the file system, `conda` environments in conda-store or an exported `json` of the users and groups from Keycloak - now is the time to back those up **off of the cluster**.
 :::
 
 ```bash
@@ -80,7 +80,7 @@ Destroying lingering resources on AWS can be tricky because the resources often 
 
 Here, we outline how to find and destroy resources from the AWS console.
 
-1. Sign into your AWS account and in the search bar type `Tag Editor`
+1. Sign in to your AWS account and in the search bar type `Tag Editor`
 
 <img src="/img/how-tos/aws_tag_editor_1.png" alt="Search for Tag Editor in the AWS console" width="700"/>
 
@@ -124,12 +124,12 @@ python /path/to/qhub/scripts/aws-force-destroy.py -c /path/to/nebari-config.yaml
 This will print to the terminal the resources it has destroyed. **This scripts often needs to be run multiple times before all the resources are fully destroyed.**
 
 :::info
-Even with this script, AWS on occasion will find itself in some resource dependency conflict and you might need to destroy these resources manually from the AWS console as shown [above](#delete-resources-from-the-aws-console).
+Even with this script, AWS on occasion will find itself in some resource dependency conflict, and you might need to destroy these resources manually from the AWS console as shown [in the corresponding section above](#destroy-resources-from-the-aws-console).
 :::
 
 ### Azure
 
-If you deployed your Nebari cluster on Azure and the `nebari destroy` command failed, you will need to destroy one resources, the resource group.
+If you deployed your Nebari cluster on Azure and the `nebari destroy` command failed, you will need to destroy one resource: the resource group.
 
 You will need [Azure's CLI `az`](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) installed and configured. Then run the following.
 

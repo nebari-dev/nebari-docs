@@ -74,14 +74,14 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **Azure** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
-installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
+installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:
@@ -106,8 +106,8 @@ Executing the command below will generate a `nebari-config.yaml` file with an in
 
 ```bash
 nebari init azure --project projectname \
-	  --domain domain \
-	  --auth-provider password
+   --domain domain \
+   --auth-provider password
 ```
 
 :::
@@ -151,8 +151,9 @@ The Nebari initialization scripts create a `nebari-config.yaml` file that contai
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step.
 Since it is a plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation.
+<!-- TODO: uncomment and add link once section is added -->
+<!-- For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](tutorials) documentation. -->
 
 ## Deploying Nebari
 
@@ -171,7 +172,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](docs/how-tos/nebari-azure#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](docs/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
@@ -193,7 +194,9 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on Azure! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
+<!-- TODO: Add link to advanced configuration -->
+
+Congratulations! You have successfully deployed Nebari on Azure! From here, see Initial Nebari Configuration for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
 
 ## Destroying Nebari
@@ -211,3 +214,9 @@ Nebari also has a `destroy` command that works the same way the deploy works but
 ```bash
 nebari destroy -c nebari-config.yaml
 ```
+
+<!-- internal links -->
+
+[nebari-install]: /get-started/installing-nebari.md
+[nebari-troubleshooting]: /troubleshooting.mdx
+[domain-registry]: /how-tos/domain-registry.md
