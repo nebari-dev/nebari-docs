@@ -1,6 +1,6 @@
 # Release notes
 
-*Contains description of Nebari releases.*
+_Contains description of Nebari releases._
 
 <!-- Note:
 The RELEASE.md file at the root of the Nebari codebase is the source of truth for all release notes.
@@ -29,17 +29,19 @@ Enhancements for this release include:
 - Updated Traefik version to support the latest Kubernetes API
 
 ### What's Changed
-* Update azurerm version by @tjcrone in https://github.com/Quansight/qhub/pull/1471
-* Make CDSDashboards.conda_envs dynamically update from function by @costrouc in https://github.com/Quansight/qhub/pull/1358
-* Fix get_latest_repo_tag fn by @iameskild in https://github.com/Quansight/qhub/pull/1485
-* Nebari Typer CLI  by @asmijafar20 in https://github.com/Quansight/qhub/pull/1443
-* Pass AWS `region`, `kubernetes_version` to terraform scripts by @iameskild in https://github.com/Quansight/qhub/pull/1493
-* Enable ebs-csi driver on AWS, add region + kubernetes_version vars by @iameskild in https://github.com/Quansight/qhub/pull/1494
-* Update traefik version + CRD by @iameskild in https://github.com/Quansight/qhub/pull/1489
-* [ENH] Switch default and filesystem name envs by @viniciusdc in https://github.com/Quansight/qhub/pull/1357
+
+- Update azurerm version by @tjcrone in https://github.com/Quansight/qhub/pull/1471
+- Make CDSDashboards.conda_envs dynamically update from function by @costrouc in https://github.com/Quansight/qhub/pull/1358
+- Fix get_latest_repo_tag fn by @iameskild in https://github.com/Quansight/qhub/pull/1485
+- Nebari Typer CLI by @asmijafar20 in https://github.com/Quansight/qhub/pull/1443
+- Pass AWS `region`, `kubernetes_version` to terraform scripts by @iameskild in https://github.com/Quansight/qhub/pull/1493
+- Enable ebs-csi driver on AWS, add region + kubernetes_version vars by @iameskild in https://github.com/Quansight/qhub/pull/1494
+- Update traefik version + CRD by @iameskild in https://github.com/Quansight/qhub/pull/1489
+- [ENH] Switch default and filesystem name envs by @viniciusdc in https://github.com/Quansight/qhub/pull/1357
 
 ### New Contributors
-* @tjcrone made their first contribution in https://github.com/Quansight/qhub/pull/1471
+
+- @tjcrone made their first contribution in https://github.com/Quansight/qhub/pull/1471
 
 ### Migration note
 
@@ -51,6 +53,7 @@ to be compatible with the new Nebari version. This is a one-time migration step 
 ### Feature changes and enhancements
 
 Enhancements for this release include:
+
 - Bump `conda-store` version to `v0.4.11` and enable overrides
 - Fully decouple the JupyterLab, JupyterHub and Dask-Worker images from the main codebase
   - See https://github.com/nebari-dev/nebari-docker-images for images
@@ -60,94 +63,97 @@ Enhancements for this release include:
 - Add support for Kubernetes Kind (local)
 
 ### What's Changed
-* Add support for terraform binary download for M1 by @aktech in https://github.com/Quansight/qhub/pull/1370
-* Improvements in the QHub Cost estimate tool by @HarshCasper in https://github.com/Quansight/qhub/pull/1365
-* Add Python-3.10 by @HarshCasper in https://github.com/Quansight/qhub/pull/1352
-* Add backwards compatibility item to test checklist by @viniciusdc in https://github.com/Quansight/qhub/pull/1381
-* add code server version to fix build by @HarshCasper in https://github.com/Quansight/qhub/pull/1383
-* Update Cirun.io config to use labels by @aktech in https://github.com/Quansight/qhub/pull/1379
-* Decouple docker images by @iameskild in https://github.com/Quansight/qhub/pull/1371
-* Set LATEST_SUPPORTED_PYTHON_VERSION as str by @iameskild in https://github.com/Quansight/qhub/pull/1387
-* Integrate kind into local deployment to no longer require minikube for development by @costrouc in https://github.com/Quansight/qhub/pull/1171
-* Upgrade conda-store to 0.4.7 allow for customization by @costrouc in https://github.com/Quansight/qhub/pull/1385
-* [ENH] Bump conda-store to v0.4.9 by @viniciusdc in https://github.com/Quansight/qhub/pull/1392
-* [ENH] Add `pyarrow` and `s3fs` by @viniciusdc in https://github.com/Quansight/qhub/pull/1393
-* Fixing bug in authentication method in Conda-Store authentication by @costrouc in https://github.com/Quansight/qhub/pull/1396
-* CI: Merge test and release to PyPi workflows into one by @HarshCasper in https://github.com/Quansight/qhub/pull/1386
-* Update packages in the dashboard env by @iameskild in https://github.com/Quansight/qhub/pull/1402
-* BUG: Setting behind proxy setting in conda-store to be aware of http vs. https by @costrouc in https://github.com/Quansight/qhub/pull/1404
-* Minor update to release workflow by @iameskild in https://github.com/Quansight/qhub/pull/1406
-* Clean up release workflow by @iameskild in https://github.com/Quansight/qhub/pull/1407
-* Add release notes for v0.4.4 by @iameskild in https://github.com/Quansight/qhub/pull/1408
-* Update Ingress overrides behaviour by @viniciusdc in https://github.com/Quansight/qhub/pull/1420
-* Preserve conda-store image permissions by @iameskild in https://github.com/Quansight/qhub/pull/1419
-* Add project name to jhub helm chart release name by @iameskild in https://github.com/Quansight/qhub/pull/1422
-* Fix for helm extension overrides data type issue by @konkapv in https://github.com/Quansight/qhub/pull/1424
-* Add option to disable tls certificate by @iameskild in https://github.com/Quansight/qhub/pull/1421
-* Fixing provider=existing for local/existing by @costrouc in https://github.com/Quansight/qhub/pull/1425
-* Update release, testing checklist by @iameskild in https://github.com/Quansight/qhub/pull/1397
-* Add `--disable-checks` flag to deploy by @iameskild in https://github.com/Quansight/qhub/pull/1429
-* Adding option to supply additional arguments to ingress via `ingress.terraform_overrides.additional-arguments` by @costrouc in https://github.com/Quansight/qhub/pull/1431
-* Add properties to middleware crd headers by @iameskild in https://github.com/Quansight/qhub/pull/1434
-* Restart conda-store worker when new conda env is added to config.yaml by @iameskild in https://github.com/Quansight/qhub/pull/1437
-* Pin dask ipywidgets version to `7.7.1` by @viniciusdc in https://github.com/Quansight/qhub/pull/1442
-* Set qhub-dask version to 0.4.4 by @iameskild in https://github.com/Quansight/qhub/pull/1470
+
+- Add support for terraform binary download for M1 by @aktech in https://github.com/Quansight/qhub/pull/1370
+- Improvements in the QHub Cost estimate tool by @HarshCasper in https://github.com/Quansight/qhub/pull/1365
+- Add Python-3.10 by @HarshCasper in https://github.com/Quansight/qhub/pull/1352
+- Add backwards compatibility item to test checklist by @viniciusdc in https://github.com/Quansight/qhub/pull/1381
+- add code server version to fix build by @HarshCasper in https://github.com/Quansight/qhub/pull/1383
+- Update Cirun.io config to use labels by @aktech in https://github.com/Quansight/qhub/pull/1379
+- Decouple docker images by @iameskild in https://github.com/Quansight/qhub/pull/1371
+- Set LATEST_SUPPORTED_PYTHON_VERSION as str by @iameskild in https://github.com/Quansight/qhub/pull/1387
+- Integrate kind into local deployment to no longer require minikube for development by @costrouc in https://github.com/Quansight/qhub/pull/1171
+- Upgrade conda-store to 0.4.7 allow for customization by @costrouc in https://github.com/Quansight/qhub/pull/1385
+- [ENH] Bump conda-store to v0.4.9 by @viniciusdc in https://github.com/Quansight/qhub/pull/1392
+- [ENH] Add `pyarrow` and `s3fs` by @viniciusdc in https://github.com/Quansight/qhub/pull/1393
+- Fixing bug in authentication method in Conda-Store authentication by @costrouc in https://github.com/Quansight/qhub/pull/1396
+- CI: Merge test and release to PyPi workflows into one by @HarshCasper in https://github.com/Quansight/qhub/pull/1386
+- Update packages in the dashboard env by @iameskild in https://github.com/Quansight/qhub/pull/1402
+- BUG: Setting behind proxy setting in conda-store to be aware of http vs. https by @costrouc in https://github.com/Quansight/qhub/pull/1404
+- Minor update to release workflow by @iameskild in https://github.com/Quansight/qhub/pull/1406
+- Clean up release workflow by @iameskild in https://github.com/Quansight/qhub/pull/1407
+- Add release notes for v0.4.4 by @iameskild in https://github.com/Quansight/qhub/pull/1408
+- Update Ingress overrides behaviour by @viniciusdc in https://github.com/Quansight/qhub/pull/1420
+- Preserve conda-store image permissions by @iameskild in https://github.com/Quansight/qhub/pull/1419
+- Add project name to jhub helm chart release name by @iameskild in https://github.com/Quansight/qhub/pull/1422
+- Fix for helm extension overrides data type issue by @konkapv in https://github.com/Quansight/qhub/pull/1424
+- Add option to disable tls certificate by @iameskild in https://github.com/Quansight/qhub/pull/1421
+- Fixing provider=existing for local/existing by @costrouc in https://github.com/Quansight/qhub/pull/1425
+- Update release, testing checklist by @iameskild in https://github.com/Quansight/qhub/pull/1397
+- Add `--disable-checks` flag to deploy by @iameskild in https://github.com/Quansight/qhub/pull/1429
+- Adding option to supply additional arguments to ingress via `ingress.terraform_overrides.additional-arguments` by @costrouc in https://github.com/Quansight/qhub/pull/1431
+- Add properties to middleware crd headers by @iameskild in https://github.com/Quansight/qhub/pull/1434
+- Restart conda-store worker when new conda env is added to config.yaml by @iameskild in https://github.com/Quansight/qhub/pull/1437
+- Pin dask ipywidgets version to `7.7.1` by @viniciusdc in https://github.com/Quansight/qhub/pull/1442
+- Set qhub-dask version to 0.4.4 by @iameskild in https://github.com/Quansight/qhub/pull/1470
 
 ### New Contributors
-* @konkapv made their first contribution in https://github.com/Quansight/qhub/pull/1424
+
+- @konkapv made their first contribution in https://github.com/Quansight/qhub/pull/1424
 
 ## Release v0.4.3 - July 7, 2022
 
 ### Feature changes and enhancements
 
 Enhancements for this release include:
+
 - Integrating Argo Workflow
 - Integrating kbatch
 - Adding `cost-estimate` CLI subcommand (Infracost)
 - Add `panel-serve` as a CDS dashboard option
 - Add option to use RetroLab instead of default JupyterLab
 
-
 ### What's Changed
-* Update the login/Keycloak docs page by @gabalafou in https://github.com/Quansight/qhub/pull/1289
-* Add configuration option so myst parser generates anchors for heading… by @costrouc in https://github.com/Quansight/qhub/pull/1299
-* Image scanning by @HarshCasper in https://github.com/Quansight/qhub/pull/1291
-* Fix display version behavior by @viniciusdc in https://github.com/Quansight/qhub/pull/1275
-* [Docs] Add docs about custom Identity providers for Authentication by @viniciusdc in https://github.com/Quansight/qhub/pull/1273
-* Add prefect token var to CI when needed by @viniciusdc in https://github.com/Quansight/qhub/pull/1279
-* ci: prevent image scans on main image builds by @HarshCasper in https://github.com/Quansight/qhub/pull/1300
-* Integrate `kbatch` by @iameskild in https://github.com/Quansight/qhub/pull/1258
-* add `retrolab` to the base jupyter image by @tonyfast in https://github.com/Quansight/qhub/pull/1222
-* Update pre-commit, remove vale by @iameskild in https://github.com/Quansight/qhub/pull/1282
-* Argo Workflows by @Adam-D-Lewis in https://github.com/Quansight/qhub/pull/1252
-* Update minio, postgresql chart repo location by @iameskild in https://github.com/Quansight/qhub/pull/1308
-* Fix broken AWS, set minimum desired size to 1, enable 0 scaling by @tylerpotts in https://github.com/Quansight/qhub/pull/1304
-* v0.4.2 release notes by @iameskild in https://github.com/Quansight/qhub/pull/1323
-* install dask lab ext from main by @iameskild in https://github.com/Quansight/qhub/pull/1321
-* Overrides default value for dask-labextension by @viniciusdc in https://github.com/Quansight/qhub/pull/1327
-* CI: Add Infracost to GHA CI for infra cost tracking by @HarshCasper in https://github.com/Quansight/qhub/pull/1316
-* Add check for highest supported k8s version by @aktech in https://github.com/Quansight/qhub/pull/1336
-* Increase the default instance sizes by @peytondmurray in https://github.com/Quansight/qhub/pull/1338
-* Add panel-serve as a CDS dashboard option by @iameskild in https://github.com/Quansight/qhub/pull/1070
-* Generate QHub Costs via `infracost` by @HarshCasper in https://github.com/Quansight/qhub/pull/1340
-* Add release-checklist issue template by @iameskild in https://github.com/Quansight/qhub/pull/1314
-* Fix missing import: `rich` : broken qhub init with cloud by @aktech in https://github.com/Quansight/qhub/pull/1353
-* Bump qhub-dask version to 0.4.3 by @peytondmurray in https://github.com/Quansight/qhub/pull/1341
-* Remove the need for AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set with Digital Ocean deployment by @costrouc in https://github.com/Quansight/qhub/pull/1344
-* Revert "Remove the need for AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set with Digital Ocean deployment" by @viniciusdc in https://github.com/Quansight/qhub/pull/1355
-* Upgrade kbatch version by @iameskild in https://github.com/Quansight/qhub/pull/1335
-* Drop support for python 3.7 in dask environment by @peytondmurray in https://github.com/Quansight/qhub/pull/1354
-* Add useful terminal utils to jlab image by @dharhas in https://github.com/Quansight/qhub/pull/1361
-* Tweak bashrc by @dharhas in https://github.com/Quansight/qhub/pull/1363
-* Fix bug where vscode extensions are not installing by @viniciusdc in https://github.com/Quansight/qhub/pull/1360
+
+- Update the login/Keycloak docs page by @gabalafou in https://github.com/Quansight/qhub/pull/1289
+- Add configuration option so myst parser generates anchors for heading… by @costrouc in https://github.com/Quansight/qhub/pull/1299
+- Image scanning by @HarshCasper in https://github.com/Quansight/qhub/pull/1291
+- Fix display version behavior by @viniciusdc in https://github.com/Quansight/qhub/pull/1275
+- [Docs] Add docs about custom Identity providers for Authentication by @viniciusdc in https://github.com/Quansight/qhub/pull/1273
+- Add prefect token var to CI when needed by @viniciusdc in https://github.com/Quansight/qhub/pull/1279
+- ci: prevent image scans on main image builds by @HarshCasper in https://github.com/Quansight/qhub/pull/1300
+- Integrate `kbatch` by @iameskild in https://github.com/Quansight/qhub/pull/1258
+- add `retrolab` to the base jupyter image by @tonyfast in https://github.com/Quansight/qhub/pull/1222
+- Update pre-commit, remove vale by @iameskild in https://github.com/Quansight/qhub/pull/1282
+- Argo Workflows by @Adam-D-Lewis in https://github.com/Quansight/qhub/pull/1252
+- Update minio, postgresql chart repo location by @iameskild in https://github.com/Quansight/qhub/pull/1308
+- Fix broken AWS, set minimum desired size to 1, enable 0 scaling by @tylerpotts in https://github.com/Quansight/qhub/pull/1304
+- v0.4.2 release notes by @iameskild in https://github.com/Quansight/qhub/pull/1323
+- install dask lab ext from main by @iameskild in https://github.com/Quansight/qhub/pull/1321
+- Overrides default value for dask-labextension by @viniciusdc in https://github.com/Quansight/qhub/pull/1327
+- CI: Add Infracost to GHA CI for infra cost tracking by @HarshCasper in https://github.com/Quansight/qhub/pull/1316
+- Add check for highest supported k8s version by @aktech in https://github.com/Quansight/qhub/pull/1336
+- Increase the default instance sizes by @peytondmurray in https://github.com/Quansight/qhub/pull/1338
+- Add panel-serve as a CDS dashboard option by @iameskild in https://github.com/Quansight/qhub/pull/1070
+- Generate QHub Costs via `infracost` by @HarshCasper in https://github.com/Quansight/qhub/pull/1340
+- Add release-checklist issue template by @iameskild in https://github.com/Quansight/qhub/pull/1314
+- Fix missing import: `rich` : broken qhub init with cloud by @aktech in https://github.com/Quansight/qhub/pull/1353
+- Bump qhub-dask version to 0.4.3 by @peytondmurray in https://github.com/Quansight/qhub/pull/1341
+- Remove the need for AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set with Digital Ocean deployment by @costrouc in https://github.com/Quansight/qhub/pull/1344
+- Revert "Remove the need for AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set with Digital Ocean deployment" by @viniciusdc in https://github.com/Quansight/qhub/pull/1355
+- Upgrade kbatch version by @iameskild in https://github.com/Quansight/qhub/pull/1335
+- Drop support for python 3.7 in dask environment by @peytondmurray in https://github.com/Quansight/qhub/pull/1354
+- Add useful terminal utils to jlab image by @dharhas in https://github.com/Quansight/qhub/pull/1361
+- Tweak bashrc by @dharhas in https://github.com/Quansight/qhub/pull/1363
+- Fix bug where vscode extensions are not installing by @viniciusdc in https://github.com/Quansight/qhub/pull/1360
 
 ### New Contributors
-* @gabalafou made their first contribution in https://github.com/Quansight/qhub/pull/1289
-* @peytondmurray made their first contribution in https://github.com/Quansight/qhub/pull/1338
-* @dharhas made their first contribution in https://github.com/Quansight/qhub/pull/1361
+
+- @gabalafou made their first contribution in https://github.com/Quansight/qhub/pull/1289
+- @peytondmurray made their first contribution in https://github.com/Quansight/qhub/pull/1338
+- @dharhas made their first contribution in https://github.com/Quansight/qhub/pull/1361
 
 **Full Changelog**: https://github.com/Quansight/qhub/compare/v0.4.1...v0.4.3
-
 
 ## Release v0.4.2 - June 8, 2022
 
@@ -174,21 +180,22 @@ Given the impact and severity of this bug, the team has decided to quickly cut a
 ### Bug fixes
 
 This release is a hotfix for the issue summarized in the following:
-* [issue 1319](https://github.com/Quansight/qhub/issues/1319)
-* [issue 1306](https://github.com/Quansight/qhub/issues/1306)
-* [issue 1302](https://github.com/Quansight/qhub/issues/1302)
 
+- [issue 1319](https://github.com/Quansight/qhub/issues/1319)
+- [issue 1306](https://github.com/Quansight/qhub/issues/1306)
+- [issue 1302](https://github.com/Quansight/qhub/issues/1302)
 
 ### What's Changed
-* Update minio, postgresql chart repo location by @iameskild in [PR 1308](https://github.com/Quansight/qhub/pull/1308)
-* Fix broken AWS, set minimum desired size to 1, enable 0 scaling by @tylerpotts in [PR 1304](https://github.com/Quansight/qhub/issues/1304)
 
+- Update minio, postgresql chart repo location by @iameskild in [PR 1308](https://github.com/Quansight/qhub/pull/1308)
+- Fix broken AWS, set minimum desired size to 1, enable 0 scaling by @tylerpotts in [PR 1304](https://github.com/Quansight/qhub/issues/1304)
 
 ## Release v0.4.1 - May 10, 2022
 
 ### Feature changes and enhancements
 
 Enhancements for this release include:
+
 - Add support for pinning the IP address of the load balancer via terraform overrides
 - Upgrade to Conda-Store to `v0.3.15`
 - Add ability to limit JupyterHub profiles based on users/groups
@@ -198,55 +205,57 @@ Enhancements for this release include:
 This release addresses several bugs with a slight emphasis on stablizing the core services while also improving the end user experience.
 
 ### What's Changed
-* [BUG] Adding back feature of limiting profiles for users and groups by @costrouc in [PR 1169](https://github.com/Quansight/qhub/pull/1169)
-* DOCS: Add release notes for v0.4.0 release by @HarshCasper in [PR 1170](https://github.com/Quansight/qhub/pull/1170)
-* Move ipython config within jupyterlab to docker image with more robust jupyterlab ssh tests by @costrouc in [PR 1143](https://github.com/Quansight/qhub/pull/1143)
-* Removing custom dask_gateway from qhub and idle_timeout for dask clusters to 30 min by @costrouc in [PR 1151](https://github.com/Quansight/qhub/pull/1151)
-* Overrides.json now managed by qhub configmaps instead of inside docker image by @costrouc in [PR 1173](https://github.com/Quansight/qhub/pull/1173)
-* Adding examples to QHub jupyterlab  by @costrouc in [PR 1176](https://github.com/Quansight/qhub/pull/1176)
-* Bump conda-store version to 0.3.12 by @costrouc in [PR 1179](https://github.com/Quansight/qhub/pull/1179)
-* Fixing concurrency not being specified in configuration by @costrouc in [PR 1180](https://github.com/Quansight/qhub/pull/1180)
-* Adding ipykernel as default to environment along with ensure conda-store restarted on config change by @costrouc in [PR 1181](https://github.com/Quansight/qhub/pull/1181)
-* keycloak dev docs by @danlester in [PR 1184](https://github.com/Quansight/qhub/pull/1184)
-* Keycloakdev2 by @danlester in [PR 1185](https://github.com/Quansight/qhub/pull/1185)
-* Setting minio storage to by default be same as filesystem size for Conda-Store environments by @costrouc in [PR 1188](https://github.com/Quansight/qhub/pull/1188)
-* Bump Conda-Store version in Qhub to 0.3.13 by @costrouc in [PR 1189](https://github.com/Quansight/qhub/pull/1189)
-* Upgrade mrparkers to 3.7.0 by @danlester in [PR 1183](https://github.com/Quansight/qhub/pull/1183)
-* Mdformat tables by @danlester in [PR 1186](https://github.com/Quansight/qhub/pull/1186)
-* [ImgBot] Optimize images by @imgbot in [PR 1187](https://github.com/Quansight/qhub/pull/1187)
-* Bump conda-store version to 0.3.14 by @costrouc in [PR 1192](https://github.com/Quansight/qhub/pull/1192)
-* Allow terraform init to upgrade providers within version specification by @costrouc in [PR 1194](https://github.com/Quansight/qhub/pull/1194)
-* Adding missing __init__ files by @costrouc in [PR 1196](https://github.com/Quansight/qhub/pull/1196)
-* Release 0.3.15 for Conda-Store by @costrouc in [PR 1205](https://github.com/Quansight/qhub/pull/1205)
-* Profilegroups by @danlester in [PR 1203](https://github.com/Quansight/qhub/pull/1203)
-* Render `.gitignore`, black py files by @iameskild in [PR 1206](https://github.com/Quansight/qhub/pull/1206)
-* Update qhub-dask pinned version by @iameskild in [PR 1224](https://github.com/Quansight/qhub/pull/1224)
-* Fix env doc links and add corresponding tests by @aktech in [PR 1216](https://github.com/Quansight/qhub/pull/1216)
-* Update conda-store-environment variable `type`  by @iameskild in [PR 1213](https://github.com/Quansight/qhub/pull/1213)
-* Update release notes - justification for changes in `v0.4.0`  by @iameskild in [PR 1178](https://github.com/Quansight/qhub/pull/1178)
-* Support for pinning the IP address of the load balancer via terraform overrides by @aktech in [PR 1235](https://github.com/Quansight/qhub/pull/1235)
-* Bump moment from 2.29.1 to 2.29.2 in /tests_e2e by @dependabot in [PR 1241](https://github.com/Quansight/qhub/pull/1241)
-* Update cdsdashboards to 0.6.1, Voila to 0.3.5 by @danlester in [PR 1240](https://github.com/Quansight/qhub/pull/1240)
-* Bump minimist from 1.2.5 to 1.2.6 in /tests_e2e by @dependabot in [PR 1208](https://github.com/Quansight/qhub/pull/1208)
-* output check fix by @Adam-D-Lewis in [PR 1244](https://github.com/Quansight/qhub/pull/1244)
-* Update panel version to fix jinja2 recent issue by @viniciusdc in [PR 1248](https://github.com/Quansight/qhub/pull/1248)
-* Add support for terraform overrides in cloud and VPC deployment for Azure by @aktech in [PR 1253](https://github.com/Quansight/qhub/pull/1253)
-* Add test-release workflow by @iameskild in [PR 1245](https://github.com/Quansight/qhub/pull/1245)
-* Bump async from 3.2.0 to 3.2.3 in /tests_e2e by @dependabot in [PR 1260](https://github.com/Quansight/qhub/pull/1260)
-* [WIP] Add support for VPC deployment for GCP via terraform overrides by @aktech in [PR 1259](https://github.com/Quansight/qhub/pull/1259)
-* Update login instructions for training by @iameskild in [PR 1261](https://github.com/Quansight/qhub/pull/1261)
-* Add docs for general node upgrade by @iameskild in [PR 1246](https://github.com/Quansight/qhub/pull/1246)
-* [ImgBot] Optimize images by @imgbot in [PR 1264](https://github.com/Quansight/qhub/pull/1264)
-* Fix project name and domain at None by @pierrotsmnrd in [PR 856](https://github.com/Quansight/qhub/pull/856)
-* Adding name convention validator for QHub project name by @viniciusdc in [PR 761](https://github.com/Quansight/qhub/pull/761)
-* Minor doc updates by @iameskild in [PR 1268](https://github.com/Quansight/qhub/pull/1268)
-* Enable display of Qhub version by @viniciusdc in [PR 1256](https://github.com/Quansight/qhub/pull/1256)
-* Fix missing region from AWS provider by @viniciusdc in [PR 1271](https://github.com/Quansight/qhub/pull/1271)
-* Re-enable GPU profiles for GCP/AWS by @viniciusdc in [PR 1219](https://github.com/Quansight/qhub/pull/1219)
-* Release notes for `v0.4.1` by @iameskild in [PR 1272](https://github.com/Quansight/qhub/pull/1272)
+
+- [BUG] Adding back feature of limiting profiles for users and groups by @costrouc in [PR 1169](https://github.com/Quansight/qhub/pull/1169)
+- DOCS: Add release notes for v0.4.0 release by @HarshCasper in [PR 1170](https://github.com/Quansight/qhub/pull/1170)
+- Move ipython config within jupyterlab to docker image with more robust jupyterlab ssh tests by @costrouc in [PR 1143](https://github.com/Quansight/qhub/pull/1143)
+- Removing custom dask_gateway from qhub and idle_timeout for dask clusters to 30 min by @costrouc in [PR 1151](https://github.com/Quansight/qhub/pull/1151)
+- Overrides.json now managed by qhub configmaps instead of inside docker image by @costrouc in [PR 1173](https://github.com/Quansight/qhub/pull/1173)
+- Adding examples to QHub jupyterlab by @costrouc in [PR 1176](https://github.com/Quansight/qhub/pull/1176)
+- Bump conda-store version to 0.3.12 by @costrouc in [PR 1179](https://github.com/Quansight/qhub/pull/1179)
+- Fixing concurrency not being specified in configuration by @costrouc in [PR 1180](https://github.com/Quansight/qhub/pull/1180)
+- Adding ipykernel as default to environment along with ensure conda-store restarted on config change by @costrouc in [PR 1181](https://github.com/Quansight/qhub/pull/1181)
+- keycloak dev docs by @danlester in [PR 1184](https://github.com/Quansight/qhub/pull/1184)
+- Keycloakdev2 by @danlester in [PR 1185](https://github.com/Quansight/qhub/pull/1185)
+- Setting minio storage to by default be same as filesystem size for Conda-Store environments by @costrouc in [PR 1188](https://github.com/Quansight/qhub/pull/1188)
+- Bump Conda-Store version in Qhub to 0.3.13 by @costrouc in [PR 1189](https://github.com/Quansight/qhub/pull/1189)
+- Upgrade mrparkers to 3.7.0 by @danlester in [PR 1183](https://github.com/Quansight/qhub/pull/1183)
+- Mdformat tables by @danlester in [PR 1186](https://github.com/Quansight/qhub/pull/1186)
+- [ImgBot] Optimize images by @imgbot in [PR 1187](https://github.com/Quansight/qhub/pull/1187)
+- Bump conda-store version to 0.3.14 by @costrouc in [PR 1192](https://github.com/Quansight/qhub/pull/1192)
+- Allow terraform init to upgrade providers within version specification by @costrouc in [PR 1194](https://github.com/Quansight/qhub/pull/1194)
+- Adding missing **init** files by @costrouc in [PR 1196](https://github.com/Quansight/qhub/pull/1196)
+- Release 0.3.15 for Conda-Store by @costrouc in [PR 1205](https://github.com/Quansight/qhub/pull/1205)
+- Profilegroups by @danlester in [PR 1203](https://github.com/Quansight/qhub/pull/1203)
+- Render `.gitignore`, black py files by @iameskild in [PR 1206](https://github.com/Quansight/qhub/pull/1206)
+- Update qhub-dask pinned version by @iameskild in [PR 1224](https://github.com/Quansight/qhub/pull/1224)
+- Fix env doc links and add corresponding tests by @aktech in [PR 1216](https://github.com/Quansight/qhub/pull/1216)
+- Update conda-store-environment variable `type` by @iameskild in [PR 1213](https://github.com/Quansight/qhub/pull/1213)
+- Update release notes - justification for changes in `v0.4.0` by @iameskild in [PR 1178](https://github.com/Quansight/qhub/pull/1178)
+- Support for pinning the IP address of the load balancer via terraform overrides by @aktech in [PR 1235](https://github.com/Quansight/qhub/pull/1235)
+- Bump moment from 2.29.1 to 2.29.2 in /tests_e2e by @dependabot in [PR 1241](https://github.com/Quansight/qhub/pull/1241)
+- Update cdsdashboards to 0.6.1, Voila to 0.3.5 by @danlester in [PR 1240](https://github.com/Quansight/qhub/pull/1240)
+- Bump minimist from 1.2.5 to 1.2.6 in /tests_e2e by @dependabot in [PR 1208](https://github.com/Quansight/qhub/pull/1208)
+- output check fix by @Adam-D-Lewis in [PR 1244](https://github.com/Quansight/qhub/pull/1244)
+- Update panel version to fix jinja2 recent issue by @viniciusdc in [PR 1248](https://github.com/Quansight/qhub/pull/1248)
+- Add support for terraform overrides in cloud and VPC deployment for Azure by @aktech in [PR 1253](https://github.com/Quansight/qhub/pull/1253)
+- Add test-release workflow by @iameskild in [PR 1245](https://github.com/Quansight/qhub/pull/1245)
+- Bump async from 3.2.0 to 3.2.3 in /tests_e2e by @dependabot in [PR 1260](https://github.com/Quansight/qhub/pull/1260)
+- [WIP] Add support for VPC deployment for GCP via terraform overrides by @aktech in [PR 1259](https://github.com/Quansight/qhub/pull/1259)
+- Update login instructions for training by @iameskild in [PR 1261](https://github.com/Quansight/qhub/pull/1261)
+- Add docs for general node upgrade by @iameskild in [PR 1246](https://github.com/Quansight/qhub/pull/1246)
+- [ImgBot] Optimize images by @imgbot in [PR 1264](https://github.com/Quansight/qhub/pull/1264)
+- Fix project name and domain at None by @pierrotsmnrd in [PR 856](https://github.com/Quansight/qhub/pull/856)
+- Adding name convention validator for QHub project name by @viniciusdc in [PR 761](https://github.com/Quansight/qhub/pull/761)
+- Minor doc updates by @iameskild in [PR 1268](https://github.com/Quansight/qhub/pull/1268)
+- Enable display of Qhub version by @viniciusdc in [PR 1256](https://github.com/Quansight/qhub/pull/1256)
+- Fix missing region from AWS provider by @viniciusdc in [PR 1271](https://github.com/Quansight/qhub/pull/1271)
+- Re-enable GPU profiles for GCP/AWS by @viniciusdc in [PR 1219](https://github.com/Quansight/qhub/pull/1219)
+- Release notes for `v0.4.1` by @iameskild in [PR 1272](https://github.com/Quansight/qhub/pull/1272)
 
 ### New Contributors
-* @dependabot made their first contribution in [PR 1241](https://github.com/Quansight/qhub/pull/1241)
+
+- @dependabot made their first contribution in [PR 1241](https://github.com/Quansight/qhub/pull/1241)
 
 [**Full Changelog**](https://github.com/Quansight/qhub/compare/v0.4.0...v0.4.1)
 
@@ -264,6 +273,7 @@ There are no breaking changes or API changes.
 ## Release v0.4.0 - March 17, 2022
 
 **WARNING**
+
 > If you're looking for a stable version of QHub, please consider `v0.3.14`. The `v0.4.0` has many breaking changes and has rough edges that will be resolved in upcoming point releases.
 
 We are happy to announce the release of `v0.4.0`! This release lays the groundwork for many exciting new features and improvements in the future, stay tuned.
@@ -279,13 +289,13 @@ These design changes were considered important enough that the development team 
 and provide justification for them.
 
 - Replace Terraforms resource targeting with staged Terraform deployments.
-  - *Justification*: using Terraform resource targeting was never an ideal way of handing off outputs from stage to the next and Terraform explicitly warns its users that it's only
+  - _Justification_: using Terraform resource targeting was never an ideal way of handing off outputs from stage to the next and Terraform explicitly warns its users that it's only
     intended to be used "for exceptional situations such as recovering from errors or mistakes".
 - Fully remove `cookiecutter` as a templating mechanism.
-  - *Justification*: Although `cookiecutter` has its benefits, we were becoming overly reliant on it as a means of rendering various scripts needed for the deployment. Reading through
+  - _Justification_: Although `cookiecutter` has its benefits, we were becoming overly reliant on it as a means of rendering various scripts needed for the deployment. Reading through
     Terraform scripts with scattered `cookiecutter` statements was increasing troublesome and a bit intimidating. Our IDEs are also much happier about this change.
 - Removing users and groups from the `qhub-config.yaml` and replacing user management with Keycloak.
-  - *Justification*: Up until now, any change to QHub deployment needed to be made in the `qhub-config.yaml` which had the benefit of centralizing any configuration. However it
+  - _Justification_: Up until now, any change to QHub deployment needed to be made in the `qhub-config.yaml` which had the benefit of centralizing any configuration. However it
     also potentially limited the kinds of user management tasks while also causing the `qhub-config.yaml` to balloon in size. Another benefit of removing users and groups from the
     `qhub-config.yaml` that deserves highlighting is that user management no longer requires a full redeployment.
 
@@ -660,7 +670,7 @@ Explicit user facing changes:
    in format `X.Y.Z`
 5. Create a git tag pointing to the release branch once fully tested and version numbers are incremented `v<version>`
 
-______________________________________________________________________
+---
 
 ## Release 0.2.3 - February 5, 2021
 
