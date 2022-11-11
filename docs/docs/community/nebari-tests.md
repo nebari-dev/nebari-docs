@@ -64,7 +64,7 @@ Re-deploying Nebari after every change can be tedious, so we recommend using [`k
 `k9s` continuously monitors Kubernetes clusters for changes and provides shortcut commands to interact with the observed resources.
 It can help you review and resolve day-to-day issues in the deployed clusters quickly.
 
-You can install `k9s` on macOS, Windows, and Linux with [these instructions project's README](https://github.com/derailed/k9s)
+You can install `k9s` on macOS, Windows, and Linux with [these instructions project's README](https://github.com/derailed/k9s).
 
 For more details on using `k9s`, check out the [documentation on debugging Nebari](../how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s).
 
@@ -73,7 +73,7 @@ For more details on using `k9s`, check out the [documentation on debugging Nebar
 Cloud deployments are the only way to truly test the complete Nebari infrastructure.
 To test on cloud Kubernetes, deploy Nebari in the normal way on the cloud, but make sure to:
 
-- Install Nebari in the editable mode so your changes are reflected in the deployment, and
+- Install Nebari in the editable mode, so your changes are reflected in the deployment, and
 - [Use a development branch](#use-a-development-branch) to specify the Docker images based on the latest development code in `nebari-config.yaml`.
 
 :::warning
@@ -94,31 +94,31 @@ To do so:
 
 1. Navigate to the `tests_e2e` directory:
 
-```bash
-cd tests_e2e
-```
+   ```bash
+   cd tests_e2e
+   ```
 
 2. Install the necessary prerequisites:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 3. Set the following environment variables:
 
-```bash
-export CYPRESS_BASE_URL=http://127.0.0.1:8000/
-export NEBARI_CONFIG_PATH=/Users/<name>/<path>/nebari-config.yaml
-export CYPRESS_EXAMPLE_USER_PASSWORD=<password>
-```
+   ```bash
+   export CYPRESS_BASE_URL=http://127.0.0.1:8000/
+   export NEBARI_CONFIG_PATH=/Users/<name>/<path>/nebari-config.yaml
+   export CYPRESS_EXAMPLE_USER_PASSWORD=<password>
+   ```
 
-The `CYPRESS_BASE_URL` can point anywhere that you can access it. It can also be the URL of a Nebari cloud deployment.
+   The `CYPRESS_BASE_URL` can point anywhere that you can access it. It can also be the URL of a Nebari cloud deployment.
 
-The `NEBARI_CONFIG_PATH` should point to the associated YAML file for that website.
-The tests will inspect the YAML file to understand which tests are relevant.
-It first checks `security.authentication.type` to determine what should be available on the login page, and how to test it.
-If the login type is 'password' then it uses the value in `CYPRESS_EXAMPLE_USER_PASSWORD` as the password.
-The default username is `example-user`, but it can be changed by setting the `CYPRESS_EXAMPLE_USER_NAME` environment variable.
+   The `NEBARI_CONFIG_PATH` should point to the associated YAML file for that website.
+   The tests will inspect the YAML file to understand which tests are relevant.
+   It first checks `security.authentication.type` to determine what should be available on the login page, and how to test it.
+   If the login type is 'password' then it uses the value in `CYPRESS_EXAMPLE_USER_PASSWORD` as the password.
+   The default username is `example-user`, but it can be changed by setting the `CYPRESS_EXAMPLE_USER_NAME` environment variable.
 
 4. Open the Cypress UI where you can run the tests manually and see the actions in the browser:
 
@@ -196,13 +196,13 @@ In case of an error, the CI will fail.
 
 To use (initialize, deploy, and more) Nebari from a development branch such as `main` set the environment variable `NEBARI_GH_BRANCH` before running Nebari commands:
 
-```
+```bash
 export NEBARI_GH_BRANCH=main
 ```
 
 Then `nebari init` will create a `nebari-config.yaml` file containing, for example, `nebari/nebari-jupyterlab:main` which is the Docker image built based on the Dockerfiles specified in the main branch of the Nebari repo.
 
-`nebari deploy` can also use `NEBARI_GH_BRANCH` to create GitHub/GitLab Actions workflows which install the development branch of Nebari for the deploy steps.
+`nebari deploy` can also use `NEBARI_GH_BRANCH` to create GitHub/GitLab Actions workflows which install the development branch of Nebari for the deployment steps.
 
 :::note
 If you want to use the development version of Nebari for your `init` and `deploy` steps, but want your resulting deployment to be based on a full release version, don't set the `NEBARI_GH_BRANCH` environment variable.
@@ -216,6 +216,6 @@ When `nebari init <cloud provider>` is called, it checks that the `--kubernetes-
 
 To get around this, set the `NEBARI_K8S_VERSION` environment variable with:
 
-```
+```bash
 export NEBARI_K8S_VERSION=1.20
 ```

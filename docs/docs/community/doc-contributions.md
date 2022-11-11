@@ -60,19 +60,19 @@ Nebari uses the [Diátaxis framework for technical documentation](https://diatax
 
 1. To create an environment with `conda`:
 
-```bash
-conda create -n nebari-docs python=3.9
-```
+   ```bash
+   conda create -n nebari-docs python=3.9
+   ```
 
-:::note
-You need Python >= 3.7 to complete the setup and install the `pre-commit` package manager later.
-:::
+   :::note
+   You need Python >= 3.7 to complete the setup and install the `pre-commit` package manager later.
+   :::
 
 2. Activate the environment:
 
-```bash
-conda activate nebari-docs
-```
+   ```bash
+   conda activate nebari-docs
+   ```
 
 ### Prerequisites: Node.js
 
@@ -151,7 +151,7 @@ The workflow to develop your contribution is similar to contributing code. The d
 
 ### Start a live version of the documentation
 
-To see a live local version of the docs while editing, run the following command from the `docs` sub directory:
+To see a live local version of the docs while editing, run the following command from the `docs` subdirectory:
 
 ```bash
 yarn start
@@ -196,10 +196,10 @@ In addition to the `pre-commit` hooks, you can run the Docusaurus linter (ESLint
 
 2. Run the following commands:
 
-```bash
-yarn run lint
-yarn run format
-```
+   ```bash
+   yarn run lint
+   yarn run format
+   ```
 
 ### Adding a new dependency
 

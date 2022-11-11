@@ -30,7 +30,7 @@ Keep in mind that many developers and maintainers are volunteers, so be patient 
 You can drop a reminder after about 4 working days if no one has replied. :)
 
 :::warning
-If you know what you want to work on and it involves significant API changes, start by [creating a new issue](issues.md) or commenting on an existing issue related to it.
+If you know what you want to work on, and it involves significant API changes, start by [creating a new issue](issues.md) or commenting on an existing issue related to it.
 This allows us to discuss the details and confirm the changes beforehand, and respect the time and energy you spend contributing to Nebari.
 :::
 
@@ -65,7 +65,7 @@ Now the command `git remote -v` shows two remote repositories:
 
 ### Prerequisites
 
-1. Operating System: Currently, Nebari supports developemnt on **macOS and Linux operating** systems. Windows is NOT supported, however we would welcome contributions that add and improve support for Windows.
+1. Operating System: Currently, Nebari supports development on **macOS and Linux operating** systems. Windows is NOT supported, however we would welcome contributions that add and improve support for Windows.
 
 2. Python: You need **Python >= 3.7** on your local machine, or in your virtual environment to work on Nebari.
 
@@ -76,9 +76,9 @@ Now the command `git remote -v` shows two remote repositories:
 The requirements for developing Nebari are listed in the `environment-dev.yaml` file in the repository's root directory.
 The following steps describe how to create and use a `conda` environment.
 
-1. If you don't have `conda` installed, you can follow the [installation instructions in the conda user guide](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
+1. If you don't have `conda` installed, you can follow the [installation instructions in the `conda` user guide](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-2. Create an new environment using `environment-dev.yaml`:
+2. Create a new environment using `environment-dev.yaml`:
 
 ```bash
 conda env create -f environment-dev.yaml
@@ -94,7 +94,7 @@ conda activate nebari-dev
 
 ### Install Nebari in "editable" mode
 
-With an "editable" installation, all the changes you make to the Nebari codebase will be available in your developmnet environment in real-time.
+With an "editable" installation, all the changes you make to the Nebari codebase will be available in your development environment in real-time.
 
 You can do this with:
 
@@ -113,26 +113,26 @@ We encourage regular contributors to install the pre-commit hooks to help with d
 
 1. Before you can run the hooks, you need to install the `pre-commit` package manager:
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+   import Tabs from '@theme/Tabs';
+   import TabItem from '@theme/TabItem';
 
-<Tabs>
-   <TabItem value="conda" label="conda">
+   <Tabs>
+      <TabItem value="conda" label="conda">
 
-```
-conda install -c conda-forge pre-commit
-```
+   ```bash
+   conda install -c conda-forge pre-commit
+   ```
 
-  </TabItem>
+     </TabItem>
 
-  <TabItem value="pip" label="pip" default>
+     <TabItem value="pip" label="pip" default>
 
-```bash
-python -m pip install pre-commit
-```
+   ```bash
+   python -m pip install pre-commit
+   ```
 
-  </TabItem>
-</Tabs>
+     </TabItem>
+   </Tabs>
 
 2. Install the pre-commit hooks:
 
@@ -181,7 +181,7 @@ If you need help with a test case, you can create a draft pull request and messa
 Prioritize including relevant documentation with your contributions to help your code reviewers, Nebari users, as well as other contributors who may interact with your code.
 
 - Add **comments** to explain intricacies in your code and share "why" it is needed. If you reference a particular GitHub issue or PR, use `gh-xxxx` (where `xxxx` indicated the issue/PR number.)
-- If your contribution changes the behaviour of a function, be sure to document it in the **function's docstring**. As a reminder, we follow the [Google Style Guide](https://google.github.io/styleguide/pyguide.html#381-docstrings) for docstrings formatting.
+- If your contribution changes the behavior of a function, be sure to document it in the **function's docstring**. As a reminder, we follow the [Google Style Guide](https://google.github.io/styleguide/pyguide.html#381-docstrings) for docstrings formatting.
 - Update any relevant pages on narrative documentation on `nebari.dev`. Read [Contribute to Nebari's documentation](doc-contributions.md) for more details.
 - If your change introduces any user-facing modifications, mention in the release notes.
 
@@ -189,7 +189,7 @@ Prioritize including relevant documentation with your contributions to help your
 
 ## Submitting your contribution
 
-When you feel comforatble with your contribution, you can open a Pull Request (PR) to submit it for review!
+When you feel comfortable with your contribution, you can open a Pull Request (PR) to submit it for review!
 
 You can also submit partial work to get early feedback on your contribution or discuss some implementation details.
 If you do so, add `WIP` (work in progress) in the PR title and mark it as a draft.
@@ -206,8 +206,8 @@ If you do so, add `WIP` (work in progress) in the PR title and mark it as a draf
 
 :::note
 If the PR relates to any issues, you can add the text `xref gh-xxxx` where `xxxx` is the issue number to GitHub comments.
-Likewise, if the PR solves an issue, replace the `xref` with `closes`, `fixes` or any other flavours [GitHub accepts](https://help.github.com/en/articles/closing-issues-using-keywords).
-GitHub will automatically close the corresponding issue(s) when youy PR gets merged.
+Likewise, if the PR solves an issue, replace the `xref` with `closes`, `fixes` or any other flavors [GitHub accepts](https://help.github.com/en/articles/closing-issues-using-keywords).
+GitHub will automatically close the corresponding issue(s) when your PR gets merged.
 :::
 
 ## Review process
@@ -221,7 +221,7 @@ The PR will update automatically as soon as those changes are pushed up (to the 
 
 ## Continuous Integration
 
-Various continuous integration (CI) pipelines are triggered after each PR update to build artefacts, run unit tests, and check the coding style of your branch.
+Various continuous integration (CI) pipelines are triggered after each PR update to build artifacts, run unit tests, and check the coding style of your branch.
 To avoid overuse of this resource, test your work locally before committing.
 We require the CI tests to pass before your PR can be merged.
 If CI fails, you can find why by clicking on the "failed" icon (red cross) and inspecting the build and test log.
