@@ -111,15 +111,15 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the Nebari
-environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further
+environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshoothing] for further
 guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
@@ -189,8 +189,9 @@ The nebari initialization scripts create a `nebari-config.yaml` file that contai
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation.
+<!-- TODO: uncomment and add link once section is added -->
+<!-- For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation. -->
 
 ## Deploying Nebari
 
@@ -209,7 +210,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](docs/how-tos/nebari-gcp#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](docs/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
@@ -233,7 +234,7 @@ Kubecloak master realm username=root *****
 
 <!-- TODO: add link to initial config -->
 
-Congratulations! You have successfully deployed Nebari on GCP! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
+Congratulations! You have successfully deployed Nebari on GCP! From here, see Initial Nebari Configuration for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
 
 ## Destroying Nebari
@@ -246,8 +247,14 @@ nebari destroy --help
 
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
 
-Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
+Nebari also has a `destroy` command that works the same way the deployment works but instead of creating the provisioned resources it destroys it.
 
 ```bash
 nebari destroy -c nebari-config.yaml
 ```
+
+<!-- internal links -->
+
+[nebari-install]: /get-started/installing-nebari.md
+[nebari-troubleshoothing]: /troubleshooting.mdx
+[domain-registry]: /how-tos/domain-registry.md

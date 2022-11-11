@@ -171,7 +171,7 @@ plain text file, you can edit it manually if you are unhappy with the choices yo
 
 <!-- TODO: uncomment and add link once section is added -->
 <!-- For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation. -->
+[Understanding the `nebari-config.yaml` file](tutorials) documentation. -->
 
 ## Deploying Nebari
 
