@@ -115,6 +115,11 @@ const config = {
         hideOnScroll: false,
         items: [
           {
+            label: "Home",
+            position: "right",
+            to: "/",
+          },
+          {
             label: "Get Started",
             position: "right",
             items: [
