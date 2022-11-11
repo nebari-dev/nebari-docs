@@ -11,7 +11,7 @@ Nebari development happens on GitHub and the codebase is hosted at [nebari-dev/n
 
 :::note
 Nebari's documentation is hosted on a different repository [`nebari-dev/nebari-docs`][nebari-docs-repo].
-To contribute to the documentation, read [Contribute to Nebari's documentation](doc-contributions.md).
+To contribute to the documentation, read [Contribute to Nebari's documentation][docs-contributions].
 :::
 
 ## Select an issue to work on
@@ -30,13 +30,13 @@ Keep in mind that many developers and maintainers are volunteers, so be patient 
 You can drop a reminder after about 4 working days if no one has replied. :)
 
 :::warning
-If you know what you want to work on, and it involves significant API changes, start by [creating a new issue](issues.md) or commenting on an existing issue related to it.
+If you know what you want to work on, and it involves significant API changes, start by [creating a new issue][community-issues] or commenting on an existing issue related to it.
 This allows us to discuss the details and confirm the changes beforehand, and respect the time and energy you spend contributing to Nebari.
 :::
 
 ## Set up your local Nebari repository
 
-1. Create a personal copy of the [Nebari repository][nebari-repo] by clicking the `fork` button on the top-right corner.
+1. Create a personal copy of the [Nebari repository][nebari-repo] by clicking the `fork` button in the top-right scorner.
 
 2. Clone the forked project to your local computer:
 
@@ -80,17 +80,17 @@ The following steps describe how to create and use a `conda` environment.
 
 2. Create a new environment using `environment-dev.yaml`:
 
-```bash
-conda env create -f environment-dev.yaml
-```
+   ```bash
+   conda env create -f environment-dev.yaml
+   ```
 
-You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the environment build.
+   You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the environment build.
 
 2. Activate the environment with:
 
-```bash
-conda activate nebari-dev
-```
+   ```bash
+   conda activate nebari-dev
+   ```
 
 ### Install Nebari in "editable" mode
 
@@ -174,7 +174,7 @@ In your contributions, always include tests that fail before your change and pas
 Run all the tests locally and make sure that they pass before submitting your contribution.
 If you need help with a test case, you can create a draft pull request and message the maintainers for help.
 
-[For tips and best practices, read Test your Nebari contribution ->](nebari-tests)
+[For tips and best practices, read Test your Nebari contribution ->][community-tests]
 
 ### Document changes
 
@@ -241,3 +241,9 @@ Approval means the core team member has carefully reviewed the changes, and the 
 [nebari-repo]: https://github.com/nebari-dev/nebari
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
 [nebari-docs]: https://www.nebari.dev/
+
+<!-- Internal links -->
+
+[docs-contributions]: community/doc-contributions.md
+[community-issues]: community/issues.md
+[community-tests]: community/nebari-test.md

@@ -145,9 +145,9 @@ Once you have the dependencies and the pre-commit hooks installed, you can start
 
 The workflow to develop your contribution is similar to contributing code. The difference is that you're writing or updating Markdown files. Go through the following sections to learn about creating branches, making pull requests, and how the contribution review process works:
 
-- [Develop your contribution →](code-contributions.md#develop-your-contribution)
-- [Submitting your contribution →](code-contributions.md#submitting-your-contribution)
-- [Review process →](code-contributions.md#review-process)
+- [Develop your contribution →][code-contributions-develop]
+- [Submitting your contribution →][code-contributions-submit]
+- [Review process →][code-contributions-review]
 
 ### Start a live version of the documentation
 
@@ -215,3 +215,9 @@ yarn add package-name
 [nebari-repo]: https://github.com/nebari-dev/nebari
 [nebari-org]: https://github.com/nebari-dev
 [nebari-demo]: https://github.com/nebari-dev/nebari-demo
+
+<!-- Internal links -->
+
+[code-contributions-develop]: community/code-contributions.md#develop-your-contribution
+[code-contributions-submit]: community/code-contributions.md#submitting-your-contribution
+[code-contributions-review]: community/code-contributions.md#review-process
