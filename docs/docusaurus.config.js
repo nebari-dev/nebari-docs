@@ -114,24 +114,24 @@ const config = {
         style: "dark",
         hideOnScroll: false,
         items: [
-          // right navbar items
-
-          // when landing page is ready, uncomment the Home nav bar link
-          // {
-          //   label: "Home",
-          //   position: "right",
-          //   to: "/",
-          // },
           {
             label: "Get Started",
             position: "right",
             items: [
               {
-                label: "Install Nebari",
+                label: "Quickstart",
+                to: "docs/get-started/quickstart",
+              },
+              {
+                label: "Installing Nebari",
                 to: "docs/get-started/installing-nebari",
               },
               {
-                label: "Cloud providers",
+                label: "Choosing a deployment platform",
+                to: "docs/get-started/deploy",
+              },
+              {
+                label: "Supported cloud providers",
                 to: "docs/get-started/cloud-providers",
               },
             ],
