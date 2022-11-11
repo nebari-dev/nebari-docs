@@ -30,7 +30,7 @@ managing Kubernetes clusters.
 
 <!-- TODO: add link to conceptual guide -->
 
-For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our Conceptual guides for more information regarding the basic infrastructure provided by Nebari.
 
 :::warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your
@@ -91,9 +91,9 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](../get-started/installing-nebari.md) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
-installation, please visit the "Get started" section of our [troubleshooting page](../troubleshooting.mdx) for further guidance.
+installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshoothing] for further guidance.
 :::
 
 ## Nebari Initialize
@@ -190,7 +190,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](../how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](../how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
@@ -212,7 +212,9 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on AWS! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
+<!-- TODO: add link to advanced configuration -->
+
+Congratulations! You have successfully deployed Nebari on AWS! From here, see Initial Nebari Configuration for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
 
 ## Destroying Nebari
@@ -230,3 +232,9 @@ Nebari also has a `destroy` command that works the same way the deploy works but
 ```bash
 nebari destroy -c nebari-config.yaml
 ```
+
+<!-- internal links -->
+
+[nebari-install]: /get-started/installing-nebari.md
+[nebari-troubleshoothing]: /troubleshooting.mdx
+[domain-registry]: /how-tos/domain-registry.md

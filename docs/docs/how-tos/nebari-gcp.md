@@ -37,7 +37,7 @@ For a more detailed cost estimate, please also refer to our \[Conceptual guides\
 
 :::note
 If you are using a new GCP account, please keep in mind the [GCP quotas](https://cloud.google.com/docs/quota) of your account. Every new `free tier` account has a limited quota
-for resources like vCPU/Mem/GPUs per region among others. Refer to [Google's free-tier limits](https://cloud.google.com/free/docs/gcp-free-tier#free-tier-usage-limits)
+for resources like `vCPU/Mem/GPUs` per region among others. Refer to [Google's free-tier limits](https://cloud.google.com/free/docs/gcp-free-tier#free-tier-usage-limits)
 documentation for more information.
 :::
 
@@ -144,14 +144,14 @@ Executing the command below will generate a `nebari-config.yaml` file with the N
 
 ```bash
 nebari init gcp --project projectname \
-	  --domain domain \
-	  --auth-provider password
+   --domain domain \
+   --auth-provider password
 ```
 
 :::
 
 :::note
-You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
@@ -177,7 +177,7 @@ For more information, run nebari deploy --help or check out the documentation: h
 ```
 
 :::tip
-The main `temp` folder on a MacOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
+The main `temp` folder on a macOS system can be found by inspecting the value of `$TMPDIR`. This folder and its files are not meant to be user-facing and will present you
 with a seemingly random directory path similar to `/var/folders/xx/xxxxx/T`
 :::
 
