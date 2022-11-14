@@ -135,7 +135,7 @@ environment variables have been properly set. It is time to initialize and deplo
    nebari init --guided-init
 ```
 
-![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-gcp.png)
+![A representation of the output generated when Nebari init guided-init command is executed. ](/img/how-tos/nebari-gcp.png)
 
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
@@ -201,7 +201,7 @@ To see all the options available for the deploy command, run the following comma
 nebari deploy --help
 ```
 
-![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
+![A representation of the output generated when nebari deploy help command is executed. ](/img/how-tos/nebari-deploy-help.png)
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
@@ -245,7 +245,7 @@ To see all the options available for the destroy command, type the following com
 nebari destroy --help
 ```
 
-![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+![A representation of the output generated when nebari deploy help command is executed. ](/img/how-tos/nebari-destroy-help.png)
 
 Nebari also has a `destroy` command that works the same way the deployment works but instead of creating the provisioned resources it destroys it.
 

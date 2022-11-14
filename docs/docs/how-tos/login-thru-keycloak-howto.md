@@ -16,7 +16,7 @@ Navigate to the cluster homepage, for instance [`https://demo.nebari.dev`](https
 Once on the site, you will be prompted to log in, similar to
 the login page shown in the image below.
 
-![Nebari login screen](/img/how-tos/nebari_login_screen.png)
+![Nebari login screen ](/img/how-tos/nebari_login_screen.png)
 
 Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see the [How to Configure Keycloak][nebari-keycloak] docs.
 
@@ -33,12 +33,12 @@ For more information on how to configure Keycloak, and add new users, review the
 In this example, Auth0 is acting as our identity provider. To continue the login process, the user selects the `Auth0` button and logs into through Auth0.
 
 <p align="center">
-<img src="/img/how-tos/keycloak_nebari_login.png" alt="Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through Auth0" width="400"/>
+<img src="/img/how-tos/keycloak_nebari_login.png" alt="Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through Auth0 " width="400"/>
 </p>
 
 Once authenticated, you will be forwarded to the main JupyterHub page. On this page, you will find links to all of Nebari's core features, and it is where you can launch your JupyterLab pod. If you are an admin, you'll also have access to the JupyterHub `Admin` management.
 
-![Nebari dashboard main screen - displays a button "Start my server"](/img/how-tos/nebari_main_hub_page.png)
+![Nebari dashboard main screen - displays a button "Start my server" ](/img/how-tos/nebari_main_hub_page.png)
 
 ## 3. Selecting a Profile
 
@@ -49,7 +49,7 @@ The customized profiles will give you access to fixed cloud resources. In this e
 These options are configured by your administrator. A more detailed explanation of dedicated profiles can be found in the Profiles section of
 the advanced configuration page.
 
-![Nebari select profile](/img/how-tos/nebari_select_profile.png)
+![Nebari select profile ](/img/how-tos/nebari_select_profile.png)
 
 ## 4. Starting your server
 
@@ -57,14 +57,14 @@ Once an appropriate profile has been selected, click `start`. At this point, you
 
 Ultimately this autoscaling feature helps reduce costs when the cluster is idle. A successful launch should look similar to the image below.
 
-![Nebari start server](/img/how-tos/nebari_server_start.png)
+![Nebari start server ](/img/how-tos/nebari_server_start.png)
 
 <details>
 <summary>Event Log</summary>
 
 During this time you might see some log messages that detail the autoscaling process. To view all the logs, click the **Event Log** button. They should look similar to the following:
 
-![Nebari event log](/img/how-tos/keycloak_start_event_logs.png)
+![Nebari event log ](/img/how-tos/keycloak_start_event_logs.png)
 
 </details>
 

@@ -40,20 +40,20 @@ After the initial deployment, it is **highly** recommended that you change the K
 1. To change the `root` user password, go to your Nebari instance's admin dashboard - e.g., something like `https://{your-nebari-domain}/auth/admin/` and log in with the root password provided.
 
    <p align="center">
-   <img src="/img/how-tos/keycloak_master_login.png" alt="Nebari admin view - Root Login to Keycloak form" width="400"/>
+   <img src="/img/how-tos/keycloak_master_login.png" alt="Nebari admin view - Root Login to Keycloak form " width="400"/>
    </p>
 
 2. From there, click on the **Root** dropdown in the top right of the screen, and select **Manage account**.
 
-   ![Keycloak root user page - manage account tab selected](/img/how-tos/keycloak_root_user_manage_account.png)
+   ![Keycloak root user page - manage account tab selected ](/img/how-tos/keycloak_root_user_manage_account.png)
 
 3. Under **Account Security** click **Signing In**.
 
-   ![Keycloak root user page - account security](/img/how-tos/keycloak_root_user_account_security.png)
+   ![Keycloak root user page - account security ](/img/how-tos/keycloak_root_user_account_security.png)
 
 4. In the Password section, click the **Update** button. This will guide you through entering your existing root password, and then creating a new password.
 
-   ![Keycloak root user page - account security, update password](/img/how-tos/keycloak_root_user_update_password.png)
+   ![Keycloak root user page - account security, update password ](/img/how-tos/keycloak_root_user_update_password.png)
 
 :::warning
 The `security.keycloak.initial_root_password` field in `nebari-config.yaml` has no effect after changing the `root` password. If you redeploy Nebari it **will not reset** the password back to the old one (or anything else that might be in the field in your YAML file). We strongly recommend you delete this field to prevent later confusion.
@@ -83,7 +83,7 @@ Steps to create a new user:
 
 2. Click the **Add user** button, and you will see the new user form:
 
-   ![Keycloak add user tab screenshot - new user form](/img/how-tos/keycloak_add_users.png)
+   ![Keycloak add user tab screenshot - new user form ](/img/how-tos/keycloak_add_users.png)
 
 3. Fill out the three fields outlined above. These are **Username**, **Email**, and **Groups**. (See explanation below). Then click **save**.
 
@@ -110,7 +110,7 @@ If you are using the password authentication provider, you will also need to def
 If using Auth0, GitHub or any other identity provider, the password field is not required.
 :::
 
-![Keycloak add user > credentials tab screenshot - set password](/img/how-tos/keycloak_user_password.png)
+![Keycloak add user > credentials tab screenshot - set password ](/img/how-tos/keycloak_user_password.png)
 
 ### Add user from the command line
 
@@ -130,7 +130,7 @@ This will create a new user `<username>` under the `analyst` group, with the ini
 
 Your new user can now log in to Nebari, visit your provided Nebari domain URI which will take you to the login form page and follow the [How-to login in to Nebari and start a server][keycloak-login].
 
-![Nebari - Log in to Keycloak page](/img/how-tos/nebari_login_screen.png)
+![Nebari - Log in to Keycloak page ](/img/how-tos/nebari_login_screen.png)
 
 ## In-depth look at Roles and Groups
 
@@ -162,15 +162,15 @@ As an example, we create a new group named `conda-store-manager`. This group wil
 
 1. Click **New** in the upper-right hand corner under **Groups**.
 
-![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
+![Keycloak groups tab screenshot - user groups view] (/img/how-tos/keycloak_groups.png)
 
 - Then, give the new group an appropriate name.
 
-![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
+![Keycloak add group form - name field set to conda-store-manager ](/img/how-tos/keycloak_new_group1.png)
 
 2. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
 
-![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
+![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown ](/img/how-tos/keycloak_new_group2.png)
 
 In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
 
