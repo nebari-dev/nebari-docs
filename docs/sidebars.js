@@ -99,7 +99,6 @@ module.exports = {
       items: [
         "references/overview",
         "references/cli-command-reference",
-        "references/full-configuration-examples",
         "references/RELEASE",
       ],
     },
