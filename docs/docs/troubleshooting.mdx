@@ -57,6 +57,22 @@ environments:
 
 The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/nebari-dask-meta-feedstock/blob/master/recipe/meta.yaml).
 
+### SSl certificate issues with ClearML
+
+if you are using ClearML and you are getting SSL certificate errors, this might be due to a mismatch between the certificate used by ClearML and the one used by Nebari.
+This normally happens when a custom certificate was provided to Nebari that does not englobe the ClearML domains. which are:
+
+```
+- files.clearml.<nebari-domain>
+- app.clearml.<nebari-domain>
+- api.clearml.<nebari-domain>
+```
+
+If the Domain Name System (DNS) and Common Name (CN) name doesn't match, Traefik then generates and uses a self-signed certificate.
+Though as it's not possible to request a double wildcard certificate for a domain (for example \*.\*.local.com). This may lead to some unexpected [TLS](https://www.internetsociety.org/deploy360/tls/basics) issues,
+so as alternative to including each specific domain under the certificate CN list, you may also define a wildcard certificate.
+See [default certificate configuration](https://doc.traefik.io/traefik/https/tls/#default-certificate) for more details.
+
 ## Errors
 
 ### Default conda-store environment fails to build on initial deployment
