@@ -4,7 +4,7 @@ title: Quickstart
 description: A cheat sheet of Neabri commands for returning users.
 ---
 
-This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari](installing-nebari.md).
+This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari][install-nebari].
 
 <div align="center">
   <img src="/img/get-started/nebari-cli-commands.png" alt="A diagram showing the different Nebari CLI commands. The first step is 'nebari init' which creates the 'nebari-config.yaml' file. The second step is 'nebari deploy' which deploys the Nebari instance on the cloud. The third step is 'nebari destroy' which destroys the deployed instance. These second and third steps run 'nebari validate' and 'nebari render' internally. 'nebari validate' verifies the 'nebari-config.yaml' file. 'nebari render' generates the 8-stage terraform deployment scripts." width="60%"/>
@@ -252,4 +252,8 @@ This command is automatically run when you `deploy`.
 
 ---
 
-If you face any issues with the commands, check out the [Troubleshooting guide](../troubleshooting.mdx).
+If you face any issues with the commands, check out the [Troubleshooting guide][nebari-troubleshooting].
+
+<!-- internal links -->
+[install-nebari]: /get-started/installing-nebari.md
+[nebari-troubleshooting]: /troubleshooting.mdx

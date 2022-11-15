@@ -39,7 +39,7 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "logo/favicon.ico",
-  staticDirectories: ['static'],
+  staticDirectories: ["static"],
 
   i18n: {
     defaultLocale: "en",
@@ -49,12 +49,18 @@ const config = {
   // Plugings need installing first then add here
   plugins: [
     "docusaurus-plugin-sass",
-    require.resolve('docusaurus-lunr-search'),
+    require.resolve("docusaurus-lunr-search"),
   ],
   customFields: { ...customFields },
 
   // Add plausible as script
-  scripts: [{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': customFields.domain }],
+  scripts: [
+    {
+      src: "https://plausible.io/js/script.js",
+      defer: true,
+      "data-domain": customFields.domain,
+    },
+  ],
   // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
@@ -82,8 +88,7 @@ const config = {
         },
         pages: {
           path: "src/pages",
-          include: ["**/*.md", "**/*.mdx"],
-        }
+        },
       }),
     ],
   ],
@@ -109,20 +114,32 @@ const config = {
         style: "dark",
         hideOnScroll: false,
         items: [
-          // right navbar items
+          {
+            label: "Home",
+            position: "right",
+            to: "/",
+          },
           {
             label: "Get Started",
             position: "right",
             items: [
               {
-                label: "Install Nebari",
+                label: "Quickstart",
+                to: "docs/get-started/quickstart",
+              },
+              {
+                label: "Installing Nebari",
                 to: "docs/get-started/installing-nebari",
               },
               {
-                label: "Cloud providers",
+                label: "Choosing a deployment platform",
+                to: "docs/get-started/deploy",
+              },
+              {
+                label: "Supported cloud providers",
                 to: "docs/get-started/cloud-providers",
               },
-            ]
+            ],
           },
           {
             label: "Docs",
@@ -143,7 +160,7 @@ const config = {
         ],
       },
       announcementBar: {
-        id: 'rename_announcement',
+        id: "rename_announcement",
         content:
           '🪴 This project has been officially renamed to Nebari and migrated to the <a rel="noopener noreferrer" href="https://github.com/nebari-dev">nebari-dev</a> organization in GitHub.</br> Shall you encounter any issues or need support, you can find us in our <a rel="noopener noreferrer" href="https://github.com/nebari-dev/nebari"> new repository</a>.',
         isCloseable: false,
@@ -166,7 +183,7 @@ const config = {
             ],
           },
           {
-            title: 'Community',
+            title: "Community",
             items: [
               {
                 label: "Nebari repository",
