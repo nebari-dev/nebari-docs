@@ -178,7 +178,7 @@ The default authentication method is set to `github` if no changes are specified
 
 <Tabs>
 
-  <TabItem label="GitHub" value="github" default>
+<TabItem label="GitHub" value="github" default>
 
 To use GitHub as your authentication method, you must first create a [GitHub OAuth application](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and provide the `client_id` and `client_secret` to Nebari. By using the `GitHub` authentication method, users will then be able to log in to Nebari using their GitHub account registered within Keycloak database.
 
@@ -193,9 +193,9 @@ security:
       client_secret: ...
 ```
 
-  </TabItem>
+</TabItem>
 
-  <TabItem label="Auth0" value="auth0">
+<TabItem label="Auth0" value="auth0">
 
 Auth0 is a cloud-based identity management platform that provides authentication, authorization, and user management for web, mobile, IoT, and internal applications. This authentication method is useful for organizations that already have an Auth0 account and user database and want to seamlessly integrate it with Nebari.
 
@@ -216,15 +216,18 @@ security:
 Important to note is that the `auth0_subdomain` field which must be only the `<auth0_subdomain>.auth0.com`. For example, for `nebari-dev.auth0.com` the subdomain would be `nebari-dev`.
 
 :::note
+
 Nebari supports automatic provisioning of the Auth0 application during initialization. To do so, you must provide the `--auth-provider=auth0 --auth-auto-provision` flags when running `nebari init`. This will automatically provide the `client_id` and `client_secret` to Nebari given that your Auth0 environment variables are set:
 
 - `AUTH0_CLIENT_ID`: client ID of Auth0 machine-to-machine application found at top of the newly created application page
 - `AUTH0_CLIENT_SECRET`: secret ID of Auth0 machine-to-machine application found in the `Settings` tab of the newly created application
 - `AUTH0_DOMAIN`: The `Tenant Name` which can be found in the general account settings on the left hand side of the page appended with `.auth0.com`
-  :::
 
-  </TabItem>
-  <TabItem label="Password" value="password" default="true">
+:::
+
+</TabItem>
+
+<TabItem label="Password" value="password" default="true">
 
 Username and Password is the simplest authentication method that Nebari supports. By using the `Password` authentication method, users will then be able to log in to Nebari using their username and password registered within Keycloak database.
 
@@ -236,7 +239,8 @@ security:
     type: password
 ```
 
-  </TabItem>
+</TabItem>
+
 </Tabs>
 
 :::note
