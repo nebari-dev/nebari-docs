@@ -3,69 +3,67 @@ title: Welcome to Nebari's documentation
 slug: /welcome
 ---
 
-<!-- TODO: Remove in favour of the new website gh: #182-->
-
-## Nebari Vision
-
-An opinionated open source [JupyterHub][jupyterhub] distribution that provides
-an all-in-one development and experimentation platform for teams to work
-efficiently and collaboratively.
-
-Deployment, integration, and maintenance is minimized by using the
-Infrastructure as Code (IaC) management approach.
-
-## Nebari has a _DevOps for non-DevOps people_ approach.
+Nebari is an open source data science platform, developed for collaboration and scalability.
+It aims to provide a robust infrastructure that can be set up (deployed) quickly.
 
 ![Nebari overview sequence showing deploying from yaml to cloud resources to the instance spinup selection](/img/welcome/nebari_overview_sequence.png)
 
-### Components
+## Get Started
 
-The technology stack is an integration of the following existing open source libraries:
+New to Nebari? Start here to set up your own Nebari instance!
 
-- [Terraform](https://www.terraform.io/intro/index.html): a tool for building, changing, and versioning infrastructure.
-- [Kubernetes](https://kubernetes.io/docs/home/): a cloud-agnostic orchestration system
-- [Helm](https://helm.sh/): a package manager for Kubernetes
-- [JupyterHub][jupyterhub] : a shareable compute platform for data science
-- [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/): a web-based interactive development environment for Jupyter Notebooks
-- [Dask](https://docs.dask.org/en/latest/): a scalable and flexible library for parallel computing in Python
-  - [Dask-Gateway](https://gateway.dask.org/): a secure, multi-tenant server for managing Dask clusters
-- [Keycloak](https://www.keycloak.org/): an open source identity and access management tool
-- [GitHub Actions](https://docs.github.com/en/actions): a tool to automate, customize, and execute software development workflows in a GitHub repository.
-- [traefik](https://traefik.io/): for routing web/tcp traffic inside cluster
-  - [traefik-forward-auth](https://github.com/thomseddon/traefik-forward-auth): for single sign on and easy securing of web applications
+> [Learn how to install and deploy Nebari from scratch →](./get-started/installing-nebari)
 
-Amongst the newly created open source libraries on the tech stack are:
+> Refer to [CLI commands in the Quick start →](./get-started/quickstart)
 
-- [Jupyterhub SSH](https://github.com/yuvipanda/jupyterhub-ssh): brings the SSH experience to a modern cluster manager.
-- [Jupyter Videochat](https://github.com/yuvipanda/jupyter-videochat): allows video-chat with JupyterHub peers inside JupyterLab, powered by Jitsi.
-- [Conda Store](https://github.com/quansight/conda-store): serves identical conda environments and controls its life-cycle.
-- [Conda Docker](https://github.com/conda-incubator/conda-docker): an extension to the docker concept of having declarative environments that are associated with Docker images
-  allowing tricks and behavior that otherwise would not be allowed.
-- [VS Code codeserver](https://github.com/cdr/code-server): built-in web editor tied to jupyterlab server
+<!-- TODO: All a link to Nebari 101 when it's ready. -->
 
-### Integrations
+[↳ Read all pages](./category/get-started/)
 
-Nebari does all the heavy lifting of integrating with common services.
+## Tutorials
 
-- [Prefect](https://www.prefect.io/) - workflow management
-- [ClearML](https://clear.ml/) - machine learning experiment tracking and analysis
-- [Prometheus](https://prometheus.io/) - cluster monitoring
-- [Grafana](https://grafana.com/) - cluster monitoring visualizations
-- [CDS Dashboards](https://cdsdashboards.readthedocs.io/) - shared dashboarding across users
+Learn to use different Nebari features and integrations with our end-to-end, standalone, walkthroughs.
 
-## Why use Nebari?
+> [Work with big data using Dask →](./tutorials/using_dask)
 
-Nebari enables teams to build their own scalable compute infrastructure with:
+> [Create, deploy, and share a Panel dashboard →](./tutorials/creating-cds-dashboard)
 
-- Straightforward installation and maintenance controlled by a single configuration file.
-- Autoscaling JupyterHub installation deployed on one of the supported Cloud providers (AWS, GCP, DO, or Azure).
-- Option to choose from multiple compute instances.
-- Autoscaling Dask compute clusters for big data using any instance type.
-- Shell access and remote editing access (VSCode remote) through KubeSSH.
-- Shared filesystem allowing users to work on projects privately, within groups, or across the organisation.
-- Robust compute environment handling allowing both prebuilt and ad-hoc environment creation.
-- Integrated video conferencing, using [Jitsi](https://meet.jit.si/).
+[↳ Read all tutorials](./category/tutorials/)
 
-<!-- Reusable links -->
+## How-to guides
 
-[jupyterhub]: https://jupyter.org/hub
+Learn to perform specific tasks, with our step-by-step instructions.
+
+> If you're an administrator, read [how-to configure Keycloack for all users →](./how-tos/configuring-keycloak)
+
+> If you're a data scientist, [learn how-to use Visual Studio code for your work →](how-tos/using-vscode)
+
+[↳ Read all guides](./category/tutorials/)
+
+<!-- TODO: Add conceptual guides when ready
+
+## Conceptual guides
+
+> TBD
+
+[↳ Read all guides](./category/conceptual-guides/) -->
+
+## Community
+
+Nebari is a community-led open source project, learn how you can get involved!
+
+> [Facing issues with Nebari? Get support on GitHub discussions or the issue tracker →](./community/#getting-support)
+
+> [Learn how you can contribute to Nebari, beyond code and pull-requests →](./community/#how-to-contribute)
+
+[↳ Read all community resources](./category/community/)
+
+## References
+
+<!-- TODO: Add API doc when ready -->
+
+Technical details of Nebari's architecture and how it works.
+
+> [Release notes →](./references/RELEASE)
+
+[↳ Read all references](./category/references/)

@@ -28,7 +28,7 @@
     padding: 10px;
     &::before,
     &::after {
-      content: '"';
+      content: '';
     }
 
     // assigning colour otherwise it is too dark
