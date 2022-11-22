@@ -17,7 +17,7 @@ This page describes the high-level details of cutting a new Nebari release.
 
 ## Release Captain responsibilities
 
-For every release, there is an assigned "Release Captain". It is the responsibility of this person to manage both the release checklist and testing checklist as well to communicate the status of the release to the rest of the Nebari development team.
+For every release, there is an assigned "Release Captain". It is the responsibility of this person to manage both the release and testing checklists as well as to communicate the status of the release to the rest of the Nebari development team and the community.
 
 Communication channels that need to be updated are:
 
@@ -40,8 +40,8 @@ YYYY-MM-releaseNumber
 `releaseNumber` represents the current release for that month, starting at `1`
 :::
 
-:::warn
-For the release tag, there should be no prepended `v`!
+:::caution
+For the release tag, there should be NO prepended `v`
 :::
 
 For example, the first Nebari CalVer release was `2022.10.1`. If a second release was needed in the same month, we simply increment the `releaseNumber` by 1, which would be `2022.10.2` (_this is to illustrate how the increment works, this release does not exist._)
@@ -51,8 +51,10 @@ For example, the first Nebari CalVer release was `2022.10.1`. If a second releas
 Gitflow is framework for managing `git` branches by assigning certain roles to particular branches.
 
 `main` - Represents a production-ready state of the code-base, with appropriate tags to match the most recent releases.
+
 `develop` - Represents the working branch where all new features and bug fixes (since the last release) are merged into. - This is the default branch on the `nebari-dev/nebari` GitHub repo.
-`release/YYYY-MM-releaseNumber` - Tepresents the branch for the upcoming release.
+
+`release/YYYY-MM-releaseNumber` - Represents the branch for the upcoming release.
 
 Simplified Gitflow workflow:
 

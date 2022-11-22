@@ -91,6 +91,7 @@ module.exports = {
       },
       items: [
         "references/RELEASE",
+        "references/release-process"
       ],
     },
     {
