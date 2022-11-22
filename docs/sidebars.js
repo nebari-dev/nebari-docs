@@ -90,8 +90,7 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/RELEASE",
-        "references/release-process"
+        "references/RELEASE"
       ],
     },
     {
@@ -106,6 +105,7 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
+        "community/release-process",
       ],
     },
     {

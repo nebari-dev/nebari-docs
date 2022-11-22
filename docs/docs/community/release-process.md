@@ -37,30 +37,39 @@ YYYY-MM-releaseNumber
 
 `MM` represents the _non-zero padded_ month - i.e. `1` for January, `12` for December
 
-`releaseNumber` represents the current release for that month, starting at `1`
+`releaseNumber` represents the current release for that month, starting at `1`. Anything above `1` represents a [hotfix (patch) release](#hotfixes).
 :::
 
 :::caution
 For the release tag, there should be NO prepended `v`
 :::
 
-For example, the first Nebari CalVer release was `2022.10.1`. If a second release was needed in the same month, we simply increment the `releaseNumber` by 1, which would be `2022.10.2` (_this is to illustrate how the increment works, this release does not exist._)
+For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix release was needed in the same month, we simply increment the `releaseNumber` by 1, which would be `2022.10.2` (_this is to illustrate how the increment works, this release does not exist._)
 
-## Gitflow details
+## Gitflow and branching strategy
 
 Gitflow is framework for managing `git` branches by assigning certain roles to particular branches.
 
-`main` - Represents a production-ready state of the code-base, with appropriate tags to match the most recent releases.
+`main` - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
 
-`develop` - Represents the working branch where all new features and bug fixes (since the last release) are merged into. - This is the default branch on the `nebari-dev/nebari` GitHub repo.
+`release/YYYY-MM-releas1eNumber` - Represents the branch for the upcoming release and is the _default_ branch on the GitHub repository.
 
-`release/YYYY-MM-releaseNumber` - Represents the branch for the upcoming release.
+### Process
 
-Simplified Gitflow workflow:
+Although this process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E), it's worth making clear how branches are managed.
 
-1. Create new feature/bug-fix branches from `develop`
-2. Open PRs against `develop` branch
-3. When all features/major bug fixes have been been completed and merged into `develop`, create a release branch `release/YYYY-MM-releaseNumber`
-4. Complete end-to-end/integration testing; merge any small, last-minute bug fixes into this release branch
-5. When all testing and user validation has been completed, merge `release/YYYY-MM-releaseNumber` into `main` and back into `develop`
-6. Cut release from `main`
+Whenever a new release is out, it is the responsibility of the Release Captain to create a new release branch `release/YYYY-MM-releaseNumber` for the next month's release and to set this new branch as the default branch on the GitHub repository.
+
+All feature branches and bug fixes pull requests (PRs) will then be opened against this new release branch.
+
+And the cycle continues.
+
+:::note
+This process was inspired by the Bokeh [BEP6](https://github.com/bokeh/bokeh/wiki/BEP-6:-Branching-Strategy).
+:::
+
+#### Hotfixes
+
+In the event that a patch or hotfix release is needed, a pull request is still opened against the current release branch.
+
+However after it has been merged, this commit can be cherry-picked and merged into a hotfix branch. This hotfix or patch branch is created off of the last release but with an incremented `releaseNumber`. From here, the release checklist should be able to guide us through the remaining steps.
