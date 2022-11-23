@@ -46,7 +46,7 @@ YYYY-MM-releaseNumber
 For the release tag, there should be NO prepended `v`
 :::
 
-For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix release was needed in the same month, we simply increment the `releaseNumber` by 1, which would be `2022.10.2` (_this is to illustrate how the increment works, this release does not exist._)
+For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix release was needed in the same month, we increment the `releaseNumber` by 1, which would be `2022.10.2` (_this is to illustrate how the increment works, this release does not exist._)
 
 ## Gitflow and branching strategy
 
