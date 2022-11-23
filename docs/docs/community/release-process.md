@@ -1,6 +1,6 @@
 ---
 id: release-process
-title: The Nebari release process
+title: Release process
 description: The Nebari release process and workflow
 ---
 
