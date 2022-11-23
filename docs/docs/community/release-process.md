@@ -60,7 +60,8 @@ Gitflow is framework for managing `git` branches by assigning certain roles to p
 
 Although this process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E), it's worth making clear how branches are managed.
 
-Whenever a new release is out, it is the responsibility of the Release Captain to create a new release branch `release/YYYY-MM-releaseNumber` for the next month's release and to set this new branch as the default branch on the GitHub repository.
+Whenever a new release is out, it is the responsibility of the Release Captain to create a new release branch, `release/YYYY-MM-releaseNumber` for the next month's release and to set this new branch as the default branch on the GitHub repository.
+Setting this as the default branch ensures that new Pull Requests will automatically default to submitting against it. Force pushes are not allowed to these branches.
 
 Active development occurs against the `release/YYYY-MM-releaseNumber` branch.
 
