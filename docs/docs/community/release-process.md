@@ -17,7 +17,13 @@ This page describes the high-level details of cutting a new Nebari release.
 
 ## Release Captain responsibilities
 
-For every release, there is an assigned "Release Captain". It is the responsibility of this person to manage both the release and testing checklists as well as to communicate the status of the release to the rest of the Nebari development team and the community.
+For every release, there is an assigned "Release Captain". The Release Captain's responsibilities are:
+
+- Manage both the release and testing processes and update the checklists as needed.
+- Communicate the status of the release to the rest of the Nebari development team and the community (through updating the checklists and adding status updates as comments).
+- Assign owners to checklist items (if not owned by the Release Captain).
+- Adjust the schedule, particularly the publishing dates, based on defects found, fixes made, holidays, vacations, and so on.
+- Ensure a new branch and milestone is created after completing a release cycle.
 
 Communication channels that need to be updated are:
 
