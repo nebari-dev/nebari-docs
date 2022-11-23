@@ -6,12 +6,12 @@ description: Perform a manual backup of a Nebari instance
 
 # Manual backups
 
-Your cloud provider may have native ways to backup your Kubernetes cluster and volumes.
+Your cloud provider may have native ways to back up your Kubernetes cluster and volumes.
 
-This guide describes how you would manually obtain the data you need to repopulate your QHub if your cluster is lost and you wish to start it up again from the `nebari-config.yaml`
+This guide describes how you would manually obtain the data you need to repopulate your Nebari instance if your cluster is lost, and you wish to start it up again from the `nebari-config.yaml`
 file.
 
-There are three main locations that you need to backup:
+There are three main locations that you need to back up:
 
 1. The Network File System (NFS) volume where all JupyterLab workspace files are stored
 2. The JupyterHub database (for Dashboard configuration)
@@ -34,7 +34,7 @@ This specific guide shows how to do this on an AWS cluster and upload to AWS S3.
 
 ### Kubectl configuration
 
-To setup kubectl, obtain the name of the cluster. If you know the deployment region of the current cluster, this is straightforward:
+To set up kubectl, obtain the name of the cluster. If you know the deployment region of the current cluster, this is straightforward:
 
 ```shell
 aws eks list-clusters --region=us-west-2
@@ -89,7 +89,7 @@ Again replacing the `dev` namespace as needed.
 
 ### Installations
 
-You must install several `apt` packages, as the pod spun up is a basic pod. The following commands installs them:
+You must install several `apt` packages, as the pod spun up is a basic pod. Use the following command:
 
 ```shell
 apt update
@@ -110,7 +110,7 @@ The last line in the command above prompts for your AWS public/private key and d
 
 ### Backups
 
-To backup the file system, run:
+To back up the file system, run:
 
 ```shell
 cd /data
@@ -199,11 +199,12 @@ Instructions will be similar to those for AWS above, but use Digital Ocean space
 
 The JupyterHub database will mostly be recreated whenever you start a new cluster, but should be backed up to save Dashboard configurations.
 
-You want to do something very similar to the NFS backup, above - this time you need to back up just one file located in the PersistentVolume `hub-db-dir`.
+You want to do something very similar to the NFS backup, above - this time you need to back up one file located in the `PersistentVolume` `hub-db-dir`.
 
-First, you might think you can just make a new `pod.yaml` file, this time specifying `claimName: "hub-db-dir"` instead of `claimName: "jupyterhub-dev-share"`. However, `hub-db-dir`
-is 'Read Write Once' - the 'Once' meaning it can only be mounted to one pod at a time, but the JupyterHub pod will already have this mounted! So the same approach will not work
-here.
+First, you might think you can make a new `pod.yaml` file, this time specifying `claimName: "hub-db-dir"` instead of
+`claimName: "jupyterhub-dev-share"`. However, `hub-db-dir`
+is 'Read Write Once' - the 'Once' meaning it can only be mounted to one pod at a time
+but the JupyterHub pod will already have this mounted! So the same approach will not work here.
 
 Instead of mounting to a new 'debugger pod' you have to access the JupyterHub pod directly using the `kubectl` CLI.
 
@@ -225,7 +226,7 @@ There is no need to TAR anything up since the only file required to be backed up
 
 ### Backing up JupyterHub DB
 
-Now we just need to upload the file to S3. You might want to [install the AWS CLI tool](#installations) as we did before, however, as the Hub container is a rather restricted
+Now you need to upload the file to S3. You might want to [install the AWS CLI tool](#installations) as we did before, however, as the Hub container is a rather restricted
 environment the recommended approach is to upload files to AWS S3 buckets using curl.
 
 For more details please refer to the [using curl to access AWS S3 buckets] documentation.
@@ -244,7 +245,7 @@ As for uploads, [you may need to use curl to download items from an AWS S3 bucke
 
 ## Keycloak user/group database
 
-Nebari provides a simple script to export the important user/group database. Your new Nebari cluster will recreate a lot of Keycloak config (including new Keycloak clients which will
+Nebari provides a script to export the important user/group database. Your new Nebari cluster will recreate a lot of Keycloak config (including new Keycloak clients which will
 have new secrets), so only the high-level Group and User info is exported.
 
 If you have a heavily customized Keycloak configuration, some details may be omitted in this export.
@@ -273,4 +274,4 @@ To re-import your users and groups, [login to the /auth/ URL] using the root use
 
 Under 'Manage' on the left-hand side, click 'Import'. Locate the `exported-keycloak.json` file and select it. Then click the 'Import' button.
 
-All users and groups should now be present in Keycloak. Note that the passwords will not have been restored so you may need to be reset them after this step.
+All users and groups should now be present in Keycloak. Note that the passwords will not have been restored, so you may need to be reset them after this step.

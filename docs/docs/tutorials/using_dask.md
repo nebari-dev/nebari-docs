@@ -17,7 +17,7 @@ with almost no code changes. It's a powerful tool that can revolutionize how you
 
 ## Dask integration on Nebari
 
-Nebari uses [Dask Gateway](https://gateway.dask.org/) to expose auto-scaling compute clusters automatically
+Nebari uses [Dask Gateway][dask-gateway] to expose auto-scaling compute clusters automatically
 configured for the user, and it provides a secure way to managing Dask clusters.
 
 <details>
@@ -31,7 +31,7 @@ Dask consists of 3 main components `client`, `scheduler`, and `workers`.
 
 The `client` interacts with both `scheduler` (sends instructions) and `workers` (collects results).
 
-Check out the [Dask Gateway documentation](https://gateway.dask.org/) for a full explanation.
+Check out the [Dask Gateway documentation][dask-gateway] for a full explanation.
 
 </details>
 
@@ -59,7 +59,7 @@ options
 
 ![Nebari - Cluster Options UI](/img/tutorials/cluster_options.png)
 
-Using the `Cluster Options` interface, you can specify the conda environment, the instance type, and any additional
+Using the `Cluster Options` interface, you can specify the `conda` environment, the instance type, and any additional
 environment variables you'll need.
 
 :::warning
@@ -303,3 +303,6 @@ with dask_cluster() as client:
 
 Kudos, you should now have a working Dask cluster inside Nebari.
 Now go load up your own big data!
+
+<!-- Reusable links -->
+[dask-gateway]: https://gateway.dask.org/

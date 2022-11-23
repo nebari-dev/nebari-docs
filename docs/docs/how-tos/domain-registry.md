@@ -56,7 +56,7 @@ Finally, set the token value as an environment variable:
  export CLOUDFLARE_TOKEN="cloudflaretokenvalue"
 ```
 
-Also, add the flag `--dns-provider=cloudflare` to the [Nebari `deploy` command.](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari)
+Also, add the flag `--dns-provider=cloudflare` to the [Nebari `deploy` command][nebari-deploy].
 
 ## Using other DNS providers
 
@@ -90,4 +90,8 @@ This will set the DNS provider as Cloudflare and automatically handle the creati
 The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
 :::
 
-When you are done setting up the domain name, you can refer back to the [Nebari deployment documentation](https://www.nebari.dev/how-tos/nebari-gcp#deploying-nebari) and continue the remaining steps.
+When you are done setting up the domain name, you can refer back to the [Nebari deployment documentation][nebari-deploy] and continue the remaining steps.
+
+<!-- internal- links -->
+
+[nebari-deploy]: /get-started/deploy.mdx
