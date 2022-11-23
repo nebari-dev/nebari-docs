@@ -1,7 +1,7 @@
 ---
 id: release-process
 title: Release process
-description: The Nebari release process and workflow
+description: Release process
 ---
 
 # The Nebari release process
