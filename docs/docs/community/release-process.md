@@ -25,10 +25,6 @@ For every release, there is an assigned "Release Captain". The Release Captain's
 - Adjust the schedule, particularly the publishing dates, based on defects found, fixes made, holidays, vacations, and so on.
 - Ensure a new branch and milestone is created after completing a release cycle.
 
-Communication channels that need to be updated are:
-
-- the release checklist issue itself
-- the `#nebari-dev` slack channel
 
 ## CalVer details
 
