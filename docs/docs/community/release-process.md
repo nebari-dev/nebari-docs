@@ -8,12 +8,9 @@ description: Release process
 
 This page describes the high-level details of cutting a new Nebari release.
 
-|                   |                                                                                                                                                                                                  |
-| :---------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|      Cadence      |                                                                                             Monthly                                                                                              |
-| Versioning System |                                                                                    [CalVer](#calver-details)                                                                                     |
-| Release Checklist |     [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E)     |
-| Testing Checklist | [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=testing-checklist.md&title=Testing+checklist+for+%3Cversion%3E) |
+|        Cadence        |               Versioning System                |                                                                                    Release Checklist                                                                                     |                                                                                        Testing Checklist                                                                                         |
+| :-------------------: | :--------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| 3rd week of the month | [CalVer](#calver-details) - (i.e. `2022.10.1`) | [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E) | [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=testing-checklist.md&title=Testing+checklist+for+%3Cversion%3E) |
 
 ## Release Captain responsibilities
 
@@ -24,7 +21,6 @@ For every release, there is an assigned "Release Captain". The Release Captain's
 - Assign owners to checklist items (if not owned by the Release Captain).
 - Adjust the schedule, particularly the publishing dates, based on defects found, fixes made, holidays, vacations, and so on.
 - Ensure a new branch and milestone is created after completing a release cycle.
-
 
 ## CalVer details
 
@@ -64,11 +60,6 @@ Whenever a new release is out, it is the responsibility of the Release Captain t
 Setting this as the default branch ensures that new Pull Requests will automatically default to submitting against it. Force pushes are not allowed to these branches.
 
 Active development occurs against the `release/YYYY-MM-releaseNumber` branch.
-
-
-:::note
-This process was inspired by the Bokeh [BEP6](https://github.com/bokeh/bokeh/wiki/BEP-6:-Branching-Strategy).
-:::
 
 #### Hotfixes
 
