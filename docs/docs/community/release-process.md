@@ -52,9 +52,9 @@ For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix releas
 
 Gitflow is framework for managing `git` branches by assigning certain roles to particular branches.
 
-`main` - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
+- `main` - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
 
-`release/YYYY-MM-releas1eNumber` - Represents the branch for the upcoming release and is the _default_ branch on the GitHub repository.
+- `release/YYYY-MM-releas1eNumber` - Represents the branch for the upcoming release and is the _default_ branch on the GitHub repository.
 
 ### Process
 
