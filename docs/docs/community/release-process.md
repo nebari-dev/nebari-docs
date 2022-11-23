@@ -28,7 +28,7 @@ For every release, there is an assigned "Release Captain". The Release Captain's
 
 ## CalVer details
 
-These releases should follow the following CalVer versioning style:
+Nebari releases should follow the following CalVer versioning style:
 
 ```
 YYYY-MM-releaseNumber
