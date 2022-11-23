@@ -65,7 +65,6 @@ Setting this as the default branch ensures that new Pull Requests will automatic
 
 Active development occurs against the `release/YYYY-MM-releaseNumber` branch.
 
-And the cycle continues.
 
 :::note
 This process was inspired by the Bokeh [BEP6](https://github.com/bokeh/bokeh/wiki/BEP-6:-Branching-Strategy).
