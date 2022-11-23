@@ -62,7 +62,7 @@ Although this process is captured in the [release checklist template](https://gi
 
 Whenever a new release is out, it is the responsibility of the Release Captain to create a new release branch `release/YYYY-MM-releaseNumber` for the next month's release and to set this new branch as the default branch on the GitHub repository.
 
-All feature branches and bug fixes pull requests (PRs) will then be opened against this new release branch.
+Active development occurs against the `release/YYYY-MM-releaseNumber` branch.
 
 And the cycle continues.
 
