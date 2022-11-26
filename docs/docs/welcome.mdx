@@ -18,27 +18,27 @@ New to Nebari? Start here to set up your own Nebari instance.
 
 <!-- TODO: All a link to Nebari 101 when it's ready. -->
 
-[↳ Read all pages](./category/get-started/)
+[↳ Read all pages][get-started]
 
 ## Tutorials
 
-Learn to use different Nebari features and integrations with our end-to-end, standalone, walkthroughs.
+Learn to use different Nebari features and integrations with our end-to-end, standalone walkthroughs.
 
-> [Work with big data using Dask →](./tutorials/using_dask)
+> [Work with big data using Dask →][using-dask]
 
-> [Create, deploy, and share a Panel dashboard →](./tutorials/creating-cds-dashboard)
+> [Create, deploy, and share a Panel dashboard →][create-dashboards]
 
-[↳ Read all tutorials](./tutorials/)
+[↳ Read all tutorials][tutorials]
 
 ## How-to guides
 
-Learn to perform specific tasks, with our step-by-step instructions.
+Learn to perform specific tasks in Nebari, with step-by-step instructions.
 
-> If you're an administrator, read [how-to configure Keycloack for all users →](./how-tos/configuring-keycloak)
+> If you're an administrator, read [how-to configure Keycloack for all users →][configure-keycloak]
 
-> If you're a data scientist, [learn how-to use Visual Studio code for your work →](how-tos/using-vscode)
+> If you're a data scientist, [learn how-to use Visual Studio code for your work →][using-vscode]
 
-[↳ Read all guides](./how-tos/)
+[↳ Read all guides][how-tos]
 
 <!-- TODO: Add conceptual guides when ready
 
@@ -46,24 +46,113 @@ Learn to perform specific tasks, with our step-by-step instructions.
 
 > TBD
 
-[↳ Read all guides](./category/conceptual-guides/) -->
+[↳ Read all guides](./) -->
 
 ## Community
 
 Nebari is a community-led open source project, learn how you can get involved!
 
-> [Facing issues with Nebari? Get support on GitHub discussions or the issue tracker →](./community/#getting-support)
+> [Facing issues with Nebari? Get support on GitHub discussions or the issue tracker →](./community#getting-support)
 
-> [Learn how you can contribute to Nebari, beyond code and pull-requests →](./community/#how-to-contribute)
+> [Learn how you can contribute to Nebari, beyond code and pull-requests →](./community#how-to-contribute)
 
-[↳ Read all community resources](./community/)
+[↳ Read all community resources][community]
 
 ## References
 
 <!-- TODO: Add API doc when ready -->
 
-Technical details of Nebari's architecture and how it works.
+Understand technical details of Nebari's architecture and how it works.
 
-> [Release notes →](./references/RELEASE)
+> [Release notes →][release-notes]
 
-[↳ Read all references](./category/reference)
+[↳ Read all references][references]
+
+## Learning paths
+
+Nebari's individual documentation page have specific purpose and an intended audience.
+You can be an administrator configuring resourcesfor your team, or a data scientist looking to create dashboards.
+The following tabs provide a quick guide for the different paths you can take to navigate Nebari's documentation.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="data-scientist" label="Data scientist" default>
+
+  If you are a data professional using Nebari for your day-to-day work like data analysis, visualization, and more, the following path and pages will be useful for you.
+
+  🔸 [Log-in to your team's Nebari instance, launch your JupyterLab server](./how-tos/login-keycloak), and use the IPython/Jupyter notebooks.
+
+  🔸 Learn to [create new environments (kernels) using conda-store](./tutorials/creating-new-environments) if you need specific libraries.
+
+  🔸 If you need to scale your work, [leverage Dask and Dask Gateway for parallel and distributed computing within Nebari][using-dask].
+
+  🔸 Learn to [create and share interactive data visualization dashboards with your team][create-dashboards].
+
+  🔸 If you need to run notebooks or scripts regularly (cronjobs), [you can read how to use `kbatch`](./how-tos/kbatch-howto).
+
+  🔸 You can also [consider Visual Studio Code][using-vscode] if that is more convenient for your work.
+
+  </TabItem>
+
+  <TabItem value="administrator" label="Administrator">
+
+  If you are setting up Nebari and managing the platform for your organization, the following steps and pages will be helpful.
+
+  🔸 Begin with the ["Get Started" documentation section][get-started] that includes complete instructions to install and deploy your own Nebari instance.
+
+  🔸 The get started section will also take you to some "how-to guides" like the [deployment instructions for specific cloud-providers](./get-started/cloud-providers) and [DNS provisioning](./how-tos/domain-registry).
+
+  🔸 After setup, [provide your team members access to your Nebari instance by configuring Keycloak][configure-keycloak].
+
+  🔸 Learn to [estimate the cost of your cloud resources](./tutorials/cost-estimate-report) to inform future configuratios and allocations.
+
+  🔸 If you face issues or challenges, check out the [Troubleshooting section](./troubleshooting) and [GitHub Discussions][github-discussions] to learn from the community. You can also look into [debugging your deployment](./how-tos/debug-nebari).
+
+  🔸 As a good security practice, [create and keep a manual backup](./how-tos/manual-backup) of your configurations and your team's work.
+
+  🔸 If or when you need to, you can [destroy the instance and all associated resources](./how-tos/nebari-destroy).
+
+  </TabItem>
+
+  <TabItem value="contributor" label="Contributor">
+
+  Thanks for your interest in contributing to Nebari! Nebari is a fully open source project, and relies on contributors like you to continue growing.
+
+  🔸 Learn all the different ways in which you can [participate in the community, like reporting bugs, contributing with and without code][community].
+
+  🔸 Read the [release notes][release-notes] to stay informed about Nebari's latest improvements.
+
+  </TabItem>
+
+  <TabItem value="other" label="Just curious">
+
+  Welcome curious person! Glad your're interested in Nebari!
+  Take a look at the home page at [nebari.dev][nebari-home] for an overview of Nebari.
+
+  To learn more, you can briefly go through the pages in the ["Getting started" section][get-started], then check out the pages listed in the "Data Scientist" tab here!
+
+  If you have any questions, you can reach the Nebari community on [GitHub Discussions][github-discussions].
+
+  </TabItem>
+</Tabs>
+
+<!-- TODO in Admin path: Add advanced setting page, upgrading, migration guide. -->
+<!-- TODO in Just curious path: Add Nebari 101 when ready. -->
+
+<!-- External links -->
+[github-discussions]: https://github.com/orgs/nebari-dev/discussions
+
+<!-- Internal links -->
+[nebari-home]: https://nebari.dev/
+[get-started]: ./category/get-started
+[tutorials]: ./tutorials/
+[how-tos]: ./how-tos/
+[community]: ./community/
+[references]: ./category/reference
+[release-notes]: ./references/RELEASE
+[using-dask]: ./tutorials/using_dask
+[using-vscode]: ./how-tos/using-vscode
+[configure-keycloak]: ./how-tos/configuring-keycloak
+[create-dashboards]: ./tutorials/creating-cds-dashboard
