@@ -108,7 +108,7 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
-        "community/release-process",
+        "community/release-process-branching-strategy",
       ],
     },
     {

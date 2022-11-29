@@ -1,7 +1,7 @@
 ---
-id: release-process
-title: Release process
-description: Release process
+id: release-process-branching-strategy
+title: Release process and branching strategy
+description: Release process and branching strategy
 ---
 
 # The Nebari release process
