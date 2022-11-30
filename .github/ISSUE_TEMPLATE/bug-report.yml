@@ -14,7 +14,7 @@ body:
         Please fill out each section below. This info allows Nebari maintainers to diagnose (and fix!) your issue as
         quickly as possible.
         Before submitting a bug, please make sure the issue hasn't been already addressed by searching through
-        [the past issues](https://github.com/nebari-dev/nebari/issues).
+        the past issues in this repository.
 
         Useful links:
 
@@ -37,12 +37,6 @@ body:
       description: |
         A clear and concise description of what you expected to happen.
         We suggest using bullets (indicated by * or -).
-    validations:
-      required: true
-
-  - type: input
-    attributes:
-      label: OS system and architecture in which you are running Nebari
     validations:
       required: true
 
@@ -79,38 +73,10 @@ body:
       description: |
         Describe your environment:
         - Conda version (use `conda --version`)
-        - Kubernetes version (use `kubectl version`)
-        - Nebari version
+        - Operating system
+        - Dependencies installed and their version
     validations:
       required: false
-
-  - type: dropdown
-    attributes:
-      label: Compute environment
-      description: Are you using a public cloud provider or testing locally with minikube? Select the option that applies.
-      multiple: false
-      options:
-        - "Azure"
-        - "GCP"
-        - "AWS"
-        - "Digital Ocean"
-        - "minikube"
-    validations:
-      required: false
-
-  - type: dropdown
-    attributes:
-      label: Integrations
-      description: Is this issue related to onay of the Nebari integrations?
-      multiple: true
-      options:
-        - "Prefect"
-        - "Keycloak"
-        - "conda-store"
-        - "Dask"
-        - "dashboards"
-        - "Grafana"
-        - "Argo"
 
   - type: textarea
     attributes:

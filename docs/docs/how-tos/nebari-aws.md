@@ -30,7 +30,7 @@ managing Kubernetes clusters.
 
 <!-- TODO: add link to conceptual guide -->
 
-For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our Conceptual guides for more information regarding the basic infrastructure provided by Nebari.
 
 :::warning
 A Nebari deployment on AWS will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://aws.amazon.com/eks/pricing/). Therefore, we recommend that you check [AWS pricing documentation](https://aws.amazon.com/ec2/pricing/) or contact your
@@ -91,14 +91,14 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 :::
 
 :::note
-The steps in the following sections assume you have (i) completed the [Install Nebari](docs/get-started/installing-nebari) section, (ii) confirmed that Nebari is successfully
+The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
 installed in your environment, (iii) opted for **AWS** as your cloud provider, and (iv) already configured the Nebari environment variables. If you had any issues during the
-installation, please visit the "Get started" section of our [troubleshooting page](docs/troubleshooting) for further guidance.
+installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further guidance.
 :::
 
 ## Nebari Initialize
 
-Great, you’ve gone through the [Nebari Installation](docs/get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
+Great, you’ve gone through the [Nebari Installation](get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set. It is time to initialize and deploy Nebari!
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-aws`:
@@ -107,6 +107,7 @@ environment variables have been properly set. It is time to initialize and deplo
    mkdir nebari-aws && cd nebari-aws
    ```
 
+<!-- TODO: replace link to configuration once migrated -->
 2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the
    [`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
 
@@ -130,7 +131,7 @@ nebari init aws --project projectname \
 :::
 
 :::note
-You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
+You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
@@ -168,8 +169,9 @@ The Nebari initialization scripts create a `nebari-config.yaml` file that contai
 The generated `nebari-config.yaml` is the configuration file that will determine how the cloud infrastructure and Nebari is built and deployed in the next step. Since it is a
 plain text file, you can edit it manually if you are unhappy with the choices you made during initialization, or delete it and start over again by re-running `nebari init/nebari init --guided-init`.
 
-For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
-[Understanding the `nebari-config.yaml` file](docs/tutorials) documentation.
+<!-- TODO: uncomment and add link once section is added -->
+<!-- For additional information about the `nebari-config.yaml` file and extra flags that allow you to configure the initialization process, see the
+[Understanding the `nebari-config.yaml` file](tutorials) documentation. -->
 
 ## Deploying Nebari
 
@@ -188,7 +190,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](docs/how-tos/nebari-aws#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari](docs/how-tos/domain-registry) for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
@@ -210,7 +212,9 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-Congratulations! You have successfully deployed Nebari on AWS! From here, see \[Initial Nebari Configuration\] for instructions on the first steps you should take to prepare your
+<!-- TODO: add link to advanced configuration -->
+
+Congratulations! You have successfully deployed Nebari on AWS! From here, see Initial Nebari Configuration for instructions on the first steps you should take to prepare your
 Nebari instance for your team's use.
 
 ## Destroying Nebari
@@ -228,3 +232,9 @@ Nebari also has a `destroy` command that works the same way the deploy works but
 ```bash
 nebari destroy -c nebari-config.yaml
 ```
+
+<!-- internal links -->
+
+[nebari-install]: /get-started/installing-nebari.md
+[nebari-troubleshooting]: /troubleshooting.mdx
+[domain-registry]: /how-tos/domain-registry.md
