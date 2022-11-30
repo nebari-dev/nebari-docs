@@ -24,6 +24,7 @@ const customFields = {
   githubOrgUrl,
   githubUrl: `${githubOrgUrl}/nebari-docs`,
   githubDocsUrl: `${githubOrgUrl}/nebari-docs/tree/main/docs`,
+  githubCodebaseUrl: `${githubOrgUrl}/nebari`,
   githubForum,
   url,
 };
@@ -152,10 +153,18 @@ const config = {
             to: "docs/community",
           },
           {
-            href: customFields.githubUrl,
+            label: "GitHub",
             position: "right",
-            className: "header-github-link",
-            "aria-label": "Nebari GitHub repository",
+            items: [
+              {
+                label: "Code repository",
+                href: customFields.githubCodebaseUrl,
+              },
+              {
+                label: "Documentation repository",
+                href: customFields.githubUrl,
+              },
+            ]
           },
         ],
       },
@@ -186,8 +195,8 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Nebari repository",
-                href: customFields.githubUrl,
+                label: "Nebari roadmap",
+                href: "https://github.com/nebari-dev/governance/blob/main/roadmap.md",
               },
               {
                 label: "User forum",
