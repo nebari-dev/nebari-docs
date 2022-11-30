@@ -1,6 +1,6 @@
 ---
 id: file-issues
-title: Opening and triaging issues
+title: Opening and working on issues
 description: Best practices for opening and triaging issues
 ---
 
@@ -12,8 +12,10 @@ submitting Pull Requests.
 To resolve your issue, please select the appropriate category and follow the prompts to provide as much information as
 possible:
 
-- Bug Report
-- Documentation
+- [Bug Report](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+bug+%F0%9F%90%9B%2Cneeds%3A+triage+%F0%9F%9A%A6&template=bug-report.yml&title=%5BBUG%5D+-+%3Ctitle%3E)
+- [Feature request](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+enhancement&template=feature-request.yml&title=%5BENH%5D+-+%3Ctitle%3E)
+- [Documentation](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=area%3A+documentation+%F0%9F%93%96&template=documentation.yml&title=%5BDOC%5D+-+%3Ctitle%3E)
+- [General issue](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=needs%3A+triage+%F0%9F%9A%A6&template=general-issue.yml&title=%3Ctitle%3E)
 
 ## Best practices
 
@@ -30,7 +32,8 @@ Our issue template helps you remember the most important details to include. A f
   This collapses the content, so it only becomes visible on click, making the issue easier to read and follow.
 
 :::tip
-See this page for an overview of the [system we use to tag our issues and pull requests][nebari-labels].
+See this page for an overview of the [system we use to tag our issues and pull requests](./maintainers/github-conventions.md).
+You can also see all the available labels in the [Nebari repository][nebari-labels].
 :::
 
 For bug reports, include in your issue:

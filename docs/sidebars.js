@@ -111,7 +111,7 @@ module.exports = {
         {
           type: "category",
           label: "Maintainers",
-          items: ["community/maintainers/github-conventions", "community/maintainers/github-tasks"
+          items: ["community/maintainers/github-conventions", "community/maintainers/triage-issues"
           ]
         }
       ],

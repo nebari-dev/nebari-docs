@@ -68,7 +68,8 @@ Here are a few guidelines for how to categorize impact across a few major types 
   (for example, instances won't work at all).
 - `impact: med`: Disruptive to some users, but not in a critical way. Only noticeable under circumstances that aren't very common.
   Most issues should be in this category.
-- `impact: low`: Minimally disruptive or cosmetic, or only affects a small number of users or niche use-cases. Note that `accessibility` related issues should be `impact: high` as these are never purely cosmetic changes.
+- `impact: low`: Minimally disruptive or cosmetic, or only affects a few users or niche use-cases.
+  Note that `accessibility` related issues should be `impact: high` as these are never purely cosmetic changes.
 
 ### Area tag
 

@@ -1,7 +1,7 @@
 ---
 id: quickstart
 title: Quickstart
-description: A cheat sheet of Neabri commands for returning users.
+description: A cheat sheet of Nebari commands for returning users.
 ---
 
 This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari][install-nebari].

@@ -36,7 +36,7 @@ This allows us to discuss the details and confirm the changes beforehand, and re
 
 ## Set up your local Nebari repository
 
-1. Create a personal copy of the [Nebari repository][nebari-repo] by clicking the `fork` button in the top-right scorner.
+1. Create a personal copy of the [Nebari repository][nebari-repo] by clicking the `fork` button in the top-right corner.
 
 2. Clone the forked project to your local computer:
 
