@@ -15,9 +15,15 @@
     border: 1px solid var(--ifm-color-emphasis-300);
   }
   // lists in markdown - style when it's a URL
-  > li {
+  li {
     a {
       @include link-hover(--ifm-color-primary);
+    }
+    // to ensure the labels badges are placed properly
+    img {
+      border: none;
+      vertical-align: middle;
+      padding: 5px;
     }
   }
 

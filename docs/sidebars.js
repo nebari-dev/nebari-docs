@@ -108,6 +108,12 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
+        {
+          type: "category",
+          label: "Maintainers",
+          items: ["community/maintainers/github-conventions", "community/maintainers/triage-issues"
+          ]
+        }
       ],
     },
     {
