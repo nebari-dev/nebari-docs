@@ -16,7 +16,7 @@ Repositories may define their own labels in addition to the ones described here 
 and scope of the project.
 :::
 
-### Issue Type
+### Issue type
 
 **REQUIRED :pushpin:**
 

@@ -3,13 +3,14 @@ title: Issue triaging
 description: Guidelines and tips for maintaining Nebari
 ---
 
-Issue triage is a process by which Nebari maintainers and contributors intake and reviews new GitHub issues and requests,
+Issue triage is a process by which Nebari maintainers and contributors understand and review new GitHub issues and requests,
 and organize them to be actioned. Triaging involves categorizing issues and Pull Requests based on factors such as priority,
 area of ownership of the issue (tags), and the issue kind (bug, feature, and so on).
 
+We aim to triage new issues or Pull Requests within 1-2 working days.
 Triage can happen asynchronously and continuously, or in regularly scheduled meetings.
 
-## Why Is Triaging Beneficial?
+## Why Is triaging beneficial?
 
 Projects that triage regularly say it offers a number of benefits, such as:
 
