@@ -8,7 +8,7 @@ This page describes some common conventions and guidelines that we follow in all
 
 ## Issue labels
 
-There are a few issue labels that we use to provide key metadata in our issues and Pull Requests.
+There are a few issue labels that we use to provide key metadata in our issues and pull requests.
 These are added to all `nebari-dev/` repositories, and share the same meaning across each of them.
 
 :::note

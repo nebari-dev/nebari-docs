@@ -218,6 +218,6 @@ yarn add package-name
 
 <!-- Internal links -->
 
-[code-contributions-develop]: community/code-contributions.md#develop-your-contribution
-[code-contributions-submit]: community/code-contributions.md#submitting-your-contribution
-[code-contributions-review]: community/code-contributions.md#review-process
+[code-contributions-develop]: community/code-contributions.mdx#develop-your-contribution
+[code-contributions-submit]: community/code-contributions.mdx#submitting-your-contribution
+[code-contributions-review]: community/code-contributions.mdx#review-process
