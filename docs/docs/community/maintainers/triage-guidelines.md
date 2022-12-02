@@ -1,7 +1,7 @@
 ---
-title: Triaging Guide
+title: Triaging guidelines
 description: Guidelines and tips for maintaining Nebari
-id: triage-guide
+id: triage-guidelines
 ---
 
 Issue triage is a process by which Nebari maintainers and contributors understand and review new GitHub issues and requests,
