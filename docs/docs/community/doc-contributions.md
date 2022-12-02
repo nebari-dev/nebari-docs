@@ -137,7 +137,7 @@ Similar to the Nebari codebase, the `nebari-docs` repository uses a number of [p
 
 1. Navigate to the root of this project. If you're in the `docs` subdirectory, you can run "`cd ..`" to go back to the root.
 
-2. Follow the instructions in the [Pre-commit hooks section of Contribute to Nebari's codebase](code-contributions.md#pre-commit-hooks) to install the pre-commit hooks.
+2. Follow the instructions in the [Pre-commit hooks section of Contribute to Nebari's codebase](code-contributions.mdx#pre-commit-hooks) to install the pre-commit hooks.
 
 ## Develop and submit your contribution
 
