@@ -7,7 +7,7 @@ description: Best practices for opening and triaging issues
 ## Submitting a bug report or a feature request
 
 The [Nebari issue tracker][nebari-issues] is the preferred channel for bug reports, documentation requests, and
-submitting Pull Requests.
+submitting pull requests.
 
 To resolve your issue, please select the appropriate category and follow the prompts to provide as much information as
 possible:
@@ -46,7 +46,7 @@ For bug reports, include in your issue:
 If an issue is affecting you, start at the top of this list and complete as many tasks on the list as you can:
 
 1. Check the [issue tracker][nebari-issues], if there is an open issue for this same problem, add a reaction or more details to the issue
-   to indicate that it’s affecting you (tip: make sure to also check the open [Pull Requests][nebari-prs] for ongoing work).
+   to indicate that it’s affecting you (tip: make sure to also check the open [pull requests][nebari-prs] for ongoing work).
 2. You should also check the [troubleshooting guide](../troubleshooting.mdx) in these docs to see if your problem is already listed there.
 3. If there is an open issue, and you can add more detail, write a comment describing how the problem is affecting you,
    OR if you can, write up a work-around or improvement for the issue.

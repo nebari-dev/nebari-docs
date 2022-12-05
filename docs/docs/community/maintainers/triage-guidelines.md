@@ -1,13 +1,14 @@
 ---
-title: Issue triaging
+title: Triaging guidelines
 description: Guidelines and tips for maintaining Nebari
+id: triage-guidelines
 ---
 
 Issue triage is a process by which Nebari maintainers and contributors understand and review new GitHub issues and requests,
-and organize them to be actioned. Triaging involves categorizing issues and Pull Requests based on factors such as priority,
+and organize them to be actioned. Triaging involves categorizing issues and pull requests based on factors such as priority,
 area of ownership of the issue (tags), and the issue kind (bug, feature, and so on).
 
-We aim to triage new issues or Pull Requests within 1-2 working days.
+We aim to triage new issues or pull requests within 1-2 working days.
 Triage can happen asynchronously and continuously, or in regularly scheduled meetings.
 
 ## Why Is triaging beneficial?
@@ -50,15 +51,17 @@ beyond using the project itself. As such, we want it to be a welcoming, pleasant
 
 2. Assess the issue and label, assign, or close accordingly.
    1. Depending on your permissions, either close or comment on any issues that are identified as support requests,
-        duplicates, or not-reproducible bugs, or that lack enough information from the reporter.
+      duplicates, or not-reproducible bugs, or that lack enough information from the reporter (see sections below).
    2. Make sure that the title accurately reflects the issue. If you have the necessary permissions edit it yourself if it’s not clear.
    3. Remove the `needs: triage` label from the issue if this exists.
    4. Add the relevant labels.
-      Detailed rationale on our labelling system can be found in the [GitHub conventions section](./github-conventions.md) of our documentation.
+      Detailed rationale on our labelling system can be found in the [GitHub conventions section][github-conventions] of our documentation.
 
-      :::tip TLD'R
-      Assign one and only one `type:` label to the issue and as many `area:` labels as are relevant.
-      :::
+:::tip
+Assign one and only one `type:` label to the issue and as many `area:` labels as are relevant.
+
+Feel free to [use our saved replies][saved-replies] to help you with triaging.
+:::
 
 #### Abandoned or wrongly placed issues
 
@@ -67,6 +70,7 @@ If an issue is abandoned or in the wrong place, either close or comment on it.
 #### Needs more information
 
 The `needs: investigation 🔍` label indicates an issue needs more information in order for work to continue; comment on or close it.
+This can be steps to reproduce the bug, details on the environment, or any other information that would help the issue move forward.
 
 #### Bugs
 
@@ -74,9 +78,9 @@ First, validate if the problem is a bug by trying to reproduce it.
 
 If you can reproduce it:
 
-- Define its impact and area (see our [GitHub conventions section](./github-conventions.md) for more details).
+- Define its impact and area (see our [GitHub conventions section][github-conventions] for more details).
 - Search for duplicates to see if the issue has been reported already. If a duplicate is found, let the issue reporter know,
-  reference the original issue, and close the duplicate.
+  reference the original issue, add the `type: duplicate 👯‍♀️` label, and close the duplicate.
 
 If you can't reproduce it:
 
@@ -100,7 +104,7 @@ Then apply the `close?` label and close the issue.
 #### Self-Assigning
 
 If you think you can fix the issue, assign it to yourself. If you cannot self-assign for permissions-related reasons,
-leave a comment that you'd like to claim it and [begin working on a PR](../code-contributions.md).
+leave a comment that you'd like to claim it and [begin working on a PR][code-contributions].
 
 When an issue already has an assignee, **do not** assign it to yourself or create a PR without talking to the existing assignee first.
 Creating a PR when someone else is already working on an issue is not a good practice and is discouraged.
@@ -111,10 +115,19 @@ Opening new issues and leaving comments on other people's issues is possible for
 However, permission to assign specific labels (such as `type: enhancement 💅🏼`), change milestones,
 or close other contributors' issues is only granted to the author of an issue, assignees, and organization members.
 
+We have multiple [saved replies][saved-replies] that can be used to help triage issues and while conducting contributions reviews.
+
 ### Support requests channels
 
 Support requests should be directed to the following channels:
 
-- [User documentation](https://nebari.dev/docs)
-- [Troubleshooting guide](../../troubleshooting.mdx)
+- [User documentation](https://nebari.dev/docs/welcome)
+- [Troubleshooting guide][troubleshooting]
 - [User forum in GitHub discussions](https://github.com/orgs/nebari-dev/discussions)
+
+<!-- Internal links -->
+
+[code-contributions]: community/code-contributions.mdx
+[github-conventions]: community/maintainers/github-conventions.md
+[troubleshooting]: ../../troubleshooting.mdx
+[saved-replies]: ./saved-replies.md
