@@ -123,6 +123,11 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 ### Code of conduct
 
+<!-- TODO: Add a link to CoC enforcement committee members list. -->
+:::note
+The following replies should only be used by Nebari's Code of Conduct committee members. 
+:::
+
 - **First warning**
 <!-- TODO: add link to CoC -->
   ```md

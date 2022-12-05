@@ -22,6 +22,7 @@ its development workflow.
   or being too nitpicky on style or grammar, consider merging the current PR when all important concerns are addressed.
   Then, either push a commit directly (if you are a maintainer) or open a follow-up PR yourself.
 - Do not rush, take the time to make your comments clear and justify your suggestions.
+- If you review a pull request from a "first-time contributor" (you will see a label on their pull request), be a little more patient with them and include additional context to your suggestions.
 
 :::tip
 If you need help writing replies in reviews, check out our [standard replies for reviewing][saved-replies].
@@ -46,6 +47,7 @@ Note this is not an exhaustive, nor strictly list of items to cover on each revi
   If you are the first to review a PR and approve of the changes use the GitHub approve review tool to mark it as such.
   If a PR is straightforward, for example it’s a clearly correct bug fix, it can be merged straight away.
   If it’s more complex or introduces breaking changes, please leave it open for at least a couple of days, so other maintainers get a chance to review.
+  You can also consider mentioning or requesting a review from specific maintainers who are familiar with relevant parts of the codebase.
 - If you are a subsequent reviewer on an already approved PR, please use the same review method as for a new PR
   (focus on the larger issues, resist the temptation to add only a few nitpicks).
   If you have commit rights and think no more review is needed, merge the PR.
