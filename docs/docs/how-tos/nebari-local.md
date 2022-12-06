@@ -1,6 +1,6 @@
 ---
 id: nebari-local
-title: Local deployment with kind and Nebari
+title: Deploy Nebari on local machines
 description: Deploying Nebari on a local development environment with kind
 ---
 
@@ -14,7 +14,7 @@ It's important to highlight that while it's possible to test most of Nebari with
 
 ## What is kind ?
 
-[kind](https://kind.sigs.k8s.io/) is a tool for running local Kubernetes clusters using Docker container “nodes”.
+[kind](https://kind.sigs.k8s.io/) is a tool for running local Kubernetes clusters using Docker container "nodes".
 kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
 
 The advantages of using kind are:
@@ -44,7 +44,7 @@ To install kubectl see the [upstream kubectl installation documentation](https:/
 
 The following steps assume you have:
 
-* An installed version of Nebari, for any directions please visit [Install Nebari](/getting-started/installing-nebari) section,
+* An installed version of Nebari, for any directions please visit [Install Nebari](/docs/get-started/installing-nebari) section,
 * confirmed that `nebari` is successfully installed in your environment.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-local`:
@@ -92,9 +92,11 @@ Since it is a regular text file, you can edit it manually if you are unhappy wit
 
 :::tip
 You can also use the new Guided Init wizard for a step-by-step initialization process.
+
 ```bash
 nebari init --guided-init
 ```
+
 :::
 
 <!-- TODO: Add link to advances settings doc -->
@@ -151,7 +153,7 @@ Finally, if everything is set properly you should be able to cURL the JupyterHub
 curl -k https://projectname.domain/hub/login
 ```
 
-It’s also possible to visit https://projectname.domain in your web browser to select the deployment.
+It's also possible to visit `https://projectname.domain` in your web browser to select the deployment.
 As default for a local deployment the https certificates generated during deployments aren't signed by a recognized [Certificate Authority (CA)](https://en.wikipedia.org/wiki/Certificate_authority) and are self-signed by [Traefik](https://github.com/traefik/traefik) instead.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
@@ -177,7 +179,7 @@ A workaround for Firefox:
 
 And a workaround for Chrome:
 
-- Type **badidea** or **thisisunsafe** while viewing the rendered page (this has to do with how [Chrome preloads some domains for its HTTP Strict Transport Security list](https://hstspreload.org/) in a way that can’t be manually removed)
+- Type **badidea** or **thisisunsafe** while viewing the rendered page (this has to do with how [Chrome preloads some domains for its HTTP Strict Transport Security list](https://hstspreload.org/) in a way that can't be manually removed)
 
 ## Destroying Nebari
 
