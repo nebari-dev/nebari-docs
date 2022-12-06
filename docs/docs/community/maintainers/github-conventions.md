@@ -6,10 +6,12 @@ id: github-conventions
 
 This page describes some common conventions and guidelines that we follow in all of our GitHub repositories within the `nebari-dev` organization.
 
-## Issue labels
+## GitHub labels for issues and pull requests
 
-There are a few issue labels that we use to provide key metadata in our issues and pull requests.
+There are a few GitHub labels that we use to provide key metadata in our issues and pull requests.
 These are added to all `nebari-dev/` repositories, and share the same meaning across each of them.
+
+Issues and pull requests are classified by having a [`type`](#issue-type) label and a number of optional labels such as [`area`](#area-tag) or [`impact`](#issue-impact).
 
 :::note
 Repositories may define their own labels in addition to the ones described here to better reflect the areas
@@ -21,13 +23,15 @@ and scope of the project.
 **REQUIRED :pushpin:**
 
 **Issue type** determines the kind of issue and implies what sorts of actions must be taken to close it.
+**All issues must be assigned a type label as soon as possible.**
 Issue types are mutually-exclusive - **there may only be one issue type per issue**.
 
 There are a few issue types that are defined for all repositories, for example:
 
-- ![type: enhancement 💅🏼](https://img.shields.io/badge/-type:enhancement%20💅🏼-9D73D9.svg): an incremental improvement to something
-- ![type: bug 🐛](https://img.shields.io/badge/-type:bug%20🐛-9D73D9.svg): a problem that needs to be fixed
-- ![type: maintenance 🛠](https://img.shields.io/badge/-type:maintenance%20🛠-9D73D9.svg): regular maintenance and upkeep
+- `type: enhancement 💅🏼`: an incremental improvement to something
+- `type: bug 🐛`: a problem that needs to be fixed
+- `type: maintenance 🛠`: regular maintenance and upkeep
+- `type: discussion 💬`: discussion of general questions, ideas and so on
 
 In addition, other repositories may use repository-specific types, with the caveat that **all issues must still only have one `type` label**.
 
@@ -46,9 +50,9 @@ The impact should be proportional to a combination of:
 
 These are the impact labels for our issues:
 
-![impact: high](https://img.shields.io/badge/-impact:%20high-F2A29B.svg)
-![impact: medium](https://img.shields.io/badge/-impact:%20medium-F2A29B.svg)
-![impact: low](https://img.shields.io/badge/-impact:%20low-F2A29B.svg)
+- `impact: high 🟥`
+- `impact: medium 🟨`
+- `impact: low 🟩`
 
 #### Categorizing impact
 
@@ -80,9 +84,57 @@ They are highly repository-specific, optional, and non-exclusive (so issues may 
 
 Here are some example tags:
 
-- ![area: documentation 📖](https://img.shields.io/badge/-area:%20documentation%20📖-6FB7BF.svg): related to documentation in a repository
-- ![area: CI 👷🏽‍♀️](https://img.shields.io/badge/-area:%20ci%20👷🏽‍♀️-6FB7BF.svg): related to continuous integration/deployment
-- ![area: design 🎨](https://img.shields.io/badge/-area:%20design%20🎨-6FB7BF.svg): related to design items including UX/UI and graphic design
+- `area: documentation 📖`: related to documentation in a repository
+- `area: CI 👷🏽‍♀️`: related to continuous integration/deployment
+- `area: design 🎨`: related to design items including UX/UI and graphic design
+
+### Needs labels
+
+**OPTIONAL**
+
+These labels are used to denote what sort of action is needed to resolve an issue or move a pull request forward.
+
+- `needs: discussion 💬`: this issue needs to be discussed in a meeting or in a GitHub issue
+- `needs: follow-up 📫`: someone in the team needs to follow up on this issue or with another stakeholder
+- `needs: review 👀`: this issue needs to be reviewed by a team member
+- `needs: triage 🚦`: this issue needs to be triaged by a team member
+- `needs: investigation 🔍`: this issue needs to be investigated by a team member, often used when an issue was submitted without enough information or reproduction steps
+- `needs: changes 🧱`: this pull request has been reviewed and changes have been requested
+- `needs: tests ✅`: tests need to be added or updated to close this pull request
+- `needs: documentation 📖`: documentation needs to be added or updated to close this pull request
+- `needs: PR 📬`: this issue needs to be worked on, usually as a pull request
+
+### Other labels
+
+A few labels exist to denote particular situations:
+
+- `Close?`: to denote an issue that might need closing, either because the discussion has dried out or there are no concrete follow-up actions
+- `DO-NOT-MERGE`: to denote a PR that should not be merged yet
+- `good first issue`: these issues represents self-contained work that would make a good introduction to project development for a new contributor
+- `Roadmap 🚀`: this issue is part of the project roadmap
+
+## Pull requests
+
+Pull requests are usually associated with or linked to issues. The natural path is to start with an issue and move onto a pull request for resolution.
+But sometimes a new pull request is created without an associated issue.
+In such cases a new issue should be created for that pull request to engage people in a general discussion, not the technical review which is performed in the pull request itself.
+
+If the PR does not need a discussion (trivial fixes, tasks, and so on), the opening of an associated issue may be skipped, but the pull request must be labeled accordingly.
+
+We use mutually exclusive GitHub labels with the prefix`status:` to classify PR's.
+
+- `status: abandoned 🗑`: this pull request has not seen activity in a while (at least a month)
+- `status: stale 🥖`: a "stale" pull request is one that is no longer up to date with the main line of development, and it needs to be updated before it can be merged into the project.
+- `status: in progress 🏗`: this PR is currently being worked on
+- `status: in review 👀`: this PR is currently being reviewed by the team
+- `status: declined 🙅🏻‍♀️`: this PR has been reviewed and declined for merged
+- `status: approved 💪🏾`: this PR has been reviewed and approved for merge
+- `status: blocked ⛔️`: this PR is blocked by another PR or issue
+
+GitHub notifies team member when labels are changed, so it is useful to keep the status of each pull request as close as possible with the reality.
+For example, if you realize that your PR needs more work after a first pass review, then change the label to `status: in progress 🏗`.
+
+**All PR's must be tagged with a status at all times**
 
 ## Issue and PR templates
 
