@@ -123,17 +123,19 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 ### Code of conduct
 
-<!-- TODO: Add a link to CoC enforcement committee members list. -->
 :::note
-The following replies should only be used by Nebari's Code of Conduct committee members. 
+The following replies should only be used by [Nebari's Code of Conduct committee members][nebari-coc-committee].
 :::
 
 - **First warning**
-<!-- TODO: add link to CoC -->
+
   ```md
-  [[at-mention]] your comment was [[minimized|deleted]] as a violation of the Nebari Code of Conduct. You may consider this an official warning.
+  [[at-mention]] your comment was [[minimized|deleted]] as a violation of the [Nebari Code of Conduct](https://github.com/nebari-dev/governance/blob/main/CODE_OF_CONDUCT.md). You may consider this an official warning.
 
   Please do not interact with the project for 24 hours.
   After that, please look through your open issues and edit them to ensure they're entirely on-topic,
   and we can continue the discussion here about the best way to go forward.
   ```
+
+<!-- Links -->
+[nebari-coc-committee]: https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee
