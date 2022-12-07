@@ -12,11 +12,9 @@ It's important to highlight that while it's possible to test most of Nebari with
 To operate in this mode, Nebari uses "kind" to maintain and deploy the Kubernetes environment where its resources will be integrated with.
 This deployment mode allows quicker feedback loops for development, as well as removes the requisites imposed by using a cloud Kubernetes cluster.
 
-<!-- TODO: Add link to nebari-kubernetes page when ready
+<!-- TODO: Add link to nebari-kubernetes page when ready -->
 
-:::note
-If you are looking for installation and deployment instructions for an existing Kubernetes cluster, please visit [How to install > and setup Nebari on an existing Kubernetes infrastructure].
-::: -->
+<!-- Note: If you are looking for installation and deployment instructions for an existing Kubernetes cluster, please visit [Deploy Nebari on an existing Kubernetes infrastructure]. -->
 
 ## What is kind ?
 
