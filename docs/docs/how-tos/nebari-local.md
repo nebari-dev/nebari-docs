@@ -4,9 +4,9 @@ title: Deploy Nebari on local machines
 description: Deploying Nebari on a local development environment with kind
 ---
 
-Nebari supports a `local` mode which helps you to develop and test Nebari on any environment, which can vary from a simple VM, a laptop, or a large multi-node ecosystem.
-Deploying Nebari locally allows quicker feedback loops for development, as well as being less expensive than running cloud Kubernetes clusters.
-Nebar uses kind for `local` mode.
+Nebari supports a "testing" mode that helps you develop and efficiently run Nebari on any environment, which can vary from a simple VM, a laptop, or a sizeable multi-node ecosystem. 
+
+To operate in this mode, Nebari uses "kind" to maintain and deploy the Kubernetes environment where its resources will be integrated with.  This deployment mode allows quicker feedback loops for development, as well as removes the requisites imposed by using a cloud Kubernetes cluster.
 
 :::note
 It's important to highlight that while it's possible to test most of Nebari with this version, components that are Cloud provisioned such as VPCs, managed Kubernetes cluster, and managed container registries can't be locally tested, due to their Cloud dependencies.
