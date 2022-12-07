@@ -1,5 +1,5 @@
 ---
-id: nebari-testing
+id: nebari-local
 title: Deploy Nebari on local machines (for testing)
 description: Deploying Nebari on a local development environment with kind
 ---
@@ -16,7 +16,7 @@ This deployment mode allows quicker feedback loops for development, as well as r
 
 <!-- Note: If you are looking for installation and deployment instructions for an existing Kubernetes cluster, please visit [Deploy Nebari on an existing Kubernetes infrastructure]. -->
 
-## What is kind ?
+## What is kind?
 
 [kind](https://kind.sigs.k8s.io/) is a tool for running local Kubernetes clusters using Docker container "nodes".
 kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
