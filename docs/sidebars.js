@@ -59,7 +59,7 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
-        "how-tos/nebari-local",
+        "how-tos/nebari-testing",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
