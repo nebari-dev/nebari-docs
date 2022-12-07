@@ -5,14 +5,18 @@ description: Deploying Nebari on a local development environment with kind
 ---
 
 Nebari supports a "local testing" mode that helps you develop and efficiently run Nebari on any environment, which can vary from a Virtual Machine, a laptop, or a sizeable multi-node ecosystem.
+
 This installation mode is intended to be used as a debugging tool or, to some extent, as a preview of Nebari functionalities. Thus we do not recommend its use in a production environment.
+It's important to highlight that while it's possible to test most of Nebari with this version, components that are Cloud provisioned such as VPCs, managed Kubernetes cluster, and managed container registries can't be locally tested, due to their Cloud dependencies.
 
 To operate in this mode, Nebari uses "kind" to maintain and deploy the Kubernetes environment where its resources will be integrated with.
 This deployment mode allows quicker feedback loops for development, as well as removes the requisites imposed by using a cloud Kubernetes cluster.
 
+<!-- TODO: Add link to nebari-kubernetes page when ready
+
 :::note
-It's important to highlight that while it's possible to test most of Nebari with this version, components that are Cloud provisioned such as VPCs, managed Kubernetes cluster, and managed container registries can't be locally tested, due to their Cloud dependencies.
-:::
+If you are looking for installation and deployment instructions for an existing Kubernetes cluster, please visit [How to install > and setup Nebari on an existing Kubernetes infrastructure].
+::: -->
 
 ## What is kind ?
 
