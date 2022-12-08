@@ -48,21 +48,21 @@ For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix releas
 
 Gitflow is framework for managing `git` branches by assigning certain roles to particular branches.
 
+- `develop` - Represents the active development branch and is the _default_ branch on the GitHub repository.
+
 - `main` - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
 
-- `release/YYYY-MM-releas1eNumber` - Represents the branch for the upcoming release and is the _default_ branch on the GitHub repository.
+- `release/YYYY-MM-releaseNumber` - Represents the branch for the upcoming release.
 
 ### Process
 
 Although this process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E), it's worth making clear how branches are managed.
 
-Whenever a new release is out, it is the responsibility of the Release Captain to create a new release branch, `release/YYYY-MM-releaseNumber` for the next month's release and to set this new branch as the default branch on the GitHub repository.
-Setting this as the default branch ensures that new Pull Requests will automatically default to submitting against it. Force pushes are not allowed to these branches.
-
-Active development occurs against the `release/YYYY-MM-releaseNumber` branch.
+- Active development occurs against the `develop` branch.
+- When it's time for a release, the Release Captain will create the release branch `release/YYYY-MM-releaseNumber` and preparing the branch for the release. At times, this might mean cherry-picking a commits that are needed for this release and at other times, this might mean merging `develop` into this release branch.
+- As soon as this release branch is ready, the Release Captain can open a pull request against `main`. From here, all of the changes that are included in the release should be visible in the "Files changed" section of the pull request.
+- Once CI passes, all manual tests are successful and the team is happy with the changes, the Release Captain can complete the release checklist and cut the release.
 
 #### Hotfixes
 
-In the event that a patch or hotfix release is needed, a pull request is still opened against the current release branch.
-
-However after it has been merged, this commit can be cherry-picked and merged into a hotfix branch. This hotfix or patch branch is created off of the last release but with an incremented `releaseNumber`. From here, the release checklist should be able to guide us through the remaining steps.
+In the event that a patch or hotfix release is needed, release process is the same as outlined above. The only difference is that the commits that are merged into the hotfix release branch will need to be cherry-picked from the `develop` branch.
