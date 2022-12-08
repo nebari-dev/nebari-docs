@@ -1,7 +1,7 @@
 ---
 id: quickstart
 title: Quickstart
-description: A cheat sheet of Neabri commands for returning users.
+description: A cheat sheet of Nebari commands for returning users.
 ---
 
 This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari][install-nebari].
@@ -84,7 +84,7 @@ cd <project-name>
 Create the `nebari-config.yaml` file using the guided init wizard:
 
 ```bash
-nebari init --guided-int
+nebari init --guided-init
 ```
 
 **Or**, if you know the initialization requirements and have set up the environment variables, you can directly run the `nebari init` command with the necessary flags.

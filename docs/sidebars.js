@@ -109,6 +109,15 @@ module.exports = {
         "community/doc-contributions",
         "community/style-guide",
         "community/release-process-branching-strategy",
+        {
+          type: "category",
+          label: "Maintainers",
+          items: ["community/maintainers/github-conventions",
+            "community/maintainers/triage-guidelines",
+            "community/maintainers/reviewer-guidelines",
+            "community/maintainers/saved-replies",
+          ]
+        }
       ],
     },
     {

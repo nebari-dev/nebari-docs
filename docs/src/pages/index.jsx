@@ -14,7 +14,8 @@ import GcloudSvg from "@site/static/img/home/gcloud.svg";
 import DigitalOceanSvg from "@site/static/img/home/digital-ocean.svg";
 import CondaStoreSvg from "@site/static/img/home/conda-store.svg";
 import VSCodeSvg from "@site/static/img/home/vscode.svg";
-import ClearMLSvg from "@site/static/img/home/clear-ml.svg";
+import JitsiSvg from "@site/static/img/home/jitsi.svg";
+import ArgoSvg from "@site/static/img/home/argo.svg";
 import JupyterSvg from "@site/static/img/home/jupyter.svg";
 import styles from "./index.module.css";
 
@@ -204,12 +205,12 @@ export default function HomePage() {
                 Grafana
               </li>
               <li className={styles.integrationsItem}>
-                <ClearMLSvg aria-hidden="true" />
-                ClearML
+                <JitsiSvg aria-hidden="true" />
+                Jitsi
               </li>
               <li className={styles.integrationsItem}>
-                <img alt="" src="/img/home/prefect.svg" />
-                Prefect
+                <ArgoSvg aria-hidden="true" />
+                Argo
               </li>
               <li className={styles.integrationsItem}>
                 <JupyterSvg aria-hidden="true" />

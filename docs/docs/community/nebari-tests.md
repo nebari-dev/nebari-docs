@@ -26,7 +26,7 @@ pytest tests/
 ```
 
 :::note
-These tests are also triggered by the Nebari CI when you open Pull Requests.
+These tests are also triggered by the Nebari CI when you open pull requests.
 :::
 
 ## Test the Nebari deployment (Terraform)
@@ -54,7 +54,7 @@ pytest tests_deployment/
 ```
 
 :::note
-These tests are also triggered by the Nebari CI when you open Pull Requests.
+These tests are also triggered by the Nebari CI when you open pull requests.
 :::
 
 ### Debug Kubernetes clusters with `k9s`
@@ -134,7 +134,7 @@ These tests are heavily state-dependent, so any changes or use of the deployed N
 
 All Nebari docker images are located in [`nebari-dev/nebari-docker-images`](https://github.com/nebari-dev/nebari-docker-images).
 You can build any image locally.
-Additionally, when you open Pull Requests on the main `nebari-dev/nebari` repository, each Docker-build will be tested.
+Additionally, when you open pull requests on the main `nebari-dev/nebari` repository, each Docker-build will be tested.
 
 ```bash
 docker build -f Dockerfile.<filename> .
@@ -171,10 +171,10 @@ docker exec -ti <container-name>
 ### Linting Dockerfiles
 
 To lint Dockerfiles, we use a tool called [Hadolint](https://github.com/hadolint/hadolint).
-Hadolint is a Dockerfile linter that helps you discover issues with the Dockerfiles and recommends some [best practices to be followed](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
-Nebari CI automates Hadolint code reviews on every commit and Pull Request to `nebari-dev/nebari-docker-images`, reporting code style and error prone issues.
+Hadolint is a Dockerfile linter that helps you discover issues with the Dockerfiles and recommends some [best practices being followed](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
+Nebari CI automates Hadolint code reviews on every commit and pull request to `nebari-dev/nebari-docker-images`, reporting code style and error-prone issues.
 
-To run Hadolint locally you can either install it locally or use a container image, with the instructions in the [install documentation for HadoLint](https://github.com/hadolint/hadolint#install).
+To run Hadolint locally you can either install it locally or use a container image, with the instructions in the [installation documentation for Hadolint](https://github.com/hadolint/hadolint#install).
 The `.hadolint.yml` on the root directory defines the ignored rules.
 
 Run Hadolint on Dockerfiles with:
