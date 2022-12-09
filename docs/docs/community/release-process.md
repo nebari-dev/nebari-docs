@@ -46,7 +46,7 @@ For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix releas
 
 ## Branching strategy
 
-Gitflow is framework for managing `git` branches by assigning certain roles to particular branches.
+We use the following guidelines to manage `git` branches by assigning certain roles to particular branches.
 
 - `develop` - Represents the active development branch and is the _default_ branch on the GitHub repository.
 
