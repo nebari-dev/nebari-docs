@@ -93,7 +93,7 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/RELEASE",
+        "references/RELEASE"
       ],
     },
     {
@@ -115,6 +115,7 @@ module.exports = {
             "community/maintainers/triage-guidelines",
             "community/maintainers/reviewer-guidelines",
             "community/maintainers/saved-replies",
+            "community/maintainers/release-process-branching-strategy",
           ]
         }
       ],
