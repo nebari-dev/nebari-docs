@@ -59,7 +59,7 @@ We use the following guidelines to manage `git` branches by assigning certain ro
 Although this process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E), it's worth making clear how branches are managed.
 
 - Active development occurs against the `develop` branch.
-- When it's time for a release, the Release Captain will create the release branch `release/YYYY-MM-releaseNumber` and preparing the branch for the release. At times, this might mean cherry-picking a commits that are needed for this release and at other times, this might mean merging `develop` into this release branch.
+- When it's time for a release, the Release Captain will create the release branch `release/YYYY-MM-releaseNumber` and prepare the branch for the release. At times, this might mean cherry-picking commits that are needed for this release and at other times, this might mean merging `develop` into this release branch.
 - As soon as this release branch is ready, the Release Captain can open a pull request against `main`. From here, all of the changes that are included in the release should be visible in the "Files changed" section of the pull request.
 - Once CI passes, all manual tests are successful and the team is happy with the changes, the Release Captain can complete the release checklist and cut the release.
 
