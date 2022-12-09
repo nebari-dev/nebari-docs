@@ -8,8 +8,8 @@ description: Release process and branching strategy
 
 This page describes the high-level details of cutting a new Nebari release.
 
-|        Cadence        |               Versioning System                |                                                                                    Release Checklist                                                                                     |                                                                                        Testing Checklist                                                                                         |
-| :-------------------: | :--------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|        Cadence        |                   Versioning System                   |                                                                                    Release Checklist                                                                                     |                                                                                        Testing Checklist                                                                                         |
+| :-------------------: | :---------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | 3rd week of the month | [CalVer](#calver-details) - (for example `2022.10.1`) | [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E) | [Link to issue template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=testing-checklist.md&title=Testing+checklist+for+%3Cversion%3E) |
 
 ## Release Captain responsibilities
@@ -20,7 +20,6 @@ For every release, there is an assigned "Release Captain". The Release Captain's
 - Communicate the status of the release to the rest of the Nebari development team and the community (through updating the checklists and adding status updates as comments).
 - Assign owners to checklist items (if not owned by the Release Captain).
 - Adjust the schedule, particularly the publishing dates, based on defects found, fixes made, holidays, vacations, and so on.
-- Ensure a new branch and milestone is created after completing a release cycle.
 
 ## CalVer details
 
@@ -48,11 +47,11 @@ For example, the first Nebari CalVer release was `2022.10.1`. If a hotfix releas
 
 We use the following guidelines to manage `git` branches by assigning certain roles to particular branches.
 
-- `develop` - Represents the active development branch and is the _default_ branch on the GitHub repository.
+- [`develop`](https://github.com/nebari-dev/nebari/tree/develop) - Represents the active development branch and is the _default_ branch on the GitHub repository.
 
-- `main` - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
+- [`main`](https://github.com/nebari-dev/nebari/tree/main) - Represents a production-ready state of the code-base, with an appropriate tag to match the most recent release.
 
-- `release/YYYY-MM-releaseNumber` - Represents the branch for the upcoming release.
+- `release/YYYY-MM-releaseNumber` - Represents the branch for the upcoming release and only briefly exist while actively preparing for the release.
 
 ### Process
 
