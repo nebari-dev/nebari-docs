@@ -31,9 +31,9 @@ YYYY-MM-releaseNumber
 ```
 
 :::info
-`YYYY` represents the year - i.e. `2023`
+`YYYY` represents the year - such as `2023`
 
-`MM` represents the _non-zero padded_ month - i.e. `1` for January, `12` for December
+`MM` represents the _non-zero padded_ month - such as `1` for January, `12` for December
 
 `releaseNumber` represents the current release for that month, starting at `1`. Anything above `1` represents a [hotfix (patch) release](#hotfixes).
 :::
