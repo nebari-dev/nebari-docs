@@ -31,10 +31,10 @@ The advantages of using kind are:
 
 ## Compatibility
 
-Nebari integrates kind under the hood by using its Terraform provider and a proper `local` deployment method, which grants native OS compatibility with Linux and MacOS.
+Nebari integrates kind under the hood by using its Terraform provider and a proper `local` deployment method, which grants native OS compatibility with Linux.
 
 :::warning
-Windows is also supported by kind, but Nebari itself currently does not support it.
+Currently, Nebari does not support local mode on Windows and macOS.
 :::
 
 To use kind, you will also need to install [docker engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
