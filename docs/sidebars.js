@@ -21,19 +21,20 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Getting Started",
+      label: "Get Started",
       link: {
         type: "generated-index",
-        title: "Getting Started",
+        title: "Get started",
         description:
           "This section describes how to install and deploy Nebari on a selection of cloud providers, and provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
-        slug: "category/getting-started",
-        keywords: ["getting-started"],
+        slug: "category/get-started",
+        keywords: ["get-started"],
       },
       items: [
-        "getting-started/installing-nebari",
-        "getting-started/deploy",
-        "getting-started/cloud-providers",
+        "get-started/quickstart",
+        "get-started/installing-nebari",
+        "get-started/deploy",
+        "get-started/cloud-providers",
       ],
     },
     {
@@ -58,8 +59,14 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/nebari-local",
+        "how-tos/nebari-destroy",
         "how-tos/domain-registry",
+        "how-tos/debug-nebari",
+        "how-tos/login-keycloak",
+        "how-tos/configuring-keycloak",
         "how-tos/using-vscode",
+        "how-tos/manual-backup",
       ],
     },
     {
@@ -75,20 +82,21 @@ module.exports = {
       },
       items: ["explanations/overview"],
     },
-    // TODO - uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Reference",
-    //   link: {
-    //     type: "generated-index",
-    //     title: "Reference Guides",
-    //     description:
-    //       "Nitty-gritty technical descriptions of how Nebari works. ",
-    //     slug: "category/reference",
-    //     keywords: ["reference"],
-    //   },
-    //   items: ["references/overview"],
-    // },
+    {
+      type: "category",
+      label: "Reference",
+      link: {
+        type: "generated-index",
+        title: "Reference Guides",
+        description:
+          "Nitty-gritty technical descriptions of how Nebari works. ",
+        slug: "category/reference",
+        keywords: ["reference"],
+      },
+      items: [
+        "references/RELEASE"
+      ],
+    },
     {
       type: "category",
       label: "Community",
@@ -96,8 +104,21 @@ module.exports = {
         type: "doc", id: "community/index"
       },
       items: [
-        "community/index",
         "community/file-issues",
+        "community/code-contributions",
+        "community/nebari-tests",
+        "community/doc-contributions",
+        "community/style-guide",
+        {
+          type: "category",
+          label: "Maintainers",
+          items: ["community/maintainers/github-conventions",
+            "community/maintainers/triage-guidelines",
+            "community/maintainers/reviewer-guidelines",
+            "community/maintainers/saved-replies",
+            "community/maintainers/release-process-branching-strategy",
+          ]
+        }
       ],
     },
     {

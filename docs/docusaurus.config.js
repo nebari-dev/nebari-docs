@@ -17,13 +17,14 @@ const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: "Nebari",
-    description: "An opinionated JupyterHub deployment for Data Science teams",
-    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python"],
+    description: "Your open source data science platform. Built for scale, designed for collaboration.",
+    keywords: ["Jupyter", "MLOps", "Kubernetes", "Python", "Dask"],
   },
   domain,
   githubOrgUrl,
-  githubUrl: `${githubOrgUrl}/nebari`,
-  githubDocsUrl: `${githubOrgUrl}/nebari/tree/main/docs`,
+  githubUrl: `${githubOrgUrl}/nebari-docs`,
+  githubDocsUrl: `${githubOrgUrl}/nebari-docs/tree/main/docs`,
+  githubCodebaseUrl: `${githubOrgUrl}/nebari`,
   githubForum,
   url,
 };
@@ -39,7 +40,7 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "logo/favicon.ico",
-  staticDirectories: ['static'],
+  staticDirectories: ["static"],
 
   i18n: {
     defaultLocale: "en",
@@ -49,12 +50,18 @@ const config = {
   // Plugings need installing first then add here
   plugins: [
     "docusaurus-plugin-sass",
-    require.resolve('docusaurus-lunr-search'),
+    require.resolve("docusaurus-lunr-search"),
   ],
   customFields: { ...customFields },
 
   // Add plausible as script
-  scripts: [{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': customFields.domain }],
+  scripts: [
+    {
+      src: "https://plausible.io/js/script.js",
+      defer: true,
+      "data-domain": customFields.domain,
+    },
+  ],
   // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
@@ -63,15 +70,15 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: "/",
           path: "docs",
+          routeBasePath: "docs",
           admonitions: {
             icons: "emoji",
           },
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo
-          // Remove this to remove the "edit this page" links.
+          // Remove this to remove the "edit this page" links.\
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -79,6 +86,9 @@ const config = {
         blog: false,
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
+        },
+        pages: {
+          path: "src/pages",
         },
       }),
     ],
@@ -105,43 +115,63 @@ const config = {
         style: "dark",
         hideOnScroll: false,
         items: [
-          // right navbar items
           {
-            label: "Getting Started",
-            position: "right",
-            items: [
-              {
-                label: "Install Nebari",
-                to: "getting-started/installing-nebari",
-              },
-              {
-                label: "Cloud providers",
-                to: "getting-started/cloud-providers",
-              },
-            ]
-          },
-          {
-            label: "Documentation",
+            label: "Home",
             position: "right",
             to: "/",
           },
           {
-            label: "Community",
+            label: "Get Started",
             position: "right",
-            to: "community",
+            items: [
+              {
+                label: "Quickstart",
+                to: "docs/get-started/quickstart",
+              },
+              {
+                label: "Installing Nebari",
+                to: "docs/get-started/installing-nebari",
+              },
+              {
+                label: "Choosing a deployment platform",
+                to: "docs/get-started/deploy",
+              },
+              {
+                label: "Supported cloud providers",
+                to: "docs/get-started/cloud-providers",
+              },
+            ],
           },
           {
-            href: customFields.githubUrl,
+            label: "Docs",
             position: "right",
-            className: "header-github-link",
-            "aria-label": "Nebari GitHub repository",
+            to: "/docs/welcome",
+          },
+          {
+            label: "Community",
+            position: "right",
+            to: "docs/community",
+          },
+          {
+            label: "GitHub",
+            position: "right",
+            items: [
+              {
+                label: "Code repository",
+                href: customFields.githubCodebaseUrl,
+              },
+              {
+                label: "Documentation repository",
+                href: customFields.githubUrl,
+              },
+            ]
           },
         ],
       },
       announcementBar: {
-        id: 'rename_announcement',
+        id: "rename_announcement",
         content:
-          '⚠️ We are currently undergoing a rename from <a rel="noopener noreferrer" href="https://docs.qhub.dev/">QHub</a> to Nebari ⚠️ </br>You might see some references to <b>QHub</b> mainly in the context of commands or installation/setup in the meantime.',
+          '🪴 This project has been officially renamed to Nebari and migrated to the <a rel="noopener noreferrer" href="https://github.com/nebari-dev">nebari-dev</a> organization in GitHub.</br> Shall you encounter any issues or need support, you can find us in our <a rel="noopener noreferrer" href="https://github.com/nebari-dev/nebari"> new repository</a>.',
         isCloseable: false,
       },
       footer: {
@@ -152,21 +182,21 @@ const config = {
             title: "Documentation",
             items: [
               {
-                label: "Getting Started",
-                to: "getting-started/installing-nebari",
+                label: "Get Started",
+                to: "docs/get-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "tutorials",
+                to: "docs/tutorials",
               },
             ],
           },
           {
-            title: 'Community',
+            title: "Community",
             items: [
               {
-                label: "Nebari repository",
-                href: customFields.githubUrl,
+                label: "Nebari roadmap",
+                href: "https://github.com/nebari-dev/governance/blob/main/roadmap.md",
               },
               {
                 label: "User forum",

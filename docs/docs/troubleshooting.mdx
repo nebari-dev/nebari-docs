@@ -11,12 +11,35 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 ## Configuration
 
+### Conda-store compatibility migration steps when upgrading to 0.4.5
+
+If you are upgrading from a version of Nebari prior to `0.4.5`, you will need to manually update your conda-store namespaces
+to be compatible with the new Nebari version. This is a one-time migration step that will need to be performed after upgrading to continue using the service.
+
+After upgrading to `0.4.5`, the base names for the following namespaces that are built in with Nebari were changed as follows:
+
+- `default` -> `global`
+- `filesystem` -> `nebari-git`
+
+Due to this change, you will need to migrate the environments from the old `default` and `filesystem` namespaces into the new `global` and `nebari-git` respectively.
+This is a manual process that consists in copying over the yaml specifications for each environment to the new namespaces and rebuilding them.
+
+Once all environments are migrated, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI:
+
+![delete-namespace](/img/troubleshooting/delete_namespace.png)
+
+:::warning
+Both the `filesystem` and `nebari-git` are built-in namespaces that are used by Nebari.
+Deleting or modifying these namespaces will require special permission levels that are not granted by default.
+Follow the instructions in the [Handle Access to restricted namespaces](troubleshooting#handle-access-to-restricted-namespaces) to grant the necessary permissions.
+:::
+
 ### Required pins for Dask environments
 
 There are some pins that are required for the Nebari Dask environment to function correctly.
 
-The best way to manage Dask pins is to use the `qhub-dask`
-[metapackage on conda-forge](https://anaconda.org/conda-forge/qhub-dask).
+The best way to manage Dask pins is to use the `nebari-dask`
+[metapackage on conda-forge](https://anaconda.org/conda-forge/nebari-dask).
 Usage will look something like this:
 
 ```yaml
@@ -29,10 +52,10 @@ environments:
     - python
     - ipykernel
     - ipywidgets
-    - qhub-dask ==0.2.3
+    - nebari-dask ==0.2.3
 ```
 
-The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/qhub-dask-meta-feedstock/blob/master/recipe/meta.yaml).
+The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/nebari-dask-meta-feedstock/blob/master/recipe/meta.yaml).
 
 ## Errors
 
@@ -123,28 +146,6 @@ aws eks update-kubeconfig --region "<region-code>" \
 
 Once you have created a `kubeconfig` file `kubectl` should be able to access your Kubernetes cluster.
 
-### Debug the Kubernetes Cluster
-
-If you need more information about your Kubernetes cluster, [`k9s`](https://k9scli.io/) is an extremely handy terminal-based UI for debugging.
-It simplifies navigating, observing, and managing your applications in Kubernetes.
-`k9s` continuously monitors Kubernetes clusters for changes and provides shortcut commands to interact with the observed resources.
-It's a fast way to review and resolve day-to-day issues in Kubernetes, a huge improvement to the general workflow,
-and a best-to-have tool for debugging your Kubernetes cluster sessions.
-
-[Installation instructions for macOS, Windows, and Linux](https://github.com/derailed/k9s) are available.
-
-By default, `k9s` starts with the standard directory that's set as the context (in this case Minikube). To view all the current process press 0:
-
-![K9s CLI main screen - displaying information for a local minikube cluster](../static/img/k9s_UI.png)
-
-:::note
-In some circumstances, you will need to inspect any services launched by your cluster at your `localhost`.
-For instance, if your cluster has problems with the network traffic tunnel configuration, it may limit or block the user’s access to destination resources over the connection.
-
-`k9s` port-forward option <kbd>shift</kbd> + <kbd>f</kbd> allows you to access and interact with internal Kubernetes cluster processes from your localhost,
-so you can then use this method to investigate issues and adjust your services locally without the need to expose them beforehand.
-:::
-
 ### Deploy an arbitrary pod
 
 A straightforward way to deploy arbitrary pods would be to use `kubectl apply` on the pod manifest.
@@ -155,7 +156,7 @@ The `general` node group, or node pool, is (usually) the node that hosts most of
 The instance by default, follows a "min-max" approach to determine the instance size: large enough so that the initial deployment will work out of the box,
 while keeping total cloud compute costs to a minimum.
 
-Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `qhub-config.yaml` has 2 vCPU and 8 GB of memory.
+Although each cloud provider has different names and hourly prices for their compute nodes, the default `general` node group in `nebari-config.yaml` has 2 vCPU and 8 GB of memory.
 
 Based on testing, clusters running on Google Kubernetes Engine (GKE) appear to be amenable to in-place upgrades of the `general` node instance size.
 Unfortunately, this does not seem to be the case with the other cloud providers, and attempting to do so for AWS and Azure will likely result in the catastrophic destruction of your cluster.
@@ -174,7 +175,7 @@ This will mean two nodes (reserved for the `general` node group) will always be 
 Given the possible destructive nature of resizing this node group, it is **highly recommended** to back up your cluster before attempting this.
 :::
 
-Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `qhub-config.yaml`, and redeploy.
+Alternatively, you can backup your cluster, destroy it, specify the new instance size in your `nebari-config.yaml`, and redeploy.
 
 ### Use a DNS provider other than CloudFlare
 
@@ -190,7 +191,7 @@ In some cases, you may wish to customize the default user's JupyterLab image, su
 Nebari uses its own registered docker images for `jupyterhub`, `dask`, and `jupyterlab` services by default, but this can be changed by:
 
 1.  Building your own docker images, and
-2.  Including the DockerHub register hash into `qhub-config.yaml`.
+2.  Including the DockerHub register hash into `nebari-config.yaml`.
 
 ### Provide individual users with unique environments and cloud instance types
 
@@ -200,3 +201,43 @@ First, you will need to create new node groups, one for each type of GPU instanc
 
 Second, you will need to create a new JupyterLab profile to select the GPU node.
 In this way, you'll have a separate profile for GPUs which users can select.
+
+### Migrate existing environments from a namespaces to another
+
+When you create a new environment as a user, it requires selecting a namespace. This namespace is used to identify the group permissions to
+that environment and the location where the environment needs to be stored.
+To migrate environments from one namespace to another, you must manually build all environments in the new namespace.
+Once migrated, you can delete the old namespace, permanently deleting all existing environments built against it.
+
+### Handle Access to restricted namespaces
+
+The built in namespace `nebari-git` is used to build the environments from the `nebari-config.yaml` file.
+As its use is reserved for conda-store server, and is directly controlled by Nebari, modifying or deleting the contents of such namespaces without system permission level
+will result in a permission denied message from conda-store.
+
+As the conda-store system permission level is not granted to any user on Nebari, to modify this namespace, you will need to manually update the `conda-store-config.py` configmap located in the
+kubernetes cluster to lift the restriction. Follow the steps below to do so: (`kubectl` or `k9s` are required)
+
+With `kubectl`:
+
+```bash
+kubectl edit configmap conda-store-config -n nebari
+```
+
+Once the editor opens, look for the `role_bindings` map and update
+the `default_namespace` value from `{"viewer"}` to `{"admin"}`. And restart the conda-store
+pods to fully propagate the changes.
+
+With `k9s`:
+
+1.  Type <kbd>:configmap</kbd> to list the available configmaps.
+2.  Search for `conda-store-config` using the shortcut <kbd>/conda-store-config</kbd>.
+3.  When hovering over the `configmap`, press <kbd>e</kbd> to open the editor. (defaults to `vim`)
+4.  Look for the `role_bindings` map and update the `default_namespace` value from `{"viewer"}` to `{"admin"}`.
+5.  Save and exit the editor. (`:wq`)
+6.  Restart the conda-store pods to fully propagate the changes.
+
+:::warning
+Based on the Nebari and conda-store security model, the `default_namespace` value should be set to `{"viewer"}` after the migration is complete. Or followed by a re-deployment of Nebari
+to restore the default value.
+:::
