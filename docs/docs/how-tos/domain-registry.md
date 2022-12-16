@@ -23,7 +23,8 @@ Take IP Address 12.312.312.312 and update DNS to point to "your.domain" [Press E
 Once the IP is generated, you will need to grab it and create the necessary records within the DNS provider of your choice. Setting a DNS record heavily depends on your provider, so an internet search for A/CNAME record for your specific provider should yield helpful results.
 
 :::note
-During the initial deployment, Digital Ocean, GCP, and Azure will display an "IP" address whereas **AWS will display a CNAME "hostname"**.
+During the initial deployment, Digital Ocean, GCP, and Azure will display an "IP" address, that you can use to set the A record.
+Whereas, AWS will display a "hostname" that you can use to set the CNAME record.
 :::
 
 ## Cloudflare
