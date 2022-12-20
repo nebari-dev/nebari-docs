@@ -14,12 +14,12 @@ body:
         Please fill out each section below. This info allows Nebari maintainers to diagnose (and fix!) your issue as
         quickly as possible.
         Before submitting a bug, please make sure the issue hasn't been already addressed by searching through
-        [the past issues](https://github.com/nebari-dev/nebari/issues).
+        [the past issues](https://github.com/nebari-dev/nebari-docs/issues).
 
         Useful links:
 
         - Documentation: https://www.nebari.dev
-        - Contributing: https://www.nebari.dev/community/
+        - Contribution guidelines: https://www.nebari.dev/community/
 
   - type: checkboxes
     attributes:

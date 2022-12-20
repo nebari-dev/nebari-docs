@@ -1,0 +1,8 @@
+[build]
+base = "docs/"
+command = "yarn run build"
+publish = "build/"
+
+# The default HTTP status code is 301, but you can define a different one.
+status = 301
+force = true
