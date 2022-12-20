@@ -19,26 +19,17 @@ infrastructure. It allows you to easily configure any number of
 cloud servers as well as all the required connections and features
 to ensure security, redundancy and scalability
 
-Nebari uses Terraform for managing its infrastructure in configuration
-files that are easily accessible and extendable in our code base, these
-files acts as the single source of truth for all the components required
-in the Infrastructure, such as Load Balancers, Virtual Machines, Gateways,
-etc. Such methodology is usualy referred to as Infrastructure as code (IaC).
-
-For more information about Terraform, IaC and the features it provides, refer to
-[Infrastructure as Code with Terraform](https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code).
-
 ![Terraform](/img/explanations/terraform.png)
 
 ## Kubernetes
 
-Kubernetes is a powerful open-source system, initially developed by Google,
-for managing containerized applications in a clustered environment. It aims
+Kubernetes is a powerful open-source container orchestration system, initially developed by Google,
+for managing containerized applications in a cluster. It aims
 to provide better ways of managing related, distributed components and services
 across varied infrastructure.
 
-Kubernetes provides fine-grained control in applications and container lifecycles,
-especially in dynamic environments. Tasks such as pod tracking, availability, and
+Kubernetes provides fine-grained controls in applications and container lifecycles,
+especially in dynamic environments. Tasks such as monitoring, availability, and
 deployment are simplified by the use of controllers, which are control loops that
 monitor your Kubernetes cluster and make changes as needed to maintain the expected
 state.
@@ -63,25 +54,12 @@ import TabItem from '@theme/TabItem';
 </TabItem>
 <TabItem value="do" label="Digital Ocean">
 
-The Digital Ocean deployment is the simplest of the cloud
-providers. We deploy a managed Kubernetes not within a virtual
-network. Similar to all other deployments auto-scaling is enabled. A
-limitation of Digital Ocean auto-scaling is that it only scales down
-to one. Once Nebari is fully deployed a load-balancer is connected to
-the Kubernetes cluster through [Traefik](https://traefik.io/).
-
 ![DO Architecture Diagram](/img/explanations/architecture-diagram-do.png)
 
 </TabItem>
 <TabItem value="aws" label="Amazon AWS">
 
 ![AWS Architecture Diagram](/img/explanations/architecture-diagram-aws.png)
-
-AWS is the most complex of the cloud deployments with significant
-effort being put into networking. An EKS managed kubernetes cluster is
-deployed within a given region. A restriction of AWS eks is that it
-must be deployed within two subnets in a region. Nebari supports spot
-instances, auto-scaling to zero, and GPU instances.
 
 </TabItem>
 <TabItem value="azure" label="Azure">
@@ -90,23 +68,3 @@ instances, auto-scaling to zero, and GPU instances.
 
 </TabItem>
 </Tabs>
-
-### Stages
-
-#### Stage 1: Terraform state
-
-#### Stage 2: Infrastructure (Kubernetes cluster)
-
-#### Stage 3: network services (Traefik, Cert-manager, etc)
-
-#### Stage 4: Keycloak (user management and authentication)
-
-#### Stage 5: Keycloak configuration (Create Nebari realm and service clients)
-
-#### Stage 6: Services
-
-### Kubernetes
-
-![Kubernetes architecture](/img/explanations/components-of-kubernetes.svg)
-
-## User context workflow
