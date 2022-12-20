@@ -2,9 +2,11 @@
 
 This is a short overview of the general architecture and structure of the repository, to help you orient yourself.
 
-This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Documentation README](./docs/README.md)
+This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Contributing to Nebari's documentation section in our community guidelines](https://www.nebari.dev/docs/community/doc-contributions).
 
 The structure of this repository is as follows:
+
+```bash
 .
 ├── .github
 ├── docs
@@ -29,6 +31,7 @@ The structure of this repository is as follows:
 ├── CONTRIBUTING.md
 ├── LICENSE
 └── README.md
+```
 
 ## `.github` - GitHub-related files
 
@@ -38,13 +41,16 @@ This directory contains the following
 - `PULL_REQUEST_TEMPLATE`: this project's pull request template
 - `workflows/`: GitHub actions workflows for this repository
 
+> **Note**
+> The issue and pull request templates are located in the (nebari-dev/.github)[https://github.com/nebari-dev/.github] repository and are synced across repositories through a GitHub action.
+
 # `docs/`
 
 This is the top-level directory for the documentation. It contains the following files and directories.
 
 ## `docs`
 
-The main content for the Nebari documentation. Since we follow the Diátaxis documentation framework the content is organised to follow the Diátaxis structure:
+The main content for the Nebari documentation. Since we follow the Diátaxis documentation framework the content is organized to follow the Diátaxis structure:
 
 - `tutorials`: Step-by-step tutorials that cover how to do a particular thing from beginning to end.
 - `how-tos`: How-tos that are intended to be used in the context of a particular project.
@@ -59,7 +65,7 @@ Plus additional sections such as `glossary, troubleshooting, welcome, etc.`
 This folder contains all the source files for the documentation theme:
 The team uses `scss` to work on the stylesheets to benefit from the syntactic sugar this offers over `css`. The stylesheets are organized as follows:
 
-```ascii
+```bash
 .
 ├── scss
 │   ├── utils
@@ -89,7 +95,7 @@ To keep things tidy the images are organized in the same way as the main documen
 - `references`
 - `explanations`
 - `community`
-- `getting-started`: getting started sections of the documentation
+- `get-started`: getting started sections of the documentation
 - `welcome`: our main page
 
 ## Other miscellaneous files in `/docs`
@@ -108,7 +114,7 @@ To keep things tidy the images are organized in the same way as the main documen
 
 ## Files in `./` - the root directory of this repository
 
-- `.gitignore`: `.git` configuration file with files and patters not to be committed to version control
+- `.gitignore`: `.git` configuration file with files and patterns not to be committed to version control
 - `.gitpod.yml`: gitpod configuration file
 - `.pre-commit.yaml`: configuration for the multiple non-JavaScript pre-commits used
 - `CONTRIBUTING.md`: this project's contribution guidelines
