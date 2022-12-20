@@ -11,7 +11,7 @@ description: Introduction to Dask
 Working with large datasets can pose a few challenges - perhaps the most common is memory limitations on the
 user's machine.
 
-[Dask](https://docs.dask.org/en/stable/) is a flexible, Open-Source library for parallel computing in Python. Dask
+[Dask](https://www.dask.org/) is a flexible, open source library for parallel and distributed computing in Python. Dask
 allows data scientists the ability able to scale analyses from a sample dataset to the full, large-scale dataset
 with almost no code changes. It's a powerful tool that can revolutionize how you do analytics!
 
@@ -21,7 +21,7 @@ Nebari uses [Dask Gateway][dask-gateway] to expose auto-scaling compute clusters
 configured for the user, and it provides a secure way to managing Dask clusters.
 
 <details>
-<summary> Click here for more information on how this Dask integration works! </summary>
+<summary> Click here for quick notes on how this Dask works! </summary>
 
 Dask consists of 3 main components `client`, `scheduler`, and `workers`.
 
@@ -31,17 +31,19 @@ Dask consists of 3 main components `client`, `scheduler`, and `workers`.
 
 The `client` interacts with both `scheduler` (sends instructions) and `workers` (collects results).
 
-Check out the [Dask Gateway documentation][dask-gateway] for a full explanation.
+Check out the [Dask documentation][dask-docs] and the [Dask Gateway documentation][dask-gateway] for a full explanation.
 
 </details>
 
 ## Step 1 - Setting up Dask Gateway
 
-Let's start by creating a Jupyter notebook. Select an environment from the `Select kernel` dropdown menu
+Let's start by creating a Jupyter notebook.
+Select an environment from the `Select kernel` dropdown menu
 (located on the top right of your notebook).
 
 :::warning
-Be sure to select an environment which includes `Dask`
+Be sure to select an environment which includes `Dask`.
+On a default Nebari deployment, you can select the kernel `TBD`.
 :::
 
 Nebari has set of pre-defined options for configuring the Dask profiles that we have access to. These can be
@@ -305,4 +307,7 @@ Kudos, you should now have a working Dask cluster inside Nebari.
 Now go load up your own big data!
 
 <!-- Reusable links -->
+
+[dask-website]: https://www.dask.org/
+[dask-docs]: https://docs.dask.org/en/stable/
 [dask-gateway]: https://gateway.dask.org/
