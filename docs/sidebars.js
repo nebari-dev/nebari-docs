@@ -98,7 +98,6 @@ module.exports = {
       },
       items: [
         "references/overview",
-        "references/source-code-architecture"
       ],
     },
     {
