@@ -25,7 +25,7 @@ The necessary restrictions for each cloud provider are presented below:
 ### Omitting sensitive values
 
 If you wish to avoid storing secrets directly in the config yaml file you can instead set the values in environment variables. This substitution is triggered by setting config
-values to `QHUB_SECRET_` followed by the environment variable name.
+values to `NEBARI_SECRET_` followed by the environment variable name.
 
 For example, you could set the environment variables `github_client_id` and `github_client_key` and write the
 following in your config file:
@@ -35,28 +35,28 @@ security:
   authentication:
     type: GitHub
     config:
-      client_id: QHUB_SECRET_github_client_id
-      client_secret: QHUB_SECRET_github_client_key
+      client_id: NEBARI_SECRET_github_client_id
+      client_secret: NEBARI_SECRET_github_client_key
 ```
 
 ### Nebari version assertion
 
-All `qhub-config.yaml` files must contain a `qhub_version` field displaying the version of Nebari which it’s intended to be deployed with.
+All `nebari-config.yaml` files must contain a `nebari_version` field displaying the version of Nebari which it’s intended to be deployed with.
 
-Typically, you can upgrade the `qhub-config.yaml` file itself by manually adding the intended version to the file and validating that the version matches the version of Nebari you are deploying with by calling `qhub --version`.
+Typically, you can upgrade the `nebari-config.yaml` file itself by manually adding the intended version to the file and validating that the version matches the version of Nebari you are deploying with by calling `nebari --version`.
 
-If available, you may also update the configuration using the `qhub upgrade` command. This will update image numbers, plus updating `qhub_version` to match the installed version of qhub, as well as any other bespoke changes required.
+If available, you may also update the configuration using the `nebari upgrade` command. This will update image numbers, plus update `nebari_version` to match the installed version of Nebari, as well as any other bespoke changes required.
 
 :::warning
-Nebari will refuse to deploy if it doesn’t contain the same version as that of the qhub command.
+Nebari will refuse to deploy if it doesn’t contain the same version as that of the `nebari` command.
 ```
-Error: The schema validation of the qhub-config.yaml failed.
+Error: The schema validation of the nebari-config.yaml failed.
 The following error message may be helpful in determining what went wrong:
 
-qhub_version
-  qhub_version in the config file must be equivalent to <installed version> to be
-  processed by this version of qhub (your config file version is <qhub_version>).
-  Install a different version of qhub or run qhub upgrade to ensure your config
+nebari_version
+  nebari_version in the config file must be equivalent to <installed version> to be
+  processed by this version of Nebari (your config file version is <nebari_version>).
+  Install a different version of nebari or run nebari upgrade to ensure your config
   file is compatible.
 (type=value_error)
 ```

@@ -1,5 +1,5 @@
 ---
-title: Advanced Configuration
+title: Advanced configuration
 id: advanced-configuration
 description: An in-depth guide to advanced configuration options.
 ---
@@ -164,8 +164,8 @@ main features of Nebari such as JupyterLab with this user. It is exclusively for
 The `overrides` section allows you to specify a custom image for the Keycloak service. This is useful if you want to customize theming or add additional plugins to Keycloak. The full extent of override options can be found in the [Keycloak Helm deployment](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 
 :::warning
-We strongly recommend changing the `initial_root_password` after your initial deployment and deleting this value from your `qhub-config.yaml`. Any changes to this value in the
-`qhub-config.yaml` after the initial deployment will have no effect.
+We strongly recommend changing the `initial_root_password` after your initial deployment and deleting this value from your `nebari-config.yaml`. Any changes to this value in the
+`nebari-config.yaml` after the initial deployment will have no effect.
 
 For more information on how to do this, see the ["Change Keycloak root password"] section.
 :::
@@ -429,7 +429,7 @@ local:
 </Tabs>
 
 :::note
-Many of the cloud providers regularly update their internal **Kubernetes versions** so if you wish to specify a particular version, please check the following resources. This is _completely optional_ as Nebari will, by default, select the most recent version available for your preferred cloud provider. [Digital Ocean](https://docs.digitalocean.com/products/kubernetes/changelog/) [Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable) [Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html) [Microsoft Azure](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli)
+Many of the cloud providers regularly update their internal **Kubernetes versions** so if you wish to specify a particular version, please check the following resources. This is _completely optional_ as Nebari will, by default, select the most recent version available for your preferred cloud provider: [Digital Ocean](https://docs.digitalocean.com/products/kubernetes/changelog/); [Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable); [Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html); [Microsoft Azure](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli).
 :::
 
 ## Custom settings
@@ -613,7 +613,7 @@ When configuring the memory and CPUs for profiles, there are some important cons
 - `limit`: the absolute max memory that a given pod can consume. If a process within the pod consumes more than the `limit` memory the linux OS will kill the process. Limit is not
   used for scheduling purposes with kubernetes.
 - `guarantee`: is the amount of memory the kubernetes scheduler uses to place a given pod. In general the `guarantee` will be less than the limit. Often times the node itself has
-  less available memory than the node specification. See this [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/#allocatable-memory) which is generally
+  less available memory than the node specification. See this [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/details/limits/#allocatable-memory) which is generally
   applicable to other clouds.
 
 For example if a node has 8 GB of ram and 2 CPUs you should guarantee/schedule roughly 75% and follow the digital ocean guide linked above, e.g. 1.5 CPU guaranteed and 5.5 GB
@@ -642,7 +642,7 @@ profiles:
 
 ## Customizing JupyterHub theme
 
-Nebari uses a custom JupyterHub theme, [[Quansight/qhub-jupyterhub-theme](https://github.com/quansight/qhub-jupyterhub-theme)](https://github.com/nebari-dev/nebari-jupyterhub-theme). Users can further customize the theme through these available options:
+Nebari uses a custom JupyterHub theme, [nebari-dev/nebari-jupyterhub-theme](https://github.com/nebari-dev/nebari-jupyterhub-theme). Users can further customize the theme through these available options:
 
 Below is an example of a custom theme configuration for a GCP deployment:
 
@@ -674,7 +674,7 @@ theme:
 ![A demonstration os the theming customizations](/img/how-tos/nebari_login_screen.png)
 
 :::note
-To properly update the image logo, you will must ensure that the provided logo field contains an accessible path to the logo. Which is added in the jupyterhub image, or by passing a valid URL to the logo.
+To properly update the image logo, you must ensure that the provided logo field contains an accessible path to the logo. Which is added in the jupyterhub image, or by passing a valid URL to the logo.
 :::
 
 ## Nebari-git environments
