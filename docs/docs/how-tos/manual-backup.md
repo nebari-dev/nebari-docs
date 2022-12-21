@@ -22,7 +22,7 @@ There are three main locations that you need to back up:
 This amounts to:
 
 - Tarballing the /home directory
-- Saving to block storage \[s3, google cloud storage, etc\]
+- Saving to object storage \[s3, google cloud storage, etc\]
 - Downloading and untaring to new cluster
 
 This specific guide shows how to do this on an AWS cluster and upload to AWS S3.
@@ -120,7 +120,7 @@ tar -cvf <custom_name>.tar .
 The preferred naming scheme includes a year-month-day, example `2021-04-23_home_backup.tar`. You can utilize multi-backups through this step. This step takes several minutes
 depending on the size of the home directories.
 
-### Upload to block storage
+### Upload to object storage
 
 Once this is complete, upload the tar file to S3 using the AWS command-line tool:
 
@@ -131,7 +131,7 @@ aws s3 cp 2021-04-23.tar s3://<your_bucket_name>/backups/2021-04-23.tar
 Replacing `your_bucket_name` with a bucket you have created. If you don't have an existing bucket, instructions are here:
 <https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html>
 
-### Download from block storage and decompress
+### Download from object storage and decompress
 
 Now that the data backed up, perform the same steps preceding for the new cluster. This includes:
 

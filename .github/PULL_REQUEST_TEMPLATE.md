@@ -18,7 +18,7 @@ _Put a `x` in the boxes that apply_
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds a feature)
-- [ ] Breaking change (fix or feature that would cause existing features to not work as expected)
+- [ ] Breaking change (fix or feature that would cause existing features not to work as expected)
 - [ ] Documentation Update
 - [ ] Code style update (formatting, renaming)
 - [ ] Refactoring (no functional changes, no API changes)
@@ -60,13 +60,14 @@ please address the access-centred guidelines in your content and complete our ch
 - [ ] Don't use [flashing GIFs or videos](https://www.w3.org/TR/UNDERSTANDING-WCAG20/seizure-does-not-violate.html).
 - [ ] If the content were to be read as plain text, it still makes sense, and no information is missing.
 
-### Any other comments?
+## Any other comments?
 
 <!--
-Please be aware that we are a loose team of volunteers, so patience is
-necessary; assistance handling other issues is very welcome. We value
-all user contributions. If we are slow to review, either the pull request needs some benchmarking, tinkering,
-convincing, etc., or the reviewers are likely busy. In either case, we ask for your understanding during the
+Please be aware that we are a loose team of volunteers, so patience is necessary;
+assistance handling other issues is very welcome.
+We value all user contributions. If we are slow to review, either the pull request needs some benchmarking, tinkering,
+convincing, etc., or the reviewers are likely busy. In either case,
+we ask for your understanding during the
 review process.
 Thanks for contributing to Nebari 🙏🏼!
 -->

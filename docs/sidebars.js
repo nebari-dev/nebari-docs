@@ -59,6 +59,7 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/nebari-local",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
@@ -114,6 +115,16 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
+        {
+          type: "category",
+          label: "Maintainers",
+          items: ["community/maintainers/github-conventions",
+            "community/maintainers/triage-guidelines",
+            "community/maintainers/reviewer-guidelines",
+            "community/maintainers/saved-replies",
+            "community/maintainers/release-process-branching-strategy",
+          ]
+        }
       ],
     },
     {
