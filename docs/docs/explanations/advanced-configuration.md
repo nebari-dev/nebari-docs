@@ -72,14 +72,14 @@ If `ci_cd` is not supplied, no CI/CD will be auto-generated, however, we advise 
 
 To enable HTTPS on your website, you need to get a SSL certificate (a type of file) from a Certificate Authority (CA). An SSL certificate is a data file hosted in a website's origin server. SSL certificates make SSL/TLS encryption possible, and they contain the website's public key and the website's identity, along with related information.
 
-By providing the domain name of your deployment, Nebari will automatically generate a certificate for based on the default `certificate` configuration below.
+By providing the domain name of your deployment, Nebari will automatically generate a certificate for you based on the default `certificate` configuration below. Nebari uses [Traefik](https://traefik.io/traefik/) to create and manage certificates.
 
-Below we provide the list of supported certificate providers.
+The supported options are:
 
 <Tabs>
-  <TabItem label="Traefik" value="traefik" default="true">
+  <TabItem label="New self-signed" value="traefik" default="true">
 
-By `default`, `Nebari` uses [Traefik](https://traefik.io/traefik/) to create a [self-signed certificate](https://en.wikipedia.org/wiki/Self-signed_certificate). In order to create a certificate that's signed so that web browsers don't throw errors we currently support **Let's Encrypt**.
+By `default`, `Nebari` creates a [self-signed certificate](https://en.wikipedia.org/wiki/Self-signed_certificate).
 
 ```yaml
 ### Certificate configuration ###
@@ -88,7 +88,9 @@ certificate:
 ```
 
   </TabItem>
-  <TabItem label="Let's Encrypt" value="letsencrypt">
+  <TabItem label="New Let's Encrypt" value="letsencrypt">
+
+In order to create a certificate that's signed so that web browsers don't throw errors we currently support **Let's Encrypt**.
 
 [Let’s Encrypt](https://letsencrypt.org/) is a CA. In order to get a certificate for your website’s domain from Let’s Encrypt, Nebari requires extra information that abide by the [ACME protocol](https://tools.ietf.org/html/rfc8555) which typically runs on your web host. This information is provided in the `letsencrypt` section of the configuration file.
 
@@ -108,7 +110,7 @@ You can generate the above configuration automatically by using the `--ssl-cert-
 :::
 
   </TabItem>
-  <TabItem label="Custom" value="Custom">
+  <TabItem label="Custom self-signed" value="Custom">
 
 You may also supply a custom self-signed certificate and secret key.
 
@@ -128,13 +130,12 @@ kubectl create secret tls <secret-name> \
 ```
 
 :::note
-The kubernetes default namespace that Nebari uses is `dev`. Otherwise, it will be your `namespace`
-defined in `nebari-config.yaml`.
+The kubernetes default namespace that Nebari uses is `dev`. Otherwise, it will be your `namespace` defined in `nebari-config.yaml`.
 :::
 
-##### Wildcard certificates
+#### Wildcard certificates
 
-Some of Nebari services might require special subdomains under your certificate, wildcard certificates allow you to secure all subdomains of a domain with a single certificate. Defining a wildcard certificate decreases the amount of CN names you would need to define under the certificate configuration and reduces the chance of generating an incorrect subdomain.
+Some of Nebari services might require special subdomains under your certificate, wildcard certificates allow you to secure all subdomains of a domain with a single certificate. Defining a wildcard certificate decreases the amount of Common Name (CN) names you would need to define under the certificate configuration and reduces the chance of generating an incorrect subdomain.
 
 </TabItem>
 </Tabs>
@@ -167,14 +168,14 @@ The `overrides` section allows you to specify a custom image for the Keycloak se
 We strongly recommend changing the `initial_root_password` after your initial deployment and deleting this value from your `nebari-config.yaml`. Any changes to this value in the
 `nebari-config.yaml` after the initial deployment will have no effect.
 
-For more information on how to do this, see the ["Change Keycloak root password"] section.
+For more information on how to do this, see the [Change Keycloak root password section](../how-tos/configuring-keycloak#change-keycloak-root-password).
 :::
 
 ### Authentication methods
 
-Nebari supports multiple authentication methods by using [Keycloak](https://www.keycloak.org/) under the hood. To ease the configuration procedure of adding the most common authentication providers to Keycloak, Nebari already supports `[Auth0, Github, Password]` automatically during deployment. You may also disable authentication by setting `authentication` to `false` in the `nebari-config.yaml` file.
+Nebari supports multiple authentication methods by using [Keycloak](https://www.keycloak.org/) under the hood. To ease the configuration procedure of adding the most common authentication providers to Keycloak, Nebari already supports `[Auth0, GitHub, password]` automatically during deployment. You may also disable authentication by setting `authentication` to `false` in the `nebari-config.yaml` file.
 
-The default authentication method is set to `github` if no changes are specified in the configuration file or during initialization.
+The default authentication method is set to `GitHub` if no changes are specified in the configuration file or during initialization.
 
 <Tabs>
 
@@ -227,7 +228,7 @@ Nebari supports automatic provisioning of the Auth0 application during initializ
 
 </TabItem>
 
-<TabItem label="Password" value="password" default="true">
+<TabItem label="password" value="password" default="true">
 
 Username and Password is the simplest authentication method that Nebari supports. By using the `Password` authentication method, users will then be able to log in to Nebari using their username and password registered within Keycloak database.
 
@@ -243,8 +244,13 @@ security:
 
 </Tabs>
 
+:::warning
+The options for `type` -- `Auth0`, `GitHub`, and `password` are case sensitive.
+:::
+
 :::note
-Even if you formally select `password/Github/Auth0` authentication in the `nebari-config.yaml` file, it's still possible to add other authentication methods alongside them to Keycloak manually. For more information on how to do this, please refer to the [Keycloak documentation](https://www.keycloak.org/docs/latest/server_admin/index.html#_identity_broker).
+Even if you formally select `password/GitHub/Auth0` authentication in the `nebari-config.yaml` file, it's still possible to add other authentication methods alongside them to Keycloak manually.
+For more information on how to do this, please refer to the [Keycloak documentation](https://www.keycloak.org/docs/latest/server_admin/index.html#_identity_broker).
 :::
 
 ## Provider configuration
@@ -552,6 +558,16 @@ It is possible to control which users have access to which JupyterLab profiles. 
   example, if the user is in a Keycloak group named `developers` which has an attribute `jupyterlab_profiles` set to `Large Instance`, they will have access to the Large Instance
   profile. To specify multiple profiles for one group (or user) delimit their names using `##` - for example, `Large Instance##Another Instance`.
 
+When configuring the memory and CPUs for profiles, there are some important considerations to make. Two important terms to understand are:
+
+- `limit`: the absolute max memory that a given pod can consume. If a process within the pod consumes more than the `limit` memory the linux OS will kill the process. Limit is not
+  used for scheduling purposes with kubernetes.
+- `guarantee`: is the amount of memory the kubernetes scheduler uses to place a given pod. In general the `guarantee` will be less than the limit. Often times the node itself has
+  less available memory than the node specification. See this [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/details/limits/#allocatable-memory) which is generally
+  applicable to other clouds.
+
+For example if a node has 8 GB of ram and 2 CPUs you should guarantee/schedule roughly 75% and follow the digital ocean guide linked above, e.g. 1.5 CPU guaranteed and 5.5 GB guaranteed.
+
 #### JupyterLab Profile Node Selectors
 
 A common operation is to target jupyterlab profiles to specific node labels. In order to target a specific node groups add the following. This example shows a GKE node groups with
@@ -607,17 +623,6 @@ profiles:
       worker_memory_limit: 2G
       worker_memory: 2G
 ```
-
-When configuring the memory and CPUs for profiles, there are some important considerations to make. Two important terms to understand are:
-
-- `limit`: the absolute max memory that a given pod can consume. If a process within the pod consumes more than the `limit` memory the linux OS will kill the process. Limit is not
-  used for scheduling purposes with kubernetes.
-- `guarantee`: is the amount of memory the kubernetes scheduler uses to place a given pod. In general the `guarantee` will be less than the limit. Often times the node itself has
-  less available memory than the node specification. See this [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/details/limits/#allocatable-memory) which is generally
-  applicable to other clouds.
-
-For example if a node has 8 GB of ram and 2 CPUs you should guarantee/schedule roughly 75% and follow the digital ocean guide linked above, e.g. 1.5 CPU guaranteed and 5.5 GB
-guaranteed.
 
 #### Dask Scheduler
 
