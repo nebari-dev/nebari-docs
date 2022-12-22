@@ -98,8 +98,6 @@ module.exports = {
         keywords: ["reference"],
       },
       items: [
-        "references/overview",
-        "references/cli-command-reference",
         "references/RELEASE",
       ],
     },

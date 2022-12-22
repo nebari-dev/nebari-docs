@@ -57,7 +57,7 @@ environments:
 
 The pins for the metapackage can be found in the [conda-forge recipe](https://github.com/conda-forge/nebari-dask-meta-feedstock/blob/master/recipe/meta.yaml).
 
-### SSl certificate issues with ClearML
+### SSL certificate issues with ClearML
 
 If you are using ClearML and you are getting SSL certificate errors, this might be due to a mismatch between the certificate used by ClearML and the one used by Nebari.
 This normally happens when a custom certificate was provided to Nebari that does not englobe the ClearML domains, which are:

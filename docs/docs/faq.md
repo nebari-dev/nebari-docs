@@ -77,9 +77,11 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
 
 
-## How do I migrate Qhub to Nebari?
+## How do I migrate from Qhub to Nebari?
 
-If your Qhub version lives in the `0.4.x` series, you can migrate to Nebari by following the [migration guide]. If you're using a version of Qhub that lives in the `0.3.x` series, you will need to upgrade to `0.4.x` first as the user group management is different between the two versions. For more information, see the deprecation notice in the [Nebari release note](./references/RELEASE).
+<!-- TODO: Add link to "migration guide" when complete -->
+
+Nebari was previously called QHub. If your Qhub version lives in the `0.4.x` series, you can migrate to Nebari by following the migration guide. If you're using a version of Qhub that lives in the `0.3.x` series, you will need to upgrade to `0.4.x` first as the user group management is different between the two versions. For more information, see the deprecation notice in the [Nebari release note](./references/RELEASE).
 
 
 [dask-tutorial]: tutorials/using_dask.md
