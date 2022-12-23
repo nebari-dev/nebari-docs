@@ -65,3 +65,17 @@ Although this process is captured in the [release checklist template](https://gi
 #### Hotfixes
 
 In the event that a patch or hotfix release is needed, release process is the same as outlined above. The only difference is that the commits that are merged into the hotfix release branch will need to be cherry-picked from the `develop` branch.
+
+## Related packages
+
+### nebari-dask
+
+[`nebari-dask`](https://github.com/conda-forge/qhub-dask-feedstock) is a meta package which contains specific versions of `dask`, `dask-gateway` and `distributed`.
+
+> Released at the same time as `nebari` with matching version numbers. Included in the release checklist linked above.
+
+### nebari-docker-images
+
+The [`nebari-docker-images`](https://github.com/nebari-dev/nebari-docker-images) repo contains the Dockerfiles for the JupyterHub, JupyterLab, and Dask-Gateway Kubernetes deployments. This repo also contains the workflow needed to build and push them the images to [github.com/orgs/nebari-dev/packages](https://github.com/orgs/nebari-dev/packages) and [quay.io/organization/nebari](https://quay.io/organization/nebari).
+
+> These images are built and tagged with the same version number of the corresponding `nebari` release. Included in the release checklist linked above.
