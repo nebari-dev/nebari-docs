@@ -1,19 +1,20 @@
 ---
 id: using_dask
-title: Working with big data using Dask
-description: Introduction to Dask
+title: Work with big data using Dask
+description: Introduction to Dask with Nebari
 ---
 
-# Working with big data using Dask
+# Work with big data using Dask
 
 ## Introduction
 
 Working with large datasets can pose a few challenges - perhaps the most common is memory limitations on the
 user's machine.
 
-[Dask](https://www.dask.org/) is a flexible, open source library for parallel and distributed computing in Python. Dask
-allows data scientists the ability able to scale analyses from a sample dataset to the full, large-scale dataset
-with almost no code changes. It's a powerful tool that can revolutionize how you do analytics!
+[Dask](https://www.dask.org/) is a flexible, open source library for parallel and distributed computing in Python.
+Dask allows data scientists the ability able to scale analyses from a sample dataset to the full, large-scale dataset
+with almost no code changes.
+It's a powerful tool that can revolutionize how you do analytics!
 
 ## Dask integration on Nebari
 
@@ -35,9 +36,9 @@ Check out the [Dask documentation][dask-docs] and the [Dask Gateway documentatio
 
 </details>
 
-## Step 1 - Setting up Dask Gateway
+## Step 1 - Set up Dask Gateway
 
-Let's start by creating a Jupyter notebook.
+Let's start with a fresh Jupyter notebook.
 Select an environment from the `Select kernel` dropdown menu
 (located on the top right of your notebook).
 
@@ -46,8 +47,8 @@ Be sure to select an environment which includes `Dask`.
 On a default Nebari deployment, you can select the kernel `TBD`.
 :::
 
-Nebari has set of pre-defined options for configuring the Dask profiles that we have access to. These can be
-accessed via Dask Gateway options.
+Nebari has set of pre-defined options for configuring the Dask profiles that we have access to.
+These can be accessed via Dask Gateway options.
 
 ```python
 from dask_gateway import Gateway
@@ -70,7 +71,7 @@ It’s important that the environment used for your notebook matches the Dask wo
 The Dask worker environment is specified in your deployment directory under `/image/dask-worker/environment.yaml`
 :::
 
-## Step 2 - Creating a Dask cluster
+## Step 2 - Create a Dask cluster
 
 1. Let's start by creating a new Dask cluster from within your notebook:
 
@@ -96,7 +97,7 @@ The Dask worker environment is specified in your deployment directory under `/im
 
    You may also notice a link to the Dask Dashboard in this interface. We'll discuss this in a later section.
 
-## Step 3 - Viewing the Dask Client
+## Step 3 - View the Dask Client
 
 Once the Dask cluster has been created, you'll be able to get the cluster's information directly from your Jupyter notebook:
 
@@ -114,13 +115,16 @@ The `Dask Client` interface gives us a brief summary of everything we've set up 
 
 ## Step 4 - Running your code on Dask
 
-In the following sections, you will perform some basic analysis on the well-known New York City yellow taxi dataset, a subset of which we have copied over to a Google Cloud Storage bucket `gs://nebari-public/yellow_taxi_NYC`.
+## Step 5 - Run your computation with Dask
+
+In the following sections, you will perform some basic analysis on the well-known New York City yellow taxi dataset,
+a subset of which we have copied over to a Google Cloud Storage bucket `gs://nebari-public/yellow_taxi_NYC`.
 
 :::note
-This dataset is saved in parquet format, a column-oriented file format commonly used for large datasets saved in the cloud.
+This dataset is saved in Parquet format, a column-oriented file format commonly used for large datasets saved in the cloud.
 :::
 
-1. To get started, we will load the data using a Dask DataFrame. This will lazily load the dataset. Add the following to your notebook:
+1. To get started, we will load the data using Dask's Dask DataFrame API. The following will lazily load the dataset::
 
    ```python
    import dask.dataframe as dd
