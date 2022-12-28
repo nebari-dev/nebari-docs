@@ -41,10 +41,11 @@ Check out the [Dask documentation][dask-docs] and the [Dask Gateway documentatio
 Let's start with a fresh Jupyter notebook.
 Select an environment from the `Select kernel` dropdown menu
 (located on the top right of your notebook).
+On a default Nebari deployment, you can select the `filesystem/dask` environment.
 
 :::warning
-Be sure to select an environment which includes `Dask`.
-On a default Nebari deployment, you can select the kernel `TBD`.
+Be sure to select an environment which includes `Dask`, and note that the versions of `dask`, `distributed`, and `dask-gateway` must be the same.
+We recommend the [`nebari-dask` metapackage](https://anaconda.org/conda-forge/nebari-dask) that includes the correct Dask packages and versions.
 :::
 
 Nebari has set of pre-defined options for configuring the Dask profiles that we have access to.
@@ -62,13 +63,18 @@ options
 
 ![Nebari - Cluster Options UI](/img/tutorials/cluster_options.png)
 
-Using the `Cluster Options` interface, you can specify the `conda` environment, the instance type, and any additional
+Using the `Cluster Options` interface, you can specify the `conda` environment for Dask workers, the instance type for the workers, and any additional
 environment variables you'll need.
 
 :::warning
 It’s important that the environment used for your notebook matches the Dask worker environment!
 
 The Dask worker environment is specified in your deployment directory under `/image/dask-worker/environment.yaml`
+:::
+
+:::tip
+The fields displayed in the Cluster Options UI are defined in the `nebari-config.yml`.
+By default, you see "Environment", "Cluster Profile", and "Environment Variables", but you can configure this as per your (and your team's) needs.
 :::
 
 ## Step 2 - Create a Dask cluster
@@ -179,7 +185,7 @@ This dataset is saved in Parquet format, a column-oriented file format commonly 
    ```python
    import dask.dataframe as dd
 
-   df = dd.read_parquet(
+   ddf = dd.read_parquet(
        path='gs://nebari-public/yellow_taxi_NYC/*/*.parquet',
        storage_options={'anon':True},
    )
@@ -188,14 +194,14 @@ This dataset is saved in Parquet format, a column-oriented file format commonly 
 2. From here you can start analyzing the data. First, let's check the size of the overall dataset:
 
    ```python
-   dataset_size = df.memory_usage(deep=True).compute().sum()
-   dataset_size
+   dataset_size = ddf.memory_usage(deep=True).compute().sum()
+   print(dataset_size / 10**9, "GB")
    ```
 
    **Output:**
 
    ```shell
-   32426244980
+   32.42624498 GB
    ```
 
    This corresponds to 32.43 GB of data. Running this one-liner would be impossible on most single machines but running this on a Dask cluster with 4 workers, this can be calculated in under a minute.
@@ -205,9 +211,9 @@ This dataset is saved in Parquet format, a column-oriented file format commonly 
 
    ```python
    # get the pickup date, ignoring pickup time
-   df["pickup_date"] = df.tpep_pickup_datetime.dt.date.astype(str)
+   ddf["pickup_date"] = ddf.tpep_pickup_datetime.dt.date.astype(str)
    # aggregate rides by pickup date
-   gb_date = df.groupby(by="pickup_date").agg("count")
+   gb_date = ddf.groupby(by="pickup_date").agg("count")
    # calculate a 7-day rolling average of the number of taxi rides
    gb_date["num_rides_7_rolling_ave"] = gb_date.tpep_pickup_datetime.rolling(7).mean()
    ```
@@ -260,25 +266,10 @@ This dataset is saved in Parquet format, a column-oriented file format commonly 
 
 Performing this kind of analysis on such a large dataset would not be possible without a tool like Dask. On Nebari, Dask comes out-of-the-box ready to help you handle these larger-than-memory (out-of-core) datasets.
 
-### The Dask diagnostic UI
-
-Dask comes with an inbuilt dashboard containing multiple plots and tables containing live information as
-the data gets processed. Let's understand the dashboard plots `Task Stream` and `Progress`.
-The colors and the interpretation would differ based on the computation we choose.
-
-Each of the computation in split into multiple tasks for parallel execution. From the progress bar we see 4
-distinct colors associated with different computation. Under task stream (a streaming plot) each row represents a thread
-and the small rectangles within are the individual tasks.
-
-Check out the [Dask Documentation](https://docs.dask.org/en/stable/dashboard.html) for more information.
-
-![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
-
-### Shutting down the cluster
+## Step 5 - Shutdown the cluster
 
 As will you have noticed, you can spin up a lot of compute really quickly using Dask.
 
-:::warning
 **With great power comes great responsibility**
 
 Remember to shut down your cluster once you are done, otherwise this will be running in the background, and you might incur on unplanned costs.
@@ -288,17 +279,7 @@ You can do this from your Jupyter notebook:
 cluster.close(shutdown=True)
 ```
 
-:::
-
-## Step 5 - Viewing the dashboard inside of JupyterLab
-
-The [Dask-labextension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters,
-as well as embed Dask's dashboard plots directly into JupyterLab panes.
-Nebari includes this extension by default, elevating the overall developer experience.
-
-![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
-
-## Step 6 - Using Dask safely
+## Using Dask safely
 
 If you're anything like us, we've forgotten to shut down our cluster a time or two. Wrapping the `dask-gateway` tasks in a
 context manager is a great practice that ensures the cluster is fully shutdown once the task is complete!
