@@ -113,7 +113,57 @@ On executing the cell, you'll see the following:
 
 The `Dask Client` interface gives us a brief summary of everything we've set up so far.
 
-## Step 4 - Running your code on Dask
+## Step 4 - Understand Dask's diagnostic tools
+
+Dask comes with an inbuilt dashboard containing multiple plots and tables containing live information as
+the data gets processed.
+
+:::note
+To use the dashboard for the first time, click on the dashboard link displayed in the Client UI.
+This opens a familiar Keycloak authentication page, where you can [sign-in the same way you authenticated into Nebari](/docs/how-tos/login-keycloak).
+Dask's browser-based dashboard opens automatically.
+:::
+
+You can access the dashboard in two ways:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="browser-based" label="Browser-based diagnostic dashboard" default>
+
+Dask's diagnostic dashboard will open in a new browser tab if you click on the dashboard links displayed in the Client UI or Cluster UI above.
+
+![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
+
+  </TabItem>
+  <TabItem value="labextension" label="Dask JupyterLab extension (recommended)">
+
+The [Dask-labextension](https://github.com/dask/dask-labextension) is included with the default Nebari deployment.
+It provides a JupyterLab extension to manage Dask clusters,
+as well as embed Dask's dashboard plots directly into JupyterLab panes.
+
+On JupyterLab, you can select the Dask icon in the left sidebar and click on the magnifying glass icon to view the list of available plots.
+Alternatively, you can copy-and-paste the dashboard link (displayed in the Client UI) in the input field.
+
+![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
+
+  </TabItem>
+</Tabs>
+
+Let's understand the dashboard plots `Task Stream`, `Progress`, and `Cluster map`.
+The colors and the interpretation would differ based on the computation we choose.
+
+Each of the computation you submit to Dask (you will learn more in the next section) in split into multiple tasks for parallel execution.
+From the progress bar we see 4 distinct colors associated with different computation.
+Under task stream (a streaming plot) each row represents a thread
+and the small rectangles within are the individual tasks.
+
+The Cluster map shows the Dask scheduler at the center, with the active Dask workers around it.
+It is a convenient way to visualize Adaptive scaling, and ensure new workers are being spun-up and shut-down based on workflow demand.
+
+Check out the [Dask Documentation on the dashboard plots](https://docs.dask.org/en/stable/dashboard.html) for more information.
+Keep the dashboard plots open for the following computations!
 
 ## Step 5 - Run your computation with Dask
 
