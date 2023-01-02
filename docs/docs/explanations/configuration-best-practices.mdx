@@ -4,9 +4,11 @@ id: config-best-practices
 description: A guide to best practices for configuring Nebari
 ---
 
-This document highlights and consolidates configuration best practices that are introduced throughout the Getting Started, How To's, and Advanced Settings sections of the documentation.
+# Configuration best practices
 
-### Naming conventions
+This document highlights and consolidates configuration best practices for `nebari-config.yaml` that are introduced throughout the Getting Started, How To's, and Advanced Settings sections of the documentation.
+
+## Naming conventions
 
 When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc. for these resources.
 As Nebari mainly uses the project name from config to populate those attributes, we must ensure that for such cases, the resource attribute/name meets the bound conventions for the chosen cloud provider.
@@ -19,10 +21,12 @@ The necessary restrictions for each cloud provider are presented below:
 - If using `AWS`: names should not start with the string "aws"
 - If using `Azure`: names should not contain "-"
 
+<!--
+TODO: Add domain format details
+ ## Domain Format
+-->
 
-### Domain Format
-
-### Omitting sensitive values
+## Omitting sensitive values
 
 If you wish to avoid storing secrets directly in the config yaml file you can instead set the values in environment variables. This substitution is triggered by setting config
 values to `NEBARI_SECRET_` followed by the environment variable name.
@@ -39,7 +43,7 @@ security:
       client_secret: NEBARI_SECRET_github_client_key
 ```
 
-### Nebari version assertion
+## Nebari version assertion
 
 All `nebari-config.yaml` files must contain a `nebari_version` field displaying the version of Nebari which it’s intended to be deployed with.
 
