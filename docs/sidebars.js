@@ -81,8 +81,8 @@ module.exports = {
         keywords: ["conceptual-guides"],
       },
       items: [
-        "explanations/config-best-practices",
         "explanations/advanced-configuration",
+        "explanations/config-best-practices",
       ],
     },
     {
