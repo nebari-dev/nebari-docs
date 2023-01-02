@@ -36,7 +36,9 @@ domain: dojupyterhub.com
   - `existing` for deploying on an existing kubernetes infrastructure
   - `local` for Kind local cluster deployment
 
-- `domain`: the top level URI used to access the application services. For more information regarding the format of this field, see [Domain Format](/docs/explanations/config-best-practices#domain-format).
+- `domain`: the top level URI used to access the application services.
+<!-- For more information regarding the format of this field, see [Domain Format](/docs/explanations/config-best-practices#domain-format). -->
+<!-- TODO: Complete the Domain Format section and then link to it -->
 
 ### Continuous integration and continuous deployment
 
@@ -245,7 +247,7 @@ security:
 </Tabs>
 
 :::warning
-The options for `type` -- `Auth0`, `GitHub`, and `password` are case sensitive.
+The options for `type`, which are `Auth0`, `GitHub`, and `password`, are case sensitive.
 :::
 
 :::note
@@ -355,7 +357,9 @@ azure:
 
 <TabItem value="do" label="DigitalOcean">
 
-DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the least expensive provider even accounting for `spot/pre-emptible` instances. In addition Digital Ocean doesn't have accelerator/gpu support. Digital Ocean is a great default choice for trying out Nebari.
+DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the least expensive provider even accounting for `spot/pre-emptible` instances. In addition, Digital Ocean doesn't have accelerator/gpu support.
+
+Digital Ocean is a good choice for trying out Nebari, but we recommend selecting a different provider for your production Nebari deployment.
 
 To see available instance types refer to [Digital Ocean Instance Types](https://www.digitalocean.com/docs/droplets/). Additionally the Digital Ocean cli `doctl` has
 [support for listing droplets](https://www.digitalocean.com/docs/apis-clis/doctl/reference/compute/droplet/list/).
