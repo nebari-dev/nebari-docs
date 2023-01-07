@@ -61,7 +61,7 @@ options = gateway.cluster_options()
 options
 ```
 
-![Nebari - Cluster Options UI](/img/tutorials/cluster_options.png)
+![Nebari - Cluster Options UI](/img/tutorials/dask_cluster_options.png)
 
 Using the `Cluster Options` interface, you can specify the `conda` environment for Dask workers, the instance type for the workers, and any additional
 environment variables you'll need.
@@ -89,7 +89,7 @@ By default, you see "Environment", "Cluster Profile", and "Environment Variables
    ```
 
    Once you run the cell, you'll see the following:
-   ![Creating a Gateway Cluster UI](/img/tutorials/cluster_creation.png)
+   ![Creating a Gateway Cluster UI](/img/tutorials/dask_cluster_creation.png)
 
 2. You have the option to choose between `Manual Scaling` and `Adaptive Scaling`.
 
@@ -100,6 +100,9 @@ By default, you see "Environment", "Cluster Profile", and "Environment Variables
    than others, you can select `Adaptive Scaling`. Dask Gateway will automatically scale the number of workers
    (spinning up new workers or shutting down unused ones) depending on the computational border. `Adaptive Scaling` is
    a safe way to prevent running out of memory, while not burning excess resources.
+
+   For this tutorial, we suggest trying the Adaptive Scaling feature.
+   In the Gateway Cluster UI, set the minimum value to 1 worker and maximum to 5 workers, and click on the `Adapt` button.
 
    You may also notice a link to the Dask Dashboard in this interface. We'll discuss this in a later section.
 
@@ -140,7 +143,7 @@ import TabItem from '@theme/TabItem';
 
 Dask's diagnostic dashboard will open in a new browser tab if you click on the dashboard links displayed in the Client UI or Cluster UI above.
 
-![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
+![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagnostic_dashboard.png)
 
   </TabItem>
   <TabItem value="labextension" label="Dask JupyterLab extension (recommended)">
@@ -157,16 +160,21 @@ Alternatively, you can copy-and-paste the dashboard link (displayed in the Clien
   </TabItem>
 </Tabs>
 
-Let's understand the dashboard plots `Task Stream`, `Progress`, and `Cluster map`.
-The colors and the interpretation would differ based on the computation we choose.
+Let's open and understand the dashboard plots `Task Stream`, `Progress`, and `Cluster map`.
 
-Each of the computation you submit to Dask (you will learn more in the next section) in split into multiple tasks for parallel execution.
-From the progress bar we see 4 distinct colors associated with different computation.
-Under task stream (a streaming plot) each row represents a thread
+Most colors and the interpretation would differ based on the computation you choose.
+However, some colors like red always indicate inter-worker communication and data transfer.
+
+Each of the computation you submit to Dask (you will learn more in the next section) is split into multiple tasks for parallel execution.
+
+In the `Progress` plot, we see the distinct colors associated with different tasks to complete the overall computation.
+These colors remain consistent throughout the dashboard plots.
+
+In the `Task Stream` (a streaming plot) each row represents a thread (a Dask worker can have multiple threads)
 and the small rectangles within are the individual tasks.
 
-The Cluster map shows the Dask scheduler at the center, with the active Dask workers around it.
-It is a convenient way to visualize Adaptive scaling, and ensure new workers are being spun-up and shut-down based on workflow demand.
+The `Cluster Map` shows the Dask scheduler at the center in a purple circle, with the active Dask workers around it in yellow circles.
+This diagram is a convenient way to visualize Adaptive scaling, and ensure new workers are being spun-up and shut-down based on workflow demand.
 
 Check out the [Dask Documentation on the dashboard plots](https://docs.dask.org/en/stable/dashboard.html) for more information.
 Keep the dashboard plots open for the following computations!
@@ -218,7 +226,7 @@ This dataset is saved in Parquet format, a column-oriented file format commonly 
    gb_date["num_rides_7_rolling_ave"] = gb_date.tpep_pickup_datetime.rolling(7).mean()
    ```
 
-4. Now you can compare number of taxi rides on April 15th across three different years.
+4. Now you can compare number of taxi rides on April 15th across three different years. In the `Cluster Map`, notice how new workers are spun-up to execute that task.
 
    **For April 15th, 2019 - pre-pandemic**
 
