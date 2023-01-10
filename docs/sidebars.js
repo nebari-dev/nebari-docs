@@ -69,30 +69,17 @@ module.exports = {
         "how-tos/manual-backup",
       ],
     },
-    {
-      type: "category",
-      label: "Conceptual Guides",
-      link: {
-        type: "generated-index",
-        title: "Conceptual Guides",
-        description:
-          "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
-        slug: "category/conceptual-guides",
-        keywords: ["conceptual-guides"],
-      },
-      items: ["explanations/overview"],
-    },
+    // Uncomment after adding pages
+    // {
+    //   type: "category",
+    //   label: "Conceptual Guides",
+    //   link: { type: "doc", id: "explanations/index" },
+    //   items: [],
+    // },
     {
       type: "category",
       label: "Reference",
-      link: {
-        type: "generated-index",
-        title: "Reference Guides",
-        description:
-          "Nitty-gritty technical descriptions of how Nebari works. ",
-        slug: "category/reference",
-        keywords: ["reference"],
-      },
+      link: { type: "doc", id: "references/index" },
       items: [
         "references/RELEASE"
       ],
