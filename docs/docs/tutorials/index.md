@@ -1,7 +1,7 @@
 import DocCardList from '@theme/DocCardList';
 import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
 
-# Nebari Tutorials
+# Nebari tutorials
 
 <div align="center">
     <img src="/img/welcome/tutorials-icon.svg" width="30%" style={{border: "none", paddingBottom: 10 + "px"}} />
