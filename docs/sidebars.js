@@ -69,10 +69,10 @@ module.exports = {
         "how-tos/manual-backup",
       ],
     },
-    // Uncomment after adding pages
+    // Uncomment once populated
     // {
     //   type: "category",
-    //   label: "Conceptual Guides",
+    //   label: "Conceptual guides",
     //   link: { type: "doc", id: "explanations/index" },
     //   items: [],
     // },
