@@ -3,7 +3,9 @@ import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
 
 # Nebari Tutorials
 
-## Welcome to Nebari!
+<div align="center">
+    <img src="/img/welcome/tutorials-icon.svg" width="30%" style={{border: "none", paddingBottom: 10 + "px"}} />
+</div>
 
 The goal of these tutorials is to help you create a mental model for how Nebari works.
 
