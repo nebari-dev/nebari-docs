@@ -69,13 +69,14 @@ module.exports = {
         "how-tos/manual-backup",
       ],
     },
-    // Uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Conceptual guides",
-    //   link: { type: "doc", id: "explanations/index" },
-    //   items: [],
-    // },
+    {
+      type: "category",
+      label: "Conceptual guides",
+      link: { type: "doc", id: "explanations/index" },
+      items: [
+        "explanations/infrastructure-architecture",
+      ],
+    },
     {
       type: "category",
       label: "Reference",
