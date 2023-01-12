@@ -71,15 +71,8 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Conceptual Guides",
-      link: {
-        type: "generated-index",
-        title: "Conceptual Guides",
-        description:
-          "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
-        slug: "category/conceptual-guides",
-        keywords: ["conceptual-guides"],
-      },
+      label: "Conceptual guides",
+      link: { type: "doc", id: "explanations/index" },
       items: [
         "explanations/advanced-configuration",
         "explanations/config-best-practices",
@@ -88,14 +81,7 @@ module.exports = {
     {
       type: "category",
       label: "Reference",
-      link: {
-        type: "generated-index",
-        title: "Reference Guides",
-        description:
-          "Nitty-gritty technical descriptions of how Nebari works. ",
-        slug: "category/reference",
-        keywords: ["reference"],
-      },
+      link: { type: "doc", id: "references/index" },
       items: [
         "references/RELEASE",
       ],
