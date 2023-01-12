@@ -1,0 +1,70 @@
+---
+id: infrastructure-architecture
+title: Nebari architecture
+---
+
+# Nebari architecture
+
+Nebari relies on a few core concepts to make it work.
+This guide will help you understand how Nebari works and how to use it.
+
+Some of the most important concepts that Nebari relies on are Terraform and Kubernetes.
+
+![Nebari core concepts](/img/explanations/core-concepts.png)
+
+## Terraform
+
+Terraform is an excellent option for deploying and managing cloud
+infrastructure. It allows you to easily configure any number of
+cloud servers as well as all the required connections and features
+to ensure security, redundancy, and scalability.
+Check out [the Terraform documentation to learn how it works.](https://developer.hashicorp.com/terraform/intro#how-does-terraform-work).
+
+![Terraform](/img/explanations/terraform.png)
+
+## Kubernetes
+
+Kubernetes is a powerful open-source container orchestration system, initially developed by Google,
+for managing containerized applications in a cluster. It aims
+to provide better ways of managing related, distributed components and services
+across varied infrastructure.
+
+Kubernetes provides fine-grained controls in applications and container lifecycles,
+especially in dynamic environments. Tasks such as monitoring, availability, and
+deployment are simplified by the use of controllers, which are control loops that
+monitor your Kubernetes cluster and make changes as needed to maintain the expected
+state.
+You can learn more details in the [Kubernetes documentation](https://kubernetes.io/docs/concepts/overview/).
+
+![Kubernetes overall structure levels](/img/explanations/kubernetes-concepts-architecture.jpg)
+
+## Infrastructure
+
+Below are diagrams to help show the architecture and design behind
+Nebari. The diagrams are meant to show different levels and cloud specific infrastructure.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="gcp" label="Google GCP" default>
+
+![GCP Architecture Diagram](/img/explanations/architecture-diagram-gcp.png)
+
+</TabItem>
+<TabItem value="do" label="Digital Ocean">
+
+![DO Architecture Diagram](/img/explanations/architecture-diagram-do.png)
+
+</TabItem>
+<TabItem value="aws" label="Amazon AWS">
+
+![AWS Architecture Diagram](/img/explanations/architecture-diagram-aws.png)
+
+</TabItem>
+<TabItem value="azure" label="Azure">
+
+![Azure Architecture Diagram](/img/explanations/architecture-diagram-azure.png)
+
+</TabItem>
+</Tabs>
