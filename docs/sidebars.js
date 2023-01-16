@@ -76,6 +76,7 @@ module.exports = {
       items: [
         "explanations/advanced-configuration",
         "explanations/config-best-practices",
+        "explanations/infrastructure-architecture",
       ],
     },
     {
