@@ -387,10 +387,11 @@ digital_ocean:
 
 <TabItem value="existing" label="Existing Kubernetes">
 
-Originally designed for Nebari deployments on a "local" minikube cluster, this feature has now expanded to allow users to deploy Nebari to any existing kubernetes cluster. The default
-options for a `existing` deployment are still set to deploy to a minikube cluster.
+Originally designed for Nebari deployments on a "local" minikube cluster, this feature has now expanded to allow users to deploy Nebari to any existing kubernetes cluster.
+The default options for an `existing` deployment are still set to deploy to a minikube cluster.
 
-If you wish to deploy to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the [Deploy Nebari to an Existing Kubernetes Cluster].
+<!-- TODO: Uncomment and add link when available -->
+<!-- If you wish to deploy to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the [Deploy Nebari to an Existing Kubernetes Cluster]. -->
 
 Deploying to a local existing kubernetes cluster has different options than the cloud providers. `kube_context` is an optional key that can be used to deploy to a non-default
 context. The default node selectors will allow pods to be scheduled anywhere. This can be adjusted to schedule pods on different labeled nodes. Allowing for similar functionality
@@ -414,7 +415,7 @@ existing:
 
 </TabItem>
 
-<TabItem value="local" label="Local">
+<TabItem value="local" label="Local (testing)">
 
 Local deployment is intended for Nebari deployments on a "local" cluster created and management by Kind. It is great for experimentation and development.
 
@@ -496,8 +497,13 @@ terraform_state:
 
 ### Default Images
 
-Default images are to the default image run if not specified in a profile (described in the next section). The `jupyterhub` key controls the jupyterhub image run. These control the
-docker image used to run JupyterHub, the default JupyterLab image, and the default Dask worker image.
+Nebari uses Docker images to provide containers for JupyterHub, JupyterLab interface, and the Dask worker user environments.
+
+Default images are the image run by default if not explicitly specified in a profile (described in the next section).
+
+The `jupyterhub` key controls the JupyterHub image run.
+
+These control the docker image used to run JupyterHub, the default JupyterLab image, and the default Dask worker image respectively.
 
 ```yaml
 ### Default images ###
@@ -509,7 +515,7 @@ default_images:
 
 ### Storage
 
-The Storage section is used to control the amount of storage allocated to the shared filesystem.
+The Storage section is used to control the amount of storage allocated to the **shared filesystem**.
 
 ```yaml
 ### Storage ###
@@ -519,7 +525,9 @@ storage:
 ```
 
 :::warning
-when the storage size is changed, for most providers it will automatically delete (!) the previous storage place. Changing the storage size on an AWS deployment after the initial deployment can be especially tricky so it might be worthwhile padding these storage sizes.
+For most providers, when the storage size is changed, it will automatically **delete** the previous storage place.
+
+Changing the storage size on an AWS deployment after the initial deployment can be especially tricky so it might be worthwhile padding these storage sizes.
 :::
 
 ## Profiles
