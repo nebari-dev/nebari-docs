@@ -82,11 +82,11 @@ Here, we outline how to find and destroy resources from the AWS console.
 
 1. Sign in to your AWS account and in the search bar type `Tag Editor`
 
-<img src="/img/how-tos/aws_tag_editor_1.png" alt="Search for Tag Editor in the AWS console" width="700"/>
+<img src="/img/how-tos/aws_tag_editor_1.png" alt="Search for Tag Editor in the AWS console " width="700"/>
 
 2. From the `Resource Groups & Tag Editor` page, navigate to `Tag Editor` from the left most panel
 
-<img src="/img/how-tos/aws_tag_editor_2.png" alt="Navigate to the Tag Editor in the AWS console" width="200"/>
+<img src="/img/how-tos/aws_tag_editor_2.png" alt="Navigate to the Tag Editor in the AWS console " width="200"/>
 
 3. Fill out the form as follows:
    - `Regions` - the region you deployed your Nebari cluster (or select `all regions`)
@@ -95,7 +95,7 @@ Here, we outline how to find and destroy resources from the AWS console.
      - select `Environment` for key (on the left)
      - enter the namespace you chose for your Nebari cluster (on the right)
 
-<img src="/img/how-tos/aws_tag_editor_3.png" alt="Use the Tag Editor to filter for lingering Nebari resources" width="700"/>
+<img src="/img/how-tos/aws_tag_editor_3.png" alt="Use the Tag Editor to filter for lingering Nebari resources " width="700"/>
 
 4. From here you can filter further if needed by entering the name of your Nebari cluster.
 

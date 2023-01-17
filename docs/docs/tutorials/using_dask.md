@@ -57,7 +57,7 @@ options = gateway.cluster_options()
 options
 ```
 
-![Nebari - Cluster Options UI](/img/tutorials/cluster_options.png)
+![Nebari - Cluster Options UI ](/img/tutorials/cluster_options.png)
 
 Using the `Cluster Options` interface, you can specify the `conda` environment, the instance type, and any additional
 environment variables you'll need.
@@ -80,7 +80,7 @@ The Dask worker environment is specified in your deployment directory under `/im
    ```
 
    Once you run the cell, you'll see the following:
-   ![Creating a Gateway Cluster UI](/img/tutorials/cluster_creation.png)
+   ![Creating a Gateway Cluster UI ](/img/tutorials/cluster_creation.png)
 
 2. You have the option to choose between `Manual Scaling` and `Adaptive Scaling`.
 
@@ -106,7 +106,7 @@ client
 ```
 
 On executing the cell, you'll see the following:
-![Nebari - Dask client UI showing details of the newly created Dask cluster](/img/tutorials/dask_client.png)
+![Nebari - Dask client UI showing details of the newly created Dask cluster ](/img/tutorials/dask_client.png)
 
 The `Dask Client` interface gives us a brief summary of everything we've set up so far.
 
@@ -216,7 +216,7 @@ and the small rectangles within are the individual tasks.
 
 Check out the [Dask Documentation](https://docs.dask.org/en/stable/dashboard.html) for more information.
 
-![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagostic_UI.png)
+![Dask diagnostic UI - showing four parallel computation streams ](/img/tutorials/dask_diagostic_UI.png)
 
 ### Shutting down the cluster
 
@@ -240,7 +240,7 @@ The [Dask-labextension](https://github.com/dask/dask-labextension) provides a Ju
 as well as embed Dask's dashboard plots directly into JupyterLab panes.
 Nebari includes this extension by default, elevating the overall developer experience.
 
-![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
+![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings ](/img/tutorials/dask_labextension.png)
 
 ## Step 6 - Using Dask safely
 

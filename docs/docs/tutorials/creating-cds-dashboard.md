@@ -74,7 +74,7 @@ In this section, you'll use CDS Dashboards to publish and share your newly creat
 
 To begin, click on the top left tab navigate to `File` -> `Hub Control Panel` -> `Dashboards`. Click on the button `New Dashboard`. You will now be presented with a new window where you'll need to provide additional details for your dashboard (see image below for reference).
 
-![CDS dashboard configuration screenshot](/img/tutorials/window_dashboard_configuration_example.png)
+![CDS dashboard configuration screenshot ](/img/tutorials/window_dashboard_configuration_example.png)
 
 1. Give your dashboard a name, for example, `Trees`. This name will be the name of your shareable dashboard, so make sure to give this a meaningful name.
 2. Add a short description, for example, `Insights and more`.

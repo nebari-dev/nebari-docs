@@ -15,7 +15,7 @@ to Nebari and spin up a JupyterLab instance.
 Next, bring up the `New Launcher` window by clicking the `+` in the top left of
 the screen. Now click on the VS Code logo on the Launcher window.
 
-![JupyterLab Launcher window with VS Code](/img/tutorials/vscode_launcher.png)
+![JupyterLab Launcher window with VS Code ](/img/tutorials/vscode_launcher.png)
 
 You will now have been redirected to a new web browser page showing the VS
 Code platform. If you're starting VS Code for the first time, you'll see a
@@ -23,7 +23,7 @@ Welcome Page with some helpful links and tips.
 
 Feel free to explore!
 
-![VS Code Welcome screen](/img/tutorials/vscode_welcome.png)
+![VS Code Welcome screen ](/img/tutorials/vscode_welcome.png)
 
 ## VS Code components
 
@@ -63,7 +63,7 @@ hides these files in its Explorer view.
 Let's click on a file we all have, `.bashrc`. This file was created by Nebari
 for us.
 
-![VS Code bashrc file](/img/tutorials/vscode_bashrc.png)
+![VS Code bashrc file ](/img/tutorials/vscode_bashrc.png)
 
 We now have an `Editor` window in which we can modify the file. The default
 VS Code preferences include an auto-save feature which will continually save
@@ -77,7 +77,7 @@ installed by you, and a list of "Popular" extensions you may want to try.
 Through this interface we can also search the Marketplace for a particular
 extension.
 
-![VS Code extensions list](/img/tutorials/vscode_extensions_list.png)
+![VS Code extensions list ](/img/tutorials/vscode_extensions_list.png)
 
 The Python extension is at the top of the list in our example (rightly so!),
 but if you don't see it here, you can search for it.
@@ -102,7 +102,7 @@ some automatic linting tasks through Preferences if you'd like.
 
 Add some sample code to your file:
 
-![VS Code new file contents](/img/tutorials/vscode_new_file_contents.png)
+![VS Code new file contents ](/img/tutorials/vscode_new_file_contents.png)
 
 We also see the VS Code `Terminal` in the previous image. This can be
 opened with `File -> Terminal -> New Terminal`.
@@ -110,16 +110,16 @@ opened with `File -> Terminal -> New Terminal`.
 Before we run our file, we need to select what Conda environment it should run
 inside.
 
-![VS Code select conda env](/img/tutorials/vscode_select_env.png)
+![VS Code select conda env ](/img/tutorials/vscode_select_env.png)
 
 Now we can run our code through the VS Code UI by selecting either
 `Run Python File` or `Debug Python File` in the top right.
 
-![VS Code run or debug env](/img/tutorials/vscode_run_debug_buttons.png)
+![VS Code run or debug env ](/img/tutorials/vscode_run_debug_buttons.png)
 
 We can see output in the terminal:
 
-![VS Code view output](/img/tutorials/vscode_output.png)
+![VS Code view output ](/img/tutorials/vscode_output.png)
 
 As another alternative, we could run code directly from the terminal as well.
 
