@@ -168,13 +168,12 @@ Note that some colors always have the same meaning. For example, red always indi
 
 Each of the computations you submit to Dask (you will learn more in the next section) is split into multiple tasks for parallel execution.
 
-In the `Progress` plot, we see the distinct colors associated with different tasks to complete the overall computation.
+In the `Progress` plot, the distinct colors are associated with different tasks to complete the overall computation.
 
-In the `Task Stream` (a streaming plot) each row represents a thread (a Dask worker can have multiple threads)
-and the small rectangles within are the individual tasks.
+In the `Task Stream` (a streaming plot) each row represents a thread (a Dask worker can have multiple threads). The small rectangles within are the individual tasks running over time.
 
 The `Cluster Map` shows the Dask scheduler at the center in a purple circle, with the active Dask workers around it in yellow circles.
-This diagram is a convenient way to visualize Adaptive scaling, and ensure new workers are being spun-up and shut-down based on workflow demand.
+This diagram is a convenient way to visualize Adaptive Scaling, and ensure new workers are being spun-up and shut-down based on workflow demand.
 
 Check out the [Dask Documentation on the dashboard plots](https://docs.dask.org/en/stable/dashboard.html) for more information.
 Keep the dashboard plots open for the following computations!
@@ -280,7 +279,7 @@ As will you have noticed, you can spin up a lot of compute really quickly using 
 
 **With great power comes great responsibility**
 
-Remember to shut down your cluster once you are done, otherwise this will be running in the background, and you might incur on unplanned costs.
+Remember to shut down your cluster once you are done, otherwise this will be running in the background, and you might incur unplanned costs.
 You can do this from your Jupyter notebook:
 
 ```python
