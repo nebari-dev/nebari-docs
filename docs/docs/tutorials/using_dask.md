@@ -164,7 +164,7 @@ Let's open and understand the dashboard plots `Task Stream`, `Progress`, and `Cl
 
 Most colors and the interpretation would differ based on the computation you choose.
 However, the colors remain consistent and represent the same task across all plots within the dashboard.
-Note that some colors always have the same meaning, like red always indicates inter-worker communication and data transfer.
+Note that some colors always have the same meaning. For example, red always indicates inter-worker communication and data transfer.
 
 Each of the computation you submit to Dask (you will learn more in the next section) is split into multiple tasks for parallel execution.
 
