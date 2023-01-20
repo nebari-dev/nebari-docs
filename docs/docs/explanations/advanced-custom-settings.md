@@ -1,5 +1,5 @@
 ---
-title: Custom configuration setting and overrides
+title: Custom configurations and overrides
 id: custom-overrides-configuration
 description: Manage Terraform state, default images, storage, or override config.
 ---
@@ -15,6 +15,9 @@ If you are doing anything other than testing we highly recommend `remote` unless
 are doing. As any unexpected changes to the state can cause issues with the deployment.
 
 For a `existing` provider that deploys to a kubernetes cluster, the kubernetes `remote` backend is also used.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 <Tabs>
 
@@ -97,9 +100,7 @@ Overrides allows you to override the default configuration for a given resource 
 
 Below we show the available resources that can be overridden in the configuration.
 
-<Tabs>
-
-<TabItem label="Jupyterhub" value="jupyterhub" >
+### JupyterHub
 
 JupyterHub uses the [zero to jupyterhub helm chart](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/). This chart has many options that are not configured in the Nebari default
 installation. You can override specific values in the [values.yaml](https://github.com/jupyterhub/zero-to-jupyterhub-k8s/blob/main/jupyterhub/values.yaml). `jupyterhub.overrides`
@@ -112,9 +113,7 @@ jupyterhub:
       users: true
 ```
 
-</TabItem>
-
-<TabItem label="terraform" value="Terraform">
+### Terraform
 
 The Nebari configuration file provides a huge number of configuration options for customizing your Nebari Infrastructure, while these options are sufficient for an average user, but
 aren't exhaustive by any means. There are still a plenty of things you might want to achieve which cannot be configured directly by the above mentioned options, hence we've
@@ -123,7 +122,7 @@ relatively advance feature and must be used with utmost care and you should real
 
 Here we describe the overrides supported via Nebari config file:
 
-### Ingress
+#### Ingress
 
 You can configure the IP of the load balancer and add annotations for the same via `ingress`'s terraform overrides, one such example for GCP is:
 
@@ -138,9 +137,11 @@ ingress:
 
 This is quite useful for pinning the IP Address of the load balancer.
 
-### Deployment inside a Virtual Private Network
+#### Deployment inside a Virtual Private Network
 
-#### Azure
+<Tabs>
+
+<TabItem value="azure" label="Azure" default="true" >
 
 Using terraform overrides you can also deploy inside a virtual private network (VPN).
 
@@ -154,7 +155,9 @@ azure:
   region: Central US
 ```
 
-#### Google Cloud
+</TabItem>
+
+<TabItem value="gcp" label="GCP" default="true" >
 
 Using terraform overrides you can also deploy inside a VPC in GCP, making the Kubernetes cluster private. Here is an example configuration:
 
@@ -176,18 +179,18 @@ google_cloud_platform:
 As the name suggests the cluster will be private, which means it would not have access to the internet, which is not ideal for deploying pods in the cluster. Therefore, we need
 to allow internet access for the cluster, which can be achieved by creating a NAT router by running the following two commands for your VPC network.
 
-```
+```bash
 gcloud compute routers create nebari-nat-router --network your-vpc-name --region your-region
 
 gcloud compute routers nats create nat-config --router nebari-nat-router  --nat-all-subnet-ip-ranges --auto-allocate-nat-external-ips --region your-region
 ```
 
-#### Deployment Notes
-
-Deployment inside a virtual network is slightly different from deploying inside a public network, as the name suggests, since its a virtual private network, you need to be inside
-the network to able to deploy and access nebari. One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network, just select the virtual network and subnet name
-under the networking settings of your cloud provider while creating the VM and then follow the usual deployment instructions as you would deploy from your local machine.
-
 </TabItem>
 
 </Tabs>
+
+Deployment inside a virtual network is slightly different from deploying inside a public network.
+As the name suggests, since its a virtual private network, you need to be inside the network to able to deploy and access nebari.
+One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network.
+Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
+ and then follow the usual deployment instructions as you would deploy from your local machine.

@@ -1,5 +1,5 @@
 ---
-title: Advanced security configuration
+title: Security configuration
 id: security-configuration
 description: Guide to configure Keycloak and authentication methods.
 ---
