@@ -180,7 +180,7 @@ Keep the dashboard plots open for the following computations!
 
 ## Step 5 - Run your computation with Dask
 
-In the following sections, you will perform some basic analysis on the well-known New York City yellow taxi dataset,
+In the following sections, you will perform some basic analysis on the well-known [New York City yellow taxi dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page),
 a subset of which we have copied over to a Google Cloud Storage bucket `gs://nebari-public/yellow_taxi_NYC`.
 
 :::note
