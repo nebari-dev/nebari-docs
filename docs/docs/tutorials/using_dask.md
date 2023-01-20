@@ -22,7 +22,7 @@ Nebari uses [Dask Gateway][dask-gateway] to expose auto-scaling compute clusters
 configured for the user, and it provides a secure way to managing Dask clusters.
 
 <details>
-<summary> Click here for quick notes on how this Dask works! </summary>
+<summary> Click here for quick notes on how Dask works! </summary>
 
 Dask consists of 3 main components `client`, `scheduler`, and `workers`.
 
