@@ -41,7 +41,7 @@ Check out the [Dask documentation][dask-docs] and the [Dask Gateway documentatio
 Let's start with a fresh Jupyter notebook.
 Select an environment from the `Select kernel` dropdown menu
 (located on the top right of your notebook).
-On a default Nebari deployment, you can select the `filesystem/dask` environment.
+On a default Nebari deployment, you can select the `nebari-git-nebari-git-dask` environment.
 
 :::warning
 Be sure to select an environment which includes `Dask`, and note that the versions of `dask`, `distributed`, and `dask-gateway` must be the same.
@@ -307,7 +307,7 @@ from distributed import Client
 from dask_gateway import Gateway
 
 @contextmanager
-def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="filesystem/dask"):
+def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="nebari-git-nebari-git-dask"):
     try:
         gateway = Gateway()
         options = gateway.cluster_options()
