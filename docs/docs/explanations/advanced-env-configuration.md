@@ -16,10 +16,16 @@ Upon changing the environment definition expect 1-10 minutes upon deployment of 
 One current requirement is that each environment _must_ include `ipykernel` and `ipywidgets` to properly show up in the JupyterLab environment.
 :::
 
-Nebari comes with two default filesystem environments that are built during deployment:
+Nebari comes with two default environments that are built during deployment:
 
-- `filesystem/dask` to [run distributed workflows with Dask][using-dask],
-- `filesystem/dashboard` to [create shareable dashboard][create-dashboards].
+- `nebari-git-nebari-git-dask` to [run distributed workflows with Dask][using-dask],
+- `nebari-git-nebari-git-dashboard` to [create shareable dashboard][create-dashboards].
+
+:::note
+The double `nebari-git` is a known consequence of using conda-store for environment management.
+
+Learn more in the [FAQ: Why do I see duplication in the names of environments?]
+:::
 
 ```yaml
 ### Example environment configuration
