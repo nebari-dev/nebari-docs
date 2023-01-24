@@ -42,11 +42,11 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/creating-cds-dashboard",
-        "tutorials/cost-estimate-report",
-        "tutorials/creating-new-environments",
         "tutorials/using_dask",
+        "tutorials/creating-cds-dashboard",
+        "tutorials/creating-new-environments",
         "tutorials/kbatch",
+        "tutorials/cost-estimate-report",
       ],
     },
     {
@@ -71,28 +71,16 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Conceptual Guides",
-      link: {
-        type: "generated-index",
-        title: "Conceptual Guides",
-        description:
-          "Big-picture explanations of higher-level Nebari concepts. Most useful for building understanding of a particular topic.",
-        slug: "category/conceptual-guides",
-        keywords: ["conceptual-guides"],
-      },
-      items: ["explanations/overview"],
+      label: "Conceptual guides",
+      link: { type: "doc", id: "explanations/index" },
+      items: [
+        "explanations/infrastructure-architecture",
+      ],
     },
     {
       type: "category",
       label: "Reference",
-      link: {
-        type: "generated-index",
-        title: "Reference Guides",
-        description:
-          "Nitty-gritty technical descriptions of how Nebari works. ",
-        slug: "category/reference",
-        keywords: ["reference"],
-      },
+      link: { type: "doc", id: "references/index" },
       items: [
         "references/RELEASE"
       ],
