@@ -1,5 +1,7 @@
 .footer {
-  background-color: var(--ifm-color-black-light);
+  background:
+    url(/icons/nebari-silhouette-dark.svg) bottom left / contain no-repeat,
+    var(--ifm-color-black-light);
   color: var(--ifm-footer-color);
   font-weight: bold;
 }

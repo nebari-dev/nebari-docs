@@ -29,7 +29,11 @@ because it mixes dark and light sections.
 */
 
 .heroSection {
-  background-color: var(--ifm-color-black);
+  background:
+    url(/img/home/lower-right-yellow-quarter-pie.svg) top left no-repeat,
+    url(/img/home/left-half-purple-pill.svg) top right no-repeat,
+    url(/img/home/background-hero.svg) 30% 50% no-repeat,
+    var(--ifm-color-black);
   color: var(--ifm-color-white);
   padding: 150px 0 219px 0;
   text-align: center;
@@ -124,7 +128,9 @@ because it mixes dark and light sections.
 */
 
 .platformsSection {
-  background-color: var(--ifm-color-white);
+  background:
+    url(/img/home/abstract-foliage-light.svg) bottom right no-repeat,
+    var(--ifm-color-white);
   color: var(--ifm-color-black);
 }
 
@@ -204,7 +210,9 @@ height as the column of logos to the right */
 */
 
 .getStartedSection {
-  background-color: var(--ifm-color-black);
+  background:
+    url(/img/home/abstract-foliage-dark.svg) top left no-repeat,
+    var(--ifm-color-black);
   color: var(--ifm-color-white);
   padding: 82px;
   text-align: center;
@@ -245,7 +253,9 @@ height as the column of logos to the right */
 */
 
 .integrationsSection {
-  background-color: var(--ifm-color-white);
+  background:
+    url(/img/home/abstract-foliage-light.svg) top right no-repeat,
+    var(--ifm-color-white);
   color: var(--ifm-color-black);
   padding: 82px;
 }
