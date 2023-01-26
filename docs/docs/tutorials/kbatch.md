@@ -8,7 +8,7 @@ description: Using kbatch to submit batch jobs
 
 ## Introduction
 
-The ability to run a notebook or a script from within the Nebari terminal is now possible with the addition of [`kbatch`](https://github.com/kbatch-dev/kbatch). `kbatch` is a small project that enables the user submit jobs or cronjobs to the Kubernetes API. Or in other words, this CLI tool allows a user to submit their notebook or script to run in a "headless" manner.
+The ability to run a notebook or a script from within the Nebari terminal is now possible with the addition of [`kbatch`](https://github.com/kbatch-dev/kbatch). `kbatch` is a small project that enables the user to submit jobs or cronjobs to the Kubernetes API. Or in other words, this CLI tool allows a user to submit their notebook or script to run in a "headless" manner.
 
 The idea of batch jobs is useful in situations where you need no human interaction, besides submitting it as a job, and the results can be efficiently saved to the cloud or other similar storage locations. Batch jobs can also be submitted to run on a schedule, these are known as cronjobs, more on `kbatch cronjob` below.
 
