@@ -84,9 +84,9 @@ these types of instances. However, the cloud provider might stop these instances
 resources for other tasks. Preemptible instances are excess Cloud Provider's capacity, so their availability varies with
 usage.
 
-### Usage
+#### Usage
 
-#### Google Cloud Platform
+##### Google Cloud Platform
 
 The `preemptible` flag in the Nebari config file defines the preemptible instances.
 
@@ -107,15 +107,15 @@ google_cloud_platform:
       max_nodes: 10
 ```
 
-#### Amazon Web Services
+##### Amazon Web Services
 
 Spot instances aren't supported at this moment.
 
-#### Azure
+##### Azure
 
 Preemptible instances aren't supported at this moment.
 
-#### Digital Ocean
+##### Digital Ocean
 
 Digital Ocean doesn't support these type of instances.
 
