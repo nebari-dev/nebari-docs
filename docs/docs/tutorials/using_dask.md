@@ -307,7 +307,7 @@ from distributed import Client
 from dask_gateway import Gateway
 
 @contextmanager
-def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="nebari-git-nebari-git-dask"):
+def dask_cluster(n_workers=2, worker_type="Small Worker", conda_env="nebari-git/nebari-git-dask"):
     try:
         gateway = Gateway()
         options = gateway.cluster_options()
