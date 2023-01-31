@@ -76,7 +76,7 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 
 You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
 
-## What are Preemptible and Spot instances on Nebari?
+## How do I use preemptible and spot instances on Nebari?
 
 A preemptible or spot VM is an instance that you can create and run at a much lower price than normal instances. Azure
 and Google Cloud platform use the term preemptible, while AWS uses the term spot, and Digital Ocean doesn't support
