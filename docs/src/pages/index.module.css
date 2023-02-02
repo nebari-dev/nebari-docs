@@ -30,8 +30,8 @@ because it mixes dark and light sections.
 
 .heroSection {
   background:
-    url(/img/home/lower-right-yellow-quarter-pie.svg) top left no-repeat,
-    url(/img/home/left-half-purple-pill.svg) top right no-repeat,
+    url(/img/home/lower-right-yellow-quarter-pie.svg) top left/10.5% no-repeat,
+    url(/img/home/left-half-purple-pill.svg) top right/7% no-repeat,
     url(/img/home/background-hero.svg) 30% 50% no-repeat,
     var(--ifm-color-black);
   color: var(--ifm-color-white);
