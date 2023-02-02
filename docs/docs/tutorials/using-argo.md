@@ -31,7 +31,7 @@ should be `ARGO_BASE_HREF=/argo` in the default nebari installation and you need
 deployed (dev by default) `ARGO_NAMESPACE=dev`. After setting those variables and the others copied from the Argo Server
 UI, you can check that things are working by running `argo list`.
 
-![Argo Workflows User Tab](/img/argo_workflows_user_tab.png)
+![Argo Workflows User Tab](/img/tutorials/argo_workflows_user_tab.png)
 
 ## Additional Argo Workflows Resources
 
