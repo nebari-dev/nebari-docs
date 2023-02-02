@@ -47,6 +47,7 @@ module.exports = {
         "tutorials/creating-new-environments",
         "tutorials/kbatch",
         "tutorials/cost-estimate-report",
+        "tutorials/using-argo",
       ],
     },
     {
@@ -67,6 +68,7 @@ module.exports = {
         "how-tos/configuring-keycloak",
         "how-tos/using-vscode",
         "how-tos/manual-backup",
+        "how-tos/setup-argo",
       ],
     },
     {
