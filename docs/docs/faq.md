@@ -119,6 +119,11 @@ Preemptible instances aren't supported at this moment.
 
 Digital Ocean doesn't support these type of instances.
 
+## How do I access a GPU on Nebari?
+
+First be sure you have chosen [a server with a GPU][selecting a profile].  Then be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  `tensorflow>=2` includes both CPU and GPU capabilities, but if you still have trouble, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+
 <!-- Internal links  -->
 
 [dask-tutorial]: tutorials/using_dask.md
+[selecting a profile]: https://www.nebari.dev/docs/how-tos/login-keycloak#3-selecting-a-profile
