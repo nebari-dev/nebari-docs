@@ -119,7 +119,6 @@ Preemptible instances aren't supported at this moment.
 
 Digital Ocean doesn't support these type of instances.
 
-## How do I access a GPU on Nebari?
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
 First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile].  Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
