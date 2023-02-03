@@ -76,9 +76,9 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 
 You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
 
-## How do I access a GPU on Nebari?
+## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you have chosen [a server with a GPU][selecting a profile].  Then be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  `tensorflow>=2` includes both CPU and GPU capabilities, but if you still have trouble, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you have chosen [a server with a GPU][selecting a profile].  Then be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
 <!-- Internal links  -->
 
