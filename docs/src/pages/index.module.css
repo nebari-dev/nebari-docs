@@ -56,7 +56,7 @@ because it mixes dark and light sections.
 .getStartedLink,
 [data-theme=dark] .getStartedLink {
   display: inline-flex;
-  background-color: var(--nebari-magenta-4);
+  background-color: var(--nebari-magenta-3);
   color: var(--ifm-color-white);
   border-radius: 4px;
   padding: 0.8em 2em;
