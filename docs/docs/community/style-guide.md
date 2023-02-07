@@ -69,7 +69,7 @@ Some terms and libraries have specific capitalization preferences:
 | DataFrame        | 'D' and 'F' always capitalized                                                           |
 | pandas           | Never capitalized                                                                        |
 | NumPy            | 'N' and 'P' always capitalized                                                           |
-| Conda            | First letter capitalized only at the beginning of sentences                              |
+| conda            | First letter capitalized only at the beginning of sentences                              |
 | pip              | Never capitalized                                                                        |
 | Panel            | First letter always capitalized                                                          |
 | VS Code          | 'V', 'S', and 'C' always capitalized; always use one blank space between 'VS' and 'Code' |
@@ -85,6 +85,8 @@ Some terms and libraries have specific capitalization preferences:
 | CPU              | Always capitalized                                                                       |
 | RAM              | Always capitalized                                                                       |
 | GB               | Always capitalized                                                                       |
+| open source      | First letter capitalized only at the beginning of sentences; Never hyphenated            |
+| data science     | First letter capitalized only at the beginning of sentences; Never hyphenated            |
 
 :::note
 The capitalization guidelines only apply to narrative documentation. When referring to the API, use the appropriate module names, which are all lowercase alphabets most of the time.

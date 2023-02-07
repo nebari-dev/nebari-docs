@@ -42,10 +42,11 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
-        "tutorials/creating-cds-dashboard",
-        "tutorials/cost-estimate-report",
-        "tutorials/creating-new-environments",
         "tutorials/using_dask",
+        "tutorials/creating-cds-dashboard",
+        "tutorials/creating-new-environments",
+        "tutorials/kbatch",
+        "tutorials/cost-estimate-report",
       ],
     },
     {
@@ -53,7 +54,6 @@ module.exports = {
       label: "How-to Guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
-        "how-tos/kbatch-howto",
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",
         "how-tos/nebari-do",
@@ -69,13 +69,14 @@ module.exports = {
         "how-tos/manual-backup",
       ],
     },
-    // Uncomment once populated
-    // {
-    //   type: "category",
-    //   label: "Conceptual guides",
-    //   link: { type: "doc", id: "explanations/index" },
-    //   items: [],
-    // },
+    {
+      type: "category",
+      label: "Conceptual guides",
+      link: { type: "doc", id: "explanations/index" },
+      items: [
+        "explanations/infrastructure-architecture",
+      ],
+    },
     {
       type: "category",
       label: "Reference",
