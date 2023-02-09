@@ -9,7 +9,7 @@ description: An overview of how to upgrade Nebari. Includes instructions on upda
 This is a guide to upgrade Nebari to a newer version.
 
 :::note Breaking upgrades
-If you are updgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4), the cluster cannot be upgraded in-situ so you must perform a redeployment. Please pay extra attention to the highlighted `Breaking upgrades` steps throughout the process!
+If you are upgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4), the cluster cannot be upgraded in-situ so you must perform a redeployment. Please pay extra attention to the highlighted `Breaking upgrades` steps throughout the process!
 :::
 
 ## Backup existing data
