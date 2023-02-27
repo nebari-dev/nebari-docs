@@ -8,7 +8,7 @@ description: An overview of how to upgrade Nebari. Includes instructions on upda
 
 This is a guide to upgrade Nebari to a newer version.
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 If you are upgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4), the cluster cannot be upgraded in-situ so you must perform a redeployment. Please pay extra attention to the highlighted `Breaking upgrades` steps throughout the process!
 :::
 
@@ -16,7 +16,7 @@ If you are upgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4)
 
 Perform manual backups of the NFS data and JupyterHub database
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 For older versions of nebari, ignore the section about Keycloak data since that will not exist in older (v0.3.14) clusters.
 :::
 
@@ -31,7 +31,7 @@ to your git repo in the CI/CD case).
 For CI/CD deployments, you will need to `git clone <repo URL>` into a folder on your local machine if you haven't done
 so already.
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 
 ## Rename existing Nebari URL
 
@@ -77,7 +77,7 @@ In the folder containing your Nebari configuration file, run:
 nebari upgrade -c nebari-config.yaml
 ```
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 For those that are upgrading from an older version (e.g. v0.3.14 (or earlier)), you will need to go back to the original `nebari-config.yaml` file which contained the original domain.
 :::
 
@@ -92,7 +92,7 @@ Please check your `nebari-config.yaml` and decide if you need to update any valu
 automatically - or, for example, you may need to build new versions of your custom Docker images to match any changes in
 Nebari's images.
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 
 ## Rename the Project and Increase Kubernetes version
 
@@ -155,7 +155,7 @@ nebari render -c nebari-config.yaml
 Commit all the files (`nebari-config.yaml` and GitHub/GitLab workflow files) back to the remote repo. All files need to be
 committed together in the same commit.
 
-:::note Breaking upgrades
+:::warning Breaking upgrades
 For upgrades from older versions to v0.4, you will need to do the following steps. Everyone else is done!
 
 ## Update OAuth callback URL for Auth0 or GitHub
