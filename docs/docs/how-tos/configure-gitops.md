@@ -1,14 +1,14 @@
 ---
 id: configure-gitops
-title: Setup Nebari gitops
-description: Setting up gitops for Nebari
+title: Setup Nebari GitOps
+description: Setting up GitOps for Nebari
 ---
 
 # Setup Nebari gitops
 
 ## What is GitOps / Infrastructure as Code (IaC)?
 
-Gitops or Infrastructure as Code(Iac) is the practice of using git for
+GitOps also known as Infrastructure as Code(Iac) is the practice of using git for
 managing the state of your infrastructure. This allows for easy
 auditing and discovering the current state of your system.
 
