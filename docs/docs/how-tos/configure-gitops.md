@@ -1,5 +1,5 @@
 ---
-id: gitops
+id: configure-gitops
 title: Setup Nebari gitops
 description: Setting up gitops for Nebari
 ---
