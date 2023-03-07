@@ -28,6 +28,16 @@ you'll need to contact your Nebari administrator to include the required package
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
 
+## What packages are needed in your environment to create a dashboard?
+
+When deploying an app via CDS Dashboards, you will always need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
+
+Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed.  You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
+
+Finally, when creating your app, make note of the packages you are using to run the app locally.  These will also need to be added to your environment you will be using to create the dashboard.
+
+There are several example dashboards to build in the dashboard_examples folder on Nebari.  The `environment.yml` file in this folder can be used to build an environment that can run each of the dashboard examples available.
+
 ## How can I install a package locally? Will this package be available to Dask workers?
 
 :::caution

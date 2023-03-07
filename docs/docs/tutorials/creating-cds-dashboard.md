@@ -23,7 +23,24 @@ _Let's get our hands dirty_
 
 1. Once in Nebari, create a new Jupyter notebook. Make sure to assign this a meaningful name, such as `panel-trees-dashboard.ipynb`.
 2. Select an environment from the `select kernel` dropdown (this dropdown menu is located in the top right corner of your notebook).
-3. Copy the code below into a `code` cell of your notebook.
+
+:::note
+You will need to make sure you have an environment set up that can run your notebook.  See this [tutorial](./creating-new-environments.md) to learn how to create environments in Nebari.  
+
+For this example, you will need the following installed in your environment:
+
+```
+- pandas
+- panel
+- holoviews
+- cdsdashboards-singleuser>=0.6.2
+- jupyter_bokeh
+```
+
+See the [FAQ item](../faq.md#what-packages-are-needed-in-your-environment-to-create-a-dashboard) on creating environments for running the various dashboard options on Nebari.
+:::
+
+1. Copy the code below into a `code` cell of your notebook.
 
 ```python title="panel-trees-dashboard.ipynb"
 import pandas as pd
@@ -59,8 +76,9 @@ dashboard = pn.template.BootstrapTemplate(
           )
 dashboard.servable()
 ```
+:::
 
-4. You can now run all the cells in your notebook and view the Panel dashboard as an output right inside the notebook.
+1. You can now run all the cells in your notebook and view the Panel dashboard as an output right inside the notebook.
 
 This interactive feature of Panel makes it possible to rapidly prototype and iterate on dashboards.
 
