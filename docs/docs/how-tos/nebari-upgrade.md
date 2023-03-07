@@ -119,7 +119,7 @@ It is also a good time to upgrade your version of Kubernetes. Look for the `kube
 provider section of the `nebari-config.yaml` file and increase it to the latest.
 :::
 
-## Step 4: Redeploy Nebari
+## Redeploy Nebari
 
 If you are deploying Nebari from your local machine (not using CI/CD) then you will now have a `nebari-config.yaml` file
 that you can deploy.
