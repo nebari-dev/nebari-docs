@@ -4,9 +4,12 @@ title: Upgrade Nebari
 description: An overview of how to upgrade Nebari. Includes instructions on updating when breaking changes are expected to occur.
 ---
 
-# Upgrade Nebari from pre-0.4.0 to 0.4.0
+# Upgrading Nebari
 
-This is a guide to upgrade Nebari to a newer version.
+This is a guide to upgrade Nebari to a newer version.  There are instructions for both a minor upgrade to Nebari as well as any upgrades from pre-0.4.0 to 0.4.0.
+
+
+# Upgrade Nebari from pre-0.4.0 to 0.4.0
 
 :::warning Breaking upgrades
 If you are upgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4), the cluster cannot be upgraded in-situ so you must perform a redeployment. Please pay extra attention to the highlighted `Breaking upgrades` steps throughout the process!
@@ -207,3 +210,53 @@ For more details on this process, visit the [Keycloak docs section](./login-thru
 Version `v0.3.11` on AWS has an error with the Kubernetes config map. See
 [this GitHub discussion related to AWS K8s config maps](https://github.com/Quansight/nebari/discussions/841) for more details.
 :::
+
+
+# Minor upgrade to Nebari
+
+## Backup existing data
+
+Always [backup your data](./manual-backup.md) before upgrading!
+
+## Install latest version of Nebari
+
+Use pip or conda to install the latest Nebari version.
+
+```shell
+pip install --upgrade nebari
+```
+
+## Update configuration file
+In the `nebari-config.yaml` file, you will need to update to the latest version.
+
+```yaml
+nebari_version: xxx
+```
+
+Next, its a good idea to validate your configuration.  While not required, this is the best practice.
+
+```shell
+run nebari validate -c nebari-config.yaml
+```
+
+## CI/CD: render and commit to git
+
+With the newly upgraded `nebari-config.yaml` file, run:
+
+```shell
+nebari render -c nebari-config.yaml
+```
+
+Commit all the files (`nebari-config.yaml` and GitHub/GitLab workflow files) back to the remote repo. All files need to be
+committed together in the same commit.
+
+## Re-deploy Nebari
+
+```shell
+nebari deploy -c nebari-config.yaml
+```
+
+:::note
+If deploying via GitOps, you will open a PR on the deployment repo and merge once the linter passes.
+:::
+
