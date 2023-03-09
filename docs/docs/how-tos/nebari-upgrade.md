@@ -4,15 +4,18 @@ title: Upgrade Nebari
 description: An overview of how to upgrade Nebari. Includes instructions on updating when breaking changes are expected to occur.
 ---
 
-# Upgrade Nebari from pre-0.4.0 to 0.4.0
+# Upgrade Nebari
 
-This is a guide to upgrade Nebari to a newer version.
+This is a guide to upgrade Nebari to a newer version.  There are instructions for both upgrades from pre-0.4.0 to 0.4.0 as well as [minor upgrades](#minor-upgrade-to-nebari).
+
+
+## Upgrade Nebari from pre-0.4.0 to 0.4.0
 
 :::warning Breaking upgrades
 If you are upgrading from an older version, (e.g. v0.3.14 (or earlier), to v0.4), the cluster cannot be upgraded in-situ so you must perform a redeployment. Please pay extra attention to the highlighted `Breaking upgrades` steps throughout the process!
 :::
 
-## Backup existing data
+### Backup existing data
 
 Perform manual backups of the NFS data and JupyterHub database
 
@@ -22,7 +25,7 @@ For older versions of nebari, ignore the section about Keycloak data since that 
 
 Always [backup your data](./manual-backup.md) before upgrading!
 
-## Locate configuration file
+### Locate configuration file
 
 You may be deploying Nebari based on a local configuration file, or you may be using CI/CD workflows in GitHub or GitLab.
 Either way, you will need to locate a copy of your `nebari-config.yaml` configuration file to upgrade it (and commit back
@@ -33,7 +36,7 @@ so already.
 
 :::warning Breaking upgrades
 
-## Rename existing Nebari URL
+### Rename existing Nebari URL
 
 This will allow the existing cluster to remain alive in case it is needed, but the idea would be not to have it in use
 from now on.
@@ -55,7 +58,7 @@ domain: nebari-old.myproj.com
 Run the command `nebari deploy` using the existing (old) version of Nebari.
 :::
 
-## Upgrade the `nebari` command package
+### Upgrade the `nebari` command package
 
 To install (or upgrade) your pip installation of the Python package used to manage Nebari:
 
@@ -85,7 +88,7 @@ Upgrading will output a newer version of `nebari-config.yaml` that is compatible
 outputs a list of changes it has made. The `upgrade` command creates a copy of the original unmodified config file
 (`nebari-config.yaml.old.backup`) as well as any other files that may be required by the upgraded cluster (including a JSON file (`nebari-users-import.json`) used to import existing users into Keycloak if they are not already there).
 
-## Validate special customizations to `nebari-config.yaml`
+### Validate special customizations to `nebari-config.yaml`
 
 You may have made special customizations to your `nebari-config.yaml`, such as using your own versions of Docker images.
 Please check your `nebari-config.yaml` and decide if you need to update any values that would not have been changed
@@ -94,7 +97,7 @@ Nebari's images.
 
 :::warning Breaking upgrades
 
-## Rename the Project and Increase Kubernetes version
+### Rename the Project and Increase Kubernetes version
 
 You need to rename the project to avoid clashes with the existing (old) cluster which would otherwise already own
 resources based on the names that the new cluster will attempt to use.
@@ -119,7 +122,7 @@ It is also a good time to upgrade your version of Kubernetes. Look for the `kube
 provider section of the `nebari-config.yaml` file and increase it to the latest.
 :::
 
-## Redeploy Nebari
+### Redeploy Nebari
 
 If you are deploying Nebari from your local machine (not using CI/CD) then you will now have a `nebari-config.yaml` file
 that you can deploy.
@@ -158,7 +161,7 @@ committed together in the same commit.
 :::warning Breaking upgrades
 For upgrades from older versions to v0.4, you will need to do the following steps. Everyone else is done!
 
-## Update OAuth callback URL for Auth0 or GitHub
+### Update OAuth callback URL for Auth0 or GitHub
 
 If your Nebari deployment relies on Auth0 or GitHub for authentication, please update the OAuth callback URL.
 
@@ -184,7 +187,7 @@ If your Nebari deployment relies on Auth0 or GitHub for authentication, please u
 
 </details>
 
-## Restore from Backups
+### Restore from Backups
 
 Next, you will need to perform the following steps to restore from a previously generated backup, as described in the
 [Manual Backups documentation](./manual-backup.md):
@@ -193,7 +196,7 @@ Next, you will need to perform the following steps to restore from a previously 
 2. Immediately after restoring NFS data, you must run some extra commands as explained in the backup/restore docs for v0.4 upgrades specifically.
 3. Restore the JupyterHub SQLite database.
 
-## Import users into Keycloak
+### Import users into Keycloak
 
 The last two steps are:
 
@@ -202,8 +205,62 @@ The last two steps are:
 
 For more details on this process, visit the [Keycloak docs section](./login-thru-keycloak-howto.md).
 
-## Known versions that require re-deployment
+### Known versions that require re-deployment
 
 Version `v0.3.11` on AWS has an error with the Kubernetes config map. See
 [this GitHub discussion related to AWS K8s config maps](https://github.com/Quansight/nebari/discussions/841) for more details.
 :::
+
+
+## Minor upgrade to Nebari
+
+### Backup existing data
+
+Always [backup your data](./manual-backup.md) before upgrading!
+
+### Install latest version of Nebari
+
+Use pip or conda to install the latest Nebari version.
+
+```shell
+pip install --upgrade nebari
+```
+or 
+
+```shell
+conda update nebari
+```
+
+### Update configuration file
+In the `nebari-config.yaml` file, you will need to update the latest version.
+
+```yaml
+nebari_version: xxx
+```
+
+Next, its a good idea to validate your configuration.  While not required, this is the best practice.
+
+```shell
+run nebari validate -c nebari-config.yaml
+```
+
+### CI/CD: render and commit to git
+
+With the newly upgraded `nebari-config.yaml` file, run:
+
+```shell
+nebari render -c nebari-config.yaml
+```
+
+Commit all the files (`nebari-config.yaml` and GitHub/GitLab workflow files) back to the remote repo. All files need to be committed together in the same commit.
+
+### Re-deploy Nebari
+
+```shell
+nebari deploy -c nebari-config.yaml
+```
+
+:::note
+If deploying via GitOps, you will open a PR on the deployment repo and merge once the linter passes.
+:::
+
