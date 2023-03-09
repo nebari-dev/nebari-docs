@@ -40,7 +40,7 @@ For this example, you will need the following installed in your environment:
 See the [FAQ item](../faq.md#what-packages-are-needed-in-your-environment-to-create-a-dashboard) on creating environments for running the various dashboard options on Nebari.
 :::
 
-1. Copy the code below into a `code` cell of your notebook.
+3. Copy the code below into a `code` cell of your notebook.
 
 ```python title="panel-trees-dashboard.ipynb"
 import pandas as pd
@@ -76,9 +76,8 @@ dashboard = pn.template.BootstrapTemplate(
           )
 dashboard.servable()
 ```
-:::
 
-1. You can now run all the cells in your notebook and view the Panel dashboard as an output right inside the notebook.
+4. You can now run all the cells in your notebook and view the Panel dashboard as an output right inside the notebook.
 
 This interactive feature of Panel makes it possible to rapidly prototype and iterate on dashboards.
 
