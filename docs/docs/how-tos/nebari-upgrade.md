@@ -4,7 +4,7 @@ title: Upgrade Nebari
 description: An overview of how to upgrade Nebari. Includes instructions on updating when breaking changes are expected to occur.
 ---
 
-# Upgrading Nebari
+# Upgrade Nebari
 
 This is a guide to upgrade Nebari to a newer version.  There are instructions for both upgrades from pre-0.4.0 to 0.4.0 as well as [minor upgrades](#minor-upgrade-to-nebari).
 
