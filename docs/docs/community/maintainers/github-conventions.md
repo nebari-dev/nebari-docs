@@ -61,9 +61,9 @@ Here are a few guidelines for how to categorize impact across a few major types 
 **Features / Enhancements**
 
 - `impact: high`: Will be seen and commonly used by nearly all users. Has been requested by an abnormally large number of users.
-    Is of particular importance to a key community.
+  Is of particular importance to a key community.
 - `impact: med`: Useful to many users but not an overwhelming amount. Will be a less-obvious improvement.
-    Most issues should be in this category.
+  Most issues should be in this category.
 - `impact: low`: Useful but not a critical part of workflows. Is a niche use-case that only a few users may need.
 
 **Bugs**

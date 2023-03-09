@@ -25,7 +25,7 @@ _Let's get our hands dirty_
 2. Select an environment from the `select kernel` dropdown (this dropdown menu is located in the top right corner of your notebook).
 
 :::note
-You will need to make sure you have an environment set up that can run your notebook.  See this [tutorial](./creating-new-environments.md) to learn how to create environments in Nebari.  
+You will need to make sure you have an environment set up that can run your notebook. See this [tutorial](./creating-new-environments.md) to learn how to create environments in Nebari.
 
 For this example, you will need the following installed in your environment:
 

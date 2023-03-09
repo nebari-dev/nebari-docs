@@ -6,8 +6,7 @@ description: An overview of how to upgrade Nebari. Includes instructions on upda
 
 # Upgrade Nebari
 
-This is a guide to upgrade Nebari to a newer version.  There are instructions for both upgrades from pre-0.4.0 to 0.4.0 as well as [minor upgrades](#minor-upgrade-to-nebari).
-
+This is a guide to upgrade Nebari to a newer version. There are instructions for both upgrades from pre-0.4.0 to 0.4.0 as well as [minor upgrades](#minor-upgrade-to-nebari).
 
 ## Upgrade Nebari from pre-0.4.0 to 0.4.0
 
@@ -211,7 +210,6 @@ Version `v0.3.11` on AWS has an error with the Kubernetes config map. See
 [this GitHub discussion related to AWS K8s config maps](https://github.com/Quansight/nebari/discussions/841) for more details.
 :::
 
-
 ## Minor upgrade to Nebari
 
 ### Backup existing data
@@ -225,20 +223,22 @@ Use pip or conda to install the latest Nebari version.
 ```shell
 pip install --upgrade nebari
 ```
-or 
+
+or
 
 ```shell
 conda update nebari
 ```
 
 ### Update configuration file
+
 In the `nebari-config.yaml` file, you will need to update the latest version.
 
 ```yaml
 nebari_version: xxx
 ```
 
-Next, its a good idea to validate your configuration.  While not required, this is the best practice.
+Next, its a good idea to validate your configuration. While not required, this is the best practice.
 
 ```shell
 run nebari validate -c nebari-config.yaml
@@ -263,4 +263,3 @@ nebari deploy -c nebari-config.yaml
 :::note
 If deploying via GitOps, you will open a PR on the deployment repo and merge once the linter passes.
 :::
-
