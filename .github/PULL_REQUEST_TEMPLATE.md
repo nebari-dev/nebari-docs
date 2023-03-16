@@ -1,6 +1,6 @@
 <!--
 Thanks for contributing a pull request! Please ensure you have taken a look at
-the contribution guidelines: https://nebari.dev/community
+the contribution guidelines: https://www.nebari.dev/docs/community
 -->
 
 ## Reference Issues or PRs
