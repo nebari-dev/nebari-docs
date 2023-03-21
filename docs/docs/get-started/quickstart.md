@@ -89,6 +89,18 @@ nebari init --guided-init
 
 **Or**, if you know the initialization requirements and have set up the environment variables, you can directly run the `nebari init` command with the necessary flags.
 
+:::caution Project naming conventions
+
+In order to successfully deploy Nebari, there are some project naming conventions which need to be followed. Bellow we summarize the format requirements for the most common cloud providers:
+
+- Letters from A to Z (upper and lower case) and numbers are allowed;
+- Special characters are **NOT** allowed;
+- Maximum accepted length of the name string is 16 characters.
+- If using AWS names **SHOULD NOT** start with the string `aws`
+
+Each cloud provider has its own naming conventions which in some cases may be more restrictive or less restrictive than the ones listed above. For more information, please refer to the `Initializing Nebari` section of your chosen cloud provider.
+:::
+
 <Tabs>
   <TabItem value="gcp" label="GCP" default>
 
@@ -255,5 +267,6 @@ This command is automatically run when you `deploy`.
 If you face any issues with the commands, check out the [Troubleshooting guide][nebari-troubleshooting].
 
 <!-- internal links -->
+
 [install-nebari]: /get-started/installing-nebari.md
 [nebari-troubleshooting]: /troubleshooting.mdx

@@ -122,6 +122,18 @@ guidance.
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set.
 
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your GCP account. This name must comply with the following rules:
+
+- Be 1-63 characters in length;
+- Comply with [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt) conventions;
+- The first character must be a lowercase letter, and all the following characters must be hyphens, lowercase letters, or digits, except the last character, which cannot be a hyphen.
+
+Those rules are enforced by GCP terraform provider and are not configurable.
+:::
+
 In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
