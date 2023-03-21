@@ -196,7 +196,7 @@ It is also a good time to upgrade your version of Kubernetes. Look for the `kube
 
 ### Redeploy Nebari
 
-For local deployments, run the following
+For local deployments, run the following:
 
 ```shell
 nebari deploy -c nebari-config.yaml   
@@ -239,7 +239,7 @@ If your Nebari deployment relies on Auth0 or GitHub for authentication, please u
 2. Click "OAuth Apps" and then click the app representing your Nebari instance.
 
 3. Under "Authorization callback URL", paste the new GitHub callback URL. The URL should be
-   `https://{your-nebari-domain}/auth/realms/nebari/broker/github/endpoint`, replacing `{your-nebari-domain}` with yourliteral domain of course.
+   `https://{your-nebari-domain}/auth/realms/nebari/broker/github/endpoint`, replacing `{your-nebari-domain}` with your literal domain of course.
 
 </details>
 
