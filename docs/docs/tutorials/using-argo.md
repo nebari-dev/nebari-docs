@@ -1,27 +1,27 @@
 ---
 id: using-argo
-title: Automating workflows with Argo
+title: Automate workflows with Argo
 description: Argo workflow management
 ---
 
-# Argo Workflows
+# Automate workflows with Argo
 
 Argo Workflows is an open source container-native workflow engine for orchestrating parallel jobs on Kubernetes. Argo
 workflows comes enabled by default with Nebari deployments.
 
-## Accessing Argo Server
+## Access Argo Server
 
 If Argo Workflows is enabled, users can access argo workflows server at: `your-nebari-domain.com/argo`. Log in via
 Keycloak with your usual credentials.
 
-## Submitting a Workflow via Argo Server
+## Submit a workflow via Argo Server
 
 You can submit a workflow by clicking "SUBMIT NEW WORKFLOW" on the landing page assuming you have the appropriate
 permissions.
 
 ![Argo Server Landing Page](/img/tutorials/argo_server_landing_page.png)
 
-## Submitting a workflow via Argo CLI
+## Submit a workflow via Argo CLI
 
 You can submit or manage workflows via the Argo CLI. The Argo CLI can be downloaded from the
 [Argo Releases](https://github.com/argoproj/argo-workflows/releases) page. After downloading the CLI, you can get your

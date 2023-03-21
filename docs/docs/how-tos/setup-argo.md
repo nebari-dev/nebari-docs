@@ -1,15 +1,15 @@
 ---
 id: setup-argo
-title: Setting up Argo Workflows
+title: Set up Argo workflows
 description: Argo Workflow Setup
 ---
 
-# Argo Workflows
+# Set up Argo workflows
 
 Argo Workflows is an open source container-native workflow engine for orchestrating parallel jobs on Kubernetes. Argo
 workflows comes enabled by default with Nebari deployments.
 
-## Accessing Argo Server
+## Access Argo Server
 
 If Argo Workflows is enabled, users can access argo workflows server at: `your-nebari-domain.com/argo`. Log in via
 Keycloak with your usual credentials.
@@ -31,7 +31,7 @@ argo_workflows:
           value: bar
 ```
 
-## Disabling Argo Workflows
+## Disable Argo Workflows
 
 To turn off the cluster monitoring on Nebari deployments, simply turn off the feature flag within your
 `nebari-config.yaml` file. For example:
