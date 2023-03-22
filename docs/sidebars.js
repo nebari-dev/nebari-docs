@@ -67,6 +67,7 @@ module.exports = {
         "how-tos/configuring-keycloak",
         "how-tos/using-vscode",
         "how-tos/manual-backup",
+        "how-tos/nebari-upgrade",
         "how-tos/setup-argo",
         "how-tos/using-argo",
       ],
