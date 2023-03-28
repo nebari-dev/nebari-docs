@@ -91,7 +91,7 @@ nebari init --guided-init
 
 :::caution Project naming conventions
 
-In order to successfully deploy Nebari, there are some project naming conventions which need to be followed. Bellow we summarize the format requirements for the most common cloud providers:
+In order to successfully deploy Nebari, there are some project naming conventions which need to be followed. Below we summarize the format requirements for the most common cloud providers:
 
 - Letters from A to Z (upper and lower case) and numbers are allowed;
 - Special characters are **NOT** allowed;
