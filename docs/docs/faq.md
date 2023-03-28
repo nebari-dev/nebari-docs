@@ -32,11 +32,11 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 
 When deploying an app via CDS Dashboards, you will always need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
 
-Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed.  You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
+Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed. You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
 
-Finally, when creating your app, make note of the packages you are using to run the app locally.  These will also need to be added to your environment you will be using to create the dashboard.
+Finally, when creating your app, make note of the packages you are using to run the app locally. These will also need to be added to your environment you will be using to create the dashboard.
 
-There are several example dashboards to build in the dashboard_examples folder on Nebari.  The `environment.yml` file in this folder can be used to build an environment that can run each of the dashboard examples available.
+There are several example dashboards to build in the dashboard_examples folder on Nebari. The `environment.yml` file in this folder can be used to build an environment that can run each of the dashboard examples available.
 
 ## How can I install a package locally? Will this package be available to Dask workers?
 
@@ -131,7 +131,7 @@ Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile].  Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
 <!-- Internal links  -->
 

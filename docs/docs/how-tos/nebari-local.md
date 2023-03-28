@@ -48,8 +48,8 @@ To install kubectl see the [upstream kubectl installation documentation](https:/
 
 The following steps assume you have:
 
-* An installed version of Nebari, for any directions please visit [Install Nebari](/docs/get-started/installing-nebari) section,
-* confirmed that `nebari` is successfully installed in your environment.
+- An installed version of Nebari, for any directions please visit [Install Nebari](/docs/get-started/installing-nebari) section,
+- confirmed that `nebari` is successfully installed in your environment.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-local`:
 
@@ -123,6 +123,7 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 ```bash
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
+
 :::
 
 ## Deploying Nebari

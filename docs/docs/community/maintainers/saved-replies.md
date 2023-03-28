@@ -12,7 +12,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **Usage question**
 
-  *action: redirect to support channels and close the issue*
+  _action: redirect to support channels and close the issue_
 
   ```md
   Thanks for taking the time to open an issue!
@@ -27,7 +27,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **Self-contained example for bug**
 
-  *action: add `needs: investigation 🔍` label*
+  _action: add `needs: investigation 🔍` label_
 
   ```md
   Thanks for reporting this and helping make Nebari better!
@@ -39,7 +39,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **Duplicate issue**
 
-  *action: add `type: duplicate 👯‍♀️` label and link to duplicate issue*
+  _action: add `type: duplicate 👯‍♀️` label and link to duplicate issue_
 
   ```md
   Thanks for taking the time to contribute!
@@ -51,14 +51,14 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **No response: closing issue**
 
-    *action: add `status: abandoned 🗑` label and close the issue*
+  _action: add `status: abandoned 🗑` label and close the issue_
 
-    ```md
-    Thanks for taking the time to open an issue!
+  ```md
+  Thanks for taking the time to open an issue!
 
-    Unfortunately, we haven't heard back from you in a while, so we're going to close this issue.
-    With only the information that is currently in the issue, we don't have enough information to take action. I'm going to close this but don't hesitate to reach out if you have or find the answers we need, we'll be happy to reopen the issue.
-    ```
+  Unfortunately, we haven't heard back from you in a while, so we're going to close this issue.
+  With only the information that is currently in the issue, we don't have enough information to take action. I'm going to close this but don't hesitate to reach out if you have or find the answers we need, we'll be happy to reopen the issue.
+  ```
 
 - **You are welcome to update the docs**
 
@@ -73,9 +73,9 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **Linking to code**
 
-    ```md
-    For clarity's sake, you can link to code like [this](https://help.github.com/articles/creating-a-permanent-link-to-a-code-snippet/).
-    ```
+  ```md
+  For clarity's sake, you can link to code like [this](https://help.github.com/articles/creating-a-permanent-link-to-a-code-snippet/).
+  ```
 
 - **Linking to comments**
 
@@ -104,7 +104,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **PR: Needs tests**
 
-  *action*: add `needs: tests ✅` label
+  _action_: add `needs: tests ✅` label
 
   ```md
   Thanks for your submission!
@@ -114,7 +114,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
 
 - **Fix tests**
 
-  *action*: add `needs: changes 🧱` label
+  _action_: add `needs: changes 🧱` label
 
   ```md
   We notice that the automated tests are failing on this pull request. In our investigation it appears that the failing tests are caused by your changes.
@@ -138,4 +138,5 @@ The following replies should only be used by [Nebari's Code of Conduct committee
   ```
 
 <!-- Links -->
+
 [nebari-coc-committee]: https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee
