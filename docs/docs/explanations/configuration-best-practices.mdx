@@ -16,10 +16,14 @@ As Nebari mainly uses the project name from config to populate those attributes,
 To avoid any burden on the user, on keeping track of each new naming rule for all infrastructure related resources that Nebari creates, we have automated the process to ensure that all resources are named in a consistent manner.
 The necessary restrictions for each cloud provider are presented below:
 
-- Letters from A to Z (upper and lower case) and numbers
-- Maximum accepted length of the name string is **16** characters
-- If using `AWS`: names should not start with the string "aws"
-- If using `Azure`: names should not contain "-"
+- Letters from A to Z (upper and lower case) and numbers are allowed;
+- Special characters are NOT allowed;
+- Maximum accepted length of the name string is 16 characters;
+- If using AWS: names SHOULD NOT start with the string aws.
+
+:::note
+Each cloud provider has its own naming conventions which in some cases may be more restrictive or less restrictive than the ones listed above. For more information, refer to the "Initializing Nebari" section in the "How to Deploy ..." documentation for the specific cloud provider.
+:::
 
 <!--
 TODO: Add domain format details
