@@ -179,5 +179,6 @@ In this example, the new group only has one mapped role, `conda_store_admin`; ho
 Once complete, return to the **Users** section in the dashboard and add the relevant users to this newly created group.
 
 <!-- internal links -->
+
 [keycloak-login]: login-keycloak
 [nebari-install]: /get-started/installing-nebari.md

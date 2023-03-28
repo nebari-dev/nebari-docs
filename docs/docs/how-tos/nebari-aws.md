@@ -108,6 +108,7 @@ environment variables have been properly set. It is time to initialize and deplo
    ```
 
 <!-- TODO: replace link to configuration once migrated -->
+
 2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the
    [`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
 

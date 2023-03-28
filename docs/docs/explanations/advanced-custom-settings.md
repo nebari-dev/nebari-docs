@@ -193,4 +193,4 @@ Deployment inside a virtual network is slightly different from deploying inside 
 As the name suggests, since it's a virtual private network, you need to be inside the network to able to deploy and access Nebari.
 One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network.
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
- and then follow the usual deployment instructions as you would deploy from your local machine.
+and then follow the usual deployment instructions as you would deploy from your local machine.

@@ -51,9 +51,10 @@ By default conda-store restricts the environment channels to only accept `defaul
 
 <!-- TODO: Uncomment and add link when ready -->
 <!-- You can check out [Managing conda environment][] for more details. -->
+
 :::
 
-
 <!-- Internal links -->
+
 [using-dask]: ../tutorials/using_dask
 [create-dashboards]: ../tutorials/creating-cds-dashboard

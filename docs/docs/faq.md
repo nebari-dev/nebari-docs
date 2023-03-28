@@ -76,7 +76,6 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 
 You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
 
-
 ## How do I migrate from Qhub to Nebari?
 
 <!-- TODO: Add link to "migration guide" when complete -->
@@ -105,4 +104,5 @@ We have discussed contributing a PR to `nb_conda_kernels`, but the project has n
 If you have potential solutions or can help us move forward with updates to the `nb_conda_kernels`, please reach out to us on our [discussion forum](https://github.com/orgs/nebari-dev/discussions)!
 
 <!-- Internal links -->
+
 [dask-tutorial]: tutorials/using_dask.md
