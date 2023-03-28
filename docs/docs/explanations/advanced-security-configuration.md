@@ -21,25 +21,29 @@ security:
     initial_root_password: initpasswd
     overrides:
       image:
-        repository: quansight/qhub-keycloak
+        repository: quansight/nebari-keycloak
   ...
 ```
 
 The `keycloak` section allows you to specify an initial password for the `root` Administrative user to manage your Keycloak database which is responsible for managing users, clients, and other Keycloak related configurations. Note that the `root` user is not actually a Nebari user - you cannot access the
 main features of Nebari such as JupyterLab with this user - it is exclusively for Keycloak management.
 
-The `overrides` section allows you to specify a custom image for the Keycloak service. This is useful if you want to customize theming or add additional plugins to Keycloak. The full extent of override options can be found in the [Keycloak Helm deployment](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
+The `overrides` section allows you to specify a custom image for the Keycloak service.
+This is useful if you want to customize themes or add additional plugins to Keycloak.
+The full extent of override options can be found in the [Keycloak Helm deployment](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 
 :::warning
-We strongly recommend changing the `initial_root_password` after your initial deployment and deleting this value from your `nebari-config.yaml`. Any changes to this value in the
-`nebari-config.yaml` after the initial deployment will have no effect.
+We strongly recommend changing the `initial_root_password` after your initial deployment and deleting this value from your `nebari-config.yaml`.
+Any changes to this value in the `nebari-config.yaml` after the initial deployment will have no effect.
 
 For more information on how to do this, see the [Change Keycloak root password section](../how-tos/configuring-keycloak#change-keycloak-root-password).
 :::
 
 ## Authentication methods
 
-Nebari supports multiple authentication methods by using [Keycloak](https://www.keycloak.org/) under the hood. To ease the configuration procedure of adding the most common authentication providers to Keycloak, Nebari already supports `[Auth0, GitHub, password]` automatically during deployment. You may also disable authentication by setting `authentication` to `false` in the `nebari-config.yaml` file.
+Nebari supports multiple authentication methods by using [Keycloak](https://www.keycloak.org/) under the hood.
+To ease the configuration procedure of adding the most common authentication providers to Keycloak, Nebari already supports `[Auth0, GitHub, password]` automatically during deployment.
+You may also disable authentication by setting `authentication` to `false` in the `nebari-config.yaml` file.
 
 The default authentication method is set to `GitHub` if no changes are specified in the configuration file or during initialization.
 
@@ -50,7 +54,8 @@ import TabItem from '@theme/TabItem';
 
 <TabItem label="GitHub" value="github" default>
 
-To use GitHub as your authentication method, you must first create a [GitHub OAuth application](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and provide the `client_id` and `client_secret` to Nebari. By using the `GitHub` authentication method, users will then be able to log in to Nebari using their GitHub account registered within Keycloak database.
+To use GitHub as your authentication method, you must first create a [GitHub OAuth application](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app) and provide the `client_id` and `client_secret` to Nebari.
+By using the `GitHub` authentication method, users will then be able to log in to Nebari using their GitHub account registered within Keycloak database.
 
 ```yaml
 ### Authentication configuration ###
@@ -69,7 +74,9 @@ security:
 
 Auth0 is a cloud-based identity management platform that provides authentication, authorization, and user management for web, mobile, IoT, and internal applications. This authentication method is useful for organizations that already have an Auth0 account and user database and want to seamlessly integrate it with Nebari.
 
-To use Auth0 as your authentication method, you must have an [Auth0 application](https://auth0.com/docs/applications/set-up-an-application/register-single-page-app) and provide the `client_id` and `client_secret` to Nebari, make sure that your Auth0 application is a `Regular Web Application`. By using the `Auth0` authentication method, users will then be able to log in to Nebari using their Auth0 account registered within Keycloak database.
+To use Auth0 as your authentication method, you must have an [Auth0 application](https://auth0.com/docs/applications/set-up-an-application/register-single-page-app) and provide the `client_id` and `client_secret` to Nebari.
+Make sure that your Auth0 application is a `Regular Web Application`.
+By using the `Auth0` authentication method, users will then be able to log in to Nebari using their Auth0 account registered within Keycloak database.
 
 ```yaml
 ### Authentication configuration ###
@@ -83,7 +90,8 @@ security:
       auth0_subdomain: ...
 ```
 
-Important to note is that the `auth0_subdomain` field which must be only the `<auth0_subdomain>.auth0.com`. For example, for `nebari-dev.auth0.com` the subdomain would be `nebari-dev`.
+It's important to note is that the `auth0_subdomain` field in the YAML must be only the `<auth0_subdomain>.auth0.com`.
+For example, for `nebari-dev.auth0.com` the subdomain would be `nebari-dev`.
 
 :::note
 

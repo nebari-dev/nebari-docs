@@ -8,7 +8,7 @@ description: An in-depth guide to advanced configuration options.
 
 Nebari is a highly configurable tool with different customization options.
 To better understand how to use these options, this guide will walk you through the different configuration options in `nebari-config.yaml` and how to use them.
-In the "How to deploy Nebari" sections of our docs we covered how you can auto-generate this file using `nebari init` (and properly set options/flags and environment variables).
+In the "How to deploy Nebari" pages of our docs we covered how you can auto-generate this file using `nebari init` (and properly set options/flags and environment variables).
 
 After first initializing a project, you can find the configuration file, `nebari-config.yaml`, in your project directory.
 This file is a `YAML` file that exports sets of parameters used by Nebari to deploy and redeploy changes to your infrastructure.
@@ -16,28 +16,32 @@ This file is a `YAML` file that exports sets of parameters used by Nebari to dep
 ## General configuration settings
 
 The `nebari-config.yaml` file can be split into several sections.
-The first section relates to Nebari inner mechanics for the initial deployment and should be seen as the most important section of the configuration file as the following parameters are heavily propagated throughout all infrastructure components.
+The first section relates to Nebari's inner mechanics for the initial deployment and is the most important section of the configuration file,
+because the following parameters are heavily propagated throughout all infrastructure components.
 
 ```yaml
 ### General configuration ###
 project_name: dojupyterhub
 namespace: dev
-provider: local
+provider: do
 domain: dojupyterhub.com
 ```
 
-- `project_name`: determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider naming convention. See [Project Naming Conventions](/docs/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
-- `namespace` (Optional): used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
-- `provider`: determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
+`project_name`: Determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider's naming conventions. See [Project Naming Conventions](/docs/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
 
-  - `do` for DigitalOcean
-  - `aws` for Amazon AWS
-  - `gcp` for Google Could Provider
-  - `azure` for Microsoft Azure
-  - `existing` for deploying on an existing kubernetes infrastructure
-  - `local` for Kind local cluster deployment
+`namespace` (Optional): Used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
 
-- `domain`: the top level URI used to access the application services.
+`provider`: Determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
+
+- `do` for DigitalOcean
+- `aws` for Amazon Web Services
+- `gcp` for Google Could Provider
+- `azure` for Microsoft Azure
+- `existing` for deploying on an existing Kubernetes infrastructure
+- `local` for local cluster deployment using Kind
+
+`domain`: The top level URI used to access the application services.
+
 <!-- For more information regarding the format of this field, see [Domain Format](/docs/explanations/config-best-practices#domain-format). -->
 <!-- TODO: Complete the Domain Format section and then link to it -->
 
@@ -45,7 +49,7 @@ domain: dojupyterhub.com
 
 Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to allow developers and users to request changes to the environment via pull requests (PRs) which then get approved by administrators.
 You may configure a CI/CD process to watch for pull-requests or commits on specific branches.
-Currently CI/CD can be setup for either [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI](https://docs.gitlab.com/ee/ci/).
+Currently, CI/CD can be setup for either [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI](https://docs.gitlab.com/ee/ci/).
 
 ```yaml
 ### Continuous integration ###
@@ -60,15 +64,14 @@ ci_cd:
     - echo "additional commands to run"
 ```
 
-`ci_cd` (Optional): used to enable continuous integration and continuous deployment (CI/CD) frameworks on Nebari.
+`ci_cd` (optional): Used to enable continuous integration and continuous deployment (CI/CD) frameworks on Nebari.
 
-- `type`: current supported CI providers are `github-actions` and `gitlab-ci`
+- `type`: Current supported CI providers are `github-actions` and `gitlab-ci`
 - `branch`: git branch on which to commit changes from `nebari render`
-- `commit_render`: whether to commit the rendered changes back into the repo. Optional, defaults to `true`.
-- `before_script`: optional script to run before CI starts Nebari infrastructure deployment. This is useful in cases that additional setup is required for Nebari to deploy the
+- `commit_render`: Whether to commit the rendered changes back into the repo. Optional, defaults to `true`.
+- `before_script` (optional): Script to run before CI starts Nebari infrastructure deployment. This is useful in cases that additional setup is required for Nebari to deploy the
   resources. Currently only supported on `gitlab-ci`.
-- `after_script`: optional script to run after CI ends infrastructure deployment. This is useful in cases to notify resources of successful Nebari deployment. Currently supported on
-  `gitlab-ci`.
+- `after_script` (optional): Script to run after CI ends infrastructure deployment. This is useful in cases to notify resources of successful Nebari deployment. Currently supported on `gitlab-ci`.
 
 If `ci_cd` is not supplied, no CI/CD will be auto-generated, however, we advise employing an infrastructure-as-code approach.
 This allows teams to more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
@@ -115,11 +118,15 @@ certificate:
   acme_server: https://acme-v02.api.letsencrypt.org/directory
 ```
 
-You must specify an email address that Let's Encrypt will associate the generated certificate with and whether to use the [staging server](https://acme-staging-v02.api.letsencrypt.org/directory) or [production server](https://acme-v02.api.letsencrypt.org/directory).
+You must specify:
+
+- an email address that Let's Encrypt will associate the generated certificate with, and
+- whether to use the [staging server](https://acme-staging-v02.api.letsencrypt.org/directory) or [production server](https://acme-v02.api.letsencrypt.org/directory).
+
 In general you should use the production server, as seen above.
 
 :::note
-You can generate the above configuration automatically by using the `--ssl-cert-email <your-email-address>` flag when you ran `nebari init` to initialize your project.
+You can also generate the above configuration automatically by using the `--ssl-cert-email <your-email-address>` flag when you run `nebari init` to initialize your project.
 :::
 
   </TabItem>
@@ -134,7 +141,7 @@ certificate:
   secret_name: <secret-name>
 ```
 
-To add the tls certificate to Kubernetes run the following command with existing files.
+To add the TLS certificate to Kubernetes run the following command with existing files.
 
 ```shell
 kubectl create secret tls <secret-name> \
@@ -159,9 +166,9 @@ Defining a wildcard certificate decreases the amount of Common Name (CN) names y
 
 Learn to configure more aspects of your Nebari deployment with the following topic guides:
 
-* [Security configuration](./advanced-security-configuration.md)
-* [Cloud provider configuration](./advanced-provider-configuration.md)
-* [JupyterLab and Dask profile configuration](./advanced-profiles-settings.md)
-* [Customize JuputerHub theme](./advanced-custom-settings.md)
-* [Environment configuration](./advanced-env-configuration.md)
-* [Custom settings and overrides](./advanced-custom-settings.md)
+- [Security configuration](./advanced-security-configuration.md)
+- [Cloud provider configuration](./advanced-provider-configuration.md)
+- [JupyterLab and Dask profile configuration](./advanced-profiles-settings.md)
+- [Customize JuputerHub theme](./advanced-custom-settings.md)
+- [Environment configuration](./advanced-env-configuration.md)
+- [Custom settings and overrides](./advanced-custom-settings.md)
