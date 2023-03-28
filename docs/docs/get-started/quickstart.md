@@ -95,10 +95,10 @@ In order to successfully deploy Nebari, there are some project naming convention
 
 - Letters from A to Z (upper and lower case) and numbers are allowed;
 - Special characters are **NOT** allowed;
-- Maximum accepted length of the name string is 16 characters.
-- If using AWS names **SHOULD NOT** start with the string `aws`
+- Maximum accepted length of the name string is 16 characters;
+- If using AWS names **SHOULD NOT** start with the string `aws`.
 
-Each cloud provider has its own naming conventions which in some cases may be more restrictive or less restrictive than the ones listed above. For more information, please refer to the `Initializing Nebari` section of your chosen cloud provider.
+Each cloud provider has its own naming conventions which in some cases may be more restrictive or less restrictive than the ones listed above. For more information, refer to the `Initializing Nebari` section in the "How to Deploy ..." documentation for your chosen cloud provider.
 :::
 
 <Tabs>

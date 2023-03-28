@@ -91,7 +91,7 @@ your Azure account. This name must comply with the following rules:
 
 - Between 3 and 16 characters long;
 - Start and end with alphanumeric;
-- lowercase alphanumerics
+- Must use lowercase alphabets.
 
 Those rules are enforced by Azure and are not configurable. For more information refer to [Azure's official documentation](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).
 :::
