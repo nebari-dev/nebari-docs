@@ -12,7 +12,7 @@ through the following steps:
 - [Introduction](#introduction)
 - [Sign up for Azure](#sign-up-for-azure)
 - [Authentication](#authentication)
-- [Nebari Initialize](#nebari-initialize)
+- [Initializing Nebari](#initializing-nebari)
 - [Deploying Nebari](#deploying-nebari)
 - [Destroying Nebari](#destroying-nebari)
 
@@ -79,10 +79,24 @@ installed in your environment, (iii) opted for **Azure** as your cloud provider,
 installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further guidance.
 :::
 
-## Nebari Initialize
+## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
-environment variables have been properly set. It is time to initialize and deploy Nebari!
+environment variables have been properly set.
+
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your Azure account. This name must comply with the following rules:
+
+- Between 3 and 16 characters long;
+- Start and end with alphanumeric;
+- Must use lowercase alphabets.
+
+Those rules are enforced by Azure and are not configurable. For more information refer to [Azure's official documentation](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).
+:::
+
+In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:
 
@@ -102,7 +116,13 @@ environment variables have been properly set. It is time to initialize and deplo
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
 
-Executing the command below will generate a `nebari-config.yaml` file with an infrastructure based on **Azure**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a basic config file with an infrastructure based on **Azure**.
+
+- `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created).
+- `domain` will be the domain endpoint for your Nebari instance.
+- `auth-provider` sets your authentication provider that you plan to use inside of Keycloak, options are Github, Auth0, and password.
+
+For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `nebari-config.yaml`.
 
 ```bash
 nebari init azure --project projectname \
@@ -110,9 +130,6 @@ nebari init azure --project projectname \
    --auth-provider password
 ```
 
-:::
-
-:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 

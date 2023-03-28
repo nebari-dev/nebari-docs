@@ -13,7 +13,7 @@ will walk you through the following steps:
 - [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform)
 - [Set up the `gcloud` CLI](#set-up-the-gcloud-cli)
 - [Authentication](#authentication)
-- [Nebari Initialize](#nebari-initialize)
+- [Initializing Nebari](#initializing-nebari)
 - [Deploying Nebari](#deploying-nebari)
 - [Destroying Nebari](#destroying-nebari)
 
@@ -117,10 +117,24 @@ environment variables. If you had any issues during the installation, please vis
 guidance.
 :::
 
-## Nebari Initialize
+## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
-environment variables have been properly set. It is time to initialize and deploy Nebari!
+environment variables have been properly set.
+
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your GCP account. This name must comply with the following rules:
+
+- Be 1-63 characters in length;
+- Comply with [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt) conventions;
+- The first character must be a lowercase letter, and all the following characters must be hyphens, lowercase letters, or digits, except the last character, which cannot be a hyphen.
+
+Those rules are enforced by GCP terraform provider and are not configurable.
+:::
+
+In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-gcp`:
 
@@ -140,7 +154,13 @@ environment variables have been properly set. It is time to initialize and deplo
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
 
-Executing the command below will generate a `nebari-config.yaml` file with the Nebari cluster deployed on **GCP**, with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**.
+Executing the command below will generate a basic config file with an infrastructure based on **GCP**.
+
+- `projectname` will be the name of the folder/repo that will manage this Nebari deployment (it will be created).
+- `domain` will be the domain endpoint for your Nebari instance.
+- `auth-provider` sets your authentication provider that you plan to use inside of Keycloak, options are Github, Auth0, and password.
+
+For this example, we'll run with project name `projectname`, endpoint domain `domain`, and with the authentication mode set to **password**. These can be updated later by directly modifying the `nebari-config.yaml`.
 
 ```bash
 nebari init gcp --project projectname \
@@ -148,9 +168,6 @@ nebari init gcp --project projectname \
    --auth-provider password
 ```
 
-:::
-
-:::note
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 

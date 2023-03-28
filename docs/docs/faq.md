@@ -28,6 +28,16 @@ you'll need to contact your Nebari administrator to include the required package
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
 
+## What packages are needed in your environment to create a dashboard?
+
+When deploying an app via CDS Dashboards, you will always need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
+
+Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed. You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
+
+Finally, when creating your app, make note of the packages you are using to run the app locally. These will also need to be added to your environment you will be using to create the dashboard.
+
+There are several example dashboards to build in the dashboard_examples folder on Nebari. The `environment.yml` file in this folder can be used to build an environment that can run each of the dashboard examples available.
+
 ## How can I install a package locally? Will this package be available to Dask workers?
 
 :::caution
@@ -76,6 +86,54 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 
 You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
 
+## How do I use preemptible and spot instances on Nebari?
+
+A preemptible or spot VM is an instance that you can create and run at a much lower price than normal instances. Azure
+and Google Cloud platform use the term preemptible, while AWS uses the term spot, and Digital Ocean doesn't support
+these types of instances. However, the cloud provider might stop these instances if it requires access to those
+resources for other tasks. Preemptible instances are excess Cloud Provider's capacity, so their availability varies with
+usage.
+
+#### Usage
+
+##### Google Cloud Platform
+
+The `preemptible` flag in the Nebari config file defines the preemptible instances.
+
+```yaml
+google_cloud_platform:
+  project: project-name
+  region: us-central1
+  zone: us-central1-c
+  availability_zones:
+  - us-central1-c
+  kubernetes_version: 1.18.16-gke.502
+  node_groups:
+# ...
+    preemptible-instance-group:
+      preemptible: true
+      instance: "e2-standard-8"
+      min_nodes: 0
+      max_nodes: 10
+```
+
+##### Amazon Web Services
+
+Spot instances aren't supported at this moment.
+
+##### Azure
+
+Preemptible instances aren't supported at this moment.
+
+##### Digital Ocean
+
+Digital Ocean doesn't support these type of instances.
+
+## Why doesn't my code recognize the GPU(s) on Nebari?
+
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+
+
 ## How do I migrate from Qhub to Nebari?
 
 <!-- TODO: Add link to "migration guide" when complete -->
@@ -106,3 +164,4 @@ If you have potential solutions or can help us move forward with updates to the 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
+[selecting a profile]: https://www.nebari.dev/docs/how-tos/login-keycloak#3-selecting-a-profile
