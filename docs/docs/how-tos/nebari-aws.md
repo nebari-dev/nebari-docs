@@ -101,6 +101,18 @@ installation, please visit the "Get started" section of our [troubleshooting pag
 Great, you’ve gone through the [Nebari installation](get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set.
 
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your AWS account. This name must comply with the following rules:
+
+- Must be between 3-47 characters in length;
+- Must begin with an alphanumeric character, and must only contain alphanumeric lowercase characters, dashes, and underscores;
+- The name cannot start with `AWS` or `aws`.
+
+Those rules are enforced by the AWS Terraform Provider and are not configurable.
+:::
+
 In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-aws`:
