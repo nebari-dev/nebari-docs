@@ -24,7 +24,7 @@ Nebari comes with two default environments that are built during deployment:
 :::note
 The double `nebari-git` is a known consequence of using conda-store for environment management.
 
-Learn more in the [FAQ: Why do I see duplication in the names of environments?]
+Learn more in the [FAQ: Why do I see duplication in the names of environments?](../faq#why-is-there-duplication-in-names-of-environments)
 :::
 
 ```yaml

@@ -143,7 +143,7 @@ This is quite useful for pinning the IP Address of the load balancer.
 
 <TabItem value="azure" label="Azure" default="true" >
 
-Using terraform overrides you can also deploy inside a virtual private network (VPN).
+Using terraform overrides you can also deploy inside a Virtual Private Network (VPN).
 
 An example configuration for Azure is given below:
 
@@ -159,7 +159,7 @@ azure:
 
 <TabItem value="gcp" label="GCP" default="true" >
 
-Using terraform overrides you can also deploy inside a VPC in GCP, making the Kubernetes cluster private. Here is an example configuration:
+Using terraform overrides you can also deploy inside a [Virtual Private Cloud (VPC) in GCP](https://cloud.google.com/vpc/docs/overview), making the Kubernetes cluster private. Here is an example configuration:
 
 ```yaml
 google_cloud_platform:
@@ -177,7 +177,7 @@ google_cloud_platform:
 ```
 
 As the name suggests the cluster will be private, which means it would not have access to the internet - not ideal for deploying pods in the cluster. Therefore, we need
-to allow internet access for the cluster, which can be achieved by creating a NAT router. The following two commands are an example of how you can do this for your VPC network on GCP.
+to allow internet access for the cluster, which can be achieved by creating a [Network Address Translation](https://en.wikipedia.org/wiki/Network_address_translation) router. The following two commands are an example of how you can do this for your VPC network on GCP.
 
 ```bash
 gcloud compute routers create nebari-nat-router --network your-vpc-name --region your-region

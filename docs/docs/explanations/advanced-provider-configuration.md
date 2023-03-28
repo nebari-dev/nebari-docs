@@ -173,6 +173,10 @@ existing:
 Local deployment is intended for Nebari deployments on a "local" cluster created and management by Kind.
 It is great for experimentation and development.
 
+:::warning
+Currently, local mode is only supported for Linux-based operating systems.
+:::
+
 ```yaml
 ### Provider configuration ###
 local:
