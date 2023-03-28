@@ -148,9 +148,7 @@ The default options for an `existing` deployment are still set to deploy to a mi
 <!-- If you wish to deploy to an existing kubernetes cluster on one of the cloud providers, please refer to a more detailed walkthrough found in the [Deploy Nebari to an Existing Kubernetes Cluster]. -->
 
 Deploying to a local existing kubernetes cluster has different options than the cloud providers. `kube_context` is an optional key that can be used to deploy to a non-default context.
-The default node selectors will allow pods to be scheduled anywhere.
-This can be adjusted to schedule pods on different labeled nodes.
-Allowing for similar functionality to node groups in the cloud.
+The default node selectors will allow pods to be scheduled anywhere. This can be adjusted to schedule pods on different labeled nodes, allowing for similar functionality to node groups in the cloud.
 
 ```yaml
 ### Provider configuration ###

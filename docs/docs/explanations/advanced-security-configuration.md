@@ -25,8 +25,8 @@ security:
   ...
 ```
 
-The `keycloak` section allows you to specify an initial password for the `root` Administrative user to manage your Keycloak database. Which is responsible for managing users, clients, and other Keycloak related configurations. Note that the `root` user is not actually a Nebari user - you cannot access the
-main features of Nebari such as JupyterLab with this user. It is exclusively for Keycloak management.
+The `keycloak` section allows you to specify an initial password for the `root` Administrative user to manage your Keycloak database which is responsible for managing users, clients, and other Keycloak related configurations. Note that the `root` user is not actually a Nebari user - you cannot access the
+main features of Nebari such as JupyterLab with this user - it is exclusively for Keycloak management.
 
 The `overrides` section allows you to specify a custom image for the Keycloak service. This is useful if you want to customize theming or add additional plugins to Keycloak. The full extent of override options can be found in the [Keycloak Helm deployment](https://github.com/codecentric/helm-charts/tree/master/charts/keycloak).
 

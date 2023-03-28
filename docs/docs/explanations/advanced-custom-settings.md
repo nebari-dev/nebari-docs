@@ -115,10 +115,10 @@ jupyterhub:
 
 ### Terraform
 
-The Nebari configuration file provides a huge number of configuration options for customizing your Nebari Infrastructure, while these options are sufficient for an average user, but
-aren't exhaustive by any means. There are still a plenty of things you might want to achieve which cannot be configured directly by the above mentioned options, hence we've
+The Nebari configuration file provides a huge number of configuration options for customizing your Nebari infrastructure. While these options are sufficient for an average user, they
+aren't exhaustive by any means. There are still a plenty of things you might want to achieve which cannot be configured directly by the above mentioned options. Therefore, we've
 introduced a new option called terraform overrides (`terraform_overrides`), which lets you override the values of terraform variables in specific modules/resource. This is a
-relatively advance feature and must be used with utmost care and you should really know what you're doing.
+relatively advanced feature and must be used with utmost care, and you should really know what you're doing.
 
 Here we describe the overrides supported via Nebari config file:
 
@@ -176,8 +176,8 @@ google_cloud_platform:
       display_name: null
 ```
 
-As the name suggests the cluster will be private, which means it would not have access to the internet, which is not ideal for deploying pods in the cluster. Therefore, we need
-to allow internet access for the cluster, which can be achieved by creating a NAT router by running the following two commands for your VPC network.
+As the name suggests the cluster will be private, which means it would not have access to the internet - not ideal for deploying pods in the cluster. Therefore, we need
+to allow internet access for the cluster, which can be achieved by creating a NAT router. The following two commands are an example of how you can do this for your VPC network on GCP.
 
 ```bash
 gcloud compute routers create nebari-nat-router --network your-vpc-name --region your-region
@@ -190,7 +190,7 @@ gcloud compute routers nats create nat-config --router nebari-nat-router  --nat-
 </Tabs>
 
 Deployment inside a virtual network is slightly different from deploying inside a public network.
-As the name suggests, since its a virtual private network, you need to be inside the network to able to deploy and access nebari.
+As the name suggests, since it's a virtual private network, you need to be inside the network to able to deploy and access Nebari.
 One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network.
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
  and then follow the usual deployment instructions as you would deploy from your local machine.

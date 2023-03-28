@@ -40,7 +40,7 @@ Each profile under `jupyterlab` is a named JupyterLab profile.
 It is possible to control which users have access to which JupyterLab profiles. Each profile has a field named `access` which can be set to `all` (default if omitted), `yaml`, or
 `keycloak`.
 
-- `all` means every user will have access to the profile.
+- `all` means every user will have access to the profile (default).
 - `yaml` means that access is restricted to anyone with their username in the `users` field of the profile or who belongs to a group named in the `groups` field.
 - `keycloak` means that access is restricted to any user who in Keycloak has either their group(s) or user with the attribute `jupyterlab_profiles` containing this profile name. For
   example, if the user is in a Keycloak group named `developers` which has an attribute `jupyterlab_profiles` set to `Large Instance`, they will have access to the Large Instance
@@ -48,7 +48,7 @@ It is possible to control which users have access to which JupyterLab profiles. 
 
 When configuring the memory and CPUs for profiles, there are some important considerations to make. Two important terms to understand are:
 
-- `limit`: the absolute max memory that a given pod can consume. If a process within the pod consumes more than the `limit` memory the linux OS will kill the process. Limit is not
+- `limit`: the absolute max memory that a given pod can consume. If a process within the pod consumes more than the `limit` memory the Linux OS will kill the process. Limit is not
   used for scheduling purposes with kubernetes.
 - `guarantee`: is the amount of memory the kubernetes scheduler uses to place a given pod. In general the `guarantee` will be less than the limit. Often times the node itself has
   less available memory than the node specification. See this [guide from digital ocean](https://docs.digitalocean.com/products/kubernetes/details/limits/#allocatable-memory) which is generally
