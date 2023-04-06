@@ -37,8 +37,8 @@ jupyterlab:
     kernel_cull_idle_timeout: 30
 ```
 
-::: note
-Note that once the new configurations are applied and the user pod is left idle, it should take approximately the sum of cull_idle_timeout and cull_inactive_timeout (if both are enabled) plus shutdown_no_activity_timeout for the pod to be terminated. However, these configurations are approximate and may not reflect the exact time that a kernel or terminal will be terminated. The exact timing may depend on factors such as server load, network latency, and other system resources.
+:::note
+Note that once the new configurations are applied and the user pod is left idle, it should take approximately the sum of `max(cull_idle_timeout, cull_inactive_timeout)` (if both are enabled) plus `shutdown_no_activity_timeout` for the pod to be terminated. However, these configurations are approximate and may not reflect the exact time that a kernel or terminal will be terminated. The exact timing may depend on factors such as server load, network latency, and other system resources that could lead to a certain amount of variance in the actual termination time.
 :::
 
 ## Default values
