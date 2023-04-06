@@ -46,11 +46,13 @@ Note that once the new configurations are applied and the user pod is left idle,
 The idle culling mechanism is enabled by default in Nebari, and it can be configured using the `nebari-config.yaml` file. By default, JupyterHub will ping the user notebook servers every 10 minutes to check their status. Every server found to be idle for more than 30 minutes (approximately) will be culled. The default values for the internal culling mechanism are as follows:
 
 ```yaml
-kernel_cull_busy                    = false
-kernel_cull_connected               = true
-kernel_cull_idle_timeout            = 15
-kernel_cull_interval                = 5
-server_shutdown_no_activity_timeout = 15
-terminal_cull_inactive_timeout      = 15
-terminal_cull_interval              = 5
+jupyterlab:
+  idle_culler:
+    kernel_cull_busy                    : false
+    kernel_cull_connected               : true
+    kernel_cull_idle_timeout            : 15
+    kernel_cull_interval                : 5
+    server_shutdown_no_activity_timeout : 15
+    terminal_cull_inactive_timeout      : 15
+    terminal_cull_interval              : 5
 ```
