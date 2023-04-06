@@ -70,6 +70,7 @@ module.exports = {
         "how-tos/nebari-upgrade",
         "how-tos/setup-argo",
         "how-tos/using-argo",
+        "how-tos/idle-culling",
       ],
     },
     {
