@@ -1,0 +1,71 @@
+---
+title: Configuration best practices
+id: config-best-practices
+description: A guide to best practices for configuring Nebari
+---
+
+# Configuration best practices
+
+This document highlights and consolidates configuration best practices for `nebari-config.yaml` that are introduced throughout the Getting Started, How To's, and Advanced Settings sections of the documentation.
+
+## Naming conventions
+
+When Nebari creates a new cloud resource on each one of the cloud providers, it will have to provide properties such as a name, project id, buckets, etc. for these resources.
+As Nebari mainly uses the project name from config to populate those attributes, we must ensure that for such cases, the resource attribute/name meets the bound conventions for the chosen cloud provider.
+
+To avoid any burden on the user, on keeping track of each new naming rule for all infrastructure related resources that Nebari creates, we have automated the process to ensure that all resources are named in a consistent manner.
+The necessary restrictions for each cloud provider are presented below:
+
+- Letters from A to Z (upper and lower case) and numbers are allowed;
+- Special characters are NOT allowed;
+- Maximum accepted length of the name string is 16 characters;
+- If using AWS: names SHOULD NOT start with the string aws.
+
+:::note
+Each cloud provider has its own naming conventions which in some cases may be more restrictive or less restrictive than the ones listed above. For more information, refer to the "Initializing Nebari" section in the "How to Deploy ..." documentation for the specific cloud provider.
+:::
+
+<!--
+TODO: Add domain format details
+ ## Domain Format
+-->
+
+## Omitting sensitive values
+
+If you wish to avoid storing secrets directly in the config yaml file you can instead set the values in environment variables. This substitution is triggered by setting config
+values to `NEBARI_SECRET_` followed by the environment variable name.
+
+For example, you could set the environment variables `github_client_id` and `github_client_key` and write the
+following in your config file:
+
+```yaml
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: NEBARI_SECRET_github_client_id
+      client_secret: NEBARI_SECRET_github_client_key
+```
+
+## Nebari version assertion
+
+All `nebari-config.yaml` files must contain a `nebari_version` field displaying the version of Nebari with which it’s intended to be deployed.
+
+Typically, you can upgrade the `nebari-config.yaml` file itself by manually adding the intended version to the file and validating that the version matches the version of Nebari you are deploying with by calling `nebari --version`.
+
+If available, you may also update the configuration using the `nebari upgrade` command. This will update image numbers, plus update `nebari_version` to match the installed version of Nebari, as well as any other bespoke changes required.
+
+:::warning
+Nebari will refuse to deploy if it doesn’t contain the same version as that of the `nebari` command.
+```
+Error: The schema validation of the nebari-config.yaml failed.
+The following error message may be helpful in determining what went wrong:
+
+nebari_version
+  nebari_version in the config file must be equivalent to <installed version> to be
+  processed by this version of Nebari (your config file version is <nebari_version>).
+  Install a different version of nebari or run nebari upgrade to ensure your config
+  file is compatible.
+(type=value_error)
+```
+:::
