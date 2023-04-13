@@ -1,6 +1,6 @@
 ---
 id: idle-culling
-title: Updating JupyterHub Idle-Culling Settings
+title: Update JupyterHub idle-culling settings
 description: How to update JupyterHub idle-culling settings
 ---
 
