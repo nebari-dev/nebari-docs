@@ -78,6 +78,14 @@ module.exports = {
       label: "Conceptual guides",
       link: { type: "doc", id: "explanations/index" },
       items: [
+        "explanations/advanced-configuration",
+        "explanations/security-configuration",
+        "explanations/provider-configuration",
+        "explanations/profile-configuration",
+        "explanations/customize-themes",
+        "explanations/environments-configuration",
+        "explanations/custom-overrides-configuration",
+        "explanations/config-best-practices",
         "explanations/infrastructure-architecture",
       ],
     },
@@ -86,7 +94,7 @@ module.exports = {
       label: "Reference",
       link: { type: "doc", id: "references/index" },
       items: [
-        "references/RELEASE"
+        "references/RELEASE",
       ],
     },
     {
