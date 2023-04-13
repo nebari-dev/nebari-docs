@@ -8,18 +8,15 @@ This document provides information on how to update JupyterHub idle-culling sett
 
 ## Overview
 
-The idle culler automatically shuts down user notebook servers after a certain period of inactivity to reduce the total resource usage from your user instances. There are two ways to cull idle notebooks and kernels:
+The Nebari system includes an idle culler that automatically shuts down user notebook servers to reduce resource usage from inactive instances. There are two primary methods used for culling idle kernels and terminals.
 
-- Setting configuration options for the notebook server to shutdown kernels and the server itself after a certain period of inactivity.
-  The default kernel manager, the MappingKernelManager, can be configured to cull idle kernels. Its configuration is documented in more details at [NotebookApp](https://jupyter-notebook.readthedocs.io/en/stable/config.html#options).
-- Using an external JupyterHub culler ([jupyterhub-idle-culler](https://github.com/jupyterhub/jupyterhub-idle-culler)) to shutdown the whole server after a certain period of inactivity.
-  The external culler is more coarse-grained, while the internal culler is considered more granular and can be smarter. It is recommended to use both methods to avoid false-positives.
+The first method involves an internal configuration setting for the notebook server that will shut down kernels and the server itself after a certain period of inactivity. The second method involves an external JupyterHub culler ([jupyterhub-idle-culler](https://github.com/jupyterhub/jupyterhub-idle-culler)) that orchestrates the culling of idle kernels and terminals based on user usage metrics.
 
-The two methods have different levels of granularity in terms of what they can measure and act on, The internal culler is considered more granular and can be smarter, while the external culler is more coarse-grained. To avoid false-positives Nebari uses both.
+These two methods have different levels of granularity in terms of what they can measure and act on. The internal culler is considered more granular and can make more intelligent decisions about when to shut down kernels and servers. In contrast, the external culler is more coarse-grained and may not be as precise.
 
-## Updating JupyterHub Idle-Culling Settings
+## Update JupyterHub idle-culling settings
 
-To update the settings for managing idle kernels and terminals in Nebari/JupyterHub, modify the nebari-config.yaml file. The available options that can be modified are as follows:
+To update the settings for managing idle kernels and terminals in Nebari/JupyterHub, modify the `nebari-config.yaml` file. The available options that can be modified are as follows:
 
 - `terminal_cull_inactive_timeout`: The timeout (in minutes) after which a terminal is considered inactive and ready to be culled.
 - `terminal_cull_interval`: The interval (in minutes) on which to check for terminals exceeding the inactive timeout value.
@@ -29,7 +26,7 @@ To update the settings for managing idle kernels and terminals in Nebari/Jupyter
 - `kernel_cull_busy`: Whether to consider culling kernels which are currently busy running some code.
 - `server_shutdown_no_activity_timeout`: The timeout (in minutes) after which the server is shut down if there is no activity.
 
-To update any of these options, modify the corresponding value in the `nebari-config.yaml` file and save the changes. For example, to update the kernel_cull_idle_timeout value to 30 minutes, modify the following lines:
+To update any of these options, modify the corresponding value in the `nebari-config.yaml` file and save the changes. For example, to update the `kernel_cull_idle_timeout` value to 30 minutes, modify the following lines:
 
 ```yaml
 jupyterlab:
