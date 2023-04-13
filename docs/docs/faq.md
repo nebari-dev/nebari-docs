@@ -58,6 +58,8 @@ If you're using a `flit` package, you can install it through the following comma
 flit install -s
 ```
 
+If the package requires build tools like `gcc` and `cmake`, remember that you can create a conda environment through the conda-store UI that includes the build tools, then just activate the environment and install the package locally.
+
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial][dask-tutorial] for more information.
 
 ## Can I modify the `.bashrc` file on Nebari?
