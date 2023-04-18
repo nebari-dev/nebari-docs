@@ -140,7 +140,7 @@ python -m nebari init aws --project <project_name> --domain <domain_name> --ci-p
 
 Then update the `nebari-config.yaml` file. The important keys to update are:
 
-- Replace `provider: aws` with `provider: local`
+- Replace `provider: aws` with `provider: existing`
 - Replace `amazon_web_services` with `local`
   - And update the `node_selector` and `kube_context` appropriately
 
