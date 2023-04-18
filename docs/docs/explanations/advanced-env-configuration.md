@@ -73,10 +73,10 @@ In Nebari, namespaces are used to organize and isolate resources. Nebari has two
 
 The `nebari-git` namespace refers to all available environments created using the `nebari-config.yaml` file and is available for all users and services. On the other hand, the global namespace (previously known as default) is the default namespace used by conda-store to manage its internal components and workers. It is designed for environments that are specific to a user or a service.
 
-For more information, please refer to conda-store [administration documentation](https://conda.store/en/latest/administration.html) related to `CondaStore.filesystem_namespace` and `CondaStore.filesystem_namespace` respectively.
+For more information, please refer to conda-store [administration documentation](https://conda.store/en/latest/administration.html) related to `CondaStore.default_namespace` and `CondaStore.filesystem_namespace` respectively.
 
 :::note
-By default, the namespace `nebari-git` is used in a standard Nebari deployment. However, you can change the namespace name by modifying the `conda-store.default_namespace` entry in your configuration file. Keep in mind that this setting permanently changes the namespace name.
+By default, the namespace `nebari-git` is used in a standard Nebari deployment. However, you can change the namespace name by modifying the `conda-store.default_namespace` entry in your `nebari-config.yaml` configuration file. Keep in mind that this setting permanently changes the namespace name.
 :::
 
 When you specify an environment in `nebari_config.yml`, it will be made available for all users and services under the `nebari-git` namespace. Conda-store is responsible for creating them upon request from the deployment process.
