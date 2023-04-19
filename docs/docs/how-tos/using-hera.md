@@ -16,9 +16,11 @@ To work with Hera via Python code, you'll need to create Argo environment variab
 2. Click on Argo Workflows and log in if needed
 3. On the left, click on User to show your User Info page
 
-At the bottom of the User Info page is list of variables and a button to copy them to your clipboard.  Copy those variables using the button (the redacted token will be copied to the clipboard), create your `.env` file following the format below, and save it in your Nebari directory.
+At the bottom of the User Info page is a list of variables and a button to copy them to your clipboard.
 
    ![Argo UI page - user info selected](/img/how-tos/hera_argo_user_credentials.png)
+
+Copy those variables using the button (the redacted token will be copied to the clipboard), create your `.env` file following the format below, and save it in your Nebari directory.  Remember to keep your credentials hidden and secure by not putting them in shared directories or other public platforms.
 
 TODO: why are we using a second arg 'ARGO_TOKEN_TOKEN'?  Can we just use 'ARGO_TOKEN'?
 
