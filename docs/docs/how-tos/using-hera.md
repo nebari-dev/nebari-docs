@@ -80,8 +80,8 @@ def multiline_function(arg1: str, arg2: str, ) -> str:
     print(arg2)
 
 
-with Workflow(generate_name="fv-test-", entrypoint="d") as w:
-    with DAG(name='d'):
+with Workflow(generate_name="fv-test-", entrypoint="my-dag") as w:
+    with DAG(name='my-dag'):
         hello_world()
         multiline_function(
             arguments={'arg1': 'test string', 'arg2': 'another test string'}
@@ -90,6 +90,8 @@ with Workflow(generate_name="fv-test-", entrypoint="d") as w:
 w.create()
 ```
 The second function illustrates how to pass arguments to a function via the `arguments` dict in the function call.  It also shows how to pass environment variables to the pod in the script decorator using a list of `Env` specifications.
+
+The `Workflow` takes `generated_name`, which appends some random characters to the string to ensure your workflow name is unique.  The parameter `entrypoint` defines the DAG to be invoked.  Be sure it the same as the name given in your DAG.
 
 Notice that a docker image was not specified in the script above.  In this case, Argo will start a pod using the default image specified by Hera.  In Hera 5.1.3, it's a [Python 3.8 image](https://github.com/argoproj-labs/hera/blob/3fd01f75059823da2338ef02488d2c71306818bf/src/hera/shared/_global_config.py#L37).
 
