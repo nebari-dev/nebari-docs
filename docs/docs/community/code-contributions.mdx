@@ -81,7 +81,7 @@ The following steps describe how to create and use a `conda` environment.
 2. Create a new environment using `environment-dev.yaml`:
 
    ```bash
-   conda env create -f environment-dev.yaml
+   conda create -n nebari-dev python=3.10
    ```
 
    You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the environment build.
@@ -103,7 +103,11 @@ python -m pip install -e .[dev]
 ```
 
 :::note
-If you use `zsh`, you may need to escape the square brackets: `\[dev\]`.
+If you use `zsh`, you may need to escape the square brackets:
+
+```bash
+python -m pip install -e .\[dev\]
+```
 :::
 
 ### Pre-commit hooks
