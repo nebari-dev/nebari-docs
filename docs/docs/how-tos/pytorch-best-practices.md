@@ -13,7 +13,7 @@ We recommend using the [PyTorch installation matrix][pytorch installation matrix
 - Python
 - CUDA 11.7
 
-![pytorch-matrix](img/how-tos/pytorch-specification-matrix.png)
+![pytorch-matrix](/img/how-tos/pytorch-specification-matrix.png)
 
 Those options produce the following command, which provides the packages and channels we need to build the environment:
 
@@ -23,7 +23,7 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvi
 
 So just go to conda-store and create a new environment by adding `pytorch`, `torchvision`, `torchaudio`, and `pytorch-cuda=11.7` to the list of requested packages and adding `pytorch` and `nvidia` to the list of channels.
 
-![conda-pytorch-specification](img/how-tos/pytorch-conda-specification.png)
+![conda-pytorch-specification](/img/how-tos/pytorch-conda-specification.png)
 
 Add any other packages you need and click `Create` to build the environment.
 
