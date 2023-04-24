@@ -84,6 +84,7 @@ module.exports = {
         "explanations/customize-themes",
         "explanations/environments-configuration",
         "explanations/custom-overrides-configuration",
+        "explanations/advanced-idle-culler",
         "explanations/config-best-practices",
         "explanations/infrastructure-architecture",
       ],
