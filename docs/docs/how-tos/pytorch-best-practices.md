@@ -13,7 +13,7 @@ We recommend using the [PyTorch installation matrix][pytorch installation matrix
 - Python
 - CUDA 11.7
 
-![pytorch-matrix](/img/how-tos/pytorch-specification-matrix.png)
+![pytorch-matrix](/img/how-tos/pytorch-installation-matrix.png)
 
 Those options produce the following command, which provides the packages and channels we need to build the environment:
 
