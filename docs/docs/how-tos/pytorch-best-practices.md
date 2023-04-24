@@ -27,6 +27,7 @@ So just go to conda-store and create a new environment by adding `pytorch`, `tor
 
 Add any other packages you need and click `Create` to build the environment.
 
-Also see the FAQ answer to [Why doesn't my code recognize the GPU(s) on Nebari?](www.nebari.dev/docs/faq#why-doesnt-my-code-recognize-the-gpus-on-nebari)
+Also see the FAQ answer to [Why doesn't my code recognize the GPU(s) on Nebari?][why gpus not recognized]
 
 [pytorch installation matrix]: https://pytorch.org/get-started
+[why gpus not recognized]: /faq#why-doesnt-my-code-recognize-the-gpus-on-nebari
