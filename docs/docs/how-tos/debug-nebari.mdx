@@ -148,7 +148,7 @@ Once you have installed kubectl, you can use it to debug issues within your Neba
 kubectl provides a variety of commands and options to help you diagnose and fix issues with your deployment.
 In this section, we will cover some useful `kubectl` commands to get you started.
 
-#### Viewing all pods in a namespace
+<details><summary>Viewing all pods in a namespace</summary>
 
 To view all the pods in a namespace, use the following command:
 
@@ -159,7 +159,9 @@ kubectl get pods -n <namespace>
 This command lists all the pods in the specified namespace. You can use the namespace flag `(-n)`
 to specify the namespace you want to view.
 
-#### Viewing logs for a specific pod
+</details>
+
+<details><summary>Viewing all pods in all namespaces</summary>
 
 To view the logs for a specific pod, use the following command:
 
@@ -176,7 +178,9 @@ value by inspecting your `nebari-config.yaml` under the `namespace` key. For mor
 refer to [general configuration settings](docs/explanations/advanced-configuration#general-configuration-settings).
 :::
 
-#### Executing a command inside a specific pod
+</details>
+
+<details><summary>Viewing logs for a specific pod</summary>
 
 ```bash
 kubectl exec -it <pod-name> -n <namespace> -- /bin/bash
@@ -185,6 +189,8 @@ kubectl exec -it <pod-name> -n <namespace> -- /bin/bash
 Replace `pod-name` with the name of the pod you want to execute the command in, and `namespace`
 with the namespace the pod is deployed in. This command opens a shell inside the specified pod,
 allowing you to execute commands as if you were logged into the pod.
+
+</details>
 
 ### Troubleshooting
 
