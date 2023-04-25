@@ -133,7 +133,7 @@ Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [PyTorch best practices][pytorch best practices].  If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
 
 ## How do I migrate from Qhub to Nebari?
@@ -164,4 +164,5 @@ If you have potential solutions or can help us move forward with updates to the 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[selecting a profile]: https://www.nebari.dev/docs/how-tos/login-keycloak#3-selecting-a-profile
+[selecting a profile]: how-tos/login-keycloak#3-selecting-a-profile
+[pytorch best practices]: how-tos/pytorch-best-practices
