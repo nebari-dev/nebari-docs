@@ -13,7 +13,7 @@ its development workflow.
 ## Communication guidelines
 
 - Every PR, good or bad, is an act of generosity. Opening with a positive comment will help the author feel rewarded,
-    and your subsequent remarks may be heard more openly. You may feel good also.
+  and your subsequent remarks may be heard more openly. You may feel good also.
 - Begin if possible with the large issues, so the author knows they’ve been understood.
   Resist the temptation to immediately go line by line, or to open with small pervasive issues.
 - You are the face of the project, and the Nebari project aims to be: open, empathetic, welcoming, friendly and patient.
@@ -60,7 +60,7 @@ Only maintainers can merge pull requests. Please follow these guidelines:
 
 - Make sure all automated CI tests pass before merging a PR, and that the documentation builds without any errors.
   - If the contribution is made to the `nebari-dev/nebari` repository, then you'll need to trigger the Kubernetes tests
-  by commenting `/bot run tests` on the PR.
+    by commenting `/bot run tests` on the PR.
   - If the contribution is made to the `nebari-dev/nebari-docs` repository, then make sure to check the Netlify build and preview.
 - In case of merge conflicts, ask the PR submitter to rebase on `develop`.
 - Squashing commits or cleaning up commit messages of a PR that you consider too messy is OK.
@@ -121,5 +121,6 @@ Our reviewer guidelines were inspired and adapted from:
 - scikit-learn [reviewer guidelines](https://scikit-learn.org/stable/developers/contributing.html#code-review-guidelines)
 
 <!-- Internal links -->
+
 [saved-replies]: ./saved-replies.md
 [github-conventions]: community/maintainers/github-conventions.md

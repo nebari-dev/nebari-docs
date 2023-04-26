@@ -84,6 +84,18 @@ installation, please visit the "Get started" section of our [troubleshooting pag
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set.
 
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your Azure account. This name must comply with the following rules:
+
+- Between 3 and 16 characters long;
+- Start and end with alphanumeric;
+- Must use lowercase alphabets.
+
+Those rules are enforced by Azure and are not configurable. For more information refer to [Azure's official documentation](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).
+:::
+
 In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-azure`:

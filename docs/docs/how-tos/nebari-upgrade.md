@@ -23,7 +23,7 @@ Use pip or conda to install the latest Nebari version.
 ```shell
 pip install --upgrade nebari
 ```
-or 
+or
 
 ```shell
 conda update nebari
@@ -43,7 +43,7 @@ nebari upgrade
 If you are deploying Nebari from your local machine (see [this section](#cicd-render-and-commit-to-git) for CI/CD deployments), you will now have a `nebari-config.yaml` file that you can deploy.
 
 ```shell
-nebari deploy -c nebari-config.yaml   
+nebari deploy -c nebari-config.yaml
 ```
 
 ### CI/CD: render and commit to git
@@ -115,7 +115,7 @@ To install (or upgrade) to a specific version of the python package used to mana
 pip install --upgrade qhub==<version>
 ```
 
-or 
+or
 
 ```shell
 conda install qhub=<version>
@@ -170,7 +170,7 @@ It is also a good time to upgrade your version of Kubernetes. Look for the `kube
 For local deployments, run the following:
 ###TO DO: is there a QHub command?
 ```shell
-nebari deploy -c qhub-config.yaml   
+nebari deploy -c qhub-config.yaml
 ```
 
 At this point you may see an error message saying that deployment is prevented due to the `prevent_deploy` setting in your YAML file. This is a safeguard to ensure that you only proceed if you are aware of possible breaking changes in the current upgrade.
@@ -181,7 +181,7 @@ For example, we may be aware that you will lose data due to this upgrade, so nee
 
 ### CI/CD: render and commit to git
 
-For CI/CD (GitHub/GitLab) workflows, update the workflow files.  
+For CI/CD (GitHub/GitLab) workflows, update the workflow files.
 Run the following with the updated `nebari-config.yaml` file:
 
 ###TO DO: is there a QHub command?
@@ -244,7 +244,7 @@ Version `v0.3.11` on AWS has an error with the Kubernetes config map. See [this 
 ## Migrating from QHub to Nebari
 
 :::Note
-If you are migrating your package from QHub to Nebari there are a couple steps in the upgrade process to make note of.  First, you will re-name anything labeled with `qhub` with `nebari`.  Second, the version system used for Nebari is different from QHub.  Nebari uses a CalVer version system, starting at version 2022.10.1.  QHub was tracked with a SemVer version system, the last version being 0.4.5.  
+If you are migrating your package from QHub to Nebari there are a couple steps in the upgrade process to make note of.  First, you will re-name anything labeled with `qhub` with `nebari`.  Second, the version system used for Nebari is different from QHub.  Nebari uses a CalVer version system, starting at version 2022.10.1.  QHub was tracked with a SemVer version system, the last version being 0.4.5.
 :::
 
 
@@ -288,7 +288,8 @@ To install (or upgrade) to a specific version of the python package used to mana
 ```shell
 pip install --upgrade nebari
 ```
-or 
+
+or
 
 ```shell
 conda update nebari
@@ -341,12 +342,12 @@ It is also a good time to upgrade your version of Kubernetes. Look for the `kube
 For local deployments, run the following:
 
 ```shell
-nebari deploy -c qhub-config.yaml   
+nebari deploy -c qhub-config.yaml
 ```
 
 ### CI/CD: render and commit to git
 
-For CI/CD (GitHub/GitLab) workflows, update the workflow files.  
+For CI/CD (GitHub/GitLab) workflows, update the workflow files.
 Run the following with the updated `nebari-config.yaml` file:
 
 ```shell
@@ -404,5 +405,3 @@ For more details on this process, visit the [Keycloak docs section](./login-thru
 
 Version `v0.3.11` on AWS has an error with the Kubernetes config map. See [this GitHub discussion related to AWS K8s config maps](https://github.com/Quansight/nebari/discussions/841) for more details.
 :::
-
-

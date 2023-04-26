@@ -45,7 +45,9 @@ Once authenticated, you will be forwarded to the main JupyterHub page. On this p
 Now, click on `Start My Server` and you will be prompted with a set of available profiles for this particular user.
 
 The customized profiles will give you access to fixed cloud resources. In this example, you could choose a resource with 1 CPUs and 4 GB of RAM or a resource with 2 CPU and 8 GB of RAM.
+
 <!-- TODO: add link to advanced configuration section -->
+
 These options are configured by your administrator. A more detailed explanation of dedicated profiles can be found in the Profiles section of
 the advanced configuration page.
 
@@ -77,5 +79,6 @@ The starting up sequence can take up to several minutes, depending on the size o
 Now you are ready to fully use all the features of your Jupyterlab instance. Please check our [Nebari 101] section for more information.
 
 <!-- internal links -->
+
 [nebari-keycloak]: how-tos/configure-keycloak-howto.md
 [nebari-keycloak-add-user]: how-tos/configure-keycloak-howto.md#adding-a-nebari-user
