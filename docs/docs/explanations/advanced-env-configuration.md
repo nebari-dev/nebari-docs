@@ -79,7 +79,7 @@ For more information, please refer to conda-store [administration documentation]
 By default, the namespace `nebari-git` is used in a standard Nebari deployment. However, you can change the namespace name by modifying the `conda-store.default_namespace` entry in your `nebari-config.yaml` configuration file. Keep in mind that this setting permanently changes the namespace name.
 :::
 
-When you specify an environment in `nebari_config.yml`, it will be made available for all users and services under the `nebari-git` namespace. Conda-store is responsible for creating them upon request from the deployment process.
+When you specify an environment in `nebari-config.yml`, it will be made available for all users and services under the `nebari-git` namespace. Conda-store is responsible for creating them upon request from the deployment process.
 
 However, the conda-store permission model restricts user intervention for both namespaces. This means that `nebari-git` environments can only be modified within the Nebari deployments, while global environments can be locally changed via direct interaction with conda activate. However, any changes made to global environments will only be perceived by the user and not propagated to other users.
 
