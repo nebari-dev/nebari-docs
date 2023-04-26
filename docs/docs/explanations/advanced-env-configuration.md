@@ -20,7 +20,7 @@ Nebari comes with two default environments that are built during deployment:
 
 The configuration of each environment in Nebari is achieved through a `environment.<filename>` mapping to a conda environment specification. To configure environments, you can add entries to the `nebari-config.yml` file located in the deployment repository, which will then be used by conda-store to create or update the environment during deployment.
 
-For example, the following snippet shows an environment configuration in `nebari_config.yml`:
+For example, the following snippet shows an environment configuration in `nebari-config.yml`:
 
 ```yaml
 ### Example environment configuration
