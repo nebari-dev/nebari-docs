@@ -83,7 +83,9 @@ When you specify an environment in `nebari-config.yml`, it will be made availabl
 
 However, the conda-store permission model restricts user intervention for both namespaces. This means that `nebari-git` environments can only be modified within the Nebari deployments, while global environments can be locally changed via direct interaction with conda activate. However, any changes made to global environments will only be perceived by the user and not propagated to other users.
 
-Note that the `nebari-git` namespace is modified using nebari-config deployments only, and any modifications to the `global` namespace will only be available locally.
+:::warning
+To reiterate, the `nebari-git` namespace is modified using nebari-config deployments only, and any modifications to the `global` namespace will only be available locally.
+:::
 
 :::note
 While it is not possible to interact with these namespaces directly, it is possible to override the conda-store permission model to allow users to modify the environments.
