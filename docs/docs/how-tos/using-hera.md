@@ -229,13 +229,125 @@ Parameters and environment variables will be created in the container using the 
 
 This script uses the `command` attribute to execute commands in the container.  The script above demonstrates how to access each type of variable (swap the commented commands to try each method).  If an executable, such as `echo` in the example above, is not specified, Hera defaults to `python`.  See the [description of `command` in the version 4 docs][command-description-v4-docs] for more on using the `command` attribute, and see the Kubernetes doc [Define a Command and Arguments for a Container][define-a-command-on-k8s] for more on executing commands in a pod.
 
-## TODO: volume mounts
-- mount local fs so you can load env vars, save model results, etc.
-- Volume mounts can make it easy to pass env vars, tokens, conda envs, and input data, as well as return output from the run directly to your working folders.  However, it might be more than you need, so consider simpler methods that only pass env vars, or write output to the cloud.
-- volume mount conda envs from conda-store
--
+## Volume mounts
+
+Volume mounts can make it easy to pass environment variables, tokens, conda environments, and input data, as well as return output from the run directly to your home directory.  However, it might be more than you need, so consider simpler methods that only pass variables or that write output to the cloud.
+
+If you need to create an empty volume, you can specify whatever mount path you need, such as `/mnt/my_vol`.  Our example below serves two purposes.  If the volume did not already exist, it would create it, but because it is already specified for any linux container we spin up, we are effectively specifying the size that the volume should be when Docker creates it.  `/dev/shm` is typically small, like 64MB, but when running deep learning algorithms, we need a larger size, and anything from 2-16GB tends to work well for us.
+
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from hera.shared import global_config
+from hera.workflows import Container, DAG, Volume, Workflow
+
+
+env_path = Path('.env').resolve()
+load_dotenv(env_path, verbose=True)
+global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
+global_config.host = os.environ['GLOBAL_CONFIG_HOST']
+global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
+
+
+with Workflow(generate_name="vol-", entrypoint="my-dag") as w:
+    container = Container(
+        name="container",
+        image="continuumio/miniconda3",
+        command=["df", "-h"],
+        volumes=[Volume(size="2Gi", mount_path="/dev/shm")]
+    )
+    with DAG(name="my-dag"):
+        A = container(name="A")
+
+w.create()
+```
+
+The next example adds a user's home directory as an existing volume mount.  As mentioned above, this can be a great way to quickly load environment variables from a `.env` file or pass datasets into your container.  Note that you should replace `<username>` with your Nebari username.
+
+TODO: is `jupyterhub-dev-share` the same for any user, or does this name change depending on the Nebari instance?
+
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from hera.shared import global_config
+from hera.workflows import Container, DAG, ExistingVolume, Volume, Workflow
+
+
+env_path = Path('.env').resolve()
+load_dotenv(env_path, verbose=True)
+global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
+global_config.host = os.environ['GLOBAL_CONFIG_HOST']
+global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
+
+
+with Workflow(generate_name="vol-", entrypoint="my-dag") as w:
+    container = Container(
+        name="container",
+        image="continuumio/miniconda3",
+        command=["ls", "/home/<username>"],
+        volumes=[
+            Volume(size="2Gi", mount_path="/dev/shm"),
+            ExistingVolume(
+                name="jupyterhub-dev-share",
+                mount_path="/home/<username>",
+                sub_path="home/<username>",
+                claim_name="jupyterhub-dev-share"
+            )
+        ]
+    )
+    with DAG(name="my-dag"):
+        A = container(name="A")
+
+w.create()
+```
+
+The next example adds conda-store environments from a namespace to the container by creating another `ExistingVolume` that points to the namespace on your Nebari instance.
+
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from hera.shared import global_config
+from hera.workflows import Container, DAG, ExistingVolume, Volume, Workflow
+
+
+env_path = Path('.env').resolve()
+load_dotenv(env_path, verbose=True)
+global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
+global_config.host = os.environ['GLOBAL_CONFIG_HOST']
+global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
+
+
+with Workflow(generate_name="vol-", entrypoint="my-dag") as w:
+    container = Container(
+        name="container",
+        image="continuumio/miniconda3",
+        command=["conda", "info", "--envs"],
+        volumes=[
+            Volume(size="2Gi", mount_path="/dev/shm"),
+            ExistingVolume(
+                name="jupyterhub-dev-share",
+                mount_path="/home/<username>",
+                sub_path="home/<username>",
+                claim_name="jupyterhub-dev-share"
+            ),
+            ExistingVolume(
+                name="conda-store-dev-share",
+                mount_path="/home/conda/<namespace>",
+                sub_path="<namespace>",
+                claim_name="conda-store-dev-share"
+            )
+        ]
+    )
+    with DAG(name="my-dag"):
+        A = container(name="A")
+
+w.create()
+```
+
 ## WIP: Deep Learning Tips
-Set `dev/shm` by adding a Volume() to the volume list in a Task.  `Volume(size="2Gi", mount_path="/dev/shm")`
 
 If you need to run your deep learning code with the `torchrun` executable instead of `python`, see the notes and links above on running commands in containers.
 
