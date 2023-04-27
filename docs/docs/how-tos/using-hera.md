@@ -6,7 +6,7 @@ description: Hera workflow management
 
 # Automate workflows with Hera
 
-[Hera](https://hera-workflows.readthedocs.io/) provides an easy way to run Argo workflows from Python code. The examples below are based on Hera 5, which is a major release with a full rewrite of the library.  The rewrite allowed full feature parity with Argo workflows, so be sure to use the [Argo docs](https://argoproj.github.io/argo-workflows/) to learn more about how the workflows are being executed.
+[Hera][hera-docs] provides an easy way to run Argo workflows from Python code. The examples below are based on Hera 5, which is a major release with a full rewrite of the library.  The rewrite allowed full feature parity with Argo workflows, so be sure to use the [Argo docs][argo-docs] to learn more about how the workflows are being executed.
 
 ## Setup
 
@@ -90,7 +90,7 @@ The second function illustrates how to pass arguments to a function via the `arg
 
 The `Workflow` takes `generated_name`, which appends some random characters to the string to ensure your workflow name is unique.  The parameter `entrypoint` defines the DAG to be invoked.  Be sure it is the same as the name given in your DAG.
 
-Notice that a docker image was not specified in the script above.  In this case, Argo will start a pod using the default image specified by Hera.  In Hera 5.1.3, it's a [Python 3.8 image](https://github.com/argoproj-labs/hera/blob/3fd01f75059823da2338ef02488d2c71306818bf/src/hera/shared/_global_config.py#L37).
+Notice that a docker image was not specified in the script above.  In this case, Argo will start a pod using the default image specified by Hera.  In Hera 5.1.3, it's a [Python 3.8 image][hera-python-default-image].
 
 ## Specify priorities and dependencies with a DAG
 
@@ -347,12 +347,50 @@ with Workflow(generate_name="vol-", entrypoint="my-dag") as w:
 w.create()
 ```
 
-## WIP: Deep Learning Tips
+## TODO: How to work with GPUs
 
-If you need to run your deep learning code with the `torchrun` executable instead of `python`, see the notes and links above on running commands in containers.
+TODO: This is a starting point.  Hera 5 does not have a GPUTolerance yet.  We used it in Hera 4 previously and they have a todo on their repo to make one.
 
-set GPUToleration for GPUs
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from hera.shared import global_config
+from hera.workflows import Container, DAG, GPUTolerance, Resources, Volume, Workflow
 
+
+env_path = Path('.env').resolve()
+load_dotenv(env_path, verbose=True)
+global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
+global_config.host = os.environ['GLOBAL_CONFIG_HOST']
+global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
+
+
+with Workflow(generate_name="gpu-", entrypoint="my-dag") as w:
+    container = Container(
+        name="container",
+        image="pytorchignite/vision",
+        # command=["python", "import", "torch", "torch.cuda.is_available()"],
+        command=["nvidia-smi"],
+        volumes=[Volume(size="2Gi", mount_path="/dev/shm")],
+        resources=Resources(gpus=2),
+        tolerations=[GPUTolerance],
+        node_selectors={"cloud.google.com/gke-accelerator": "nvidia-tesla-t4"},
+    )
+    with DAG(name="my-dag"):
+        A = container(name="A")
+
+w.create()
+```
+
+## Deep Learning Tips
+
+- If you need to run your deep learning code with the `torchrun` executable instead of `python`, see the notes and links above on running commands in containers.
+- Set `/dev/shm` to a larger size by using a volume specification as shown above.
+
+[hera-docs]: https://hera-workflows.readthedocs.io/
+[argo-docs]: https://argoproj.github.io/argo-workflows/
+[hera-python-default-image]: https://github.com/argoproj-labs/hera/blob/3fd01f75059823da2338ef02488d2c71306818bf/src/hera/shared/_global_config.py#L37
 [image-pull-secrets]: https://hera-workflows.readthedocs.io/en/stable/examples/workflows/upstream/image_pull_secrets/
 [define-a-command-on-k8s]: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
 [command-description-v4-docs]: https://github.com/argoproj-labs/hera/blob/e93b0b0d972e658c00f8c786314fc47f26ae64f9/src/hera/task.py#L116
