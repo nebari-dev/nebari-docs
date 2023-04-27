@@ -1,7 +1,7 @@
 ---
 id: using-hera
 title: Automate workflows with Hera
-description: Hera workflow management
+description: Hera workflow examples
 ---
 
 # Automate workflows with Hera
