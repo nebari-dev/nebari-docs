@@ -135,54 +135,6 @@ w.create()
 
 In this script, we added another function and defined the tasks as `t1`, `t2a`, and `t2b`.  In this case, `t1` will run first, and if it succeeds, `t2a` and `t2b` will run in parallel.  If `t1` fails, `t2a` and `t2b` will not be run.
 
-## WIP: Parameter passing between tasks
-
-Defining a Task allows parameter passing.  This script passes the output from the first function to the second function, each running in their own pods.
-
-TODO: There is a permission issue preventing parameter sharing.  Either allow sharing on Nebari or skip this and use volume mounts to share across pods.
-
-```python
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-from hera.shared import global_config
-from hera.workflows import Env, DAG, Workflow, script, Task, Parameter
-
-
-env_path = Path('.env').resolve()
-load_dotenv(env_path, verbose=True)
-global_config.token = os.environ['ARGO_TOKEN_TOKEN']
-global_config.host = os.environ['GLOBAL_CONFIG_HOST']
-global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
-
-@script()
-def hello_world():
-    """Simple function"""
-    print("Hello World!")
-
-
-@script(env=[Env(name="ENV_VAR1", value="1"), Env(name="ENV_VAR2", value="2")])
-def multiline_function(arg1: str, arg2: str, ) -> str:
-    """Example of passing function arguments and environment variables"""
-    print(arg1)
-    print(arg2)
-
-
-with Workflow(generate_name="fv-test-", entrypoint="my-dag") as w:
-    with DAG(name='my-dag'):
-        t1: Task = hello_world()
-        t2 = multiline_function(
-            arguments=[
-                Parameter(name="arg1", value=t1.result),
-                Parameter(name="arg2", value="another test string")
-            ]
-        )
-        t1 >> t2
-
-w.create()
-
-```
-
 ## Passing variables to containers
 
 Hera and Argo fully support container-based workflows, and in fact you are using containers via Kubernetes whenever you use these tools.  You can specify your own image or use one from Docker Hub.  Both parameters and environment variables can be passed into containers as shown in the script below.
