@@ -135,7 +135,7 @@ w.create()
 
 In this script, we added another function and defined the tasks as `t1`, `t2a`, and `t2b`.  In this case, `t1` will run first, and if it succeeds, `t2a` and `t2b` will run in parallel.  If `t1` fails, `t2a` and `t2b` will not be run.
 
-## Passing variables to containers
+## Using commands and passing variables to containers
 
 Hera and Argo fully support container-based workflows, and in fact you are using containers via Kubernetes whenever you use these tools.  You can specify your own image or use one from Docker Hub.  Both parameters and environment variables can be passed into containers as shown in the script below.
 
