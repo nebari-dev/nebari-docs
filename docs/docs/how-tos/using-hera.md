@@ -37,13 +37,6 @@ GLOBAL_CONFIG_HOST='<your Nebari domain>/argo'
 GLOBAL_CONFIG_NAMESPACE='<your namespace>'  # might be different from Argo namespace, e.g., 'dev'
 ```
 
-## TODO: Script that returns stacktrace for debugging
-
-Return Task result for debugging
-- Simplest workflow possible, that returns the result of a task, including stdout/stderr.
-- Use subprocess?
-- Is it something that should be configured for all users in Nebari instead?  The Argo UI includes logs but the logs are empty.
-
 ## Basic workflow to run scripts
 
 The script below runs two functions in different pods concurrently.  After the imports, it loads global configuration arguments for Hera to interact with Argo.  Those come from the `.env` file defined above.  Be sure to update this script with the path to your `.env` file.
