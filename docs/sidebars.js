@@ -68,6 +68,7 @@ module.exports = {
         "how-tos/using-vscode",
         "how-tos/manual-backup",
         "how-tos/nebari-upgrade",
+        "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
         "how-tos/using-hera",
