@@ -292,41 +292,6 @@ with Workflow(generate_name="vol-", entrypoint="my-dag") as w:
 w.create()
 ```
 
-## TODO: How to work with GPUs
-
-TODO: This is a starting point.  Hera 5 does not have a GPUTolerance yet.  We used it in Hera 4 previously and they have a todo on their repo to make one.
-
-```python
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-from hera.shared import global_config
-from hera.workflows import Container, DAG, GPUTolerance, Resources, Volume, Workflow
-
-
-env_path = Path('.env').resolve()
-load_dotenv(env_path, verbose=True)
-global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
-global_config.host = os.environ['GLOBAL_CONFIG_HOST']
-global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
-
-
-with Workflow(generate_name="gpu-", entrypoint="my-dag") as w:
-    container = Container(
-        name="container",
-        image="pytorchignite/vision",
-        # command=["python", "import", "torch", "torch.cuda.is_available()"],
-        command=["nvidia-smi"],
-        volumes=[Volume(size="2Gi", mount_path="/dev/shm")],
-        resources=Resources(gpus=2),
-        tolerations=[GPUTolerance],
-        node_selectors={"cloud.google.com/gke-accelerator": "nvidia-tesla-t4"},
-    )
-    with DAG(name="my-dag"):
-        A = container(name="A")
-
-w.create()
-```
 
 ## Deep Learning Tips
 
