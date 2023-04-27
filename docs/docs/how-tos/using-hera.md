@@ -92,6 +92,56 @@ The `Workflow` takes `generated_name`, which appends some random characters to t
 
 Notice that a docker image was not specified in the script above.  In this case, Argo will start a pod using the default image specified by Hera.  In Hera 5.1.3, it's a [Python 3.8 image](https://github.com/argoproj-labs/hera/blob/3fd01f75059823da2338ef02488d2c71306818bf/src/hera/shared/_global_config.py#L37).
 
+## Specify priorities and dependencies with a DAG
+
+Using a DAG will allow you to specify the dependencies of each task.  If a task fails, the downstream tasks can be cancelled or some other task can take its place.  This provides more control over the tasks and can assist in creating much more efficient workflows.
+
+```python
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from hera.shared import global_config
+from hera.workflows import Env, DAG, Workflow, script
+
+
+env_path = Path('.env').resolve()
+load_dotenv(env_path, verbose=True)
+global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
+global_config.host = os.environ['GLOBAL_CONFIG_HOST']
+global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
+
+@script()
+def hello_world():
+    """Simple function"""
+    print("Hello World!")
+
+
+@script(env=[Env(name="ENV_VAR1", value="1"), Env(name="ENV_VAR2", value="2")])
+def multiline_function(arg1: str, arg2: str, ) -> str:
+    """Example of passing function arguments and environment variables"""
+    print(arg1)
+    print(arg2)
+
+@script()
+def another_script():
+    """Simple function"""
+    print("Another script")
+
+
+with Workflow(generate_name="dependency-test-", entrypoint="my-dag") as w:
+    with DAG(name='my-dag'):
+        t1 = hello_world()
+        t2a = multiline_function(
+                arguments={'arg1': 'test string', 'arg2': 'another test string'}
+            )
+        t2b = another_script()
+        t1 >> [t2a, t2b]
+
+w.create()
+```
+
+In this script, we added another function and defined the tasks as `t1`, `t2a`, and `t2b`.  In this case, `t1` will run first, and if it succeeds, `t2a` and `t2b` will run in parallel.  If `t1` fails, `t2a` and `t2b` will not be run.
+
 ## WIP: Parameter passing between tasks
 
 Defining a Task allows parameter passing.  This script passes the output from the first function to the second function, each running in their own pods.
@@ -140,16 +190,16 @@ w.create()
 
 ```
 
-## Specify priorities and dependencies
+## Passing variables to containers
 
-Using a DAG will allow you to specify the dependencies of each task.  If a task fails, the downstream tasks can be cancelled or some other task can take its place.  This provides more control over the tasks and can assist in creating much more efficient workflows.
+Hera and Argo fully support container-based workflows, and in fact you are using containers via Kubernetes whenever you use these tools.  You can specify your own image or use one from Docker Hub.  Both parameters and environment variables can be passed into containers as shown in the script below.
 
 ```python
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from hera.shared import global_config
-from hera.workflows import Env, DAG, Workflow, script
+from hera.workflows import Container, Env, DAG, Workflow, Parameter
 
 
 env_path = Path('.env').resolve()
@@ -158,45 +208,26 @@ global_config.token = os.environ['ARGO_TOKEN'].replace('Bearer ', '')
 global_config.host = os.environ['GLOBAL_CONFIG_HOST']
 global_config.namespace = os.environ['GLOBAL_CONFIG_NAMESPACE']
 
-@script()
-def hello_world():
-    """Simple function"""
-    print("Hello World!")
 
-
-@script(env=[Env(name="ENV_VAR1", value="1"), Env(name="ENV_VAR2", value="2")])
-def multiline_function(arg1: str, arg2: str, ) -> str:
-    """Example of passing function arguments and environment variables"""
-    print(arg1)
-    print(arg2)
-
-@script()
-def another_script():
-    """Simple function"""
-    print("Another script")
-
-
-with Workflow(generate_name="dependency-test-", entrypoint="my-dag") as w:
-    with DAG(name='my-dag'):
-        t1 = hello_world()
-        t2 = multiline_function(
-                arguments={'arg1': 'test string', 'arg2': 'another test string'}
-            )
-        t3 = another_script()
-        t1 >> [t2, t3]
+with Workflow(generate_name="container-", entrypoint="my-dag") as w:
+    container = Container(
+        name="container",
+        image="alpine:3.7",
+        command=["echo", "{{inputs.parameters.arg}}"],
+        # command=["echo", "$(ENV_VAR1)"],
+        inputs=[Parameter(name="arg")],
+        env=[Env(name="ENV_VAR1", value="my_env_var1")]
+    )
+    with DAG(name="my-dag"):
+        A = container(name="A", arguments={"arg": "arg_for_task_A"})
+        B = container(name="B", arguments={"arg": "arg_for_task_B"})
 
 w.create()
 ```
 
-In this script, we added another function and defined the tasks as `t1`, `t2`, and `t3`.  With those definitions, it's easy to specify the order in which the tasks should run.  In this case, `t1` will run first, and if it succeeds, `t2` and `t3` will run in parallel.
+Parameters and environment variables will be created in the container using the names specified, e.g., `ENV_VAR1` and `arg`.  Environment variables can also be pulled in from other sources, such as a Docker registry.  See Hera's [Image Pull Secrets][image-pull-secrets] example for more.
 
-## WIP: Use Docker containers
-
-You can add containers
-
-Add env vars as usual via `env=[Env(), Env(),...]` (Container class)
-
-
+This script uses the `command` attribute to execute commands in the container.  The script above demonstrates how to access each type of variable (swap the commented commands to try each method).  If an executable, such as `echo` in the example above, is not specified, Hera defaults to `python`.  See the [description of `command` in the version 4 docs][command-description-v4-docs] for more on using the `command` attribute, and see the Kubernetes doc [Define a Command and Arguments for a Container][define-a-command-on-k8s] for more on executing commands in a pod.
 
 ## TODO: volume mounts
 - mount local fs so you can load env vars, save model results, etc.
@@ -204,4 +235,12 @@ Add env vars as usual via `env=[Env(), Env(),...]` (Container class)
 - volume mount conda envs from conda-store
 -
 ## WIP: Deep Learning Tips
-Set dev/shm by adding a Volume() to the volume list in a Task.  `Volume(size="2Gi", mount_path="/dev/shm")`
+Set `dev/shm` by adding a Volume() to the volume list in a Task.  `Volume(size="2Gi", mount_path="/dev/shm")`
+
+If you need to run your deep learning code with the `torchrun` executable instead of `python`, see the notes and links above on running commands in containers.
+
+set GPUToleration for GPUs
+
+[image-pull-secrets]: https://hera-workflows.readthedocs.io/en/stable/examples/workflows/upstream/image_pull_secrets/
+[define-a-command-on-k8s]: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+[command-description-v4-docs]: https://github.com/argoproj-labs/hera/blob/e93b0b0d972e658c00f8c786314fc47f26ae64f9/src/hera/task.py#L116
