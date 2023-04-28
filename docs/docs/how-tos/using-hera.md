@@ -210,7 +210,6 @@ w.create()
 
 The next example adds a user's home directory as an existing volume mount.  As mentioned above, this can be a great way to quickly load environment variables from a `.env` file or pass datasets into your container.  Note that you should replace `<username>` with your Nebari username.
 
-TODO: is `jupyterhub-dev-share` the same for any user, or does this name change depending on the Nebari instance?
 
 ```python
 import os
