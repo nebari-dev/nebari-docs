@@ -71,6 +71,7 @@ module.exports = {
         "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
+        "how-tos/idle-culling",
       ],
     },
     {
