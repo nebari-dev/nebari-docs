@@ -58,6 +58,8 @@ If you're using a `flit` package, you can install it through the following comma
 flit install -s
 ```
 
+If the package requires build tools like `gcc` and `cmake`, remember that you can create a conda environment through the conda-store UI that includes the build tools, then just activate the environment and install the package locally.
+
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial][dask-tutorial] for more information.
 
 ## Can I modify the `.bashrc` file on Nebari?
@@ -131,7 +133,7 @@ Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [PyTorch best practices][pytorch best practices].  If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
 
 ## How do I migrate from Qhub to Nebari?
@@ -162,4 +164,5 @@ If you have potential solutions or can help us move forward with updates to the 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[selecting a profile]: https://www.nebari.dev/docs/how-tos/login-keycloak#3-selecting-a-profile
+[selecting a profile]: how-tos/login-keycloak#3-selecting-a-profile
+[pytorch best practices]: how-tos/pytorch-best-practices
