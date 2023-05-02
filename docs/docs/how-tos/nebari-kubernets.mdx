@@ -7,10 +7,6 @@ description: Deploying Nebari on an existing Kubernetes infrastructure
 Nebari can also be deployed on top of Kubernetes clusters. In this documentation,
 we will guide you through the process of deploying Nebari into a pre-existing Kubernetes cluster.
 
-:::note
-We have tested this functionality for GCP and AWS, but the other providers should work in a similar fashion.
-:::
-
 To make it easier for you to follow along, we will outline the steps for such deployment with a
 simple infrastructure example. We will use tabs to represent the different provider
 steps/configurations. Let's get started!
@@ -41,10 +37,8 @@ that there exists an [Identity and Access Management (IAM)](https://docs.aws.ama
 - `AmazonEC2ContainerRegistryReadOnly`
 - `AmazonEKS_CNI_Policy`
 
-A custom policy:
-
 <details>
-<summary>Click to expand</summary>
+<summary>Custom CNI policy (Click to expand) </summary>
 
 ```json
 {
@@ -87,10 +81,6 @@ A custom policy:
 ```
 
 </details>
-
-</TabItem>
-<TabItem value="GCP">
-    This is the custom configuration for GCP
 </TabItem>
 </Tabs>
 </div>
@@ -144,7 +134,7 @@ Then update the `nebari-config.yaml` file. The important keys to update are:
 - Replace `amazon_web_services` with `local`
   - And update the `node_selector` and `kube_context` appropriately
 
-<details>
+<details><summary>Example nebari-config.yaml (Click to expand)</summary>
 
 ```
 project_name: <project_name>
