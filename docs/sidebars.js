@@ -59,6 +59,7 @@ module.exports = {
         "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-hpc",
+        "how-tos/nebari-kubernetes",
         "how-tos/nebari-local",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
@@ -71,6 +72,7 @@ module.exports = {
         "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
+        "how-tos/idle-culling",
       ],
     },
     {

@@ -1,0 +1,224 @@
+---
+id: nebari-kubernetes
+title: How to deploy Nebari on pre-existing infrastructure
+description: Deploying Nebari on an existing Kubernetes infrastructure
+---
+
+Nebari can also be deployed on top of Kubernetes clusters. In this documentation,
+we will guide you through the process of deploying Nebari into a pre-existing Kubernetes cluster.
+
+To make it easier for you to follow along, we will outline the steps for such deployment with a
+simple infrastructure example. We will use tabs to represent the different provider
+steps/configurations. Let's get started!
+
+### Evaluating the infrastructure
+
+This is an optional stage and will only be used as part of this guided example, for setting up an initial infrastructure.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
+<Tabs className="unique-tabs">
+<TabItem value="AWS">
+
+In this example, a basic web app is already running on an EKS cluster. Here is a tutorial on [how to set
+up the Guestbook web app](https://logz.io/blog/amazon-eks-cluster/), containing more details.
+
+The existing EKS cluster has one Virtual Private Cloud (VPC) with three subnets, each
+in its Availability Zone, and no node groups. There are three nodes running on a `t3.medium` EC2 instance, but unfortunately,
+Nebari's general node group requires a more powerful instance type.
+
+Before proceeding, ensure that the subnets can
+"[automatically assign public IP addresses to instances launched into it](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#subnet-public-ip)" and
+that there exists an [Identity and Access Management (IAM)](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html) role with the following permissions:
+
+- `AmazonEKSWorkerNodePolicy`
+- `AmazonEC2ContainerRegistryReadOnly`
+- `AmazonEKS_CNI_Policy`
+
+<details>
+<summary>Custom CNI policy (Click to expand) </summary>
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "eksWorkerAutoscalingAll",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeLaunchTemplateVersions",
+                "autoscaling:DescribeTags",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeAutoScalingGroups"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "eksWorkerAutoscalingOwn",
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:UpdateAutoScalingGroup",
+                "autoscaling:TerminateInstanceInAutoScalingGroup",
+                "autoscaling:SetDesiredCapacity"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled": [
+                        "true"
+                    ],
+                    "autoscaling:ResourceTag/kubernetes.io/cluster/eaeeks": [
+                        "owned"
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
+
+</details>
+</TabItem>
+</Tabs>
+</div>
+
+### Creating node groups
+
+Skip this step if node groups already exists.
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
+<Tabs className="unique-tabs">
+<TabItem value="AWS">
+
+[Follow this guide to create new node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html).
+Be sure to fill in the following fields carefully:
+
+- "Node Group configuration"
+  - `Name` must be either `general`, `user` or `worker`
+  - `Node IAM Role` must be the IAM role described proceeding
+- "Node Group compute configuration"
+  - `Instance type`
+    - The recommended minimum vCPU and memory for a `general` node is 8 vCPU / 32 GB RAM
+    - The recommended minimum vCPU and memory for a `user` and `worker` node is 4 vCPU / 16 GB RAM
+  - `Disk size`
+    - The recommended minimum is 200 GB for the attached EBS (block-strage)
+- "Node Group scaling configuration"
+  - `Minimum size` and `Maximum size` of 1 for the `general` node group
+- "Node Group subnet configuration"
+  - `subnet` include all existing EKS subnets
+
+</TabItem>
+</Tabs>
+</div>
+
+### Deploying Nebari
+
+Ensure that you are using the existing cluster's `kubectl` context.
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
+<Tabs className="unique-tabs">
+<TabItem value="AWS">
+
+Initialize in the usual manner:
+
+```
+python -m nebari init aws --project <project_name> --domain <domain_name> --ci-provider github-actions --auth-provider github --auth-auto-provision
+```
+
+Then update the `nebari-config.yaml` file. The important keys to update are:
+
+- Replace `provider: aws` with `provider: existing`
+- Replace `amazon_web_services` with `local`
+  - And update the `node_selector` and `kube_context` appropriately
+
+<details><summary>Example nebari-config.yaml (Click to expand)</summary>
+
+```
+project_name: <project_name>
+provider: existing
+domain: <domain_name>
+certificate:
+  type: self-signed
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id:
+      client_secret:
+      oauth_callback_url: https://<domain_name>/hub/oauth_callback
+...
+ci_cd:
+  type: github-actions
+  branch: main
+terraform_state:
+  type: remote
+namespace: dev
+local:
+  kube_context: arn:aws:eks:<region>:xxxxxxxxxxxx:cluster/<existing_cluster_name>
+  node_selectors:
+    general:
+      key: eks.amazonaws.com/nodegroup
+      value: general
+    user:
+      key: eks.amazonaws.com/nodegroup
+      value: user
+    worker:
+      key: eks.amazonaws.com/nodegroup
+      value: worker
+profiles:
+  jupyterlab:
+  - display_name: Small Instance
+    description: Stable environment with 2 cpu / 8 GB ram
+    default: true
+    kubespawner_override:
+      cpu_limit: 2
+      cpu_guarantee: 1.5
+      mem_limit: 8G
+      mem_guarantee: 5G
+      image: quansight/nebari-jupyterlab:latest
+  - display_name: Medium Instance
+    description: Stable environment with 4 cpu / 16 GB ram
+    kubespawner_override:
+      cpu_limit: 4
+      cpu_guarantee: 3
+      mem_limit: 16G
+      mem_guarantee: 10G
+      image: quansight/nebari-jupyterlab:latest
+  dask_worker:
+    Small Worker:
+      worker_cores_limit: 2
+      worker_cores: 1.5
+      worker_memory_limit: 8G
+      worker_memory: 5G
+      worker_threads: 2
+      image: quansight/nebari-dask-worker:latest
+    Medium Worker:
+      worker_cores_limit: 4
+      worker_cores: 3
+      worker_memory_limit: 16G
+      worker_memory: 10G
+      worker_threads: 4
+      image: quansight/nebari-dask-worker:latest
+environments:
+...
+```
+
+</details>
+
+Once updated, deploy Nebari. When prompted be ready to manually update the DNS record.
+
+- `local` or "existing" deployments fail if you pass `--dns-auto-provision` or `--disable-prompt`
+
+```
+python -m nebari deploy --config nebari-config.yaml
+```
+
+The deployment completes successfully and all the pods appear to be running and so do the pre-existing Guestbook web
+app.
+
+</TabItem>
+</Tabs>
+</div>
