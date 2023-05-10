@@ -28,12 +28,17 @@ restrictions.
 
 To see available instance types refer to [GCP docs](https://cloud.google.com/compute/docs/machine-types).
 
+:::note
+By default the [GKE release channel](https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels) is set to `UNSPECIFIED` to prevent the cluster from auto-updating. This has the advantage of ensuring that the Kubernetes version doesn't upgrade and potentially introduce breaking changes. If you'd prefer your cluster's Kubernetes version to update automatically, you can specify a release channel; the options are either `stable`, `regular` or `rapid`.
+:::
+
 ```yaml
 ### Provider configuration ###
 google_cloud_platform:
   project: test-test-test
   region: us-central1
-  kubernetes_version: "1.18.16-gke.502"
+  kubernetes_version: "1.24.11-gke.1000"
+  release_channel: "UNSPECIFIED"  # default is hidden
   node_groups:
     general:
       instance: n1-standard-4
