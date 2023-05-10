@@ -6,7 +6,9 @@ description: |
 ---
 
 # Best practices for installing PyTorch on Nebari
-We recommend using the [PyTorch installation matrix][pytorch installation matrix] to generate a conda (or pip) install command and using it to fill out the Conda specification in conda-store.  For example, the following options can be entered into the matrix to get the package options for a Conda environment:
+
+We recommend using the [PyTorch installation matrix][pytorch installation matrix] to generate a conda (or pip) install command and using it to fill out the Conda specification in conda-store. For example, the following options can be entered into the matrix to get the package options for a Conda environment:
+
 - Stable
 - Linux
 - Conda
