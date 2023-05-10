@@ -43,9 +43,8 @@ api: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   name: jupyterflow-override-example
-  namespace: dev
+  namespace: dev  # replace with your deployment namespace if needed
   labels:
-    example: 'true'
     jupyterflow-override: 'true'
 spec:
   entrypoint: print-hello-world
