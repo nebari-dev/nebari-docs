@@ -11,7 +11,7 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 
 ## Upcoming Release
 
-### Release 2023.5.1 - May 5, 2023
+## Release 2023.5.1 - May 5, 2023
 
 ### Feature changes and enhancements
 
