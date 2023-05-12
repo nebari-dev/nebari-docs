@@ -38,7 +38,8 @@ Nebari includes an admission controller for Argo Workflows that 1) prevents user
 ```yaml
 argo_workflows:
   enabled: true
-  nebari_workflow_controller: false
+  nebari_workflow_controller:
+    enabled: false
 ```
 
 ## Disable Argo Workflows
