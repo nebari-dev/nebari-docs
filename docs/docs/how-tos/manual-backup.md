@@ -29,22 +29,8 @@ This specific guide shows how to do this on an AWS cluster and upload to AWS S3.
 
 ### Pre-requisites
 
-- [Install kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Install kubectl and update your kubeconfig](/docs/how-tos/debug-nebari#getting-started-with-kubectl)
 - [Install AWS command-line tool](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
-
-### Kubectl configuration
-
-To set up kubectl, obtain the name of the cluster. If you know the deployment region of the current cluster, this is straightforward:
-
-```shell
-aws eks list-clusters --region=us-west-2
-```
-
-Copy the relevant name from this output, and run this command:
-
-```shell
-aws eks update-kubeconfig  --region us-west-2 --name <relevant-name>
-```
 
 ### Pod deployment
 

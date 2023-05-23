@@ -41,7 +41,7 @@ To use kind, you will also need to install [docker engine](https://docs.docker.c
 
 :::note
 While `kubectl` is not required for kind to work, we do recommended its installation as it provides an excellent interface for interacting with the cluster resources.
-To install kubectl see the [upstream kubectl installation documentation](https://kubernetes.io/docs/tasks/tools/install-kubectl/).
+To install kubectl and configure access to the Nebari cluster, refer to [Install and Set Up kubectl](/docs/how-tos/debug-nebari#getting-started-with-kubectl).
 :::
 
 ## Initializing Nebari

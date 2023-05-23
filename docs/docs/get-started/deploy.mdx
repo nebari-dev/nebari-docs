@@ -11,6 +11,8 @@ Review the options below to determine which option best suits your needs.
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
+
 <Tabs>
   <TabItem value="Cloud-deployment-tab" label="Cloud" default>
 
@@ -66,21 +68,36 @@ Although it is possible to deploy Nebari HPC in the cloud, it is not generally r
 :::
 
 </TabItem>
-<TabItem value="local" label="Pre-existing Kubernetes cluster">
+<TabItem value="local" label="Local deployment">
 
 This approach is recommended for **testing and development** of Nebari’s components due to its simplicity. Choose the local mode if:
 
-- You already have a Kubernetes cluster [on one of the Nebari's supported cloud]providers(/started/cloud-providers)
 - You want to test your Kubernetes cluster
 - You have available local compute setup
 - You want to try out Nebari with a quick install for exploratory purposes, without setting up environment variables
 
 You should choose another installation option, likely a [cloud install][supported-cloud-providers] if you are starting from scratch (you have no compute clusters already in place) and you desire to stand up a production instance of Nebari.
 
-For instructions on installing and deploying Nebari Local, please visit [How to install and setup Nebari on an existing Kubernetes infrastructure][nebari-local].
+For instructions on installing and deploying Nebari Local, please visit [Deploying Nebari on a local machine](/docs/how-tos/nebari-local.md).
+
+</TabItem>
+
+<TabItem value="existing" label="Pre-existing Kubernetes cluster">
+
+This approach is recommended if you are already using Kubernetes and want to deploy Nebari on your existing cluster.
+
+For instructions on installing and deploying Nebari on an existing Kubernetes cluster, please visit [How to install and setup Nebari on an existing Kubernetes infrastructure](/docs/how-tos/nebari-kubernets.mdx).
+
+:::note
+As of now, we have only tested this functionality for AWS, but we are continuously working on expanding to other cloud providers.
+:::
+
+You should choose another installation option, likely a cloud install if you are starting from scratch (you have no compute clusters already in place) and you desire to stand up a production instance of Nebari.
 
 </TabItem>
 </Tabs>
+
+</div>
 
 ---
 
