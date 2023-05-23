@@ -33,6 +33,43 @@ UI, you can check that things are working by running `argo list`.
 
 ![Argo Workflows User Tab](/img/tutorials/argo_workflows_user_tab.png)
 
+## Jupyterflow-Override (Beta)
+
+:::note
+This feature requires that you have a Jupyter user pod running when the "jupyterflow-override" workflow is submitted. The workflow will not be created if you don't have a Jupyter user pod running.
+:::
+
+New users of Argo Workflows are often frustrated because the Argo Workflow pods do not have access to the same conda environments and shared files as the Jupyterlab user pod by default. To help with this use case, Nebari comes with [Nebari Workflow Controller](https://github.com/nebari-dev/nebari-workflow-controller) which overrides a portion of the Workflow spec when the
+`jupyterflow-override` label is applied to a workflow. The Jupyterlab user pod's environment variables, home and shared directories, docker image, and more will be added to the Workflow. Users can then e.g. run a script that loads and saves from their home directory with a particular conda environment. This works whether the label is added to the Workflow in a kubernetes manifest, via Hera, the argo CLI, or via the Argo Server Web UI. However, this does require that a Jupyter user pod be running when the workflow is submitted. The Workflow pod will have the same resources (cpu, memory) that the user pod has.
+
+### Example
+
+```
+api: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: jupyterflow-override-example
+  namespace: dev  # replace with your deployment namespace if needed
+  labels:
+    jupyterflow-override: 'true'
+spec:
+  entrypoint: print-hello-world
+  templates:
+    - name: print-hello-world
+      container:
+        name: main
+        image: any-image:any-tag  # will be overridden with the jupyter user pod image
+        command:
+          - sh
+          - "-c"
+        args:
+          - "conda run -n nebari-git-dask python -c \"print('hello world')\" >> output_file_in_home_dir.txt"
+```
+
+The command starting with "conda run" runs the python print statement with the nebari-git-dask conda environment and writes stdout to the user's home directory, but could just as easily run a script in the user's home directory. The example above is for a Workflow, but the same process will work with [CronWorkflows](https://argoproj.github.io/argo-workflows/cron-workflows/) as well. In that case, the Jupyter user pod only needs to be running when the CronWorkflow is submitted, not each time the CronWorkflow starts a Workflow.
+
+The jupyterflow-override feature is in beta so please [leave some feedback](https://github.com/nebari-dev/nebari-workflow-controller/discussions) and [report any issues](https://github.com/nebari-dev/nebari-workflow-controller/issues).
+
 ## Additional Argo Workflows Resources
 
 Refer to the [Argo documentation](https://argoproj.github.io/argo-workflows/) for further details on Argo Workflows.

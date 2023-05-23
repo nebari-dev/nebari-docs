@@ -31,6 +31,17 @@ argo_workflows:
           value: bar
 ```
 
+## Nebari Workflow Controller (Beta)
+
+Nebari includes an admission controller for Argo Workflows that 1) prevents users from mounting shared directories they don't have permissions for in their Workflows and 2) provides a convenient way to start an Argo Workflow with conda envs and shared directories mounted that the user does have permissions for. Valid workflows should not be affected, however submitting Workflows via `kubectl apply` on a kubernetes manifest is not supported when Nebari Workflow Controller is enabled. Submitting Argo Workflows through other methods (Argo CLI, Argo UI, Hera, etc.) will work as expected. If you'd like to disable Nebari Workflow Controller for any reason, you can do so in the nebari-config.yaml file.
+
+```yaml
+argo_workflows:
+  enabled: true
+  nebari_workflow_controller:
+    enabled: false
+```
+
 ## Disable Argo Workflows
 
 To turn off the cluster monitoring on Nebari deployments, simply turn off the feature flag within your
