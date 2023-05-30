@@ -111,6 +111,7 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
+        "community/team-structure",
         {
           type: "category",
           label: "Maintainers",
