@@ -124,4 +124,4 @@ If there is an issue with the notebook code itself, viewing the notebook job log
 Notebook job details can also be viewed from the `<nebari-domiain>/argo` UI.
 :::
 
-Lastly, if the job fails without writing to this `scheduler_staging_area`, or the job status is stuck in `In progress` mode for an extended period of time, have an administrator try and view the specific the logs on the user`s JupyterLab server pod or on the workflow pod itself.
+Lastly, if the job fails without writing to this `scheduler_staging_area`, or the job status is stuck in `In progress` mode for an extended period of time, have an administrator try and view the specific logs on the user's JupyterLab server pod or on the workflow pod itself.
