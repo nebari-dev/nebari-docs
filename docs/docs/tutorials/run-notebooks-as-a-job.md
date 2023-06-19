@@ -80,7 +80,7 @@ You can check [crontab.guru](https://crontab.guru) which is a nifty tool that tr
   <img src="/img/tutorials/jupyter-scheduler-job-definition.png" alt="Jupyter-Scheduler UI - create a job definition to run on a specified schedule." width="60%"/>
 </div>
 
-When a job definition is created, a new job is created at each time intervel specified by the schedule. These created jobs can be inspected like a regular notebook job. From here you can:
+When a job definition is created, a new job is created at each time interval specified by the schedule. These created jobs can be inspected like a regular notebook job. From here you can:
 - **delete** the job definition
 - **pause** the job job definition
 - view details such as the **status** of the job definition
@@ -98,7 +98,7 @@ Unlike a regular notebook job, job definitions create Argo-Workflows cron-workfl
 :::
 
 :::warning
-Notebook jobs that run on a schedule will run indifinitely so it's the responsibility of the job creator to either delete or pause the job if then they are no longer needed.
+Notebook jobs that run on a schedule will run indefinitely so it's the responsibility of the job creator to either delete or pause the job if then they are no longer needed.
 :::
 
 
