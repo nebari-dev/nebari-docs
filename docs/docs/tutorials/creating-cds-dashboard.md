@@ -6,6 +6,14 @@ description: Quickly build and deploy a panel and CDS Dashboards
 
 # Create and deploy a dashboard with `Panel` and `CDS Dashboards`
 
+:::danger
+
+CDS Dashboards will be deprecated soon.
+Nebari 2023.7.1 will be the last release with support for CDS Dashboards integration.
+A new dashboard sharing mechanism added in the near future, but some releases in the interim will not have dashboard sharing capabilities.
+
+:::
+
 ## Introduction
 
 Analyzing data provides insights, and a dashboard stitches these insights into a meaningful story. Fortunately, there are many great open source dashboards tools out there that you can use to organize and display your data in an engaging and digestible way.
