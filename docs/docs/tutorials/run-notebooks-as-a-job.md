@@ -8,6 +8,8 @@ description: Using jupyter-scheduler to submit batch jobs
 
 :::warning
 This is a new feature still in beta so please [leave some feedback](https://github.com/nebari-dev/nebari/discussions) and [report any issues](https://github.com/nebari-dev/nebari/issues).
+
+There is one known issue with the `Update Job Definition` and `Resume` job definition which is related to Nebari-Workflow-Controller issue, [captured here](https://github.com/nebari-dev/nebari-workflow-controller/issues/18). The current workaround for those who need to update (or pause) your job definitions, is simply to delete the current job definition and create a new one as and when needed.
 :::
 
 
@@ -38,6 +40,7 @@ This will open the Jupyter-Scheduler UI. From here you can specify:
 - the notebook **job name**
 - the **input file** the use (this will default to the file from which the icon was clicked)
 - the **environment** to run the notebook with
+- add environment variables via the `Parameters` section
 
 <div align="center">
   <img src="/img/tutorials/jupyter-scheduler-run-now.png" alt="Jupyter-Scheduler UI - layout of Jupyter-Scheduler UI." width="60%"/>
@@ -67,6 +70,7 @@ As mentioned above, the notebook job will run as an Argo-Workflows workflow. Thi
 Only users in the `admin` or `developer` groups will have access to create notebook jobs. For more information regarding users and groups, please visit [How to configure Keycloak](/how-tos/configure-keycloak-howto.md)
 :::
 
+All associated workflows have a TTL (time-to-live) set to 600 seconds. This means that regardless of whether or not your workflow was successful, it will be deleted after 10 mins. The downside is that those logs are now gone, that said, the upside is that the workflow no longer consumes compute resources once deleted.
 
 ## Submit Jupyter Notebooks to run on a schedule
 
