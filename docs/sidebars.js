@@ -47,6 +47,7 @@ module.exports = {
         "tutorials/creating-new-environments",
         "tutorials/kbatch",
         "tutorials/cost-estimate-report",
+        "tutorials/jupyter-scheduler",
       ],
     },
     {
