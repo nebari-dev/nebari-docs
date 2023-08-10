@@ -12,7 +12,6 @@ This is a new feature still in beta so please [leave some feedback](https://gith
 There is one known issue with the `Update Job Definition` and `Resume` job definition which is related to Nebari-Workflow-Controller issue, [captured here](https://github.com/nebari-dev/nebari-workflow-controller/issues/18). The current workaround for those who need to update (or pause) your job definitions, is simply to delete the current job definition and create a new one as and when needed.
 :::
 
-
 A common task that many Nebari users have is submitting their notebooks to run as a script or to run on a predefined schedule. This is now possible with [Jupyter-Scheduler](https://jupyter-scheduler.readthedocs.io/en/latest/index.html#), a JupyterLab extension that has been expanded and integrated into Nebari. This also means that you can view the status of the jobs by vising the `<nebari-domain>/argo` endpoint.
 
 The idea of notebook jobs is useful in situations where you need no human interaction, besides submitting it as a job, and the results can be efficiently saved to your home directory, the cloud or other similar storage locations. It is also useful in situations where the notebook might run for a long time and the user needs to shut down their JupyterLab server.
@@ -28,15 +27,14 @@ Jupyter-Scheduler is included by default in the base Nebari JupyterLab image and
 When using a conda-store environment, please ensure that the [`papermill` package](https://papermill.readthedocs.io/en/latest/) is included.
 :::
 
-
 ## Submitting a Notebook as a Jupyter-Scheduler Job
 
 To submit your notebook as a Jupyter-Scheduler Job, simply click the `Jupyter-Scheduler` icon on the top of your notebook toolbar.
 
-
 ![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/tutorials/jupyter-scheduler-icon.png)
 
 This will open the Jupyter-Scheduler UI. From here you can specify:
+
 - the notebook **job name**
 - the **input file** the use (this will default to the file from which the icon was clicked)
 - the **environment** to run the notebook with
@@ -48,16 +46,15 @@ This will open the Jupyter-Scheduler UI. From here you can specify:
 
 Once created, the status and output of the notebook job can be viewed from the Jupyter-Scheduler UI:
 
-
 ![Jupyter-Scheduler UI - view the notebook job status](/img/tutorials/jupyter-scheduler-job-status.png)
 
 Click on the notebook job name to view more information about the job. From here, you can view:
+
 - the **job ID**
 - when the job was **created**
 - the **start time** and **end time**
 
 ![Jupyter-Scheduler UI - view the notebook job details](/img/tutorials/jupyter-scheduler-job-details.png)
-
 
 :::info
 As mentioned above, the notebook job will run as an Argo-Workflows workflow. This means these jobs (workflows) are viewable from the Argo-Workflows UI at `<nebari-domain>/argo`. The name of the workflow is prefixed with `job-<job-id>`.
@@ -85,6 +82,7 @@ You can check [crontab.guru](https://crontab.guru) which is a nifty tool that tr
 </div>
 
 When a job definition is created, a new job is created at each time interval specified by the schedule. These created jobs can be inspected like a regular notebook job. From here you can:
+
 - **delete** the job definition
 - **pause** the job job definition
 - view details such as the **status** of the job definition
@@ -105,7 +103,6 @@ Unlike a regular notebook job, job definitions create Argo-Workflows cron-workfl
 Notebook jobs that run on a schedule will run indefinitely so it's the responsibility of the job creator to either delete or pause the job if then they are no longer needed.
 :::
 
-
 ## Debugging failed jobs
 
 Occasionally notebook jobs will fail to run and it's helpful to understand why.
@@ -114,15 +111,13 @@ Occasionally notebook jobs will fail to run and it's helpful to understand why.
   <img src="/img/tutorials/jupyter-scheduler-job-failed.png" alt="Jupyter-Scheduler UI - view the details of a failed job." width="60%"/>
 </div>
 
-
 If there is an issue with the notebook code itself, viewing the notebook job logs will help the user get a better idea of what went wrong. These are the steps to get the logs:
 
-1. Document the job ID 
+1. Document the job ID
 2. Launch a terminal session
 3. Navigate to `~/.local/share/jupyter/scheduler_staging_area`
 4. Find the folder that corresponds to the job ID that failed
 5. Open (or `cat`) the `output.ipynb` to view the notebook as it was run
-
 
 :::info
 Notebook job details can also be viewed from the `<nebari-domiain>/argo` UI.
