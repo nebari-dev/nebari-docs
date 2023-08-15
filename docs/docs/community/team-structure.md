@@ -13,15 +13,15 @@ Use the table of contents in the right sidebar to jump to different sections of 
 
 ## Teams
 
-The following formal teams are recognized by Nebari.
+The following teams are formally recognized by Nebari.
 
 ### Triage
 
-Members responsible for [triaging](./maintainers/triage-guidelines) and [improving](./file-issues#working-on-issues-to-improve-them) new and existing issues & pull requests (PRs) across all repositories. They have the ability to add relevant labels to issues/PRs, edit issue/PR titles and descriptions to improve them, and transfer issues between repositories.
+Members responsible for [triaging](./maintainers/triage-guidelines) and [improving](./file-issues#working-on-issues-to-improve-them) new and existing issues & pull requests (PRs) across all repositories. They can add relevant labels to issues/PRs, edit issue/PR titles and descriptions to improve them, and transfer issues between repositories.
 
 ### Contributors
 
-People who make valuable contributions to the Nebari projects in the form of code contributions, documentation improvements, or design enhancements, issues/PR triage, community management, fund raising, advocacy, and more. Members of this team have commit rights across all Nebari repositories, which includes access to [triage](#triage) permissions.
+People who make valuable contributions to the Nebari projects in the form of code contributions, documentation improvements, or design enhancements, issues/PR triage, community management, fundraising, advocacy, and more. Members of this team have commit rights across all Nebari repositories, which includes access to [triage](#triage) permissions.
 
 ### Core
 
@@ -29,11 +29,11 @@ Project sustainers who lead and maintain the overall Nebari project and communit
 
 ### Owners
 
-A private and small subset of the Core team who have organization-level privileges for [`nebari-dev`](https://github.com/nebari-dev). While decisions are made by the the entire Core team, the Owners group have relevant permissions to implement certain decision like adding new team members.
+A private and small subset of the Core team who have organization-level privileges for [`nebari-dev`](https://github.com/nebari-dev). While decisions are made by the entire Core team, the Owners group has relevant permissions to implement certain decision like adding new team members.
 
 ### Conduct
 
-Community members responsible for upholding and enforcing Nebari's Code of Conduct. This team is documented in the [Nebari governance repository](https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee). At least one members of this team should also be in the Nebari Core team, and all members should be trained to handle CoC reports with care.
+Community members responsible for upholding and enforcing Nebari's Code of Conduct. This team is documented in the [Nebari governance repository](https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee). At least one member of this team should also be in the Nebari Core team, and all members should be trained to handle CoC reports with care.
 
 ### Emeritus core
 
@@ -43,13 +43,13 @@ Nebari Core team members can step away at any time, and we hope for them to comm
 
 ## Special interest or working groups
 
-In addition to the above formal teams, new special interest group can be created with commit and triage access to specific Nebari repositories. Examples of special interest groups in the past are "Documentation" and "Design" teams.
+In addition to the above formal teams, new special interest groups (SIG) can be created with commit and triage access to specific Nebari repositories. Examples of special interest groups in the past are "Documentation" and "Design" teams.
 
-These special interest teams can be created by the Nebari Core team if two or more community members express interest in the [discussion forum](https://github.com/orgs/nebari-dev/discussions/categories/community).
+The Core team can create a new SIG if two or more community members express interest in the [discussion forum](https://github.com/orgs/nebari-dev/discussions/categories/community).
 
-## How to join a team?
+## Join a team
 
-Nebari uses a nomination process add new team members[^1], as detailed in the following table. You can nominate members by opening a GitHub discussions topic in the ["Community" category](https://github.com/orgs/nebari-dev/discussions/categories/community).
+Nebari follows a nomination process to add new team members[^1], as detailed in the following table. You can nominate members by opening a GitHub discussions topic in the ["Community" category](https://github.com/orgs/nebari-dev/discussions/categories/community).
 
 [^1]: All except the [Emeritus core](#emeritus-core) team are decided through nominations.
 
