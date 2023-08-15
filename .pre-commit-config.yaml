@@ -17,7 +17,7 @@ ci:
 repos:
   # Codespell: Spell checks the code and documentation
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.2.5
     hooks:
       - id: codespell
         entry: codespell
@@ -28,7 +28,7 @@ repos:
 
   # Markdown, json, toml
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.9-for-vscode
+    rev: v3.0.0
     hooks:
       - id: prettier
         types_or: [markdown, mdx, json, toml]
