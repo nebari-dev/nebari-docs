@@ -33,6 +33,7 @@ Alternatively if you only want to temporarily add an extension.
 :::note 
 `--import-plugin` does not work for loading subcommands due to
 cli already being constructed before plugin imports take place.
+:::
 
 ```shell
 nebari --import-plugin path/to/plugin.py <command> ...
