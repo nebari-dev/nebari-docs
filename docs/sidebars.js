@@ -74,6 +74,7 @@ module.exports = {
         "how-tos/setup-argo",
         "how-tos/using-argo",
         "how-tos/idle-culling",
+        "how-tos/nebari-extension-system",
       ],
     },
     {
