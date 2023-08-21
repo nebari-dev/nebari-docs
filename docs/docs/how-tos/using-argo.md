@@ -112,12 +112,7 @@ manifest, via Hera, the Argo CLI, or via the Argo Server Web UI.
 This feature requires that you have a Jupyter user pod running when the "jupyterflow-override" workflow is submitted. The workflow will not be created if you don't have a Jupyter user pod running.
 :::
 
-## Next Steps
-
-Now that you have had an introduction, check out the [more detailed tutorial](/tutorials/argo-workflows-walkthrough.md) on
-Argo for some practical examples!
-
-### Example
+### YAML Example
 
 ```
 api: argoproj.io/v1alpha1
@@ -148,3 +143,8 @@ The jupyterflow-override feature is in beta so please [leave some feedback](http
 ## Additional Argo Workflows Resources
 
 Refer to the [Argo documentation](https://argoproj.github.io/argo-workflows/) for further details on Argo Workflows.
+
+## Next Steps
+
+Now that you have had an introduction, check out the [more detailed tutorial](/tutorials/argo-workflows-walkthrough.md) on
+Argo for some practical examples!
