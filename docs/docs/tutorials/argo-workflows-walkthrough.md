@@ -46,7 +46,7 @@ to tell Argo to use the Nebari Workflow Controller so that we have access to
 our Nebari file system and conda environments from within the Argo pod
 ([more information](/how-tos/using-argo.md#access-your-nebari-environments-and-file-system-while-on-an-argo-pod-beta)).
 
-The workflow labels must be hexidecimal ASCII while the usernames have no such
+The workflow labels must be hexadecimal ASCII while the usernames have no such
 constraint so we have a helper function `sanitize_labels` to ensure that our
 label is valid for Argo.
 
@@ -280,7 +280,7 @@ def create_conda_command(
 
 
 def create_bash_container(name="bash-container"):
-    """Create a workflow container that is able to recieve bash commands"""
+    """Create a workflow container that is able to receive bash commands"""
     bash_container = Container(
         name="bash-container",
         image="thiswilloverridden",

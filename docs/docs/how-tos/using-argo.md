@@ -68,7 +68,7 @@ You can submit a workflow through the CLI using `argo submit my-workflow.yaml`.
 
 The `argo list` command will list all the running workflows.
 
-If you've just submitted a workflow and you want ot check on it, you can run
+If you've just submitted a workflow and you want to check on it, you can run
 `argo get @latest` to get the latest submitted workflow.
 
 You can also access the logs for a workflow using
