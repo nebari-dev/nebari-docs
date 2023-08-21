@@ -185,11 +185,156 @@ If you'd like even more control over your workflow, for example diamond
 or branching workflows, the `DAG` constructor will allow you to specify that
 level of complexity.
 
-## Next Steps
+## Beyond "Hello World"
 
-Now that you've worked through the basics of an Argo workflow, and have some
-understanding of the individual parts that make up a workflow, you can move on
-to more complex usecases.
+We've proven that we can run **something** on Argo, but what about actually
+running some Python code? Let's review the requirements.
 
-Check out the [Advanced Argo Usage](/tutorials/advanced-argo-usage.md) tutorial
-next.
+We've already discussed setting the `jupyter-overrides` label which tells
+Nebari to mount our home directory and the conda environments onto our Argo
+pod. We will also need to use a Docker image which has conda set up and
+initialized. We'll grab the Nebari Jupyter image. This has the added benefit
+of bringing parity between running a code on your Nebari instance and running
+on Argo.
+
+As you've seen, we're creating quite a bit of peripheral code and we're about
+to add even more. Let's bring some structure in to help us organize things.
+
+### "Argo Assistant" code
+
+For this, we have a little "Argo Assistant" code that will help us out.
+
+```
+import logging
+import os
+import subprocess
+from pathlib import Path
+
+from hera.workflows import Container, Parameter, Steps, Workflow
+from hera.workflows.models import TTLStrategy
+
+LOGGER = logging.getLogger()
+
+DEFAULT_TTL = 90  # seconds
+DEFAULT_ARGO_NODE_TYPE = "user"
+DEFAULT_K8S_SELECTOR_LABEL = "eks.amazonaws.com/nodegroup"
+
+
+class NebariWorkflow(Workflow):
+    """Hera Workflow object with required/reasonable default for running
+    on Nebari
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        if "ttl_strategy" in kwargs.keys():
+            self.ttl_strategy = kwargs["ttl_strategy"]
+        else:
+            self.ttl_strategy = TTLStrategy(
+                seconds_after_completion=DEFAULT_TTL,
+                seconds_after_success=DEFAULT_TTL,
+                seconds_after_failure=DEFAULT_TTL,
+            )
+
+        if "node_selector" in kwargs.keys():
+            self.node_selector = kwargs["node_selector"]
+        else:
+            self.node_selector = {DEFAULT_K8S_SELECTOR_LABEL: DEFAULT_ARGO_NODE_TYPE}
+
+        self.namespace = os.environ["ARGO_NAMESPACE"]
+
+        self.labels = {
+            "workflows.argoproj.io/creator-preferred-username": sanitize_label(username),
+            'jupyterflow-override': 'true',
+        }
+
+
+def create_conda_command(
+    script_path,
+    conda_env,
+    stdout_path="stdout.txt",
+):
+    """Workflows need to be submitted via a bash command that runs a
+    python script. This function creates a conda run command that
+    will run a script from a given location using a given conda
+    environment.
+
+    Parameters
+    ----------
+    script_path: str
+        Path to the python script (including extension) to be run on Argo
+    conda_env: str
+        Conda environment name in which to the run the `script_path`
+    stdout_path: str
+        Local Nebari path (for your user) for standard output from
+        the given script. Defaults to `stdout.txt`.
+
+    Returns
+    -------
+    String bash command
+    """
+
+    conda_command = f'conda run -n {conda_env} python "{script_path}" >> {stdout_path}'
+    return conda_command
+
+
+def create_bash_container(name="bash-container"):
+    """Create a workflow container that is able to recieve bash commands"""
+    bash_container = Container(
+        name="bash-container",
+        image="thiswilloverridden",
+        inputs=[
+            Parameter(name="bash_command")
+        ],  # inform argo that an input called bash_command is coming
+        command=["bash", "-c"],
+        args=["{{inputs.parameters.bash_command}}"],  # use the input parameter
+    )
+    return bash_container
+
+
+def submit_argo_script(script_path, conda_env, stdout_path="stdout.txt"):
+    """Submit a script to be run via Argo in a specific environment"""
+    validated = validate_submission(script_path, conda_env)
+
+    if not validated:
+        raise RuntimeError("Unable to submit Argo workflow")
+
+    conda_command = create_conda_command(script_path, conda_env, stdout_path)
+
+    LOGGER.debug("Submitting command {conda_command} to Argo")
+
+    with NebariWorkflow(
+        generate_name="workflow-name-",
+        entrypoint="steps",
+    ) as w:
+        bash_container = create_bash_container()
+        with Steps(
+            name="steps",  # must match Workflow entrypoint
+            annotations={"go": "here"},
+        ):
+            bash_container(
+                name="step-name",
+                arguments=[Parameter(name="bash_command", value=conda_command)],
+            )
+
+    workflow = w.create()
+    return workflow
+
+```
+
+First, you'll need to create a python script and a conda environment. Then to
+submit the workflow to Argo you would run the high level command:
+
+```
+path = '/path/to/pyfile.py'
+nebari_conda_env = 'analyst-workflow-env'
+submit_argo_script(path, nebari_conda_env)
+```
+
+Now you can go to the Argo UI and monitor progress!
+
+## Conclusion
+
+Well done! You've learned how to submit a python workflow to Argo and have a
+few extra tools to help you along.
