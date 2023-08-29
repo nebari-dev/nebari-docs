@@ -39,11 +39,11 @@ Community members responsible for upholding and enforcing Nebari's Code of Condu
 
 The Emeritus core team recognizes community members who choose to step away from the Core team. Open source projects have members join and retire as the project matures. Contributors can move on for various reasons including limited bandwidth, conflicting or changing interests, burnout, boredom, personal reasons, and much more.
 
-Nebari Core team members can step away at any time, and we hope for them to communicate this to the rest of the Core team early when possible. They can share as much or little details as they are comfortable sharing for this move. We also hope they can work with the team for a smooth transition, but we do understand if sometimes this may not be possible. Fellow core team members are expected to support off-boarding member for a graceful transfer of responsibilities.
+Nebari Core team members can step away at any time, and we hope for them to communicate this to the rest of the Core team early when possible. They can share as much or as little details as they are comfortable sharing for this move. We also hope they can work with the team for a smooth transition, but we do understand if sometimes this may not be possible. Fellow core team members are expected to support off-boarding members for a graceful transfer of responsibilities.
 
 ## Special interest or working groups
 
-In addition to the above formal teams, new special interest groups (SIG) can be created with commit and triage access to specific Nebari repositories. Examples of special interest groups in the past are "Documentation" and "Design" teams.
+In addition to the formal teams, new special interest groups (SIG) can be created with commit and triage access to specific Nebari repositories. In the past, examples of special interest groups are "Documentation" and "Design" teams. The core team is responsible for the approval and dissolution of SIGs.
 
 The Core team can create a new SIG if two or more community members express interest in the [discussion forum](https://github.com/orgs/nebari-dev/discussions/categories/community).
 
