@@ -33,13 +33,17 @@ A private and small subset of the Core team who have organization-level privileg
 
 ### Code of Conduct response team
 
-Community members responsible for upholding and enforcing Nebari's Code of Conduct. This team is documented in the [Nebari governance repository](https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee). At least one member of this team should also be in the Nebari Core team, and all members should be trained to handle CoC reports with care.
+Community members responsible for upholding and enforcing Nebari's Code of Conduct. This team is documented in the [Nebari governance repository](https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee). At least one member of this team should also be in the Nebari Core team, and all members should be trained to handle CoC reports with care[^1].
+
+[^1]: Members can attend any form of online or in-person training on dealing with CoC reports.
 
 ### Emeritus core
 
-The Emeritus core team recognizes community members who choose to step away from the Core team. Open source projects have members join and retire as the project matures. Contributors can move on for various reasons including limited bandwidth, conflicting or changing interests, burnout, boredom, personal reasons, and much more.
+The Emeritus core team recognizes community members who choose to step away from the Core team. Open source projects have members join, retire, and return as the project matures. Contributors can move on for various reasons including limited bandwidth, conflicting or changing interests, burnout, boredom, personal reasons, and much more.
 
 Nebari Core team members can step away at any time, and we hope for them to communicate this to the rest of the Core team early when possible. They can share as much or as little details as they are comfortable sharing for this move. We also hope they can work with the team for a smooth transition, but we do understand if sometimes this may not be possible. Fellow core team members are expected to support off-boarding members for a graceful transfer of responsibilities.
+
+Emeritus members are welcome return to the project as active participants, and join the core team again through the process of nomination described earlier.
 
 ## Special interest or working groups
 
@@ -49,9 +53,9 @@ The Core team can create a new SIG if two or more community members express inte
 
 ## Join a team
 
-Nebari follows a nomination process to add new team members[^1], as detailed in the following table. You can nominate members by opening a GitHub discussions topic in the ["Community" category](https://github.com/orgs/nebari-dev/discussions/categories/community).
+Nebari follows a nomination process to add new team members[^2], as detailed in the following table. You can nominate members by opening a GitHub discussions topic in the ["Community" category](https://github.com/orgs/nebari-dev/discussions/categories/community).
 
-[^1]: All except the [Emeritus core](#emeritus-core) team are decided through nominations.
+[^2]: All except the [Emeritus core](#emeritus-core) team are decided through nominations.
 
 | Team        | Requirements for nomination                                                                                         | Nominators                                                          | Approvers                                                                                                               |
 | ----------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
