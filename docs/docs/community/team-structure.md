@@ -31,7 +31,7 @@ Project sustainers who lead and maintain the overall Nebari project and communit
 
 A private and small subset of the Core team who have organization-level privileges for [`nebari-dev`](https://github.com/nebari-dev). While decisions are made by the entire Core team, the Owners group has relevant permissions to implement certain decision like adding new team members.
 
-### Conduct
+### Code of Conduct response team
 
 Community members responsible for upholding and enforcing Nebari's Code of Conduct. This team is documented in the [Nebari governance repository](https://github.com/nebari-dev/governance/blob/main/code-of-conduct/coc_enforcement.md#the-code-of-conduct-committee). At least one member of this team should also be in the Nebari Core team, and all members should be trained to handle CoC reports with care.
 
