@@ -10,9 +10,8 @@ description: A walk through several example workflows
 
 Using a workflow manager can help you automate ETL pipelines, schedule regular
 analysis, or just chain together a sequence of functions. Argo is available on
-Nebari for workflow management. If you haven't already checked out the
-[introductory documentation on Argo](/how-tos/using-argo.md), head over to that
-[doc page](/how-tos/using-argo.md) and take a look!
+Nebari for workflow management. If you haven't already, check out the
+[introductory documentation on using Argo](/how-tos/using-argo.md).
 
 For this tutorial we'll be using the
 [Hera](https://hera-workflows.readthedocs.io/) interface to Argo. This will
@@ -29,7 +28,7 @@ Nebari sets up several environment variables with tokens, etc. that enable us to
 use Argo more smoothly. However, there are two global configuration settings
 that we'll need to manually add to each workflow script.
 
-```
+```python
 from hera.shared import global_config
 import os
 
@@ -50,7 +49,7 @@ The workflow labels must be hexadecimal ASCII while the usernames have no such
 constraint so we have a helper function `sanitize_labels` to ensure that our
 label is valid for Argo.
 
-```
+```python
 import re
 
 def sanitize_label(label: str) -> str:
@@ -97,11 +96,13 @@ Because this can cause substantial unexpected cloud costs, we _highly_
 recommend _always_ setting the "Time to live strategy", or `TTLStrategy` on
 every workflow.
 
-Note that the Argo UI will only show the workflow details until the
+:::note 
+The Argo UI will only show the workflow details until the
 `TTLStrategy` time has elapsed so make sure you have enough time to evaluate
 logs, etc. before those details are removed.
+:::
 
-```
+```python
 from hera.workflows.models import TTLStrategy
 
 DEFAULT_TTL = 90
@@ -133,11 +134,11 @@ a suffix to ensure uniqueness. Lastly, we'll give the workflow an `entrypoint`.
 This parameter needs to match with the name of the `Steps` parameter you're
 using (or `DAG`).
 
-_Workflow constructor_
+### Workflow constructor
 
 Let's put this all together and have a closer look.
 
-```
+```python
 from hera.workflows import Steps, script
 from hera.workflows import Workflow
 
@@ -170,7 +171,7 @@ out these commands into individual DAG points in a series.
 
 For example, if I wanted to run two separate functions, it might look like this
 
-```
+```python
 ...
     with Steps(name="steps"):
         echo(arguments={"message": "hello"})
@@ -197,14 +198,13 @@ initialized. We'll grab the Nebari Jupyter image. This has the added benefit
 of bringing parity between running a code on your Nebari instance and running
 on Argo.
 
-As you've seen, we're creating quite a bit of peripheral code and we're about
-to add even more. Let's bring some structure in to help us organize things.
-
 ### "Argo Assistant" code
 
+As you've seen, we're creating quite a bit of peripheral code and we're about
+to add even more. Let's bring some structure in to help us organize things.
 For this, we have a little "Argo Assistant" code that will help us out.
 
-```
+```python
 import logging
 import os
 import subprocess
@@ -323,7 +323,7 @@ def submit_argo_script(script_path, conda_env, stdout_path="stdout.txt"):
 
 ```
 
-First, you'll need to create a python script and a conda environment. Then to
+Next, you'll need to create a python script and a conda environment. Then to
 submit the workflow to Argo you would run the high level command:
 
 ```
