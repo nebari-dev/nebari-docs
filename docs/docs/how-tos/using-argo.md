@@ -16,7 +16,7 @@ Access control for Argo on Nebari is done through Keycloak user groups. All
 users in the `admin` or `developer` groups have access to Argo.
 
 :::note
-Also see the [Set up Argo Workflows documentation](/how-tos/setup-argo).
+Also see the [Set up Argo Workflows documentation](/docs/how-tos/setup-argo).
 :::
 
 
@@ -83,7 +83,7 @@ For more information on Argo workflows via the UI or the CLI, you can visit the
 [Argo docs](https://argoproj.github.io/argo-workflows/workflow-concepts/).
 
 [Hera](https://hera-workflows.readthedocs.io/) is a framework for building and
-submitting Argo workflows in Python. Learn more in the [Argo Workflows walkthrough tutorial](/tutorials/argo-workflows-walkthrough).
+submitting Argo workflows in Python. Learn more in the [Argo Workflows walkthrough tutorial](/docs/tutorials/argo-workflows-walkthrough).
 
 ## Access your Nebari environments and file system while on an Argo pod (BETA)
 
