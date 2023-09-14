@@ -48,6 +48,7 @@ module.exports = {
         "tutorials/kbatch",
         "tutorials/cost-estimate-report",
         "tutorials/jupyter-scheduler",
+        "tutorials/argo-workflows-walkthrough",
       ],
     },
     {
@@ -113,6 +114,7 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
+        "community/team-structure",
         {
           type: "category",
           label: "Maintainers",
