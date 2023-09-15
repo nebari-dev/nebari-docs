@@ -48,6 +48,7 @@ module.exports = {
         "tutorials/kbatch",
         "tutorials/cost-estimate-report",
         "tutorials/jupyter-scheduler",
+        "tutorials/argo-workflows-walkthrough",
       ],
     },
     {
