@@ -115,6 +115,7 @@ module.exports = {
         "community/doc-contributions",
         "community/style-guide",
         "community/team-structure",
+        "community/plugins",
         {
           type: "category",
           label: "Maintainers",
