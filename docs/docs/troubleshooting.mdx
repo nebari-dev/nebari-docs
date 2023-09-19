@@ -102,6 +102,16 @@ At this point, feel free to cancel the deployment and rerun the same deployment 
 
 If you are interested in learning more about DNS, [this "How DNS works comic" by dnsimple](https://howdns.works/) is a great resource to get started.
 
+### New Dask Gateway clusters lead to `500 Internal Server Error`
+
+This may occur when `dask-gateway-controller` has some internal authentication issues. To resolve this, you can restart `nebari-daskgateway-controller` and `nebari-daskgateway-controller` pods:
+
+- Open `k9s` (Learn more about `k9s` in [Debug Nebari deployment](./how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s))
+- Press the <kbd>/</kbd> key and search for "daskgateway"
+- Use the arrow keys to highlight each pod
+- Delete highlighted pods with <kbd>ctrl</kbd> + <kbd>d</kbd>, and the pods should restart automatically
+
+
 ## How do I...?
 
 ### Get the Kubernetes context
