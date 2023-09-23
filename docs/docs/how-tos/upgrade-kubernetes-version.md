@@ -1,0 +1,83 @@
+---
+id: kubernetes-version-upgrade
+title: How to upgrade the clusters Kubernetes version
+description: A basic overview on how to upgrade your cluster Kubernetes version
+---
+
+## Introduction
+
+Nebari runs on Kubernetes under the hood, and as administrators of this Kubernets cluster, one of the maintenance tasks required from time to time includes upgrading the version of your Kubernetes cluster. Each of the different cloud providers that Nebari can run on, has their own release cycle and support windows for their flavor of Kubernetes. That said, they tend to follow the [official Kubernetes release cycle](https://kubernetes.io/releases/).
+
+The Nebari development team tries to stay ahead of this by supporting the latest version when possible. However given that many Kubernetes releases comes with a set of deprecations that potentially affect Nebari and downstream plugins, there is an enforced [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11) allowed.
+
+:::note
+This `HIGHEST_SUPPORTED_K8S_VERSION` is, at times, a minor version or two behind the officially released Kubernetes version.
+:::
+
+This upgrade process bumps the version of the control plane along with all node groups. 
+
+:::warning
+Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly.
+:::
+
+:::warning
+Kubernetes versions can only be upgraded one minor version at a time. If you're running on 1.24, and need to upgrade to 1.26, you will first need to upgrade to 1.25.
+:::
+
+:::warning
+Downgrading to a lower version of Kubernetes is dangerous and we strongly advise against it!
+:::
+
+## Upgrade the Kubernetes version of an Amazon Web Services EKS cluster
+
+The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, simply updated the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
+
+:::info
+You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+:::
+    
+Then repeat the above process one minor version at a time.
+
+For more information about EKS upgrades, please refer to the [EKS documentation](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html).
+
+
+## Upgrade the Kubernetes version of a Google Cloud Platform GKE cluster
+
+
+Google Kubernetes Engine (GKE) cut their own platform specific version of Kubernetes that usually look something like: `1.26.7-gke.500`; this corresponds to a Kubernetes version of `1.26.17`.
+
+You can locate the supported GKE Kubernetes versions by running the following `gcloud` command:
+
+```bash
+gcloud container get-server-config --region <region>
+```
+
+To upgrade your GKE cluster, update the `google_cloud_platform.kubernetes_version` field in your `nebari-config.yaml` to match one of these GKE Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
+
+:::info
+You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+:::
+
+Then repeat the above process one minor version at a time. You will get a similar error otherwise:
+
+```bash
+[terraform]: │ Error: googleapi: Error 400: Master cannot be upgraded to "1.26.7-gke.500": cannot upgrade the master more than a minor version at a time.
+```
+
+For more information about GKE upgrades, please refer to the [GKE documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/upgrading-a-cluster).
+
+
+## Upgrade the Kubernetes version of an Azure Cloud AKS cluster
+
+The Azure Kubernetes Service (AKS) requires that you specify the major, minor and patch version you wouldl like to use. To specify a Kubernetes version update the `azure.kubernetes_version` to `1.26.7` (or the version you need to upgrade to).
+
+:::info
+You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+:::
+
+
+Then repeat the above process one minor version at a time.
+
+For more information about AKS upgrade, please refer to the [AKS documentation](https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster?tabs=azure-cli)
+
+## Upgrade the Kubernets version of a Digital Ocean DOKS cluster
