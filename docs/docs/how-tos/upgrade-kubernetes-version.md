@@ -13,9 +13,12 @@ Nebari runs on Kubernetes under the hood, and as administrators of this Kubernet
 
 The Nebari development team tries to stay ahead of this by supporting the latest version when possible. However given that many Kubernetes releases comes with a set of deprecations that potentially affect Nebari and downstream plugins, there is an enforced [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11) allowed.
 
+
 :::note
 This `HIGHEST_SUPPORTED_K8S_VERSION` is, at times, a minor version or two behind the officially released Kubernetes version.
 :::
+
+Many cloud providers enable users to automatically upgrade their Kubernetes cluster (control plane), however given the potential for deprecations and other changes, Nebari deployed to these cloud have this feature automatically disabled. 
 
 This upgrade process bumps the version of the control plane along with all node groups. 
 

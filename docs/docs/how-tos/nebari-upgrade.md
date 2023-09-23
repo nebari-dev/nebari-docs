@@ -42,6 +42,10 @@ nebari upgrade -c nebari-config.yaml
 
 The upgrade command may print some manual instructions that need to be run before continuing with the upgrade. If so, complete those instructions before continuing on.
 
+:::info
+New versions of Nebari often include support for newer versions of Kubernetes, as such you might need to upgrade your cluster's Kubernetes version. Please refer to [these docs](./upgrade-kubernetes-version.md) for more details.
+:::
+
 ### Re-deploy Nebari
 
 If you are deploying Nebari from your local machine (see [this section](#cicd-render-and-commit-to-git) for CI/CD deployments), you will now have a `nebari-config.yaml` file that you can deploy.
