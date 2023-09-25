@@ -23,7 +23,7 @@ Many cloud providers enable users to automatically upgrade their Kubernetes clus
 This upgrade process bumps the version of the control plane along with all node groups. 
 
 :::warning
-Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly.
+Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly. We also recommend [backing up your data](./manual-backup.md) before starting this upgrade process.
 :::
 
 :::warning
@@ -40,11 +40,38 @@ Downgrading to a lower version of Kubernetes is dangerous and we strongly advise
 
 Google Kubernetes Engine (GKE) cut their own platform specific version of Kubernetes that usually look something like: `1.26.7-gke.500`; this corresponds to a Kubernetes version of `1.26.17`.
 
-You can locate the supported GKE Kubernetes versions by running the following `gcloud` command:
+You can list the supported GKE Kubernetes versions by running the following `gcloud` command:
 
 ```bash
 gcloud container get-server-config --region <region>
 ```
+
+We recommend selecting a `validVersion` from the `STABLE` channel:
+
+```bash
+channels:
+- channel: RAPID
+  defaultVersion: 1.27.4-gke.900
+  validVersions:
+  - 1.28.1-gke.201
+  ...
+- channel: REGULAR
+  defaultVersion: 1.27.3-gke.100
+  validVersions:
+  - 1.27.4-gke.900
+  - 1.27.3-gke.1700
+  ...
+- channel: STABLE
+  defaultVersion: 1.27.3-gke.100
+  validVersions:
+  - 1.27.4-gke.900
+  - 1.27.3-gke.100
+  - 1.26.7-gke.500
+  ...
+  - 1.24.15-gke.1700
+  - 1.24.14-gke.2700
+```
+
 
 To upgrade your GKE cluster, update the `google_cloud_platform.kubernetes_version` field in your `nebari-config.yaml` to match one of these GKE Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
 
@@ -81,7 +108,7 @@ For more information about EKS upgrades, please refer to the [EKS documentation]
 <TabItem label="Azure" value="azure">
 
 
-The Azure Kubernetes Service (AKS) requires that you specify the major, minor and patch version you wouldl like to use. To specify a Kubernetes version update the `azure.kubernetes_version` to `1.26.7` (or the version you need to upgrade to).
+The Azure Kubernetes Service (AKS) requires that you specify the major, minor and patch version you wouldl like to use. To specify a Kubernetes version update the `azure.kubernetes_version` to `1.26.7` (or the version you need to upgrade to). Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by AKS or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
 
 :::info
 You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
@@ -89,11 +116,37 @@ You will get a validation error if you try to select a Kubernetes version that i
 
 Then repeat the above process one minor version at a time.
 
-For more information about AKS upgrade, please refer to the [AKS documentation](https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster?tabs=azure-cli)
+For more information about AKS upgrade, please refer to the [AKS documentation](https://learn.microsoft.com/en-us/azure/aks/upgrade-cluster?tabs=azure-cli).
 
 </TabItem>
 
 <TabItem label="Digital Ocean" value="do">
+
+Digital Ocean Kubernetes Service (DOKS) cut their own platform specific version of Kubernetes that usually look something like: `1.25.14-do.0`; this corresponds to a Kubernetes version of `1.25.14`.
+
+You can list the supported DOKS Kubernetes versions by running the following `doctl` command:
+
+```bash
+doctl kubernetes options versions
+```
+
+```bash
+Slug            Kubernetes Version    Supported Features
+1.28.2-do.0     1.28.2                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
+1.27.6-do.0     1.27.6                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
+1.26.9-do.0     1.26.9                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
+1.25.14-do.0    1.25.14               cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
+```
+
+To upgrade your DOKS cluster, update the `digital_ocean.kubernetes_version` field in your `nebari-config.yaml` to match one of these DOKS Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
+
+:::info
+You will get a validation error if you try to select a Kubernetes version that is unsupported by DOKS or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+
+Then repeat the above process one minor version at a time.
+
+For more information about DOKS upgrade, please refer to the [DOKS documentation](https://docs.digitalocean.com/products/kubernetes/how-to/upgrade-cluster/).
+
 
 </TabItem>
 
