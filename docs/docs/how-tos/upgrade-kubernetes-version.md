@@ -105,7 +105,7 @@ For more information about EKS upgrades, please refer to the [EKS documentation]
 
 <TabItem label="Azure" value="azure">
 
-The Azure Kubernetes Service (AKS) requires that you specify the major, minor and patch version you wouldl like to use. To specify a Kubernetes version update the `azure.kubernetes_version` to `1.26.7` (or the version you need to upgrade to). Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by AKS or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
+The Azure Kubernetes Service (AKS) requires that you specify the major, minor, and patch version you would like to use. To specify a Kubernetes version update the `azure.kubernetes_version` to `1.26.7` (or the version you need to upgrade to). Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
 
 :::info
 You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
