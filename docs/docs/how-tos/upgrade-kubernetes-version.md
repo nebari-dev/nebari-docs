@@ -38,7 +38,7 @@ Downgrading to a lower version of Kubernetes is dangerous and we strongly advise
   
 <TabItem label="GCP" value="gcp" default="true">
 
-Google Kubernetes Engine (GKE) cut their own platform specific version of Kubernetes that usually look something like: `1.26.7-gke.500`; this corresponds to a Kubernetes version of `1.26.17`.
+Google Kubernetes Engine (GKE) cut their own platform specific version of Kubernetes that usually look something like: `1.26.7-gke.500`; this corresponds to a Kubernetes version of `1.26.7`.
 
 You can list the supported GKE Kubernetes versions by running the following `gcloud` command:
 
@@ -92,11 +92,15 @@ For more information about GKE upgrades, please refer to the [GKE documentation]
 
 <TabItem label="AWS" value="aws">
 
-The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, simply updated the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
+The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, simply updated the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by EKS or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
 
 :::info
-You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+You will get a validation error if you try to select a Kubernetes version that is unsupported by EKS or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
 :::
+
+In AWS, upgrading EKS will upgrade the control plane components but the node groups will need to be **upgraded manually**.
+
+In the AWS console, navigate to EKS and click on the name of your Kubernetes cluster (format will be `{project-name}-{namespace}`). In the 'Compute' tab, scroll down to "Node Groups". Any node groups which are behind will have an "Update Now" button by the "AMI release version" column values. Click "Update Now" for each. Each update may take 15 or more minutes depending on how many workloads need to be migrated, but they can be run simultaneously."
     
 Then repeat the above process one minor version at a time.
 
