@@ -1,6 +1,6 @@
 ---
 id: kubernetes-version-upgrade
-title: How to upgrade the cluster's Kubernetes version
+title: Upgrade cluster's Kubernetes version
 description: A basic overview on how to upgrade your cluster Kubernetes version
 ---
 
