@@ -23,15 +23,9 @@ Many cloud providers enable users to automatically upgrade their Kubernetes clus
 This upgrade process bumps the version of the control plane along with all node groups. 
 
 :::warning
-Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly. We also recommend [backing up your data](./manual-backup.md) before starting this upgrade process.
-:::
-
-:::warning
-Kubernetes versions can only be upgraded one minor version at a time. If you're running on 1.24, and need to upgrade to 1.26, you will first need to upgrade to 1.25.
-:::
-
-:::warning
-Downgrading to a lower version of Kubernetes is dangerous and we strongly advise against it!
+1. Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly. We also recommend [backing up your data](./manual-backup.md) before starting this upgrade process.
+2. Kubernetes versions can only be upgraded one minor version at a time. If you're running on 1.24, and need to upgrade to 1.26, you will first need to upgrade to 1.25.
+3. Downgrading to a lower version of Kubernetes is dangerous and we strongly advise against it!
 :::
 
 <Tabs>
