@@ -92,7 +92,7 @@ The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major
 You will get a validation error if you try to select a Kubernetes version that is unsupported by EKS or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
 :::
 
-In AWS, upgrading EKS will upgrade the control plane components but the node groups will need to be **upgraded manually**.
+In AWS, upgrading EKS will upgrade the control plane components but the **node groups will need to be upgraded manually**.
 
 In the AWS console, navigate to EKS and click on the name of your Kubernetes cluster (format will be `{project-name}-{namespace}`). In the 'Compute' tab, scroll down to "Node Groups". Any node groups which are behind will have an "Update Now" button by the "AMI release version" column values. Click "Update Now" for each. Each update may take 15 or more minutes depending on how many workloads need to be migrated, but they can be run simultaneously."
     
