@@ -46,7 +46,6 @@ module.exports = {
         "tutorials/creating-cds-dashboard",
         "tutorials/creating-new-environments",
         "tutorials/kbatch",
-        "tutorials/cost-estimate-report",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
       ],
