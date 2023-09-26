@@ -70,7 +70,7 @@ channels:
 To upgrade your GKE cluster, update the `google_cloud_platform.kubernetes_version` field in your `nebari-config.yaml` to match one of these GKE Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
 
 :::info
-You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
+You will get a validation error if you try to select a Kubernetes version that is unsupported by GKE or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`][highest-supported-k8s].
 :::
 
 Then repeat the above process one minor version at a time. You will get a similar error otherwise:
