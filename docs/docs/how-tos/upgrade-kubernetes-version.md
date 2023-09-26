@@ -18,7 +18,7 @@ The Nebari development team tries to stay ahead of this by supporting the latest
 This `HIGHEST_SUPPORTED_K8S_VERSION` is, at times, a minor version or two behind the officially released Kubernetes version.
 :::
 
-Many cloud providers enable users to automatically upgrade their Kubernetes cluster (control plane), however given the potential for deprecations and other changes, Nebari deployed to these cloud have this feature automatically disabled. 
+Many cloud providers enable users to automatically upgrade their Kubernetes cluster (control plane), however given the potential for deprecations and other changes, Nebari deployed to these clouds has this feature automatically disabled. 
 
 This upgrade process bumps the version of the control plane along with all node groups. 
 
