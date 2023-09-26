@@ -12,7 +12,7 @@ and so which way depends on your use-case.
 
 The longer answer:
 
-- For global environments, you can specify the environment in `nebari_config.yml`, and it will be made available for all users and services.
+- For global environments, you can specify the environment in `nebari-config.yml`, and it will be made available for all users and services.
 - By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
