@@ -151,3 +151,7 @@ For more information about DOKS upgrade, please refer to the [DOKS documentation
 
 </Tabs>
 
+<!-- Reusable links -->
+
+[highest-supported-k8s]: https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11
+
