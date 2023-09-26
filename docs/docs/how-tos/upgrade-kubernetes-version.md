@@ -94,7 +94,7 @@ You will get a validation error if you try to select a Kubernetes version that i
 
 In AWS, upgrading EKS will upgrade the control plane components but the **node groups will need to be upgraded manually**.
 
-In the AWS console, navigate to EKS and click on the name of your Kubernetes cluster (format will be `{project-name}-{namespace}`). In the 'Compute' tab, scroll down to "Node Groups". Any node groups which are behind will have an "Update Now" button by the "AMI release version" column values. Click "Update Now" for each. Each update may take 15 or more minutes depending on how many workloads need to be migrated, but they can be run simultaneously."
+In the AWS console, navigate to EKS and click on the name of your Kubernetes cluster (format will be `{project-name}-{namespace}`). In the 'Compute' tab, scroll down to "Node Groups". Any node groups which are behind will have an "Update Now" button by the "AMI release version" column values. Click "Update Now" for each. Each update may take 15 or more minutes depending on how many workloads need to be migrated, but they can be run simultaneously.
     
 Then repeat the above process one minor version at a time.
 
