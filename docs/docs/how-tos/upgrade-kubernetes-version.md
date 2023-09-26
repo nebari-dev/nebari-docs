@@ -86,7 +86,7 @@ For more information about GKE upgrades, please refer to the [GKE documentation]
 
 <TabItem label="AWS" value="aws">
 
-The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, simply updated the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes; you will get a validation error if you try to select a Kubernetes version that is unsupported by EKS or a version higher than `HIGHEST_SUPPORTED_K8S_VERSION`. This deployment process might take as long as 30 minutes.
+The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, update the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
 
 :::info
 You will get a validation error if you try to select a Kubernetes version that is unsupported by EKS or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11).
