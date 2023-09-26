@@ -152,6 +152,10 @@ nebari init aws --project projectname \
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
+:::note
+Nebari can also be deployed into an [AWS GovCloud](https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/whatis.html) account, you simply need to ensure you specify the appropriate AWS GovCloud region in the `amazon_web_services.region` field of your `nebari-config.yaml`.
+:::
+
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash

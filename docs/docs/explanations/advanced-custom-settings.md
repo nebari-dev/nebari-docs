@@ -143,37 +143,54 @@ This is quite useful for pinning the IP Address of the load balancer.
 
 <TabItem value="azure" label="Azure" default="true" >
 
-Using terraform overrides you can also deploy inside a Virtual Private Network (VPN).
+You can deploy your cluster into a Virtual Private Network (VPN) or Virtual Network (VNET). 
 
 An example configuration for Azure is given below:
 
 ```yaml
 azure:
-  terraform_overrides:
-      private_cluster_enabled: true
-      vnet_subnet_id: '/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>'
   region: Central US
+  ...
+  vnet_subnet_id: '/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>'
 ```
+
+If you want the AKS cluster to be [private cluster](https://learn.microsoft.com/en-us/azure/aks/private-clusters?tabs=azure-portal).
+
+For extra security, you can deploy your cluster from an [Azure Bastion host](https://learn.microsoft.com/en-us/azure/aks/operator-best-practices-network#securely-connect-to-nodes-through-a-bastion-host) (or jump host), making the Kubernetes API only accessible from this one secure machine. You will likely need to also modify the network_profile as follows:
+
+```yaml
+azure:
+  region: Central US
+  private_cluster_enabled: true
+  vnet_subnet_id: '/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>'
+  network_profile:
+    service_cidr: "10.0.2.0/24" # how many IPs would you like to reserve for Nebari
+    network_plugin: "azure" 
+    network_policy: "azure"
+    dns_service_ip: "10.0.2.10" # must be within the `service_cidr` range from above
+    docker_bridge_cidr: "172.17.0.1/16" # no real need to change this 
+  
+```
+
 
 </TabItem>
 
 <TabItem value="gcp" label="GCP" default="true" >
 
-Using terraform overrides you can also deploy inside a [Virtual Private Cloud (VPC) in GCP](https://cloud.google.com/vpc/docs/overview), making the Kubernetes cluster private. Here is an example configuration:
+You can also deploy inside a [Virtual Private Cloud (VPC) in GCP](https://cloud.google.com/vpc/docs/overview), making the Kubernetes cluster private. Here is an example configuration:
 
 ```yaml
 google_cloud_platform:
-  terraform_overrides:
-    networking_mode: "VPC_NATIVE"
-    network: "your-vpc-name"
-    subnetwork: "your-vpc-subnet-name"
-    private_cluster_config:
-      enable_private_nodes: true
-      enable_private_endpoint: true
-      master_ipv4_cidr_block: "172.16.0.32/28"
-    master_authorized_networks_config:
-      cidr_block: null
-      display_name: null
+  networking_mode: "VPC_NATIVE"
+  network: "your-vpc-name"
+  subnetwork: "your-vpc-subnet-name"
+  private_cluster_config:
+    enable_private_nodes: true
+    enable_private_endpoint: true
+    master_ipv4_cidr_block: "172.16.0.32/28"
+  master_authorized_networks_config:
+    cidr_block: null
+    display_name: null
 ```
 
 As the name suggests the cluster will be private, which means it would not have access to the internet - not ideal for deploying pods in the cluster. Therefore, we need
