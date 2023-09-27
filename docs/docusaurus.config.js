@@ -83,7 +83,11 @@ const config = {
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
-        blog: false,
+        blog: {
+          blogTitle: "Nebari blog",
+          blogDescription: "Community space to share updates and thoughts.",
+          showReadingTime: true,
+        },
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
         },
@@ -151,6 +155,11 @@ const config = {
             label: "Community",
             position: "right",
             to: "docs/community",
+          },
+          {
+            label: 'Blog',
+            position: 'right',
+            to: 'blog'
           },
           {
             label: "GitHub",
