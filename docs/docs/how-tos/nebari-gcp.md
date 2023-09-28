@@ -117,6 +117,16 @@ environment variables. If you had any issues during the installation, please vis
 guidance.
 :::
 
+## Required GCP APIs
+
+| API    | 
+| -------- |
+| Compute Engine API |
+| Kubernetes Engine API |
+| Cloud Monitoring API  |
+| Cloud Autoscaling API |
+| Identity and Access Management (IAM) API |
+
 ## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
