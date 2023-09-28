@@ -119,13 +119,16 @@ guidance.
 
 ## Required GCP APIs
 
-| API    | 
-| -------- |
-| Compute Engine API |
-| Kubernetes Engine API |
-| Cloud Monitoring API  |
-| Cloud Autoscaling API |
-| Identity and Access Management (IAM) API |
+Deploying Nebari on GCP requires the following APIs and services enabled. So before proceeding, go to the "APIs & Services"
+tab and enable the following APIs.
+
+- Compute Engine API
+- Kubernetes Engine API
+- Cloud Monitoring API
+- Cloud Autoscaling API
+- Identity and Access Management (IAM) API
+- Cloud Resource Manager API
+
 
 ## Initializing Nebari
 
