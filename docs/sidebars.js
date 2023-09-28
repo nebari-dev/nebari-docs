@@ -46,7 +46,6 @@ module.exports = {
         "tutorials/creating-cds-dashboard",
         "tutorials/creating-new-environments",
         "tutorials/kbatch",
-        "tutorials/cost-estimate-report",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
       ],
@@ -71,6 +70,7 @@ module.exports = {
         "how-tos/using-vscode",
         "how-tos/manual-backup",
         "how-tos/nebari-upgrade",
+        "how-tos/kubernetes-version-upgrade",
         "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
@@ -115,6 +115,7 @@ module.exports = {
         "community/doc-contributions",
         "community/style-guide",
         "community/team-structure",
+        "community/plugins",
         {
           type: "category",
           label: "Maintainers",

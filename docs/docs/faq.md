@@ -12,7 +12,7 @@ and so which way depends on your use-case.
 
 The longer answer:
 
-- For global environments, you can specify the environment in `nebari_config.yml`, and it will be made available for all users and services (for example, CDSDashboards).
+- For global environments, you can specify the environment in `nebari-config.yml`, and it will be made available for all users and services.
 - By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
@@ -29,6 +29,10 @@ you'll need to contact your Nebari administrator to include the required package
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
 
 ## What packages are needed in your environment to create a dashboard?
+
+:::info
+CDS Dashboards has been deprecated in version `2023.9.1`.
+:::
 
 When deploying an app via CDS Dashboards, you will always need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
 
