@@ -86,18 +86,18 @@ The amount of time this takes varies for each DNS provider. Validate such inform
 
 ## Automatic DNS provision
 
-Nebari also supports management and the creation of the DNS records for you automatically. For automatic DNS provision add `dns.auto-provision` to your Nebari config file:
+Nebari also supports management and the creation of the DNS records for you automatically. For automatic DNS provision add `dns.auto_provision` to your Nebari config file:
 
 ```yaml
 dns:
   provider: cloudflare
-  auto-provision: true
+  auto_provision: true
 ```
 
 This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Nebari domain DNS records on Cloudflare.
 
 :::warning
-The usage of `dns.auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
+The usage of `dns.auto_provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
 :::
 
 :::warning
