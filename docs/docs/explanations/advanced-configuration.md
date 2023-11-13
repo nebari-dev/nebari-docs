@@ -247,7 +247,7 @@ The first section is the version of Nebari you wish to run.
 nebari_version: 2023.7.2
 ```
 
-:::warning
+:::note
 You will get a validation error if the version of `nebari` used from the command line is different from the one in the `nebari-config.yaml`. 
 :::
 
