@@ -65,8 +65,10 @@ to do this is using a [service account](https://cloud.google.com/iam/docs/unders
 management.
 
 If it's your first time creating a service account, please follow
-[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with **Owner** level
-permissions over the project created in the previous step. For more information about roles and permissions, see the
+[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
+"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+
+For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
 you are handling multiple GCP projects.
 
