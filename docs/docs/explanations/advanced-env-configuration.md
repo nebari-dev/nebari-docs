@@ -65,7 +65,6 @@ For versions of Nebari earlier than `2023.04.1`, conda-store by default restrict
 <!-- Internal links -->
 
 [using-dask]: ../tutorials/using_dask
-[create-dashboards]: ../tutorials/creating-cds-dashboard
 
 ### Built-in namespaces:
 
