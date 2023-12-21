@@ -11,6 +11,62 @@ why it's happening, help you diagnose it, and if possible resolve it.
 
 ## Configuration
 
+### Delete a conda-store build, environment or namespace
+
+:::note
+Please be patient as conda-store deletes the build, environment or namespace as it can take up to 30 minutes for these changes to propagate.
+:::
+
+#### Delete a conda-store build
+
+If you wish to delete a conda-store build, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin` 
+(in the `superadmin` group) role to be perform this action.
+
+1. Navigate to https://your-nebari-domain/conda-store/admin/ and login
+2. Navigate to the appropriate conda-store namespace and environment
+3. Locate the build you wish to delete and then click the trash can icon to delete the build
+
+<div class="text--center">
+  <img src="/img/troubleshooting/delete_build.png" width={420} />
+</div>
+
+
+#### Delete a conda-store environment
+
+If you wish to delete a conda-store environment, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin` 
+(in the `superadmin` group) role to be perform this action.
+
+The steps to delete an environment are practically the same:
+1. Navigate to https://your-nebari-domain/conda-store/admin/ and login
+2. Navigate to the appropriate conda-store namespace and environment
+3. When ready, click on the "delete" button
+
+<div class="text--center">
+  <img src="/img/troubleshooting/delete_environment.png" width={420} />
+</div>
+
+#### Delete a conda-store namespace
+
+If you wish to delete a conda-store namespace, your user will need the  `conda_store_superadmin` (in the `superadmin` group) role to be perform this action.
+
+1. Navigate to https://your-nebari-domain/conda-store/admin/user and login
+2. Click on the "Manage namespaces" button
+
+<div class="text--center">
+  <img src="/img/troubleshooting/manage_namespaces.png" width={420} />
+</div>
+
+3. Find the namespace you wish to delete and click on the "delete" button
+
+<div class="text--center">
+  <img src="/img/troubleshooting/delete_namespace.png" width={420} />
+</div>
+
+:::warning
+Please avoid deleting the `nebari-git` namespace as it is used by the base JupyterLab image and deleting it will likely cause JupyterLab to stop working!
+:::
+
+
 ### Conda-store compatibility migration steps when upgrading to 0.4.5
 
 If you are upgrading from a version of Nebari prior to `0.4.5`, you will need to manually update your conda-store namespaces
@@ -26,7 +82,7 @@ This is a manual process that consists in copying over the yaml specifications f
 
 Once all environments are migrated, you will be able to delete the `default` and `filesystem` namespaces using the `delete` option from the conda-store UI:
 
-![delete-namespace](/img/troubleshooting/delete_namespace.png)
+![delete-namespace](/img/troubleshooting/delete_namespace_045_upgrade.png)
 
 :::warning
 Both the `filesystem` and `nebari-git` are built-in namespaces that are used by Nebari.

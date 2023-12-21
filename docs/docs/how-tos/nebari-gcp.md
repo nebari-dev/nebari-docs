@@ -65,8 +65,10 @@ to do this is using a [service account](https://cloud.google.com/iam/docs/unders
 management.
 
 If it's your first time creating a service account, please follow
-[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with **Owner** level
-permissions over the project created in the previous step. For more information about roles and permissions, see the
+[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
+"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+
+For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
 you are handling multiple GCP projects.
 
@@ -116,6 +118,19 @@ installed in your environment, (iii) opted for **GCP** as your cloud provider wh
 environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further
 guidance.
 :::
+
+## Required GCP APIs
+
+Deploying Nebari on GCP requires the following APIs and services enabled. So before proceeding, go to the "APIs & Services"
+tab and enable the following APIs.
+
+- Compute Engine API
+- Kubernetes Engine API
+- Cloud Monitoring API
+- Cloud Autoscaling API
+- Identity and Access Management (IAM) API
+- Cloud Resource Manager API
+
 
 ## Initializing Nebari
 
