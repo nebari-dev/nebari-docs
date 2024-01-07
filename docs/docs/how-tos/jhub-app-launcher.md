@@ -6,7 +6,7 @@ description: Using JHub App Launcher with Nebari
 
 # JHub App Launcher with Nebari
 
-[JHub App Launcher](https://argoproj.github.io/workflows) is a generalized server launcher
+[JHub App Launcher](https://github.com/nebari-dev/jhub-apps) is a generalized server launcher
 for JupyterHub. You can use it create and share apps using various frameworks like:
 
 - Panel
