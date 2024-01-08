@@ -96,6 +96,22 @@ installed in your environment, (iii) opted for **AWS** as your cloud provider, a
 installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further guidance.
 :::
 
+### Permissions Boundary (Optional)
+
+Permissions boundaries in AWS is a powerful feature designed to control the maximum permissions a
+user or role can have within an AWS Identity and Access Management (IAM) policy. By setting a permissions
+boundary, administrators can enforce restrictions on the extent of permissions that can be granted,
+even if policies would otherwise allow broader access.
+
+Nebari supports setting permissions boundary while deploying Nebari to be applied on all the policies
+created by Nebari. Here is an example of how you would set permissions boundary in `nebari-config.yaml`.
+
+```yaml
+amazon_web_services:
+  # the arn for the permission's boundary policy
+  permissions_boundary: arn:aws:iam::01234567890:policy/<permissions-boundary-policy-name>
+```
+
 ## Initializing Nebari
 
 Great, you’ve gone through the [Nebari installation](get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
