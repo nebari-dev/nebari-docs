@@ -27,3 +27,8 @@ JHub App Launcher can be enabled on Nebari by adding the following in the
 jhub_apps:
   enabled: true
 ```
+
+## Environment
+
+To be able to create apps using `jhub-apps` you need to have `jhub-apps` in your
+conda environment.
