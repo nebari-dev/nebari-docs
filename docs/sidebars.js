@@ -45,7 +45,6 @@ module.exports = {
         "tutorials/using_dask",
         "tutorials/creating-cds-dashboard",
         "tutorials/creating-new-environments",
-        "tutorials/kbatch",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
       ],
@@ -76,6 +75,7 @@ module.exports = {
         "how-tos/using-argo",
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
+        "how-tos/telemetry",
       ],
     },
     {
