@@ -71,7 +71,7 @@ Depending on where you are planning to deploy, Nebari can be installed and
 deployed in roughly 30 minutes!
 
 > **\*Note**
-> Check the [Nebari installation guide](https://www.nebari.dev/category/get-started) for detailed step-by-step instructions on deploying Nebari.
+> Check the [Nebari installation guide](https://www.nebari.dev/docs/get-started/installing-nebari) for detailed step-by-step instructions on deploying Nebari.
 
 ## Contributing to Nebari :woman_technologist:
 
