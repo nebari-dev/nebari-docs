@@ -110,8 +110,8 @@ Once launched, you use all the features of JupyterLab!
 
 <!-- Internal links -->
 
-[nebari-keycloak]: /docs/how-tos/configure-keycloak-howto
-[nebari-keycloak-add-user]: /docs/how-tos/configure-keycloak-howto#adding-a-nebari-user
+[nebari-keycloak]: /docs/how-tos/configure-keycloak
+[nebari-keycloak-add-user]: /docs/how-tos/configure-keycloak#adding-a-nebari-user
 [install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation
 [profile-configuration]: /docs/explanations/profile-configuration
 [troubleshooting]: /docs/troubleshooting

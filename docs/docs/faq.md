@@ -167,5 +167,5 @@ If you have potential solutions or can help us move forward with updates to the 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[selecting a profile]: how-tos/login-keycloak#3-selecting-a-profile
+[selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [pytorch best practices]: how-tos/pytorch-best-practices
