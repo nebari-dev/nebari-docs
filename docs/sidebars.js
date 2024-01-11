@@ -73,6 +73,7 @@ module.exports = {
         "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
+        "how-tos/jhub-app-launcher",
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
