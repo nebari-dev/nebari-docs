@@ -51,8 +51,8 @@ You may need to "Authorize access" to reach the home page:
 Once authenticated, the **Nebari home page** opens.
 The home page, also referred to as "Landing page" or "JupyterHub launcher",
 lists Nebari's core **services** and allows you to create and share web apps.
-opens
-<!- TODO: Link to app creation & sharing tutorial when available -->
+
+<!-- TODO: Link to app creation & sharing tutorial when available -->
 
 Click on the **"JupyterLab"** button under Services to start a server and launch JupyterLab:
 
@@ -110,8 +110,8 @@ Once launched, you use all the features of JupyterLab!
 
 <!-- Internal links -->
 
-[nebari-keycloak]: /docs/how-tos/configure-keycloak
-[nebari-keycloak-add-user]: /docs/how-tos/configure-keycloak#adding-a-nebari-user
+[nebari-keycloak]: /docs/how-tos/configuring-keycloak
+[nebari-keycloak-add-user]: /docs/how-tos/configuring-keycloak#adding-a-nebari-user
 [install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation
 [profile-configuration]: /docs/explanations/profile-configuration
 [troubleshooting]: /docs/troubleshooting
