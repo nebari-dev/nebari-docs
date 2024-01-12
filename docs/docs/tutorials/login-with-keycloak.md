@@ -49,12 +49,11 @@ You may need to "Authorize access" to reach the home page:
 :::
 
 Once authenticated, the **Nebari home page** opens.
-The home page, also referred to as "Landing page" or "JupyterHub launcher",
-lists Nebari's core **services** and allows you to create and share web apps.
+The home page, also referred to as
+"Landing page", "JupyterHub launcher", or "Hub Control Panel",
+lists Nebari's core **services** and allows you to [create and share web apps][create-dashboard].
 
-<!-- TODO: Link to app creation & sharing tutorial when available -->
-
-Click on the **"JupyterLab"** button under Services to start a server and launch JupyterLab:
+Click on the **"JupyterLab"** button under **"My Apps"** to start a server and launch JupyterLab:
 
 ![Nebari home page with Services: JupyterLab, Argo, Users, Environments, Monitoring, VSCode; My Apps: JupyterLab (default JupyterLab instance); and Shared Apps.](/img/tutorials/nebari-home.png)
 
@@ -115,6 +114,7 @@ Once launched, you use all the features of JupyterLab!
 [install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation
 [profile-configuration]: /docs/explanations/profile-configuration
 [troubleshooting]: /docs/troubleshooting
+[create-dashboard]: /docs/tutorials/create-dashboard
 
 <!-- External links -->
 

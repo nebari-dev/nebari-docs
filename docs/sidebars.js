@@ -44,7 +44,7 @@ module.exports = {
       items: [
         "tutorials/login-keycloak",
         "tutorials/using_dask",
-        "tutorials/creating-cds-dashboard",
+        "tutorials/create-dashboard",
         "tutorials/creating-new-environments",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
