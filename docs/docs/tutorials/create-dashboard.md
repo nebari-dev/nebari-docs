@@ -49,6 +49,7 @@ CDS Dashboards supports `Panel`, `Bokeh`, `Voila`, `Streamlit`, and `Plotly`.
 To use JHub Apps, your environment must include `jhub-apps` and the corresponding dashboard/app creation framework, in addition to other libraries required in the notebook.
 
 Hence, for this tutorial:
+
 ```yaml
 - pandas
 - panel
@@ -60,6 +61,14 @@ Hence, for this tutorial:
 
 </TabItem>
 <TabItem value="cds-dashboards" label="CDS Dashboards">
+
+When deploying an app via CDS Dashboards, you need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
+
+Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed. You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
+
+Finally, when creating your app, make note of the packages you are using to run the app locally. These will also need to be added to your environment you will be using to create the dashboard.
+
+For this tutorial:
 
 ```yaml
 - pandas
@@ -73,9 +82,6 @@ Hence, for this tutorial:
 </Tabs>
 
 [Launch JupyterLab in Nebari][login-keycloak], create a new Jupyter Notebook with a meaningful name (such as `panel-trees-dashboard.ipynb`), and select the environment your created for this notebook from the `select kernel` dropdown (this dropdown menu is located in the top right corner of your notebook).
-
-<!-- See the [FAQ item](../faq.md#what-packages-are-needed-in-your-environment-to-create-a-dashboard) on creating environments for running the various dashboard options on Nebari.
-::: -->
 
 ### 2. Create a panel dashboard
 
