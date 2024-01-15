@@ -89,5 +89,6 @@ Include the `jhub-apps` package in your environment to create apps using the JHu
 
 <!-- Internal links -->
 
-[login-keycloak]: /docs/tutorials/login-keycloak
+<!--Update when PR#397 is merged -->
+[login-keycloak]: docs/docs/how-tos/login-thru-keycloak-howto.md
 [configure-keycloak-groups]: /docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups
