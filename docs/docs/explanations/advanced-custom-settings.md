@@ -143,7 +143,7 @@ This is quite useful for pinning the IP Address of the load balancer.
 
 <TabItem value="azure" label="Azure" default="true" >
 
-You can deploy your cluster into a Virtual Private Network (VPN) or Virtual Network (VNET). 
+You can deploy your cluster into a Virtual Private Network (VPN) or Virtual Network (VNET).
 
 An example configuration for Azure is given below:
 
@@ -165,13 +165,12 @@ azure:
   vnet_subnet_id: '/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>'
   network_profile:
     service_cidr: "10.0.2.0/24" # how many IPs would you like to reserve for Nebari
-    network_plugin: "azure" 
+    network_plugin: "azure"
     network_policy: "azure"
     dns_service_ip: "10.0.2.10" # must be within the `service_cidr` range from above
-    docker_bridge_cidr: "172.17.0.1/16" # no real need to change this 
-  
-```
+    docker_bridge_cidr: "172.17.0.1/16" # no real need to change this
 
+```
 
 </TabItem>
 
@@ -211,3 +210,55 @@ As the name suggests, since it's a virtual private network, you need to be insid
 One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network.
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
 and then follow the usual deployment instructions as you would deploy from your local machine.
+
+#### Helm Extensions
+
+Nebari provides a way for any user to expand the infrastructure availablke by default by using the `helm_extensions` attribute, which allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
+
+##### Overview
+
+Each entry in the `helm_extensions` list represents a single Helm chart configuration, allowing you to define the chart source, version, and specific overrides or settings for that chart. When Nebari is deployed, it will install the specified Helm charts using the provided settings.
+
+##### Structure
+
+Each entry in the helm_extensions list contains the following fields:
+
+- `name`: A unique identifier for the Helm chart. It will also be used as the name of the Kubernetes deployment related resources.
+- `repository`: The URL of the repository where the Helm chart is stored. Must be a valid Helm repository URL.
+- `chart`: The name or path of the chart within the repository. must be compliant with the Helm chart naming conventions.
+- `version`: The specific version of the chart to be used.
+- `overrides`: Specific configurations to override default chart values.
+
+:::note Note
+The `overrides` field is optional. If not specified, the default values for the chart will be used.
+:::
+
+##### Example
+
+Below we give an example showcasing how to install Redis using helm_extensions:
+
+```yaml
+helm_extensions:
+  - name: redis-deployment
+    repository: https://charts.bitnami.com/bitnami
+    chart: redis
+    version: 17.7.5
+    overrides:
+      architecture: standalone
+      master:
+        containerSecurityContext:
+          runAsUser: 0
+        persistence:
+          enabled: true
+          path: /redis/data
+          subPath: redis/data
+          existingClaim: <existing-claim-name-is-required>
+      replica:
+        persistence:
+          enabled: false
+        replicaCount: 0
+```
+
+:::warning Warning
+In the above example, we are assuming the current nebari kubernetes cluster already has an appropriate storage class and persistent volume claim (PVC) created. If not, you will need to create a storage class and PVC before deploying the helm chart.
+:::
