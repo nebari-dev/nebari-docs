@@ -117,7 +117,7 @@ jupyterhub:
 
 Nebari supports two main configuration options for JupyterLab:
 
-- `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/docs/how-tos/nebari-idle-culler) for more information.
+- `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/docs/how-tos/idle-culling) for more information.
 
 ```yaml
 jupyterlab:
@@ -125,7 +125,7 @@ jupyterlab:
     kernel_cull_idle_timeout: 30
 ```
 
-- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of name: url pairs, with each 'name' becoming the folder name in the user's home directory.
+- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory.
 
 ```yaml
 jupyterlab:
@@ -195,7 +195,6 @@ azure:
     docker_bridge_cidr: "172.17.0.1/16" # no real need to change this
 
 ```
-
 
 </TabItem>
 
