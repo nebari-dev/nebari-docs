@@ -30,7 +30,7 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 
 ## What packages are needed in your environment to create a dashboard?
 
-When deploying an app with JHub App Launcher, you need to have the following in your environemtn:
+When deploying an app with JHub App Launcher, you need to have the following in your environment:
 - `jhub-apps` package
 - packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
 - any other libraries required for the analysis in the dashboard creation script/notebook
