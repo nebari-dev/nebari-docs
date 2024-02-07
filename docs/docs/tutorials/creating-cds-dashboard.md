@@ -8,10 +8,8 @@ description: Quickly build and deploy a panel and CDS Dashboards
 
 :::danger
 
-CDS Dashboards will be deprecated soon.
-Nebari 2023.7.1 will be the last release with support for CDS Dashboards integration.
-A new dashboard sharing mechanism added in the near future, but some releases in the interim will not have dashboard sharing capabilities.
-
+CDS Dashboards has been deprecated in `2023.9.1`.
+Nebari 2023.7.1 is the last release that support CDS Dashboards. A new dashboard sharing mechanism will be added in the near future.
 :::
 
 ## Introduction

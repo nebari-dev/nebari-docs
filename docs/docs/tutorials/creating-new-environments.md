@@ -122,7 +122,7 @@ authorization model is able to provide admins with a fine-grained level of contr
    ![conda-store UI - Sample environment build details page: showing build details, specification file, and conda packages](/img/tutorials/conda_store_build_details_top.png)
 
    Scroll down to the bottom of this list, and you'll see a section called `Conda Environment Artifacts`.
-   This is where you can download your own copy of the YAML file, a [conda-lock](https://conda-incubator.github.io/conda-lock/) file, and a `tar.gz` archive of the environment.
+   This is where you can download your own copy of the YAML file, a [conda-lock](https://conda.github.io/conda-lock/) file, and a `tar.gz` archive of the environment.
 
    ![conda-store UI - Sample environment build details page: showing the conda environment artifacts](/img/tutorials/conda_store_build_details_bottom.png)
 
