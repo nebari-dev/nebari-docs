@@ -42,8 +42,9 @@ module.exports = {
       label: "Tutorials",
       link: { type: "doc", id: "tutorials/index" },
       items: [
+        "tutorials/login-keycloak",
         "tutorials/using_dask",
-        "tutorials/creating-cds-dashboard",
+        "tutorials/create-dashboard",
         "tutorials/creating-new-environments",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
@@ -64,7 +65,6 @@ module.exports = {
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
-        "how-tos/login-keycloak",
         "how-tos/configuring-keycloak",
         "how-tos/using-vscode",
         "how-tos/manual-backup",

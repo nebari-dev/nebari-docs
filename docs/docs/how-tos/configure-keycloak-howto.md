@@ -186,5 +186,5 @@ Once complete, return to the **Users** section in the dashboard and add the rele
 
 <!-- internal links -->
 
-[keycloak-login]: login-keycloak
-[nebari-install]: /get-started/installing-nebari.md
+[keycloak-login]: /docs/tutorials/login-keycloak
+[nebari-install]: /docs/get-started/installing-nebari.md

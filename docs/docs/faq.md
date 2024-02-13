@@ -30,17 +30,10 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 
 ## What packages are needed in your environment to create a dashboard?
 
-:::info
-CDS Dashboards has been deprecated in version `2023.9.1`.
-:::
-
-When deploying an app via CDS Dashboards, you will always need to have `cdsdashboards-singleuser` installed in your environment. This allows your environment to show up on the environment options menu when creating your app.
-
-Furthermore, with each framework, you will need to make sure that the specific framework you are deploying is installed. You will need to install `streamlit` for a streamlit app, `panel` for a panel app, etc.
-
-Finally, when creating your app, make note of the packages you are using to run the app locally. These will also need to be added to your environment you will be using to create the dashboard.
-
-There are several example dashboards to build in the dashboard_examples folder on Nebari. The `environment.yml` file in this folder can be used to build an environment that can run each of the dashboard examples available.
+When deploying an app with JHub App Launcher, you need to have the following in your environment:
+- `jhub-apps` package
+- packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
+- any other libraries required for the analysis in the dashboard creation script/notebook
 
 ## How can I install a package locally? Will this package be available to Dask workers?
 
@@ -167,5 +160,5 @@ If you have potential solutions or can help us move forward with updates to the 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[selecting a profile]: how-tos/login-keycloak#3-selecting-a-profile
+[selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [pytorch best practices]: how-tos/pytorch-best-practices
