@@ -137,6 +137,16 @@ jupyterlab:
 Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
 :::
 
+
+- `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
+
+```yaml
+jupyterlab:
+  default_settings:
+    "@jupyterlab/apputils-extension:themes":
+      theme: JupyterLab Dark
+```
+
 ### Terraform
 
 The Nebari configuration file provides a huge number of configuration options for customizing your Nebari infrastructure. While these options are sufficient for an average user, they
