@@ -135,7 +135,10 @@ jupyterlab:
 
 :::note Note
 Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
+
+- `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
 
 ### Terraform
 
