@@ -28,7 +28,6 @@ To get started with Nebari right away, check the [Nebari documentation][nebari-d
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
 - [Nebari 101 :zap:](#nebari-101-zap)
 - [Installation :computer:](#installation-computer)
 - [Contributing to Nebari :woman_technologist:](#contributing-to-nebari-woman_technologist)
