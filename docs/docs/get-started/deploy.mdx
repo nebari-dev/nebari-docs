@@ -5,7 +5,7 @@ title: Choosing a deployment platform
 
 # Choosing a deployment platform
 
-Nebari can be deployed on a bare-metal server using HPC, any of the major public cloud providers, or on a pre-existing Kubernetes cluster.
+Nebari can be deployed on any of the major public cloud providers, or on a pre-existing Kubernetes cluster.
 Review the options below to determine which option best suits your needs.
 
 import Tabs from '@theme/Tabs';
@@ -34,40 +34,6 @@ Currently, Nebari supports [Amazon AWS][nebari-aws], [DigitalOcean][nebari-do], 
 
 </TabItem>
 
-<TabItem value="hpc-deployment-tab" label="HPC">
-
-Nebari HPC is an opinionated open source deployment of JupyterHub based on an HPC jobscheduler (e.g. Slurm).
-Nebari HPC is a "distribution" of these packages much like Debian and Ubuntu are distributions of Linux.
-
-:::note
-To note, Nebari HPC can be used on other distributed compute hardware, not just HPC hardware specifically. We anticipate that Nebari HPC will be used most often on HPC hardware, however.
-:::
-
-The high level goal of this distribution is to form a cohesive set of tools that enable:
-
-- Environment management via [`conda`](https:/...conda.io/en/latest/) and [`conda-store`](https://conda-store.readthedocs.io/en/latest/)
-
-- Monitoring of compute infrastructure and services
-
-- Scalable and efficient compute via Jupyterlab and Dask
-
-- On-prem deployment of Jupyterhub without requiring deep DevOps knowledge of the Slurm/HPC and Jupyter ecosystems
-
-Nebari HPC should be your choice if:
-
-- You have highly optimized code that requires highly performant infrastructure
-
-- You have existing HPC infrastructure
-
-- You expect that your projects will not exceed the resources/capabilities of your current infrastructure
-
-For instructions on installing and deploying Nebari HPC, visit the [How to install and setup Nebari HPC on bare metal machines][nebari-hpc] section of the documentation.
-
-:::note
-Although it is possible to deploy Nebari HPC in the cloud, it is not generally recommended due to potentially high costs. For more information, check out the [base cost] section of the docs.
-:::
-
-</TabItem>
 <TabItem value="local" label="Local deployment">
 
 This approach is recommended for **testing and development** of Nebari’s components due to its simplicity. Choose the local mode if:
@@ -116,7 +82,6 @@ For instructions on installing and deploying Nebari on a particular cloud provid
 [nebari-azure]: /how-tos/nebari-azure.md
 [nebari-do]: /how-tos/nebari-do.md
 [nebari-gcp]: /how-tos/nebari-gcp.md
-[nebari-hpc]: /how-tos/nebari-hpc.md
 [nebari-local]: /how-tos/nebari-local.md
 [nebari-deploy]: /get-started/deploy.mdx
 [supported-cloud-providers]: /get-started/cloud-providers.mdx
