@@ -88,11 +88,11 @@ You can customize the size of persistent volume for logs storage, by setting up 
 
 ```yaml
 monitoring:
-enabled: true
-overrides:
-  minio:
-    persistence:
-      size: 100Gi
+    enabled: true
+    overrides:
+      minio:
+        persistence:
+          size: 100Gi
 ```
 
 ### Log Retention Period
@@ -105,13 +105,13 @@ value as follows:
 
 ```yaml
 monitoring:
-enabled: true
-overrides:
-  loki:
-    loki:
-      limits_config:
-        # The minimum retention period is 24h.
-        retention_period: 90d
+    enabled: true
+    overrides:
+      loki:
+        loki:
+          limits_config:
+            # The minimum retention period is 24h.
+            retention_period: 90d
 ```
 
 This may not be a suitable solution for many cases, like if your organization needs to keep
@@ -120,10 +120,10 @@ deletion of old logs. You can disable deletion via:
 
 ```yaml
 monitoring:
-enabled: true
-overrides:
-  loki:
-    loki:
-      compactor:
-        retention_enabled: false
+    enabled: true
+    overrides:
+      loki:
+        loki:
+          compactor:
+            retention_enabled: false
 ```
