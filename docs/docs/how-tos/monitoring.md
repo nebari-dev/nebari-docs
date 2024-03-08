@@ -81,6 +81,26 @@ monitoring:
 
 Below are some examples of customizing your loki deployment via terraform overrides:
 
+### Log Storage Config
+
+We use minio for logs storage as default, it is a high-performance, S3 compatible object store. You can use
+any S3 compatible object store instead of minio, below is an example configuration for using AWS S3:
+
+```yaml
+monitoring:
+  enabled: true
+  minio_enabled: false
+  overrides:
+    loki:
+      loki:
+        storage_config:
+          aws:
+            s3: s3://<access_key>:<uri-encoded-secret-access-key>@<region>
+```
+
+See https://grafana.com/docs/loki/latest/storage/#aws-deployment-s3-single-store for more configuration
+options.
+
 ### Log Storage
 
 You can customize the size of persistent volume for logs storage, by setting up the value for
@@ -88,11 +108,11 @@ You can customize the size of persistent volume for logs storage, by setting up 
 
 ```yaml
 monitoring:
-    enabled: true
-    overrides:
-      minio:
-        persistence:
-          size: 100Gi
+  enabled: true
+  overrides:
+    minio:
+      persistence:
+        size: 100Gi
 ```
 
 ### Log Retention Period
@@ -105,13 +125,13 @@ value as follows:
 
 ```yaml
 monitoring:
-    enabled: true
-    overrides:
+  enabled: true
+  overrides:
+    loki:
       loki:
-        loki:
-          limits_config:
-            # The minimum retention period is 24h.
-            retention_period: 90d
+        limits_config:
+          # The minimum retention period is 24h.
+          retention_period: 90d
 ```
 
 This may not be a suitable solution for many cases, like if your organization needs to keep
@@ -120,10 +140,10 @@ deletion of old logs. You can disable deletion via:
 
 ```yaml
 monitoring:
-    enabled: true
-    overrides:
+  enabled: true
+  overrides:
+    loki:
       loki:
-        loki:
-          compactor:
-            retention_enabled: false
+        compactor:
+          retention_enabled: false
 ```
