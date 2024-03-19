@@ -19,7 +19,7 @@ Please be patient as conda-store deletes the build, environment or namespace as 
 
 #### Delete a conda-store build
 
-If you wish to delete a conda-store build, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin` 
+If you wish to delete a conda-store build, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin`
 (in the `superadmin` group) role to be perform this action.
 
 1. Navigate to https://your-nebari-domain/conda-store/admin/ and login
@@ -30,13 +30,13 @@ If you wish to delete a conda-store build, your user will need the `conda_store_
   <img src="/img/troubleshooting/delete_build.png" width={420} />
 </div>
 
-
 #### Delete a conda-store environment
 
-If you wish to delete a conda-store environment, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin` 
+If you wish to delete a conda-store environment, your user will need the `conda_store_admin` (in the `admin` group) or `conda_store_superadmin`
 (in the `superadmin` group) role to be perform this action.
 
 The steps to delete an environment are practically the same:
+
 1. Navigate to https://your-nebari-domain/conda-store/admin/ and login
 2. Navigate to the appropriate conda-store namespace and environment
 3. When ready, click on the "delete" button
@@ -47,7 +47,7 @@ The steps to delete an environment are practically the same:
 
 #### Delete a conda-store namespace
 
-If you wish to delete a conda-store namespace, your user will need the  `conda_store_superadmin` (in the `superadmin` group) role to be perform this action.
+If you wish to delete a conda-store namespace, your user will need the `conda_store_superadmin` (in the `superadmin` group) role to be perform this action.
 
 1. Navigate to https://your-nebari-domain/conda-store/admin/user and login
 2. Click on the "Manage namespaces" button
@@ -65,7 +65,6 @@ If you wish to delete a conda-store namespace, your user will need the  `conda_s
 :::warning
 Please avoid deleting the `nebari-git` namespace as it is used by the base JupyterLab image and deleting it will likely cause JupyterLab to stop working!
 :::
-
 
 ### Conda-store compatibility migration steps when upgrading to 0.4.5
 
@@ -167,6 +166,32 @@ This may occur when `dask-gateway-controller` has some internal authentication i
 - Use the arrow keys to highlight each pod
 - Delete highlighted pods with <kbd>ctrl</kbd> + <kbd>d</kbd>, and the pods should restart automatically
 
+### Conda-store storage threshold
+
+Nebari has a predefined (and configurable) storage limit for private and shared conda environments created via `conda-store`. A common pitfall is having the created environments fill up the available space, resulting in the following error in the conda-store UI when trying to [create new environments or builds](https://www.nebari.dev/docs/tutorials/creating-new-environments):
+
+> `CondaStore.storage_threshold` reached
+
+To remove unused or unwanted environments and free up some space, you can follow the [Delete a conda-store build, environment or namespace](https://www.nebari.dev/docs/troubleshooting#delete-a-conda-store-build-environment-or-namespace) steps.
+
+While this process does indeed free up space in the storage drive, currently trying to create a new environment or build using the conda-store UI keeps failing because it does not re-scan available space automatically. In order to have conda-store re-scan the available space and allow the creation of new environments and builds, the conda-store worker pod must be restarted.
+
+You can do this via either `k9s` or `kubectl`.
+
+If you prefer `kubectl`, simply run:
+
+```bash
+kubectl delete pods -l role=nebari-conda-store-worker -n dev
+```
+
+If you prefer `k9s`:
+
+- Open `k9s` (Learn more about `k9s` in [Debug Nebari deployment](./how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s))
+- Press the <kbd>/</kbd> key and search for "nebari-conda-store-worker"
+- Use the arrow keys to highlight each pod
+- Delete highlighted pods with <kbd>ctrl</kbd> + <kbd>d</kbd>
+
+In both cases, a new conda-store worker pod will be immediately restarted, and you will be able to create new environments and builds again.
 
 ## How do I...?
 
