@@ -92,7 +92,6 @@ Already made your mind about deployment? Check our handy how-to-guides:
 - [Deploying Nebari on Azure][nebari-azure]
 - [Deploying Nebari on Digital Ocean][nebari-do]
 - [Deploying Nebari on GCP][nebari-gcp]
-- [Deploying Nebari on HPC][nebari-hpc]
 - [Deploying Nebari on a local cluster][nebari-local]- using [`kind`](https://kind.sigs.k8s.io/) no cloud required
 
 <!-- Internal links -->
@@ -101,7 +100,6 @@ Already made your mind about deployment? Check our handy how-to-guides:
 [nebari-azure]: /how-tos/nebari-azure.md
 [nebari-do]: /how-tos/nebari-do.md
 [nebari-gcp]: /how-tos/nebari-gcp.md
-[nebari-hpc]: /how-tos/nebari-hpc.md
 [nebari-local]: /how-tos/nebari-local.md
 [nebari-deploy]: /get-started/deploy.mdx
 [nebari-troubleshooting]: /troubleshooting.mdx

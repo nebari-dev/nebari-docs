@@ -29,7 +29,6 @@ To get started with Nebari right away, check the [Nebari documentation][nebari-d
 ## Table of contents
 
 - [Nebari 101 :zap:](#nebari-101-zap)
-  - [Nebari on-prem](#nebari-on-prem)
 - [Installation :computer:](#installation-computer)
 - [Contributing to Nebari :woman_technologist:](#contributing-to-nebari-woman_technologist)
   - [Installing the Development version of Nebari :gear:](#installing-the-development-version-of-nebari-gear)
@@ -53,13 +52,6 @@ mentioned technologies to have your project successfully deployed.
 > **TLD;R**
 > If you know GitHub/GitLab and feel comfortable generating and using API keys, you should have all it takes to deploy
 > and maintain your system without the need for a dedicated DevOps team. No need to learn Kubernetes, Terraform, or Helm.
-
-### Nebari on-prem
-
-We also have a version of Nebari based on OpenHPC. It can be used to deploy onto HPC systems or on bare-metal.
-
-> **Note**
-> This tool is currently under development. Curious? Check out the [Nebari HPC](https://github.com/Quansight/qhub-hpc) repository.
 
 ## Installation :computer:
 
