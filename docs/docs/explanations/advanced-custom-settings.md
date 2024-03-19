@@ -115,7 +115,7 @@ jupyterhub:
 
 ### JupyterLab
 
-Nebari supports two main configuration options for JupyterLab:
+Nebari supports a number of configuration options for JupyterLab:
 
 - `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/docs/how-tos/idle-culling) for more information.
 
@@ -135,7 +135,20 @@ jupyterlab:
 
 :::note Note
 Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
+
+
+- `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
+
+```yaml
+jupyterlab:
+  default_settings:
+    "@jupyterlab/apputils-extension:themes":
+      theme: JupyterLab Dark
+```
+
+- `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
 
 ### Terraform
 
