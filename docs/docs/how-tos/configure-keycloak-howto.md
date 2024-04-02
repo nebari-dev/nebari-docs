@@ -142,7 +142,7 @@ Users in a particular group will also get access to that groups shared folder. S
 
 Roles on the other hand represent the type or category of user. This includes access and permissions that this category of user will need to perform their regular job duties. The differences between `groups` and `roles` are subtle. Particular roles (one or many), like `conda_store_admin`, are associated with a particular group, such as `admin` and any user in this group will then assume the role of `conda_store_admin`.
 
-::info
+:::info
 These roles can be stacked. This means that if a user is in one group with role `conda_store_admin` and another group with role `conda_store_viewer`, this user ultimately has the role `conda_store_admin`.
 :::
 
