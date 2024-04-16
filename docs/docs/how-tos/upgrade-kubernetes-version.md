@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 Nebari runs on Kubernetes under the hood, and as administrators of this Kubernetes cluster, one of the maintenance tasks required from time to time is upgrading the version of your Kubernetes cluster. Each of the different cloud providers that Nebari can run on, has their own release cycle and support windows for their flavor of Kubernetes. That said, they tend to follow the [official Kubernetes release cycle](https://kubernetes.io/releases/).
 
-The Nebari development team tries to stay ahead of this by supporting the latest version when possible. However, given that many Kubernetes releases come with a set of deprecations that potentially affect Nebari and downstream plugins, there is an enforced [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11) allowed.
+The Nebari development team tries to stay ahead of this by supporting the latest version when possible. However, given that many Kubernetes releases come with a set of deprecations that potentially affect Nebari and downstream plugins, there is an enforced [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/main/src/_nebari/constants.py#L11) allowed.
 
 
 :::note

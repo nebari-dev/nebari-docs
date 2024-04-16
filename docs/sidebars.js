@@ -76,6 +76,7 @@ module.exports = {
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
+        "how-tos/monitoring",
       ],
     },
     {
