@@ -120,7 +120,7 @@ This feature requires that you have a Jupyter user pod running when the "jupyter
 ### YAML Example
 
 ```
-api: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   name: jupyterflow-override-example
