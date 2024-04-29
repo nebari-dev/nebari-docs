@@ -225,7 +225,7 @@ The last two steps are:
 1. Change the Keycloak `root` user password, documented [here](./configure-keycloak-howto.md#change-keycloak-root-password)
 2. Import existing users, documented [here](./manual-backup.md#import-keycloak).
 
-For more details on this process, visit the [Keycloak docs section](./login-thru-keycloak-howto.md).
+For more details on this process, visit the [Keycloak docs section][login-keycloak].
 
 ### Known versions that require re-deployment
 
@@ -407,9 +407,12 @@ The last two steps are:
 1. Change the Keycloak `root` user password, documented [here](./configure-keycloak-howto.md#change-keycloak-root-password)
 2. Import existing users, documented [here](./manual-backup.md#import-keycloak).
 
-For more details on this process, visit the [Keycloak docs section](./login-thru-keycloak-howto.md).
+For more details on this process, visit the [Keycloak docs section][login-keycloak].
 
 ### Known versions that require re-deployment
 
 Version `v0.3.11` on AWS has an error with the Kubernetes config map. See [this GitHub discussion related to AWS K8s config maps](https://github.com/Quansight/nebari/discussions/841) for more details.
 :::
+
+<!-- Internal links -->
+[login-keycloak]: /docs/tutorials/login-keycloak
