@@ -9,7 +9,7 @@ Nebari uses [`conda-store`][conda-store-docs] for managing and sharing reproduci
 :::warning
 conda-store is the most reliable way to manage your packages and environments on Nebari.
 
-Do not install libraries directly in the notebook or through the terminal (outside a conda-store managed environment). It won't work as expected and may break your instance in subtle ways.
+Refrain from installing libraries directly in the notebook or through the terminal (outside a conda-store managed environment). These actions could lead to subtle and unforeseen problems with your environment.
 :::
 
 ## Preliminary reading
