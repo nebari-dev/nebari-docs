@@ -23,7 +23,7 @@ Nebari has conda-store integrated, and you can use it through the graphical UI.
 
 ## Open `conda-store` web interface
 
-To navigate to conda-store:
+There are several options for navigating to conda-store:
 
 * From Nebari Home, click on **"Environment Management"** under "Services"
 * From JupyterLab, click on `Nebari` in the menu bar and go to **"Environments"**
