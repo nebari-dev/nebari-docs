@@ -25,9 +25,9 @@ Nebari has conda-store integrated, and you can use it through the graphical UI.
 
 There are several options for navigating to conda-store:
 
-* From Nebari Home, click on **"Environment Management"** under "Services"
-* From JupyterLab, click on `Nebari` in the menu bar and go to **"Environments"**
-* From anywhere, go to URL: `https://<your-nebari-domain>/conda-store`
+- From Nebari Home, click on **"Environment Management"** under "Services"
+- From JupyterLab, click on `Nebari` in the menu bar and go to **"Environments"**
+- From anywhere, go to URL: `https://<your-nebari-domain>/conda-store`
 
 If not logged in to conda-store, click on the **"Log in"** button in th left sidebar and authenticate similar to the [Nebari login][login-keycloak]. This is required to be able to access many `conda-store` features.
 
@@ -36,9 +36,9 @@ If not logged in to conda-store, click on the **"Log in"** button in th left sid
 Go through the following conda-store (UI) tutorials
 on using the graphical interface for various actions:
 
-* [Create new environments][cs-create-env]
-* [Edit & delete existing environments][cs-edit-delete-env]
-* [Switch environment versions][version-control]
+- [Create new environments][cs-create-env]
+- [Edit & delete existing environments][cs-edit-delete-env]
+- [Switch environment versions][version-control]
 
 ## Default namespaces in Nebari
 
@@ -46,9 +46,9 @@ A default Nebari deployment/instance has the following namespaces corresponding 
 
 <!-- Verify the roles and actions -->
 
-* `analyst` namespace - Users in the `analyst` group can view and `admin` group can view+edit the environments in this namespace
-* `developer` namespace - Users in the `developer` and `admin` groups can view+edit the environments in this namespace
-* `nebari-git` namespace - Everyone can view and `admin`s can edit
+- `analyst` namespace - Users in the `analyst` group can view and `admin` group can view+edit the environments in this namespace
+- `developer` namespace - Users in the `developer` and `admin` groups can view+edit the environments in this namespace
+- `nebari-git` namespace - Everyone can view and `admin`s can edit
 
 As an individual user, you also have a personal namespace with the same name as your Nebari username.
 
@@ -60,11 +60,11 @@ If you can "view" an environment, you can use it.
 
 Instructions to select any environment you have access to in the following editing spaces:
 
-* **JupyterLab** - In a Jupyter Notebook, click on the "Select Kernel" dropdown in the top-left corner, and select the environment.
+- **JupyterLab** - In a Jupyter Notebook, click on the "Select Kernel" dropdown in the top-left corner, and select the environment.
 
-* **VS Code** - Click on the ⚙️ icon in the bottom-right to open `Settings` -> `Command Pallette`, and type "Python: Select Interpreter" and press <kbd>Enter</kbd> to get the list of environments to select from.
+- **VS Code** - Click on the ⚙️ icon in the bottom-right to open `Settings` -> `Command Pallette`, and type "Python: Select Interpreter" and press <kbd>Enter</kbd> to get the list of environments to select from.
 
-* **Terminal** - In the terminal window, you can use `conda` CLI commands like `conda activate <namespace>-<environment_name>` to activate the relevant environment and `conda env list` to view the list of available environments.
+- **Terminal** - In the terminal window, you can use `conda` CLI commands like `conda activate <namespace>-<environment_name>` to activate the relevant environment and `conda env list` to view the list of available environments.
 
 ## Special requirements
 
@@ -80,9 +80,7 @@ Include the `jhub-apps` package in your environment to create apps using the JHu
 
 <!-- External links -->
 
-[conda-docs]: https://docs.conda.io/projects/conda
 [conda-store-docs]: https://conda.store/
-[conda-store-docs-auth]: https://conda.store/conda-store/references/auth#authorization-model
 [cs-create-env]: https://conda.store/conda-store-ui/tutorials/create-envs
 [cs-edit-delete-env]: https://conda.store/conda-store-ui/tutorials/edit-delete-envs
 [version-control]: https://conda.store/conda-store-ui/tutorials/version-control
@@ -90,5 +88,5 @@ Include the `jhub-apps` package in your environment to create apps using the JHu
 <!-- Internal links -->
 
 <!--Update when PR#397 is merged -->
-[login-keycloak]: /docs/how-tos/login-thru-keycloak-howto.md
+[login-keycloak]: /docs/tutorials/login-with-keycloak
 [configure-keycloak-groups]: /docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups
