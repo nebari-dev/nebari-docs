@@ -265,7 +265,7 @@ domain: demo.nebari.dev
 
 `project_name`: Determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider's naming conventions. See [Project Naming Conventions](/docs/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
 
-`namespace``: Used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
+`namespace`: Used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
 
 `provider`: Determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
 

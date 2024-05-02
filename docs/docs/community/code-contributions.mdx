@@ -16,10 +16,8 @@ To contribute to the documentation, read [Contribute to Nebari's documentation][
 
 ## Select an issue to work on
 
-<!-- TODO: Add link to "good first issue" labels after the qhub -> Nebari rename -->
-
 New to Nebari?
-The issues marked with the "good first issue" label are an excellent place to start.
+The issues marked with the ["good first issue"][good-first-issue] label are an excellent place to start.
 These bug reports and feature requests have a low entry-barrier, need little historical context, and are self-contained.
 Select a "good first issue" that matches your interest and skill set.
 
@@ -108,6 +106,10 @@ If you use `zsh`, you may need to escape the square brackets:
 ```bash
 python -m pip install -e .\[dev\]
 ```
+:::
+
+:::note
+If you encounter the following issue while attempting to install the development version of Nebari `AssertionError: Error getting the version from source vcs`, make sure that all tags were also pulled and synced with your forked git repository (`git fetch --tags upstream`), as Nebari heavily depends on those tags as a source to build its development and production versions dynamically.  
 :::
 
 ### Pre-commit hooks
@@ -248,6 +250,7 @@ Approval means the core team member has carefully reviewed the changes, and the 
 [nebari-repo]: https://github.com/nebari-dev/nebari
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
 [nebari-docs]: https://www.nebari.dev/
+[good-first-issue]: https://github.com/nebari-dev/nebari/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22
 
 <!-- Internal links -->
 

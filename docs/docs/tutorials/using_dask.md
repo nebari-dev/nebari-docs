@@ -129,7 +129,7 @@ the data gets processed.
 
 :::note
 To use the dashboard for the first time, click on the dashboard link displayed in the Client UI.
-This opens a familiar Keycloak authentication page, where you can [sign-in the same way you authenticated into Nebari](/docs/how-tos/login-keycloak).
+This opens a familiar Keycloak authentication page, where you can [sign-in the same way you authenticated into Nebari](/docs/tutorials/login-keycloak).
 Dask's browser-based dashboard opens automatically.
 :::
 

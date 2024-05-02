@@ -113,6 +113,43 @@ jupyterhub:
       users: true
 ```
 
+### JupyterLab
+
+Nebari supports a number of configuration options for JupyterLab:
+
+- `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/docs/how-tos/idle-culling) for more information.
+
+```yaml
+jupyterlab:
+  idle_culler:
+    kernel_cull_idle_timeout: 30
+```
+
+- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory.
+
+```yaml
+jupyterlab:
+  initial_repositories:
+    - examples/nebari-demo: https://github.com/nebari-dev/nebari-demo.git
+```
+
+:::note Note
+Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
+:::
+
+
+- `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
+
+```yaml
+jupyterlab:
+  default_settings:
+    "@jupyterlab/apputils-extension:themes":
+      theme: JupyterLab Dark
+```
+
+- `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
+
 ### Terraform
 
 The Nebari configuration file provides a huge number of configuration options for customizing your Nebari infrastructure. While these options are sufficient for an average user, they
@@ -143,7 +180,7 @@ This is quite useful for pinning the IP Address of the load balancer.
 
 <TabItem value="azure" label="Azure" default="true" >
 
-You can deploy your cluster into a Virtual Private Network (VPN) or Virtual Network (VNET). 
+You can deploy your cluster into a Virtual Private Network (VPN) or Virtual Network (VNET).
 
 An example configuration for Azure is given below:
 
@@ -165,13 +202,12 @@ azure:
   vnet_subnet_id: '/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Network/virtualNetworks/<vnet-name>/subnets/<subnet-name>'
   network_profile:
     service_cidr: "10.0.2.0/24" # how many IPs would you like to reserve for Nebari
-    network_plugin: "azure" 
+    network_plugin: "azure"
     network_policy: "azure"
     dns_service_ip: "10.0.2.10" # must be within the `service_cidr` range from above
-    docker_bridge_cidr: "172.17.0.1/16" # no real need to change this 
-  
-```
+    docker_bridge_cidr: "172.17.0.1/16" # no real need to change this
 
+```
 
 </TabItem>
 
