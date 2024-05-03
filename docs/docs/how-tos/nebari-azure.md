@@ -28,7 +28,7 @@ Billing for Azure services is done on a per-subscription basis. For a list of th
 [Microsoft Azure Offer Details](https://azure.microsoft.com/support/legal/offer-details/) and
 [Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/ask/intro-kubernetes) for a quick overview of the Kubernetes services.
 
-For a more detailed cost estimate, please also refer to our \[Conceptual guides\] for more information regarding the basic infrastructure provided by Nebari.
+For a more detailed cost estimate, please also refer to our [Conceptual guides](/explanations/) for more information regarding the basic infrastructure provided by Nebari.
 
 :::warning
 A Nebari deployment on Azure will **NOT** fall into `free tier` usage as some of its inner components will lead to [additional charges](https://azure.microsoft.com/en-us/pricing/calculator/?service=kubernetes-service). Therefore, we recommend that you check [Azure pricing documentation](https://azure.microsoft.com/en-us/pricing/#product-pricing) or contact your cloud administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
