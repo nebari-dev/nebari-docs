@@ -58,10 +58,14 @@ nebari keycloak adduser --user "${KEYCLOAK_USERNAME}" "${KEYCLOAK_PASSWORD}" --c
 You can then run the integration and deployment tests located in the `tests_deployment` directory with:
 
 ```bash
-KEYCLOAK_USERNAME=test-user KEYCLOAK_PASSWORD=P@sswo3d pytest tests/tests_deployment/
+NEBARI_HOSTNAME=nebari.local \
+  KEYCLOAK_USERNAME=test-user \
+  KEYCLOAK_PASSWORD=P@sswo3d \
+  pytest tests/tests_deployment/
 ```
 
-Please note that the `KEYCLOAK_USERNAME` and `KEYCLOAK_PASSWORD` environment variables need to be defined for pytest to work.
+Please note that the `KEYCLOAK_USERNAME` and `KEYCLOAK_PASSWORD` environment variables need to match those of the test user created in the previous step,
+and that the `NEBARI_HOSTNAME` variable needs to point to the domain of the deployment against which you wish to test.
 
 :::note
 These tests are also triggered by the Nebari CI when you open pull requests.
