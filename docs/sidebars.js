@@ -94,6 +94,7 @@ module.exports = {
         "explanations/custom-overrides-configuration",
         "explanations/config-best-practices",
         "explanations/infrastructure-architecture",
+        "explanations/nebari-yaml-schema",
       ],
     },
     {
