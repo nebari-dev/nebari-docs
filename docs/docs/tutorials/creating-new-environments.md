@@ -78,7 +78,7 @@ spaces:
   the top-left corner, and select the environment.
 
 - **VS Code** - Click on the ⚙️ icon in the bottom-right to open `Settings` ->
-  `Command Pallette`, and type "Python: Select Interpreter" and press <kbd>Enter</kbd>
+  `Command Palette`, and type "Python: Select Interpreter" and press <kbd>Enter</kbd>
   to get the list of environments to select from.
 
 - **Terminal** - In the terminal window, you can use `conda` CLI commands like
