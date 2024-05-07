@@ -98,17 +98,40 @@ export default function NebariConfig() {
             {/* <Details>
                 <pre>{JSON.stringify(schema, null, 2)}</pre>
             </Details> */}
+            <SchemaToc schema={schema} />
             <Markdown text={schema.description} />
             <PropertiesList properties={schema.properties} />
         </>
     );
 }
 
+function SchemaToc({ schema }) {
+    return (
+        <ul>
+            {Object.entries(schema.properties).sort().map(([key, value]) => (
+                <li key={key}>
+                    <a href={`#${key.replace(/_/g, "-")}`}>
+                        {value.deprecated ? <span style={{ textDecoration: "line-through" }}>{key}</span> : key}
+                    </a>
+                </li>
+            ))}
+        </ul>
+    );
+}
+
 function PropertieTitle({ title, subHeading = false, deprecated = false }) {
+    const titleStyle = {
+        background: 'linear-gradient(to right, var(--ifm-color-primary) 0%, var(--ifm-color-primary) 5px, var(--ifm-admonition-background-color) 5px, var(--ifm-admonition-background-color) 100%)',
+        padding: '8px 15px',
+        borderRadius: '5px',
+        display: 'inline-block'
+    };
     return (
         <div>
             <Heading as={subHeading ? 'h3' : 'h2'} id={title.replace(/_/g, '-')}>
-                {title} {deprecated && <span className="badge badge--danger">Deprecated</span>}
+                <span style={titleStyle}>
+                    {title} {deprecated && <span className="badge badge--danger">Deprecated</span>}
+                </span>
             </Heading>
         </div>
     );
@@ -225,6 +248,14 @@ function PropertyContent({ property }) {
             )}
             {hasTableData && (
                 <table className="property-details" style={{ borderCollapse: 'collapse', borderRadius: '8px', border: '1px solid #ccc' }}>
+                    {/* Adding CSS within the component */}
+                    <style>
+                        {`
+                            .property-details tbody tr:nth-child(even) {
+                                background-color: var(--ifm-admonition-background-color);
+                            }
+                        `}
+                    </style>
                     <tbody>
                         {property.type && (
                             <tr>
