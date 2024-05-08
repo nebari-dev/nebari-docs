@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import JSONSchema from '../../../static/nebari-config-schema.json';
+// import JSONSchema from '../../../static/nebari-config-schema.json';
 
 const schemaUrl = "https://raw.githubusercontent.com/viniciusdc/nebari/nebari-schema-models/nebari-config-schema.json";
 
@@ -85,7 +85,7 @@ function useSchema(schemaUrl: string, useLocal = false) {
 }
 
 export default function NebariConfig() {
-    const { schema, loading, error } = useSchema(schemaUrl, true);
+    const { schema, loading, error } = useSchema(schemaUrl, false);
 
     if (loading) return <p>Loading schema...</p>;
     if (error) return <p>Error loading schema: {error}</p>;
