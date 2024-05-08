@@ -128,7 +128,7 @@ sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 
 ### Exposing container network (for MacOS)
 
-Docker for macOS does not expose container networks directly on the macOS host, for this we will use
+Docker for macOS does not expose container networks directly on the MacOS host, for this we will use
 [docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect), which lets you connect directly
 to Docker-for-Mac containers via IP address. You can install and start it with following command:
 
@@ -144,6 +144,20 @@ $ sudo brew services start chipmk/tap/docker-mac-net-connect
 
 You can skip this section if you have an x86_64 machine. If you're using Mac M1, then the x86_64 docker images
 will not work out of the box. You would need to use images that are built with support for arm as well.
+
+We're building all the docker images for both platforms except external images. The only external image relevant
+here is keycloak. You'd need to update the keycloak image for the deployment, which can be done by adding the
+override for the keycloak deployment to update the image:
+
+```yaml
+security:
+  keycloak:
+    initial_root_password: <SANITIZED>
+    overrides:
+      image:
+        repository: quay.io/nebari/keycloak
+        tag: sha-b4a2d1e
+```
 
 ## Deploying Nebari
 
