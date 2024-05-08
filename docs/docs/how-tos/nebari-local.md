@@ -34,7 +34,7 @@ The advantages of using kind are:
 Nebari integrates kind under the hood by using its Terraform provider and a proper `local` deployment method, which grants native OS compatibility with Linux.
 
 :::warning
-Currently, Nebari does not support local mode on Windows and macOS.
+Currently, Nebari does not support local mode on Windows.
 :::
 
 To use kind, you will also need to install [docker engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -125,6 +125,25 @@ sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
 
 :::
+
+### Exposing container network (for MacOS)
+
+Docker for macOS does not expose container networks directly on the macOS host, for this we will use
+[docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect), which lets you connect directly
+to Docker-for-Mac containers via IP address. You can install and start it with following command:
+
+```bash
+# Install via Homebrew
+$ brew install chipmk/tap/docker-mac-net-connect
+
+# Run the service and register it to launch at boot
+$ sudo brew services start chipmk/tap/docker-mac-net-connect
+```
+
+### Docker Images
+
+You can skip this section if you have an x86_64 machine. If you're using Mac M1, then the x86_64 docker images
+will not work out of the box. You would need to use images that are built with support for arm as well.
 
 ## Deploying Nebari
 
