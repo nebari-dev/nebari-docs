@@ -24,6 +24,7 @@ type SchemaProperty = {
     allOf?: SchemaProperty[];
     examples?: string[];
     optionsAre?: string[];
+    note?: string;
 };
 
 type Properties = { [key: string]: SchemaProperty };
@@ -300,6 +301,11 @@ function PropertyContent({ property }) {
                 <div className="property-examples">
                     <MarkdownCodeSeparator examples={property.examples} inputKey="examples" />
                 </div>
+            )}
+            {property.note && (
+                <Admonition type="note">
+                    <Markdown text={property.note} />
+                </Admonition>
             )}
         </div>
     );
