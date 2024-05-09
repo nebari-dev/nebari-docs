@@ -22,9 +22,12 @@ type SchemaProperty = {
     enum?: string[];
     default?: any;
     allOf?: SchemaProperty[];
+    anyOf?: SchemaProperty[];
     examples?: string[];
     optionsAre?: string[];
     note?: string;
+    depends_on?: string | object;
+    group_by?: string;
 };
 
 type Properties = { [key: string]: SchemaProperty };
@@ -84,6 +87,17 @@ function useSchema(schemaUrl: string, useLocal = false) {
     return { schema, loading, error };
 }
 
+function ParentComponent({ schema }) {
+    return (
+        <div>
+            <SchemaToc schema={schema} />
+            <Markdown text={schema.description} />
+            <PropertiesList properties={schema.properties} />
+        </div>
+    );
+}
+
+
 export default function NebariConfig() {
     const { schema, loading, error } = useSchema(schemaUrl, false);
 
@@ -99,9 +113,7 @@ export default function NebariConfig() {
             {/* <Details>
                 <pre>{JSON.stringify(schema, null, 2)}</pre>
             </Details> */}
-            <SchemaToc schema={schema} />
-            <Markdown text={schema.description} />
-            <PropertiesList properties={schema.properties} />
+            <ParentComponent schema={schema} />
         </>
     );
 }
@@ -138,42 +150,83 @@ function PropertieTitle({ title, subHeading = false, deprecated = false }) {
     );
 }
 
-function PropertiesList({ properties, sub_heading = false }: { properties: Properties; sub_heading?: boolean }) {
+function mergeProperties(property, key) {
+    if (!property[key]) return property;
+    const base = { ...property, [key]: undefined };
+    return property[key].reduce((acc, cur) => ({
+        ...acc,
+        ...mergeProperties(cur, key), // Recursive call to handle nested structures
+        properties: { ...acc.properties, ...cur.properties } // Merge nested properties
+    }), base);
+}
+
+function renderProperties(value, key, sub_heading) {
+    if (value[key] && value[key].length > 0 && value[key][0].properties) {
+        return (
+            <Details summary={<summary>Available Options</summary>}>
+                <PropertiesList properties={mergeProperties(value, key).properties ?? {}} sub_heading />
+            </Details>
+        );
+    }
+    return null;
+}
+
+function PropertiesList({ properties, sub_heading = false }) {
+    const groupedByTabs = {};
+    const standaloneProperties = [];
+
+    // Organize properties by group_by key
+    Object.entries(properties).forEach(([key, value]) => {
+        if (value.group_by) {
+            const groupKey = value.group_by;
+            if (!groupedByTabs[groupKey]) {
+                groupedByTabs[groupKey] = [];
+            }
+            groupedByTabs[groupKey].push({ key, value });
+        } else {
+            standaloneProperties.push({ key, value });
+        }
+    });
+
     return (
         <>
-            {Object.entries(properties).map(([key, value]) => (
+            {/* Render standalone properties */}
+            {standaloneProperties.map(({ key, value }) => (
                 <div key={key}>
-                    {/* // if sub_heading is true, render a heading for each property as an
-                    // h3, else render the property title as an h2 */}
                     <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
                     <PropertyContent property={value} />
-                    {/* Check if value.allOf is defined and has entries */}
-                    {value.allOf && value.allOf.length > 0 ? (
-                        value.allOf[0].properties ? (
-                            <Details summary={<summary>Available Options</summary>}>
-                                {/* If the first item in allOf has properties, display them as a nested list */}
-                                <PropertiesList properties={mergeAllOf(value).properties ?? {}} sub_heading />
-                            </Details>
-                        ) : null
-                    ) : (
-                        null
-                    )}
+                    {renderProperties(value, 'allOf', sub_heading)}
+                    {renderProperties(value, 'anyOf', sub_heading)}
+                </div>
+            ))}
+            {/* Render grouped properties in tabs */}
+            {Object.entries(groupedByTabs).map(([groupKey, groupProps]) => (
+                <div>
+                    <Admonition type="info">
+                        <Markdown text={`All the properties presented bellow (${groupProps.map(({ key }) => `\`${key}\``).join(', ')})
+                        are mutually exclusive. You can only use one of them at a time.`} />
+                        <Markdown text={`The pre-initialization of those properties are managed by the choice made in the corresponding [\`${groupKey}\`](#${groupKey.replace(/_/g, "-")}) property.`} />
+                    </Admonition>
+                    {/* {groupProps.map(({ key, value }) => (
+                            // <TabItem key={key} value={key}>
+                                <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
+                                <PropertyContent property={value} />
+                                {renderProperties(value, 'allOf', sub_heading)}
+                                {renderProperties(value, 'anyOf', sub_heading)}
+                            {/* </TabItem> */}
+                    {/* ))} */}
+                    {groupProps.map(({ key, value }) => (
+                        <div key={key}>
+                            <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
+                            <PropertyContent property={value} />
+                            {renderProperties(value, 'allOf', sub_heading)}
+                            {renderProperties(value, 'anyOf', sub_heading)}
+                        </div>
+                    ))}
                 </div>
             ))}
         </>
     );
-}
-
-function mergeAllOf(property: SchemaProperty): SchemaProperty {
-    if (!property.allOf) return property;
-    // Start with a clone of the original property without the allOf key
-    const base = { ...property, allOf: undefined };
-    // Merge all properties from the allOf array into the base
-    return property.allOf.reduce((acc, cur) => ({
-        ...acc,
-        ...mergeAllOf(cur), // Recursively merge all nested allOf properties
-        properties: { ...acc.properties, ...cur.properties } // Merge nested properties separately
-    }), base);
 }
 
 const MarkdownCodeSeparator = ({ examples, inputKey }) => {
@@ -242,6 +295,13 @@ function PropertyContent({ property }) {
 
     return (
         <div className="property-content">
+            {/* // For properties that contain the depends_on key, render a warning
+            // admonition to inform users that the property is dependent on another */}
+            {property.depends_on && (
+                <Admonition type="warning">
+                    <Markdown text="This key has a dependency on another property. Please refer to the documentation bellow under `Depends on` section for extra details." />
+                </Admonition>
+            )}
             {property.description && (
                 <div className="property-description">
                     <ReactMarkdown>{property.description}</ReactMarkdown>
@@ -291,6 +351,14 @@ function PropertyContent({ property }) {
                                 <th style={{ fontWeight: 'bold', padding: '8px', }}>Pattern:</th>
                                 <td style={{ padding: '8px', }} width="100%">
                                     <code>{property.pattern}</code>
+                                </td>
+                            </tr>
+                        )}
+                        {property.depends_on && (
+                            <tr>
+                                <th style={{ fontWeight: 'bold', padding: '8px', whiteSpace: 'nowrap' }}>Depends on:</th>
+                                <td style={{ padding: '8px', }} width="100%">
+                                    <code>{JSON.stringify(property.depends_on)}</code>
                                 </td>
                             </tr>
                         )}
