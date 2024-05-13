@@ -164,6 +164,6 @@ Nebari automatically shuts down servers when users are idle, as described in Neb
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling/#overview
+[idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [pytorch best practices]: how-tos/pytorch-best-practices

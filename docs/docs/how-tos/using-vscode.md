@@ -136,4 +136,4 @@ to the [VS Code Documentation](https://code.visualstudio.com/).
 
 <!-- Internal links -->
 
-[faq-vscode]: ../faq#Why-does-my-VS-Code-server-continue-to-run-even-after-I've-been-idle-for-a-long-time
+[faq-vscode]: faq#why-does-my-vs-code-server-continue-to-run-even-after-ive-been-idle-for-a-long-time
