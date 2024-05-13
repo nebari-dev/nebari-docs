@@ -157,8 +157,13 @@ We have discussed contributing a PR to `nb_conda_kernels`, but the project has n
 
 If you have potential solutions or can help us move forward with updates to the `nb_conda_kernels`, please reach out to us on our [discussion forum](https://github.com/orgs/nebari-dev/discussions)!
 
+## Why does my VS Code server continue to run even after I've been idle for a long time?
+
+Nebari automatically shuts down servers when users are idle, based on the [idle culler settings][idle-culler-settings]. This functionality currently applies only to JupyterLab servers. A VS Code instance, however, runs on Code Server, which isn't managed by the idle culler. VS Code, and other non-JupyterLab services, will not be automatically shut down. Until this issue is addressed, we recommend manually shutting down your VS Code server when it is not in use.
+
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
+[idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling/#overview
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [pytorch best practices]: how-tos/pytorch-best-practices

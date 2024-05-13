@@ -7,6 +7,11 @@ provides helpful tooling (including debugging) to assist developers in writing
 code. It also has many other functions which non-developers may also find
 useful such a text editing and markdown rendering.
 
+:::warning
+Your VS Code server does not automatically shut down when idle. To prevent excess resource usage, be sure to manually shut down your server. More details are available in this [FAQ for VS Code][faq-vscode].
+:::
+
+
 ## Getting started
 
 VS Code comes built-in with every installation of Nebari. To start, log in
@@ -128,3 +133,7 @@ As another alternative, we could run code directly from the terminal as well.
 We've covered the basic setup and run some arbitrary code. If you're curious
 about more advanced features or have specific questions, you can always refer back
 to the [VS Code Documentation](https://code.visualstudio.com/).
+
+<!-- Internal links -->
+
+[faq-vscode]: ../faq#Why-does-my-VS-Code-server-continue-to-run-even-after-I've-been-idle-for-a-long-time
