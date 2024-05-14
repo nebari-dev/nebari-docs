@@ -1,7 +1,7 @@
 ---
 id: configure-gitops
 title: Setup Nebari GitOps
-description: Setting up GitOps for Nebari
+description: Setting up IaC via GitHub Actions or GitLab CI
 ---
 
 # Setup Nebari gitops
