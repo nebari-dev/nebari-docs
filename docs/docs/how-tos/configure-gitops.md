@@ -4,18 +4,18 @@ title: Setup Nebari GitOps
 description: Setting up IaC via GitHub Actions or GitLab CI
 ---
 
-# Setup Nebari gitops
+# Setup Nebari GitOps
 
 ## What is GitOps / Infrastructure as Code (IaC)?
 
-GitOps also known as Infrastructure as Code(Iac) is the practice of using git for
+GitOps, also known as Infrastructure as Code (Iac), is the practice of using git for
 managing the state of your infrastructure. This allows for easy
-auditing and discovering the current state of your system.
+auditing and tracking the current state of your system.
 
-## Setting up IaC on Github-Actions
+## Setting up IaC on Github Actions
 
-Configuring Neabri to render the appropriate workflows for
-github-actions can be configured via the following settings in your
+Setting up Nebari to render the appropriate workflows via
+GitHub Actions can be configured via the following settings in your
 `nebari-config.yaml`.
 
 ```yaml
@@ -24,7 +24,7 @@ ci_cd:
   branch: main
   commit_render: true
 ```
-
+The `branch` specified indicates where the Github Action will watch for changes and trigger a redeploy when changes are seen. 
 It is possible for your deployment that you will need to run arbitrary
 steps before and after the deployment. These are exposed via the
 `before_script` and `after_script` keys.
@@ -44,10 +44,10 @@ ci_cd:
         echo "Bye World"
 ```
 
-## Setting up Iac on Gitlab CI
+## Setting up GitOps on GitLab CI
 
-Configuring Neabri to render the appropriate workflows for
-github-ci can be configured via the following settings in your
+Setting up Nebari to render the appropriate workflows via
+GitLab CI can be configured via the following settings in your
 `nebari-config.yaml`.
 
 ```yaml
