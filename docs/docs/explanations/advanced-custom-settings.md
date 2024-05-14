@@ -250,7 +250,7 @@ and then follow the usual deployment instructions as you would deploy from your 
 
 #### Helm Extensions
 
-Nebari provides a way for any user to expand the infrastructure availablke by default by using the `helm_extensions` attribute, which allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
+Nebari provides a way for any user to expand the infrastructure available by default by using the `helm_extensions` attribute. This attribute allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
 
 ##### Overview
 
