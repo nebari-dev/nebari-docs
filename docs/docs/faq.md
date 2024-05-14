@@ -12,7 +12,7 @@ and so which way depends on your use-case.
 
 The longer answer:
 
-- For global environments, you can specify the environment in `nebari_config.yml`, and it will be made available for all users and services (for example, CDSDashboards).
+- For global environments, you can specify the environment in `nebari-config.yml`, and it will be made available for all users and services.
 - By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
 
 As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
@@ -27,6 +27,13 @@ you'll need to contact your Nebari administrator to include the required package
 <!-- TODO: will need to update the conda-feedstock -->
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
+
+## What packages are needed in your environment to create a dashboard?
+
+When deploying an app with JHub App Launcher, you need to have the following in your environment:
+- `jhub-apps` package
+- packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
+- any other libraries required for the analysis in the dashboard creation script/notebook
 
 ## How can I install a package locally? Will this package be available to Dask workers?
 
@@ -47,6 +54,8 @@ If you're using a `flit` package, you can install it through the following comma
 ```shell
 flit install -s
 ```
+
+If the package requires build tools like `gcc` and `cmake`, remember that you can create a conda environment through the conda-store UI that includes the build tools, then just activate the environment and install the package locally.
 
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial][dask-tutorial] for more information.
 
@@ -121,9 +130,35 @@ Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile].  Next, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`.  Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [PyTorch best practices][pytorch best practices]. If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
-<!-- Internal links  -->
+## How do I migrate from Qhub to Nebari?
+
+Nebari was previously called QHub. If your Qhub version lives in the `0.4.x` series, you can migrate to Nebari by following the [migration guide](./how-tos/nebari-upgrade). If you're using a version of Qhub that lives in the `0.3.x` series, you will need to upgrade to `0.4.x` first as the user group management is different between the two versions. For more information, see the deprecation notice in the [Nebari release note](./references/RELEASE).
+
+## Why is there duplication in names of environments?
+
+The default Dask environment is named `nebari-git-nebari-git-dask`, with `nebari-git` duplicated.
+
+`nebari-git` is the name of the namespace.
+Namespaces are a concept in conda-store, however conda itself does not recognize it.
+
+It is possible to use conda-store to create an environment with the name "dask" in two different namespaces.
+But because conda doesn't understand namespaces, conda won't be able to differentiate between them.
+To avoid this, we prepend the namespace's name into the environment building on conda-store.
+
+Next, [nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels) with [nb-conda-store-kernels](https://pypi.org/project/nb-conda-store-kernels/) are the packages that we use to transform conda environments into runnable kernels in JupyterLab (that's why we require that all environments have `ipykernel`).
+
+The issue is that `nb_conda_kernels` insists the following path: `/a/path/to/global/datascience-env`, which corresponds to `global-datascience-env` being the name that users see while `datascience-env` is what conda sees.
+
+Hence, to make things unique we've named things as `/a/path/to/global/global-datascience-env`. This makes conda see the env as `global-datascience-env`, but `nb_conda_kernel` now displays it as `global-global-datascience-env`.
+
+We have discussed contributing a PR to `nb_conda_kernels`, but the project has not accepted community PRs in over 3 years, so we don't currently have the motivation to do this.
+
+If you have potential solutions or can help us move forward with updates to the `nb_conda_kernels`, please reach out to us on our [discussion forum](https://github.com/orgs/nebari-dev/discussions)!
+
+<!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[selecting a profile]: https://www.nebari.dev/docs/how-tos/login-keycloak#3-selecting-a-profile
+[selecting a profile]: tutorials/login-keycloak#4-select-a-profile
+[pytorch best practices]: how-tos/pytorch-best-practices

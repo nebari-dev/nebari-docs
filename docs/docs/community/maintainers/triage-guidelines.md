@@ -36,18 +36,18 @@ which will show the most recently created issues first (see an example of this i
 
 Other useful queries include:
 
-|Query | Example search                                                                                                       | What it sorts                                           |
-|------| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
-|`is:issue is:open label:"needs: follow-up 📥" `| [needs-follow-up nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs%3A+follow-up+%F0%9F%93%A5%22+)        | Issues that need to be following up from a maintainer                |
-|`is:issue is:open sort:created-asc no:label`| [created-ascending nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+sort%3Acreated-asc+no%3Alabel)     | Untriaged issues by age                                 |
-|`is:issue is:open sort:comments-desc`| [comments-descending nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+sort%3Acomments-desc) | Busiest issues, sorted by # of comments       |
-|`is:issue is:open sort:created-dec`| [new-issues nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aopen+is%3Aissue)                 | Newest incoming issues                                  |
+| Query                                           | Example search                                                                                                                              | What it sorts                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `is:issue is:open label:"needs: follow-up 📥" ` | [needs-follow-up nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs%3A+follow-up+%F0%9F%93%A5%22+) | Issues that need to be following up from a maintainer |
+| `is:issue is:open sort:created-asc no:label`    | [created-ascending nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+sort%3Acreated-asc+no%3Alabel)                | Untriaged issues by age                               |
+| `is:issue is:open sort:comments-desc`           | [comments-descending nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aissue+is%3Aopen+sort%3Acomments-desc)                       | Busiest issues, sorted by # of comments               |
+| `is:issue is:open sort:created-dec`             | [new-issues nebari](https://github.com/nebari-dev/nebari/issues?q=is%3Aopen+is%3Aissue)                                                     | Newest incoming issues                                |
 
 ### Step 2: Triage issues
 
 1. **First things first: thank the reporter for opening an issue.**
-The issue tracker is many people’s first interaction with the Nebari project itself,
-beyond using the project itself. As such, we want it to be a welcoming, pleasant experience for everyone.
+   The issue tracker is many people’s first interaction with the Nebari project itself,
+   beyond using the project itself. As such, we want it to be a welcoming, pleasant experience for everyone.
 
 2. Assess the issue and label, assign, or close accordingly.
    1. Depending on your permissions, either close or comment on any issues that are identified as support requests,

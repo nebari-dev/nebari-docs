@@ -101,6 +101,18 @@ installation, please visit the "Get started" section of our [troubleshooting pag
 Great, you’ve gone through the [Nebari installation](get-started/installing-nebari.md) and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set.
 
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your AWS account. This name must comply with the following rules:
+
+- Must be between 3-47 characters in length;
+- Must begin with an alphanumeric character, and must only contain alphanumeric lowercase characters, dashes, and underscores;
+- The name cannot start with `AWS` or `aws`.
+
+Those rules are enforced by the AWS Terraform Provider and are not configurable.
+:::
+
 In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-aws`:
@@ -110,6 +122,7 @@ In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
    ```
 
 <!-- TODO: replace link to configuration once migrated -->
+
 2. Executing the `nebari init --guided-init` command prompts you to respond to a set of questions, which will be used to generate the
    [`nebari-config.yaml`](https://docs.qhub.dev/en/latest/source/installation/configuration.html) file with an infrastructure based on **AWS**.
 
@@ -137,6 +150,10 @@ nebari init aws --project projectname \
 ```
 
 You will be prompted to enter values for some choices above if they are absent from the command line arguments (for example, project name and domain)
+:::
+
+:::note
+Nebari can also be deployed into an [AWS GovCloud](https://docs.aws.amazon.com/govcloud-us/latest/UserGuide/whatis.html) account, you simply need to ensure you specify the appropriate AWS GovCloud region in the `amazon_web_services.region` field of your `nebari-config.yaml`.
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:

@@ -168,12 +168,6 @@ const config = {
           },
         ],
       },
-      announcementBar: {
-        id: "rename_announcement",
-        content:
-          '🪴 This project has been officially renamed to Nebari and migrated to the <a rel="noopener noreferrer" href="https://github.com/nebari-dev">nebari-dev</a> organization in GitHub.</br> Shall you encounter any issues or need support, you can find us in our <a rel="noopener noreferrer" href="https://github.com/nebari-dev/nebari"> new repository</a>.',
-        isCloseable: false,
-      },
       footer: {
         copyright: customFields.copyright,
         style: "dark",

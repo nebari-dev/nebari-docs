@@ -16,10 +16,8 @@ To contribute to the documentation, read [Contribute to Nebari's documentation][
 
 ## Select an issue to work on
 
-<!-- TODO: Add link to "good first issue" labels after the qhub -> Nebari rename -->
-
 New to Nebari?
-The issues marked with the [good first issue] label are an excellent place to start.
+The issues marked with the ["good first issue"][good-first-issue] label are an excellent place to start.
 These bug reports and feature requests have a low entry-barrier, need little historical context, and are self-contained.
 Select a "good first issue" that matches your interest and skill set.
 
@@ -73,15 +71,14 @@ Now the command `git remote -v` shows two remote repositories:
 
 ### Create a virtual environment
 
-The requirements for developing Nebari are listed in the `environment-dev.yaml` file in the repository's root directory.
 The following steps describe how to create and use a `conda` environment.
 
 1. If you don't have `conda` installed, you can follow the [installation instructions in the `conda` user guide](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
 
-2. Create a new environment using `environment-dev.yaml`:
+2. Create a new environment with:
 
    ```bash
-   conda env create -f environment-dev.yaml
+   conda create -n nebari-dev python=3.10
    ```
 
    You may need to press <kbd>Y</kbd> + <kbd>Enter/Return</kbd> to complete the environment build.
@@ -95,6 +92,7 @@ The following steps describe how to create and use a `conda` environment.
 ### Install Nebari in "editable" mode
 
 With an "editable" installation, all the changes you make to the Nebari codebase will be available in your development environment in real-time.
+This will also install the required dependencies for development.
 
 You can do this with:
 
@@ -103,7 +101,15 @@ python -m pip install -e .[dev]
 ```
 
 :::note
-If you use `zsh`, you may need to escape the square brackets: `\[dev\]`.
+If you use `zsh`, you may need to escape the square brackets:
+
+```bash
+python -m pip install -e .\[dev\]
+```
+:::
+
+:::note
+If you encounter the following issue while attempting to install the development version of Nebari `AssertionError: Error getting the version from source vcs`, make sure that all tags were also pulled and synced with your forked git repository (`git fetch --tags upstream`), as Nebari heavily depends on those tags as a source to build its development and production versions dynamically.  
 :::
 
 ### Pre-commit hooks
@@ -154,8 +160,8 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 1. Before you start, make sure to pull the latest changes from upstream.
 
    ```bash
-   git checkout main
-   git pull upstream main
+   git checkout develop
+   git pull upstream develop
    ```
 
 2. Create a branch for the bug or feature you want to work on. The branch name will appear in the merge message, so use a sensible, self-explanatory name:
@@ -244,6 +250,7 @@ Approval means the core team member has carefully reviewed the changes, and the 
 [nebari-repo]: https://github.com/nebari-dev/nebari
 [nebari-docs-repo]: https://github.com/nebari-dev/nebari-docs
 [nebari-docs]: https://www.nebari.dev/
+[good-first-issue]: https://github.com/nebari-dev/nebari/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22
 
 <!-- Internal links -->
 

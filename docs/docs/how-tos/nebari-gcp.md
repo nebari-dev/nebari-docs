@@ -65,8 +65,10 @@ to do this is using a [service account](https://cloud.google.com/iam/docs/unders
 management.
 
 If it's your first time creating a service account, please follow
-[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with **Owner** level
-permissions over the project created in the previous step. For more information about roles and permissions, see the
+[these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
+"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+
+For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
 you are handling multiple GCP projects.
 
@@ -117,10 +119,35 @@ environment variables. If you had any issues during the installation, please vis
 guidance.
 :::
 
+## Required GCP APIs
+
+Deploying Nebari on GCP requires the following APIs and services enabled. So before proceeding, go to the "APIs & Services"
+tab and enable the following APIs.
+
+- Compute Engine API
+- Kubernetes Engine API
+- Cloud Monitoring API
+- Cloud Autoscaling API
+- Identity and Access Management (IAM) API
+- Cloud Resource Manager API
+
+
 ## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
 environment variables have been properly set.
+
+:::warning Important
+
+In the following steps you will be asked to provide a name for your project. This name will be used to generate the name of the infrastructure components that will be created in
+your GCP account. This name must comply with the following rules:
+
+- Be 1-63 characters in length;
+- Comply with [RFC 1035](https://www.ietf.org/rfc/rfc1035.txt) conventions;
+- The first character must be a lowercase letter, and all the following characters must be hyphens, lowercase letters, or digits, except the last character, which cannot be a hyphen.
+
+Those rules are enforced by GCP terraform provider and are not configurable.
+:::
 
 In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
 

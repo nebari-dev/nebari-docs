@@ -61,11 +61,16 @@ Finally, set the token value as an environment variable:
  export CLOUDFLARE_TOKEN="cloudflaretokenvalue"
 ```
 
-Also, add the flag `--dns-provider=cloudflare` to the [Nebari `deploy` command][nebari-deploy].
+Also, add a `dns` section to the `nebari-config.yaml` file.
+
+```yaml
+dns:
+  provider: cloudflare
+```
 
 ## Using other DNS providers
 
-Currently, Nebari only supports CloudFlare for [automatic DNS registration](link to automatic section below). If an alternate DNS provider is desired, change the `--dns-provider` flag from `cloudflare` to `none` on the Nebari `deploy` command.
+Currently, Nebari only supports CloudFlare for [automatic DNS registration](link to automatic section below). If an alternate DNS provider is desired, change the `dns.provider` field from `cloudflare` to `none` in the `nebari-config.yaml` file.
 
 Below are the links to detailed documentation on how to create and manage DNS records on a few providers:
 
@@ -81,18 +86,22 @@ The amount of time this takes varies for each DNS provider. Validate such inform
 
 ## Automatic DNS provision
 
-Nebari has an extra flag for deployments that grants management and the creation of the DNS records for you automatically. For automatic DNS provision add `--dns-auto-provision` to your Nebari `deploy` command:
+Nebari also supports management and the creation of the DNS records for you automatically. For automatic DNS provision add `dns.auto_provision` to your Nebari config file:
 
-```bash
-nebari deploy -c nebari-config \
-    --dns-provider cloudflare \
-    --dns-auto-provision
+```yaml
+dns:
+  provider: cloudflare
+  auto_provision: true
 ```
 
 This will set the DNS provider as Cloudflare and automatically handle the creation or updates to the Nebari domain DNS records on Cloudflare.
 
 :::warning
-The usage of `--dns-auto-provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
+The usage of `dns.auto_provision` is restricted to Cloudflare as it is the only fully integrated DNS provider that Nebari currently supports.
+:::
+
+:::warning
+Earlier version of Nebari supports dns settings through `--dns-provider` and `--dns-auto-provision` flags in the `deploy` command. But this feature is removed in favor of using the `nebari-config.yaml` file.
 :::
 
 When you are done setting up the domain name, you can refer back to the [Nebari deployment documentation][nebari-deploy] and continue the remaining steps.
