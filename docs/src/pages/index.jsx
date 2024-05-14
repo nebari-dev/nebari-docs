@@ -138,8 +138,7 @@ export default function HomePage() {
                 </p>
                 <p>
                   Nebari can be seamlessly deployed to the major public cloud
-                  providers, including AWS, Azure, GCP, and Digital Ocean or to
-                  bare-metal HPC clusters.
+                  providers, including AWS, Azure, GCP, and Digital Ocean.
                 </p>
               </div>
             </div>
