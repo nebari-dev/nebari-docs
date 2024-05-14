@@ -34,7 +34,7 @@ import os
 
 global_config_host = f"https://{os.environ['ARGO_SERVER'].rsplit(':')[0]}{os.environ['ARGO_BASE_HREF']}/"
 global_config.host = global_config_host
-global_config.token = os.environ['ARGO_TOKEN']
+global_config.token = os.environ['HERA_TOKEN']
 ```
 
 ### Workflow Labels
@@ -96,7 +96,7 @@ Because this can cause substantial unexpected cloud costs, we _highly_
 recommend _always_ setting the "Time to live strategy", or `TTLStrategy` on
 every workflow.
 
-:::note 
+:::note
 The Argo UI will only show the workflow details until the
 `TTLStrategy` time has elapsed so make sure you have enough time to evaluate
 logs, etc. before those details are removed.
