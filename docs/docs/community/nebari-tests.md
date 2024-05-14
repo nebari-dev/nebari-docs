@@ -22,7 +22,7 @@ The unit test files are located in the `tests` directory.
 You can use the regular `pytest` commands to run them:
 
 ```bash
-pytest tests/
+pytest tests/tests_unit
 ```
 
 :::note
@@ -47,11 +47,25 @@ After you make changes, you can re-deploy your Nebari instance to test it manual
 
 The deployment and integration tests help us test various features of a [local Nebari deployment on Kind](#testing-the-nebari-deployment-terraform),
 such as Dask Gateway, external integrations, state of the Kubernetes cluster, and more.
-You can run the integration and deployment tests located in the `tests_deployment` directory with:
+Before you can run these tests, you need to create a test user on your deployment, for example with:
 
 ```bash
-pytest tests_deployment/
+KEYCLOAK_USERNAME=test-user
+KEYCLOAK_PASSWORD=P@sswo3d
+nebari keycloak adduser --user "${KEYCLOAK_USERNAME}" "${KEYCLOAK_PASSWORD}" --config nebari-config.yaml
 ```
+
+You can then run the integration and deployment tests located in the `tests_deployment` directory with:
+
+```bash
+NEBARI_HOSTNAME=nebari.local \
+  KEYCLOAK_USERNAME=test-user \
+  KEYCLOAK_PASSWORD=P@sswo3d \
+  pytest tests/tests_deployment/
+```
+
+Please note that the `KEYCLOAK_USERNAME` and `KEYCLOAK_PASSWORD` environment variables need to match those of the test user created in the previous step,
+and that the `NEBARI_HOSTNAME` variable needs to point to the domain of the deployment against which you wish to test.
 
 :::note
 These tests are also triggered by the Nebari CI when you open pull requests.
