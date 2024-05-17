@@ -58,7 +58,7 @@ google_cloud_platform:
 
 <TabItem value="aws" label="AWS">
 
-[Amazon Web Services](https://aws.amazon.com/) has similar support to DigitalOcean and doesn't allow auto-scaling below 1 node.
+[Amazon Web Services](https://aws.amazon.com/) also has support for auto-scaling to zero within the node group with no restrictions.
 
 Consult [AWS instance types](https://aws.amazon.com/ec2/instance-types/) for possible options.
 
