@@ -126,7 +126,7 @@ You can view the job log and the notebook using either the terminal or the file 
 5. Open (or `cat`) any log file or notebook files and look for error information
 
 :::info
-Notebook job details can also be viewed from the `<nebari-domiain>/argo` UI if the job is still listed.
+Notebook job details can also be viewed from the `<nebari-domain>/argo` UI if the job is still listed.
 :::
 
 Lastly, if the job fails without writing to the `scheduler_staging_area`, or the job status is stuck in `In progress` mode for an extended period of time, have an administrator try and view the specific logs on your JupyterLab server pod or on the workflow pod itself.
