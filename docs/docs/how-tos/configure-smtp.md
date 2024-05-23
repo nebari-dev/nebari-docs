@@ -8,10 +8,10 @@ description: Set up your Nebari instance to send emails
 
 Nebari deployments do not require an SMTP server for core functionality.  However, certain optional features such as email validation and password resets do require outgoing emails.
 
-Outgoing SMTP is configured at the Keycloak `nebari` realm level.  These settings are currently NOT configurable in Nebari's YAML configuration nebari-config.yaml, but must be set manually by an administrator after the Nebari cluster is deployed.
+Outgoing SMTP is configured at the Keycloak `nebari` realm level.  These settings are currently NOT configurable in Nebari's YAML configuration `nebari-config.yaml`, but must be set manually by an administrator after the Nebari cluster is deployed.
 
 :::note
-Subsequent nebari deploy actions will NOT undo the SMTP configuration (the Terraform keycloak_realm resource is configured by default to ignore these changes) so it only has to be configured once.
+Subsequent nebari deploy actions will NOT undo the SMTP configuration (the Terraform `keycloak_realm` resource is configured by default to ignore these changes) so it only has to be configured once.
 :::
 
 As an administrator within Keycloak web UI, navigate to the "Nebari" Realm > "Realm Settings" > "Email" tab.  The general direct URL for this page is `https://[domain]/auth/admin/nebari/console/#/realms/nebari/smtp-settings`.
