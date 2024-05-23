@@ -14,7 +14,7 @@ Outgoing SMTP is configured at the Keycloak `nebari` realm level.  These setting
 Subsequent nebari deploy actions will NOT undo the SMTP configuration (the Terraform keycloak_realm resource is configured by default to ignore these changes) so it only has to be configured once.
 :::
 
-As an administrator within Keycloak web UI, navigate to the "Nebari" Realm > "Realm Settings" > "Email" tab.  The general direct URL for this page is https://[domain]/auth/admin/nebari/console/#/realms/nebari/smtp-settings.
+As an administrator within Keycloak web UI, navigate to the "Nebari" Realm > "Realm Settings" > "Email" tab.  The general direct URL for this page is `https://[domain]/auth/admin/nebari/console/#/realms/nebari/smtp-settings`.
 ![Keycloak Realm - SMTP Config](/img/how-tos/nebari-smtp.png)
 
 ## Example - SMTP Using Amazon SES
