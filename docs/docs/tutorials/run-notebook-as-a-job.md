@@ -63,9 +63,9 @@ Click on the notebook job name to view more information about the job, such as:
 
 ![Jupyter-Scheduler UI - view the notebook job details](/img/tutorials/jupyter-scheduler-job-details.png)
 
-If you need to reopen the Notebook Jobs tab, look for the icon in the upper right of the JupyterLab launcher tab. 
+If you need to reopen the Notebook Jobs tab, look for the icon in the upper right of the JupyterLab launcher tab.
 
-![JupyterLab-Launcher UI - open Notebook Jobs tab](/img/tutorials/jupyter-scheduler-notebook-jobs-icon.png)
+![JupyterLab-Launcher UI - location of Notebook Jobs icon](/img/tutorials/jupyterlab-launcher-notebook-jobs-icon.png)
 
 :::info
 As mentioned above, the notebook job will run as an Argo-Workflows workflow. This means the jobs (workflows) are also viewable from the Argo-Workflows UI at `<nebari-domain>/argo`. The name of the workflow is prefixed with `job-<job-id>`, which will match the notebook job ID.
