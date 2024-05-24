@@ -65,6 +65,7 @@ module.exports = {
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
         "how-tos/configuring-keycloak",
+        "how-tos/configuring-smtp",
         "how-tos/using-vscode",
         "how-tos/manual-backup",
         "how-tos/nebari-upgrade",
