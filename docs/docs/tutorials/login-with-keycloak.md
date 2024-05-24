@@ -53,7 +53,7 @@ The home page, also referred to as
 "Landing page", "JupyterHub launcher", or "Hub Control Panel",
 lists Nebari's core **services** and allows you to [create and share web apps][create-dashboard].
 
-Click on the **"JupyterLab"** button under **"My Apps"** to start a server and launch JupyterLab:
+Click on the **"JupyterLab"** button under **"Services"** to start a server and launch JupyterLab:
 
 ![Nebari home page with Services: JupyterLab, Argo, Users, Environments, Monitoring, VSCode; My Apps: JupyterLab (default JupyterLab instance); and Shared Apps.](/img/tutorials/nebari-home.png)
 
@@ -64,13 +64,17 @@ You can follow the progress on [JHub App Launcher's GitHub repository][jhub-apps
 To go back to the legacy version, [disable the launcher in `nebari-config.yaml`][install-jhub-apps].
 :::
 
-### Legacy JupyterHub dashboard (v2023.12.1 or earlier)
+### JupyterHub dashboard
+Landing page to Launch server:
+![Nebari dashboard main screen - displays a button "Launch Server"](/img/how-tos/nebari_main_launch_hub_page.png)
 
+Click on the **Launch Server** button to select a profile and launch JupyterLab.
+
+:::note
 Nebari versions 2023.12.1 and earlier had a different landing page with core services listed in the top navigation bar:
-
 ![Nebari dashboard main screen - displays a button "Start my server"](/img/how-tos/nebari_main_hub_page.png)
-
-Click on the **Start My Server** button to select a profile and launch JupyterLab.
+In which case, click on the **Start My Server** button to select a profile and launch JupyterLab.
+:::
 
 ## 4. Select a profile
 
@@ -88,7 +92,7 @@ JupyterLab starts to launch.
 
 This step may take up to several minutes due to Nebari use of autoscaling under the hood. Ultimately this autoscaling feature helps reduce costs when the cluster is idle.
 
-A successful launch process shows a blue progress bar:
+A successful launch process shows a purpel progress bar:
 
 ![Nebari start server](/img/how-tos/nebari_server_start.png)
 
