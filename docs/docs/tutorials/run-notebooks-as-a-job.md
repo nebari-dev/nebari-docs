@@ -23,9 +23,35 @@ If you're curious why shutting down your JupyterLab server (and associated Jupyt
 
 Jupyter-Scheduler is included by default in the base Nebari JupyterLab image and can be used with any conda-store environment available to the notebook author.
 
+##### Install `papermill`
+
 :::note
 When using a conda-store environment, please ensure that the [`papermill` package](https://papermill.readthedocs.io/en/latest/) is included.
 :::
+
+##### Configure Groups
+
+:::note
+Only users in the `admin` or `developer` groups will have access to create notebook jobs. For more information regarding users and groups, please visit [How to configure Keycloak](/how-tos/configure-keycloak-howto.md).
+
+If your user is not part of one of the mentioned groups, you might see an error
+like this one when clicking on the job details:
+
+`Server returned status code 403 with message: 'workflows.argoproj.io is forbidden: User "system:serviceaccount:dev:argo-viewer" cannot create resource "workflows" in API group "argoproj.io" in the namespace "dev"`
+
+<div align="center">
+  <img src="/img/tutorials/jupyter-scheduler-permission-error.png" alt="Jupyter-Scheduler UI - permission error." width="100%"/>
+</div>
+
+The mentioned groups should also automatically set `argo-server-sso` Client
+Roles. To check, go to the Role Mappings tab in Keycloak and see if you have
+`argo-admin` or `argo-developer` listed as Effective Roles.
+
+If you did configure the groups but still see this error, it's possible that
+changes are not visible in JupyterLab. Terminate the JupyterLab server, log
+out/in via Keycloak, then start the server and try again.
+:::
+
 
 ## Submitting a Notebook as a Jupyter-Scheduler Job
 
@@ -61,27 +87,6 @@ As mentioned above, the notebook job will run as an Argo-Workflows workflow. Thi
 
 ![Argo UI - view the notebook job status from the argo UI](/img/tutorials/jupyter-scheduler-argo-ui.png)
 
-:::
-
-:::note
-Only users in the `admin` or `developer` groups will have access to create notebook jobs. For more information regarding users and groups, please visit [How to configure Keycloak](/how-tos/configure-keycloak-howto.md).
-
-If your user is not part of one of the mentioned groups, you might see an error
-like this one when clicking on the job details:
-
-`Server returned status code 403 with message: 'workflows.argoproj.io is forbidden: User "system:serviceaccount:dev:argo-viewer" cannot create resource "workflows" in API group "argoproj.io" in the namespace "dev"`
-
-<div align="center">
-  <img src="/img/tutorials/jupyter-scheduler-permission-error.png" alt="Jupyter-Scheduler UI - permission error." width="100%"/>
-</div>
-
-The mentioned groups should also automatically set `argo-server-sso` Client
-Roles. To check, go to the Role Mappings tab in Keycloak and see if you have
-`argo-admin` or `argo-developer` listed as Effective Roles.
-
-If you did configure the groups but still see this error, it's possible that
-changes are not visible in JupyterLab. Terminate the JupyterLab server, log
-out/in via Keycloak, then start the server and try again.
 :::
 
 All associated workflows have a TTL (time-to-live) set to 600 seconds. This means that regardless of whether or not your workflow was successful, it will be deleted after 10 mins. The downside is that those logs are now gone, that said, the upside is that the workflow no longer consumes compute resources once deleted.
