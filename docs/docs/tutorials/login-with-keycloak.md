@@ -50,7 +50,7 @@ You may need to "Authorize access" to reach the home page:
 
 Once authenticated, the **Nebari home page** opens.
 The home page, also referred to as
-"Landing page", "JupyterHub launcher", or "Hub Control Panel",
+"Landing page", "JupyterHub launcher", or "App Launcher",
 lists Nebari's core **services** and allows you to [create and share web apps][create-dashboard].
 
 Click on the **"JupyterLab"** button under **"Services"** to start a server and launch JupyterLab:
