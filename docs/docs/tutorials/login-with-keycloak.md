@@ -92,7 +92,7 @@ JupyterLab starts to launch.
 
 This step may take up to several minutes due to Nebari use of autoscaling under the hood. Ultimately this autoscaling feature helps reduce costs when the cluster is idle.
 
-A successful launch process shows a purpel progress bar:
+A successful launch process shows a purple progress bar:
 
 ![Nebari start server](/img/how-tos/nebari_server_start.png)
 
