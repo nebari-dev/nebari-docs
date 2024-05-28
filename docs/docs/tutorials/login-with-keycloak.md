@@ -64,7 +64,7 @@ You can follow the progress on [JHub App Launcher's GitHub repository][jhub-apps
 To go back to the legacy version, [disable the launcher in `nebari-config.yaml`][install-jhub-apps].
 :::
 
-### JupyterHub dashboard
+### Launch a new server
 Landing page to Launch server:
 ![Nebari dashboard main screen - displays a button "Launch Server"](/img/how-tos/nebari_main_launch_hub_page.png)
 
