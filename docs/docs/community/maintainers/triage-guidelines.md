@@ -58,7 +58,7 @@ Other useful queries include:
       Detailed rationale on our labelling system can be found in the [GitHub conventions section][github-conventions] of our documentation.
 
 :::tip
-Assign one and only one `type:` label to the issue and as many `area:` labels as are relevant.
+Assign one and only one `type:` label to the issue and as many `area:` labels as are relevant. Take special care to evaluate and mark appropriate issues with the `good first issue` label to help new comers contribute to Nebari.
 
 Feel free to [use our saved replies][saved-replies] to help you with triaging.
 :::
