@@ -106,7 +106,9 @@ During this time you might see some log messages that detail the autoscaling pro
 </details>
 
 :::warning
-The starting up sequence can take up to several minutes, depending on the size of the cluster. If the server is not accessible **after 10 minutes**, an error will be shown, and you will be redirected to the Home page. Please check the [troubleshooting docs][troubleshooting] for more information.
+- The starting up sequence can take up to several minutes, depending on the size of the cluster. If the server is not accessible **after 10 minutes**, an error will be shown, and you will be redirected to the Home page. Please check the [troubleshooting docs][troubleshooting] for more information.
+- The Event logs may include warnings about `"[Warning] 0/2 nodes are available: 2 node(s) didn't match Pod's node affinity/selector ..." `. This is normal behaviour as cluster sometimes need to expand in order to start the server.
+- Warning such as `"[Warning]" Unable to retrieve some image pull secrets ..."` can also be safely ignored.
 :::
 
 Once your server is ready, you will be redirected to JupyterLab!
