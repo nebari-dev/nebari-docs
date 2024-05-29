@@ -103,11 +103,6 @@ During this time you might see some log messages that detail the autoscaling pro
 
 ![Nebari event log](/img/how-tos/keycloak_start_event_logs.png)
 
-:::note
-- The Event logs may include warnings about `"[Warning] 0/2 nodes are available: 2 node(s) didn't match Pod's node affinity/selector ..." `. This is normal behaviour as cluster sometimes need to expand in order to start the server.
-- Warning such as `"[Warning]" Unable to retrieve some image pull secrets ..."` can also be safely ignored.
-:::
-
 </details>
 
 :::warning
