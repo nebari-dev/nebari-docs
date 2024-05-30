@@ -34,19 +34,23 @@ Following steps describe how to get CUDA related information from the server.
 By default, conda-store will build CPU-compatible packages. To build GPU-compatible packages, we have a couple of options:
 1. Use a GPU-specific version of either PyTorch or TensorFlow, i.e.,`pytorch-gpu` or `tensorflow-gpu`.
 2. Build a GPU-enabled environment using `CONDA_OVERRIDE_CUDA`.
-    1. At the time of writing this document the latest CUDA version was showing as `12.1`.
-   You will need check PyTorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
-   Select the following options in order to get the latest CUDA version.:
-        - PyTorch Build = Stable
-        - Your OS = Linux
-        - Package = Conda
-        - Language = Python
+    1. You will need check PyTorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
+    Select the following options in order to get the latest CUDA version:
+    - PyTorch Build = Stable
+    - Your OS = Linux
+    - Package = Conda
+    - Language = Python
 
     ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
+
+    :::note
+    - At the time of writing this document the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for `CONDA_OVERRIDE_CUDA` environment variable.
+    - Please ensure that you choose from PyTorch documentation is not greater than the highest supported version in `nvidia-smi` output (captured above).
+    :::
     2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. You will see a config ending with `variables: {}`. We will replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
-   ![conda-store-yaml-toggle](/img/how-tos/conda-store-yaml-toggle.png)
-   ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
+    ![conda-store-yaml-toggle](/img/how-tos/conda-store-yaml-toggle.png)
+    ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
 
 ### Launching a new notebook with GPU-compatible environment
 Go to JupyterLab Homepage and find the newly created environment for GPUs under "Launch New Notebook" section.
