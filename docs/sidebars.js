@@ -78,6 +78,7 @@ module.exports = {
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
         "how-tos/monitoring",
+        "how-tos/use-gpus",
       ],
     },
     {

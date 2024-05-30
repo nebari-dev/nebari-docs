@@ -1,0 +1,97 @@
+---
+id: use-gpus
+title: Using GPUs in Nebari projects
+description: Provide a complete overview of using GPUs in the Nebari project, including server setup, environment setup, and validation.
+---
+
+# Using GPUs
+## Introduction
+This document provides a complete overview of using GPUs in the Nebari project, including server setup, environment setup, and validation.
+
+## 1. Starting a GPU server
+
+Login to Nebari by following steps 1, 2, and, 3 to in the [tutorials/Authenticate and launch JupyterLab][login-with-keycloak] document. UI will show a list of profiles (instances, servers, machines).
+
+![Nebari select profile](/img/how-tos/nebari_select_profile.png)
+Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
+
+Select the server option most suitable for your project. If the server instance description does not specifically mention GPU, this document has a section to validate your setup for GPUs.
+Select an appropriate profile and click "Start".
+
+### Understanding GPU setup on the server.
+Before we create an environment, we need to check a few things on the server.
+Following steps describe how to get CUDA related information from the server.
+1. Once the JupyterHub starts, it will redirect you to a JupyterLab home page.
+2. Click on the **"Terminal"** icon.
+3. Run command `nvidia-smi`. The top right corner of the command's output should have the highest the installed the driver supports.
+    ```
+    $ nvidia-smi
+    Thu May 30 14:04:29 2024
+    +-----------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 550.54.15              Driver Version: 550.54.15      CUDA Version: 12.4     |
+    |-----------------------------------------+------------------------+----------------------+
+    | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                        |               MIG M. |
+    |=========================================+========================+======================|
+    |   0  NVIDIA TITAN RTX               Off |   00000000:08:00.0 Off |                  N/A |
+    | 27%   57C    P0             66W /  280W |       0MiB /  24576MiB |      0%      Default |
+    |                                         |                        |                  N/A |
+    +-----------------------------------------+------------------------+----------------------+
+    |   1  NVIDIA TITAN RTX               Off |   00000000:43:00.0 Off |                  N/A |
+    | 28%   59C    P0             N/A /  280W |       0MiB /  24576MiB |      0%      Default |
+    |                                         |                        |                  N/A |
+    +-----------------------------------------+------------------------+----------------------+
+
+    +-----------------------------------------------------------------------------------------+
+    | Processes:                                                                              |
+    |  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+    |        ID   ID                                                               Usage      |
+    |=========================================================================================|
+    |  No running processes found                                                             |
+    +-----------------------------------------------------------------------------------------+
+    ```
+
+    If you get `nvidia-smi: command not found`. You are most likely on a non-gpu server. Please contact your administrator to figure out the right instance option.
+4. Run `nvcc --version` to find the CUDA version installed on the server. You might need this in the next step.
+
+## 2. Creating environments
+
+### Building a GPU-compatibly conda-store environment.
+By default, conda-store will build CPU-compatible packages. To build GPU-compatible packages, we have a couple of options:
+1. Use a GPU-specific version of either PyTorch or TensorFlow, i.e.,`pytorch-gpu` or `tensorflow-gpu`.
+2. Build a GPU-enabled environment using `CONDA_OVERRIDE_CUDA`.
+    1. You might want to check Pytorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) for compatibility.
+    2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
+    3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. You will see a config ending with `variables: {}`. We will replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
+    # **TODO**: Add image of environment json.
+
+
+### Launching a new notebook with GPU-compatible environment
+Go to JupyterHub Homepage and find the newly created environment for GPUs.
+
+**TODO**: Add image of JupyterHub Homepage highlighting the newly created env to build JupyterNotebook.
+
+Click on the env to launch a JupyterNotebook.
+
+## 3. Validating the setup
+Run the following commands to get more information on the setup:
+```
+import torch
+torch.cuda.is_available()
+torch.cuda.device_count()
+torch.cuda.current_device()
+torch.cuda.device(0)
+torch.cuda.get_device_name(0)
+```
+Your output should look something like this:
+
+![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
+
+## Also see:
+- [Pytorch best practices][pytorch-best-practices]
+
+<!-- Internal links -->
+[profile-configuration]: /docs/explanations/profile-configuration
+[login-with-keycloak]: /docs/tutorials/login-keycloak
+[pytorch-best-practices]: /docs/how-tos/pytorch-best-practices
