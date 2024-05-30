@@ -53,7 +53,6 @@ Following steps describe how to get CUDA related information from the server.
     ```
 
     If you get `nvidia-smi: command not found`. You are most likely on a non-gpu server. Please contact your administrator to figure out the right instance option.
-4. Run `nvcc --version` to find the CUDA version installed on the server. You might need this in the next step.
 
 ## 2. Creating environments
 
@@ -62,13 +61,21 @@ By default, conda-store will build CPU-compatible packages. To build GPU-compati
 1. Use a GPU-specific version of either PyTorch or TensorFlow, i.e.,`pytorch-gpu` or `tensorflow-gpu`.
 2. Build a GPU-enabled environment using `CONDA_OVERRIDE_CUDA`.
     1. You might want to check Pytorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) for compatibility.
+   Select the following options in order to get the latest CUDA version.:
+        - PyTorch Build = Stable
+        - Your OS = Linux
+        - Package = Conda
+        - Language = Python
+    At the time of writing this document the latest CUDA version was showing as 12.1
+
+    ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
     2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. You will see a config ending with `variables: {}`. We will replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
-    **TODO**: Add image of environment json.
-
+   ![conda-store-yaml-toggle](/img/how-tos/conda-store-yaml-toggle.png)
+   ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
 
 ### Launching a new notebook with GPU-compatible environment
-Go to JupyterHub Homepage and find the newly created environment for GPUs.
+Go to JupyterLab Homepage and find the newly created environment for GPUs.
 
 **TODO**: Add image of JupyterHub Homepage highlighting the newly created env to build JupyterNotebook.
 
@@ -78,11 +85,10 @@ Click on the env to launch a JupyterNotebook.
 Run the following commands to get more information on the setup:
 ```
 import torch
-torch.cuda.is_available()
-torch.cuda.device_count()
-torch.cuda.current_device()
-torch.cuda.device(0)
-torch.cuda.get_device_name(0)
+print(f"GPU available: {torch.cuda.is_available()}")
+print(f"Number of GPUs available: {torch.cuda.device_count()}")
+print(f"ID of current GPU: {torch.cuda.current_device()}")
+print(f"Name of first GPU: {torch.cuda.get_device_name(0)}")
 ```
 Your output should look something like this:
 
