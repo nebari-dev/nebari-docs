@@ -34,13 +34,13 @@ Following steps describe how to get CUDA related information from the server.
 By default, conda-store will build CPU-compatible packages. To build GPU-compatible packages, we have a couple of options:
 1. Use a GPU-specific version of either PyTorch or TensorFlow, i.e.,`pytorch-gpu` or `tensorflow-gpu`.
 2. Build a GPU-enabled environment using `CONDA_OVERRIDE_CUDA`.
-    1. You might want to check Pytorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) for compatibility.
+    1. At the time of writing this document the latest CUDA version was showing as `12.1`.
+   You will need check PyTorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
    Select the following options in order to get the latest CUDA version.:
         - PyTorch Build = Stable
         - Your OS = Linux
         - Package = Conda
         - Language = Python
-    At the time of writing this document the latest CUDA version was showing as 12.1
 
     ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
     2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
@@ -66,7 +66,7 @@ Your output should look something like this:
 ![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
 
 ## Also see:
-- [Pytorch best practices][pytorch-best-practices]
+- [PyTorch best practices][pytorch-best-practices]
 
 <!-- Internal links -->
 [profile-configuration]: /docs/explanations/profile-configuration
