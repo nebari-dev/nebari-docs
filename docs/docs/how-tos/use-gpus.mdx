@@ -64,7 +64,7 @@ By default, conda-store will build CPU-compatible packages. To build GPU-compati
     1. You might want to check Pytorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) for compatibility.
     2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. You will see a config ending with `variables: {}`. We will replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
-    # **TODO**: Add image of environment json.
+    **TODO**: Add image of environment json.
 
 
 ### Launching a new notebook with GPU-compatible environment
