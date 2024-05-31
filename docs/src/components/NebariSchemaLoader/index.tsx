@@ -4,10 +4,10 @@ import Details from '@theme/Details';
 import Heading from '@theme/Heading';
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-import JSONSchema from '../../../static/nebari-config-schema.json';
+// import JSONSchema from '../../../static/nebari-config-schema.json';
 
 const schemaUrl = "https://raw.githubusercontent.com/viniciusdc/nebari/nebari-schema-models/nebari-config-schema.json";
 
@@ -99,7 +99,7 @@ function ParentComponent({ schema }) {
 
 
 export default function NebariConfig() {
-    const { schema, loading, error } = useSchema(schemaUrl, true);
+    const { schema, loading, error } = useSchema(schemaUrl, false);
 
     if (loading) return <p>Loading schema...</p>;
     if (error) return <p>Error loading schema: {error}</p>;
@@ -118,7 +118,7 @@ export default function NebariConfig() {
     );
 }
 
-function SchemaToc({ schema }) {
+function SchemaToc({ schema }: { schema: Schema }) {
     return (
         <ul>
             {Object.entries(schema.properties).sort().map(([key, value]) => (
@@ -172,57 +172,17 @@ function renderProperties(value, key, sub_heading) {
 }
 
 function PropertiesList({ properties, sub_heading = false }) {
-    const groupedByTabs = {};
-    const standaloneProperties = [];
-
-    // Organize properties by group_by key
-    Object.entries(properties).forEach(([key, value]) => {
-        if (value.group_by) {
-            const groupKey = value.group_by;
-            if (!groupedByTabs[groupKey]) {
-                groupedByTabs[groupKey] = [];
-            }
-            groupedByTabs[groupKey].push({ key, value });
-        } else {
-            standaloneProperties.push({ key, value });
-        }
-    });
-
     return (
         <>
             {/* Render standalone properties */}
-            {standaloneProperties.map(({ key, value }) => (
+            {Object.entries(properties).map(([key, value]) => (
+                // Escape a new line after each property
                 <div key={key}>
                     <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
                     <PropertyContent property={value} />
                     {renderProperties(value, 'allOf', sub_heading)}
                     {renderProperties(value, 'anyOf', sub_heading)}
-                </div>
-            ))}
-            {/* Render grouped properties in tabs */}
-            {Object.entries(groupedByTabs).map(([groupKey, groupProps]) => (
-                <div>
-                    <Admonition type="info">
-                        <Markdown text={`All the properties presented bellow (${groupProps.map(({ key }) => `\`${key}\``).join(', ')})
-                        are mutually exclusive. You can only use one of them at a time.`} />
-                        <Markdown text={`The pre-initialization of those properties are managed by the choice made in the corresponding [\`${groupKey}\`](#${groupKey.replace(/_/g, "-")}) property.`} />
-                    </Admonition>
-                    {/* {groupProps.map(({ key, value }) => (
-                            // <TabItem key={key} value={key}>
-                                <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
-                                <PropertyContent property={value} />
-                                {renderProperties(value, 'allOf', sub_heading)}
-                                {renderProperties(value, 'anyOf', sub_heading)}
-                            {/* </TabItem> */}
-                    {/* ))} */}
-                    {groupProps.map(({ key, value }) => (
-                        <div key={key}>
-                            <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
-                            <PropertyContent property={value} />
-                            {renderProperties(value, 'allOf', sub_heading)}
-                            {renderProperties(value, 'anyOf', sub_heading)}
-                        </div>
-                    ))}
+                    <br style={{ clear: 'both', marginBottom: '20px' }} />
                 </div>
             ))}
         </>
@@ -251,19 +211,22 @@ const MarkdownCodeSeparator = ({ examples, inputKey }) => {
         return { briefing, codeBlock };
     };
 
-    // Check if examples is defined and is an array
-    if (!Array.isArray(examples)) {
+    // Check if examples is defined and is either an array or an object
+    if (!examples || (typeof examples !== 'object')) {
         return <div>No examples provided</div>;
     }
 
-    if (examples.length > 1) {
+    const exampleEntries = Array.isArray(examples) ? examples.map((example, index) => ({ label: `Example ${index + 1}`, value: example, key: `example-${index}` }))
+        : Object.entries(examples).map(([key, value]) => ({ label: key, value, key }));
+
+    if (exampleEntries.length > 1) {
         // Render content inside tabs when there are multiple examples
         return (
-            <Tabs defaultValue="example-0" values={examples.map((_, index) => ({ label: `Example ${index + 1}`, value: `example-${index}` }))}>
-                {examples.map((example, index) => {
-                    const { briefing, codeBlock } = parseContent(example); // Correct placement
+            <Tabs defaultValue={exampleEntries[0].key} values={exampleEntries.map(entry => ({ label: entry.label, value: entry.key }))}>
+                {exampleEntries.map((entry, index) => {
+                    const { briefing, codeBlock } = parseContent(entry.value); // Correct placement
                     return (
-                        <TabItem key={index} value={`example-${index}`}>
+                        <TabItem key={entry.key} value={entry.key}>
                             <div>
                                 <ReactMarkdown>{briefing}</ReactMarkdown>
                                 <pre style={{ borderRadius: '8px', border: '1px solid #ccc', padding: '10px', overflow: 'auto' }}>
@@ -277,7 +240,7 @@ const MarkdownCodeSeparator = ({ examples, inputKey }) => {
         );
     } else {
         // If only one example, no need for tabs
-        const { briefing, codeBlock } = parseContent(examples[0]);
+        const { briefing, codeBlock } = parseContent(exampleEntries[0].value);
         return (
             <div key={inputKey}>
                 <ReactMarkdown>{briefing}</ReactMarkdown>
@@ -289,19 +252,80 @@ const MarkdownCodeSeparator = ({ examples, inputKey }) => {
     }
 };
 
-function PropertyContent({ property }) {
-    // Helper function to check if any table data is available
-    const hasTableData = property.type || property.default !== undefined || property.enum || property.optionsAre || property.pattern || property.deprecated;
+
+interface PropertyRowProps {
+    label: string;
+    value: any;
+    isPreFormatted?: boolean;
+}
+
+const PropertyRow: React.FC<PropertyRowProps> = ({ label, value, isPreFormatted = false }) => {
+    if (value === undefined) return <em>Not specified</em>;
+
+    const formattedValue = isPreFormatted
+        ? (label === 'Depends on' ? <code>{JSON.stringify(value)}</code> :
+            <pre style={{ borderRadius: '8px', border: '1px solid #ccc', overflow: 'auto', marginTop: '14px' }}>
+                {JSON.stringify(value, null, 2)}
+            </pre>)
+        : <code>{Array.isArray(value) ? value.join(", ") : String(value)}</code>;
+
+    return (
+        <tr>
+            <th style={{ fontWeight: 'bold', padding: '8px', whiteSpace: 'nowrap' }}>
+                {label}:
+            </th>
+            <td style={{ padding: '8px' }} width="100%">
+                {value !== null ? formattedValue : <em>Not specified</em>}
+            </td>
+        </tr>
+    );
+}
+
+interface Property {
+    type?: string;
+    enum?: string[];
+    optionsAre?: string;
+    pattern?: string;
+    depends_on?: any;
+    default?: any;
+    description?: string;
+    examples?: string[];
+    note?: string;
+    warning?: string;
+}
+
+const DefaultValueRow: React.FC<{ property: Property }> = ({ property }) => {
+    const shouldUsePreFormat = (value: any) => typeof value === 'object';
+
+    return (
+        <>
+            {property.type && <PropertyRow label="Type" value={property.type} />}
+            {property.enum && <PropertyRow label="Available options" value={property.enum} />}
+            {property.optionsAre && <PropertyRow label="Options" value={property.optionsAre} />}
+            {property.pattern && <PropertyRow label="Pattern" value={property.pattern} />}
+            {property.depends_on && <PropertyRow label="Depends on" value={property.depends_on} isPreFormatted={true} />}
+            {property.default !== undefined && (
+                <PropertyRow
+                    label="Default"
+                    value={property.default}
+                    isPreFormatted={shouldUsePreFormat(property.default)}
+                />
+            )}
+        </>
+    );
+}
+
+const PropertyContent: React.FC<{ property: Property }> = ({ property }) => {
+    const hasTableData = property.type || property.default !== undefined || property.enum ||
+        property.optionsAre || property.pattern || property.depends_on;
 
     return (
         <div className="property-content">
-            {/* // For properties that contain the depends_on key, render a warning
-            // admonition to inform users that the property is dependent on another */}
-            {property.depends_on && (
+            {/* {property.depends_on && (
                 <Admonition type="warning">
                     <Markdown text="This key has a dependency on another property. Please refer to the documentation bellow under `Depends on` section for extra details." />
                 </Admonition>
-            )}
+            )} */}
             {property.description && (
                 <div className="property-description">
                     <ReactMarkdown>{property.description}</ReactMarkdown>
@@ -318,50 +342,7 @@ function PropertyContent({ property }) {
                         `}
                     </style>
                     <tbody>
-                        {property.type && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px' }}>Type:</th>
-                                <td style={{ padding: '8px', }} width="100%">
-                                    <code>{Array.isArray(property.type) ? property.type.join(", ") : property.type}</code>
-                                </td>
-                            </tr>
-                        )}
-                        {property.default !== undefined && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px', }}>Default:</th>
-                                <td style={{ padding: '8px', }} width="100%">
-                                    <code>{JSON.stringify(property.default)}</code>
-                                </td>
-                            </tr>
-                        )}
-                        {property.enum && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px', }}>Available options:</th>
-                                <td style={{ padding: '8px', }} width="100%">{property.enum.join(", ")}</td>
-                            </tr>
-                        )}
-                        {property.optionsAre && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px', }}>Options:</th>
-                                <td style={{ padding: '8px', }} width="100%">{property.optionsAre.join(", ")}</td>
-                            </tr>
-                        )}
-                        {property.pattern && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px', }}>Pattern:</th>
-                                <td style={{ padding: '8px', }} width="100%">
-                                    <code>{property.pattern}</code>
-                                </td>
-                            </tr>
-                        )}
-                        {property.depends_on && (
-                            <tr>
-                                <th style={{ fontWeight: 'bold', padding: '8px', whiteSpace: 'nowrap' }}>Depends on:</th>
-                                <td style={{ padding: '8px', }} width="100%">
-                                    <code>{JSON.stringify(property.depends_on)}</code>
-                                </td>
-                            </tr>
-                        )}
+                        <DefaultValueRow property={property} />
                     </tbody>
                 </table>
             )}
@@ -375,9 +356,13 @@ function PropertyContent({ property }) {
                     <Markdown text={property.note} />
                 </Admonition>
             )}
+            {property.warning && (
+                <Admonition type="warning" icon="🔥">
+                    <Markdown text={property.warning} />
+                </Admonition>
+            )}
         </div>
     );
 }
-
 
 const Markdown = ({ text }: { text: string }) => <ReactMarkdown>{text}</ReactMarkdown>;
