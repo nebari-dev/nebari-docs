@@ -366,8 +366,11 @@ You can also generate the above configuration automatically by using the `--ssl-
 :::
 
 
-Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will store retrieved certificates for the duration of their validity in a mounted PVC at a default location `/mnt/acme-certificates/acme.json`.  In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
+Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will store retrieved certificates for the duration of their validity in a mounted PVC at a default location `/mnt/acme-certificates/acme.json`.
 
+:::note
+In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
+:::
 
   </TabItem>
   <TabItem label="Custom self-signed" value="Custom">

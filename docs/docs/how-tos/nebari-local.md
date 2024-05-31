@@ -173,7 +173,7 @@ And a workaround for Chrome:
 
 ### Using Let's Encrypt Certificates
 
-If your "local" deployment happens to be exposed to the interent (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.
+If your "local" deployment happens to be exposed to the interent (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.  For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
 
@@ -186,8 +186,10 @@ certificate:
 
 Note the above snippet can be automatically provisioned in your configuration if you provided the `--ssl-cert-email` flag when you ran `nebari init`.
 
+Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.  
+
 :::note
-Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will store retrieved certificates for the duration of their validity in a mounted PVC at a default location `/mnt/acme-certificates/acme.json`.  In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
+In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
 :::
 
 
