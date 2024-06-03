@@ -132,6 +132,16 @@ Digital Ocean doesn't support these type of instances.
 
 First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [PyTorch best practices][pytorch best practices]. If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
+## Why can't I run a notebook with Jupyter-Scheduler? Why do Argo Workflows fail to run?
+
+If your notebook job has status `Failed`, click on the job name to get a more
+detailed error message. For example, you might see an error similar to this one:
+
+`Server returned status code 403 with message: 'workflows.argoproj.io is forbidden: User "system:serviceaccount:dev:argo-viewer" cannot create resource "workflows" in API group "argoproj.io" in the namespace "dev"`
+
+If so, you need to [configure groups]. In addition to that,
+`papermill` needs to be [installed][install papermill] in your environment.
+
 ## How do I migrate from Qhub to Nebari?
 
 Nebari was previously called QHub. If your Qhub version lives in the `0.4.x` series, you can migrate to Nebari by following the [migration guide](./how-tos/nebari-upgrade). If you're using a version of Qhub that lives in the `0.3.x` series, you will need to upgrade to `0.4.x` first as the user group management is different between the two versions. For more information, see the deprecation notice in the [Nebari release note](./references/RELEASE).
@@ -169,3 +179,6 @@ Until this issue is addressed, we recommend manually shutting down your VS Code 
 [idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [pytorch best practices]: how-tos/pytorch-best-practices
+[configure groups]: tutorials/run-notebooks-as-a-job.md#configure-groups
+[install papermill]: tutorials/run-notebooks-as-a-job.md#install-papermill
+
