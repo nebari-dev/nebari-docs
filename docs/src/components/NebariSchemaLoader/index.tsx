@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import React, { ReactElement, useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-// import JSONSchema from '../../../static/nebari-config-schema.json';
+import JSONSchema from '../../../static/nebari-config-schema.json';
 
 const schemaUrl = "https://raw.githubusercontent.com/viniciusdc/nebari/nebari-schema-models/nebari-config-schema.json";
 
@@ -82,24 +82,24 @@ function useSchema(schemaUrl: string, useLocal = false) {
 
             fetchSchema();
         }
-    }, [schemaUrl, useLocal]);  // Added useLocal as a dependency
+    }, [schemaUrl, useLocal]);
 
     return { schema, loading, error };
 }
 
-function ParentComponent({ schema }) {
+function ParentComponent({ schema, toc = null }) {
     return (
         <div>
             <SchemaToc schema={schema} />
             <Markdown text={schema.description} />
-            <PropertiesList properties={schema.properties} />
+            <PropertiesList properties={schema.properties} toc={toc} />
         </div>
     );
 }
 
 
-export default function NebariConfig() {
-    const { schema, loading, error } = useSchema(schemaUrl, false);
+export default function NebariConfig({ toc = null }) {
+    const { schema, loading, error } = useSchema(schemaUrl, true);
 
     if (loading) return <p>Loading schema...</p>;
     if (error) return <p>Error loading schema: {error}</p>;
@@ -113,7 +113,7 @@ export default function NebariConfig() {
             {/* <Details>
                 <pre>{JSON.stringify(schema, null, 2)}</pre>
             </Details> */}
-            <ParentComponent schema={schema} />
+            <ParentComponent schema={schema} toc={toc} />
         </>
     );
 }
@@ -123,7 +123,7 @@ function SchemaToc({ schema }: { schema: Schema }) {
         <ul>
             {Object.entries(schema.properties).sort().map(([key, value]) => (
                 <li key={key}>
-                    <a href={`#${key.replace(/_/g, "-")}`}>
+                    <a href={`#${key.replace(/_/g, "-").toLowerCase()}`}>
                         {value.deprecated ? <span style={{ textDecoration: "line-through" }}>{key}</span> : key}
                     </a>
                 </li>
@@ -132,7 +132,7 @@ function SchemaToc({ schema }: { schema: Schema }) {
     );
 }
 
-function PropertieTitle({ title, subHeading = false, deprecated = false }) {
+function PropertyTitle({ title, subHeading = false, deprecated = false }) {
     const titleStyle = {
         background: 'linear-gradient(to right, var(--ifm-color-primary) 0%, var(--ifm-color-primary) 5px, var(--ifm-admonition-background-color) 5px, var(--ifm-admonition-background-color) 100%)',
         padding: '8px 15px',
@@ -141,7 +141,7 @@ function PropertieTitle({ title, subHeading = false, deprecated = false }) {
     };
     return (
         <div>
-            <Heading as={subHeading ? 'h3' : 'h2'} id={title.replace(/_/g, '-')}>
+            <Heading as={subHeading ? 'h3' : 'h2'} id={title.replace(/_/g, "-").toLowerCase()}>
                 <span style={titleStyle}>
                     {title} {deprecated && <span className="badge badge--danger">Deprecated</span>}
                 </span>
@@ -150,40 +150,72 @@ function PropertieTitle({ title, subHeading = false, deprecated = false }) {
     );
 }
 
-function mergeProperties(property, key) {
-    if (!property[key]) return property;
-    const base = { ...property, [key]: undefined };
-    return property[key].reduce((acc, cur) => ({
-        ...acc,
-        ...mergeProperties(cur, key), // Recursive call to handle nested structures
-        properties: { ...acc.properties, ...cur.properties } // Merge nested properties
-    }), base);
+function mergeProperties(property, keys) {
+    const base = { ...property };
+    keys.forEach(key => {
+        if (!property[key]) {
+            return;
+        }
+        if (Array.isArray(property[key])) {
+            base[key] = undefined; // Clean up the base object by removing the processed key
+            base.properties = property[key].reduce((acc, cur) => {
+                let mergedProperties = { ...acc, ...cur.properties };
+                return { ...acc, ...mergeProperties(cur, keys).properties, ...mergedProperties };
+            }, base.properties || {});
+        } else if (key === 'additionalProperties' && typeof property[key] === 'object') {
+            base.properties = {
+                ...base.properties,
+                ...mergeProperties(property[key], ['properties']).properties
+            };
+        }
+    }
+    );
+    return base;
 }
 
-function renderProperties(value, key, sub_heading) {
-    if (value[key] && value[key].length > 0 && value[key][0].properties) {
+function capitalizeFirstLetter(string) {
+    let base_string = string.replace(/_/g, " ");
+    return base_string.charAt(0).toUpperCase() + base_string.slice(1);
+}
+
+function renderProperties(value, keys, sub_heading, settingKey = null) {
+    const mergedProperties = mergeProperties(value, keys).properties ?? {};
+    if (Object.keys(mergedProperties).length > 0) {
         return (
-            <Details summary={<summary>Available Options</summary>}>
-                <PropertiesList properties={mergeProperties(value, key).properties ?? {}} sub_heading />
+            <Details summary={settingKey ? <summary>{capitalizeFirstLetter(settingKey)}: Available Options</summary> : <summary> Available Options</summary>}>
+                <PropertiesList properties={mergedProperties} sub_heading={sub_heading} />
             </Details>
         );
     }
     return null;
 }
 
-function PropertiesList({ properties, sub_heading = false }) {
+
+function Setting({ settingKey, value, subHeading, level = 1, toc = null }) {
+    if (toc) {
+        if (!toc.find((item) => item.value === settingKey)) {
+            toc.push({
+                value: settingKey,
+                id: settingKey.replace(/_/g, "-").toLowerCase(),
+                level: level + 2,
+            });
+        }
+    }
+    return (
+        <div key={settingKey}>
+            <PropertyTitle title={settingKey} subHeading={subHeading} deprecated={value.deprecated} />
+            <PropertyContent property={value} />
+            {renderProperties(value, ['allOf', 'anyOf', 'additionalProperties'], subHeading)}
+            <br style={{ clear: 'both', marginBottom: '20px' }} />
+        </div>
+    );
+}
+
+function PropertiesList({ properties, sub_heading = false, toc = null }) {
     return (
         <>
-            {/* Render standalone properties */}
-            {Object.entries(properties).map(([key, value]) => (
-                // Escape a new line after each property
-                <div key={key}>
-                    <PropertieTitle title={key} subHeading={sub_heading} deprecated={value.deprecated} />
-                    <PropertyContent property={value} />
-                    {renderProperties(value, 'allOf', sub_heading)}
-                    {renderProperties(value, 'anyOf', sub_heading)}
-                    <br style={{ clear: 'both', marginBottom: '20px' }} />
-                </div>
+            {Object.entries(properties).sort().map(([key, value]) => (
+                <Setting settingKey={key} value={value} sub_heading={sub_heading} toc={toc} />
             ))}
         </>
     );
@@ -321,11 +353,6 @@ const PropertyContent: React.FC<{ property: Property }> = ({ property }) => {
 
     return (
         <div className="property-content">
-            {/* {property.depends_on && (
-                <Admonition type="warning">
-                    <Markdown text="This key has a dependency on another property. Please refer to the documentation bellow under `Depends on` section for extra details." />
-                </Admonition>
-            )} */}
             {property.description && (
                 <div className="property-description">
                     <ReactMarkdown>{property.description}</ReactMarkdown>
