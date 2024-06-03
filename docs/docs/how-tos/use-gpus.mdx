@@ -1,40 +1,39 @@
 ---
 id: use-gpus
-title: Using GPUs in Nebari projects
-description: Provide a complete overview of using GPUs in the Nebari project, including server setup, environment setup, and validation.
+title: Using GPUs on Nebari
+description: Provide a complete overview of using GPUs on Nebari, including server setup, environment setup, and validation.
 ---
 
-# Using GPUs
+# Using GPUs on Nebari
 ## Introduction
-This document provides a complete overview of using GPUs in the Nebari project, including server setup, environment setup, and validation.
+Provide a complete overview of using GPUs on Nebari, including server setup, environment setup, and validation.
 
 ## 1. Starting a GPU server
 
-Follow steps 1 to 3 in the [tutorials/Authenticate and launch JupyterLab][login-with-keycloak] document. UI will show a list of profiles (instances, servers, machines).
+Follow Steps 1 to 3 in the [Authenticate and launch JupyterLab][login-with-keycloak] tutorial. The UI will show a list of profiles (instances, servers, machines).
 
 ![Nebari select profile](/img/how-tos/nebari_select_profile.png)
 Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
 
-Select the server option most suitable for your project. If the server instance description does not explicitly mention GPU, this document has a section to validate your setup for GPUs.
 Select an appropriate profile and click "Start".
 
 ### Understanding GPU setup on the server.
-Before we create an environment, we need to check a few things on the server.
 The following steps describe how to get CUDA-related information from the server.
-1. Once the JupyterHub starts, it will redirect you to a JupyterLab home page.
+1. Once your server starts, it will redirect you to a JupyterLab home page.
 2. Click on the **"Terminal"** icon.
 3. Run the command `nvidia-smi`. The top right corner of the command's output should have the highest supported driver.
     ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
 
-    If you get `nvidia-smi: command not found`. You are most likely on a non-GPU server. Contact the Nebari administrator to figure out the right instance option.
+    If you get `nvidia-smi: command not found`. You are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
 
 ## 2. Creating environments
 
-### Building a GPU-compatibly conda-store environment.
+By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options. 
+### Build a GPU-compatible environment using `CONDA_OVERRIDE_CUDA`.
 By default, conda-store will build CPU-compatible packages. To build GPU-compatible packages, we have a couple of options:
 1. Use a GPU-specific version of PyTorch or TensorFlow, i.e., `pytorch-gpu` or `tensorflow-gpu`.
-2. Build a GPU-enabled environment using `CONDA_OVERRIDE_CUDA`.
-    1. You will need to check PyTorch documentation to [select a supported version of CUDA from our support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
+2. Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`.
+    1. You will need to check PyTorch documentation to [select a supported version of CUDA from the support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
     Select the following options to get the latest CUDA version:
     - PyTorch Build = Stable
     - Your OS = Linux
@@ -48,16 +47,12 @@ By default, conda-store will build CPU-compatible packages. To build GPU-compati
     - Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
     :::
     2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
-    3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. You will see a config ending with `variables: {}`. We will replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
-    ![conda-store-yaml-toggle](/img/how-tos/conda-store-yaml-toggle.png)
+    3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. Replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
     ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
 
-### Launching a new notebook with GPU-compatible environment
-Go to the JupyterLab Homepage and find the newly created environment for GPUs under the "Launch New Notebook" section.
-Click on the env to launch a JupyterNotebook.
 
 ## 3. Validating the setup
-Run the following commands to get more information on the setup:
+You can validate your setup and ensure that your GPU server is compatible with your GPU-compatible environment with the following process. Open a Jupyter Notebook and load the environment from above. Run the following commands to validate your setup:
 ```
 import torch
 print(f"GPU available: {torch.cuda.is_available()}")
