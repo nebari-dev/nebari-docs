@@ -33,7 +33,7 @@ To submit your job, simply click the `Jupyter-Scheduler` icon on the top of your
 
 ![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/tutorials/jupyter-scheduler-icon.png)
 
-This will open the Jupyter-Scheduler UI. From here you can specify:
+This will open a new **Create Job** tab. From here you can specify:
 
 - the notebook **Job name**
 - the **Input file** to use (this will default to the file from which the icon was clicked)
