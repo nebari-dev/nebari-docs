@@ -12,7 +12,7 @@ This is a new feature still in beta so please [leave some feedback][feedback-lin
 There is one known issue with the `Update Job Definition` and `Resume` job definition which is related to [Nebari-Workflow-Controller issue #18][workflow-controller-issue]. The current workaround for those who need to update (or pause) your job definitions, is simply to delete the current job definition and create a new one as and when needed.
 :::
 
-A common need that many Nebari users have is to submit their notebooks to run as a script or to run on a predefined schedule. This is now possible with [Jupyter-Scheduler][jupyter-scheduler], a JupyterLab extension that has been expanded and integrated into Nebari. This also allows users to view the status of their jobs by visiting the `<nebari-domain>/argo` endpoint.
+Nebari users often require scheduling notebook runs. This is now achievable with [Jupyter-Scheduler][jupyter-scheduler], a JupyterLab extension that has been enhanced and integrated into Nebari. Additionally, users can monitor their job status by accessing the `<nebari-domain>/argo` endpoint.
 
 Notebook jobs are useful in situations where you need no human interaction in the notebook and the results can be efficiently saved to your home directory, the cloud, or other storage locations. It is also useful in situations where the notebook might run for a long time and the user needs to shut down their JupyterLab server.
 
