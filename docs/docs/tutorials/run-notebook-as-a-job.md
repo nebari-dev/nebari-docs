@@ -12,7 +12,7 @@ This is a new feature still in beta so please [leave some feedback][feedback-lin
 There is one known issue with the `Update Job Definition` and `Resume` job definition which is related to [Nebari-Workflow-Controller issue #18][workflow-controller-issue]. The current workaround for those who need to update (or pause) your job definitions, is simply to delete the current job definition and create a new one as and when needed.
 :::
 
-Nebari users often require scheduling notebook runs. This is now achievable with [Jupyter-Scheduler][jupyter-scheduler], a JupyterLab extension that has been enhanced and integrated into Nebari. Additionally, users can monitor their job status by accessing the `<nebari-domain>/argo` endpoint.
+Some Nebari users require scheduling notebook runs. This is now achievable with [Jupyter-Scheduler][jupyter-scheduler], a JupyterLab extension that has been enhanced and integrated into Nebari. Additionally, users can monitor their job status by accessing the `<nebari-domain>/argo` endpoint.
 
 Notebook jobs are useful in situations where you need no human interaction in the notebook and the results can be efficiently saved to your home directory, the cloud, or other storage locations. It is also useful in situations where the notebook might run for a long time and the user needs to shut down their JupyterLab server.
 
@@ -33,20 +33,14 @@ To submit your job, simply click the `Jupyter-Scheduler` icon on the top of your
 
 ![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/tutorials/jupyter-scheduler-icon.png)
 
-This will open a new **Create Job** tab. From here you can specify:
-
-- the notebook **Job name**
-- the **Input file** to use (this will default to the file from which the icon was clicked)
-- the **Environment** in which to run the notebook
-- **Output formats**
-- environment variables (**Parameters** section), if needed
+This will open a new **Create Job** tab. Fill out the form and click "Create" to create a schedule. 
 
 <div align="center">
   <img src="/img/tutorials/jupyter-scheduler-run-now.png" alt="Jupyter-Scheduler UI - layout of Jupyter-Scheduler UI." width="60%"/>
 </div>
 
 :::note
-Include the [`papermill` package][papermill] in your conda-store environment.
+Include [`papermill`][papermill] in your conda-store environment.
 :::
 
 Once created, the status of the job and the notebook output can be viewed from the Jupyter-Scheduler Notebook Jobs UI:
@@ -55,11 +49,7 @@ Once created, the status of the job and the notebook output can be viewed from t
 
 The output of your job will be accessible via the download icon in the "Output files" column. After you download the output, new links will replace the icon and point to the location of the downloaded output.
 
-Click on the notebook job name to view more information about the job, such as:
-
-- the **Job ID**
-- when the job was **Created**
-- the **Start time** and **End time**
+Click on the notebook job name to view more information about the job. 
 
 ![Jupyter-Scheduler UI - view the notebook job details](/img/tutorials/jupyter-scheduler-job-details.png)
 
