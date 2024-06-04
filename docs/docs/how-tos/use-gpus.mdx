@@ -28,27 +28,63 @@ The following steps describe how to get CUDA-related information from the server
 
 ## 2. Creating environments
 
-By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options. 
-### Build a GPU-compatible environment using `CONDA_OVERRIDE_CUDA`.
+By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
+### Build a GPU-compatible environments
 By default, conda-store will build CPU-compatible packages. To build GPU-compatible packages, we have a couple of options:
-1. Use a GPU-specific version of PyTorch or TensorFlow, i.e., `pytorch-gpu` or `tensorflow-gpu`.
-2. Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`.
-    1. You will need to check PyTorch documentation to [select a supported version of CUDA from the support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
+1. **Creating config using PyTorch documentation**:
+
+    You will need to check PyTorch documentation to [select a supported version of CUDA from the support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
     Select the following options to get the latest CUDA version:
     - PyTorch Build = Stable
-    - Your OS = Linux
-    - Package = Conda
-    - Language = Python
+    - Your OS          = Linux
+    - Package          = Conda
+    - Language         = Python
+    - Compute Platform = 12.1 (Choose the latest supported platform)
 
     ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
 
+    The command `conda install` from above is:
+    ```
+    conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+    ```
+    The corresponding yaml config is:
+    ```
+    channels:
+      - pytorch
+      - nvidia
+      - conda-forge
+    dependencies:
+      - pytorch
+      - pytorch-cuda==12.1
+      - torchvision
+      - torchaudio
+      - ipykernel
+    variables: {}
+    ```
+    You can use **GUI <-> YAML** Toggle to edit the config.
+
+2. **Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`**:
+
+    Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
+    While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
+    ```
+    channels:
+      - pytorch
+      - nvidia
+      - conda-forge
+    dependencies:
+      - pytorch
+      - ipykernel
+    variables:
+      CONDA_OVERRIDE_CUDA: "12.1"
+    ```
+
+    Replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
+    ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
     :::note
     - At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
     - Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
     :::
-    2. Conda-store provides a mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
-    3. To set the environment variable `CONDA_OVERRIDE_CUDA` in conda-store, click on the **GUI <-> YAML** Toggle to expose the underlying config. Replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
-    ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
 
 
 ## 3. Validating the setup
@@ -64,10 +100,6 @@ Your output should look something like this:
 
 ![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
 
-## Related links:
-- [PyTorch best practices][pytorch-best-practices]
-
 <!-- Internal links -->
 [profile-configuration]: /docs/explanations/profile-configuration
 [login-with-keycloak]: /docs/tutorials/login-keycloak
-[pytorch-best-practices]: /docs/how-tos/pytorch-best-practices
