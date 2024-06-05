@@ -21,7 +21,7 @@ Shutting down your JupyterLab server (and associated JupyterLab extensions) does
 
 :::
 
-Jupyter-Scheduler is included by default in the base Nebari JupyterLab image and can be used with any conda-store environment available to the notebook author.
+Jupyter-Scheduler is included by default in the base Nebari JupyterLab image and can be used with any conda-store environment available to the notebook author (`papermill` must be included in the environment).
 
 :::note
 By default, only users in the `admin` or `developer` groups will have permission to create notebook jobs. For more information regarding users and groups, please visit [How to configure Keycloak][configure-keycloak]
