@@ -22,7 +22,7 @@ Nebari heavily depends on [Terraform](https://www.terraform.io/) and Python. The
 - To install conda, visit the [official conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), or if you prefer, visit the [mamba installation documentation](https://github.com/mamba-org/mamba#installation)
 
 ## How to install the Nebari Package
-* See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
+*See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
 
 There are currently two ways to install the Nebari CLI:
 
@@ -45,7 +45,7 @@ There are currently two ways to install the Nebari CLI:
    ```
 
 :::note
-The version of the Nebari your `nebari-config.yaml` must match your Nebari deployer package version.  See [Upgrading Nebari][upgrade-nebari] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
+The version of the Nebari your `nebari-config.yaml` must match your Nebari deployer package version.  See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
 :::
 
 :::note

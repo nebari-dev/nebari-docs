@@ -11,7 +11,7 @@ This is a quick Nebari CLI reference. If you're new to Nebari, start at [Install
 </div>
 
 ## Install
-* See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
+*See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
 
 You need a MacOS or Linux machine with Python >= 3.8 to install Nebari.
 
