@@ -18,7 +18,7 @@ The following three Nebari CLI commands trigger different steps in the Nebari de
 `nebari deploy` will validate your configuration file, generate new Terraform manifests **UNLESS** you use the `--disable-render`, **AND** deploy those changes.  If `--disable-render` is set, the Nebari CLI will instead use whatever code is present in the existing `stages` directory.  This is useful to ensure that only Terraform code changes that you have seen are present with the deploy (see Tip below).
 
 :::tip
-If you are uisng a `git` repo to maintain your Nebari configuration, you can preview the effects that a Nebari version upgrades and/or config file change will make to your running Nebari deployment.  First perform the [Nebari upgrade command]([upgrade-nebari]#nebari-upgrade-command) or modify your `nebari-config.yaml` file, then run `nebari render`.  After the new `/stages/` directories are generated, use `git diff` to see any Terraform changes that will be made with the next `nebari deploy`.
+If you are uisng a `git` repo to maintain your Nebari configuration, you can preview the effects that a Nebari version upgrades and/or config file change will make to your running Nebari deployment.  First perform the [Nebari upgrade command]([upgrade-nebari]) or modify your `nebari-config.yaml` file, then run `nebari render`.  After the new `/stages/` directories are generated, use `git diff` to see any Terraform changes that will be made with the next `nebari deploy`.
 
 Please note that some changes (e.g. container image tags) are injected as Terraform variable values at runtime by `nebari deploy`, this technique will not capture every possible change the way a basic `terraform plan` would.
 :::
