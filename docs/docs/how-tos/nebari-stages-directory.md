@@ -6,7 +6,7 @@ description: Purpose and Usage of the "stages" Directory
 
 # The Nebari "Stages" Directory
 
-The Nebari CLI generates Terraform manifests and saves them on disk in directories `stages/[stage-name]` relative to the location of your configuation file.  Knowing how and when these directories are used will allow you to better track changes that the Nebari CLI makes to your running Nebari deployment when you upgrade or modify the configuration file.
+The Nebari CLI generates Terraform manifests and saves them on disk in directories `stages/[stage-name]` relative to the location of your configuration file.  Knowing how and when these directories are used will allow you to better track changes that the Nebari CLI makes to your running Nebari deployment when you upgrade or modify the configuration file.
 
 ## Nebari CLI Steps
 The following three Nebari CLI commands trigger different steps in the Nebari deployment process.
@@ -18,13 +18,13 @@ The following three Nebari CLI commands trigger different steps in the Nebari de
 `nebari deploy` will validate your configuration file, generate new Terraform manifests **UNLESS** you use the `--disable-render`, **AND** deploy those changes.  If `--disable-render` is set, the Nebari CLI will instead use whatever code is present in the existing `stages` directory.  This is useful to ensure that only Terraform code changes that you have seen are present with the deploy (see Tip below).
 
 :::tip
-If you are uisng a `git` repo to maintain your Nebari configuration, you can preview the effects that a Nebari version upgrades and/or config file change will make to your running Nebari deployment.  First perform the [Nebari upgrade command][upgrade-nebari] or modify your `nebari-config.yaml` file, then run `nebari render`.  After the new `/stages/` directories are generated, use `git diff` to see any Terraform changes that will be made with the next `nebari deploy`.
+If you are using a `git` repo to maintain your Nebari configuration, you can preview the effects that a Nebari version upgrades and/or config file change will make to your running Nebari deployment.  First perform the [Nebari upgrade command][upgrade-nebari] or modify your `nebari-config.yaml` file, then run `nebari render`.  After the new `/stages/` directories are generated, use `git diff` to see any Terraform changes that will be made with the next `nebari deploy`.
 
 Please note that some changes (e.g. container image tags) are injected as Terraform variable values at runtime by `nebari deploy`, this technique will not capture every possible change the way a basic `terraform plan` would.
 :::
 
 ## Overview of Nebari Stages
-When you run `nebari deploy`, you will see several log entries indicating Terraform initializing anew.  This is because ***every Nebari stage is an independent Terraform deployment.***  This modular architecture allows for the greatest flexibility when customizing your platform, such as using different cloud providers in the Infrastucture stage, overriding or skipping entire stages, or adding [extensions][nebari-extension-system] to your deployment.  As the `deploy` runs, the deployer will track the Terraform outputs of each stage's Terraform deployment and append them to a `stage_outputs` object so that subsequent stages can access the data as Terraform inputs.
+When you run `nebari deploy`, you will see several log entries indicating Terraform initializing anew.  This is because ***every Nebari stage is an independent Terraform deployment.***  This modular architecture allows for the greatest flexibility when customizing your platform, such as using different cloud providers in the Infrastructure stage, overriding or skipping entire stages, or adding [extensions][nebari-extension-system] to your deployment.  As the `deploy` runs, the deployer will track the Terraform outputs of each stage's Terraform deployment and append them to a `stage_outputs` object so that subsequent stages can access the data as Terraform inputs.
 
 - **01-terraform-state/[provider-name]** - Creates the infrastructure for Terraform backend, such as Google Cloud Storage bucket or AWS S3 bucket.  If you are using a `local` or `existing` provider, this stage is skipped and Terraform instead keeps a local `.tfstate` file in each stage folder.
 - **02-infrastructure/[provider-name]** - Deploys the underlying infrastructure, notably the networking components and Kubernetes cluster (unless using the `existing` provider).  This is the last core Nebari stage which directly interacts with the Terraform cloud provider.
