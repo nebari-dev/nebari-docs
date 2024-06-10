@@ -31,39 +31,7 @@ The following steps describe how to get CUDA-related information from the server
 By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
 ### Build a GPU-compatible environments
 By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-1. **Creating config using PyTorch documentation**:
-
-    You will need to check PyTorch documentation to [select a supported version of CUDA from the support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
-    Select the following options to get the latest CUDA version:
-    - PyTorch Build = Stable
-    - Your OS          = Linux
-    - Package          = Conda
-    - Language         = Python
-    - Compute Platform = 12.1 (Choose the latest supported platform)
-
-    ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
-
-    The command `conda install` from above is:
-    ```
-    conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-    ```
-    The corresponding yaml config would be:
-    ```
-    channels:
-      - pytorch
-      - nvidia
-      - conda-forge
-    dependencies:
-      - pytorch
-      - pytorch-cuda==12.1
-      - torchvision
-      - torchaudio
-      - ipykernel
-    variables: {}
-    ```
-    You can use **GUI <-> YAML** Toggle to edit the config.
-
-2. **Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`**:
+1. **Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`**:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
@@ -85,6 +53,38 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
     - At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
     - Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
     :::
+
+2. **Creating config using PyTorch documentation**:
+
+You will need to check PyTorch documentation to [select a supported version of CUDA from the support matrix](https://pytorch.org/get-started/locally/) to determine the latest override version for `CONDA_OVERRIDE_CUDA`.
+Select the following options to get the latest CUDA version:
+ - PyTorch Build = Stable
+ - Your OS          = Linux
+ - Package          = Conda
+ - Language         = Python
+ - Compute Platform = 12.1 (Choose the latest supported platform)
+
+![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
+
+The command `conda install` from above is:
+ ```
+ conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+    ```
+The corresponding yaml config would be:
+ ```
+ channels:
+   - pytorch
+   - nvidia
+   - conda-forge
+ dependencies:
+   - pytorch
+   - pytorch-cuda==12.1
+   - torchvision
+   - torchaudio
+   - ipykernel
+ variables: {}
+    ```
+You can use **GUI <-> YAML** Toggle to edit the config.
 
 
 ## 3. Validating the setup
