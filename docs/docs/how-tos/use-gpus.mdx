@@ -79,7 +79,7 @@ By default, conda-store will build CPU-compatible packages. To build GPU-compati
       CONDA_OVERRIDE_CUDA: "12.1"
     ```
 
-    Replace this section with an override for `CONDA_OVERRIDE_CUDA` to tell the conda-store to build a GPU-compatible environment instead of the default CPU-compatible one.
+    Add the `CONDA_OVERRIDE_CUDA` override to the variables section to tell conda-store to build a GPU-compatible environment.
     ![pytorch-cuda-override.png](/img/how-tos/pytorch-cuda-override.png)
     :::note
     - At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
