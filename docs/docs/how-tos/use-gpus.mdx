@@ -31,7 +31,7 @@ The following steps describe how to get CUDA-related information from the server
 By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
 ### Build a GPU-compatible environments
 By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-1. **Build a GPU-compatible environment in conda-store using `CONDA_OVERRIDE_CUDA`**:
+1. **Create environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
