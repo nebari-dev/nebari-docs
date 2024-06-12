@@ -22,14 +22,7 @@ module.exports = {
     {
       type: "category",
       label: "Get Started",
-      link: {
-        type: "generated-index",
-        title: "Get started",
-        description:
-          "This section describes how to install and deploy Nebari on a selection of cloud providers, and provides details on how Nebari can be configured and customized to fit a variety of deployment requirements.",
-        slug: "category/get-started",
-        keywords: ["get-started"],
-      },
+      link: { type: "doc", id: "get-started/index" },
       items: [
         "get-started/quickstart",
         "get-started/installing-nebari",
@@ -104,32 +97,32 @@ module.exports = {
         "references/RELEASE",
       ],
     },
-    {
-      type: "category",
-      label: "Community",
-      link: {
-        type: "doc", id: "community/index"
-      },
-      items: [
-        "community/file-issues",
-        "community/code-contributions",
-        "community/nebari-tests",
-        "community/doc-contributions",
-        "community/style-guide",
-        "community/team-structure",
-        "community/plugins",
-        {
-          type: "category",
-          label: "Maintainers",
-          items: ["community/maintainers/github-conventions",
-            "community/maintainers/triage-guidelines",
-            "community/maintainers/reviewer-guidelines",
-            "community/maintainers/saved-replies",
-            "community/maintainers/release-process-branching-strategy",
-          ]
-        }
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Community",
+    //   link: {
+    //     type: "doc", id: "community/index"
+    //   },
+    //   items: [
+    //     "community/file-issues",
+    //     "community/code-contributions",
+    //     "community/nebari-tests",
+    //     "community/doc-contributions",
+    //     "community/style-guide",
+    //     "community/team-structure",
+    //     "community/plugins",
+    //     {
+    //       type: "category",
+    //       label: "Maintainers",
+    //       items: ["community/maintainers/github-conventions",
+    //         "community/maintainers/triage-guidelines",
+    //         "community/maintainers/reviewer-guidelines",
+    //         "community/maintainers/saved-replies",
+    //         "community/maintainers/release-process-branching-strategy",
+    //       ]
+    //     }
+    //   ],
+    // },
     {
       type: "doc",
       label: "Troubleshooting",
