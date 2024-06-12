@@ -6,15 +6,22 @@ description: "Research Data Scientist"
 
 # Sam
 
-Age bracket: 30-40  
-Role: Research Data Scientist  
-Reports to: Head of Data Science  
-Nebari user group: super user
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 30-40  </p> 
+            <p>Role: Research Data Scientist </p> 
+            <p>Reports to: Head of Data Science  </p>  
+            <p>Nebari user group: super user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/sam.png" alt="cartoon image of persona sam" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - As a research data scientist I want to use ML to measure and optimise the costs, performance, efficiency and reliability of our company’s infrastructure to deliver the best experience to our customers.
 - As a research data scientist I want to implement and test out new approaches both on toy test tasks as well as on actual application scenarios.
-
-![cartoon image of persona sam](/img/references/sam.png)
 
 ---
 

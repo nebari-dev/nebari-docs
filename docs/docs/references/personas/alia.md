@@ -7,15 +7,22 @@ image: '/img/references/alia'
 
 # Alia
 
-Age bracket: 25-35  
-Role: Data scientist  
-Reports to: Head of Data Science  
-Nebari user group: end user
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 25-35</p> 
+            <p>Role: Data scientist </p> 
+            <p>Reports to: Head of Data Science</p>  
+            <p>Nebari user group: end user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/alia.png" alt="cartoon image of persona alia" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - As a Data scientist I want to investigate, extract and report meaningful insights with my organisation’s data.
 - As a DS I want to build self-serving internal data products to make data simple within the company.
-
-![cartoon image of persona alia](/img/references/alia.png)
 
 ---
 

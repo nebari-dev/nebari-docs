@@ -6,14 +6,21 @@ description: "Staff Machine learning engineer at a startup"
 
 # Enzo
 
-Age bracket: 30-40  
-Role: Staff Machine learning engineer at a startup  
-Reports to: Head of Software Engineering
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 30-40</p> 
+            <p>Role: Staff Machine learning engineer at a startup </p> 
+            <p>Reports to: Head of Software Engineering</p>  
+            <p>Nebari user group: super user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/enzo.png" alt="cartoon image of persona enzo" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - As an ML Engineer in a startup, I have good modeling and coding skills, but I want to build MLOps pipelines as easily as possible, without having to learn DevOps first, so that I can efficiently test and productionize my models.
--
-
-![cartoon image of persona enzo](/img/references/enzo.png)
 
 ---
 

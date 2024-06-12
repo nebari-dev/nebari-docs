@@ -6,16 +6,23 @@ description: "Sr. Dev Ops Engineer"
 
 # Taylor
 
-Age bracket: 30-45  
-Role: Sr. Dev Ops Engineer  
-Reports to: Head of Software Engineering  
-Nebari user group: admin
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 30-45 </p> 
+            <p>Role: Sr. Dev Ops Engineer  </p> 
+            <p>Reports to: Head of Software Engineering  </p>  
+            <p>Nebari user group: admin</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/taylor.png" alt="cartoon image of persona taylor" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - I maintain my org’s Nebari deployment. I make sure the infrastructure as code is maintained and that everyone has the conda environments or other resources they need.
 - As a DevOps engineer I want to automate away as much of the day to day as possible - “Run By Robots” is the goal to minimise issues and make out team more efficient.
 - Identify, respond to and collaborate with support and product teams to resolve production and customer issues and incidents.
-
-![carton image of persona taylor](/img/references/taylor.png)
 
 ---
 

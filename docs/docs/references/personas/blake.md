@@ -6,16 +6,22 @@ description: "Software Engineer/ ML Engineer"
 
 # Blake
 
-Age bracket: 25-35  
-Role: Software Engineer/ ML Engineer  
-Reports to: Head of Software Engineering  
-Nebari user group: super user
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 25-35 </p> 
+            <p>Role: Software Engineer/ ML Engineer </p> 
+            <p>Reports to: Head of Software Engineering </p>  
+            <p>Nebari user group: super user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/blake.png" alt="cartoon image of persona blake" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - Nebari is a place I go to do my everyday programming work. I use conda envs, jupyter, and write code in vscode. I deploy dashboards with cds dashboards. I create packages and I need to pip install the dev versions into my environment.
 - As a SWE I want to be able to collaborate with the Data and Engineering teams to build new prototypes for products
--
-
-![cartoon image of persona blake](/img/references/blake.png)
 
 ---
 

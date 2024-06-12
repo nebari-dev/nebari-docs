@@ -6,17 +6,24 @@ description: "Head of Data Science"
 
 # Robin
 
-Age bracket: 45-55  
-Role: Head of Data Science  
-Reports to: CTO  
-Nebari user group: end user
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 45-55 </p> 
+            <p>Role: Head of Data Science  </p> 
+            <p>Reports to: CTO</p>  
+            <p>Nebari user group: end user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/robin.png" alt="cartoon image of persona robin" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - As the head of Data Science I want to make sure my team has all the tools and data needed to be successful in their job.
 - As the HDS I want to have executive buy-in to grow the data practice in house to improve our internal processes and better serve our customers.
 - As the HDS I want to not have to spend half of my budget in proprietary platforms.
 - As the HDS I want to work with organisation leadership to help establish long-term vision, strategy and roadmap for one or more teams
-
-![cartoon image of persona robin](/img/references/robin.png)
 
 ---
 

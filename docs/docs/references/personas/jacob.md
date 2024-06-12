@@ -6,13 +6,21 @@ description: "Staff Machine learning engineer"
 
 # Jacob
 
-Age bracket: 30-40  
-Role: Staff Machine learning engineer  
-Reports to: Head of Software Engineering
+<table>
+    <tr>
+        <td style={{border: 'none'}}>
+            <p>Age bracket: 30-40  </p> 
+            <p>Role: Staff Machine learning engineer  </p> 
+            <p>Reports to: Head of Software Engineering</p>  
+            <p>Nebari user group: super user</p>  
+        </td>
+        <td style={{border: 'none'}}>
+            <img src="/img/references/jacob.png" alt="cartoon image of persona jacob" style={{ border: 'none', 'background-color' : 'var(--ifm-color-background-3)', height: 300}}  />
+        </td>
+    </tr>
+</table>
 
 - As an ML Engineer with good DevOps skills and not much time, I want to build MLOps pipelines efficiently so that I don’t waste time on tedious tasks.
-
-![cartoon image of persona jacob](/img/references/jacob.png)
 
 ---
 
