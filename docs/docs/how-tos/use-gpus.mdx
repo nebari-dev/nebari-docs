@@ -57,40 +57,39 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
     :::
 
 2. **Creating config using PyTorch documentation**:
+You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
+Select the following options to get the latest CUDA version:
+- PyTorch Build = Stable
+- Your OS          = Linux
+- Package          = Conda
+- Language         = Python
+- Compute Platform = 12.1 (Choose the latest supported platform)
+Select the version that matches the `nvidia-smi` output (see above) on your server.
 
-  You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
-  Select the following options to get the latest CUDA version:
-  - PyTorch Build = Stable
-  - Your OS          = Linux
-  - Package          = Conda
-  - Language         = Python
-  - Compute Platform = 12.1 (Choose the latest supported platform)
-  Select the version that matches the `nvidia-smi` output (see above) on your server.
+![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
 
-  ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
-
-  The command `conda install` from above is:
-  ```
-  conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-  ```
-  The corresponding yaml config would be:
-  ```
-  channels:
-    - pytorch
-    - nvidia
-    - conda-forge
-  dependencies:
-    - pytorch
-    - pytorch-cuda==12.1
-    - torchvision
-    - torchaudio
-    - ipykernel
-  variables: {}
-  ```
-  :::note
-  The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
-  note
-  You can use **GUI <-> YAML** Toggle to edit the config.
+The command `conda install` from above is:
+```
+conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+```
+The corresponding yaml config would be:
+```
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - pytorch
+  - pytorch-cuda==12.1
+  - torchvision
+  - torchaudio
+  - ipykernel
+variables: {}
+```
+:::note
+The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
+note
+You can use **GUI <-> YAML** Toggle to edit the config.
 
 
 ## 3. Validating the setup
