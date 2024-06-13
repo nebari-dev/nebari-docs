@@ -10,30 +10,30 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
 ## 1. Starting a GPU server
 
-Follow Steps 1 to 3 in the [Authenticate and launch JupyterLab][login-with-keycloak] tutorial. The UI will show a list of profiles (a.k.a, instances, servers, or machines).
+  Follow Steps 1 to 3 in the [Authenticate and launch JupyterLab][login-with-keycloak] tutorial. The UI will show a list of profiles (a.k.a, instances, servers, or machines).
 
-![Nebari select profile](/img/how-tos/nebari_select_profile.png)
-Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
+  ![Nebari select profile](/img/how-tos/nebari_select_profile.png)
+  Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
 
-Select an appropriate GPU Instance and click "Start".
+  Select an appropriate GPU Instance and click "Start".
 
-### Understanding GPU setup on the server.
-The following steps describe how to get CUDA-related information from the server.
-1. Once your server starts, it will redirect you to a JupyterLab home page.
-2. Click on the **"Terminal"** icon.
-3. Run the command `nvidia-smi`. The top right corner of the command's output should have the highest supported driver.
-    ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
+  ### Understanding GPU setup on the server.
+  The following steps describe how to get CUDA-related information from the server.
+  1. Once your server starts, it will redirect you to a JupyterLab home page.
+  2. Click on the **"Terminal"** icon.
+  3. Run the command `nvidia-smi`. The top right corner of the command's output should have the highest supported driver.
+      ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
 
-If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
+  If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
 
-**Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with CUDA<=12.4.**
+  **Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with CUDA<=12.4.**
 
 ## 2. Creating environments
 
-By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
-### Build a GPU-compatible environment
-By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-1. **Create environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
+  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
+  ### Build a GPU-compatible environment
+  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
+  1. **Create environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
@@ -56,7 +56,7 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
     - Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
     :::
 
-2. **Creating config using PyTorch documentation**:
+  2. **Creating config using PyTorch documentation**:
     You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
     Select the following options to get the latest CUDA version:
     - PyTorch Build = Stable
@@ -94,17 +94,17 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
 
 
 ## 3. Validating the setup
-You can check that your GPU server is compatible with your conda environment by opening a Jupyter Notebook, loading the environment, and running the following code:
-```
-import torch
-print(f"GPU available: {torch.cuda.is_available()}")
-print(f"Number of GPUs available: {torch.cuda.device_count()}")
-print(f"ID of current GPU: {torch.cuda.current_device()}")
-print(f"Name of first GPU: {torch.cuda.get_device_name(0)}")
-```
-Your output should look something like this:
+  You can check that your GPU server is compatible with your conda environment by opening a Jupyter Notebook, loading the environment, and running the following code:
+  ```
+  import torch
+  print(f"GPU available: {torch.cuda.is_available()}")
+  print(f"Number of GPUs available: {torch.cuda.device_count()}")
+  print(f"ID of current GPU: {torch.cuda.current_device()}")
+  print(f"Name of first GPU: {torch.cuda.get_device_name(0)}")
+  ```
+  Your output should look something like this:
 
-![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
+  ![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
 
 <!-- Internal links -->
 [profile-configuration]: /docs/explanations/profile-configuration
