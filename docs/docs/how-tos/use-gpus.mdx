@@ -15,7 +15,7 @@ Follow Steps 1 to 3 in the [Authenticate and launch JupyterLab][login-with-keycl
 ![Nebari select profile](/img/how-tos/nebari_select_profile.png)
 Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
 
-Select an appropriate profile and click "Start".
+Select an appropriate GPU Instance and click "Start".
 
 ### Understanding GPU setup on the server.
 The following steps describe how to get CUDA-related information from the server.
@@ -24,7 +24,8 @@ The following steps describe how to get CUDA-related information from the server
 3. Run the command `nvidia-smi`. The top right corner of the command's output should have the highest supported driver.
     ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
 
-    If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
+If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
+
 **Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with CUDA<=12.4.**
 
 ## 2. Creating environments
@@ -47,6 +48,7 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
     variables:
       CONDA_OVERRIDE_CUDA: "12.1"
     ```
+    Alternatively, you can configure the same config using UI.
 
     Add the `CONDA_OVERRIDE_CUDA` override to the variables section to tell conda-store to build a GPU-compatible environment.
     :::note
@@ -56,39 +58,39 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
 
 2. **Creating config using PyTorch documentation**:
 
-You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
-Select the following options to get the latest CUDA version:
- - PyTorch Build = Stable
- - Your OS          = Linux
- - Package          = Conda
- - Language         = Python
- - Compute Platform = 12.1 (Choose the latest supported platform)
-Select the version that matches the `nvidia-smi` output (see above) on your server.
+  You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
+  Select the following options to get the latest CUDA version:
+  - PyTorch Build = Stable
+  - Your OS          = Linux
+  - Package          = Conda
+  - Language         = Python
+  - Compute Platform = 12.1 (Choose the latest supported platform)
+  Select the version that matches the `nvidia-smi` output (see above) on your server.
 
-![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
+  ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
 
-The command `conda install` from above is:
- ```
- conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-    ```
-The corresponding yaml config would be:
- ```
- channels:
-   - pytorch
-   - nvidia
-   - conda-forge
- dependencies:
-   - pytorch
-   - pytorch-cuda==12.1
-   - torchvision
-   - torchaudio
-   - ipykernel
- variables: {}
-    ```
-:::note
-The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
-note
- You can use **GUI <-> YAML** Toggle to edit the config.
+  The command `conda install` from above is:
+  ```
+  conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
+      ```
+  The corresponding yaml config would be:
+  ```
+  channels:
+    - pytorch
+    - nvidia
+    - conda-forge
+  dependencies:
+    - pytorch
+    - pytorch-cuda==12.1
+    - torchvision
+    - torchaudio
+    - ipykernel
+  variables: {}
+      ```
+  :::note
+  The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
+  note
+  You can use **GUI <-> YAML** Toggle to edit the config.
 
 
 ## 3. Validating the setup
