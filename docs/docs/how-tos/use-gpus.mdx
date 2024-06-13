@@ -25,6 +25,7 @@ The following steps describe how to get CUDA-related information from the server
     ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
 
     If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
+**Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with CUDA<=12.4.**
 
 ## 2. Creating environments
 
