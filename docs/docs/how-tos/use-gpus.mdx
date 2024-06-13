@@ -72,7 +72,7 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
   The command `conda install` from above is:
   ```
   conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-      ```
+  ```
   The corresponding yaml config would be:
   ```
   channels:
@@ -86,7 +86,7 @@ By default, `conda-store` will build CPU-compatible packages. To build GPU-compa
     - torchaudio
     - ipykernel
   variables: {}
-      ```
+  ```
   :::note
   The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
   note
