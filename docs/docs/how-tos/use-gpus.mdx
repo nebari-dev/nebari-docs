@@ -52,10 +52,10 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
     Add the `CONDA_OVERRIDE_CUDA` override to the variables section to tell conda-store to build a GPU-compatible environment.
 
-    :::note
+:::note
     - At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
     - Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
-    :::
+:::
 
   2. **Creating config using PyTorch documentation**:
     You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
