@@ -30,10 +30,10 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
 ## 2. Creating environments
 
-  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we the following.
+  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we do the following.
   ### Build a GPU-compatible environment
   By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-  1. **Create environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
+  1. **Create the environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
@@ -48,25 +48,24 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
     variables:
       CONDA_OVERRIDE_CUDA: "12.1"
     ```
-    Alternatively, you can configure the same config using UI.
+    Alternatively, you can configure the same config using the UI.
 
     Add the `CONDA_OVERRIDE_CUDA` override to the variables section to tell conda-store to build a GPU-compatible environment.
 
 :::note
-At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the above step to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
+At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the steps below to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
 
 Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
 :::
 
-  2. **Creating config using PyTorch documentation**:
+  2. **Create the environment specification based on recommendations from the PyTorch documentation**:
     You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
     Select the following options to get the latest CUDA version:
       - PyTorch Build = Stable
       - Your OS          = Linux
       - Package          = Conda
       - Language         = Python
-      - Compute Platform = 12.1 (Choose the latest supported platform)
-    Select the version that matches the `nvidia-smi` output (see above) on your server.
+      - Compute Platform = 12.1 (Select the version that is less than or equal to the `nvidia-smi` output (see above) on your server)
 
     ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
 
