@@ -141,7 +141,7 @@ You can configure JupyterLab to open in a location within the cloned repository 
 See also `jupyterlab.gallery_settings` (documented below) which defers the cloning of repositories until user requests it and provides a rich presentation layer.
 
 :::warning
-While private you could embed an access token in the URL to fetch from a private repository, please be aware that it this token be accessed by the user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+While you could embed an access token in the URL to fetch from a private repository, please beware that it this token be accessed by the user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
 :::
 
 - `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
@@ -171,7 +171,7 @@ jupyterlab:
         git: https://github.com/your-org/your-repository.git
         account: name_of_dedicated_account
         token: YOUR_PERSONAL_ACCESS_TOKEN
-        icon: https://your.doman/icon.svg
+        icon: https://your.domain/icon.svg
 ```
 
 :::warning
