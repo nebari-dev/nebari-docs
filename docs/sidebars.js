@@ -70,7 +70,6 @@ module.exports = {
         "how-tos/manual-backup",
         "how-tos/nebari-upgrade",
         "how-tos/kubernetes-version-upgrade",
-        "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
         "how-tos/jhub-app-launcher",
@@ -78,6 +77,7 @@ module.exports = {
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
         "how-tos/monitoring",
+        "how-tos/use-gpus",
       ],
     },
     {
@@ -100,15 +100,14 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: [
-        "references/RELEASE",
-      ],
+      items: ["references/RELEASE"],
     },
     {
       type: "category",
       label: "Community",
       link: {
-        type: "doc", id: "community/index"
+        type: "doc",
+        id: "community/index",
       },
       items: [
         "community/file-issues",
@@ -121,13 +120,14 @@ module.exports = {
         {
           type: "category",
           label: "Maintainers",
-          items: ["community/maintainers/github-conventions",
+          items: [
+            "community/maintainers/github-conventions",
             "community/maintainers/triage-guidelines",
             "community/maintainers/reviewer-guidelines",
             "community/maintainers/saved-replies",
             "community/maintainers/release-process-branching-strategy",
-          ]
-        }
+          ],
+        },
       ],
     },
     {
