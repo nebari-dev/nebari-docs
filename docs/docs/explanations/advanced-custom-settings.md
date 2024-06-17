@@ -134,10 +134,15 @@ jupyterlab:
 ```
 
 :::note Note
-Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+Path location key should not start or end with trailing slash.
 You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
 
+See also `jupyterlab.gallery_settings` (documented below) which defers the cloning of repositories until user requests it and provides a rich presentation layer.
+
+:::warning
+While private you could embed an access token in the URL to fetch from a private repository, please be aware that it this token be accessed by the user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 - `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
 
@@ -149,6 +154,29 @@ jupyterlab:
 ```
 
 - `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
+
+- `jupyterlab.gallery_settings` - Configures [`jupyterlab-gallery`](https://github.com/nebari-dev/jupyterlab-gallery) extension which enables user to clone (and later synchronise) pre-specified repositories.
+
+```yaml
+jupyterlab:
+  gallery_settings:
+    title: Example repositories
+    destination: examples
+    exhibits:
+      - title: Nebari
+        git: https://github.com/nebari-dev/nebari.git
+        homepage: https://github.com/nebari-dev/nebari
+        description: 🪴 Nebari - your open source data science platform
+      - title: PyTorch Tutorial
+        git: https://github.com/your-org/your-repository.git
+        account: name_of_dedicated_account
+        token: YOUR_PERSONAL_ACCESS_TOKEN
+        icon: https://your.doman/icon.svg
+```
+
+:::warning
+While private repositories can be cloned by passing `account` and `token`, the access token can be accessed by each user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 ### Terraform
 
