@@ -125,7 +125,7 @@ jupyterlab:
     kernel_cull_idle_timeout: 30
 ```
 
-- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory.
+- `jupyterlab.initial_repositories` - Auto-deploys specified git repositories by cloning them into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory. Once the repository is cloned in the user space, it will not be updated. In order to update to the latest repository, users must delete the folder and restart the server.
 
 ```yaml
 jupyterlab:
@@ -137,7 +137,6 @@ jupyterlab:
 Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
 You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
-
 
 - `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
 
@@ -251,6 +250,7 @@ and then follow the usual deployment instructions as you would deploy from your 
 #### Conda store worker
 
 You can use the following settings to change the defaults settings (shown) used for Conda store workers.
+
 ```yaml
 conda_store:
   max_workers: 50
@@ -259,6 +259,7 @@ conda_store:
       cpu: 1
       memory: 4Gi
 ```
+
 :::note Note
 Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
 :::
