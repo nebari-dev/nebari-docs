@@ -247,3 +247,18 @@ As the name suggests, since it's a virtual private network, you need to be insid
 One way to achieve this is by creating a Virtual Machine (VM) inside the virtual network.
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
 and then follow the usual deployment instructions as you would deploy from your local machine.
+
+#### Conda store worker
+
+You can use the following settings to change the defaults settings (shown) used for Conda store workers.
+```yaml
+conda_store:
+  max_workers: 50
+  worker_resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+```
+:::note Note
+Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
+:::

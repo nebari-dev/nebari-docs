@@ -150,7 +150,7 @@ Kubecloak master realm username=root *****
 ...
 ```
 
-#### Verify the local deployment
+### Verify the local deployment
 
 Finally, if everything is set properly you should be able to cURL the JupyterHub Server. Run
 
@@ -160,6 +160,20 @@ curl -k https://projectname.domain/hub/login
 
 It's also possible to visit `https://projectname.domain` in your web browser to select the deployment.
 As default for a local deployment the https certificates generated during deployments aren't signed by a recognized [Certificate Authority (CA)](https://en.wikipedia.org/wiki/Certificate_authority) and are self-signed by [Traefik](https://github.com/traefik/traefik) instead.
+
+Several browsers makes it difficult to view a self-signed certificate that are not added to the certificate registry. So, if you do not want to use Let's Encrypt, you can use the following workarounds to properly view the pages:
+
+A workaround for Firefox:
+
+- Visit **about:config** and change the `network.stricttransportsecurity.preloadlist` to `false`
+
+And a workaround for Chrome:
+
+- Type **badidea** or **thisisunsafe** while viewing the rendered page (this has to do with how [Chrome preloads some domains for its HTTP Strict Transport Security list](https://hstspreload.org/) in a way that can't be manually removed)
+
+### Using Let's Encrypt Certificates
+
+If your "local" deployment happens to be exposed to the interent (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.  For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
 
@@ -172,19 +186,12 @@ certificate:
 
 Note the above snippet can be automatically provisioned in your configuration if you provided the `--ssl-cert-email` flag when you ran `nebari init`.
 
+Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.  
+
 :::note
-Let's Encrypt heavily rate limits their production endpoint and provisioning https certificates can often fail due to this limit.
+In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
 :::
 
-Several browsers makes it difficult to view a self-signed certificate that are not added to the certificate registry. So, if you do not want to use Let's Encrypt, you can use the following workarounds to properly view the pages:
-
-A workaround for Firefox:
-
-- Visit **about:config** and change the `network.stricttransportsecurity.preloadlist` to `false`
-
-And a workaround for Chrome:
-
-- Type **badidea** or **thisisunsafe** while viewing the rendered page (this has to do with how [Chrome preloads some domains for its HTTP Strict Transport Security list](https://hstspreload.org/) in a way that can't be manually removed)
 
 ## Destroying Nebari
 
