@@ -60,6 +60,13 @@ group.
 In the above section, we learnt how to create a role with some attributes and attach that to a user or a group.
 Now we will learn how to create scopes to grant a particular set of permissions to the user.
 
+:::note
+After the roles are assigned to a user or group in keycloak, the user needs to login again to the service
+for the roles to take in effect. For example let's say we add a set of roles for conda-store to the user named
+"John Doe", now for the user "John Doe" to be able to avail newly granted/revoked roles, they need to login to
+conda-store again (similarly for jupyterhub as well), after the roles are granted/revoked.
+:::
+
 ## Components Attribute
 
 We have seen in the above example the `component` attribute while creating a role. The value of this param
