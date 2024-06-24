@@ -24,11 +24,11 @@ service
 
   ![Keycloak client add jupyterhub role](/img/how-tos/keycloak_jupyterhub_client.png)
 
-- 2. On the Add Role form, write a meaningful name and description for the role on what this role plans to accomplish and hit "Save".
+- 2. On the "Add Role" form, write a meaningful name and description for the role on what this role plans to accomplish and hit "Save".
 
   ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_jupyterhub_add_role.png)
 
-- 3. Now the role should be created, but it does nothing. Lets adds some permissions to it, by clicking on the "Attributes" tab
+- 3. Now the role should be created, but it does nothing. Lets add some permissions to it, by clicking on the "Attributes" tab
      and adding scopes for the same.
 
      ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_add_role_attributes.png)
@@ -69,7 +69,7 @@ conda-store again (similarly for jupyterhub as well), after the roles are grante
 
 ## Components Attribute
 
-We have seen in the above example the `component` attribute while creating a role. The value of this param
+We have seen in the above example the `component` attribute while creating a role. The value of this parameter
 depends on the type of component in the service, we're creating a role for, current we only have two components:
 
 - `jupyterhub`: to create jupyterhub native roles in `jupyterhub` client.
