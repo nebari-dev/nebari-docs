@@ -81,9 +81,9 @@ Scopes for allowing users to share apps in Nebari's jhub-apps launcher:
 
 The `scopes` defined above consists of three scopes:
 
-- `shares!user`: permissions to share user's server
-- `read:users:name`: permissions to read other user's names
-- `read:groups:name`: permissions to read other groups's names
+- `shares!user`: grants permissions to share user's server
+- `read:users:name`: grants permissions to read other user's names
+- `read:groups:name`: grants permissions to read other groups's names
 
 To be able to share a server to a group or a user you need to be read other user's or group's names and must have
 permissions to be able to share your server, this is what this set of permissions implement.
@@ -98,7 +98,7 @@ Below are some examples for the same:
 
 The `scopes` defined above consists of two scopes:
 
-- `admin!namespace=analyst`: `admin` access to namespace `analyst`
-- `developer!namespace=nebari-git`: `developer` access to namespace `nebari-git`
+- `admin!namespace=analyst`: grants `admin` access to namespace `analyst`
+- `developer!namespace=nebari-git`: grants `developer` access to namespace `nebari-git`
 
 When attached to a user or a group, the above-mentioned permissions will be granted to the user/group.
