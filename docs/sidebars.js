@@ -100,7 +100,25 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: ["references/RELEASE"],
+      items: [
+        "references/RELEASE",
+        {
+          type: "category",
+          label: "Personas",
+          link: { type: "doc", id: "references/personas/index" },
+          items: ["references/personas/alia",
+          "references/personas/blake",
+          "references/personas/enzo",
+          "references/personas/jacob",
+          "references/personas/jordan",
+          "references/personas/noor",
+          "references/personas/robin",
+          "references/personas/sam",
+          "references/personas/skyler",
+          "references/personas/taylor",
+          ]
+        }
+      ],
     },
     {
       type: "category",
