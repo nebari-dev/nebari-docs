@@ -83,7 +83,7 @@ apt install curl -y
 apt install unzip -y
 ```
 
-Because you are on AWS, the AWS command-line tool is also installed:
+For AWS, you need to install the CLI (see CLI instructions for Google, Azure, Digital Ocean below):
 
 ```shell
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -175,6 +175,27 @@ gsutil cp 2021-04-23.tar gs://<your_bucket_name>/backups/2021-04-23.tar
 cd /data
 gsutil cp gs://<your_bucket_name>/backups/2021-04-23.tar .
 ```
+### Azure
+# install Azure CLI
+curl -sL https://aka.ms/InstallAzureCLIDeb |  bash
+az login --use-device-code
+
+# Install azcopy
+wget https://aka.ms/downloadazcopy-v10-linux
+tar -xvf downloadazcopy-v10-linux
+cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
+chmod 755 /usr/bin/azcopy
+
+# Do the backup
+cd /data
+
+tar -cvf 2024-06-27.tar .
+
+# Tell AZCOPY to use same auth as CLI
+export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
+
+# copy the tar backup file to blob storage
+azcopy copy 2024-06-27.tar 'https://<storage-account>.blob.core.windows.net/<blob-bucket>/backups/nebari-2024-06-27.tar'
 
 ### Digital Ocean
 
