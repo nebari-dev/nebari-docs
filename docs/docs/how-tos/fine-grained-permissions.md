@@ -81,7 +81,7 @@ for JupyterHub itself. The documentation can be found [here](https://jupyterhub.
 
 As an example, scopes for allowing users to share apps in Nebari's `jhub-apps` launcher may look like this:
 
-`shares!user,read:users:name,read:groups:name`
+>`shares!user,read:users:name,read:groups:name`
 
 The `scopes` defined above consists of three scopes:
 
@@ -98,7 +98,7 @@ The scopes for roles for the `conda-store` Client are applied to the `namespace`
 
 Below is example of granting a user specialized permissions to `conda-store`:
 
-`admin!namespace=analyst,developer!namespace=nebari-git`
+>`admin!namespace=analyst,developer!namespace=nebari-git`
 
 The `scopes` defined above consists of two scopes:
 
