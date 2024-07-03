@@ -45,7 +45,7 @@ mamba install nebari
 </Tabs>
 
 :::note
-The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled our automatically destroyed with a `nebari destroy` command.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
+The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
 :::
 
 Verify the installation with:
@@ -210,10 +210,7 @@ You can generate the (Terraform) deployment workflow scripts with:
 nebari render -c nebari-config.yaml
 ```
 
-This is useful if you use a GitOps workflow with GitHub (or GitLab) Actions.
-
-:::note
-This 
+This is the actual step that loads the stage classes/models and generates physical IaC files based on your Nebari config file and installed package versions.  It is not necessary to manually run a render to deploy.  However, it can be useful (especially if you use a GitOps workflow with GitHub Actions or GitLab CI/CD) to review the effects of config files changes on the resulting IaC before deploying.
 
 :::note
 This command is automatically run when you `deploy`.

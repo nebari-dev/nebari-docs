@@ -45,11 +45,11 @@ There are currently two ways to install the Nebari CLI:
    ```
 
 :::note
-The version of the Nebari your `nebari-config.yaml` must match your Nebari deployer package version.  See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
+The version of Nebari in your `nebari-config.yaml` must match your currently installed Nebari package version; otherwise, a warning will be raised when attempting to deploy.  See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
 :::
 
 :::note
-The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled our automatically destroyed with a `nebari destroy` command.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
+The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
 :::
 ## Verify installation
 

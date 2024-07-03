@@ -16,7 +16,9 @@ This is a simple way to set up a Python environment with a specific Nebari versi
 conda create -n nebari0
 conda activate nebari0
 conda install python==3.12 pip # or python version of your choice
-pip install nebari==2024.1.1 nebari-plugin-self-registration==0.0.9
+pip install nebari==2024.1.1
+# Example plugin that can also be installed
+pip install nebari-plugin-self-registration==0.0.9
 ```
 
 

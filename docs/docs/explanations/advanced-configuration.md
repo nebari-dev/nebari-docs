@@ -283,9 +283,9 @@ domain: demo.nebari.dev
 
 ### Continuous integration and continuous deployment
 
-Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to declare a desired state for the deployment.  By using a git repository with CI/CD configured, teams can more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
+Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to maintain a description of the deployed infrastructure in source control.  By using a git repository with CI/CD configured, teams can more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
 
-When a `ci_cd` section is configured within your `nebari-config.yaml`, the `nebari render` command will create or update pipeline definition files which describe a CI/CD process to redeploy Nebari when changes are made to a specified branch.  Currently, Nebari can generate CI/CD for [GitHub Actions](https://docs.github.com/en/actions) and [GitLab CI](https://docs.gitlab.com/ee/ci/).
+When a `ci_cd` section is configured within your `nebari-config.yaml`, the first `nebari deploy` command will create pipeline definition files which describe a CI/CD process to redeploy Nebari as changes are made to a specified branch.  (Alternatively, an administrator can use `nebari render` to generate the necessary files as if running a dry-run.)  Currently, Nebari can generate CI/CD for [GitHub Actions](https://docs.github.com/en/actions) and [GitLab CI](https://docs.gitlab.com/ee/ci/).
 
 The CI/CD workflow that is best for you will depend on your organization, but the following approach will be appropriate for most situations.
 
