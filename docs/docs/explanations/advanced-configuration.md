@@ -292,9 +292,8 @@ The CI/CD workflow that is best for you will depend on your organization, but th
 * You will want to have an upstream Git repository configured - we recommend either GitHub or GitLab since we support generating CI/CD jobs for these products.
 * The branch that triggers deployment (typically `main`, but you can set other ones in Nebari config's `ci_cd.branch`) should be protected so that only sys admins can commit or approve pull (or merge) requests into it.
 * CI/CD variables must be set in your repository so the pipeline can access your cloud (see Note below)
-* The admin then creates a local copy of repository and creates the desired `nebari-config.yaml` including the `ci_cd` section
-* Non-admin users who have write access to the repository's non-prodcted branches may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, and then push that branch to the origin and propose they be deployed via a Pull Request.
-* Davanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
+* Non-admin users who have write access to the repository's non-protected branches may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, and then push that branch to the origin and propose they be deployed via a Pull Request.
+* Advanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
 
 
 :::note
