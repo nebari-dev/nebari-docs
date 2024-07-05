@@ -287,13 +287,15 @@ Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructur
 
 When a `ci_cd` section is configured within your `nebari-config.yaml`, the first `nebari deploy` command will create pipeline definition files which describe a CI/CD process to redeploy Nebari as changes are made to a specified branch.  (Alternatively, an administrator can use `nebari render` to generate the necessary files as if running a dry-run.)  Currently, Nebari can generate CI/CD for [GitHub Actions](https://docs.github.com/en/actions) and [GitLab CI](https://docs.gitlab.com/ee/ci/).
 
-The CI/CD workflow that is best for you will depend on your organization, but the following approach will be appropriate for most situations.
+The CI/CD workflow that is best for you will depend on your organization, but the following tenets will be appropriate for most situations.
 
-* An admin creates a GitLab or GitHub project, specifies a protected branch (typically `main`) and configures CI/CD variables (see note below) for the target cloud provider
+* You will want to have an upstream Git repository configured - we recommend either GitHub or GitLab since we support generating CI/CD jobs for these products.
+* The branch that triggers deployment (typically `main`, but you can set other ones in Nebari config's `ci_cd.branch`) should be protected so that only sys admins can commit or approve pull (or merge) requests into it.
+* CI/CD variables must be set in your repository so the pipeline can access your cloud (see Note below)
 * The admin then creates a local copy of repository and creates the desired `nebari-config.yaml` including the `ci_cd` section
-* The admin runs `nebari render` for the first time, which in addition to generating IaC in the `stages` repo, will create either a `.github` folder or a `.gitlab-ci.yml` file containing the deploy steps.  *We strongly recommend the administrator review and understand the steps in these CI/CD files before continuing.*
-* The admin commits the changes to the upstream repository and the pipeline runs for the first time, deploying Nebari
-* Going forward, any user who has write access to the repository may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, run `nebari render`, and then push that branch to the origin and propose they be deployed via a Pull Request.
+* Non-admin users who have write access to the repository's non-prodcted branches may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, and then push that branch to the origin and propose they be deployed via a Pull Request.
+* Davanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
+
 
 :::note
 In order for your CI/CD pipeline to be able to deploy changes into your Nebari cloud hosting provider, you must set the appropriate authentication environment variables for your GitLab or GitHub CI/CD execution environment.  See the Authentication section for deploing to [AWS](https://www.nebari.dev/docs/how-tos/nebari-aws/#authentication), [Azure](https://www.nebari.dev/docs/how-tos/nebari-azure#authentication), [GCP](https://www.nebari.dev/docs/how-tos/nebari-gcp/#authentication), or [Digital Ocean](https://www.nebari.dev/docs/how-tos/nebari-do/#authentication) for Nebari's required variables.  Guidance on how to set these for your repository/project can be found in the documentation for [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/variables) and [GitLab CI/CD](https://docs.gitlab.com/ee/ci/variables/).
