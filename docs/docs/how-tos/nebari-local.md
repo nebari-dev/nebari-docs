@@ -173,7 +173,7 @@ And a workaround for Chrome:
 
 ### Using Let's Encrypt Certificates
 
-If your "local" deployment happens to be exposed to the interent (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.  For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
+If your "local" deployment happens to be exposed to the internet (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.  For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
 

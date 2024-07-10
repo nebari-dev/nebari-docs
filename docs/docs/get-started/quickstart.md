@@ -10,76 +10,9 @@ This is a quick Nebari CLI reference. If you're new to Nebari, start at [Install
   <img src="/img/get-started/nebari-cli-commands.png" alt="A diagram showing the different Nebari CLI commands. The first step is 'nebari init' which creates the 'nebari-config.yaml' file. The second step is 'nebari deploy' which deploys the Nebari instance on the cloud. The third step is 'nebari destroy' which destroys the deployed instance. These second and third steps run 'nebari validate' and 'nebari render' internally. 'nebari validate' verifies the 'nebari-config.yaml' file. 'nebari render' generates the 8-stage terraform deployment scripts." width="60%"/>
 </div>
 
-## Install
-*See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
-
-You need a MacOS or Linux machine with Python >= 3.8 to install Nebari.
-
-You can install Nebari from PyPI or conda-forge:
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-  <TabItem value="conda" label="conda" default>
-
-```bash
-conda install nebari -c conda-forge
-```
-
-  </TabItem>
-  <TabItem value="pip" label="pip" default>
-
-```bash
-python3 -m pip install nebari
-```
-
-  </TabItem>
-  <TabItem value="mamba" label="mamba" default>
-
-```bash
-mamba install nebari
-```
-
-  </TabItem>
-</Tabs>
-
-:::note
-The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
-:::
-
-Verify the installation with:
-
-```bash
-nebari --help
-```
-
-<details>
-<summary>Make sure it displays an output similar to:</summary>
-
-```bash
-usage: nebari [-h] [-v]
-            {deploy,render,init,validate,destroy,support,upgrade,keycloak,cost-estimate}
-            ...
-
-Nebari command line
-
-positional arguments:
-  {deploy,render,init,validate,destroy,support,upgrade,keycloak,cost-estimate}
-                        Nebari - 0.4.3
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         Nebari version number
-```
-
-</details>
-
 ## Initialize
 
-After installation, you can create a new Nebari project!
-
-Create a new project directory:
+Begin by creating a new project directory:
 
 ```bash
 mkdir <project-name>
