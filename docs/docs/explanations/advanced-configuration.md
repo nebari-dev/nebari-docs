@@ -422,4 +422,7 @@ Learn to configure more aspects of your Nebari deployment with the following top
 
 - [Security configuration](./advanced-security-configuration.md)
 - [Cloud provider configuration](./advanced-provider-configuration.md)
-- [JupyterLab and Dask profile configuration](./a
+- [JupyterLab and Dask profile configuration](./advanced-profiles-settings.md)
+- [Customize JuputerHub theme](./advanced-custom-settings.md)
+- [Environment configuration](./advanced-env-configuration.md)
+- [Custom settings and overrides](./advanced-custom-settings.md)
