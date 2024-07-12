@@ -9,7 +9,23 @@ to it and attach it to user(s) or group(s).
 These roles are created and attached from keycloak's interface and scoped for a particular
 client (i.e. a Nebari service such as `jupyterhub` or `conda-store`). This means the roles for a
 particular service (say `jupyterhub`) should be created within the Keycloak client named
-`jupyterhub`. Below is a list of Keycloak clients in a Nebari deployment:
+`jupyterhub`.
+
+By default, Nebari comes with several custom clients included in a fresh deployment.
+These clients facilitate various services and integrations within the Nebari ecosystem.
+The predefined clients are as follows:
+
+```yaml
+clients:
+  - jupyterhub
+  - conda_store
+  - grafana (if monitoring is enabled)
+  - argo-server-sso (if argo is enabled)
+  - forwardauth
+```
+
+To manage and configure these clients, you can navigate to the `Clients` tab within the
+Keycloak admin console, as illustrated in the image below.
 
 ![Keycloak clients](/img/how-tos/fine_grainer_permissions_keycloak_clients.png)
 
@@ -22,16 +38,16 @@ service
 
 1. Select the appropriate client and click on "Add Role".
 
-  ![Keycloak client add jupyterhub role](/img/how-tos/keycloak_jupyterhub_client.png)
+![Keycloak client add jupyterhub role](/img/how-tos/keycloak_jupyterhub_client.png)
 
 2. On the "Add Role" form, write a meaningful name and description for the role. Be sure to include what this role intends to accomplish. Click "Save".
 
-  ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_jupyterhub_add_role.png)
+![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_jupyterhub_add_role.png)
 
 3. Now the role has been created, but it does nothing. Let's add some permissions to it by clicking on the "Attributes" tab
-     and adding scopes. The following sections will explain the `components` and `scopes` in more detail.
+   and adding scopes. The following sections will explain the `components` and `scopes` in more detail.
 
-     ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_add_role_attributes.png)
+   ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_add_role_attributes.png)
 
 ## Adding Role to Group(s) / User(s)
 
@@ -40,21 +56,22 @@ to a user or group, we need to _attach_ the role to the user or group. To add a 
 
 1. Select users on the left sidebar and enter the username in the Lookup searchbar.
 
-     ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_select_user.png)
+   ![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_select_user.png)
 
 2. Select that user and click on the "Role Mappings" tab.
 
-  ![Keycloak clients add jupyterhub role form](/img/how-tos/user_role_mapping_tab.png)
+![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_user_role_mapping_tab.png)
 
 3. Select the Client associated with the Role being added.
 
-  ![Keycloak clients add jupyterhub role form](/img/how-tos/user_role_mapping_roles.png)
+![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_user_role_mapping_roles.png)
 
 4. Select the role in the "Available Roles" and click on "Add Selected >>".
 
-  ![Keycloak clients add jupyterhub role form](/img/how-tos/user_role_mapping_add_role.png)
+![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_user_role_mapping_add_role.png)
 
-To attach a role to a group, follow the above steps by clicking on the groups tab and selecting a group instead of selecting the user in the first step. 
+To attach a role to a group, follow the above steps by clicking on the groups tab and
+selecting a group instead of selecting the user in the first step.
 
 In the above section, we learned how to create a role with some attributes and attach it to a user or a group.
 Now we will learn how to create scopes to grant a particular set of permissions to the user.
@@ -81,7 +98,7 @@ for JupyterHub itself. The documentation can be found [here](https://jupyterhub.
 
 As an example, scopes for allowing users to share apps in Nebari's `jhub-apps` launcher may look like this:
 
->`shares!user,read:users:name,read:groups:name`
+> `shares!user,read:users:name,read:groups:name`
 
 The `scopes` defined above consists of three scopes:
 
@@ -98,7 +115,7 @@ The scopes for roles for the `conda-store` Client are applied to the `namespace`
 
 Below is example of granting a user specialized permissions to `conda-store`:
 
->`admin!namespace=analyst,developer!namespace=nebari-git`
+> `admin!namespace=analyst,developer!namespace=nebari-git`
 
 The `scopes` defined above consists of two scopes:
 
