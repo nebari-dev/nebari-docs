@@ -78,6 +78,8 @@ module.exports = {
         "how-tos/telemetry",
         "how-tos/monitoring",
         "how-tos/use-gpus",
+        "how-tos/develop-local-packages",
+        "how-tos/install-pip-packages",
       ],
     },
     {
