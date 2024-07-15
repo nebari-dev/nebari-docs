@@ -14,7 +14,7 @@ While the setup for developing local packages may require unfamiliar extra steps
 
 Nebari prohibits the standard local installation of packages, e.g. `pip install -e .`. On your personal computer, when you `pip install` a package into a conda environment, it will be placed inside of the conda environment folder structure. However, on Nebari, the environments are managed by `conda-store` in a directory structure which is read-only to users.
 
-For this reason, all pip installs would instead default to the user's `.local` directory. Unfortunately, _all_ environments will automatically pick up _everything_ has been installed in this directory. It is _extremely_ easy to create a situtation in which all environments are broken due to a conflict. In fact, its possible to create a situation that causes a user's JupyterLab server to be unable to start. For this reason, local pip installs are prohibited in Nebari.
+For this reason, all pip installs would instead default to the user's `.local` directory. Unfortunately, _all_ environments will automatically pick up _everything_ has been installed in this directory. It is _extremely_ easy to create a situation in which all environments are broken due to a conflict. In fact, its possible to create a situation that causes a user's JupyterLab server to be unable to start. For this reason, local pip installs are prohibited in Nebari.
 
 :::note
 For more information, check out [the docs on installing pip packages](/docs/how-tos/install-pip-packages).
@@ -44,7 +44,7 @@ Step 7: Install your package via pip: `pip install -e .` or `pip install -r requ
 
 ### Usage from terminal
 
-To use this environemnt from a terminal in JupyterLab or VS Code, you'll first activate the conda environment, then activate the virtual environment.
+To use this environment from a terminal in JupyterLab or VS Code, you'll first activate the conda environment, then activate the virtual environment.
 
 Step 1: Activate the env: `conda activate myusername-myenv`
 
