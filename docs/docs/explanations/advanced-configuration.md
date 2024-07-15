@@ -283,19 +283,20 @@ domain: demo.nebari.dev
 
 ### Continuous integration and continuous deployment
 
-Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to allow developers and users to request changes to the environment via pull requests (PRs) which then get approved by administrators.
-You may configure a CI/CD process to watch for pull-requests or commits on specific branches.
-Currently, CI/CD can be setup for either [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI](https://docs.gitlab.com/ee/ci/).
+Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to maintain a description of the deployed infrastructure in source control.  By using a git repository with CI/CD configured, teams can more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
 
+When a `ci_cd` section is configured within your `nebari-config.yaml`, the first `nebari deploy` command will create all related files that describe a [CI/CD](https://about.gitlab.com/topics/ci-cd/) process.  These pipelines will then be responsible for redeploying Nebari as changes are made to a specified branch.  (Alternatively, an administrator can use `nebari render` to generate the necessary files as if running a dry-run.)  Currently, Nebari can generate CI/CD for [GitHub Actions](https://docs.github.com/en/actions) and [GitLab CI](https://docs.gitlab.com/ee/ci/).
+
+Below is an example `ci_cd` section in a `nebari-config.yaml` file.
 ```yaml
 ### Continuous integration ###
 ci_cd:
-  type: gitlab-ci
-  branch: main
-  commit_render: true
-  before_script:
+  type: gitlab-ci # 'gitlab-ci' or 'github-actions'
+  branch: main # Branch that triggers deployment
+  commit_render: true # During deployment, commit the rendered IaC back into the repository
+  before_script: # GitLab only
     - echo "running commands before ci completes"
-  after_script:
+  after_script: # GitLab only
     - echo "running commands after ci completes"
     - echo "additional commands to run"
 ```
@@ -309,8 +310,18 @@ ci_cd:
   resources. Currently only supported on `gitlab-ci`.
 - `after_script` (optional): Script to run after CI ends infrastructure deployment. This is useful in cases to notify resources of successful Nebari deployment. Currently supported on `gitlab-ci`.
 
-If `ci_cd` is not supplied, no CI/CD will be auto-generated, however, we advise employing an infrastructure-as-code approach.
-This allows teams to more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
+The CI/CD workflow that is best for you will depend on your organization, but the following tenets will be appropriate for most situations.
+
+* You will want to have an upstream Git repository configured - we recommend either GitHub or GitLab since we support generating CI/CD jobs for these products.
+* The branch that triggers deployment (typically `main`, but you can set other ones in Nebari config's `ci_cd.branch`) should be protected so that only sys admins can commit or approve pull (or merge) requests into it.
+* CI/CD variables must be set in your repository so the pipeline can access your cloud (see Note below)
+* Non-admin users who have write access to the repository's non-protected branches may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, and then push that branch to the origin and propose they be deployed via a Pull Request.
+* Advanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
+
+
+:::note
+In order for your CI/CD pipeline to be able to deploy changes into your Nebari cloud hosting provider, you must set the appropriate authentication environment variables for your GitLab or GitHub CI/CD execution environment.  See the Authentication section for deploing to [AWS](https://www.nebari.dev/docs/how-tos/nebari-aws/#authentication), [Azure](https://www.nebari.dev/docs/how-tos/nebari-azure#authentication), [GCP](https://www.nebari.dev/docs/how-tos/nebari-gcp/#authentication), or [Digital Ocean](https://www.nebari.dev/docs/how-tos/nebari-do/#authentication) for Nebari's required variables.  Guidance on how to set these for your repository/project can be found in the documentation for [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/variables) and [GitLab CI/CD](https://docs.gitlab.com/ee/ci/variables/).
+:::
 
 ### Certificates
 
