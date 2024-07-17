@@ -80,6 +80,7 @@ module.exports = {
         "how-tos/telemetry",
         "how-tos/monitoring",
         "how-tos/use-gpus",
+        "how-tos/fine-grained-permissions",
       ],
     },
     {
