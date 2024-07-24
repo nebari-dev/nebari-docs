@@ -82,6 +82,7 @@ module.exports = {
         "how-tos/use-gpus",
         "how-tos/develop-local-packages",
         "how-tos/install-pip-packages",
+        "how-tos/fine-grained-permissions",
       ],
     },
     {
