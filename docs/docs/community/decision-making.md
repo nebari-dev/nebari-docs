@@ -6,12 +6,12 @@ description: Decision making workflows for the Nebari OSS project
 
 Nebari's [core team][core-team] is the primary decision making authority for the project.
 
-This group makes decision about the following non-exhaustive list of items:
+This group makes decisions about the following non-exhaustive list of items:
 
-- Major updates to the Nebari project and community, through the Request-for-discussion (RFD) process
+- Major updates to the Nebari project and community, through the Request-for-discussion (RFD) process (see explanation below)
 - Adding and removing members from the [Nebari team following the guidelines][nebari-team]
 
-## Consent decision making
+## Consent-based decision making
 
 Nebari follows the [consent-based approach][consent-decision-making] for making all project-related decisions.
 
@@ -23,7 +23,7 @@ In this approach, everyone gets a chance to:
 
 Each objection is discussed and the proposal is updated accordingly. The proposal is accepted when the team reaches a point where there are no objections.
 
-## Request-for-discussion (RFD) process for major updates
+## Major updates - Request-for-discussion (RFD) process
 
 New features, sub-projects, and workflow changes that affect a majority of end-users of the core project or the Nebari community, need to follow the Request-for-discussion workflow (sometimes called Enhancement Proposals):
 
