@@ -118,7 +118,6 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
-        "community/team-structure",
         "community/plugins",
         {
           type: "category",
@@ -131,6 +130,8 @@ module.exports = {
             "community/maintainers/release-process-branching-strategy",
           ],
         },
+        "community/team-structure",
+        "community/decision-making",
       ],
     },
     {
