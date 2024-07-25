@@ -415,4 +415,5 @@ Version `v0.3.11` on AWS has an error with the Kubernetes config map. See [this 
 :::
 
 <!-- Internal links -->
+
 [login-keycloak]: /docs/tutorials/login-keycloak

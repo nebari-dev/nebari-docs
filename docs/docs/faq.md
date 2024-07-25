@@ -31,8 +31,9 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 ## What packages are needed in your environment to create a dashboard?
 
 When deploying an app with JHub App Launcher, you need to have the following in your environment:
+
 - `jhub-apps` package
-- packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
+- packages corresponding to the dashboard framework (for example, `panel`, `gradio`, etc.)
 - any other libraries required for the analysis in the dashboard creation script/notebook
 
 ## How can I install a package locally? Will this package be available to Dask workers?
@@ -163,6 +164,7 @@ Nebari automatically shuts down servers when users are idle, as described in Neb
 :::note
 Until this issue is addressed, we recommend manually shutting down your VS Code server when it is not in use.
 :::
+
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
