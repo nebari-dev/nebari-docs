@@ -276,10 +276,6 @@ One way to achieve this is by creating a Virtual Machine (VM) inside the virtual
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
 and then follow the usual deployment instructions as you would deploy from your local machine.
 
-:::note Note
-Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
-:::
-
 #### Helm Extensions
 
 Nebari provides a way for any user to expand the infrastructure available by default by using the `helm_extensions` attribute. This attribute allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
@@ -343,3 +339,7 @@ conda_store:
       cpu: 1
       memory: 4Gi
 ```
+
+:::note Note
+Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
+:::
