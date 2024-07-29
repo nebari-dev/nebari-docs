@@ -31,9 +31,9 @@ aggregation system inspired by Prometheus. It is designed to be very cost-effect
 does not index the contents of the logs, but rather a set of labels for each log stream. Below is a step-by-step
 walkthrough of how to view JupyterHub pod logs in Grafana Loki:
 
-Go to explore section of monitoring of your Nebari installation at:
+Access the Monitoring UI for your Nebari installation at https://{your-nebari-domain}/monitoring/.
 
-https://{your-nebari-domain}/monitoring/
+First, click "Explore".
 
 ![Grafana Explore Page](/img/how-tos/1_grafana-explore.png)
 
@@ -41,24 +41,24 @@ Select Loki Data source at the top:
 
 ![Grafana Select Loki](/img/how-tos/2_grafana-select-loki.png)
 
-Click on the Log browser and select labels to search in, in this case we have selected pod:
+Select a Label to search.  In this case we are selecting 'pod':
 
 ![Grafana Select Loki](/img/how-tos/3_grafana-log-browser-pod.png)
 
-Type the pod name initials for the pod you're looking to search logs for, in this case we are looking
-for hub pod:
+Begin typing the name of the desired pod.  In this case we are looking
+for JupyterHub pod:
 
 ![Grafana Select Loki](/img/how-tos/4_grafana-log-search-pod.png)
 
-Select the pod from the list of pods and then click on "Show logs":
+Select the pod from the list of pods and then click on "Run Query":
 
 ![Grafana Select Loki](/img/how-tos/5_grafana-log-select-pod.png)
 
-After clicking on "Show logs", you should be able to see logs for JupyterHub pod as shown below:
+After clicking on "Run Query", you should be able to see logs for JupyterHub pod as shown below:
 
 ![Grafana Select Loki](/img/how-tos/6_grafana-view-pod-logs.png)
 
-You can also filter by time, by clicking on the time filter on top right, next to "Run query".
+You can also filter by time by clicking on the time filter on top right (next to "Run query").
 
 ## Terraform Overrides
 
