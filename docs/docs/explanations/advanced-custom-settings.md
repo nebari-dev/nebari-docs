@@ -125,7 +125,7 @@ jupyterlab:
     kernel_cull_idle_timeout: 30
 ```
 
-- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory.
+- `jupyterlab.initial_repositories` - Auto-deploys specified git repositories by cloning them into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory. Once the repository is cloned in the user space, it will not be updated. In order to update to the latest repository, users must delete the folder and restart the server.
 
 ```yaml
 jupyterlab:
@@ -134,10 +134,15 @@ jupyterlab:
 ```
 
 :::note Note
-Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+Path location key should not start or end with trailing slash.
 You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
 
+See also `jupyterlab.gallery_settings` (documented below) which defers the cloning of repositories until user requests it and provides a rich presentation layer.
+
+:::warning
+While you could embed an access token in the URL to fetch from a private repository, please beware that this token can be accessed by each user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 - `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
 
@@ -149,6 +154,29 @@ jupyterlab:
 ```
 
 - `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
+
+- `jupyterlab.gallery_settings` - Configures [`jupyterlab-gallery`](https://github.com/nebari-dev/jupyterlab-gallery) extension which enables user to clone (and later synchronise) pre-specified repositories.
+
+```yaml
+jupyterlab:
+  gallery_settings:
+    title: Example repositories
+    destination: examples
+    exhibits:
+      - title: Nebari
+        git: https://github.com/nebari-dev/nebari.git
+        homepage: https://github.com/nebari-dev/nebari
+        description: 🪴 Nebari - your open source data science platform
+      - title: PyTorch Tutorial
+        git: https://github.com/your-org/your-repository.git
+        account: name_of_dedicated_account
+        token: YOUR_PERSONAL_ACCESS_TOKEN
+        icon: https://your.domain/icon.svg
+```
+
+:::warning
+While private repositories can be cloned by passing `account` and `token`, the access token can be accessed by each user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 ### Terraform
 
@@ -251,6 +279,7 @@ and then follow the usual deployment instructions as you would deploy from your 
 #### Conda store worker
 
 You can use the following settings to change the defaults settings (shown) used for Conda store workers.
+
 ```yaml
 conda_store:
   max_workers: 50
@@ -259,6 +288,7 @@ conda_store:
       cpu: 1
       memory: 4Gi
 ```
+
 :::note Note
 Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
 :::
