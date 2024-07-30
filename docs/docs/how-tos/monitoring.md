@@ -60,6 +60,22 @@ After clicking on "Run Query", you should be able to see logs for JupyterHub pod
 
 You can also filter by time by clicking on the time filter on top right (next to "Run query").
 
+#### Common Queries
+
+To see **logs from all deployed apps**, use the label filter `container` = `notebook`.  (The main container in each deployed app pod is named `notebook`).
+
+To see **logs from a specific app**, use the `pod` selector and begin typing either the name of the user running the app or the app name to find the correct pod.  App pods are named with the convention `jupyter-[username]--[app_name]-[pod_id]`
+
+To see **logs from your main JupyterLab server**, again use `pod` selector and begin typing your username.  The pod name will be `jupyter-[username]`.
+
+To see **conda store** logs, use 'pod' and select one of the pods below.  Generally, user requests and access logs will be in the server pod, while logs related to environment builds will be in the worker.
+
+* `nebari-conda-store-server-[id]`
+* `nebari-conda-store-worker-[id]`
+* `nebari-conda-store-minio-[id]`
+* `nebari-conda-store-postgresql-postgresql-0`
+* `nebari-conda-store-redis-master-0`
+
 ## Terraform Overrides
 
 Nebari provides its users with the ability to customize the deployment of various component
