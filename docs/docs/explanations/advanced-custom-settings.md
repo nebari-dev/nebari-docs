@@ -326,6 +326,7 @@ helm_extensions:
 
 :::warning Warning
 In the above example, we are assuming the current nebari kubernetes cluster already has an appropriate storage class and persistent volume claim (PVC) created. If not, you will need to create a storage class and PVC before deploying the helm chart.
+:::
 =======
 #### Conda store worker
 
