@@ -276,15 +276,33 @@ One way to achieve this is by creating a Virtual Machine (VM) inside the virtual
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
 and then follow the usual deployment instructions as you would deploy from your local machine.
 
-#### Helm Extensions
+=======
+#### Conda store worker
+
+You can use the following settings to change the defaults settings (shown) used for Conda store workers.
+
+```yaml
+conda_store:
+  max_workers: 50
+  worker_resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+```
+
+:::note Note
+Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
+:::
+
+## Helm Extensions
 
 Nebari provides a way for any user to expand the infrastructure available by default by using the `helm_extensions` attribute. This attribute allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
 
-##### Overview
+### Overview
 
 Each entry in the `helm_extensions` list represents a single Helm chart configuration, allowing you to define the chart source, version, and specific overrides or settings for that chart. When Nebari is deployed, it will install the specified Helm charts using the provided settings.
 
-##### Structure
+### Structure
 
 Each entry in the helm_extensions list contains the following fields:
 
@@ -298,7 +316,7 @@ Each entry in the helm_extensions list contains the following fields:
 The `overrides` field is optional. If not specified, the default values for the chart will be used.
 :::
 
-##### Example
+### Example
 
 Below we give an example showcasing how to install Redis using helm_extensions:
 
@@ -326,21 +344,4 @@ helm_extensions:
 
 :::warning Warning
 In the above example, we are assuming the current nebari kubernetes cluster already has an appropriate storage class and persistent volume claim (PVC) created. If not, you will need to create a storage class and PVC before deploying the helm chart.
-:::
-=======
-#### Conda store worker
-
-You can use the following settings to change the defaults settings (shown) used for Conda store workers.
-
-```yaml
-conda_store:
-  max_workers: 50
-  worker_resources:
-    requests:
-      cpu: 1
-      memory: 4Gi
-```
-
-:::note Note
-Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
 :::
