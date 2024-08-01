@@ -103,7 +103,10 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: ["references/RELEASE"],
+      items: [
+        "references/RELEASE",
+        "references/personas"
+      ],
     },
     {
       type: "category",
