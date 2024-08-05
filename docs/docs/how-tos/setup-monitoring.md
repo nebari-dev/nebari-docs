@@ -122,4 +122,4 @@ monitoring:
 
 <!-- Internal links -->
 
-[access-logs-loki]: ./how-tos/access-logs-loki
+[access-logs-loki]: /how-tos/access-logs-loki.md
