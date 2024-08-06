@@ -2,6 +2,9 @@
 
 Below is a step-by-step walkthrough of how to view JupyterHub pod logs in Grafana [Loki](https://grafana.com/docs/loki/latest/):
 
+
+## Getting Started
+
 Access the Monitoring UI for your Nebari installation at https://{your-nebari-domain}/monitoring/.
 
 First, click "Explore".
@@ -46,3 +49,9 @@ To see **conda store** logs, use 'pod' and select one of the pods below.  Genera
 * `nebari-conda-store-minio-[id]`
 * `nebari-conda-store-postgresql-postgresql-0`
 * `nebari-conda-store-redis-master-0`
+
+
+## Additional Information
+
+* [Understand Log Query Structure](https://grafana.com/docs/loki/latest/query/log_queries/)
+* [Use the Query Editor](https://grafana.com/docs/grafana/latest/datasources/loki/query-editor/#choose-a-query-editing-mode)
