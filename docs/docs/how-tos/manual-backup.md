@@ -189,7 +189,7 @@ cd /data
 # Tell AZCOPY to use same auth as CLI
 export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
 # copy the tar backup file to blob storage
-azcopy copy 2021-04-23.taz "https://[account].blob.core.windows.net/[container]/2021-04-23.tar" "./2021-04-23.tar"ar 'https://<storage-account>.blob.core.windows.net/<blob-bucket>/backups/nebari-2021-04-23.tar'
+azcopy copy 2021-04-23.tar "https://[account].blob.core.windows.net/[container]/nebari-backups/2021-04-23.tar"
 ```
 
 #### Do the restore
@@ -201,7 +201,7 @@ cd /data
 # Tell AZCOPY to use same auth as CLI
 export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
 # restore the backup file from blob storage
-azcopy copy "https://[account].blob.core.windows.net/[container]/2021-04-23.tar" "./2021-04-23.tar"
+azcopy copy "https://[account].blob.core.windows.net/[container]/nebari-backups/2021-04-23.tar" "./2021-04-23.tar"
 ```
 
 ### Digital Ocean
