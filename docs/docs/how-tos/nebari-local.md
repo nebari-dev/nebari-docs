@@ -159,6 +159,15 @@ security:
         tag: sha-b4a2d1e
 ```
 
+### Increase fs watches
+
+Depending on your host system, you may need to increase the `fs.inotify.max_user_watches` and
+`fs.inotify.max_user_instances kernel parameters` if you see a `too many open files` in the logs of
+a failing pod.
+
+See the [kind troubleshooting
+docs](https://kind.sigs.k8s.io/docs/user/known-issues/#pod-errors-due-to-too-many-open-files)
+
 ## Deploying Nebari
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time with:
