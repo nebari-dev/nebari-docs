@@ -34,7 +34,7 @@ The advantages of using kind are:
 Nebari integrates kind under the hood by using its Terraform provider and a proper `local` deployment method, which grants native OS compatibility with Linux.
 
 :::warning
-Currently, Nebari does not support local mode on Windows and macOS.
+Currently, Nebari does not support local mode on Windows.
 :::
 
 To use kind, you will also need to install [docker engine](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
@@ -126,6 +126,39 @@ sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 
 :::
 
+### Exposing container network (for MacOS)
+
+Docker for macOS does not expose container networks directly on the MacOS host, for this we will use
+[docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect), which lets you connect directly
+to Docker-for-Mac containers via IP address. You can install and start it with following command:
+
+```bash
+# Install via Homebrew
+$ brew install chipmk/tap/docker-mac-net-connect
+
+# Run the service and register it to launch at boot
+$ sudo brew services start chipmk/tap/docker-mac-net-connect
+```
+
+### Docker Images
+
+You can skip this section if you have an x86_64 machine. If you're using Mac M1, then the x86_64 docker images
+will not work out of the box. You would need to use images that are built with support for arm as well.
+
+We're building all the docker images for both platforms except external images. The only external image relevant
+here is keycloak. You'd need to update the keycloak image for the deployment, which can be done by adding the
+override for the keycloak deployment to update the image:
+
+```yaml
+security:
+  keycloak:
+    initial_root_password: <SANITIZED>
+    overrides:
+      image:
+        repository: quay.io/nebari/keycloak
+        tag: sha-b4a2d1e
+```
+
 ## Deploying Nebari
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time with:
@@ -173,7 +206,7 @@ And a workaround for Chrome:
 
 ### Using Let's Encrypt Certificates
 
-If your "local" deployment happens to be exposed to the interent (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates.  For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
+If your "local" deployment happens to be exposed to the internet (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates. For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
 

@@ -61,6 +61,8 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-kubernetes",
         "how-tos/nebari-local",
+        "how-tos/nebari-stages-directory",
+        "how-tos/nebari-environment-management",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
@@ -78,6 +80,7 @@ module.exports = {
         "how-tos/telemetry",
         "how-tos/monitoring",
         "how-tos/use-gpus",
+        "how-tos/fine-grained-permissions",
       ],
     },
     {
@@ -100,7 +103,10 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: ["references/RELEASE"],
+      items: [
+        "references/RELEASE",
+        "references/personas"
+      ],
     },
     {
       type: "category",
@@ -115,7 +121,6 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
-        "community/team-structure",
         "community/plugins",
         {
           type: "category",
@@ -128,6 +133,8 @@ module.exports = {
             "community/maintainers/release-process-branching-strategy",
           ],
         },
+        "community/team-structure",
+        "community/decision-making",
       ],
     },
     {
