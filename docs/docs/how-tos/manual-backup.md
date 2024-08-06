@@ -165,7 +165,7 @@ The file permissions for the default tar is same as the original files.
 
 ### Google Cloud
 
-To use the Google Cloud provider, install the [gsutil](https://cloud.google.com/storage/docs/gsutil_install) CLI instead of the AWS CLI. Otherwise, the instructions are the same as
+To do a backup on Google Cloud provider, install the [gsutil](https://cloud.google.com/storage/docs/gsutil_install) CLI instead of the AWS CLI. Otherwise, the instructions are the same as
 for AWS above, other than when working with S3. Here are the commands to access Google Spaces instead of S3 for copy/download of the backup:
 
 ```shell
@@ -178,7 +178,7 @@ gsutil cp gs://<your_bucket_name>/backups/2021-04-23.tar .
 
 ### Azure
 
-To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli#install) and [azcopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=dnf#install-azcopy-on-linux-by-using-a-package-manager).
+To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=script#install-or-update-azure-cli) and [azcopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=dnf#obtain-a-static-download-link). Otherwise, the instructions are the same as for AWS above, other than when working with S3. Here are the commands to access Azure blob storage instead of S3 for copy/download of the backup:
 
 #### Do the backup
 
@@ -186,14 +186,22 @@ To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/e
 az login # --use-device-code if web browser not available
 
 cd /data
-
-tar -cvf 2024-06-27.tar .
-
 # Tell AZCOPY to use same auth as CLI
 export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
-
 # copy the tar backup file to blob storage
-azcopy copy 2024-06-27.tar 'https://<storage-account>.blob.core.windows.net/<blob-bucket>/backups/nebari-2024-06-27.tar'
+azcopy copy 2021-04-23.tazcopy cp "https://[account].blob.core.windows.net/[container]/2021-04-23.tar" "./2021-04-23.tar"ar 'https://<storage-account>.blob.core.windows.net/<blob-bucket>/backups/nebari-2021-04-23.tar'
+```
+
+#### Do the restore
+
+```bash
+az login # --use-device-code if web browser not available
+
+cd /data
+# Tell AZCOPY to use same auth as CLI
+export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
+# restore the backup file from blob storage
+azcopy cp "https://[account].blob.core.windows.net/[container]/2021-04-23.tar" "./2021-04-23.tar"
 ```
 
 ### Digital Ocean
