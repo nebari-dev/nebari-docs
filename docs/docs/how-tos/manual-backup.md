@@ -163,7 +163,7 @@ The file permissions for the default tar is same as the original files.
 >
 > From QHUb v0.4. all users will have the same `uid`.
 
-### Google cloud provider
+### Google Cloud
 
 To use the Google Cloud provider, install the [gsutil](https://cloud.google.com/storage/docs/gsutil_install) CLI instead of the AWS CLI. Otherwise, the instructions are the same as
 for AWS above, other than when working with S3. Here are the commands to access Google Spaces instead of S3 for copy/download of the backup:
@@ -175,18 +175,16 @@ gsutil cp 2021-04-23.tar gs://<your_bucket_name>/backups/2021-04-23.tar
 cd /data
 gsutil cp gs://<your_bucket_name>/backups/2021-04-23.tar .
 ```
+
 ### Azure
-# install Azure CLI
-curl -sL https://aka.ms/InstallAzureCLIDeb |  bash
-az login --use-device-code
 
-# Install azcopy
-wget https://aka.ms/downloadazcopy-v10-linux
-tar -xvf downloadazcopy-v10-linux
-cp ./azcopy_linux_amd64_*/azcopy /usr/bin/
-chmod 755 /usr/bin/azcopy
+To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli#install) and [azcopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=dnf#install-azcopy-on-linux-by-using-a-package-manager).
 
-# Do the backup
+#### Do the backup
+
+```bash
+az login # --use-device-code if web browser not available
+
 cd /data
 
 tar -cvf 2024-06-27.tar .
@@ -196,6 +194,7 @@ export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
 
 # copy the tar backup file to blob storage
 azcopy copy 2024-06-27.tar 'https://<storage-account>.blob.core.windows.net/<blob-bucket>/backups/nebari-2024-06-27.tar'
+```
 
 ### Digital Ocean
 
