@@ -120,6 +120,27 @@ monitoring:
           retention_enabled: false
 ```
 
+## Logging architecture
+
+The architecture diagram below shows a simplified, high level explanation of the logging components on Nebari.
+
+![Grafana](/img/how-tos/grafana-loki-promtail-architecture.png)
+
+`Grafana` is the dashboarding user interface which allows us to use `Loki` as the data source for our logs. `Loki` connects to [`promtail`](https://grafana.com/docs/loki/latest/send-data/promtail/) as it's source.
+
+The `promtail` component scrapes logs from various pods on the kubernetes nodes. The `kube api server` provides the API endpoints which `promtail` uses for for discovering and scraping its targeted resources
+
+End users viewing the logs will create queries in `Grafana` using `Loki` as the data source. Generally, users will query based on `label`, but its important to note that `labels` in `Grafana/Loki` are not the same as kubernetes labels. The `Grafana` labels are more accurately called _streams_ and are used to aggregate kubernetes logs from multiple services into a single "source". This allows us to configure the logging so that users can quickly access logs from multiple services with a single logical label.
+
+Loki's "labels" are an agregation of different [targets](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs) which are used to filter out logs from the [kubernets_sd](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#kubernetes_sd_config) API endpoint. The default options are also called [streams](https://grafana.com/docs/loki/latest/get-started/labels/#understand-labels) and include labels like `pod` for collecting logs from all pods for example.
+
+For details on how to view specific logs in Loki, check out the document ["How to access system logs via Grafana"](access-logs-loki)
+
+## References
+
+[More information on promtail configurations](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/)
+[Understanding labels in Loki](https://grafana.com/docs/loki/latest/get-started/labels/#understand-labels)
+
 <!-- Internal links -->
 
 [access-logs-loki]: /how-tos/access-logs-loki.md
