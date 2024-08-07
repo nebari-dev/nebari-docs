@@ -130,11 +130,13 @@ The architecture diagram below shows a simplified, high level explanation of the
 
 The `promtail` component scrapes logs from various pods on the kubernetes nodes. The `kube api server` provides the API endpoints which `promtail` uses for for discovering and scraping its targeted resources
 
-End users viewing the logs will create queries in `Grafana` using `Loki` as the data source. Generally, users will query based on `label`, but its important to note that `labels` in `Grafana/Loki` are not the same as kubernetes labels. The `Grafana` labels are more accurately called _streams_ and are used to aggregate kubernetes logs from multiple services into a single "source". This allows us to configure the logging so that users can quickly access logs from multiple services with a single logical label.
+End users viewing the logs in `Grafana` will create queries using `Loki` as the data source, typically querying based on `labels`. However, it's important to note that Grafana labels differ from Kubernetes labels, as their main goal is to act as an aggregation layer of logs from multiple matching resources into a single "stream," allowing users to easily access a collection of logs from various Kubernetes resources with just a single logical label.
 
-Loki's "labels" are an aggregation of different [targets](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs) which are used to filter out logs from the [kubernets_sd](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#kubernetes_sd_config) API endpoint. The default options are also called [streams](https://grafana.com/docs/loki/latest/get-started/labels/#understand-labels) and include labels like `pod` for collecting logs from all pods for example.
+:::note
+Loki's "labels" are used to filter collections of logs from the available [kubernetes_sd](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#kubernetes_sd_config) API endpoints, in a similar way as to how Prometheus handles metrics. These labels are configured through Promtail, which is the agent responsible for collecting and shipping logs to Loki, based on the defined [targets](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs) and scraping configurations.
+:::
 
-For details on how to view specific logs in Loki, check out the document ["How to access system logs via Grafana"](access-logs-loki)
+For details on how to view specific logs in Loki, check out the document ["How to access system logs (Loki) via Grafana"](access-logs-loki)
 
 ## References
 
