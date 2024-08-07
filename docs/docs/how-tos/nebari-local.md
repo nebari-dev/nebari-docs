@@ -159,6 +159,14 @@ security:
         tag: sha-b4a2d1e
 ```
 
+### Disable DNS for local deployment
+
+If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
+scheduler extension. Therefore it is recommended to simply delete the `domain` line from the
+`nebari-config.yaml`.
+
+If you prefer to setup DNS, see the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns).
+
 ## Deploying Nebari
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time with:
@@ -219,11 +227,20 @@ certificate:
 
 Note the above snippet can be automatically provisioned in your configuration if you provided the `--ssl-cert-email` flag when you ran `nebari init`.
 
-Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.  
+Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.
 
 :::note
 In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
 :::
+
+### Login and Try Nebari!
+
+To login to the dashboard, you will first need to [login with
+keycloak](https://www.nebari.dev/docs/how-tos/configuring-keycloak).
+
+Assuming you are not using a `domain`, visit https://172.18.1.100/auth/admin/ in your browser and
+login using the keycloak username `root` and the value for `initial_root_password` in the
+`nebari-config.yaml`
 
 
 ## Destroying Nebari
