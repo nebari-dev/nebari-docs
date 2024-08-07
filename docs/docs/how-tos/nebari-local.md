@@ -159,6 +159,14 @@ security:
         tag: sha-b4a2d1e
 ```
 
+### Disable DNS for local deployment
+
+If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
+scheduler extension. Therefore it is recommended to simply delete the `domain` line from the
+`nebari-config.yaml`.
+
+If you prefer to setup DNS, see the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns).
+
 ## Deploying Nebari
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time with:
