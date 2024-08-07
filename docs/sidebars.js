@@ -62,6 +62,7 @@ module.exports = {
         "how-tos/nebari-kubernetes",
         "how-tos/nebari-local",
         "how-tos/nebari-stages-directory",
+        "how-tos/nebari-environment-management",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
