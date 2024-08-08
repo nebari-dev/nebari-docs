@@ -13,6 +13,10 @@ To view the Loki logs via Grafana in Nebari, you'll need to have [set up monitor
 
 Access the Monitoring UI for your Nebari installation at https://{your-nebari-domain}/monitoring/.
 
+:::note
+The **Explore** functionality shown below is only available to users who have `grafana_admin` permissions.  In Nebari's default configuration, only the users in the `admin` Keycloak user group will have this role.  `grafana_admin` is a client role in Keycloak which can be assigned to other groups or users.  See [Configure Keycloak](/docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups) for more information.
+:::
+
 First, click "Explore".
 
 ![Grafana Explore Page](/img/how-tos/1_grafana-explore.png)
@@ -60,7 +64,7 @@ Conda-store runs multiple pods on the backend. The conda-store server runs conti
 
 ### Deployed app logs (via jhub-apps)
 
-If you have `jhub-apps` enabled on your deployment can you view the logs to debug deployed apps.
+If you have `jhub-apps` enabled on your deployment, you can view the logs to debug deployed apps.
 
 To see the logs from **all deployed apps**, use the label filter `container` = `notebook`. The main container in each deployed app pod is named `notebook`.
 
