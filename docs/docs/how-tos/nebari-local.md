@@ -73,6 +73,11 @@ The following steps assume you have:
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
+:::note
+If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
+scheduler extension. Therefore for test deployments it is recommended leave out the `--domain` option.
+:::
+
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
@@ -123,6 +128,8 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 ```bash
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
+
+See the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns) for details.
 
 :::
 
@@ -183,6 +190,9 @@ Kubecloak master realm username=root *****
 ...
 ```
 
+To login to the dashboard, you will first need to [login with keycloak](https://www.nebari.dev/docs/how-tos/configuring-keycloak), which is at https://projectname.domain/auth/ 
+(or ip if you are not using a `domain`.
+
 ### Verify the local deployment
 
 Finally, if everything is set properly you should be able to cURL the JupyterHub Server. Run
@@ -219,7 +229,7 @@ certificate:
 
 Note the above snippet can be automatically provisioned in your configuration if you provided the `--ssl-cert-email` flag when you ran `nebari init`.
 
-Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.  
+Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will [store certificates in an acme.json file](https://doc.traefik.io/traefik/https/acme/#storage) for the duration of their validity.  Nebari will mount a PVC and save the file on the container at the location `/mnt/acme-certificates/acme.json`.
 
 :::note
 In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
