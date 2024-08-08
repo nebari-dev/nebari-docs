@@ -73,6 +73,11 @@ The following steps assume you have:
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
+:::note
+If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
+scheduler extension. Therefore for test deployments it is recommended leave out the `--domain` option.
+:::
+
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
@@ -124,6 +129,8 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
 
+See the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns) for details.
+
 :::
 
 ### Exposing container network (for MacOS)
@@ -158,14 +165,6 @@ security:
         repository: quay.io/nebari/keycloak
         tag: sha-b4a2d1e
 ```
-
-### Disable DNS for local deployment
-
-If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
-scheduler extension. Therefore it is recommended to simply delete the `domain` line from the
-`nebari-config.yaml`.
-
-If you prefer to setup DNS, see the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns).
 
 ## Deploying Nebari
 
