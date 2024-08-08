@@ -190,6 +190,9 @@ Kubecloak master realm username=root *****
 ...
 ```
 
+To login to the dashboard, you will first need to [login with keycloak](https://www.nebari.dev/docs/how-tos/configuring-keycloak), which is at https://projectname.domain/auth/ 
+(or ip if you are not using a `domain`.
+
 ### Verify the local deployment
 
 Finally, if everything is set properly you should be able to cURL the JupyterHub Server. Run
@@ -231,15 +234,6 @@ Let's Encrypt heavily rate limits their production endpoint.  In order to avoid 
 :::note
 In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
 :::
-
-### Login and Try Nebari!
-
-To login to the dashboard, you will first need to [login with
-keycloak](https://www.nebari.dev/docs/how-tos/configuring-keycloak).
-
-Assuming you are not using a `domain`, visit https://172.18.1.100/auth/admin/ in your browser and
-login using the keycloak username `root` and the value for `initial_root_password` in the
-`nebari-config.yaml`
 
 
 ## Destroying Nebari
