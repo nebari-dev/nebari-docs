@@ -28,35 +28,27 @@ Despite the limitations on local installations, Nebari does provide a mechanism 
 
 For this example, we'll walk through creating an environment called `myenv` for a user named `myusername`.
 
-Step 1: Use conda-store to build a basic environment that only includes Python called `myenv` in the namespace `myusername` (i.e. your own namespace).
-
-Step 2: Open a terminal in JupyterLab or VS Code
-
-Step 3: list your envs to find the exact spelling: `conda env list`
-
-Step 4: Activate the environment: `conda activate myusername-myenv`
-
-Step 5: Create a virtual environment (venv) in a folder of your choice: `python -m venv .venv_myenv`
-
-Step 6: Activate the venv: `source .venv_myenv/bin/activate`
-
-Step 7: Install your package via pip: `pip install -e .` or `pip install -r requirements.txt` (as needed)
+1. Use conda-store to build a basic environment that only includes Python called `myenv` in the namespace `myusername` (i.e. your own namespace).
+2. Open a terminal in JupyterLab or VS Code
+3. list your envs to find the exact spelling: `conda env list`
+4. Activate the environment: `conda activate myusername-myenv`
+5. Create a virtual environment (venv) in a folder of your choice: `python -m venv .venv_myenv`
+6. Activate the venv: `source .venv_myenv/bin/activate`
+7. Install your package via pip: `pip install -e .` or `pip install -r requirements.txt` (as needed)
 
 ### Usage from terminal
 
 To use this environment from a terminal in JupyterLab or VS Code, you'll first activate the conda environment, then activate the virtual environment.
 
-Step 1: Activate the env: `conda activate myusername-myenv`
-
-Step 2: Activate the venv: `python -m venv .venv_myenv`
+1. Activate the env: `conda activate myusername-myenv`d
+2. Activate the venv: `python -m venv .venv_myenv`
 
 ### Usage from Jupyter:
 
 To use this environment in Juptyer, you'll need to add the path to the environment to the system path since its location isn't automatically added.
 
-Step 1: Open a notebook with the `myusername-myenv` kernel
-
-Step 2: In the first notebook cell run (note that the path and python version might be different in your usecase):
+1. Open a notebook with the `myusername-myenv` kernel
+2. In the first notebook cell run (note that the path and python version might be different in your usecase):
 
 ```python
 import sys
