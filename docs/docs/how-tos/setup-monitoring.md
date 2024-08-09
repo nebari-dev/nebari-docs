@@ -1,4 +1,4 @@
-# Monitoring
+# How to Set Up Monitoring on Nebari
 
 In Nebari, we've integrated Grafana, Prometheus, and Loki to provide robust monitoring capabilities for
 your data science platform. This integration allows you to visualize metrics, monitor system health, and
@@ -28,37 +28,9 @@ metrics from configured targets, stores them efficiently, and allows querying th
 
 [Loki](https://grafana.com/docs/loki/latest/) is a horizontally-scalable, highly available, multi-tenant log
 aggregation system inspired by Prometheus. It is designed to be very cost-effective and easy to operate, as it
-does not index the contents of the logs, but rather a set of labels for each log stream. Below is a step-by-step
-walkthrough of how to view JupyterHub pod logs in Grafana Loki:
+does not index the contents of the logs, but rather a set of labels for each log stream.
 
-Go to explore section of monitoring of your Nebari installation at:
-
-https://{your-nebari-domain}/monitoring/
-
-![Grafana Explore Page](/img/how-tos/1_grafana-explore.png)
-
-Select Loki Data source at the top:
-
-![Grafana Select Loki](/img/how-tos/2_grafana-select-loki.png)
-
-Click on the Log browser and select labels to search in, in this case we have selected pod:
-
-![Grafana Select Loki](/img/how-tos/3_grafana-log-browser-pod.png)
-
-Type the pod name initials for the pod you're looking to search logs for, in this case we are looking
-for hub pod:
-
-![Grafana Select Loki](/img/how-tos/4_grafana-log-search-pod.png)
-
-Select the pod from the list of pods and then click on "Show logs":
-
-![Grafana Select Loki](/img/how-tos/5_grafana-log-select-pod.png)
-
-After clicking on "Show logs", you should be able to see logs for JupyterHub pod as shown below:
-
-![Grafana Select Loki](/img/how-tos/6_grafana-view-pod-logs.png)
-
-You can also filter by time, by clicking on the time filter on top right, next to "Run query".
+See [How to access system logs (Loki) via Grafana][access-logs-loki] for more information on using Loki in Nebari.
 
 ## Terraform Overrides
 
@@ -147,3 +119,30 @@ monitoring:
         compactor:
           retention_enabled: false
 ```
+
+## Logging architecture
+
+The architecture diagram below shows a simplified, high level explanation of the logging components on Nebari.
+
+![Grafana](/img/how-tos/grafana-loki-promtail-architecture.png)
+
+`Grafana` is the dashboarding user interface which allows us to use `Loki` as the data source for our logs. `Loki` connects to [`promtail`](https://grafana.com/docs/loki/latest/send-data/promtail/) as it's source.
+
+The `promtail` component scrapes logs from various pods on the kubernetes nodes. The `kube api server` provides the API endpoints which `promtail` uses for for discovering and scraping its targeted resources
+
+End users viewing the logs in `Grafana` will create queries using `Loki` as the data source, typically querying based on `labels`. However, it's important to note that Grafana labels differ from Kubernetes labels, as their main goal is to act as an aggregation layer of logs from multiple matching resources into a single "stream," allowing users to easily access a collection of logs from various Kubernetes resources with just a single logical label.
+
+:::note
+Loki's "labels" are used to filter collections of logs from the available [kubernetes_sd](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#kubernetes_sd_config) API endpoints, in a similar way as to how Prometheus handles metrics. These labels are configured through Promtail, which is the agent responsible for collecting and shipping logs to Loki, based on the defined [targets](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs) and scraping configurations.
+:::
+
+For details on how to view specific logs in Loki, check out the document ["How to access system logs (Loki) via Grafana"](access-logs-loki)
+
+## References
+
+[More information on promtail configurations](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/)
+[Understanding labels in Loki](https://grafana.com/docs/loki/latest/get-started/labels/#understand-labels)
+
+<!-- Internal links -->
+
+[access-logs-loki]: /how-tos/access-logs-loki.md
