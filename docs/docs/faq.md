@@ -7,9 +7,9 @@ but running the `nebari deploy` command again as a Nebari administrator will upd
 
 ## How are conda user environments created? Who creates them?
 
-`Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace.
+`Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace. For more details check out the doc on [creating environments in Nebari via conda-store](/docs/tutorials/creating-new-environments).
 
-Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`. We do not recommend this approach as it requires a redeploy in order to update the environment, though it may be useful in some circumstances.
+Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`. 
 
 ## What should be included in the environment if I want to use Dask?
 
@@ -23,15 +23,11 @@ It's important to note that packages installed this way aren't available to the 
 
 ## Can I modify the `.bashrc` file on Nebari?
 
-Regular Nebari users do not have write permissions to modify the `.bashrc` file.
+Nebari automatically creates and manages `.bashrc` and `.profile`. Therefore, end users do not have write permissions to modify this file. However, by default Nebari _will_ source `.bash_profile`. Users may use this file to populate environment variables or set up alias, etc. However, there are some important things to note:
 
-Nebari automatically creates and manages `.bashrc` and `.profile`, so if the intent of using the `.bashrc` file is to populate environment variables in bash scripts or similar, you can source the file in any scripts you create by including the following line in your scripts:
-
-```bash
-source ~/.bashrc
-```
-
-You can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. You should double-check to source the `.bashrc` inside the `.bash_profile`. Also, note that if you set environment variables in this way, these variables aren't available inside the notebooks. Additionally, the VS Code terminal does _not_ source `.bash_profile` by default.
+* The `.bash_profile` is sourced _after_ the `.bashrc` - be aware of the implications, one of which is that you will lose changes to the prompt syntax. To avoid this, you can always source the `.bashrc` inside the .`bash_profile`. 
+* JupyterLab does _not_ source `.bash_profile`.
+* The VS Code terminal does _not_ source `.bash_profile` by default. 
 
 ## What if I can't see the active conda environment in the terminal?
 
