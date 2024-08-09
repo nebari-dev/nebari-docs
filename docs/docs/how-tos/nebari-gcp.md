@@ -4,20 +4,20 @@ title: Deploy Nebari on GCP
 description: A basic overview of how to deploy Nebari on GCP.
 ---
 
+- [Introduction](#introduction)
+- [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform)
+- [Authentication](#authentication)
+- [Required GCP APIs](#required-gcp-apis)
+- [Initializing Nebari](#initializing-nebari)
+- [Deploying Nebari](#deploying-nebari)
+- [Destroying Nebari](#destroying-nebari)
+
 ## Introduction
 
 This guide is to help first-time users set up a Google Cloud Platform account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we
 will walk you through the following steps:
 
-- [Introduction](#introduction)
-- [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform)
-- [Set up the `gcloud` CLI](#set-up-the-gcloud-cli)
-- [Authentication](#authentication)
-- [Initializing Nebari](#initializing-nebari)
-- [Deploying Nebari](#deploying-nebari)
-- [Destroying Nebari](#destroying-nebari)
-
-For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
+For those already familiar with Google Cloud Platform, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
 
 ## Sign up for Google Cloud Platform
@@ -45,12 +45,6 @@ documentation for more information.
 A Nebari deployment on GCP will **NOT** fall into `free tier` usage. Therefore, we recommend that you sign up for a paid account or contact your cloud
 administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
 :::
-
-## Set up the `gcloud` CLI
-
-As Nebari executes some preliminary steps to check Kubernetes compatibility within the GCP infrastructure, it needs to use the
-[`gcloud` command line interface (CLI)](https://cloud.google.com/sdk/gcloud) to interact with the Google Cloud Platform. You will have to
-[install the `gcloud` CLI on your system](https://cloud.google.com/sdk/docs/install) before you can use Nebari.
 
 The remaining steps will assume that you are logged in to a GCP account that has admin privileges for the newly created project.
 
@@ -114,7 +108,7 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 
 :::note
 The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
-installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the Nebari
+installed in your environment, (iii) opted for **GCP** as your cloud provider, and (iv) already configured the Nebari
 environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further
 guidance.
 :::
