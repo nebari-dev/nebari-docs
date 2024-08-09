@@ -1,10 +1,12 @@
 ---
 id: nebari-environment-management
-title: Nebari Environment Management
+title: Setup Deployment Environment 
 description: Best Practices for Managing Your Python Environment
 ---
 
-# Nebari Python Environment Management
+# Nebari Deployment Python Environment Setup
+
+To configure and deploy the Nebari platform, you'll first need to set up your python environment. 
 
 Nebari configuration and deployment is highly dependent on the version of the Nebari CLI that you have active when you run `nebari` commands.  A such, we highly recommend [installing Conda](https://docs.anaconda.com/free/anaconda/install/) for managing isolated Python environments, especially when working on more than one Nebari deployment from the same machine or using [Nebari extensions][nebari-extension-system].
 
@@ -20,8 +22,6 @@ pip install nebari==2024.1.1
 # Example plugin that can also be installed
 pip install nebari-plugin-self-registration==0.0.9
 ```
-
-
 
 <!-- internal links -->
 
