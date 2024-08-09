@@ -81,6 +81,7 @@ module.exports = {
         "how-tos/monitoring",
         "how-tos/use-gpus",
         "how-tos/fine-grained-permissions",
+        "how-tos/connect-via-ssh",
       ],
     },
     {
