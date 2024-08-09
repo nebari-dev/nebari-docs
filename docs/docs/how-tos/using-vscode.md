@@ -11,7 +11,6 @@ useful such a text editing and markdown rendering.
 Your VS Code server does not automatically shut down when idle. To prevent excess resource usage, be sure to manually shut down your server. More details are available in this [FAQ for VS Code][faq-vscode].
 :::
 
-
 ## Getting started
 
 VS Code comes built-in with every installation of Nebari. To start, log in

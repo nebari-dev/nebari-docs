@@ -22,7 +22,8 @@ Nebari heavily depends on [Terraform](https://www.terraform.io/) and Python. The
 - To install conda, visit the [official conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), or if you prefer, visit the [mamba installation documentation](https://github.com/mamba-org/mamba#installation)
 
 ## How to install the Nebari Package
-*See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment.*
+
+_See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment._
 
 There are currently two ways to install the Nebari CLI:
 
@@ -45,12 +46,13 @@ There are currently two ways to install the Nebari CLI:
    ```
 
 :::note
-The version of Nebari in your `nebari-config.yaml` must match your currently installed Nebari package version; otherwise, a warning will be raised when attempting to deploy.  See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
+The version of Nebari in your `nebari-config.yaml` must match your currently installed Nebari package version; otherwise, a warning will be raised when attempting to deploy. See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
 :::
 
 :::note
-The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled.  For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
+The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled. For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
 :::
+
 ## Verify installation
 
 You can verify that the Nebari package is properly installed and you can execute the client commands by running:

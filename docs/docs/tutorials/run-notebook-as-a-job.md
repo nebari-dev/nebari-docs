@@ -33,7 +33,7 @@ To submit your job, simply click the `Jupyter-Scheduler` icon on the top of your
 
 ![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/tutorials/jupyter-scheduler-icon.png)
 
-This will open a new **Create Job** tab. Fill out the form and click "Create" to create a schedule. 
+This will open a new **Create Job** tab. Fill out the form and click "Create" to create a schedule.
 
 <div align="center">
   <img src="/img/tutorials/jupyter-scheduler-run-now.png" alt="Jupyter-Scheduler UI - layout of Jupyter-Scheduler UI." width="60%"/>
@@ -49,7 +49,7 @@ Once created, the status of the job and the notebook output can be viewed from t
 
 The output of your job will be accessible via the download icon in the "Output files" column. After you download the output, new links will replace the icon and point to the location of the downloaded output.
 
-Click on the notebook job name to view more information about the job. 
+Click on the notebook job name to view more information about the job.
 
 ![Jupyter-Scheduler UI - view the notebook job details](/img/tutorials/jupyter-scheduler-job-details.png)
 

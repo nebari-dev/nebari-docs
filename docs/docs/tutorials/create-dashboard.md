@@ -78,6 +78,7 @@ For this tutorial:
 - jupyter_bokeh
 - cdsdashboards-singleuser>=0.6.2
 ```
+
 </TabItem>
 </Tabs>
 
@@ -132,14 +133,14 @@ Feel free to add more plots or different styles to your plots!
 
 1. In the Nebari Home Page (in the top navigation, `Nebari` -> `Hub Control Panel`) click on **"Create App"** to create a new web application for your dashboard.
 2. In the app creation interface, enter or select the following:
-   * **Display Name** - Provide meaningful name for your application
-   * **Description (optional)** - Add addition information about the application
-   * **Thumbnail (optional)** - Choose a meaningful thumbnail for your application. The default thumbnail is the application framework's logo.
-   * **Framework** - Select the framework used by your application. For this tutorial, select Panel.
-   * **Filepath** - Path (from root in JupyterLab) to your application code file. For this tutorial, path to the Jupyter Notebook.
-   * **Conda Environment** - Same [environment](#1-create-environment-and-notebook) used while developing your notebook/script which has `jhub-apps` and the corresponding framework.
-   * **Spawner profile** - Instance type (i.e. machines with CPU/RAM/GPU resources) required for running your application.
-   * **Allow Public Access** - Toggle to share the application with your team.
+   - **Display Name** - Provide meaningful name for your application
+   - **Description (optional)** - Add addition information about the application
+   - **Thumbnail (optional)** - Choose a meaningful thumbnail for your application. The default thumbnail is the application framework's logo.
+   - **Framework** - Select the framework used by your application. For this tutorial, select Panel.
+   - **Filepath** - Path (from root in JupyterLab) to your application code file. For this tutorial, path to the Jupyter Notebook.
+   - **Conda Environment** - Same [environment](#1-create-environment-and-notebook) used while developing your notebook/script which has `jhub-apps` and the corresponding framework.
+   - **Spawner profile** - Instance type (i.e. machines with CPU/RAM/GPU resources) required for running your application.
+   - **Allow Public Access** - Toggle to share the application with your team.
 
   <p align="center">
     <img src="/img/tutorials/jhub-apps-create-new-app.png" width="50%"/>
@@ -201,10 +202,10 @@ All applications are available on the Nebari home page. From JupyterLAb, you can
 
 To manage an application, click on the three dots in the top right of the corresponding application card where you can:
 
-* **Start** the app is it's not running
-* **Stop**  a running app
-* **Edit** the application details
-* **Delete** the app
+- **Start** the app is it's not running
+- **Stop** a running app
+- **Edit** the application details
+- **Delete** the app
 
 ![](/img/tutorials/jhub-apps-manage-app.png)
 

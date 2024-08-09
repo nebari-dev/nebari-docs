@@ -40,7 +40,6 @@ Learn more in [Gitpod's documentation on decision making][gitpod-rfd].
 
 Minor updates to the codebase and documentation can be discussed in GitHub issues or in pull requests during code review. Contributors are expected to (informally) follow the consent-based decision making philosophy in these discussions.
 
-
 <!-- Reusable links -->
 
 [nebari-team]: /docs/community/team-structure

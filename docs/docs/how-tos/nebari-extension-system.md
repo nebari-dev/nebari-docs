@@ -17,9 +17,9 @@ Nebari. We leverage the plugin system
 [pluggy](https://pluggy.readthedocs.io/en/stable/) to enable easy
 extensibility. Currently, Nebari supports:
 
- - overriding a given stages in a deployment
- - adding additional stages before, after and between existing stages
- - arbitrary subcommands
+- overriding a given stages in a deployment
+- adding additional stages before, after and between existing stages
+- arbitrary subcommands
 
 We maintain an [examples
 repository](https://github.com/nebari-dev/nebari-plugin-examples)
@@ -103,9 +103,10 @@ arbitrary functions calls. See below for a complete example.
 
 Nebari decides the order of stages based on two things the `name: str`
 attribute and `priority: int` attribute. The rules are as follows:
- - stages are ordered by `priority`
- - stages which have the same `name` the one with highest priority
-   number is chosen
+
+- stages are ordered by `priority`
+- stages which have the same `name` the one with highest priority
+  number is chosen
 
 ```python
 import contextlib
