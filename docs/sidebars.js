@@ -78,7 +78,8 @@ module.exports = {
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
-        "how-tos/monitoring",
+        "how-tos/setup-monitoring",
+        "how-tos/access-logs-loki",
         "how-tos/use-gpus",
         "how-tos/develop-local-packages",
         "how-tos/install-pip-packages",
@@ -105,7 +106,10 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: ["references/RELEASE"],
+      items: [
+        "references/RELEASE",
+        "references/personas"
+      ],
     },
     {
       type: "category",
@@ -120,7 +124,6 @@ module.exports = {
         "community/nebari-tests",
         "community/doc-contributions",
         "community/style-guide",
-        "community/team-structure",
         "community/plugins",
         {
           type: "category",
@@ -133,6 +136,8 @@ module.exports = {
             "community/maintainers/release-process-branching-strategy",
           ],
         },
+        "community/team-structure",
+        "community/decision-making",
       ],
     },
     {
