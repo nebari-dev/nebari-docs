@@ -189,7 +189,8 @@ For upgrades from older versions to v0.4, you will need to do the following step
 
 If your QHub deployment relies on Auth0 or GitHub for authentication, please update the OAuth callback URL.
 
-<details><summary>Expand this section for Auth0 instructions </summary>
+<details>
+<summary>Expand this section for Auth0 instructions </summary>
 
 1. Navigate to the your Auth0 tenancy homepage and from there select "Applications".
 
@@ -199,9 +200,10 @@ If your QHub deployment relies on Auth0 or GitHub for authentication, please upd
 
 </details>
 
-<details><summary>Expand this section for GitHub auth instructions </summary>
+<details>
+<summary>Expand this section for GitHub auth instructions </summary>
 
-1. Go to <https://github.com/settings/developers>.
+1. Go to the [GitHub Developer Settings](https://github.com/settings/developers).
 
 2. Click "OAuth Apps" and then click the app representing your Nebari instance.
 
@@ -371,7 +373,8 @@ For upgrades from older versions to v0.4, you will need to do the following step
 
 If your QHub deployment relies on Auth0 or GitHub for authentication, please update the OAuth callback URL.
 
-<details><summary>Expand this section for Auth0 instructions </summary>
+<details>
+<summary>Expand this section for Auth0 instructions </summary>
 
 1. Navigate to the your Auth0 tenancy homepage and from there select "Applications".
 
@@ -381,9 +384,10 @@ If your QHub deployment relies on Auth0 or GitHub for authentication, please upd
 
 </details>
 
-<details><summary>Expand this section for GitHub auth instructions </summary>
+<details>
+<summary>Expand this section for GitHub auth instructions </summary>
 
-1. Go to <https://github.com/settings/developers>.
+1. Go to the [GitHub Developer Settings](https://github.com/settings/developers).
 
 2. Click "OAuth Apps" and then click the app representing your Nebari instance.
 
