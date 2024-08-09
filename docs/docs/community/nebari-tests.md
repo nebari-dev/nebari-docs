@@ -45,7 +45,7 @@ After you make changes, you can re-deploy your Nebari instance to test it manual
 
 ### Testing the deployment with `pytest`
 
-The deployment and integration tests help us test various features of a [local Nebari deployment on Kind](#testing-the-nebari-deployment-terraform),
+The deployment and integration tests help us test various features of a [local Nebari deployment on Kind](/docs/how-tos/nebari-local),
 such as Dask Gateway, external integrations, state of the Kubernetes cluster, and more.
 Before you can run these tests, you need to create a test user on your deployment, for example with:
 

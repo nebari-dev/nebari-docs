@@ -7,7 +7,7 @@ description: An overview of how to upgrade Nebari. Includes instructions on upda
 # Upgrading Nebari
 
 :::note
-This is a guide to upgrade Nebari to a newer version. If you are migrating from QHub (deprecated) to Nebari, you can find instructions [here](#migrating-from-qhub-to-nebari). If you are updating from an older version of QHub to another version of QHub, those instructions are [here](#upgrade-qhub-from-pre-040-to-another-qhub-version).
+This is a guide to upgrade Nebari to a newer version. If you are migrating from QHub (deprecated) to Nebari, you can find instructions [here](#migrating-from-qhub-deprecated-to-nebari). If you are updating from an older version of QHub to another version of QHub, those instructions are [here](#upgrade-qhub-from-pre-040-to-another-qhub-version).
 :::
 
 ## Upgrade Nebari
