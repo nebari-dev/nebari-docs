@@ -5,57 +5,19 @@
 Nebari regenerates this file on every run. This means it will be removed by the operating system during its cleanup process,
 but running the `nebari deploy` command again as a Nebari administrator will update/create a `NEBARI_KUBECONFIG` file for you.
 
-## How are Nebari conda user environments created? Who creates them?
+## How are conda user environments created? Who creates them?
 
-The short answer: there are currently _two_ ways of creating environments, as we are in the process of migrating Nebari to conda-store,
-and so which way depends on your use-case.
+`Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace.
 
-The longer answer:
+Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`. We do not recommend this approach as it requires a redeploy in order to update the environment, though it may be useful in some circumstances.
 
-- For global environments, you can specify the environment in `nebari-config.yml`, and it will be made available for all users and services.
-- By comparison, creating the environments through conda-store will provide more granular control over certain settings and permissions.
-
-As Nebari and conda-store mature, the intent is to migrate exclusively to conda-store for environment creation and management.
-
-## What if I need to install package `X`, and it's not available in the environment?
-
-You can add the package to the `nebari_config.yml`. If you don't have access to the deployment repo,
-you'll need to contact your Nebari administrator to include the required package.
-
-## What's included in the conda environment if I want to use Dask?
-
-<!-- TODO: will need to update the conda-feedstock -->
+## What should be included in the environment if I want to use Dask?
 
 There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` with the correct pinned versions available via the [Nebari Dask metapackage](https://github.com/conda-forge/nebari-dask-feedstock). Example: `nebari-dask==||nebari_VERSION||`.
 
-## What packages are needed in your environment to create a dashboard?
-
-When deploying an app with JHub App Launcher, you need to have the following in your environment:
-- `jhub-apps` package
-- packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
-- any other libraries required for the analysis in the dashboard creation script/notebook
-
 ## How can I install a package locally? Will this package be available to Dask workers?
 
-:::caution
-
-We _strongly recommend_ installing packages by adding them through the conda-store UI. If you're developing a package and need to install the package through `pip`, `conda`, or similar, the following approach may be used.
-
-:::
-
-If you are using a `setuptools` package, you can install it into your local user environment by:
-
-```shell
-pip install --no-build-isolation --user -e .
-```
-
-If you're using a `flit` package, you can install it through the following command:
-
-```shell
-flit install -s
-```
-
-If the package requires build tools like `gcc` and `cmake`, remember that you can create a conda environment through the conda-store UI that includes the build tools, then just activate the environment and install the package locally.
+If you want to install a package locally, we suggest following the guide for [developing local packages][developing-packages].
 
 It's important to note that packages installed this way aren't available to the Dask workers. See our [Dask tutorial][dask-tutorial] for more information.
 
@@ -69,7 +31,7 @@ Nebari automatically creates and manages `.bashrc` and `.profile`, so if the int
 source ~/.bashrc
 ```
 
-You can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. You should double-check to source the `.bashrc` inside the `.bash_profile`. Also, note that if you set environment variables in this way, these variables aren't available inside the notebooks.
+You can use `.bashrc` on Nebari, but it's important to note that by default Nebari sources `.bash_profile`. You should double-check to source the `.bashrc` inside the `.bash_profile`. Also, note that if you set environment variables in this way, these variables aren't available inside the notebooks. Additionally, the VS Code terminal does _not_ source `.bash_profile` by default.
 
 ## What if I can't see the active conda environment in the terminal?
 
@@ -81,9 +43,11 @@ conda config --set changeps1 true
 
 The `conda` config is located in the `/home/{user}/.condarc` file. You can change the conda config with a text editor (for example: `nano`, which is included in Nebari by default), and the changes will be applied on saving the file.
 
-## How do I clean up or delete the conda-store pod, if I need to?
+## How do I clean up old environment builds in conda-store?
 
-You may find that the pods hosting your environment get full over time, prompting you to clear them out. To delete old builds of your environment on conda-store, click the "delete" button in the conda-store UI.
+You may find that the pods hosting your environment get full over time, prompting you to clear them out. You can delete environments completely (including all builds of the environment) in the conda-store UI. Go to the environment, click `Edit` and then click `Delete`.
+
+If you'd like to retain the latest version of an environment and only remove specific builds, you'll need to navigate to the conda-store admin page located at `<nebari-domain/conda-store/admin>`. Click on the environment you'd like to clean up. At the bottom of the page, there is a list of each environment build, each with it's own "delete" button.
 
 ## How do I use preemptible and spot instances on Nebari?
 
@@ -163,9 +127,11 @@ Nebari automatically shuts down servers when users are idle, as described in Neb
 :::note
 Until this issue is addressed, we recommend manually shutting down your VS Code server when it is not in use.
 :::
+
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
 [idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [using gpus]: how-tos/use-gpus
+[developing-packages]: how-tos/develop-local-packages
