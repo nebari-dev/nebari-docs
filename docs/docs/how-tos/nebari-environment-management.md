@@ -1,6 +1,6 @@
 ---
 id: nebari-environment-management
-title: Setup Environment for Deployment
+title: Setup Deployment Environment 
 description: Best Practices for Managing Your Python Environment
 ---
 
