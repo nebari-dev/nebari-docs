@@ -19,7 +19,6 @@ users in the `admin` or `developer` groups have access to Argo.
 Also see the [Set up Argo Workflows documentation](/docs/how-tos/setup-argo).
 :::
 
-
 ## Access the Argo Server
 
 If Argo Workflows is enabled, users can access Argo Workflows UI at:

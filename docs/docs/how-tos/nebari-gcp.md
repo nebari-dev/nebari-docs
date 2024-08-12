@@ -131,7 +131,6 @@ tab and enable the following APIs.
 - Identity and Access Management (IAM) API
 - Cloud Resource Manager API
 
-
 ## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
