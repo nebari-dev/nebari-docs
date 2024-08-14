@@ -78,7 +78,8 @@ module.exports = {
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
-        "how-tos/monitoring",
+        "how-tos/setup-monitoring",
+        "how-tos/access-logs-loki",
         "how-tos/use-gpus",
         "how-tos/fine-grained-permissions",
       ],
@@ -103,7 +104,10 @@ module.exports = {
       type: "category",
       label: "Reference",
       link: { type: "doc", id: "references/index" },
-      items: ["references/RELEASE"],
+      items: [
+        "references/RELEASE",
+        "references/personas"
+      ],
     },
     {
       type: "category",

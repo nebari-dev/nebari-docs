@@ -12,5 +12,5 @@ You can learn to use and create Nebari extensions in the [extension mechanism do
 
 The following community-developed extensions are recognized and verified by the Nebari development team.
 
-* [nebari-mlflow-aws](https://github.com/MetroStar/nebari-mlflow-aws)
-* [nebari-label-studio](https://github.com/MetroStar/nebari-label-studio)
+- [nebari-mlflow-aws](https://github.com/MetroStar/nebari-mlflow-aws)
+- [nebari-label-studio](https://github.com/MetroStar/nebari-label-studio)

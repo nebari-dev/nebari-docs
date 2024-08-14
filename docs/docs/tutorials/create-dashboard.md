@@ -78,6 +78,7 @@ For this tutorial:
 - jupyter_bokeh
 - cdsdashboards-singleuser>=0.6.2
 ```
+
 </TabItem>
 </Tabs>
 
@@ -131,9 +132,7 @@ Feel free to add more plots or different styles to your plots!
 
 1. On the Nebari Home Page (from JupyterLab, click on the Nebari logo in the top right corner or go to `File` -> `Home`) click on **"Create App"** to create a new web application for your dashboard.
 2. Follow the [general instructions](https://jhub-apps.nebari.dev/docs/create-apps/general-app) from the JHub Apps documentation to fill out the `Create app` form.
-
 3. Click **Next**. You'll be redirected to the Spawner profile page. This page will allow you to select the server in which you want your app to run. These options will vary based on the setup of your Nebari deployment (which server types are available overall) and the permissions of your user (which server types you personally have access to). 
-
 4. JHub App Launcher will deploy your app (which can take several minutes to complete) and automatically redirect you to it.
 
 Your dashboard app will be available in the Nebari Home page, under "My Apps". If you allowed shared access, it will be available under "Shared Apps" for those with whom you have shared the app.
@@ -196,10 +195,10 @@ All applications are available on the Nebari home page (from JupyterLab, click o
 
 To manage an application, click on the three dots in the top right of the corresponding application card where you can:
 
-* **Start** the app is it's not running
-* **Stop**  a running app
-* **Edit** the application details
-* **Delete** the app
+- **Start** the app is it's not running
+- **Stop** a running app
+- **Edit** the application details
+- **Delete** the app
 
 ![](/img/tutorials/jhub-apps-manage-app.png)
 
