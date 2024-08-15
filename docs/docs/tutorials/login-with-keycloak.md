@@ -13,8 +13,7 @@ This guide provides a basic overview of how to log in to your Nebari instance (t
 
 Navigate to the instance homepage.
 
-Once on the site, you will be prompted to log in, similar to
-the login page shown in the image below.
+Once on the site, you will be prompted to log in, similar to the login page shown in the image below. The text on this screen is configurable so your deployment may look slightly different.
 
 ![Nebari login screen](/img/how-tos/nebari_login_screen.png)
 
@@ -53,7 +52,7 @@ The home page, also referred to as
 "Landing page", "JupyterHub launcher", or "App Launcher",
 lists Nebari's core **services** and allows you to [create and share web apps][create-dashboard].
 
-Click on the **"JupyterLab"** button under **"Services"** to start a server and launch JupyterLab:
+Click on the **"JupyterLab"** button under **"Quick Access"** to start a server and launch JupyterLab:
 
 ![Nebari home page with Services: JupyterLab, Argo, Users, Environments, Monitoring, VSCode; My Apps: JupyterLab (default JupyterLab instance); and Shared Apps.](/img/tutorials/nebari-home.png)
 
@@ -89,11 +88,11 @@ Select an appropriate profile and click **"Start"**.
 
 ## 5. Start your server
 
-JupyterLab starts to launch.
+After clicking "Start", your JupyterLab instance starts to launch.
 
-This step may take up to several minutes due to Nebari use of autoscaling under the hood. Ultimately this autoscaling feature helps reduce costs when the cluster is idle.
+This step may take up to several minutes due to Nebari's use of autoscaling under the hood. Ultimately this autoscaling feature helps reduce costs when the cluster is idle.
 
-A successful launch process shows a purple progress bar:
+A progress bar is shown while the server is being set up:
 
 ![Nebari start server](/img/how-tos/nebari_server_start.png)
 
@@ -109,7 +108,7 @@ During this time you might see some log messages that detail the autoscaling pro
 :::warning
 
 - The starting up sequence can take up to several minutes, depending on the size of the cluster. If the server is not accessible **after 10 minutes**, an error will be shown, and you will be redirected to the Home page. Please check the [troubleshooting docs][troubleshooting] for more information.
-- The Event logs may include warnings about `"[Warning] 0/2 nodes are available: 2 node(s) didn't match Pod's node affinity/selector ..." `. This is normal behaviour as cluster sometimes need to expand in order to start the server.
+- The Event logs may include warnings about `"[Warning] 0/2 nodes are available: 2 node(s) didn't match Pod's node affinity/selector ..." `. This is **normal behaviour** as the cluster sometimes need to expand in order to start the server.
 - Warning such as `"[Warning]" Unable to retrieve some image pull secrets ..."` can also be safely ignored.
   :::
 
