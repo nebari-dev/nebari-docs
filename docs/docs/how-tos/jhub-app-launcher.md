@@ -35,8 +35,9 @@ jhub_apps:
 ```
 
 :::note
-JHub App Launcher is enabled by default in the Nebari after version
-[2023.12.1](https://github.com/nebari-dev/nebari/releases/tag/2023.12.1).
+JHub App Launcher is was integrated into Nebari in version
+[2023.12.1](https://github.com/nebari-dev/nebari/releases/tag/2023.12.1)
+and is not enabled by default.
 :::
 
 ## Usage
