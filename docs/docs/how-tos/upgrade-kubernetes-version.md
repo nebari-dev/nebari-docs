@@ -13,19 +13,20 @@ Nebari runs on Kubernetes under the hood, and as administrators of this Kubernet
 
 The Nebari development team tries to stay ahead of this by supporting the latest version when possible. However, given that many Kubernetes releases come with a set of deprecations that potentially affect Nebari and downstream plugins, there is an enforced [`HIGHEST_SUPPORTED_K8S_VERSION`](https://github.com/nebari-dev/nebari/blob/main/src/_nebari/constants.py#L11) allowed.
 
-
 :::note
 This `HIGHEST_SUPPORTED_K8S_VERSION` is, at times, a minor version or two behind the officially released Kubernetes version.
 :::
 
-Many cloud providers enable users to automatically upgrade their Kubernetes cluster (control plane), however given the potential for deprecations and other changes, Nebari deployed to these clouds has this feature automatically disabled. 
+Many cloud providers enable users to automatically upgrade their Kubernetes cluster (control plane), however given the potential for deprecations and other changes, Nebari deployed to these clouds has this feature automatically disabled.
 
-This upgrade process bumps the version of the control plane along with all node groups. 
+This upgrade process bumps the version of the control plane along with all node groups.
 
 :::warning
+
 1. Upgrading the kubernetes version of the node groups will cause downtime so please plan accordingly. We also recommend [backing up your data](./manual-backup.md) before starting this upgrade process.
 2. Kubernetes versions can only be upgraded one minor version at a time. If you're running on 1.24, and need to upgrade to 1.26, you will first need to upgrade to 1.25.
 3. Downgrading to a lower version of Kubernetes is dangerous and we strongly advise against it!
+
 :::
 
 <Tabs>
@@ -66,7 +67,6 @@ channels:
   - 1.24.14-gke.2700
 ```
 
-
 To upgrade your GKE cluster, update the `google_cloud_platform.kubernetes_version` field in your `nebari-config.yaml` to match one of these GKE Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
 
 :::info
@@ -83,7 +83,6 @@ For more information about GKE upgrades, please refer to the [GKE documentation]
 
 </TabItem>
 
-
 <TabItem label="AWS" value="aws">
 
 The AWS Elastic Kubernetes Service (EKS) only requires that you supply the major and minor version of Kubernetes that you want. To specify Kubernetes version `1.26.7`, update the `amazon_web_services.kubernetes_version` to `1.26`. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
@@ -95,13 +94,12 @@ You will get a validation error if you try to select a Kubernetes version that i
 In AWS, upgrading EKS will upgrade the control plane components but the **node groups will need to be upgraded manually**.
 
 In the AWS console, navigate to EKS and click on the name of your Kubernetes cluster (format will be `{project-name}-{namespace}`). In the 'Compute' tab, scroll down to "Node Groups". Any node groups which are behind will have an "Update Now" button by the "AMI release version" column values. Click "Update Now" for each. Each update may take 15 or more minutes depending on how many workloads need to be migrated, but they can be run simultaneously.
-    
+
 Then repeat the above process one minor version at a time.
 
 For more information about EKS upgrades, please refer to the [EKS documentation](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html).
 
 </TabItem>
-
 
 <TabItem label="Azure" value="azure">
 
@@ -145,13 +143,10 @@ Then repeat the above process one minor version at a time.
 
 For more information about DOKS upgrade, please refer to the [DOKS documentation](https://docs.digitalocean.com/products/kubernetes/how-to/upgrade-cluster/).
 
-
 </TabItem>
-
 
 </Tabs>
 
 <!-- Reusable links -->
 
 [highest-supported-k8s]: https://github.com/nebari-dev/nebari/blob/91792952b67074b5c15c3b4009bde5926ca4ec6b/src/_nebari/constants.py#L11
-

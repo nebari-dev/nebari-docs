@@ -6,7 +6,7 @@ description: Quickly build and deploy a panel dashboard in Nebari
 
 # Create, deploy, and share dashboards and apps
 
-Analyzing data with visualizations provides insights, and a dashboard stitches these insights into a meaningful story. There are many great open source dashboards tools out there that you can use to organize and display your data in an engaging and digestible way.
+Analyzing data with visualizations provides insights, and a dashboard stitches these insights into a meaningful story. There are many great open source dashboarding tools out there that you can use to organize and display your data in an engaging and digestible way.
 
 In this tutorial, you'll learn how to create a new dashboard with [Panel](https://panel.holoviz.org/) within Nebari. You'll also learn how to share your newly created dashboard with other users using JHub App Launcher.
 
@@ -19,7 +19,7 @@ Since, CDS Dashboards is deprecated, the documentation will be removed soon.
 
 ## Supported frameworks
 
-This tutorials demonstrates a Panel dashboard built with HoloViews and Bokeh as the backend, but Nebari supports several other frameworks:
+This tutorial demonstrates a Panel dashboard built with HoloViews and Bokeh as the backend, but Nebari supports several other frameworks:
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -27,7 +27,7 @@ import TabItem from '@theme/TabItem';
 <Tabs>
 <TabItem value="jhub-apps" label="JHub App Launcher" default>
 
-JHub App launcher supports `Panel`, `Bokeh`, `Streamlit`, `Plotly Dash`, `Voila`, `Gradio`, `JupyterLab`, `Generic Python Command`.
+JHub App launcher supports `Panel`, `Bokeh`, `Streamlit`, `Plotly Dash`, `Voila`, `Gradio`, `JupyterLab`, and `Any generic Python command`.
 
 </TabItem>
 <TabItem value="cds-dashboards" label="CDS Dashboards">
@@ -78,6 +78,7 @@ For this tutorial:
 - jupyter_bokeh
 - cdsdashboards-singleuser>=0.6.2
 ```
+
 </TabItem>
 </Tabs>
 
@@ -114,11 +115,7 @@ hover = HoverTool(tooltips=[("avg diameter", "@avg_diameter_inch"),
 combine_plot = plot_bar.opts(tools=[hover]) + plot_curve.opts(line_dash='dashed')
 
 # creating a dashboard using panel
-dashboard = pn.template.BootstrapTemplate(
-          site="About 🌳",
-          title="Species and more",
-          main=[combine_plot]
-          ).servable()
+pn.Row(combine_plot).servable()
 ```
 
 You can run all the cells in your notebook and view the Panel dashboard using the "Preview with Panel" button in the notebook toolbar:
@@ -128,30 +125,24 @@ You can run all the cells in your notebook and view the Panel dashboard using th
 This interactive feature of Panel makes it possible to rapidly prototype and iterate on dashboards.
 Feel free to add more plots or different styles to your plots!
 
-## Deploy the dashboard with JHub App Launcher
+## Deploy the dashboard
 
-1. In the Nebari Home Page (in the top navigation, `Nebari` -> `Hub Control Panel`) click on **"Create App"** to create a new web application for your dashboard.
-2. In the app creation interface, enter or select the following:
-   * **Display Name** - Provide meaningful name for your application
-   * **Description (optional)** - Add addition information about the application
-   * **Thumbnail (optional)** - Choose a meaningful thumbnail for your application. The default thumbnail is the application framework's logo.
-   * **Framework** - Select the framework used by your application. For this tutorial, select Panel.
-   * **Filepath** - Path (from root in JupyterLab) to your application code file. For this tutorial, path to the Jupyter Notebook.
-   * **Conda Environment** - Same [environment](#1-create-environment-and-notebook) used while developing your notebook/script which has `jhub-apps` and the corresponding framework.
-   * **Spawner profile** - Instance type (i.e. machines with CPU/RAM/GPU resources) required for running your application.
-   * **Allow Public Access** - Toggle to share the application with your team.
+<Tabs>
+<TabItem value="jhub-apps" label="JHub App Launcher" default>
 
-  <p align="center">
-    <img src="/img/tutorials/jhub-apps-create-new-app.png" width="50%"/>
-  </p>
+1. On the Nebari Home Page (from JupyterLab, click on the Nebari logo in the top right corner or go to `File` -> `Home`) click on **"Create App"** to create a new web application for your dashboard.
+2. Follow the [general instructions](https://jhub-apps.nebari.dev/docs/create-apps/general-app) from the JHub Apps documentation to fill out the `Create app` form.
+3. Click **Next**. You'll be redirected to the Spawner profile page. This page will allow you to select the server in which you want your app to run. These options will vary based on the setup of your Nebari deployment (which server types are available overall) and the permissions of your user (which server types you personally have access to). 
+4. JHub App Launcher will deploy your app (which can take several minutes to complete) and automatically redirect you to it.
 
-3. Click on **Submit**. JHub App Launcher deploy your app (which can take a few minutes to complete) and automatically redirect you to it.
+Your dashboard app will be available in the Nebari Home page, under "My Apps". If you allowed shared access, it will be available under "Shared Apps" for those with whom you have shared the app.
 
-Your dashboard app will be available in the Nebari Home page, under "My Apps". If you allowed public access, it will be available under "Shared Apps" for your team.
+</TabItem>
 
-## Deploy and share the dashboard with CDS Dashboards (Nebari v2023.7.1 or earlier)
 
-In this section, you'll use CDS Dashboards to publish and share your newly created `panel` dashboard.
+<TabItem value="cds-dashboards" label="CDS Dashboard" default>
+
+In this section, you'll use CDS Dashboards ((Nebari v2023.7.1 or earlier)) to publish and share your newly created `panel` dashboard.
 
 :::warning
 CDS Dashboards has been deprecated in 2023.9.1. Nebari 2023.7.1 is the last release that support CDS Dashboards.
@@ -192,19 +183,22 @@ This will trigger the deployment of your dashboard, and you'll be presented with
 
 If there are no errors encountered during this process, you will be automatically redirected to the dashboard!
 
+</TabItem>
+</Tabs>
+
 ## Manage apps in Nebari
 
 <Tabs>
 <TabItem value="jhub-apps" label="JHub App Launcher" default>
 
-All applications are available on the Nebari home page. From JupyterLAb, you can click on the `Nebari` menu tab and select `Hub Control Panel` to go to the home page.
+All applications are available on the Nebari home page (from JupyterLab, click on the Nebari logo in the top right corner or go to `File` -> `Home`).
 
 To manage an application, click on the three dots in the top right of the corresponding application card where you can:
 
-* **Start** the app is it's not running
-* **Stop**  a running app
-* **Edit** the application details
-* **Delete** the app
+- **Start** the app is it's not running
+- **Stop** a running app
+- **Edit** the application details
+- **Delete** the app
 
 ![](/img/tutorials/jhub-apps-manage-app.png)
 
@@ -233,7 +227,7 @@ You should be mindful of the incurring ongoing costs while the dashboard is runn
 
 ---
 
-Dashboards and apps can be a very handy tool to share information and insights with colleagues and external customers or collaborators. You can use this basic dashboard to build more complex dashboards, add more dynamic features, and start sharing data insights with others.
+Dashboards and apps can be very handy tools to share information and insights with colleagues and external customers or collaborators. You can use this basic dashboard to build more complex dashboards, add more dynamic features, and start sharing data insights with others.
 
 <!-- Internal links -->
 
