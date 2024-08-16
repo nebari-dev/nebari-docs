@@ -68,7 +68,7 @@ The following actions are typically useful:
 
 <!-- Internal links -->
 
-[troubleshooting]: /docs/troubleshooting.mdx
+[troubleshooting]: /docs/troubleshooting
 
 <!-- External Links -->
 
