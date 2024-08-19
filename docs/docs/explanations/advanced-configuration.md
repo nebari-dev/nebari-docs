@@ -421,7 +421,7 @@ As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/
 Do not switch from one storage type to another on an existing Nebari deployment. Any files in the user home directory and conda environments will be lost if you do so! On GCP, all node groups in the cluster will be destroyed and recreated. Only change the storage type prior to the initial deployment.
 :::
 
-Storage is configuredin the nebari config file under the storage section.
+Storage is configured in the nebari config file under the storage section.
 
 ```yaml
 storage:
