@@ -12,7 +12,7 @@ Nebari configuration and deployment is highly dependent on the version of the Ne
 
 Once installed, you can use [manage environments](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#managing-environments) in different ways.
 
-This is a simple way to set up a new Conda environment named `nebari0` with a specific Nebari version and exactly one extension installed. This `nebari0` environment will store all of our packages, including those installed with `pip` because when **pip** is installed into an active conda environment, packages which are then installed with pip will not be saved in the global namespace\_. This especially critical when working with extensions, because `nebari` will detect and apply any extensions installed in your Python environment when it runs.
+This is a simple way to set up a new Conda environment named `nebari0` with a specific Nebari version and exactly one extension installed. This `nebari0` environment will store all of our packages, including those installed with `pip` because when **pip** is installed into an active conda environment, packages which are then installed with pip will not be saved in the global namespace. This especially critical when working with extensions, because `nebari` will detect and apply any extensions installed in your Python environment when it runs.
 
 ```
 conda create -n nebari0
