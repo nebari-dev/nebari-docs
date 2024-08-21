@@ -277,6 +277,7 @@ Select the virtual network and subnet name under the networking settings of your
 and then follow the usual deployment instructions as you would deploy from your local machine.
 
 =======
+
 #### Conda store worker
 
 You can use the following settings to change the defaults settings (shown) used for Conda store workers.
