@@ -12,7 +12,7 @@ Nebari includes a package called [`jupyterhub-ssh`](https://github.com/yuvipanda
 
 :::note
 There is a distinction between the Nebari and JupyterHub servers, though these are easily conflated by end users.
-Nebari itself is generally accessed via [kubectl](/how-tos/debug-nebari#installing-kubectl)
+Nebari itself is generally accessed via [kubectl](/docs/how-tos/debug-nebari#installing-kubectl)
 to connect directly to the cluster (nodes or pods), while the JupyterHub server runs _on_ Nebari and controls the spawning of
 user instances of JupyterLab. The approach described here uses a JupyterHub plugin, `jupyterhub-ssh`, to spawn and access users' JupyterLab instance
 :::
