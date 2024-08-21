@@ -30,21 +30,18 @@ You may add a note and expiration date to the token. You can leave the scopes fi
 
 ## Connect to Nebari via SSH
 
-Before you being, you'll need to have SSH installed on your local machine. From a terminal, use `ssh` to begin the connection.
+Before you begin, you'll need to have SSH installed on your local machine. From a terminal, use `ssh` to start the connection.
 
 `ssh <your-nebari-domain.com> -l <your-username> -p 8022`
 
 :::important
-The syntax for `<your-nebari-domain.com>` is important - do not include `https://` or a trailing `/`.
-
-If you have the incorrect syntax, it will result in the error:
-
-`Could not resolve hostname <your-nebari-domain.com>: nodename nor servname provided, or not known`
+The syntax for `<your-nebari-domain.com>` is important - do not include `https://` or a trailing `/`. If you have the incorrect syntax, it will result in the error:
+```Could not resolve hostname <your-nebari-domain.com>: nodename nor servname provided, or not known```
 :::
 
 You will then be prompted for your password. Enter the token as the password and press `Enter`.
 
-If you don't already have a JupyterLab server running on your Nebari instance, it may take several minutes for the server to start up. The `ssh` connection has it's own timeout period which is likely shorter than the time it takes to spinup a new server. Therefore, you may see the following error as the `ssh` connection times out:
+If you don't already have a JupyterLab server running on your Nebari instance, the server may take a few minutes to start up. The `ssh` connection has its own timeout period, likely shorter than the time it takes to spin up a new server. Therefore, you may see the following error as the `ssh` connection times out:
 
 `Starting your server............................................failed to start server on time!`
 
@@ -54,10 +51,27 @@ Once the connection is complete, you will have terminal access to your JupyterLa
 
 ## Use SFTP to transfer files to/from Nebari
 
-SFTP, which stands for _Secure File Transfer Protocol_, is a protocol built into SSH that can implement file transfer commands over a secure connection. The SFTP port on Nebari is 8023.
+By default, SFTP uses the SSH protocol to authenticate and establish a secure connection. Because of this, the same authentication token used previously in its SSH counterpart can be used here.
 
 Utilizing SFTP will depend on how your local machine is configured and the utility you're using for SFTP. In some cases, your SSH configuration will allow SFTP to work "out of the box". Other times, special SFTP setup is required in your SSH configuration to allow for these connections.
+Similar to `ssh`, from a terminal, use `sftp` to begin a new connection:
+```sftp <your-nebari-domain.com> -l <your-username> -p 8023```
 
+### Transferring Files with SFTP
+
+Downloading Files:
+
+- Use the `get` command to download files from the remote host:
+	- `get <remote-file>` downloads the file with the same name to the local system.
+	- `get <remote-file> <local-file>` downloads and saves the file with a different name.
+	- To download a directory and its contents, use `get -r <some-directory>`.
+	- To maintain permissions and access times, use `get -Pr <some-directory>`.
+
+Uploading Files:
+
+- Use the `put` command to upload files to the remote system:
+	- `put <local-file>` uploads the file.
+	- To upload a directory and its contents, use `put -r <some-directory>`.
 ## Dangerous, but useful information
 
 :::warning
