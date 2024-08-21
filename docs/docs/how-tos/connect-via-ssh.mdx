@@ -6,13 +6,13 @@ description: Set up a remote SSH connection using jupyter-ssh
 
 # Connect to Nebari via SSH or SFTP
 
-Secure Shell Protocol (SSH) is a common protocol for communicating securely over a network connection. Secure File Transfer Protocol (SFTP) is based on SSH and is used to transfer files to and from a remote machine. In this guide, you will learn how to connect to your Nebari deployment via SSH, and how to transfer files using SFTP from your local machine. 
+Secure Shell Protocol (SSH) is a standard protocol for communicating securely over a network connection. Secure File Transfer Protocol (SFTP) is based on SSH and transfers files to and from a remote machine. In this guide, you will learn how to connect and launch your JupyterLab user instance via SSH and transfer files using SFTP from your local machine. 
 
-Nebari includes a package called [`jupyterhub-ssh`](https://github.com/yuvipanda/jupyterhub-ssh) in all deployments to allow remote connection to Nebari deployments. On Nebari, SSH connections are set up on port 8022 and SFTP connections on port 8023. 
+Nebari includes a package called [`jupyterhub-ssh`](https://github.com/yuvipanda/jupyterhub-ssh) in all deployments to allow remote connection to their user instances. On Nebari, SSH connections are set up on port 8022 and SFTP connections on port 8023. 
 
 ## Prepare for the connection on the Nebari deployment
 
-Nebari, at its core, is running on a JupyterHub server. You will create a JupyterHub _token_ in order to access your server remotely. To do this, log into your Nebari deployment and navigate to the JupyterHub token page, \<your-nebari-domain.org/hub/token\>. 
+You will create a JupyterHub _token_ in order to access your server remotely. To do this, log into your Nebari deployment and navigate to the JupyterHub token page, \<your-nebari-domain.org/hub/token\>. 
 
 This page is also accessible via the Nebari Home Page:
 
