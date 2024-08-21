@@ -20,7 +20,6 @@ Each persona is placed in a Nebari user group:
 
 **Admin** represents the people who are in charge of deploying Nebari. They are responsible for maintaining and running the day to day maintenance. This may include cloud account management, conda-store maintenance, kubernetes cluster management and adding/removing end users from the deployment. Our admin is [Taylor](#taylor)
 
-
 ## Personas
 
 ---
