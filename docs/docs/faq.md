@@ -9,7 +9,7 @@ but running the `nebari deploy` command again as a Nebari administrator will upd
 
 `Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace. For more details check out the doc on [creating environments in Nebari via conda-store](/docs/tutorials/creating-new-environments).
 
-Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`. 
+Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`.
 
 ## What should be included in the environment if I want to use Dask?
 
@@ -25,9 +25,9 @@ It's important to note that packages installed this way aren't available to the 
 
 Nebari automatically creates and manages `.bashrc` and `.profile`. Therefore, end users do not have write permissions to modify this file. However, by default Nebari _will_ source `.bash_profile`. Users may use this file to populate environment variables or set up alias, etc. However, there are some important things to note:
 
-* The `.bash_profile` is sourced _after_ the `.bashrc` - be aware of the implications, one of which is that you will lose changes to the prompt syntax. To avoid this, you can always source the `.bashrc` inside the .`bash_profile`. 
-* JupyterLab does _not_ source `.bash_profile`.
-* The VS Code terminal does _not_ source `.bash_profile` by default. 
+- The `.bash_profile` is sourced _after_ the `.bashrc` - be aware of the implications, one of which is that you will lose changes to the prompt syntax. To avoid this, you can always source the `.bashrc` inside the .`bash_profile`.
+- JupyterLab does _not_ source `.bash_profile`.
+- The VS Code terminal does _not_ source `.bash_profile` by default.
 
 ## What if I can't see the active conda environment in the terminal?
 
