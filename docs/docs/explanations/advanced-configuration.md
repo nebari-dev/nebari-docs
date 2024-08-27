@@ -412,6 +412,9 @@ Defining a wildcard certificate decreases the amount of Common Name (CN) names y
 </Tabs>
 
 ### Shared Storage Configuration
+:::note
+As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/) shared file systems as an alternative to NFS is available.
+:::
 
 Nebari includes shared file systems for the jupyterhub user storage, jupyterhub shared storage, and conda store shared storage. By default, NFS drives are used.
 
