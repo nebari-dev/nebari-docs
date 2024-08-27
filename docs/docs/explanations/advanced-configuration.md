@@ -438,7 +438,7 @@ Supported storage types are nfs (default on most cloud providers), efs (default 
 
 When using the `cephfs` storage type option, the block storage underlying all Ceph storage will be provisioned through the same Kubernetes storage class. By default, Kubernetes will use the default storage class unless a specific one is provided. For enhanced performance, some cloud providers offer premium storage class options.
 
-You can specify the desired storage class under `storage.ceph` section in the configuration file. Below are examples of potential storage class values for various cloud providers:
+You can specify the desired storage class under `ceph.storage_class_name` section in the configuration file. Below are examples of potential storage class values for various cloud providers:
 
 <Tabs>
   <TabItem label="AWS" value="AWS" default="true">
