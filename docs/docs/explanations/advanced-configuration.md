@@ -434,7 +434,7 @@ storage:
   shared_filesystem: 200Gi
 ```
 
-Supported storage types are nfs (default on most cloud providers), efs (default on AWS), and cephfs.
+Supported values for `storage.type` are `nfs` (default on most cloud providers), `efs` (default on AWS), and `cephfs`.
 
 When using the `cephfs` storage type option, the block storage underlying all Ceph storage will be provisioned through the same Kubernetes storage class. By default, Kubernetes will use the default storage class unless a specific one is provided. For enhanced performance, some cloud providers offer premium storage class options.
 
@@ -474,8 +474,9 @@ ceph:
 Ceph is not supported on local deployments.
 </TabItem>
 </Tabs>
+
 :::note
-Premium storage might not be available for certain cloud providers on all node types, which can affect performance and availability. Make sure to check the documentation for your specific cloud provider to confirm premium storage options and their compatibility with your node types.
+Premium storage is not available for some cloud providers on all node types. Check the documentation for your specific cloud provider to confirm which node types are compatible with which storage classes.
 :::
 
 ## More configuration options
