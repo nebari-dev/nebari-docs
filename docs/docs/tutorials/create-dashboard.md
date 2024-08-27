@@ -127,22 +127,13 @@ Feel free to add more plots or different styles to your plots!
 
 ## Deploy the dashboard
 
-1. In the Nebari Home Page (in the top navigation, `Nebari` -> `Hub Control Panel`) click on **"Create App"** to create a new web application for your dashboard.
-2. In the app creation interface, enter or select the following:
+<Tabs>
+<TabItem value="jhub-apps" label="JHub App Launcher" default>
 
-   - **Display Name** - Provide meaningful name for your application
-   - **Description (optional)** - Add addition information about the application
-   - **Thumbnail (optional)** - Choose a meaningful thumbnail for your application. The default thumbnail is the application framework's logo.
-   - **Framework** - Select the framework used by your application. For this tutorial, select Panel.
-   - **Filepath** - Path (from root in JupyterLab) to your application code file. For this tutorial, path to the Jupyter Notebook.
-   - **Conda Environment** - Same [environment](#1-create-environment-and-notebook) used while developing your notebook/script which has `jhub-apps` and the corresponding framework.
-   - **Spawner profile** - Instance type (i.e. machines with CPU/RAM/GPU resources) required for running your application.
-   - **Allow Public Access** - Toggle to share the application with your team.
-
-3. On the Nebari Home Page (from JupyterLab, click on the Nebari logo in the top right corner or go to `File` -> `Home`) click on **"Create App"** to create a new web application for your dashboard.
-4. Follow the [general instructions](https://jhub-apps.nebari.dev/docs/create-apps/general-app) from the JHub Apps documentation to fill out the `Create app` form.
-5. Click **Next**. You'll be redirected to the Spawner profile page. This page will allow you to select the server in which you want your app to run. These options will vary based on the setup of your Nebari deployment (which server types are available overall) and the permissions of your user (which server types you personally have access to).
-6. JHub App Launcher will deploy your app (which can take several minutes to complete) and automatically redirect you to it.
+1. On the Nebari Home Page (from JupyterLab, click on the Nebari logo in the top right corner or go to `File` -> `Home`) click on **"Create App"** to create a new web application for your dashboard.
+2. Follow the [general instructions](https://jhub-apps.nebari.dev/docs/create-apps/general-app) from the JHub Apps documentation to fill out the `Create app` form.
+3. Click **Next**. You'll be redirected to the Spawner profile page. This page will allow you to select the server in which you want your app to run. These options will vary based on the setup of your Nebari deployment (which server types are available overall) and the permissions of your user (which server types you personally have access to).
+4. JHub App Launcher will deploy your app (which can take several minutes to complete) and automatically redirect you to it.
 
 Your dashboard app will be available in the Nebari Home page, under "My Apps". If you allowed shared access, it will be available under "Shared Apps" for those with whom you have shared the app.
 
