@@ -471,7 +471,9 @@ ceph:
 Ceph is not supported on local deployments.
 </TabItem>
 </Tabs>
-
+:::note
+Premium storage might not be available for certain cloud providers on all node types, which can affect performance and availability. Make sure to check the documentation for your specific cloud provider to confirm premium storage options and their compatibility with your node types.
+:::
 ## More configuration options
 
 Learn to configure more aspects of your Nebari deployment with the following topic guides:
