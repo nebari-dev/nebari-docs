@@ -433,7 +433,9 @@ storage:
   shared_filesystem: 200Gi
 ```
 
-If using the "cephfs" storage type. The block storage backing all ceph storage will be provisioned using a kubernetes storage class. The default storage class will be used unless specified. Premium storage can be used on some cloud providers to back ceph storage for improved performance. The storage class name can be specified in the yaml file. Be aware that premium storage is not accessible on all node types on some cloud providers.
+When using the `cephfs` storage type option, the block storage underlying all Ceph storage will be provisioned through the same Kubernetes storage class. By default, Kubernetes will use the default storage class unless a specific one is provided. For enhanced performance, some cloud providers offer premium storage class options. 
+
+You can specify the desired storage class under `storage.ceph` section in the configuration file.  Below are examples of potential storage class values for various cloud providers:
 
 <Tabs>
   <TabItem label="AWS" value="AWS" default="true">
