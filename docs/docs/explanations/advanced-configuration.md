@@ -424,7 +424,7 @@ The initial benefit of using Ceph is increased read/write performance compared t
 Do not switch from one storage type to another on an existing Nebari deployment. Any files in the user home directory and conda environments will be lost if you do so! On GCP, all node groups in the cluster will be destroyed and recreated. Only change the storage type prior to the initial deployment.
 :::
 
-Storage is configured in the nebari config file under the storage section.
+Storage may be configured in the `nebari-config.yaml` file under the storage section.
 
 ```yaml
 storage:
