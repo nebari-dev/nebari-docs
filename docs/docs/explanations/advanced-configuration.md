@@ -418,7 +418,7 @@ As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/
 
 Nebari includes shared file systems for the jupyterhub user storage, jupyterhub shared storage, and conda store shared storage. By default, NFS drives are used.
 
-As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/) shared file systems as an alternative to NFS is available. The initial benefit of using Ceph is increased read/write performance compared to NFS, but further benefits are expected in future development. Ceph is a distributed storage system which has the potential to provide increased performance, high availability, data redundancy, storage consolidation, and scalability to Nebari.
+The initial benefit of using Ceph is increased read/write performance compared to NFS, but further benefits are expected in future development. Ceph is a distributed storage system which has the potential to provide increased performance, high availability, data redundancy, storage consolidation, and scalability to Nebari.
 
 :::danger
 Do not switch from one storage type to another on an existing Nebari deployment. Any files in the user home directory and conda environments will be lost if you do so! On GCP, all node groups in the cluster will be destroyed and recreated. Only change the storage type prior to the initial deployment.
