@@ -178,7 +178,7 @@ gsutil cp gs://<your_bucket_name>/backups/2021-04-23.tar .
 
 ### Azure
 
-To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=script#install-or-update-azure-cli) and [azcopy](https://learn.microsoft.com/en-us/azure/storage/common/storasome blob storage.ge-use-azcopy-v10?tabs=dnf#obtain-a-static-download-link). You must also have setup a storage container with blob storage. Otherwise, the instructions are the same as for AWS above, other than when working with S3. Here are the commands to access Azure blob storage instead of S3 for copy/download of the backup.
+To do a backup on Azure, first install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=script#install-or-update-azure-cli) and [azcopy](https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10?tabs=dnf#obtain-a-static-download-link). You must also have setup a storage container with blob storage. Otherwise, the instructions are the same as for AWS above, other than when working with S3. Here are the commands to access Azure blob storage instead of S3 for copy/download of the backup.
 
 #### Do the backup
 
