@@ -70,6 +70,13 @@ To see the logs from **all deployed apps**, use the label filter `container` = `
 
 To see **logs from a specific app**, use the `pod` label and begin typing either the name of the user running the app or the app name to find the correct pod. App pods are named with the convention `jupyter-[username]--[app_name]-[pod_id]`.
 
+## Programmatic Access to Logs
+
+Grafana logs can be accessed programmatically from within a Jupyter Notebook running in Nebari:
+
+- Create a Grafana Service Account and API token by following Grafana docs: https://grafana.com/docs/grafana/latest/administration/service-accounts/
+- 
+
 ## Additional Information
 
 - [Understand Log Query Structure](https://grafana.com/docs/loki/latest/query/log_queries/)
