@@ -82,6 +82,7 @@ module.exports = {
         "how-tos/access-logs-loki",
         "how-tos/use-gpus",
         "how-tos/fine-grained-permissions",
+        "how-tos/connect-via-ssh",
       ],
     },
     {

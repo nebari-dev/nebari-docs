@@ -411,6 +411,74 @@ Defining a wildcard certificate decreases the amount of Common Name (CN) names y
 </TabItem>
 </Tabs>
 
+### Shared Storage Configuration
+
+:::note
+As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/) shared file systems as an alternative to NFS is available.
+:::
+
+Nebari includes shared file systems for the jupyterhub user storage, jupyterhub shared storage, and conda store shared storage. By default, NFS drives are used.
+
+The initial benefit of using Ceph is increased read/write performance compared to NFS, but further benefits are expected in future development. Ceph is a distributed storage system which has the potential to provide increased performance, high availability, data redundancy, storage consolidation, and scalability to Nebari.
+
+:::danger
+Do not switch from one storage type to another on an existing Nebari deployment. Any files in the user home directory and conda environments will be lost if you do so! On GCP, all node groups in the cluster will be destroyed and recreated. Only change the storage type prior to the initial deployment.
+:::
+
+Storage is configured in the `nebari-config.yaml` file under the storage section.
+
+```yaml
+storage:
+  type: nfs
+  conda_store: 200Gi
+  shared_filesystem: 200Gi
+```
+
+Supported values for `storage.type` are `nfs` (default on most cloud providers), `efs` (default on AWS), and `cephfs`.
+
+When using the `cephfs` storage type option, the block storage underlying all Ceph storage will be provisioned through the same Kubernetes storage class. By default, Kubernetes will use the default storage class unless a specific one is provided. For enhanced performance, some cloud providers offer premium storage class options.
+
+You can specify the desired storage class under `ceph.storage_class_name` section in the configuration file. Below are examples of potential storage class values for various cloud providers:
+
+<Tabs>
+  <TabItem label="AWS" value="AWS" default="true">
+
+Premium storage is not available on AWS.
+</TabItem>
+<TabItem label="Azure" value="Azure">
+
+```yaml
+ceph:
+  storage_class_name: managed-premium
+```
+
+  </TabItem>
+  <TabItem label="GCP" value="GCP">
+
+```yaml
+ceph:
+  storage_class_name: premium-rwo
+```
+
+  </TabItem>
+  <TabItem label="Existing" value="Existing">
+
+```yaml
+ceph:
+  storage_class_name: some-cluster-storage-class
+```
+
+  </TabItem>
+  <TabItem label="Local" value="Local">
+
+Ceph is not supported on local deployments.
+</TabItem>
+</Tabs>
+
+:::note
+Premium storage is not available for some cloud providers on all node types. Check the documentation for your specific cloud provider to confirm which node types are compatible with which storage classes.
+:::
+
 ## More configuration options
 
 Learn to configure more aspects of your Nebari deployment with the following topic guides:
