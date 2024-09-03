@@ -10,71 +10,9 @@ This is a quick Nebari CLI reference. If you're new to Nebari, start at [Install
   <img src="/img/get-started/nebari-cli-commands.png" alt="A diagram showing the different Nebari CLI commands. The first step is 'nebari init' which creates the 'nebari-config.yaml' file. The second step is 'nebari deploy' which deploys the Nebari instance on the cloud. The third step is 'nebari destroy' which destroys the deployed instance. These second and third steps run 'nebari validate' and 'nebari render' internally. 'nebari validate' verifies the 'nebari-config.yaml' file. 'nebari render' generates the 8-stage terraform deployment scripts." width="60%"/>
 </div>
 
-## Install
-
-You need a MacOS or Linux machine with Python >= 3.8 to install Nebari.
-
-You can install Nebari from PyPI or conda-forge:
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-<Tabs>
-  <TabItem value="conda" label="conda" default>
-
-```bash
-conda install nebari -c conda-forge
-```
-
-  </TabItem>
-  <TabItem value="pip" label="pip" default>
-
-```bash
-python3 -m pip install nebari
-```
-
-  </TabItem>
-  <TabItem value="mamba" label="mamba" default>
-
-```bash
-mamba install nebari
-```
-
-  </TabItem>
-</Tabs>
-
-Verify the installation with:
-
-```bash
-nebari --help
-```
-
-<details>
-<summary>Make sure it displays an output similar to:</summary>
-
-```bash
-usage: nebari [-h] [-v]
-            {deploy,render,init,validate,destroy,support,upgrade,keycloak,cost-estimate}
-            ...
-
-Nebari command line
-
-positional arguments:
-  {deploy,render,init,validate,destroy,support,upgrade,keycloak,cost-estimate}
-                        Nebari - 0.4.3
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         Nebari version number
-```
-
-</details>
-
 ## Initialize
 
-After installation, you can create a new Nebari project!
-
-Create a new project directory:
+Begin by creating a new project directory:
 
 ```bash
 mkdir <project-name>
@@ -181,6 +119,36 @@ nebari init azure --project projectname \
 
 <!-- TODO: Add commands for HPC and local cluster. -->
 
+## Validate (optional)
+
+After creating the `nebari-config.yaml` file, you can customize it. The Nebari package uses Pydantic for schema validation. To ensure your customizations are valid, run:
+
+```bash
+nebari validate -c nebari-config.yaml
+```
+
+:::note
+Extensions built using the [Nebari Extension System][nebari-extension-system] may extend the Nebari schema. If you are intending to use an extension and `nebari validate` returns an error `Extra inputs are not permitted`, ensure that the the correct versions of the extensions you intend to use are installed in your active Python environment.
+:::
+
+:::note
+This command is automatically run when you `deploy`.
+:::
+
+## Render (optional)
+
+You can generate the (Terraform) deployment workflow scripts with:
+
+```bash
+nebari render -c nebari-config.yaml
+```
+
+This is the actual step that loads the stage classes/models and generates physical IaC files based on your Nebari config file and installed package versions. It is not necessary to manually run a render to deploy. However, it can be useful (especially if you use a GitOps workflow with GitHub Actions or GitLab CI/CD) to review the effects of config files changes on the resulting IaC before deploying.
+
+:::note
+This command is automatically run when you `deploy`.
+:::
+
 ## Deploy
 
 <Tabs>
@@ -236,32 +204,6 @@ It can take up to 30 mins for the `destroy` command to complete.
 If you deployed Nebari on the cloud, verify if the relevant resources were destroyed and manually delete anything that was not destroyed.
 :::
 
-## Validate (optional)
-
-After creating the `nebari-config.yaml` file, you can customize it. To ensure your customizations are valid, run:
-
-```bash
-nebari validate -c nebari-config.yaml
-```
-
-:::note
-This command is automatically run when you `deploy`.
-:::
-
-## Render (optional)
-
-You can generate the (Terraform) deployment workflow scripts with:
-
-```bash
-nebari render -c nebari-config.yaml
-```
-
-This is useful if you use a GitOps workflow with GitHub (or GitLab) Actions.
-
-:::note
-This command is automatically run when you `deploy`.
-:::
-
 ---
 
 If you face any issues with the commands, check out the [Troubleshooting guide][nebari-troubleshooting].
@@ -269,4 +211,6 @@ If you face any issues with the commands, check out the [Troubleshooting guide][
 <!-- internal links -->
 
 [install-nebari]: /get-started/installing-nebari.md
+[environment-management]: /how-tos/nebari-environment-management.md
+[nebari-extension-system]: /how-tos/nebari-extension-system.md
 [nebari-troubleshooting]: /troubleshooting.mdx

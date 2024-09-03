@@ -5,9 +5,7 @@ description: A guide to help you install Nebari for your team.
 
 # Installing Nebari
 
-<!-- TODO: Add link to advanced settings section -->
-
-This installation guide provides the basic instructions to install and deploy Nebari for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, skip to the advanced-settings section in this documentation.
+This installation guide provides the basic instructions to install the Nebari deployer package CLI for the first time, and assumes you are already familiar with the [Conda](https://docs.conda.io/projects/conda/en/latest/) and [Python packaging](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-packages) ecosystems. If you are already familiar with Nebari and would like information on advanced configuration options, skip to the [Advanced Configuration][advanced-configuration] section in this documentation.
 
 :::note
 This guide focuses on installing Nebari for **cloud usage**.
@@ -23,9 +21,11 @@ Nebari heavily depends on [Terraform](https://www.terraform.io/) and Python. The
 - For more details on Terraform and its dependencies, visit the [official Terraform documentation](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 - To install conda, visit the [official conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), or if you prefer, visit the [mamba installation documentation](https://github.com/mamba-org/mamba#installation)
 
-## How to install Nebari
+## How to install the Nebari Package
 
-There are currently two ways to install Nebari:
+_See [Environment Management][environment-management] for best practices for using `conda` and `pip` to control your deployment environment._
+
+There are currently two ways to install the Nebari CLI:
 
 1. You can install Nebari directly from the Python Package Index (PyPI) using `pip`. For most common architectures and platforms (`Linux x86-64` and `macOS x86-64`), `pip` will download and install the most recent version available.
 
@@ -44,6 +44,14 @@ There are currently two ways to install Nebari:
    ```bash
    mamba install nebari
    ```
+
+:::note
+The version of Nebari in your `nebari-config.yaml` must match your currently installed Nebari package version; otherwise, a warning will be raised when attempting to deploy. See [Upgrading Nebari][nebari-upgrade] for techniques for upgrading your Nebari CLI or safely updating your older config file to match your Nebari package version.
+:::
+
+:::note
+The Nebari CLI will auto-detect and then deploy any [Nebari Extensions][nebari-extension-system] that are installed in your Python environment, and extensions once deployed cannot be uninstalled. For this reason, we recommend creating a [unique environment][environment-management] for each Nebari deployment, especially when managing multiple deployments with extensions.
+:::
 
 ## Verify installation
 
@@ -96,11 +104,15 @@ Already made your mind about deployment? Check our handy how-to-guides:
 
 <!-- Internal links -->
 
+[advanced-configuration]: /explanations/advanced-configuration.md
 [nebari-aws]: /how-tos/nebari-aws.md
 [nebari-azure]: /how-tos/nebari-azure.md
 [nebari-do]: /how-tos/nebari-do.md
+[environment-management]: /how-tos/nebari-environment-management.md
+[nebari-extension-system]: /how-tos/nebari-extension-system.md
 [nebari-gcp]: /how-tos/nebari-gcp.md
 [nebari-local]: /how-tos/nebari-local.md
 [nebari-deploy]: /get-started/deploy.mdx
 [nebari-troubleshooting]: /troubleshooting.mdx
+[nebari-upgrade]: /how-tos/nebari-upgrade.md
 [supported-cloud-providers]: /get-started/cloud-providers.mdx

@@ -54,6 +54,8 @@ module.exports = {
         "how-tos/nebari-azure",
         "how-tos/nebari-kubernetes",
         "how-tos/nebari-local",
+        "how-tos/nebari-stages-directory",
+        "how-tos/nebari-environment-management",
         "how-tos/nebari-destroy",
         "how-tos/domain-registry",
         "how-tos/debug-nebari",
@@ -63,14 +65,17 @@ module.exports = {
         "how-tos/manual-backup",
         "how-tos/nebari-upgrade",
         "how-tos/kubernetes-version-upgrade",
-        "how-tos/pytorch-best-practices",
         "how-tos/setup-argo",
         "how-tos/using-argo",
         "how-tos/jhub-app-launcher",
         "how-tos/idle-culling",
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
-        "how-tos/monitoring",
+        "how-tos/setup-monitoring",
+        "how-tos/access-logs-loki",
+        "how-tos/use-gpus",
+        "how-tos/fine-grained-permissions",
+        "how-tos/connect-via-ssh",
       ],
     },
     {
@@ -95,6 +100,7 @@ module.exports = {
       link: { type: "doc", id: "references/index" },
       items: [
         "references/RELEASE",
+        "references/personas"
       ],
     },
     // {

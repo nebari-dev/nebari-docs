@@ -125,7 +125,7 @@ jupyterlab:
     kernel_cull_idle_timeout: 30
 ```
 
-- `jupyterlab.initial_repositories` - Clones specified repositories into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory.
+- `jupyterlab.initial_repositories` - Auto-deploys specified git repositories by cloning them into user directories upon JupyterLab instance initialization. Accepts a list of `name: url` pairs, with each `name` becoming the folder name in the user's home directory. Once the repository is cloned in the user space, it will not be updated. In order to update to the latest repository, users must delete the folder and restart the server.
 
 ```yaml
 jupyterlab:
@@ -134,10 +134,15 @@ jupyterlab:
 ```
 
 :::note Note
-Currently only public git repositories are supported. Path location key should not start or end with trailing slash.
+Path location key should not start or end with trailing slash.
 You can configure JupyterLab to open in a location within the cloned repository by setting `preferred_dir` option within the `jupyterlab` group.
 :::
 
+See also `jupyterlab.gallery_settings` (documented below) which defers the cloning of repositories until user requests it and provides a rich presentation layer.
+
+:::warning
+While you could embed an access token in the URL to fetch from a private repository, please beware that this token can be accessed by each user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 - `jupyterlab.default_settings` - Enables overriding the default JupyterLab and JupyterLab extensions settings. Users will still be able to adjust the settings in the JupyterLab Setting Editor. The keys should be names of the Jupyter plugins with values defining mapping between the plugin setting and new default.
 
@@ -149,6 +154,29 @@ jupyterlab:
 ```
 
 - `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
+
+- `jupyterlab.gallery_settings` - Configures [`jupyterlab-gallery`](https://github.com/nebari-dev/jupyterlab-gallery) extension which enables user to clone (and later synchronise) pre-specified repositories.
+
+```yaml
+jupyterlab:
+  gallery_settings:
+    title: Example repositories
+    destination: examples
+    exhibits:
+      - title: Nebari
+        git: https://github.com/nebari-dev/nebari.git
+        homepage: https://github.com/nebari-dev/nebari
+        description: 🪴 Nebari - your open source data science platform
+      - title: PyTorch Tutorial
+        git: https://github.com/your-org/your-repository.git
+        account: name_of_dedicated_account
+        token: YOUR_PERSONAL_ACCESS_TOKEN
+        icon: https://your.domain/icon.svg
+```
+
+:::warning
+While private repositories can be cloned by passing `account` and `token`, the access token can be accessed by each user - you should only use tightly scoped personal access tokens which you are comfortable to share with each of your users.
+:::
 
 ### Terraform
 
@@ -248,9 +276,12 @@ One way to achieve this is by creating a Virtual Machine (VM) inside the virtual
 Select the virtual network and subnet name under the networking settings of your cloud provider while creating the VM
 and then follow the usual deployment instructions as you would deploy from your local machine.
 
+=======
+
 #### Conda store worker
 
 You can use the following settings to change the defaults settings (shown) used for Conda store workers.
+
 ```yaml
 conda_store:
   max_workers: 50
@@ -259,6 +290,59 @@ conda_store:
       cpu: 1
       memory: 4Gi
 ```
+
 :::note Note
 Current `conda_store.worker_resources` defaults are set at the minimum recommended resources for conda-store-workers - (conda-store [docs](https://conda.store/conda-store/references/faq#what-are-the-resource-requirements-for-conda-store-server))
+:::
+
+## Helm Extensions
+
+Nebari provides a way for any user to expand the infrastructure available by default by using the `helm_extensions` attribute. This attribute allows for the management and customization of Kubernetes applications through Helm charts. The helm_extensions is a configuration construct that specifies a list of Helm charts and their respective settings.
+
+### Overview
+
+Each entry in the `helm_extensions` list represents a single Helm chart configuration, allowing you to define the chart source, version, and specific overrides or settings for that chart. When Nebari is deployed, it will install the specified Helm charts using the provided settings.
+
+### Structure
+
+Each entry in the helm_extensions list contains the following fields:
+
+- `name`: A unique identifier for the Helm chart. It will also be used as the name of the Kubernetes deployment related resources.
+- `repository`: The URL of the repository where the Helm chart is stored. Must be a valid Helm repository URL.
+- `chart`: The name or path of the chart within the repository. must be compliant with the Helm chart naming conventions.
+- `version`: The specific version of the chart to be used.
+- `overrides`: Specific configurations to override default chart values.
+
+:::note Note
+The `overrides` field is optional. If not specified, the default values for the chart will be used.
+:::
+
+### Example
+
+Below we give an example showcasing how to install Redis using helm_extensions:
+
+```yaml
+helm_extensions:
+  - name: redis-deployment
+    repository: https://charts.bitnami.com/bitnami
+    chart: redis
+    version: 17.7.5
+    overrides:
+      architecture: standalone
+      master:
+        containerSecurityContext:
+          runAsUser: 0
+        persistence:
+          enabled: true
+          path: /redis/data
+          subPath: redis/data
+          existingClaim: <existing-claim-name-is-required>
+      replica:
+        persistence:
+          enabled: false
+        replicaCount: 0
+```
+
+:::warning Warning
+In the above example, we are assuming the current nebari kubernetes cluster already has an appropriate storage class and persistent volume claim (PVC) created. If not, you will need to create a storage class and PVC before deploying the helm chart.
 :::

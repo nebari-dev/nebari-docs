@@ -13,7 +13,6 @@ In the "How to deploy Nebari" pages of our docs we covered how you can auto-gene
 After first initializing a project, you can find the configuration file, `nebari-config.yaml`, in your project directory.
 This file is a `YAML` file that exports sets of parameters used by Nebari to deploy and redeploy changes to your infrastructure.
 
-
 <details>
 <summary>Complete configuration example.</summary>
 
@@ -238,9 +237,7 @@ conda_store:
 
 The `nebari-config.yaml` file can be split into several sections.
 
-The first section is the version of Nebari you wish to run. 
-
-
+The first section is the version of Nebari you wish to run.
 
 ```yaml
 ### Nebari version ###
@@ -248,9 +245,8 @@ nebari_version: 2023.7.2
 ```
 
 :::note
-You will get a validation error if the version of `nebari` used from the command line is different from the one in the `nebari-config.yaml`. 
+You will get a validation error if the version of `nebari` used from the command line is different from the one in the `nebari-config.yaml`.
 :::
-
 
 The next section relates to Nebari's inner mechanics for the initial deployment and is the most important section of the configuration file,
 because the following parameters are heavily propagated throughout all infrastructure components.
@@ -283,19 +279,21 @@ domain: demo.nebari.dev
 
 ### Continuous integration and continuous deployment
 
-Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to allow developers and users to request changes to the environment via pull requests (PRs) which then get approved by administrators.
-You may configure a CI/CD process to watch for pull-requests or commits on specific branches.
-Currently, CI/CD can be setup for either [GitHub Actions](https://docs.github.com/en/actions) or [GitLab CI](https://docs.gitlab.com/ee/ci/).
+Nebari uses [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to maintain a description of the deployed infrastructure in source control. By using a git repository with CI/CD configured, teams can more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
+
+When a `ci_cd` section is configured within your `nebari-config.yaml`, the first `nebari deploy` command will create all related files that describe a [CI/CD](https://about.gitlab.com/topics/ci-cd/) process. These pipelines will then be responsible for redeploying Nebari as changes are made to a specified branch. (Alternatively, an administrator can use `nebari render` to generate the necessary files as if running a dry-run.) Currently, Nebari can generate CI/CD for [GitHub Actions](https://docs.github.com/en/actions) and [GitLab CI](https://docs.gitlab.com/ee/ci/).
+
+Below is an example `ci_cd` section in a `nebari-config.yaml` file.
 
 ```yaml
 ### Continuous integration ###
 ci_cd:
-  type: gitlab-ci
-  branch: main
-  commit_render: true
-  before_script:
+  type: gitlab-ci # 'gitlab-ci' or 'github-actions'
+  branch: main # Branch that triggers deployment
+  commit_render: true # During deployment, commit the rendered IaC back into the repository
+  before_script: # GitLab only
     - echo "running commands before ci completes"
-  after_script:
+  after_script: # GitLab only
     - echo "running commands after ci completes"
     - echo "additional commands to run"
 ```
@@ -309,8 +307,17 @@ ci_cd:
   resources. Currently only supported on `gitlab-ci`.
 - `after_script` (optional): Script to run after CI ends infrastructure deployment. This is useful in cases to notify resources of successful Nebari deployment. Currently supported on `gitlab-ci`.
 
-If `ci_cd` is not supplied, no CI/CD will be auto-generated, however, we advise employing an infrastructure-as-code approach.
-This allows teams to more quickly modify their deployment, empowering developers and data scientists to request the changes and have them approved by an administrator.
+The CI/CD workflow that is best for you will depend on your organization, but the following tenets will be appropriate for most situations.
+
+- You will want to have an upstream Git repository configured - we recommend either GitHub or GitLab since we support generating CI/CD jobs for these products.
+- The branch that triggers deployment (typically `main`, but you can set other ones in Nebari config's `ci_cd.branch`) should be protected so that only sys admins can commit or approve pull (or merge) requests into it.
+- CI/CD variables must be set in your repository so the pipeline can access your cloud (see Note below)
+- Non-admin users who have write access to the repository's non-protected branches may create their own branch off of `main`, locally make changes to the `nebari-config.yaml` and other files, and then push that branch to the origin and propose they be deployed via a Pull Request.
+- Advanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
+
+:::note
+In order for your CI/CD pipeline to be able to deploy changes into your Nebari cloud hosting provider, you must set the appropriate authentication environment variables for your GitLab or GitHub CI/CD execution environment. See the Authentication section for deploing to [AWS](https://www.nebari.dev/docs/how-tos/nebari-aws/#authentication), [Azure](https://www.nebari.dev/docs/how-tos/nebari-azure#authentication), [GCP](https://www.nebari.dev/docs/how-tos/nebari-gcp/#authentication), or [Digital Ocean](https://www.nebari.dev/docs/how-tos/nebari-do/#authentication) for Nebari's required variables. Guidance on how to set these for your repository/project can be found in the documentation for [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/variables) and [GitLab CI/CD](https://docs.gitlab.com/ee/ci/variables/).
+:::
 
 ### Certificates
 
@@ -365,11 +372,10 @@ In general you should use the production server, as seen above.
 You can also generate the above configuration automatically by using the `--ssl-cert-email <your-email-address>` flag when you run `nebari init` to initialize your project.
 :::
 
-
-Let's Encrypt heavily rate limits their production endpoint.  In order to avoid throttling, Nebari's traefik deployments will store retrieved certificates for the duration of their validity in a mounted PVC at a default location `/mnt/acme-certificates/acme.json`.
+Let's Encrypt heavily rate limits their production endpoint. In order to avoid throttling, Nebari's traefik deployments will store retrieved certificates for the duration of their validity in a mounted PVC at a default location `/mnt/acme-certificates/acme.json`.
 
 :::note
-In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up.  This may be necessary if you change the domain name of your Nebari deployment.
+In order to refresh the certificate before it is invalidated, you will need to delete the `acme.json` file then restart the Traefik deployment by deleting the existing pod and letting a new one spin up. This may be necessary if you change the domain name of your Nebari deployment.
 :::
 
   </TabItem>
@@ -404,6 +410,74 @@ Defining a wildcard certificate decreases the amount of Common Name (CN) names y
 
 </TabItem>
 </Tabs>
+
+### Shared Storage Configuration
+
+:::note
+As of Nebari 2024.9.1, alpha support for [Ceph](https://docs.ceph.com/en/latest/) shared file systems as an alternative to NFS is available.
+:::
+
+Nebari includes shared file systems for the jupyterhub user storage, jupyterhub shared storage, and conda store shared storage. By default, NFS drives are used.
+
+The initial benefit of using Ceph is increased read/write performance compared to NFS, but further benefits are expected in future development. Ceph is a distributed storage system which has the potential to provide increased performance, high availability, data redundancy, storage consolidation, and scalability to Nebari.
+
+:::danger
+Do not switch from one storage type to another on an existing Nebari deployment. Any files in the user home directory and conda environments will be lost if you do so! On GCP, all node groups in the cluster will be destroyed and recreated. Only change the storage type prior to the initial deployment.
+:::
+
+Storage is configured in the `nebari-config.yaml` file under the storage section.
+
+```yaml
+storage:
+  type: nfs
+  conda_store: 200Gi
+  shared_filesystem: 200Gi
+```
+
+Supported values for `storage.type` are `nfs` (default on most cloud providers), `efs` (default on AWS), and `cephfs`.
+
+When using the `cephfs` storage type option, the block storage underlying all Ceph storage will be provisioned through the same Kubernetes storage class. By default, Kubernetes will use the default storage class unless a specific one is provided. For enhanced performance, some cloud providers offer premium storage class options.
+
+You can specify the desired storage class under `ceph.storage_class_name` section in the configuration file. Below are examples of potential storage class values for various cloud providers:
+
+<Tabs>
+  <TabItem label="AWS" value="AWS" default="true">
+
+Premium storage is not available on AWS.
+</TabItem>
+<TabItem label="Azure" value="Azure">
+
+```yaml
+ceph:
+  storage_class_name: managed-premium
+```
+
+  </TabItem>
+  <TabItem label="GCP" value="GCP">
+
+```yaml
+ceph:
+  storage_class_name: premium-rwo
+```
+
+  </TabItem>
+  <TabItem label="Existing" value="Existing">
+
+```yaml
+ceph:
+  storage_class_name: some-cluster-storage-class
+```
+
+  </TabItem>
+  <TabItem label="Local" value="Local">
+
+Ceph is not supported on local deployments.
+</TabItem>
+</Tabs>
+
+:::note
+Premium storage is not available for some cloud providers on all node types. Check the documentation for your specific cloud provider to confirm which node types are compatible with which storage classes.
+:::
 
 ## More configuration options
 

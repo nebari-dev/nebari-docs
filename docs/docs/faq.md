@@ -31,8 +31,9 @@ There are drop-in replacements for `distributed`, `dask`, and `dask-gateway` wit
 ## What packages are needed in your environment to create a dashboard?
 
 When deploying an app with JHub App Launcher, you need to have the following in your environment:
+
 - `jhub-apps` package
-- packages corresponding  to the dashboard framework (for example, `panel`, `gradio`, etc.)
+- packages corresponding to the dashboard framework (for example, `panel`, `gradio`, etc.)
 - any other libraries required for the analysis in the dashboard creation script/notebook
 
 ## How can I install a package locally? Will this package be available to Dask workers?
@@ -130,7 +131,7 @@ Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
-First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [PyTorch best practices][pytorch best practices]. If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
+First be sure you chose a [GPU-enabled server when you selected a profile][selecting a profile]. Next, if you're using PyTorch, see [Using GPUs on Nebari][using gpus]. If it's still not working for you, be sure your environment includes a GPU-specific version of either PyTorch or TensorFlow, i.e. `pytorch-gpu` or `tensorflow-gpu`. Also note that `tensorflow>=2` includes both CPU and GPU capabilities, but if the GPU is still not recognized by the library, try removing `tensorflow` from your environment and adding `tensorflow-gpu` instead.
 
 ## How do I migrate from Qhub to Nebari?
 
@@ -159,13 +160,14 @@ If you have potential solutions or can help us move forward with updates to the 
 
 ## Why does my VS Code server continue to run even after I've been idle for a long time?
 
-Nebari automatically shuts down servers when users are idle, as described in Nebari's documentation for the [idle culler settings][idle-culler-settings]. This functionality currently applies only to JupyterLab servers. A VS Code instance, however, runs on Code Server, which isn't managed by the idle culler. VS Code, and other non-JupyterLab services, will not be automatically shut down. 
+Nebari automatically shuts down servers when users are idle, as described in Nebari's documentation for the [idle culler settings][idle-culler-settings]. This functionality currently applies only to JupyterLab servers. A VS Code instance, however, runs on Code Server, which isn't managed by the idle culler. VS Code, and other non-JupyterLab services, will not be automatically shut down.
 :::note
 Until this issue is addressed, we recommend manually shutting down your VS Code server when it is not in use.
 :::
+
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
 [idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
-[pytorch best practices]: how-tos/pytorch-best-practices
+[using gpus]: how-tos/use-gpus
