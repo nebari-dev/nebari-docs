@@ -53,7 +53,7 @@ If an issue is affecting you, start at the top of this list and complete as many
 4. If there is not an issue, write the most complete description of what’s happening including reproduction steps.
 5. [Optional] - Offer to help fix the issue (and it is totally expected that you ask for help; open-source maintainers want to help contributors).
 <!-- 6. TODO link to the PR section of the docs -->
-1. If you decide to help to fix the issue, deliver a well-crafted, tested PR.
+6. If you decide to help to fix the issue, deliver a well-crafted, tested PR.
 
 ## Working on issues to improve them
 
