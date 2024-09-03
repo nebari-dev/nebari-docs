@@ -103,32 +103,6 @@ module.exports = {
         "references/personas"
       ],
     },
-    // {
-    //   type: "category",
-    //   label: "Community",
-    //   link: {
-    //     type: "doc", id: "community/index"
-    //   },
-    //   items: [
-    //     "community/file-issues",
-    //     "community/code-contributions",
-    //     "community/nebari-tests",
-    //     "community/doc-contributions",
-    //     "community/style-guide",
-    //     "community/team-structure",
-    //     "community/plugins",
-    //     {
-    //       type: "category",
-    //       label: "Maintainers",
-    //       items: ["community/maintainers/github-conventions",
-    //         "community/maintainers/triage-guidelines",
-    //         "community/maintainers/reviewer-guidelines",
-    //         "community/maintainers/saved-replies",
-    //         "community/maintainers/release-process-branching-strategy",
-    //       ]
-    //     }
-    //   ],
-    // },
     {
       type: "doc",
       label: "Troubleshooting",
@@ -139,11 +113,5 @@ module.exports = {
       label: "FAQ",
       id: "faq",
     },
-    // TODO - uncomment once populated
-    // {
-    //   type: "doc",
-    //   label: "Glossary",
-    //   id: "glossary",
-    // },
   ],
 };

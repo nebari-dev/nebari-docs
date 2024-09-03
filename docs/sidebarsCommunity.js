@@ -47,6 +47,10 @@ module.exports = {
       },
       {
         type: "doc",
+        id: "decision-making",
+      },
+      {
+        type: "doc",
         id: "plugins",
       },
     ],
