@@ -41,7 +41,7 @@ The `conda` config is located in the `/home/{user}/.condarc` file. You can chang
 
 ## How do I clean up old environment builds in conda-store?
 
-You may find that the pods hosting your environment get full over time, prompting you to clear them out. You can delete environments completely (including all builds of the environment) in the conda-store UI. Go to the environment, click `Edit` and then click `Delete`.
+You may find that the pods hosting your environment get full over time, prompting you to clear them out. As an admin, you can delete environments completely (including all builds of the environment) in the conda-store UI. Go to the environment, click `Edit` and then click `Delete`.
 
 If you'd like to retain the latest version of an environment and only remove specific builds, you'll need to navigate to the conda-store admin page located at `<nebari-domain/conda-store/admin>`. Click on the environment you'd like to clean up. At the bottom of the page, there is a list of each environment build, each with it's own "delete" button.
 
