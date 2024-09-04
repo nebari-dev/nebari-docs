@@ -6,13 +6,13 @@ description: How to install a dev package from a local project
 
 # How to Develop Local Packages on Nebari
 
-As a software development platform, Nebari can be used for active package development. Since `conda-store` manages all environments, a dynamic installation of a local package requires additional care (after all, `pip install -e .` is explicitly disallowed for various reasons).
+As a software development platform, Nebari can be used for active package development. Since `conda-store` manages all environments, a dynamic installation of a local package requires additional care (`pip install -e .` is explicitly disallowed for various reasons, see below).
 
 While the setup for developing local packages may require unfamiliar extra steps for new users, the total time for setup is minimal.
 
 ## Why can't I just `pip install -e` my package?
 
-Nebari prohibits the standard local installation of packages, e.g. `pip install -e .`. On your personal computer, when you `pip install` a package into a conda environment, it will be placed inside of the conda environment folder structure. However, on Nebari, the environments are managed by `conda-store` in a directory structure which is read-only to users.
+Nebari blocks the standard local installation of packages, e.g. `pip install -e .`. On your personal computer, when you `pip install` a package into a conda environment, it will be placed inside of the conda environment folder structure. However, on Nebari, the environments are managed by `conda-store` in a directory structure which is read-only to users.
 
 For this reason, all pip installs would instead default to the user's `.local` directory. Unfortunately, _all_ environments will automatically pick up _everything_ has been installed in this directory. It is _extremely_ easy to create a situation in which all environments are broken due to a conflict. In fact, its possible to create a situation that causes a user's JupyterLab server to be unable to start. For this reason, local pip installs are prohibited in Nebari.
 
@@ -61,6 +61,6 @@ To use this environment to run code via the VS Code Python extension, you'll onl
 
 ## Conclusion
 
-Developing local packages on Nebari requires a few extra steps compared to developing on your local machine, but the additional time requirement is minimal.
+Developing local packages on Nebari involves a few extra steps compared to working directly on your local machine. However, these additional steps are minimal and ensure a well-contained and stable environment.
 
 To learn more about installing pip packages in general, check out the documentation on [installing pip packages from various sources](/docs/how-tos/install-pip-packages).
