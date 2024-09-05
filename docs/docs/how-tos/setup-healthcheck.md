@@ -1,6 +1,6 @@
 # Overview
 
-Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to 
+Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to
 
 # Enabling
 
