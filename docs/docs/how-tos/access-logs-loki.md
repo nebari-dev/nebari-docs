@@ -76,15 +76,17 @@ Grafana logs can be accessed programmatically from within a Jupyter Notebook or 
 
 - Create a Grafana Service Account and API token by following Grafana docs: https://grafana.com/docs/grafana/latest/administration/service-accounts/
 - Use example code below to retrieve logs from a specific Loki Data Source UID:
-```import os
+```import requests
+from datetime import datetime, timedelta
 import requests
+import json
 
-NEBARI_BASE_URL = "https://nebari.local"
-GRAFANA_TOKEN = "<SANITIZED>"
+NEBARI_BASE_URL = "<URL>" # Your Nebari URL e.g. https://nebari.local
+GRAFANA_TOKEN = "<Token>" # e.g. "glsa_4QWcA...", See Grafana Documentation
 
 headers = { "Authorization": f"Bearer {GRAFANA_TOKEN}" }
 
-url = "https://nebari.local/monitoring/api/datasources/"
+url = f'{NEBARI_BASE_URL}/monitoring/api/datasources/'
 response = requests.get(url, headers=headers)
 assert response.status_code == 200
 print(response.json())
@@ -101,18 +103,13 @@ print(f"Loki data source uid: {loki_datasource_uid}")
 # Example output: Loki data source uid: P8E80F9AEF21F6940
 
 # Set Up and Execute a Grafana Query:
-
-grafana_url = "https://nebari.local/monitoring"
+grafana_url = f'{NEBARI_BASE_URL}/monitoring'
 api_key = GRAFANA_TOKEN
 loki_data_source_uid = loki_datasource_uid
 
 # Query parameters
 query = '{app="jupyterhub"}'
 query_url = f'{grafana_url}/api/ds/query'
-
-from datetime import datetime, timedelta
-import requests
-import json
 
 headers = { 'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json' }
 
