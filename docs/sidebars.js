@@ -81,6 +81,8 @@ module.exports = {
         "how-tos/setup-monitoring",
         "how-tos/access-logs-loki",
         "how-tos/use-gpus",
+        "how-tos/develop-local-packages",
+        "how-tos/install-pip-packages",
         "how-tos/fine-grained-permissions",
         "how-tos/connect-via-ssh",
       ],
