@@ -12,7 +12,7 @@ monitoring:
     enabled: true
 ```
 
-# Checking Healthcheck statuses
+# Checking status of Healthchecks
 
 All healthchecks are exported as metrics to Prometheus and can be viewed in Grafana.
 
