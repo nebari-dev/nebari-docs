@@ -26,7 +26,7 @@ It's important to note that packages installed this way aren't available to the 
 Nebari automatically creates and manages `.bashrc` and `.profile`. Therefore, end users do not have write permissions to modify this file. However, by default Nebari _will_ source `.bash_profile`. Users may use this file to populate environment variables or set up alias, etc. However, there are some important things to note:
 
 - The `.bash_profile` is sourced _after_ the `.bashrc` - be aware of the implications, one of which is that you will lose changes to the prompt syntax. To avoid this, you can always source the `.bashrc` inside the .`bash_profile`.
-- JupyterLab does _not_ source `.bash_profile`.
+- JupyterLab kernels do _not_ source `.bash_profile` but the Jupyter terminal does.
 - The VS Code terminal does _not_ source `.bash_profile` by default.
 
 ## What if I can't see the active conda environment in the terminal?
