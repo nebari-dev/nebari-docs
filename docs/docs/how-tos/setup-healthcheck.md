@@ -1,3 +1,15 @@
+---
+id: setup-healthcheck
+title: Set up healthchecks with Kuberhealthy
+description: Set up healthchecks with Kuberhealthy
+---
+
+::: warning
+
+This feature is in beta status. It should be used with caution. 
+
+:::
+
 # Overview
 
 Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to
