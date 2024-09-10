@@ -76,6 +76,7 @@ Grafana logs can be accessed programmatically from within a Jupyter Notebook or 
 
 - Create a Grafana Service Account and API token by following Grafana docs: https://grafana.com/docs/grafana/latest/administration/service-accounts/
 - Use example code below to retrieve logs from a specific Loki Data Source UID:
+
 ```import requests
 from datetime import datetime, timedelta
 import requests
@@ -138,7 +139,6 @@ if response.status_code == 200:
 else:
     print(f'Error: {response.status_code}, {response.text}')
 ```
-
 
 ## Additional Information
 
