@@ -30,7 +30,7 @@ Follow your best judgment, and feel free to add to this document following our c
 - **Avoid abbreviations** like "e.g.", "i.e.", and "etc.". Use full words like "for example", "that is", and "and so on" respectively.
 - Use **serial commas**, also known as Oxford comma. For example: "Nebari brand uses purple, yellow, and green."
 - Leave **only one blank space between sentences**.
-- **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision](../how-tos/domain-registry#automatic-dns-provision).
+- **Break up long lines in code snippets** with "`\`" for better readability. For example, see the code block in [Automatic DNS provision][automatic-dns-provision].
 - Try and **use [semantic line breaks](https://sembr.org/)** to help with documentation and contribution reviews.
 - **Prefer American English** over British or other English variant to keep spelling consistency.
 
@@ -99,3 +99,7 @@ For example: "To start JupyterLab, you run `jupyter lab`."
 - The [Microsoft Writing Style Guide](https://learn.microsoft.com/en-gb/style-guide/welcome/) is also a very thorough style guide. The included A-Z word list is a handy reference if you're unsure about a specific term.
 - [Digital Ocean's tutorial style guide](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines).
 - [Write the Docs collection of resources for accessible writing](https://www.writethedocs.org/guide/writing/accessibility/).
+
+<!-- Internal links -->
+
+[automatic-dns-provision]: docs/how-tos/domain-registry#automatic-dns-provision

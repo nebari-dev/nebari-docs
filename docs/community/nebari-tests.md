@@ -11,7 +11,7 @@ This page has some tips for testing your contributions to make sure it works as 
 
 ### Test CLI manually
 
-If you have an [editable installation of Nebari](code-contributions#install-nebari-in-editable-mode), you can test your changes by running the [Nebari CLI commands](../get-started/quickstart) from within your development environment.
+If you have an [editable installation of Nebari](code-contributions#install-nebari-in-editable-mode), you can test your changes by running the [Nebari CLI commands][quickstart] from within your development environment.
 For example, you can run `nebari init` and make sure it builds the `nebari-config.yaml` file without errors.
 
 ### Test CLI with `pytest`
@@ -80,7 +80,7 @@ It can help you review and resolve day-to-day issues in the deployed clusters qu
 
 You can install `k9s` on macOS, Windows, and Linux with [these instructions project's README](https://github.com/derailed/k9s).
 
-For more details on using `k9s`, check out the [documentation on debugging Nebari](../how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s).
+For more details on using `k9s`, check out the [documentation on debugging Nebari][debugging-nebari].
 
 ### Cloud testing
 
@@ -233,3 +233,8 @@ To get around this, set the `NEBARI_K8S_VERSION` environment variable with:
 ```bash
 export NEBARI_K8S_VERSION=1.20
 ```
+
+<!-- Internal links -->
+
+[quickstart]: docs/get-started/quickstart
+[debugging-nebari]: docs/how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s

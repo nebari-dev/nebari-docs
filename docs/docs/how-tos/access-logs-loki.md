@@ -70,6 +70,77 @@ To see the logs from **all deployed apps**, use the label filter `container` = `
 
 To see **logs from a specific app**, use the `pod` label and begin typing either the name of the user running the app or the app name to find the correct pod. App pods are named with the convention `jupyter-[username]--[app_name]-[pod_id]`.
 
+## Programmatic Access to Logs
+
+Grafana logs can be accessed programmatically from within a Jupyter Notebook or JupyterHub App running in Nebari:
+
+- Create a Grafana Service Account and API token by following Grafana docs: https://grafana.com/docs/grafana/latest/administration/service-accounts/
+- Use example code below to retrieve logs from a specific Loki Data Source UID:
+
+```python
+import requests
+from datetime import datetime, timedelta
+import requests
+import json
+
+NEBARI_BASE_URL = "<URL>" # Your Nebari URL e.g. https://nebari.local
+GRAFANA_TOKEN = "<Token>" # e.g. "glsa_4QWcA...", See Grafana Documentation
+
+headers = { "Authorization": f"Bearer {GRAFANA_TOKEN}" }
+
+url = f'{NEBARI_BASE_URL}/monitoring/api/datasources/'
+response = requests.get(url, headers=headers)
+assert response.status_code == 200
+print(response.json())
+# Example output: [{'id': 2, 'uid': 'alertmanager', 'orgId': 1, 'name': 'Alertmanager', 'type': 'alertmanager',  ...
+
+# Specify a Loki Data Source UID:
+def get_loki_uid(datasources):
+    for datasource in datasources:
+        if datasource["name"] == "Loki":
+          return datasource["uid"]
+
+loki_datasource_uid = get_loki_uid(response.json())
+print(f"Loki data source uid: {loki_datasource_uid}")
+# Example output: Loki data source uid: P8E80F9AEF21F6940
+
+# Set Up and Execute a Grafana Query:
+grafana_url = f'{NEBARI_BASE_URL}/monitoring'
+api_key = GRAFANA_TOKEN
+loki_data_source_uid = loki_datasource_uid
+
+# Query parameters
+query = '{app="jupyterhub"}'
+query_url = f'{grafana_url}/api/ds/query'
+
+headers = { 'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json' }
+
+# Data payload
+payload = {
+    'queries': [
+        {
+            'datasource': {'uid': loki_data_source_uid},
+            'expr': query,
+            'refId': 'A',
+            'intervalMs': 100,
+            'maxDataPoints': 1
+        }
+    ],
+    "from":"now-5m",
+   "to":"now"
+}
+
+# Send the request
+response = requests.post(query_url, headers=headers, data=json.dumps(payload))
+
+# Print the response
+if response.status_code == 200:
+    data = response.json()
+    print(json.dumps(data["results"]["A"], indent=2))
+else:
+    print(f'Error: {response.status_code}, {response.text}')
+```
+
 ## Additional Information
 
 - [Understand Log Query Structure](https://grafana.com/docs/loki/latest/query/log_queries/)
