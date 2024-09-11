@@ -236,5 +236,5 @@ export NEBARI_K8S_VERSION=1.20
 
 <!-- Internal links -->
 
-[quickstart]: docs/get-started/quickstart
-[debugging-nebari]: docs/how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s
+[quickstart]: /docs/get-started/quickstart
+[debugging-nebari]: /docs/how-tos/debug-nebari#debugging-the-kubernetes-cluster-using-k9s
