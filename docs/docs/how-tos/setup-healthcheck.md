@@ -30,7 +30,9 @@ All healthchecks are exported as metrics to Prometheus and can be viewed in Graf
 
 For example: To see the uptime for the conda-store service, you can run:
 
-`1 - (sum(count_over_time(kuberhealthy_check{check="dev/conda-store-http-check", status="0"}[30d])) OR vector(0))/(sum(count_over_time(kuberhealthy_check{check="dev/conda-store-http-check", status="1"}[30d])) * 100)`
+```
+1 - (sum(count_over_time(kuberhealthy_check{check="dev/conda-store-http-check", status="0"}[30d])) OR vector(0))/(sum(count_over_time(kuberhealthy_check{check="dev/conda-store-http-check", status="1"}[30d])) * 100)
+```
 
 in Grafana, which will show you the following chart.
 
