@@ -4,7 +4,7 @@ title: Set up healthchecks with Kuberhealthy
 description: Set up healthchecks with Kuberhealthy
 ---
 
-::: warning
+:::warning
 
 This feature is in beta status. It should be used with caution.
 
@@ -14,7 +14,7 @@ This feature is in beta status. It should be used with caution.
 
 Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to Prometheus. This allows them to be seen in Grafana.
 
-# Enabling
+## Enabling
 
 Healthchecks are currently considered a beta feature that we are testing. Due to this, they are disabled by default. To enable healthchecks, add the following configuration under the `monitoring` configuration in your `nebari-config.yaml`.
 
@@ -24,7 +24,7 @@ monitoring:
     enabled: true
 ```
 
-# Checking status of Healthchecks
+## Checking status of Healthchecks
 
 All healthchecks are exported as metrics to Prometheus and can be viewed in Grafana.
 
@@ -43,4 +43,21 @@ have metrics available.
 
 ![Display of available kuberhealthy metrics in Grafana](/img/how-tos/nebari-healthchecks1.png)
 
-> Note: if you have previously deployed Nebari without healthchecks, You may need to restart your Prometheus service to get it to pick up the kuberhealthy metrics.
+:::note
+
+If you have previously deployed Nebari without healthchecks, You may need to restart your Prometheus service to get it to pick up the kuberhealthy metrics.
+
+:::
+
+## Summary of available healthchecks
+
+Below is an explanation of the available healthchecks. This list may not be comprehensive as work on this feature is ongoing.
+
+| <div style={{width:180}}>Check Label</div> | Description                                                                                                                                                     |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| conda-store-http-check                     | verifies that conda-store is accessible via it's REST API                                                                                                       |
+| jupyterhub-http-check                      | verifies JupyterHub is running                                                                                                                                  |
+| dns-status-internal                        | verifies internal DNS is accessible                                                                                                                             |
+| daemonset                                  | verifies that a daemonset can be created, fully provisioned, and torn down. This checks the full kubelet functionality of every node in your Kubernetes cluster |
+| deployment                                 | verifies that a fresh deployment can run, deploy multiple pods, pass traffic, do a rolling update (without dropping connections), and clean up successfully     |
+| keycloak-http-check                        | verifies Keycloak is accessible                                                                                                                                 |
