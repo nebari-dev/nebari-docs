@@ -37,7 +37,7 @@ export default function HomePage() {
             </p>
             <p>
               <a
-                href="/docs/category/get-started"
+                href="/docs/get-started"
                 className={styles.getStartedLink}
               >
                 Get Started&nbsp;&nbsp;
@@ -166,7 +166,7 @@ export default function HomePage() {
             <h2 className={styles.sectionHeading}>Get started with Nebari</h2>
             <p>
               <a
-                href="/docs/category/get-started"
+                href="/docs/get-started"
                 className={styles.getStartedLink2}
               >
                 Learn how to deploy a Nebari instance&nbsp;&nbsp;
