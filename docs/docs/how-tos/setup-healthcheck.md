@@ -6,13 +6,13 @@ description: Set up healthchecks with Kuberhealthy
 
 ::: warning
 
-This feature is in beta status. It should be used with caution. 
+This feature is in beta status. It should be used with caution.
 
 :::
 
 # Overview
 
-Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to
+Nebari integrates [Kuberhealthy](https://kuberhealthy.github.io/kuberhealthy/) to perform internal healthchecks on Nebari. This is an extensible Kubernetes native framework for continuous synthetic testing. Kuberhealthy is set up to export metrics to Prometheus. This allows them to be seen in Grafana.
 
 # Enabling
 
@@ -35,3 +35,10 @@ For example: To see the uptime for the conda-store service, you can run:
 in Grafana, which will show you the following chart.
 
 ![Grafana chart showing the uptime for conda store](/img/how-tos/nebari-healthchecks.png)
+
+To see what other healthchecks are available, you can use the metric explorer in Grafana. Select the metric type of `kuberhealthy_check` and the label filter of `check`. The values list will be a list of the checks that
+have metrics available.
+
+![Display of available kuberhealthy metrics in Grafana](/img/how-tos/nebari-healthchecks1.png)
+
+> Note: if you have previously deployed Nebari without healthchecks, You may need to restart your Prometheus service to get it to pick up the kuberhealthy metrics.
