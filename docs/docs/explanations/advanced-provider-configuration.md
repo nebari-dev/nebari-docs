@@ -117,14 +117,20 @@ amazon_web_services:
       max_nodes: 5
       gpu: false  # Set to true if using GPU instances
       launch_template:
-        ami_id: ami-0abcdef1234567890  # Replace with your custom AMI ID
-        pre_bootstrap_command: "echo 'Hello, World!'"  # Command to run before the node joins the cluster
+        # Replace with your custom AMI ID
+        ami_id: ami-0abcdef1234567890
+        # Command to run before the node joins the cluster
+        pre_bootstrap_command: "echo 'Hello, World!'"
 ```
 
 **Parameters:**
 
 - `ami_id` (Optional): The ID of the custom AMI to use for the nodes in this group. If specified, the `ami_type` is automatically set to `CUSTOM`.
-- `pre_bootstrap_command` (Optional): A command or script to execute on the node before it joins the Kubernetes cluster. This can be used for custom setup or configuration tasks.
+- `pre_bootstrap_command` (Optional): A command or script to execute on the node before
+  it joins the Kubernetes cluster. This can be used for custom setup or configuration
+  tasks. The format should be a single string in conformation with the shell syntax.
+  This command is injected in the `user_data` field of the launch template. For more
+  information, see [User Data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html).
 
 :::note
 If an `ami_id` is not provided, AWS will use the default Amazon Linux 2 AMI for the
