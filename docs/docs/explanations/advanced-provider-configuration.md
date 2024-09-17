@@ -127,6 +127,47 @@ azure:
   storage_account_postfix: t65ft6q5
 ```
 
+### Launch Templates (Optional)
+
+Nebari supports configuring launch templates for your node groups, enabling you to customize settings like the AMI ID and pre-bootstrap commands. This is particularly useful if you need to use a custom AMI or perform specific actions before the node joins the cluster.
+
+#### Configuring a Launch Template
+
+To configure a launch template for a node group in your `nebari-config.yaml`, add the `launch_template` section under the desired node group:
+
+```yaml
+amazon_web_services:
+  region: us-west-2
+  kubernetes_version: "1.18"
+  node_groups:
+    custom-node-group:
+      instance: "m5.large"
+      min_nodes: 1
+      max_nodes: 5
+      gpu: false  # Set to true if using GPU instances
+      launch_template:
+        ami_id: ami-0abcdef1234567890  # Replace with your custom AMI ID
+        pre_bootstrap_command: "echo 'Hello, World!'"  # Command to run before the node joins the cluster
+```
+
+**Parameters:**
+
+- `ami_id` (Optional): The ID of the custom AMI to use for the nodes in this group. If specified, the `ami_type` is automatically set to `CUSTOM`.
+- `pre_bootstrap_command` (Optional): A command or script to execute on the node before it joins the Kubernetes cluster. This can be used for custom setup or configuration tasks.
+
+:::note
+If an `ami_id` is not provided, AWS will use the default Amazon Linux 2 AMI for the
+specified instance type. You can find the latest optimized AMI IDs for Amazon EKS in you
+cluster region by inspecting its respective SSM parameter. For more information, see
+[Retrieve recommended Amazon Linux AMI IDs](https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html).
+:::
+
+:::warning **Important:** If you add a `launch_template` to an existing node group that was previously created without one, AWS will treat this as a change requiring the replacement of the entire node group. This action will trigger a reallocation of resources, effectively destroying the current node group and recreating it. This behavior is due to how AWS handles self-managed node groups versus those using launch templates with custom settings.
+:::
+
+:::hint **Recommendation:** To avoid unexpected downtime or data loss, consider creating a new node group with the launch template settings and migrating your workloads accordingly. This approach allows you to implement the new configuration without disrupting your existing resources.
+:::
+
 </TabItem>
 
 <TabItem value="do" label="DigitalOcean">
