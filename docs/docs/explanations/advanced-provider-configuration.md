@@ -129,12 +129,12 @@ amazon_web_services:
         ami_id: ami-0abcdef1234567890
         # Command to run before the node joins the cluster
         pre_bootstrap_command: |
-       	  #!/bin/bash
-       	  # This script is executed before the node is bootstrapped
-       	  # You can use this script to install additional packages or configure the node
-       	  # For example, to install the `htop` package, you can run:
-       	  # sudo apt-get update
-       	  # sudo apt-get install -y htop"
+          #!/bin/bash
+          # This script is executed before the node is bootstrapped
+          # You can use this script to install additional packages or configure the node
+          # For example, to install the `htop` package, you can run:
+          # sudo apt-get update
+          # sudo apt-get install -y htop"
 ```
 
 **Parameters:**
@@ -146,7 +146,7 @@ amazon_web_services:
   This command is injected in the `user_data` field of the launch template. For more
   information, see [User Data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html).
 
-> If you're using a `launch_template` with a custom `ami_id`, there's an issue with updating the `scaling`.desired_size` via Nebari configuration (terraform). To scale up, you must recreate the node group or adjust the scaling settings directly in the AWS Console UI (recommended). We are aware of this inconsistency and plan to address it in a future update.
+> If you're using a `launch_template` with a custom `ami_id`, there's an issue with updating the `scaling.desired_size` via Nebari configuration (terraform). To scale up, you must recreate the node group or adjust the scaling settings directly in the AWS Console UI (recommended). We are aware of this inconsistency and plan to address it in a future update.
 
 :::note
 If an `ami_id` is not provided, AWS will use the default Amazon Linux 2 AMI for the
