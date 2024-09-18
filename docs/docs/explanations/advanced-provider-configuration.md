@@ -114,7 +114,7 @@ To avoid unexpected downtime or data loss, consider creating a new node group wi
 
 To configure a launch template for a node group in your `nebari-config.yaml`, add the `launch_template` section under the desired node group:
 
-````yaml
+```yaml
 amazon_web_services:
   region: us-west-2
   kubernetes_version: "1.18"
@@ -135,6 +135,7 @@ amazon_web_services:
        	  # For example, to install the `htop` package, you can run:
        	  # sudo apt-get update
        	  # sudo apt-get install -y htop"
+```
 
 **Parameters:**
 
@@ -181,7 +182,7 @@ azure:
       min_nodes: 0
       max_nodes: 5
   storage_account_postfix: t65ft6q5
-````
+```
 
 </TabItem>
 
