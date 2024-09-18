@@ -72,6 +72,7 @@ module.exports = {
         "how-tos/nebari-extension-system",
         "how-tos/telemetry",
         "how-tos/setup-monitoring",
+        "how-tos/setup-healthcheck",
         "how-tos/access-logs-loki",
         "how-tos/use-gpus",
         "how-tos/develop-local-packages",
