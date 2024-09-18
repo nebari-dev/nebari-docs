@@ -118,7 +118,7 @@ Once your server is ready, you will be redirected to JupyterLab!
 
 [nebari-keycloak]: /docs/how-tos/configuring-keycloak
 [nebari-keycloak-add-user]: /docs/how-tos/configuring-keycloak#adding-a-nebari-user
-[install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation
+[install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation-on-nebari
 [profile-configuration]: /docs/explanations/profile-configuration
 [troubleshooting]: /docs/troubleshooting
 [create-dashboard]: /docs/tutorials/create-dashboard

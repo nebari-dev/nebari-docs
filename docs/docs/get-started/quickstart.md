@@ -4,6 +4,9 @@ title: Quickstart
 description: A cheat sheet of Nebari commands for returning users.
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari][install-nebari].
 
 <div align="center">
