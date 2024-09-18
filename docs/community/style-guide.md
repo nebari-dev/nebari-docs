@@ -102,4 +102,4 @@ For example: "To start JupyterLab, you run `jupyter lab`."
 
 <!-- Internal links -->
 
-[automatic-dns-provision]: docs/how-tos/domain-registry#automatic-dns-provision
+[automatic-dns-provision]: /docs/how-tos/domain-registry#automatic-dns-provision

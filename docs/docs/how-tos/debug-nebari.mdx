@@ -155,7 +155,8 @@ Once you have installed kubectl, you can use it to debug issues within your Neba
 kubectl provides a variety of commands and options to help you diagnose and fix issues with your deployment.
 In this section, we will cover some useful `kubectl` commands to get you started.
 
-<details><summary>Viewing all pods in a namespace</summary>
+<details>
+<summary>Viewing all pods in a namespace</summary>
 
 To view all the pods in a namespace, use the following command:
 
@@ -168,7 +169,8 @@ to specify the namespace you want to view.
 
 </details>
 
-<details><summary>Viewing all pods in all namespaces</summary>
+<details>
+<summary>Viewing all pods in all namespaces</summary>
 
 To view the logs for a specific pod, use the following command:
 
@@ -187,7 +189,8 @@ refer to [general configuration settings](/docs/explanations/advanced-configurat
 
 </details>
 
-<details><summary>Viewing logs for a specific pod</summary>
+<details>
+<summary>Viewing logs for a specific pod</summary>
 
 ```bash
 kubectl exec -it <pod-name> -n <namespace> -- /bin/bash
