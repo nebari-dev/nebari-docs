@@ -1,5 +1,5 @@
 ---
-title: Share Git Respository via JupyterLab-Gallery
+title: Share Git Repository via JupyterLab-Gallery
 description: Share files or tutorials with your team
 ---
 
@@ -27,7 +27,7 @@ section, each repository must have a `title` and a `git` location. There are als
 optional config options. 
 
 The configuration is set at two different levels. Top level gallery settings define the title of
-the Gallery section and the location in which the repositories are downloaded. The respository 
+the Gallery section and the location in which the repositories are downloaded. The repository 
 level settings are defined for each repository. The descriptions of each section are described 
 below. 
 
