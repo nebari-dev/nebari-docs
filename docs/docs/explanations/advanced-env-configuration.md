@@ -8,7 +8,7 @@ description: Configure environments with conda-store
 
 :::tip
 For guidance on managing or creating environments directly with conda-store, see our guide on [Creating new environments on Nebari](/docs/tutorials/creating-new-environments.md).
-If you're looking for information on updating your namespaces after a recent upgrade, refer to our troubleshooting guide on [Migrating namespaces](/docs/troubleshooting.mdx#Conda-store-compatibility-migration-steps).
+If you're looking for information on updating your namespaces after a recent upgrade, refer to our troubleshooting guide on [Migrating namespaces](/docs/troubleshooting.mdx#conda-store-compatibility-migration-steps-when-upgrading-to-045).
 :::
 
 <!-- TODO: Update the time to create environments based in new conda-store updates -->

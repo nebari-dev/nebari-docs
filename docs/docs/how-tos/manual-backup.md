@@ -114,8 +114,7 @@ Once this is complete, upload the tar file to S3 using the AWS command-line tool
 aws s3 cp 2021-04-23.tar s3://<your_bucket_name>/backups/2021-04-23.tar
 ```
 
-Replacing `your_bucket_name` with a bucket you have created. If you don't have an existing bucket, instructions are here:
-<https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html>
+Replacing `your_bucket_name` with a bucket you have created. If you don't have an existing bucket, check out the [instructions for creating a new bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html)
 
 ### Download from object storage and decompress
 
@@ -206,8 +205,7 @@ azcopy copy "https://[account].blob.core.windows.net/[container]/nebari-backups/
 
 ### Digital Ocean
 
-Instructions will be similar to those for AWS above, but use Digital Ocean spaces instead of S3. This guide explains installation of the command-line tool:
-<https://www.digitalocean.com/community/tutorials/how-to-migrate-from-amazon-s3-to-digitalocean-spaces-with-rclone>
+Instructions will be similar to those for AWS above, but use Digital Ocean spaces instead of S3. For more information on command-line tool, check out the [documentation for Digital Ocean Spaces](https://www.digitalocean.com/community/tutorials/how-to-migrate-from-amazon-s3-to-digitalocean-spaces-with-rclone)
 
 ## JupyterHub Database
 

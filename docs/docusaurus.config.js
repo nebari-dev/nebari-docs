@@ -2,8 +2,9 @@
 // @ts-check
 
 // https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
-const lightCodeTheme = require("prism-react-renderer/themes/nightOwlLight");
-const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.nightOwlLight; 
+const darkCodeTheme = themes.nightOwl;
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
@@ -65,9 +66,6 @@ const config = {
         docs: {
           path: "docs",
           routeBasePath: "docs",
-          admonitions: {
-            icons: "emoji",
-          },
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo

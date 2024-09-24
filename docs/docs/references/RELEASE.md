@@ -87,16 +87,16 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 
 ## What's Changed
 
-- make userscheduler run on general node group by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2415>
-- Upgrade to Pydantic V2 by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2348>
-- Pydantic2 PR fix by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2421>
-- remove redundant pydantic class, fix bug by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2426>
-- Update `python-keycloak` version pins constraints by @viniciusdc in <https://github.com/nebari-dev/nebari/pull/2435>
-- add HERA_TOKEN env var to user pods by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2438>
-- fix docs link by @Adam-D-Lewis in <https://github.com/nebari-dev/nebari/pull/2443>
-- Update allowed admin groups by @aktech in <https://github.com/nebari-dev/nebari/pull/2429>
+- make userscheduler run on general node group by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2415
+- Upgrade to Pydantic V2 by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2348
+- Pydantic2 PR fix by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2421
+- remove redundant pydantic class, fix bug by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2426
+- Update `python-keycloak` version pins constraints by @viniciusdc in https://github.com/nebari-dev/nebari/pull/2435
+- add HERA_TOKEN env var to user pods by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2438
+- fix docs link by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2443
+- Update allowed admin groups by @aktech in https://github.com/nebari-dev/nebari/pull/2429
 
-**Full Changelog**: <https://github.com/nebari-dev/nebari/compare/2024.4.1...2024.5.1>
+**Full Changelog**: https://github.com/nebari-dev/nebari/compare/2024.4.1...2024.5.1
 
 ## Release 2024.4.1 - April 20, 2024
 
@@ -471,7 +471,7 @@ This is a hot-fix release that resolves an issue whereby users in the `analyst` 
 - improve CLI tests by @pmeier in https://github.com/nebari-dev/nebari/pull/1710
 - Fix Existing dashboards by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/1723
 - Fix dashboards by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/1727
-- Typo in the conda-store <-> conda_store key by @costrouc in https://github.com/nebari-dev/nebari/pull/1740
+- Typo in the conda_store key by @costrouc in https://github.com/nebari-dev/nebari/pull/1740
 - use -V (upper case) for --version short form by @pmeier in https://github.com/nebari-dev/nebari/pull/1720
 - [pre-commit.ci] pre-commit autoupdate by @pre-commit-ci in https://github.com/nebari-dev/nebari/pull/1692
 - improve pytest configuration by @pmeier in https://github.com/nebari-dev/nebari/pull/1700

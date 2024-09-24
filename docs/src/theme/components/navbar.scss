@@ -4,7 +4,9 @@
 
 .navbar__brand {
   @include link-style(var(--secondary-nebari), var(--secondary-nebari));
-  text-decoration: none;
+  & { 
+    text-decoration: none;
+  }
 
   .navbar__title {
     font-size: 1.5rem;
@@ -34,7 +36,9 @@
 
   .navbar__brand {
     @include link-style(var(--secondary-nebari), var(--secondary-nebari));
-    text-decoration: none;
+    & { 
+      text-decoration: none;
+    }
   }
 }
 

@@ -161,7 +161,7 @@ This command starts a local development server and opens up a browser window.
 Most changes are reflected live without having to restart the server.
 
 :::note
-By default, this will load your site at <http://localhost:3000/>.
+By default, this will load your site at \<http://localhost:3000/\>.
 
 You can specify a different port with `yarn start --port <port-number>`.
 :::
@@ -183,7 +183,7 @@ yarn run serve
 ```
 
 :::note
-By default, this will also load your site at <http://localhost:3000/>.
+By default, this will also load your site at \<http://localhost:3000/\>.
 
 You can specify a different port with `yarn start --port <port-number>`.
 :::
