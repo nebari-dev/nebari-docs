@@ -79,6 +79,7 @@ module.exports = {
         "how-tos/install-pip-packages",
         "how-tos/fine-grained-permissions",
         "how-tos/connect-via-ssh",
+        "how-tos/jupyter-gallery",
       ],
     },
     {
