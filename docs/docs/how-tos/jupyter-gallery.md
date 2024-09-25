@@ -52,7 +52,8 @@ below.
 
 ### Sample configuration
 
-Below is an example of the Gallery settings from the `nebari-config.yaml`.
+Below is an example of the Gallery settings from the `nebari-config.yaml`. Note that \<encoding\>
+and \<PAT\> should be replaced with the actual encoding an Private Access Token, respectively. 
 
 ```
 jupyterlab:
@@ -73,7 +74,7 @@ jupyterlab:
       icon: "data:image/png;base64,<encoding>"
       git: https://gitlab....net/companyxyz/examples.git
       account: examples
-      token: "{{ GITLAB_PAT }}"
+      token: "<PAT>"
 ```
 
 ## Using JupyterLab-Gallery
@@ -100,3 +101,5 @@ and the download button allows them to fetch an updated copy of the repo (if ava
 
 For more information on the JupyterLab-Gallery project, visit the
 [JupyterLab-Gallery codebase repo](https://github.com/nebari-dev/jupyterlab-gallery).
+
+For more information about custom JupyterLab Overrides in the Nebari config, visit the [Custom Overrides Configurations](../explanations/custom-overrides-configuration#jupyterlab) documentation.
