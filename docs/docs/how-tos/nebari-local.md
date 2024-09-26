@@ -74,8 +74,7 @@ Note You will be prompted to enter values for some of the choices above if they 
 :::
 
 :::note
-If you are deploying locally, DNS is not necessary except for dask dashboard and the notebook
-scheduler extension. Therefore for test deployments it is recommended leave out the `--domain` option.
+If you are deploying for testing purposes, omitting the `--domain` option is recommended to prevent issues related to setting up a DNS domain for your deployment. Nebari will return the external IP associated with the Kubernetes cluster's load balancer by default.
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
