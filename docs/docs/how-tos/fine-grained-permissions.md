@@ -1,7 +1,7 @@
 ---
-id: group-directory-creation
-title: Creating and Managing Groups and Directories
-description: How to configure Keycloak's and JupyterHub's groups and directories.
+id: fine-grained-permissions
+title: Creating and Managing Groups, Roles, and Directories
+description: How to configure Keycloak's permissions, groups and roles, and manage group directories in JupyterHub.
 ---
 
 Groups are a fundamental and vital part of the Nebari ecosystem. They are used to manage access to a wide range of services within Nebari, including JupyterHub instances, Keycloak realms, Conda environments, and computing resources. By grouping users based on roles, projects, or departments, Nebari simplifies the management of permissions and resource sharing.
