@@ -49,7 +49,6 @@ We use the following guidelines to manage `git` branches by assigning certain ro
 
 - [`main`](https://github.com/nebari-dev/nebari/tree/main) - Represents the active development branch and is the _default_ branch on the GitHub repository.
 
-
 ## Release Tags
 
 - `YYYY-MM-releaseNumber` - Represents the tag for a particular release.
