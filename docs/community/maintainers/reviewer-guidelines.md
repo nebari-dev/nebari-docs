@@ -62,7 +62,7 @@ Only maintainers can merge pull requests. Please follow these guidelines:
   - If the contribution is made to the `nebari-dev/nebari` repository, then you'll need to trigger the Kubernetes tests
     by commenting `/bot run tests` on the PR.
   - If the contribution is made to the `nebari-dev/nebari-docs` repository, then make sure to check the Netlify build and preview.
-- In case of merge conflicts, ask the PR submitter to rebase on `develop`.
+- In case of merge conflicts, ask the PR submitter to rebase on `main`.
 - Squashing commits or cleaning up commit messages of a PR that you consider too messy is OK.
   Remember to retain the original author’s name when doing this.
 - When you want to reject a PR: if it’s very straightforward, you can close it and explain why. If it’s not,
