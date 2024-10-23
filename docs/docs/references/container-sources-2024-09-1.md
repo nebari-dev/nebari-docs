@@ -13,9 +13,123 @@ One solution to these supply-chain concerns is to deploy Nebari from private loc
 Deploying Nebari in this fashion eliminates significant supply chain surface-area, but requires identifying all containers used by Nebari.  
 
 The following configuration enumerates all container images used by Nebari 2024-9-1 and demonstrates how to source them from a private repo denoted by the string `[LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com`.  
-The commented-out `registry` and `repository` keys document the original public source repository from which the container images are to be mirrored.
+The commented-out elements document the original public sources from which the container images are to be mirrored.
 
 ```
+default_images:
+  #jupyterhub: quay.io/nebari/nebari-jupyterhub:2024.5.1
+  jupyterhub: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/nebari/nebari-jupyterhub:2024.5.1
+  #jupyterlab: quay.io/nebari/nebari-jupyterlab:2024.5.1
+  jupyterlab: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/nebari/nebari-jupyterlab:2024.5.1
+  #dask_worker: quay.io/nebari/nebari-dask-worker:2024.5.1
+  dask_worker: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/nebari/nebari-dask-worker:2024.5.1
+
+security:
+  keycloak:
+    overrides:
+      image:
+        # Keycloak image repository
+        #repository: quay.io/keycloak/keycloak # default
+        repository: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/keycloak/keycloak
+        # Overrides the Keycloak image tag whose default is the chart version
+        #tag: "15.0.2" # default
+        tag: ""
+
+      # This container is used at deploy-time to download keycloak-metrics-spi
+      extraInitContainers: |
+        - command:
+          - sh
+          - -c
+          - | wget --no-check-certificate https://github.com/aerogear/keycloak-metrics-spi/releases/download/2.5.3/keycloak-metrics-spi-2.5.3.jar -P /data/ &&
+            export SHA256SUM=9b3f52f842a66dadf5ff3cc3a729b8e49042d32f84510a5d73d41a2e39f29a96 &&
+            if ! (echo "$SHA256SUM  /data/keycloak-metrics-spi-2.5.3.jar" | sha256sum -c)
+              then
+                echo "Error: Checksum not verified" && exit 1
+              else
+                chown 1000:1000 /data/keycloak-metrics-spi-2.5.3.jar &&
+                chmod 777 /data/keycloak-metrics-spi-2.5.3.jar
+            fi
+          image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/alpine:latest
+          name: initialize-spi-metrics-jar
+      pgchecker:
+        image:
+          # repository: docker.io/busybox
+          repository: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/docker.io/busybox
+          tag: 1.32
+      postgresql:
+        image:
+          #registry: docker.io
+          registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+          #repository: bitnami/postgresql
+          repository: docker.io/bitnami/postgresql
+          tag: 11.11.0-debian-10-r31
+          digest: ""
+
+cluster_autoscaler:
+  overrides:
+    image:
+      #repository: k8s.gcr.io/autoscaling/cluster-autoscaler
+      repository: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/k8s.gcr.io/autoscaling/cluster-autoscaler
+      tag: v1.23.0
+
+ingress:
+    traefik-image:
+      image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/traefik
+      tag: 2.9.1
+
+conda_store:
+  image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quansight/conda-store-server
+  image_tag: 2024.3.1
+
+conda_store:
+  nfs_server_image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/gcr.io/google_containers/volume-nfs
+  nfs_server_image_tag: "0.8"
+  overrides:
+    minio:
+      image:
+        #registry: docker.io
+        registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+        #repository: bitnami/minio
+        repository: docker.io/bitnami/minio
+        tag: 2021.4.22-debian-10-r0
+    postgresql:
+      image:
+        #registry: docker.io
+        registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+        #repository: bitnami/postgresql
+        repository: docker.io/bitnami/postgresql
+        tag: 11.14.0-debian-10-r17
+        digest: ""
+    redis:
+      image:
+        #registry: docker.io
+        registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+        #repository: bitnami/redis
+        repository: docker.io/bitnami/redis
+        tag: 7.0.4-debian-11-r4
+        digest: ""
+
+argo_workflows:
+  overrides:
+    controller:
+      image:
+        #registry: quay.io
+        registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+        #repository: argoproj/workflow-controller
+        repository: quay.io/argoproj/workflow-controller
+        tag: ""
+    server:
+      image:
+        #registry: quay.io
+        registry: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com
+        #repository: argoproj/argocli
+        repository: quay.io/argoproj/argocli
+        tag: "v3.4.4"
+  nebari_workflow_controller:
+    enabled: true
+    image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/nebari/nebari-workflow-controller
+    image_tag: 2024.5.1
+
 monitoring:
   overrides:
     prometheus:
@@ -123,7 +237,6 @@ monitoring:
         #repository: grafana/promtail
         repository: docker.io/grafana/promtail
         tag: null
-    # https://github.com/bitnami/charts/blob/440ec159c26e4ff0748b9e9866b345d98220c40a/bitnami/minio/values.yaml
     minio:
       image:
         #registry: docker.io
@@ -131,6 +244,7 @@ monitoring:
         #repository: bitnami/minio
         repository: docker.io/bitnami/minio
         tag: 2021.4.22-debian-10-r0
+
 jupyterhub:
   #volume_mount_init_image: "busybox:1.31"
   volume_mount_init_image: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/busybox:1.31
@@ -166,6 +280,7 @@ jupyterhub_ssh:
   jupyterhub_sftp_image:
     name: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/quay.io/jupyterhub-ssh/sftp
     tag: 0.0.1-0.dev.git.142.h402a3d6
+
 dask_gateway:
   dask_gateway_image:
     #name: ghcr.io/dask/dask-gateway-server
@@ -175,6 +290,7 @@ dask_gateway:
     #name: ghcr.io/dask/dask-gateway-server
     name: [LOCAL_ECR].dkr.ecr.us-gov-east-1.amazonaws.com/ghcr.io/dask/dask-gateway-server
     tag: "2022.4.0"
+
 forward_auth:
   traefik_forwardauth_image:
     #name: maxisme/traefik-forward-auth
