@@ -126,7 +126,7 @@ If you would like to set a DNS record for the master node, you can do so by addi
 <master node ip> <your domain name>
 ```
 
-and make sure to replace `<master node ip>` with the ip address of your master node and `<your domain name>` with the domain name you would like to use. If using a serivce such as CloudFlare to manage your DNS records, you can also set up an A record to point to the master node ip address and the above step will not be required.
+and make sure to replace `<master node ip>` with the ip address of your master node and `<your domain name>` with the domain name you would like to use. If using a service such as CloudFlare to manage your DNS records, you can also set up an A record to point to the master node ip address and the above step will not be required.
 
 Though, do update the contents of `group_vars/all.yaml` to include the extra field (at the end of the file):
 
@@ -138,7 +138,7 @@ This will ensure that the traefik reverse proxy is configured to use the domain 
 
 ## Checking services
 
-For debugging purposes, you can inspect service status, logs or restart an individual service while connected to the master node. Bellow we give an example of how to do this for the JupyterHub and Slurm services.
+For debugging purposes, you can inspect service status, logs or restart an individual service while connected to the master node. Below we give an example of how to do this for the JupyterHub and Slurm services.
 
 ```bash
 # Restart JupyterHub:

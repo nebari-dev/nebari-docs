@@ -238,13 +238,13 @@ host_vars/hpc02-test.yaml file.
 ...
 copy_files_hpc02-test:
   - src: /path/to/file/on/control/node
-    dest: /path/to/file/on/manged/node
+    dest: /path/to/file/on/managed/node
     owner: root
     group: root
     mode: 'u=rw,g=r,o=r'
     directory_mode: '644'
   - src: /path/to/other/file/on/control/node
-    dest: /path/to/other/file/on/manged/node
+    dest: /path/to/other/file/on/managed/node
     owner: vagrant
     group: users
     mode: '666'
@@ -276,7 +276,7 @@ slurmdbd_config:
 
 ### Accessing Nebari Slurm from a Domain
 
-By default, a Nebari-Slurm deployment must be accesssed using the ip
+By default, a Nebari-Slurm deployment must be accessed using the ip
 address of the hpc_master node. However, if a domain name has been
 set up to point to the hpc_master node, then Nebari Slurm's router,
 [Traefik](https://doc.traefik.io/traefik/), can be configured to work
@@ -401,7 +401,7 @@ backup_environment:
 
 - `backup_enabled` :: determines whether backups are enabled
 - `backup_on_calendar` :: determines the frequency to perform backups. Consult [systemd timer](https://www.freedesktop.org/software/systemd/man/systemd.timer.html) documentation for syntax
-- `backup_randomized_delay` :: is the random delay in seconds to apply to backups. Usefull to prevent backups from all being performed at an exact time each day
+- `backup_randomized_delay` :: is the random delay in seconds to apply to backups. Useful to prevent backups from all being performed at an exact time each day
 - `backup_environment` :: are all the key value pairs used to configure restic. RESTIC_REPOSITORY and RESTIC_PASSWORD are required. The rest are environment variables for the specific [backup repository](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html).
 
 ### Manual backup

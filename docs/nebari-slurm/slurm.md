@@ -103,7 +103,7 @@ configured.
 ## Modifying Node State
 
 There are several common cases where one would need to manually change
-the node state. All slurm managment is done via the `sacct` and
+the node state. All slurm management is done via the `sacct` and
 `scontrol` command. In this case we need to use `scontrol` command.
 
 ```shell

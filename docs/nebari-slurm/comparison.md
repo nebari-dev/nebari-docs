@@ -28,7 +28,7 @@ a managed Kubernetes.
 QHub-HPC may be your best option since deployment does not require the
 complexity of managing a kubernetes cluster. If you do have a devops
 or IT team to help manage kubernetes on bare metal QHub could be a
-great option. But be advised that managing Kubenetes comes with quite
+great option. But be advised that managing Kubernetes comes with quite
 a lot of complexity which the cloud providers handle for us.
 
 3. Are you concerned about absolute best performance?

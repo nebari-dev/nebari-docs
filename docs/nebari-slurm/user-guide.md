@@ -71,7 +71,7 @@ additional info.
 
 If you stop your dashboard from the Home tab of Jupyterhub, and wish
 to restart it then click the dashboard name, scroll to the bottom of
-the form, and push Save to retart. Do **not** click on the start
+the form, and push Save to restart. Do **not** click on the start
 button on the Home tab of Jupyterhub. This option does **not** work
 currently. ![Click Green Highlighted Region to Restart
 Dashboard](_static/images/qhub-dashboards-bug.png)
