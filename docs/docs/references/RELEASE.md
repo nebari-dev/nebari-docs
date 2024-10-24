@@ -1312,7 +1312,7 @@ Explicit user facing changes:
 
 - `qhub deploy -c qhub-config.yaml` no longer prompts unsupported argument for `load_config_file`.
 - Minor changes on the Step-by-Step walkthrough on the docs.
-- Revamp of README.md to make it concise and highlight QHub HPC.
+- Revamp of README.md to make it concise and highlight Nebari Slurm.
 
 ### Breaking changes
 
