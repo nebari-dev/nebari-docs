@@ -53,7 +53,9 @@ jhub_apps:
     # c.JAppsConfig.<ATTRIBUTE>
     # See https://github.com/nebari-dev/jhub-apps/blob/5ed5c9d3d1eeb08a5710001fef1e63295d7cb48d/jhub_apps/config_utils.py#L5
     service_workers: 4
-    allow_multiple_jupyterlab: true
+    blocked_frameworks:
+      - jupyterlab
+      - custom
 ```
 
 ## Usage
