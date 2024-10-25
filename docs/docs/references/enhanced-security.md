@@ -4,7 +4,7 @@ The security of _AWS Nebari_ deployments can be enhanced through the following d
 
 - **Explicit definition of container sources**  
   This option allows for the use of locally mirrored, security-hardened, or otherwise customized container images in place of the containers used by default.
-  See: [container-sources](container-sources-2024-09-1.md)
+  See: [container-sources](container-sources.md)
 
 - **Definition of an ssh key that can access EKS hosts**  
   EKS hosts by default cannot be accessed via ssh. This configuration item allows ssh access into EKS hosts, which can be useful for troubleshooting or external monitoring and auditing purposes.
