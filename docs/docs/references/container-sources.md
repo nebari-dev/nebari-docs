@@ -1,20 +1,22 @@
 ## Deploying and Running Nebari from a Private Container Repository
-Nebari deploys and runs FOSS components as containers running in Kubernetes. 
-By default, Nebari sources each container from the container's respective public repository, typically `docker.io` or `quay.io`. 
+
+Nebari deploys and runs FOSS components as containers running in Kubernetes.
+By default, Nebari sources each container from the container's respective public repository, typically `docker.io` or `quay.io`.
 This introduces supply-chain concerns for security-focused customers.
 
+One solution to these supply-chain concerns is to deploy Nebari from private locally-mirrored containers:
 
-One solution to these supply-chain concerns is to deploy Nebari from private locally-mirrored containers:  
 - Create a controlled private container repository (e.g. ECR or GitLab Container Repo)
 - Mirror all containers used by Nebari into this private container repository
 - Use the `overrides` mechanism in `nebari-config.yaml` to specify the mirrored container sources
 
-Deploying Nebari in this fashion eliminates significant supply chain surface-area, but requires identifying all containers used by Nebari.  
+Deploying Nebari in this fashion eliminates significant supply chain surface-area, but requires identifying all containers used by Nebari.
 
 The following configuration enumerates all container images used by Nebari 2024-9-1 and demonstrates how to source them from a private repo denoted by the string `[LOCAL_REPO]`.  
 The commented-out elements document the original public sources from which the container images are to be mirrored.
 
 ### Nebari 2024-9-1 Containers
+
 ```
 default_images:
   #jupyterhub: quay.io/nebari/nebari-jupyterhub:2024.5.1
