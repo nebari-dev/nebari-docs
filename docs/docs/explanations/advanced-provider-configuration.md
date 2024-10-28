@@ -110,6 +110,12 @@ that the user manages.
 
 Nebari supports setting an existing KMS key while deploying Nebari to implement encryption of secrets
 created in Nebari's EKS cluster. The KMS key must be a `Symmetric` key set to `encrypt and decrypt` data.
+
+Warning: Enabling EKS cluster secrets encryption, by setting `amazon_web_services.eks_kms_arn`, is an
+irreversible action, and if the KMS key used for envelope encrption of secrets is ever deleted, then
+there is no way to recover the EKS cluster.
+Consult [Encrypt K8s secrets with AWS KMS on existing clusters](https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html) for more information.
+
 Here is an example of how you would set KMS key ARN in `nebari-config.yaml`.
 
 ```yaml
