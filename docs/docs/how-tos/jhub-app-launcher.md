@@ -40,6 +40,24 @@ JHub App Launcher is was integrated into Nebari in version
 and is not enabled by default.
 :::
 
+## Overrides
+
+This integration also supports overrides, as in configuring jhub-apps via `nebari-config.yml`.
+The syntax for the same is given below:
+
+```yaml
+jhub_apps:
+  enabled: true
+  overrides:
+    # Anything that can be customized via
+    # c.JAppsConfig.<ATTRIBUTE>
+    # See https://github.com/nebari-dev/jhub-apps/blob/5ed5c9d3d1eeb08a5710001fef1e63295d7cb48d/jhub_apps/config_utils.py#L5
+    service_workers: 4
+    blocked_frameworks:
+      - jupyterlab
+      - custom
+```
+
 ## Usage
 
 Documentation on how to create apps is included in the
