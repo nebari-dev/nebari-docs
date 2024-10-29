@@ -30,11 +30,6 @@ module.exports = {
             id: "configuration",
         },
         {
-            label: "User Guide",
-            type: "doc",
-            id: "user-guide",
-        },
-        {
             label: "Benchmark",
             type: "doc",
             id: "benchmark"
