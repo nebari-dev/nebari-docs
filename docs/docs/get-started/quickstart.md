@@ -4,6 +4,9 @@ title: Quickstart
 description: A cheat sheet of Nebari commands for returning users.
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This is a quick Nebari CLI reference. If you're new to Nebari, start at [Installing Nebari][install-nebari].
 
 <div align="center">
@@ -121,14 +124,14 @@ nebari init azure --project projectname \
 
 ## Validate (optional)
 
-After creating the `nebari-config.yaml` file, you can customize it. The Nebari package uses Pydantic for schema validation.  To ensure your customizations are valid, run:
+After creating the `nebari-config.yaml` file, you can customize it. The Nebari package uses Pydantic for schema validation. To ensure your customizations are valid, run:
 
 ```bash
 nebari validate -c nebari-config.yaml
 ```
 
 :::note
-Extensions built using the [Nebari Extension System][nebari-extension-system] may extend the Nebari schema.  If you are intending to use an extension and `nebari validate` returns an error `Extra inputs are not permitted`, ensure that the the correct versions of the extensions you intend to use are installed in your active Python environment.
+Extensions built using the [Nebari Extension System][nebari-extension-system] may extend the Nebari schema. If you are intending to use an extension and `nebari validate` returns an error `Extra inputs are not permitted`, ensure that the the correct versions of the extensions you intend to use are installed in your active Python environment.
 :::
 
 :::note
@@ -143,12 +146,11 @@ You can generate the (Terraform) deployment workflow scripts with:
 nebari render -c nebari-config.yaml
 ```
 
-This is the actual step that loads the stage classes/models and generates physical IaC files based on your Nebari config file and installed package versions.  It is not necessary to manually run a render to deploy.  However, it can be useful (especially if you use a GitOps workflow with GitHub Actions or GitLab CI/CD) to review the effects of config files changes on the resulting IaC before deploying.
+This is the actual step that loads the stage classes/models and generates physical IaC files based on your Nebari config file and installed package versions. It is not necessary to manually run a render to deploy. However, it can be useful (especially if you use a GitOps workflow with GitHub Actions or GitLab CI/CD) to review the effects of config files changes on the resulting IaC before deploying.
 
 :::note
 This command is automatically run when you `deploy`.
 :::
-
 
 ## Deploy
 

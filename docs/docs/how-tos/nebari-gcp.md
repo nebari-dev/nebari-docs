@@ -125,7 +125,6 @@ tab and enable the following APIs.
 - Identity and Access Management (IAM) API
 - Cloud Resource Manager API
 
-
 ## Initializing Nebari
 
 Great, you’ve gone through the [Nebari Installation][nebari-install] and [authentication setup](#authentication) steps, and have ensured that all the necessary
@@ -236,7 +235,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#initializing-nebari). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is

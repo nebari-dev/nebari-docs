@@ -2,8 +2,9 @@
 // @ts-check
 
 // https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
-const lightCodeTheme = require("prism-react-renderer/themes/nightOwlLight");
-const darkCodeTheme = require("prism-react-renderer/themes/nightOwl");
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.nightOwlLight; 
+const darkCodeTheme = themes.nightOwl;
 
 // Adding reusable information
 const githubOrgUrl = "https://github.com/nebari-dev";
@@ -46,14 +47,7 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
-
-  // Plugings need installing first then add here
-  plugins: [
-    "docusaurus-plugin-sass",
-    require.resolve("docusaurus-lunr-search"),
-  ],
-  customFields: { ...customFields },
-
+  // ---------------------------------------------------------------------------
   // Add plausible as script
   scripts: [
     {
@@ -72,13 +66,10 @@ const config = {
         docs: {
           path: "docs",
           routeBasePath: "docs",
-          admonitions: {
-            icons: "emoji",
-          },
           sidebarPath: require.resolve("./sidebars.js"),
           sidebarCollapsible: true,
           // points to the Nebari repo
-          // Remove this to remove the "edit this page" links.\
+          // Remove this to remove the "edit this page" links.
           editUrl: customFields.githubDocsUrl,
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
@@ -93,6 +84,31 @@ const config = {
       }),
     ],
   ],
+  // ---------------------------------------------------------------------------
+  // Plugins need installing first then add here
+  plugins: [
+    "docusaurus-plugin-sass",
+    require.resolve("docusaurus-lunr-search"),
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'community',
+        path: 'community',
+        routeBasePath: 'community',
+        sidebarPath: './sidebarsCommunity.js',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'nebari-slurm',
+        path: 'nebari-slurm',
+        routeBasePath: 'nebari-slurm',
+        sidebarPath: './sidebarsSlurm.js',
+      },
+    ],
+  ],
+  customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
   themeConfig:
@@ -116,52 +132,61 @@ const config = {
         hideOnScroll: false,
         items: [
           {
-            label: "Home",
-            position: "right",
-            to: "/",
-          },
-          {
-            label: "Get Started",
-            position: "right",
-            items: [
-              {
-                label: "Quickstart",
-                to: "docs/get-started/quickstart",
-              },
-              {
-                label: "Installing Nebari",
-                to: "docs/get-started/installing-nebari",
-              },
-              {
-                label: "Choosing a deployment platform",
-                to: "docs/get-started/deploy",
-              },
-              {
-                label: "Supported cloud providers",
-                to: "docs/get-started/cloud-providers",
-              },
-            ],
-          },
-          {
-            label: "Docs",
-            position: "right",
+            label: "Nebari Core",
+            position: "left",
             to: "/docs/welcome",
           },
           {
             label: "Community",
+            position: "left",
+            to: "community/introduction",
+          },
+          {
+            label: "Nebari Slurm",
+            position: "left",
+            to: "nebari-slurm/overview",
+          },
+          {
+            label: "Get Started",
             position: "right",
-            to: "docs/community",
+            to: "docs/get-started",
+          },
+          {
+            label: "Ecosystem",
+            position: "right",
+            items: [
+              {
+                label: "JHub Apps Launcher",
+                href: "https://jhub-apps.nebari.dev",
+              },
+              {
+                label: "Jupyter Launchpad",
+                href: "https://github.com/nebari-dev/jupyterlab-new-launcher",
+              },
+              {
+                label: "JupyterLab Gallery",
+                href: "https://github.com/nebari-dev/jupyterlab-gallery",
+              },
+              {
+                label: "Plugins and extensions",
+                to: "community/plugins",
+              },
+            ]
           },
           {
             label: "GitHub",
             position: "right",
             items: [
               {
-                label: "Code repository",
+                label: "Nebari core code repository",
                 href: customFields.githubCodebaseUrl,
               },
               {
-                label: "Documentation repository",
+                label: "Nebari-Slurm code repository",
+                href: "https://github.com/nebari-dev/nebari-slurm",
+              },
+              {
+                label: "Nebari documentation repository",
                 href: customFields.githubUrl,
               },
             ]

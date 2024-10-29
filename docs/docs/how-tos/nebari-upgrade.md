@@ -7,7 +7,7 @@ description: An overview of how to upgrade Nebari. Includes instructions on upda
 # Upgrading Nebari
 
 :::note
-This is a guide to upgrade Nebari to a newer version. If you are migrating from QHub (deprecated) to Nebari, you can find instructions [here](#migrating-from-qhub-to-nebari). If you are updating from an older version of QHub to another version of QHub, those instructions are [here](#upgrade-qhub-from-pre-040-to-another-qhub-version).
+This is a guide to upgrade Nebari to a newer version. If you are migrating from QHub (deprecated) to Nebari, you can find instructions [here](#migrating-from-qhub-deprecated-to-nebari). If you are updating from an older version of QHub to another version of QHub, those instructions are [here](#upgrade-qhub-from-pre-040-to-another-qhub-version).
 :::
 
 ## Upgrade Nebari
@@ -189,7 +189,8 @@ For upgrades from older versions to v0.4, you will need to do the following step
 
 If your QHub deployment relies on Auth0 or GitHub for authentication, please update the OAuth callback URL.
 
-<details><summary>Expand this section for Auth0 instructions </summary>
+<details>
+<summary>Expand this section for Auth0 instructions </summary>
 
 1. Navigate to the your Auth0 tenancy homepage and from there select "Applications".
 
@@ -199,9 +200,10 @@ If your QHub deployment relies on Auth0 or GitHub for authentication, please upd
 
 </details>
 
-<details><summary>Expand this section for GitHub auth instructions </summary>
+<details>
+<summary>Expand this section for GitHub auth instructions </summary>
 
-1. Go to <https://github.com/settings/developers>.
+1. Go to the [GitHub Developer Settings](https://github.com/settings/developers).
 
 2. Click "OAuth Apps" and then click the app representing your Nebari instance.
 
@@ -371,7 +373,8 @@ For upgrades from older versions to v0.4, you will need to do the following step
 
 If your QHub deployment relies on Auth0 or GitHub for authentication, please update the OAuth callback URL.
 
-<details><summary>Expand this section for Auth0 instructions </summary>
+<details>
+<summary>Expand this section for Auth0 instructions </summary>
 
 1. Navigate to the your Auth0 tenancy homepage and from there select "Applications".
 
@@ -381,9 +384,10 @@ If your QHub deployment relies on Auth0 or GitHub for authentication, please upd
 
 </details>
 
-<details><summary>Expand this section for GitHub auth instructions </summary>
+<details>
+<summary>Expand this section for GitHub auth instructions </summary>
 
-1. Go to <https://github.com/settings/developers>.
+1. Go to the [GitHub Developer Settings](https://github.com/settings/developers).
 
 2. Click "OAuth Apps" and then click the app representing your Nebari instance.
 
@@ -415,4 +419,5 @@ Version `v0.3.11` on AWS has an error with the Kubernetes config map. See [this 
 :::
 
 <!-- Internal links -->
+
 [login-keycloak]: /docs/tutorials/login-keycloak

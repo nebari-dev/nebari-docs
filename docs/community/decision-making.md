@@ -40,10 +40,9 @@ Learn more in [Gitpod's documentation on decision making][gitpod-rfd].
 
 Minor updates to the codebase and documentation can be discussed in GitHub issues or in pull requests during code review. Contributors are expected to (informally) follow the consent-based decision making philosophy in these discussions.
 
-
 <!-- Reusable links -->
 
-[nebari-team]: /docs/community/team-structure
+[nebari-team]: /community/team-structure
 [core-team]: https://github.com/orgs/nebari-dev/teams/core-team
 [consent-decision-making]: https://www.sociocracyforall.org/consent-decision-making/
 [rfd-issue]: https://github.com/nebari-dev/governance/issues/new?assignees=&labels=type%3A+RFD&projects=&template=RFD.md&title=RFD+-+Title

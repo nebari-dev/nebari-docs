@@ -47,7 +47,7 @@ If an issue is affecting you, start at the top of this list and complete as many
 
 1. Check the [issue tracker][nebari-issues], if there is an open issue for this same problem, add a reaction or more details to the issue
    to indicate that it’s affecting you (tip: make sure to also check the open [pull requests][nebari-prs] for ongoing work).
-2. You should also check the [troubleshooting guide](../troubleshooting.mdx) in these docs to see if your problem is already listed there.
+2. You should also check the [troubleshooting guide][troubleshooting] in these docs to see if your problem is already listed there.
 3. If there is an open issue, and you can add more detail, write a comment describing how the problem is affecting you,
    OR if you can, write up a work-around or improvement for the issue.
 4. If there is not an issue, write the most complete description of what’s happening including reproduction steps.
@@ -66,7 +66,11 @@ The following actions are typically useful:
 - Linking to related issues or discussions while briefly describing how they are related, for instance “See also #xyz for a similar attempt at this” or “See also #xyz where the same thing happened in another cloud provider" provides context and helps the discussion.
 - Summarizing long discussions on issues to help new and existing contributors quickly understand the background, current status, and course of action for the issue.
 
-<!-- links -->
+<!-- Internal links -->
+
+[troubleshooting]: /docs/troubleshooting
+
+<!-- External Links -->
 
 [nebari-issues]: https://github.com/nebari-dev/nebari/issues
 [nebari-labels]: https://github.com/nebari-dev/nebari/labels
