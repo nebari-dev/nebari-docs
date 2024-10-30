@@ -20,6 +20,10 @@ will walk you through the following steps:
 For those already familiar with Google Cloud Platform, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
 
+:::note
+Before version 2024.9.1, Nebari relied on users having `gcloud`, Google Cloud's CLI, installed locally on the machine they were deploying Nebari from. If you want to install an older version, make sure to [install it](https://cloud.google.com/sdk/docs/install).
+:::
+
 ## Sign up for Google Cloud Platform
 
 This documentation assumes that you are already familiar with Google Cloud Platform accounts, and that you have prior knowledge regarding GCP billing and cost usage for Kubernetes related
