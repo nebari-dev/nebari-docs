@@ -4,6 +4,11 @@ title: Deploy Nebari on GCP
 description: A basic overview of how to deploy Nebari on GCP.
 ---
 
+## Introduction
+
+This guide is to help first-time users set up a Google Cloud Platform account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we
+will walk you through the following steps:
+
 - [Introduction](#introduction)
 - [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform)
 - [Authentication](#authentication)
@@ -11,11 +16,6 @@ description: A basic overview of how to deploy Nebari on GCP.
 - [Initializing Nebari](#initializing-nebari)
 - [Deploying Nebari](#deploying-nebari)
 - [Destroying Nebari](#destroying-nebari)
-
-## Introduction
-
-This guide is to help first-time users set up a Google Cloud Platform account specifically for the purpose of using and deploying Nebari at a production scale. In this guide we
-will walk you through the following steps:
 
 For those already familiar with Google Cloud Platform, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
