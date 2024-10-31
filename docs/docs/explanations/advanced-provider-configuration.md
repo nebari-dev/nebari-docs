@@ -114,6 +114,13 @@ created in Nebari's EKS cluster. The KMS key must be a `Symmetric` key set to `e
 Warning: Enabling EKS cluster secrets encryption, by setting `amazon_web_services.eks_kms_arn`, is an
 irreversible action, and if the KMS key used for envelope encryption of secrets is ever deleted, then
 there is no way to recover the EKS cluster.
+Additionally, if you try to change the KMS key in use for cluster encryption, by setting a different
+key ARN and re-deploying Nebari, the re-deploy should succeed but the KMS key used for encryption will
+not actually change the cluster config and the original key will remain set.
+
+Note: After enabling cluster encryption on your cluster, you must encrypt all existing secrets with the
+new key by running the following command:
+`kubectl get secrets --all-namespaces -o json | kubectl annotate --overwrite -f - kms-encryption-timestamp="time value"`
 Consult [Encrypt K8s secrets with AWS KMS on existing clusters](https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html) for more information.
 
 Here is an example of how you would set KMS key ARN in `nebari-config.yaml`.
