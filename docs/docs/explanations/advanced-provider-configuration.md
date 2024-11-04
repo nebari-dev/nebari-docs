@@ -112,6 +112,7 @@ Nebari supports setting an existing KMS key while deploying Nebari to implement 
 created in Nebari's EKS cluster. The KMS key must be a **Symmetric** key set to **encrypt and decrypt** data.
 
 :::warning
+
 Enabling EKS cluster secrets encryption, by setting `amazon_web_services.eks_kms_arn`, is an
 _irreversible_ action and re-deploying Nebari to try to remove a previously set `eks_kms_arn` will fail.
 On the other hand, if you try to change the KMS key in use for cluster encryption, by re-deploying Nebari
@@ -119,18 +120,23 @@ after setting a _different_ key ARN, the re-deploy should succeed but the KMS ke
 not actually change in the cluster config and the original key will remain set. The integrity of a faulty
 deployment can be restored, following a failed re-deploy attempt to remove a previously set KMS key, by
 simply re-deploying Nebari while ensuring `eks_kms_arn` is set to the original KMS key ARN.
+
 :::
 
 :::danger
+
 If the KMS key used for envelope encryption of secrets is ever deleted, then there is no way to recover
 the EKS cluster.
+
 :::
 
 :::note
+
 After enabling cluster encryption on your cluster, you must encrypt all existing secrets with the
 new key by running the following command:
 `kubectl get secrets --all-namespaces -o json | kubectl annotate --overwrite -f - kms-encryption-timestamp="time value"`
 Consult [Encrypt K8s secrets with AWS KMS on existing clusters](https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html) for more information.
+
 :::
 
 Here is an example of how you would set KMS key ARN in `nebari-config.yaml`.
