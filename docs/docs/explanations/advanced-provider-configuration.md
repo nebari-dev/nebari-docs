@@ -119,16 +119,19 @@ after setting a _different_ key ARN, the re-deploy should succeed but the KMS ke
 not actually change in the cluster config and the original key will remain set. The integrity of a faulty
 deployment can be restored, following a failed re-deploy attempt to remove a previously set KMS key, by
 simply re-deploying Nebari while ensuring `eks_kms_arn` is set to the original KMS key ARN.
+:::
 
 :::danger
 If the KMS key used for envelope encryption of secrets is ever deleted, then there is no way to recover
 the EKS cluster.
+:::
 
 :::note
 After enabling cluster encryption on your cluster, you must encrypt all existing secrets with the
 new key by running the following command:
 `kubectl get secrets --all-namespaces -o json | kubectl annotate --overwrite -f - kms-encryption-timestamp="time value"`
 Consult [Encrypt K8s secrets with AWS KMS on existing clusters](https://docs.aws.amazon.com/eks/latest/userguide/enable-kms.html) for more information.
+:::
 
 Here is an example of how you would set KMS key ARN in `nebari-config.yaml`.
 
