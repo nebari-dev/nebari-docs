@@ -6,14 +6,6 @@ The security of _AWS Nebari_ deployments can be enhanced through the following d
   This option allows for the use of locally mirrored, security-hardened, or otherwise customized container images in place of the containers used by default.
   See: [container-sources](container-sources.md)
 
-- **Definition of an ssh key that can access EKS hosts**  
-  EKS hosts by default cannot be accessed via ssh. This configuration item allows ssh access into EKS hosts, which can be useful for troubleshooting or external monitoring and auditing purposes.
-
-```
-amazon_web_services:
-  ec2_keypair_name: [example_keypair_name] # Name, not ARN
-```
-
 - **Installation of custom SSL certificate(s) into EKS hosts**  
   Install private certificates used by (e.g.) in-line content inspection engines which re-encrypt traffic.
 
