@@ -12,7 +12,7 @@ One solution to these supply-chain concerns is to deploy Nebari from private loc
 
 Deploying Nebari in this fashion eliminates significant supply chain surface-area, but requires identifying all containers used by Nebari.
 
-The following configurations demonstrate how to specify a private repo denoted by the string `[PRIVATE_REPO]`.  
+The following configurations demonstrate how to specify a private repo denoted by the string `[PRIVATE_REPO]`.
 
 ### Set ECR as default container registry mirror
 
@@ -40,8 +40,9 @@ amazon_web_services:
 ```
 
 ### Set GitLab CR as default container registry mirror
+
 ```
-# Set GitLab CR as default container registry mirror in hosts.toml; 
+# Set GitLab CR as default container registry mirror in hosts.toml;
 # must have override_path set if project/group names don't match upstream container
 amazon_web_services:
   node_groups:
@@ -79,7 +80,8 @@ amazon_web_services:
             EOT
 ```
 
-### Set GitLab CR as default container registry mirror, with custom Client SSL/TLS Certs 
+### Set GitLab CR as default container registry mirror, with custom Client SSL/TLS Certs
+
 ```
 # must have override_path set if project/group names don't match upstream container
 # Also add/set GitLab Client SSL/TLS Certificate for Containerd
