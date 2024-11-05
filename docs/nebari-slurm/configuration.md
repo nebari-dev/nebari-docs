@@ -186,8 +186,7 @@ _Note_: All slurm related configuration needs to be passed down as a string.
 ### Services
 
 Additional services can be added to the `jupyterhub_services`
-variable. Currently this is only `<service-name>:
-<service-apikey>`. You must keep the `dask_gateway` section.
+variable. Currently this is only `<service-name>: <service-apikey>`. You must keep the `dask_gateway` section.
 
 ```yaml
 jupyterhub_services:
