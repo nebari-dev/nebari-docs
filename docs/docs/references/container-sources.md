@@ -12,7 +12,9 @@ One solution to these supply-chain concerns is to deploy Nebari from private loc
 
 Deploying Nebari in this fashion eliminates significant supply chain surface-area, but requires identifying all containers used by Nebari.
 
-The following configurations demonstrate how to specify a private repo denoted by the string `[PRIVATE_REPO]`.
+The following configurations demonstrate how to specify a private repo denoted by the string `[PRIVATE_REPO]`.  
+
+**Note:** Authorization tokens are used in the examples below. It is important for administrators to understand the expiration policy of these tokens, because the Nebari k8s cluster may in some cases need to **use these tokens to pull container images at any time during run-time operation**.
 
 ### Set ECR as default container registry mirror
 
