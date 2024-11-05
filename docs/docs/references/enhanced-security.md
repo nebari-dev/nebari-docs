@@ -37,6 +37,7 @@ amazon_web_services:
 
 - **Deploy into existing subnets**  
   Instructs Nebari to be deployed into existing subnets, rather than creating its own new subnets.
+  An advantage of deploying to existing subnets is the ability to use private subnets. Note that the **ingress load-balancer-annotation** must be set appropriately based on the type (private or public) of subnet.
 
 ```
 existing_subnet_ids:
