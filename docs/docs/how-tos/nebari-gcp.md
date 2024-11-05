@@ -64,7 +64,10 @@ management.
 
 If it's your first time creating a service account, please follow
 [these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
-"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+- [`roles/editor`](https://cloud.google.com/iam/docs/understanding-roles#editor)
+- [`roles/resourcemanager.projectIamAdmin`](https://cloud.google.com/iam/docs/understanding-roles#resourcemanager.projectIamAdmin)
+- [`roles/container.admin`](https://cloud.google.com/iam/docs/understanding-roles#container.admin)
+- [`roles/storage.admin`](https://cloud.google.com/iam/docs/understanding-roles#storage.admin)
 
 For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
