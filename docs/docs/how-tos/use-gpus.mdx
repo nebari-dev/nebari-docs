@@ -26,7 +26,7 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
   If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
 
-  **Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with CUDA<=12.4.**
+  **Compatible environments for this server must contain CUDA versions *below* the GPU server version. For example, the server in this case is on 12.4. All environments used on this server must contain packages build with `CUDA<=12.4`.**
 
 ## 2. Creating environments
 
@@ -36,7 +36,7 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
   1. **Create the environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
-    While creating a new config, click on the **GUI <-> YAML** Toggle to edit yaml config.
+    While creating a new config, click on the `**GUI <-> YAML**` Toggle to edit yaml config.
     ```
     channels:
       - pytorch
@@ -89,7 +89,7 @@ Please ensure that your choice from PyTorch documentation is not greater than th
     :::note
     The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
 
-    You can use **GUI <-> YAML** Toggle to edit the config.
+    You can use `**GUI <-> YAML**` Toggle to edit the config.
 
 
 ## 3. Validating the setup

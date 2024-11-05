@@ -66,7 +66,10 @@ management.
 
 If it's your first time creating a service account, please follow
 [these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
-"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+- [`roles/editor`](https://cloud.google.com/iam/docs/understanding-roles#editor)
+- [`roles/resourcemanager.projectIamAdmin`](https://cloud.google.com/iam/docs/understanding-roles#resourcemanager.projectIamAdmin)
+- [`roles/container.admin`](https://cloud.google.com/iam/docs/understanding-roles#container.admin)
+- [`roles/storage.admin`](https://cloud.google.com/iam/docs/understanding-roles#storage.admin)
 
 For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
@@ -241,7 +244,7 @@ nebari deploy -c nebari-config.yaml
 ```
 
 :::note
-During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#nebari-initialize). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
+During deployment, Nebari will require you to set a DNS record for the domain defined during [initialize](#initializing-nebari). Follow the instructions on [How to set a DNS record for Nebari][domain-registry] for an overview of the required steps.
 :::
 
 The terminal will prompt you to press <kbd>enter</kbd> to check the authentication credentials that were added as part of the preceding `nebari init` command. Once Nebari is
