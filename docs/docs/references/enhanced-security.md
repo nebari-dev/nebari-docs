@@ -18,21 +18,29 @@ amazon_web_services:
   Install private certificates used by (e.g.) in-line content inspection engines which re-encrypt traffic.
 
 ```
-  extra_ssl_certificates: |
-    -----BEGIN CERTIFICATE-----
-    MIIF...<snip>...ABCD
-    -----END CERTIFICATE-----
-    -----BEGIN CERTIFICATE-----
-    MIIF...<snip>...EF01
-    -----END CERTIFICATE-----
+# Add client certificate to CA trust on node
+amazon_web_services:
+  node_groups:
+    general:
+      instance: m5.2xlarge
+      launch_template:
+        pre_bootstrap_command: |
+            #!/bin/bash
+            cat <<-EOT >> /etc/pki/ca-trust/source/anchors/client.pem
+            -----BEGIN CERTIFICATE-----
+            XzxzxzxzxxzxzxzxzxzxzxzxxzxzxzxzxzxzxzxxzxzxzxzxzxzxzxzxzxxzxzZx
+            ZxyzxzxzxxzxzxzxzxzxzxzxxzxzxzxzxzxzxzxxzxzxzxzxzxzxzxzxzxxzxzXz
+            -----END CERTIFICATE-----
+            EOT
+            sudo update-ca-trust extract
 ```
 
 - **Private EKS endpoint configuration**  
   Mirrors the corresponding AWS console option, which routes all EKS traffic within the VPC.
 
 ```
-  eks_endpoint_private_access: true
-  eks_endpoint_public_access: false
+  amazon_web_services:
+    eks_endpoint_access: private # valid values: [public, private, public_and_private]
 ```
 
 - **Deploy into existing subnets**  
