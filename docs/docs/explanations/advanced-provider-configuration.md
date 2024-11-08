@@ -101,7 +101,7 @@ amazon_web_services:
 ### EKS KMS ARN (Optional)
 
 You can use AWS Key Management Service (KMS) to enhance security by encrypting Kubernetes secrets in
-Amazon Elastic Kubernetes Service (EKS). This approach adds an extra layer of protection for sensitive 
+Amazon Elastic Kubernetes Service (EKS). This approach adds an extra layer of protection for sensitive
 information, like passwords, credentials, and TLS keys, by applying user-managed encryption keys to Kubernetes
 secrets, supporting a [defense-in-depth strategy](https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/).
 
@@ -135,7 +135,7 @@ Here is an example of how you would set KMS key ARN in `nebari-config.yaml`.
 ```yaml
 amazon_web_services:
   # the arn for the AWS Key Management Service key
-  eks_kms_arn: 'arn:aws:kms:us-west-2:01234567890:key/<aws-kms-key-id>'
+  eks_kms_arn: "arn:aws:kms:us-west-2:01234567890:key/<aws-kms-key-id>"
 ```
 
 ### Launch Templates (Optional)
