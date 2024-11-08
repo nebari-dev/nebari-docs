@@ -100,13 +100,10 @@ amazon_web_services:
 
 ### EKS KMS ARN (Optional)
 
-AWS Key Management Service (KMS) keys can provide envelope encryption of Kubernetes secrets stored in
-Amazon Elastic Kubernetes Service (EKS). Kubernetes secrets store sensitive information (e.g. passwords,
-credentials, TLS keys, etc.). Kubernetes stores all secret object data within etcd and all etcd volumes
-used by Amazon EKS are encrypted at the disk-level using AWS-managed encryption keys. The benefit of
-specifying a user-managed KMS key for EKS is adding a level of envelope encryption to apply a security
-best practice of [defense-in-depth strategy](https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/) by encrypting the Kubernetes secrets store with a KMS key
-that the user manages.
+You can use AWS Key Management Service (KMS) to enhance security by encrypting Kubernetes secrets in
+Amazon Elastic Kubernetes Service (EKS). This approach adds an extra layer of protection for sensitive 
+information, like passwords, credentials, and TLS keys, by applying user-managed encryption keys to Kubernetes
+secrets, supporting a [defense-in-depth strategy](https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/).
 
 Nebari supports setting an existing KMS key while deploying Nebari to implement encryption of secrets
 created in Nebari's EKS cluster. The KMS key must be a **Symmetric** key set to **encrypt and decrypt** data.
