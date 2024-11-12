@@ -132,57 +132,6 @@ Your new user can now log in to Nebari, visit your provided Nebari domain URI wh
 
 ![Nebari - Log in to Keycloak page](/img/how-tos/nebari_login_screen.png)
 
-## In-depth look at Roles and Groups
-
-Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: `admin`, `developer`, and `analyst` (in roughly descending order of permissions and scope).
-
-:::info
-Users in a particular group will also get access to that groups shared folder. So if `user A` belongs to the `developer`, they will also have access to the `~/shared/developer` folder. This also applies to new groups that you create.
-:::
-
-Roles on the other hand represent the type or category of user. This includes access and permissions that this category of user will need to perform their regular job duties. The differences between `groups` and `roles` are subtle. Particular roles (one or many), like `conda_store_admin`, are associated with a particular group, such as `admin` and any user in this group will then assume the role of `conda_store_admin`.
-
-:::info
-These roles can be stacked. This means that if a user is in one group with role `conda_store_admin` and another group with role `conda_store_viewer`, this user ultimately has the role `conda_store_admin`.
-:::
-
-| Group        | Access to Nebari Resources                                                                                     | Roles                                                                                                                                                                     | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `analyst`    | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>                        | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`argo_viewer`</li><li>`grafana_viewer`</li></ul>                                                   | <ul><li>Default user permissions</li><li>Access to start a server instance and generate JupyterHub access token.</li><li>Read/write access to shared `analyst` folder group mount</li><li>Read access to `analyst` and write access to personal conda-store namespace</li><li>Read access to Argo-Workflows and Jupyter-Scheduler </li><li>Inherent Grafana permissions from [Grafana viewer scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul> |
-| `developer`  | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`argo_developer`</li><li>`grafana_developer`</li></ul>                    | <ul><li>All of the above access, plus...</li><li>Read access `developer` conda-store namespace</li><li>Access to create Dask clusters.</li><li>Read/write access to shared `developer` folder group mount</li><li>Read/create access to Argo-Workflows and Jupyter-Scheduler</li><li>Inherent Grafana permissions from [Grafana editor scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                       |
-| `admin`      | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>           | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`grafana_admin`</li></ul>                                        | <ul><li>All of the above access, plus...</li><li>Read/write access to all conda-store available namespaces/environments.</li><li>Access to Jupyterhub Admin page and can access JupyterLab users spaces</li><li>Access to Keycloak and can add remove users and groups</li><li>Inherent Grafana permissions from [Grafana administrator scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                      |
-| `superadmin` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>           | <ul><li>`conda_store_superadmin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`realm_admin` (Keycloak) </li><li>`grafana_admin`</li></ul> | <ul><li>All of the above access, plus...</li><li>Delete (build and environment) access on conda-store</li><li>Full access to Keycloak (realm) (same as `root`)</li></ul>                                                                                                                                                                                                                                                                                                                                         |
-
-:::info
-Check [Conda-store authorization model](https://conda-store.readthedocs.io/en/latest/contributing.html#authorization-model) for more details on conda-store authorization.
-:::
-
-:::caution
-The role `jupyterhub_admin` gives users elevated permissions to JupyterHub and should be applied judiciously. As mentioned in the table above, a JupyterHub admin is able to impersonate other users and view the contents of their home folder. For more details, read through the [JupyterHub documentation](https://z2jh.jupyter.org/en/stable/jupyterhub/customizing/user-management.html#admin-users).
-:::
-
-To create new groups or modify (or delete) existing groups, log in as `root` and click **Groups** on the left-hand side.
-
-As an example, we create a new group named `conda-store-manager`. This group will have administrator access to the [Conda-Store service].
-
-1. Click **New** in the upper-right hand corner under **Groups**.
-
-![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
-
-- Then, give the new group an appropriate name.
-
-![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
-
-2. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
-
-![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
-
-In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
-
-![Keycloak group conda-store-manager form - role mappings tab focused ](/img/how-tos/keycloak_new_group3.png)
-
-Once complete, return to the **Users** section in the dashboard and add the relevant users to this newly created group.
-
 <!-- internal links -->
 
 [keycloak-login]: /docs/tutorials/login-keycloak
