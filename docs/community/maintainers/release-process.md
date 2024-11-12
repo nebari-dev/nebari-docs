@@ -55,7 +55,7 @@ We use the following guidelines to manage `git` branches by assigning certain ro
 
 ### Process
 
-The release process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/issues/new?assignees=&labels=type%3A+release+%F0%9F%8F%B7&template=release-checklist.md&title=%5BRELEASE%5D+%3Cversion%3E).
+The release process is captured in the [release checklist template](https://github.com/nebari-dev/nebari/blob/main/.github/ISSUE_TEMPLATE/release-checklist.md). In the event that a patch or hotfix release is needed, release process is the same as outlined above.
 
 ## Related packages
 
