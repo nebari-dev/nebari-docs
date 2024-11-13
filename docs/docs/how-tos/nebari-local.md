@@ -254,3 +254,57 @@ nebari destroy --help
 ```
 
 ![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+
+### Quick Alternative Method for Destroying the Kind Cluster
+
+:::note
+This alternative method relies on using k9s to manually delete Helm releases and
+deployments before deleting the kind cluster. For more information, refer to [Getting
+Started with k9s](/docs/how-tos/debug-nebari#getting-started-with-k9s).
+:::
+
+In some cases, you might encounter issues where running `nebari destroy` does not fully
+clean up the resources, or you might simply need to quickly destroy the cluster for a
+fresh install during iterative testing. In such situations, you can use the `kind` CLI
+to manually remove the cluster. However, since `kind` runs a Docker container to mimic
+the cluster control-plane, it usually gets stuck because certain processes within the
+cluster prevent the control-plane container from shutting down properly.
+
+To ensure a clean and complete teardown of your Nebari local deployment, you can
+manually remove the cluster resources by following these steps:
+
+1. **Remove Helm Releases Using k9s**
+
+   [k9s](https://k9scli.io/) is a terminal-based UI for interacting with your Kubernetes
+   clusters. You can use it to delete all Helm releases associated with your Nebari
+   deployment:
+
+   ```bash
+   k9s
+   ```
+
+   - In the k9s interface, type `:helm` to navigate to the list of Helm releases.
+   - Select each Helm release related to Nebari and press `d` to delete it.
+
+2. **Delete All Deployment Objects**
+
+   After removing the Helm releases, you need to delete all `Deployment` objects to stop
+   any running pods:
+
+   - **Using k9s:**
+
+     - In k9s, type `:deployments` to view all deployments.
+     - Select each deployment and press `d` to delete it, only deleting the deployments
+       under the nebari's respective namespace.
+
+3. **Delete the Kind Cluster**
+
+   With all the resources removed, you can now safely delete the kind cluster:
+
+   ```bash
+   kind delete cluster --name test-cluster
+   ```
+
+By manually deleting the Helm releases and deployments before deleting the kind cluster,
+you prevent any lingering processes from causing the control-plane container to become
+stuck.
