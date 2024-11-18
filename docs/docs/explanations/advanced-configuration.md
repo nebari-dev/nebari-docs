@@ -265,7 +265,6 @@ domain: demo.nebari.dev
 
 `provider`: Determines the cloud provider used to deploy infrastructure related resources on Nebari. Possible values are:
 
-- `do` for DigitalOcean
 - `aws` for Amazon Web Services
 - `gcp` for Google Could Provider
 - `azure` for Microsoft Azure
