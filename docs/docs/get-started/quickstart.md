@@ -80,7 +80,6 @@ nebari init aws --project projectname \
 
   </TabItem>
 
-
   <TabItem value="azure" label="Azure" default>
 
 Provide authentication credentials to Nebari by setting the following environment variables:

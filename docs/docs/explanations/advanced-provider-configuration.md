@@ -226,8 +226,6 @@ azure:
 
 </TabItem>
 
-
-
 <TabItem value="existing" label="Existing Kubernetes clusters">
 
 Originally designed for Nebari deployments on a "local" minikube cluster, this feature has now expanded to allow users to deploy Nebari to any existing kubernetes cluster.
