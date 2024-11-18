@@ -73,21 +73,8 @@ Finally, you can generate the `kubeconfig` which will be used by k9s:
 ```bash
 gcloud container clusters get-credentials <project-name>-<namespace> --region <region>
 ```
-
 </TabItem>
 
-<TabItem value="do" label="Digital Ocean">
-
-For [DigitalOcean](https://docs.digitalocean.com/products/kubernetes/),
-you'll need to have the
-[doctl](https://docs.digitalocean.com/reference/doctl/how-to/install/) tool
-(the Digital Ocean CLI) installed. The command to update your `kubeconfig` for DO is:
-
-```bash
-doctl kubernetes cluster kubeconfig save <project-name>-<namespace>
-```
-
-</TabItem>
 
 <TabItem value="aws" label="Amazon AWS">
 

@@ -11,7 +11,6 @@ import ScissorStringSvg from "@site/static/img/home/scissor-string.svg";
 import AwsSvg from "@site/static/img/home/aws.svg";
 import AzureSvg from "@site/static/img/home/azure.svg";
 import GcloudSvg from "@site/static/img/home/gcloud.svg";
-import DigitalOceanSvg from "@site/static/img/home/digital-ocean.svg";
 import CondaStoreSvg from "@site/static/img/home/conda-store.svg";
 import VSCodeSvg from "@site/static/img/home/vscode.svg";
 import JitsiSvg from "@site/static/img/home/jitsi.svg";
@@ -138,7 +137,7 @@ export default function HomePage() {
                 </p>
                 <p>
                   Nebari can be seamlessly deployed to the major public cloud
-                  providers, including AWS, Azure, GCP, and Digital Ocean.
+                  providers, including AWS, Azure, and GCP.
                 </p>
               </div>
             </div>
@@ -152,9 +151,6 @@ export default function HomePage() {
                 </li>
                 <li className={styles.platformsItem}>
                   <GcloudSvg role="img" aria-label="Google Cloud" />
-                </li>
-                <li className={styles.platformsItem}>
-                  <DigitalOceanSvg role="img" aria-label="Digital Ocean" />
                 </li>
               </ul>
             </div>
