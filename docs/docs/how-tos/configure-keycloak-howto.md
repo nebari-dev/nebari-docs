@@ -187,3 +187,271 @@ Once complete, return to the **Users** section in the dashboard and add the rele
 
 [keycloak-login]: /docs/tutorials/login-keycloak
 [nebari-install]: /docs/get-started/installing-nebari.md
+
+### Keycloak Identity Providers (IDPs) and Debugging Social Login Issues
+
+When integrating Keycloak with external Identity Providers (IDPs) like GitHub, Auth0, or
+other social login providers, you might encounter issues during the authentication
+process. To effectively troubleshoot and resolve these issues, it's helpful to enable
+detailed logging of the user profiles received from these external IDPs.
+
+Keycloak provides a logger category `org.keycloak.social.user_profile_dump` that, when
+enabled, logs the user profile information obtained from the social provider. This
+detailed logging can be invaluable for debugging authentication issues, mapping user
+attributes, and ensuring the correct data is being received.
+
+#### Enabling Detailed Logging for Social Logins
+
+To enable detailed logging for social logins in Keycloak, adjust the logging
+configuration to set the logger level for `org.keycloak.social.user_profile_dump` to
+`DEBUG`.
+
+1. **Access the Keycloak Configuration Directory**:
+   Access the Keycloak container's filesystem or use volume mounts to modify configuration files. The `standalone.xml` configuration file is typically located at:
+
+   ```
+   /opt/jboss/keycloak/standalone/configuration/standalone.xml
+   ```
+
+   ```shell
+   bash-4.4$ pwd
+   /opt/jboss/keycloak/standalone/configuration
+   bash-4.4$ ls -la
+   total 120
+   drwxrwxr-x 1 jboss root  4096 Nov 13 15:49 .
+   drwxrwxr-x 1 jboss root  4096 Nov 16  2021 ..
+   -rw-rw---- 1 jboss root   711 Aug 20  2021 application-roles.properties
+   -rw-rw---- 1 jboss root   935 Aug 20  2021 application-users.properties
+   drwxr-xr-x 2 jboss root  4096 Nov 13 15:48 keystores
+   -rw-rw-r-- 1 jboss root  1426 Nov 13 15:49 logging.properties
+   -rw-rw---- 1 jboss root   669 Aug 20  2021 mgmt-groups.properties
+   -rw-rw---- 1 jboss root  1112 Aug 20  2021 mgmt-users.properties
+   -rw-r--r-- 1 jboss root 38883 Nov 13 15:48 standalone-ha.xml
+   -rw-r--r-- 1 jboss root 34670 Nov 13 15:48 standalone.xml
+   drwxr-xr-x 5 jboss root  4096 Nov 13 15:49 standalone_xml_history
+   ```
+
+2. **Modify the Logging Subsystem Configuration**:
+
+   Open the `standalone.xml` file with a text editor. Locate the `<subsystem xmlns="urn:jboss:domain:logging:">` section. Within the logging subsystem, add the
+   following logger configuration:
+
+   ```xml
+   <logger category="org.keycloak.social.user_profile_dump">
+       <level name="DEBUG"/>
+   </logger>
+   ```
+
+   The modified section might look like this:
+
+   ```xml
+   ...
+   <subsystem xmlns="urn:jboss:domain:logging:7.0">
+       <console-handler name="CONSOLE">
+           <level name="INFO"/>
+           <formatter>
+               <named-formatter name="COLOR-PATTERN"/>
+           </formatter>
+       </console-handler>
+       <!-- Add social user_profile_dump to log -->
+       <logger category="org.keycloak.social.user_profile_dump">
+           <level name="DEBUG"/>
+       </logger>
+       <!-- Other existing loggers and configurations -->
+   ...
+   ```
+
+3. **Save and Restart Keycloak**:
+
+   After saving the changes to the `standalone.xml` file, restart the Keycloak pod by
+   restarting the pod. The changes will take effect after the restart.
+
+   :::note
+   The keycloak pod might not contain any usual editor like `vim` or `nano`. You can
+   instead use a debugging pod with the same volume mounts to edit the file. For
+   example, you can use the following command to open a shell in the Keycloak pod:
+
+   ```shell
+   kubectl debug keycloak-0 -n <nebari-namespace> --copy-to=my-debugger --set-image=*=busybox
+   ```
+
+4. **Review the Logs**:
+
+   With the logger enabled, attempt to authenticate using the social login that was causing issues. The detailed user profile information received from the IDP will now be logged, helping you identify missing attributes, incorrect mappings, or other discrepancies.
+
+#### Tips:
+
+- **Security Considerations**: Be cautious when enabling debug-level logging in production environments, as it may log sensitive information. Ensure logs are appropriately secured and consider disabling debug logging once issues are resolved.
+
+- **Alternative Methods**: You can also adjust logging levels via the Keycloak admin console under the "Server Info" > "Logging" section, although this may not persist across restarts unless properly configured.
+
+---
+
+### Using Identity Provider (IDP) Mappers in Keycloak
+
+Identity Provider (IDP) mappers in Keycloak are powerful tools that allow you to control how user data from external IDPs is mapped into the Keycloak user model during authentication. When users authenticate via an external IDP, such as a social login or another OpenID Connect provider, IDP mappers define how attributes and claims from the IDP are transformed and stored in Keycloak.
+
+#### Understanding IDP Mappers
+
+- **What Are IDP Mappers?**
+
+  IDP mappers are configurations within Keycloak that map identity provider data to Keycloak user attributes, roles, and other metadata.
+
+- **Why Use IDP Mappers?**
+
+  They enable you to:
+
+  - **Map Attributes**: Synchronize user profile information from the IDP to Keycloak.
+  - **Assign Roles**: Automatically assign roles to users based on IDP claims.
+  - **Transform Usernames**: Modify or set the Keycloak username based on IDP data.
+
+#### Common Use Cases
+
+- **Mapping User Attributes**: Import user attributes like email, first name, and last name from the IDP.
+
+- **Assigning Roles**: Grant roles to users based on claims such as group memberships.
+
+- **Username Refactoring**: Adjust usernames to ensure uniqueness or comply with naming conventions.
+
+#### How to Configure IDP Mappers
+
+To configure IDP mappers in Keycloak:
+
+1. **Navigate to the Identity Provider Configuration**:
+
+   - Log in to the Keycloak admin console.
+   - Select your realm.
+   - Go to the "Identity Providers" section.
+   - Click on the identity provider you have configured (e.g., GitHub, Google).
+
+2. **Access the Mappers Tab**:
+
+   - In the IDP configuration page, switch to the "Mappers" tab.
+   - This tab lists existing mappers and allows you to create new ones.
+
+3. **Add a New Mapper**:
+
+   - Click on the "Add Mapper" button.
+   - You will be presented with a form to configure the new mapper.
+
+4. **Configure the Mapper**:
+
+   - **Name**: Provide a descriptive name for the mapper.
+   - **Mapper Type**: Select the appropriate mapper type (e.g., "Attribute Importer", "Role Importer", "Username Template Importer").
+   - **Set Mapper Configurations**: Configure the specific settings based on the mapper type.
+
+#### Examples of IDP Mappers
+
+##### 1. **Attribute Importer**
+
+- **Purpose**: Map an IDP claim to a Keycloak user attribute.
+
+- **Configuration**:
+
+  - **Mapper Type**: `User Attribute Importer`
+  - **Claim**: The claim name from the IDP (e.g., `email`, `name`).
+  - **User Attribute Name**: The Keycloak user attribute to map to (e.g., `email`, `firstName`).
+
+- **Example**:
+
+  Mapping the `email` claim from the IDP to the Keycloak `email` attribute.
+
+##### 2. **Role Importer**
+
+- **Purpose**: Assign Keycloak roles based on IDP claims.
+
+- **Configuration**:
+
+  - **Mapper Type**: `Advanced Claim to Role`
+  - **Role**: The Keycloak role to assign.
+  - **Claim**: The IDP claim to evaluate (e.g., `groups`, `roles`).
+  - **Claim Value**: The expected value to trigger role assignment.
+
+- **Example**:
+
+  If the IDP claim `groups` contains `admin`, assign the Keycloak role `realm-admin`.
+
+##### 3. **Username Template Importer**
+
+- **Purpose**: Define or transform the Keycloak username based on IDP data.
+
+- **Configuration**:
+
+  - **Mapper Type**: `Username Template Importer`
+  - **Template**: A template string using variables from IDP claims (e.g., `${CLAIM.preferred_username}`).
+  - **Target**: Where to apply the template (e.g., `username`).
+
+- **Example**:
+
+  Setting the Keycloak username to the user's email from the IDP:
+
+  - **Template**: `${CLAIM.email}`
+
+#### Relating IDP Mappers to OpenID Connect Claims
+
+- **OpenID Connect Claims**: These are pieces of information about the user provided by the IDP (e.g., `email`, `name`, `sub`).
+
+- **Mapping Claims to Keycloak**: IDP mappers allow you to extract these claims and map them to appropriate fields in Keycloak.
+
+- **Custom Claims**: If the IDP provides custom claims, you can map them to custom user attributes in Keycloak.
+
+#### Assigning Roles Based on Claims
+
+- **Use Case**: Automatically assign roles to users based on their attributes or group memberships in the IDP.
+
+- **Steps**:
+
+  1. Identify the claim containing role or group information.
+  2. Create a Role Importer mapper in Keycloak.
+  3. Configure the mapper to assign a Keycloak role when the claim matches certain conditions.
+
+- **Example**:
+
+  - If the IDP claim `department` equals `IT`, assign the role `it-department` to the user.
+
+#### Creating User Attributes
+
+- **Use Case**: Store additional user information from the IDP in Keycloak user attributes.
+
+- **Steps**:
+
+  1. Determine the claims you want to import.
+  2. Use the Attribute Importer mapper to map these claims to Keycloak user attributes.
+
+- **Example**:
+
+  - Map the `employee_id` claim from the IDP to a custom Keycloak user attribute `employeeId`.
+
+#### Refactoring the Username During Login
+
+- **Use Case**: Adjust the Keycloak username to match organizational standards or ensure uniqueness.
+
+- **Steps**:
+
+  1. Use the Username Template Importer mapper.
+  2. Define a template that constructs the username based on IDP claims or other data.
+
+- **Examples**:
+
+  - **Appending IDP Alias**: `${ALIAS}.${CLAIM.preferred_username}` results in usernames like `github.johndoe`.
+  - **Using Email**: `${CLAIM.email}` sets the username to the user's email address.
+
+#### Tips for Using IDP Mappers
+
+- **Order Matters**: The order of mappers can affect the outcome. Keycloak processes mappers in the order they appear.
+
+- **Test and Validate**: After configuring mappers, test the login flow to ensure that attributes and roles are correctly assigned.
+
+- **Logging**: Use detailed logging (as described earlier) to debug and verify the claims received from the IDP.
+
+- **Custom Mappers**: If the built-in mapper types do not meet your needs, consider developing custom mappers using Keycloak's Service Provider Interface (SPI).
+
+#### Security Considerations
+
+- **Sensitive Data**: Be cautious when mapping sensitive data from IDP claims to Keycloak attributes. Ensure appropriate security measures are in place.
+
+- **Data Privacy**: Comply with data protection regulations by only storing necessary user information and informing users about data usage.
+
+---
+
+By leveraging IDP mappers in Keycloak, you can tailor the authentication process to suit your application's requirements, ensuring seamless integration with external identity providers and consistent user experiences.
