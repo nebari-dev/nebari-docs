@@ -17,7 +17,7 @@ available](https://www.freedesktop.org/wiki/Software/systemd/).
 
 Questions to help determine which solution may be best for you:
 
-1. Are you deploying to the cloud e.g. AWS, GCP, Azure, or Digital Ocean?
+1. Are you deploying to the cloud e.g. AWS, GCP, or Azure?
 
 QHub is likely your best option. The auto-scalability of QHub compute
 allows for cost effective usage of the cloud while taking advantage of

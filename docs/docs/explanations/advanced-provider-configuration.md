@@ -226,37 +226,6 @@ azure:
 
 </TabItem>
 
-<TabItem value="do" label="DigitalOcean">
-
-DigitalOcean has a restriction with autoscaling in that the minimum nodes allowed (`min_nodes` = 1) is one but is by far the least expensive provider even accounting for `spot/pre-emptible` instances.
-In addition, Digital Ocean doesn't have accelerator/gpu support.
-
-Digital Ocean is a good choice for trying out Nebari, but we recommend selecting a different provider for your production Nebari deployment.
-
-To see available instance types refer to [Digital Ocean Instance Types](https://www.digitalocean.com/docs/droplets/).
-Additionally the Digital Ocean cli `doctl` has [support for listing droplets](https://www.digitalocean.com/docs/apis-clis/doctl/reference/compute/droplet/list/).
-
-```yaml
-digital_ocean:
-  region: nyc3
-  kubernetes_version: "1.21.10-do.0"
-  node_groups:
-    general:
-      instance: "g-4vcpu-16gb"
-      min_nodes: 1
-      max_nodes: 1
-    user:
-      instance: "g-2vcpu-8gb"
-      min_nodes: 1
-      max_nodes: 5
-    worker:
-      instance: "g-2vcpu-8gb"
-      min_nodes: 1
-      max_nodes: 5
-```
-
-</TabItem>
-
 <TabItem value="existing" label="Existing Kubernetes clusters">
 
 Originally designed for Nebari deployments on a "local" minikube cluster, this feature has now expanded to allow users to deploy Nebari to any existing kubernetes cluster.
@@ -318,7 +287,6 @@ local:
 :::note
 Many of the cloud providers regularly update their internal **Kubernetes versions** so if you wish to specify a particular version, please check the following resources.
 This is _completely optional_ as Nebari will, by default, select the most recent version available for your preferred cloud provider:
-[Digital Ocean](https://docs.digitalocean.com/products/kubernetes/changelog/);
 [Google Cloud Platform](https://cloud.google.com/kubernetes-engine/docs/release-notes-stable);
 [Amazon Web Services](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html);
 [Microsoft Azure](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions?tabs=azure-cli).
