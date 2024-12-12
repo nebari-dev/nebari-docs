@@ -91,7 +91,7 @@ To test on cloud Kubernetes, deploy Nebari in the normal way on the cloud, but m
 - [Use a development branch](#use-a-development-branch) to specify the Docker images based on the latest development code in `nebari-config.yaml`.
 
 :::warning
-Testing your contribution by deploying Nebari on the cloud (AWS, GCP, Azure, and Digital Ocean) can consume a lot of time and resources.
+Testing your contribution by deploying Nebari on the cloud (AWS, GCP, and Azure) can consume a lot of time and resources.
 Always prefer local testing when possible.
 It will be easier to debug, may be quicker to deploy, and is likely to be less expensive.
 :::

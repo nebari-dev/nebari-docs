@@ -222,21 +222,7 @@ gcloud container clusters \
 ```
 
 </TabItem>
-<TabItem value="do" label="Digital Ocean">
 
-Check the [DigitalOcean documentation](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/) for more information.
-
-1. [Download the Digital Ocean command line utility](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
-2. If you haven't already, create a [Digital Ocean API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/).
-3. [Authenticate via the API token](https://www.digitalocean.com/docs/apis-clis/doctl/how-to/install/) with`doctl auth init`
-4. Create a `kubeconfig` file with:
-
-```bash
-doctl kubernetes cluster kubeconfig \
-  save "<your-cluster-name>"
-```
-
-</TabItem>
 <TabItem value="aws" label="Amazon AWS">
 
 Check the [Amazon Web Services documentation](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html) for more information.
@@ -274,7 +260,6 @@ Unfortunately, this does not seem to be the case with the other cloud providers,
 | :------------- | :------------------------------- |
 | AWS            | No (Danger!)                     |
 | Azure          | No (Danger!)                     |
-| Digital Ocean  | No                               |
 | GCP            | Yes                              |
 
 If modifying the resource allocation for the `general` node in-place is absolutely necessary, try increasing the maximum number of nodes for the `general` node group.

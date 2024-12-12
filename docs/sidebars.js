@@ -50,7 +50,6 @@ module.exports = {
       items: [
         "how-tos/nebari-gcp",
         "how-tos/nebari-aws",
-        "how-tos/nebari-do",
         "how-tos/nebari-azure",
         "how-tos/nebari-kubernetes",
         "how-tos/nebari-local",

@@ -23,7 +23,7 @@ Take IP Address 12.312.312.312 and update DNS to point to "your.domain" [Press E
 Once the IP is generated, you will need to grab it and create the necessary records within the DNS provider of your choice. Setting a DNS record heavily depends on your provider, so an internet search for A/CNAME record for your specific provider should yield helpful results.
 
 :::note
-During the initial deployment, Digital Ocean, GCP, and Azure will display an "IP" address, that you can use to set the A record.
+During the initial deployment, GCP and Azure will display an "IP" address, that you can use to set the A record.
 Whereas, AWS will display a "hostname" that you can use to set the CNAME record.
 :::
 
@@ -77,7 +77,6 @@ Below are the links to detailed documentation on how to create and manage DNS re
 - [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider
 - [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider
 - [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider
-- [Digital Ocean DNS](https://docs.digitalocean.com/products/networking/dns/quickstart/) provider
 
 :::note
 Once your new DNS domain is created, it might take time for the records and related certificates to fully propagate.

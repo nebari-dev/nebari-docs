@@ -83,7 +83,7 @@ apt install curl -y
 apt install unzip -y
 ```
 
-For AWS, you need to install the CLI (see CLI instructions for Google, Azure, Digital Ocean below):
+For AWS, you need to install the CLI (see CLI instructions for Google and Azure below):
 
 ```shell
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -202,10 +202,6 @@ export AZCOPY_AUTO_LOGIN_TYPE=AZCLI
 # restore the backup file from blob storage
 azcopy copy "https://[account].blob.core.windows.net/[container]/nebari-backups/2021-04-23.tar" "./2021-04-23.tar"
 ```
-
-### Digital Ocean
-
-Instructions will be similar to those for AWS above, but use Digital Ocean spaces instead of S3. For more information on command-line tool, check out the [documentation for Digital Ocean Spaces](https://www.digitalocean.com/community/tutorials/how-to-migrate-from-amazon-s3-to-digitalocean-spaces-with-rclone)
 
 ## JupyterHub Database
 

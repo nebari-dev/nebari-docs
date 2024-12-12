@@ -139,24 +139,6 @@ az group delete --resource-group "<project-name>-<namespace>"
 
 Or if you'd prefer, you can destroy the resource group from the Azure portal, [follow these instructions](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal#delete-resource-groups).
 
-### Digital Ocean
-
-If you deployed your Nebari cluster on Digital Ocean and the `nebari destroy` command failed, you will need to destroy two resources, the Kubernetes cluster (DOKS) and the S3 bucket (a Digital Ocean resource, not AWS).
-
-Digital Ocean offers an S3-compatible cloud object storage and requires the use of the [`aws` CLI](https://aws.amazon.com/cli/) to destroy it.
-
-```bash
-aws s3 rb s3://<project-name>-<namespace>-terraform-state --force --endpoint=https://<region>.digitaloceanspaces.com
-```
-
-Finally, you will need to destroy the Kubernetes cluster with [Digital Ocean's CLI tool, `doctl`](https://docs.digitalocean.com/reference/doctl/).
-
-```bash
-doctl kubernetes cluster delete <project-name>-<namespace> -f
-```
-
-Or, if you wish to destroy your Digital Ocean resources from the Digital Ocean control panel and follow these instructions to destroy your [Kubernetes cluster](https://docs.digitalocean.com/products/kubernetes/how-to/destroy-clusters/) and these instructions to destroy the associated [space (i.e. S3)](https://docs.digitalocean.com/products/spaces/how-to/destroy/).
-
 ### Google Cloud Platform (GCP)
 
 If you deployed your Nebari cluster on GCP and the `nebari destroy` command failed, you will need to destroy two resources, the Kubernetes cluster (GKE) and cloud storage bucket (GCS).

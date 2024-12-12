@@ -115,36 +115,6 @@ For more information about AKS upgrade, please refer to the [AKS documentation](
 
 </TabItem>
 
-<TabItem label="Digital Ocean" value="do">
-
-Digital Ocean Kubernetes Service (DOKS) cut their own platform specific version of Kubernetes that usually look something like: `1.25.14-do.0`; this corresponds to a Kubernetes version of `1.25.14`.
-
-You can list the supported DOKS Kubernetes versions by running the following `doctl` command:
-
-```bash
-doctl kubernetes options versions
-```
-
-```bash
-Slug            Kubernetes Version    Supported Features
-1.28.2-do.0     1.28.2                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
-1.27.6-do.0     1.27.6                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
-1.26.9-do.0     1.26.9                cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
-1.25.14-do.0    1.25.14               cluster-autoscaler, docr-integration, ha-control-plane, token-authentication
-```
-
-To upgrade your DOKS cluster, update the `digital_ocean.kubernetes_version` field in your `nebari-config.yaml` to match one of these DOKS Kubernetes versions. Then run `nebari deploy` to apply these changes. This deployment process might take as long as 30 minutes.
-
-:::info
-You will get a validation error if you try to select a Kubernetes version that is unsupported by DOKS or a version higher than [`HIGHEST_SUPPORTED_K8S_VERSION`][highest-supported-k8s].
-:::
-
-Then repeat the above process one minor version at a time.
-
-For more information about DOKS upgrade, please refer to the [DOKS documentation](https://docs.digitalocean.com/products/kubernetes/how-to/upgrade-cluster/).
-
-</TabItem>
-
 </Tabs>
 
 <!-- Reusable links -->
