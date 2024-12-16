@@ -98,7 +98,6 @@ Already made your mind about deployment? Check our handy how-to-guides:
 
 - [Deploying Nebari on AWS][nebari-aws]
 - [Deploying Nebari on Azure][nebari-azure]
-- [Deploying Nebari on Digital Ocean][nebari-do]
 - [Deploying Nebari on GCP][nebari-gcp]
 - [Deploying Nebari on a local cluster][nebari-local]- using [`kind`](https://kind.sigs.k8s.io/) no cloud required
 
@@ -107,7 +106,6 @@ Already made your mind about deployment? Check our handy how-to-guides:
 [advanced-configuration]: /explanations/advanced-configuration.md
 [nebari-aws]: /how-tos/nebari-aws.md
 [nebari-azure]: /how-tos/nebari-azure.md
-[nebari-do]: /how-tos/nebari-do.md
 [environment-management]: /how-tos/nebari-environment-management.md
 [nebari-extension-system]: /how-tos/nebari-extension-system.md
 [nebari-gcp]: /how-tos/nebari-gcp.md
