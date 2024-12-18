@@ -73,7 +73,7 @@ nebari deploy
 By default, when rbac is `enabled`, Nebari will use the Azure AD group specified in
 `admin_group_object_ids` to grant full administrative permissions to the AKS cluster by
 automatically assigning the `Azure Kubernetes Service Cluster Admin Role` to the group.
-As seen bellow:
+As seen below:
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -121,7 +121,7 @@ To demonstrate the capabilities of the RBAC and Azure AD integration, let’s si
 
 2. **Assign Reader Role (or other limited roles)**
 
-   Assign a more restrictive role to the developer and SRE groups at the resource group level. For this example, we’ll use `Reader`:
+   Assign a more restrictive role to the developer and SRE groups at the resource group level. For this example, we’ll use `Azure Kubernetes Service Cluster User Role`.
 
    ```bash
    az role assignment create \
@@ -129,6 +129,11 @@ To demonstrate the capabilities of the RBAC and Azure AD integration, let’s si
         --role "Azure Kubernetes Service Cluster User Role" \
         --scope $AKS_ID
    ```
+
+   ::note
+   For an extended list of [Azure built-in
+   roles](https://learn.microsoft.com/en-us/azure/aks/manage-azure-rbac?tabs=azure-portal#aks-built-in-roles).
+   ::
 
 3. **Map Azure AD Groups to Kubernetes RBAC**
 
@@ -181,7 +186,7 @@ To demonstrate the capabilities of the RBAC and Azure AD integration, let’s si
    ```
 
    ::note
-   This is just for testing and to serve as an exmaple, vvoid using passwords directly
+   This is just for testing and to serve as an example, avoid using passwords directly
    in command-line operations instead.
    ::
 
