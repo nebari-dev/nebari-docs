@@ -62,6 +62,12 @@ azure:
 Ensure that the `admin_group_object_ids` correspond to the Azure AD groups you've created for managing access.
 ::
 
+::warning
+Enabling `azure_rbac` will change the way the Nebari AKS cluster interacts
+with Azure resources, ensure that you have the necessary permissions and have tested the
+configuration before deploying. This change **cannot** be reverted.
+::
+
 ### Step 6: Deploy Nebari with Updated Configuration
 
 After updating the `nebari-config.yaml`, deploy Nebari to apply the changes.
