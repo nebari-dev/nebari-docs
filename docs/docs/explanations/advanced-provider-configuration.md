@@ -19,7 +19,7 @@ Select the provider of your choice:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-<Tabs>
+<Tabs queryString="provider">
 
 <TabItem value="gcp" label="GCP" default="true" >
 
