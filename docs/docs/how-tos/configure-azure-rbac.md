@@ -27,7 +27,23 @@ Before you begin, ensure you have the following:
 - **Azure Subscription**: Access to an Azure subscription where you can create resources.
 - **AKS Cluster**: An existing Nebari Azure deployment.
 
-In this guide we will be using the Azure CLI to perform most of the operations. Instructions on how to perform the same operations using the Azure Portal can be found in the [Azure RBAC documentation](https://docs.microsoft.com/azure/role-based-access-control/overview) alongside links for installing the Azure CLI.
+In this guide we will be using the Azure CLI to perform most of the operations.
+Instructions on how to perform the same operations using the Azure Portal can be found
+in the [Azure RBAC
+documentation](https://docs.microsoft.com/azure/role-based-access-control/overview)
+alongside links for installing the Azure CLI.
+
+## Configure Azure RBAC for Nebari
+
+To enable Azure RBAC for Nebari, you need to create an Azure AD group to serve as the
+admin group for the AKS cluster. This group will have full administrative permissions on
+the cluster and related resources.
+
+You will then update the Nebari configuration to integrate Azure RBAC settings and
+deploy the updated configuration.
+
+We will also demonstrate how to test access using additional groups and role
+assignments.
 
 ### Step 1: Create an Admin Group
 
