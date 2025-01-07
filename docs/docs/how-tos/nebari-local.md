@@ -74,7 +74,7 @@ Note You will be prompted to enter values for some of the choices above if they 
 :::
 
 :::note
-If you are deploying for testing purposes, omitting the `--domain` option is recommended to prevent issues related to setting up a DNS domain for your deployment. By default, at the end of your deployment, Nebari will return the external IP associated with the Kubernetes cluster's load balancer. 
+If you are deploying for testing purposes, omitting the `--domain` option is recommended to prevent issues related to setting up a DNS domain for your deployment. By default, at the end of your deployment, Nebari will return the external IP associated with the Kubernetes cluster's load balancer.
 :::
 
 Once `nebari init` is executed, you should then be able to see the following output:
