@@ -73,6 +73,10 @@ The following steps assume you have:
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
+:::note
+If you are deploying for testing purposes, omitting the `--domain` option is recommended to prevent issues related to setting up a DNS domain for your deployment. By default, at the end of your deployment, Nebari will return the external IP associated with the Kubernetes cluster's load balancer.
+:::
+
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
@@ -123,6 +127,8 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 ```bash
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
+
+See the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns) for details.
 
 :::
 
