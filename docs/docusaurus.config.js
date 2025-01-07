@@ -132,7 +132,7 @@ const config = {
         hideOnScroll: false,
         items: [
           {
-            label: "Nebari Core",
+            label: "Nebari",
             position: "left",
             to: "/docs/welcome",
           },
@@ -178,7 +178,7 @@ const config = {
             position: "right",
             items: [
               {
-                label: "Nebari core code repository",
+                label: "Nebari code repository",
                 href: customFields.githubCodebaseUrl,
               },
               {
