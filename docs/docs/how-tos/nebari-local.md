@@ -192,12 +192,12 @@ If the deployment is successful, you will see the following output:
 ```bash
 [terraform]: Nebari deployed successfully
 Services:
- - argo-workflows -> https://projectname.domain/argo/
- - conda_store -> https://projectname.domain/conda-store/
- - dask_gateway -> https://projectname.domain/gateway/
- - jupyterhub -> https://projectname.domain/
- - keycloak -> https://projectname.domain/auth/
- - monitoring -> https://projectname.domain/monitoring/
+ - argo-workflows -> https://domain/argo/
+ - conda_store -> https://domain/conda-store/
+ - dask_gateway -> https://domain/gateway/
+ - jupyterhub -> https://domain/
+ - keycloak -> https://domain/auth/
+ - monitoring -> https://domain/monitoring/
 Kubernetes kubeconfig located at file:///tmp/NEBARI_KUBECONFIG
 Kubecloak master realm username=root *****
 ...
@@ -208,10 +208,10 @@ Kubecloak master realm username=root *****
 Finally, if everything is set properly you should be able to cURL the JupyterHub Server. Run
 
 ```
-curl -k https://projectname.domain/hub/login
+curl -k https://domain/hub/login
 ```
 
-It's also possible to visit `https://projectname.domain` in your web browser to select the deployment.
+It's also possible to visit `https://domain` in your web browser to select the deployment.
 As default for a local deployment the https certificates generated during deployments aren't signed by a recognized [Certificate Authority (CA)](https://en.wikipedia.org/wiki/Certificate_authority) and are self-signed by [Traefik](https://github.com/traefik/traefik) instead.
 
 Several browsers makes it difficult to view a self-signed certificate that are not added to the certificate registry. So, if you do not want to use Let's Encrypt, you can use the following workarounds to properly view the pages:
