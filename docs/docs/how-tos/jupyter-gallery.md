@@ -53,7 +53,7 @@ below.
 ### Sample configuration
 
 Below is an example of the Gallery settings from the `nebari-config.yaml`. Note that \<encoding\>
-and \<PAT\> should be replaced with the actual encoding an Private Access Token, respectively. 
+and \<PAT\> should be replaced with the actual encoding and Private Access Token, respectively. 
 
 ```
 jupyterlab:
