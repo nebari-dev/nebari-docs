@@ -29,6 +29,8 @@ import TabItem from '@theme/TabItem';
 
 JHub App launcher supports `Panel`, `Bokeh`, `Streamlit`, `Plotly Dash`, `Voila`, `Gradio`, `JupyterLab`, and `Any generic Python command`.
 
+In order to use JHub App to create apps, ensure it is enabled in your Nebari deployment. See the [JHub App Launcher docs][jub-app-launcher] for instructions on enabling and using JHub App in Nebari.
+
 </TabItem>
 <TabItem value="cds-dashboards" label="CDS Dashboards">
 
@@ -232,3 +234,4 @@ Dashboards and apps can be very handy tools to share information and insights wi
 
 [login-keycloak]: /docs/tutorials/login-keycloak
 [create-env]: /docs/tutorials/creating-new-environments
+[jub-app-launcher]: /docs/how-tos/jhub-app-launcher
