@@ -56,6 +56,7 @@ the permission model to fit your precise security and governance requirements—
 ready-to-use defaults Nebari provides.
 
 ## Managing Roles and Permissions
+
 Overview
 - *Roles*: Define a set of permissions (or scopes) for a particular client (service).
 - *Groups*: Aggregate users who share similar permissions.
@@ -114,12 +115,110 @@ with role `conda_store_viewer`, this user ultimately has the role `conda_store_a
 Below is a table illustrating each default group, the resources they can access, and the roles they inherit. The table
 also includes a brief description of the permissions granted to each group.
 
-| Group        | Access to Nebari Resources                                                                                     | Roles                                                                                                                                                                     | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `analyst`    | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>                        | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`argo_viewer`</li><li>`grafana_viewer`</li></ul>                                                   | <ul><li>Default user permissions</li><li>Access to start a server instance and generate JupyterHub access token.</li><li>Read/write access to shared `analyst` folder group mount</li><li>Read access to `analyst` and write access to personal conda-store namespace</li><li>Read access to Argo-Workflows and Jupyter-Scheduler </li><li>Inherent Grafana permissions from [Grafana viewer scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul> |
-| `developer`  | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`argo_developer`</li><li>`grafana_developer`</li></ul>                    | <ul><li>All of the above access, plus...</li><li>Read access `developer` conda-store namespace</li><li>Access to create Dask clusters.</li><li>Read/write access to shared `developer` folder group mount</li><li>Read/create access to Argo-Workflows and Jupyter-Scheduler</li><li>Inherent Grafana permissions from [Grafana editor scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                       |
-| `admin`      | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>           | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`grafana_admin`</li></ul>                                        | <ul><li>All of the above access, plus...</li><li>Read/write access to all conda-store available namespaces/environments.</li><li>Access to Jupyterhub Admin page and can access JupyterLab users spaces</li><li>Access to Keycloak and can add remove users and groups</li><li>Inherent Grafana permissions from [Grafana administrator scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles)</li></ul>                                                      |
-| `superadmin` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul>           | <ul><li>`conda_store_superadmin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`realm_admin` (Keycloak) </li><li>`grafana_admin`</li></ul> | <ul><li>All of the above access, plus...</li><li>Delete (build and environment) access on conda-store</li><li>Full access to Keycloak (realm) (same as `root`)</li></ul>                                                                                                                                                                                                                                                                                                                                         |
+import React from 'react';
+
+export const GroupTable = ({ groups }) => {
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Group</th>
+          <th>Access to Nebari Resources</th>
+          <th>Roles</th>
+          <th>Permissions Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {groups.map((group) => (
+          <tr key={group.groupName}>
+            {/* 1. Resources */}
+            <td>
+              <ul>
+                {group.resources.map((resource) => (
+                  <li key={resource}>{resource}</li>
+                ))}
+              </ul>
+            </td>
+
+            {/* 2. Roles */}
+            <td>
+              <ul>
+                {group.roles.map((role) => (
+                  <li key={role}>{role}</li>
+                ))}
+              </ul>
+            </td>
+
+            {/* 3. Permissions Description */}
+            <td>
+              <ul>
+                {group.permissions.map((perm, i) => (
+                  <li key={i}>{perm}</li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import MarkdownTable from @site/src/components/MardownTable;
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px' }}>
+
+<Tabs>
+   <TabItem value="Analyst" label="Analyst" default>
+   <GroupTable
+    groups={[
+      {
+        resources: ['Conda-Store', 'Jupyterhub', 'Argo Workflows', 'Grafana'],
+        roles: ['[conda_store_developer](/docs/how-tos/access-logs-loki)`', 'jupyterhub_developer', 'argo_viewer', 'grafana_viewer'],
+        permissions: [
+          'Default user permissions.',
+          'Access to start a server instance and generate a JupyterHub access token.',
+          'Read/write access to shared `analyst` folder group mount.',
+          'Read access to the `analyst` namespace in conda-store (write access to personal namespace).',
+          'Read access to Argo Workflows and Jupyter Scheduler.',
+          'Inherits Grafana viewer permissions from [Grafana viewer scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles).',
+        ],
+      },
+    ]} />
+
+| Group     | Access to Nebari Resources                                                              | Roles                                                                                                                   | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `analyst` | <ul><li>Conda-Store</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul> | <ul><li>`conda_store_developer`</li><li>`jupyterhub_developer`</li><li>`argo_viewer`</li><li>`grafana_viewer`</li></ul> | <ul><li>Default user permissions.</li><li>Access to start a server instance and generate a JupyterHub access token.</li><li>Read/write access to shared `analyst` folder group mount.</li><li>Read access to the `analyst` namespace in conda-store (write access to personal namespace).</li><li>Read access to Argo Workflows and Jupyter Scheduler.</li><li>Inherits Grafana viewer permissions from [Grafana viewer scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles).</li></ul> |
+
+   </TabItem>
+   <TabItem value="Developer" label="Developer">
+
+| Group       | Access to Nebari Resources                                                                                     | Roles                                                                                                                                                  | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ----------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `developer` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana Developer</li></ul> | <ul><li>`conda_store_developer`</li><li>`dask_developer`</li><li>`jupyterhub_developer`</li><li>`argo_developer`</li><li>`grafana_developer`</li></ul> | <ul><li>Includes all `analyst` access, plus...</li><li>Read access to the `developer` namespace in conda-store.</li><li>Ability to create Dask clusters.</li><li>Read/write access to the shared `developer` folder group mount.</li><li>Read/create access to Argo Workflows and Jupyter Scheduler.</li><li>Inherits Grafana editor permissions from [Grafana editor scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles).</li></ul> |
+
+   </TabItem>
+   <TabItem value="Admin" label="Admin">
+
+| Group   | Access to Nebari Resources                                                                           | Roles                                                                                                                              | Permissions Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `admin` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul> | <ul><li>`conda_store_admin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`grafana_admin`</li></ul> | <ul><li>Includes all `developer` access, plus...</li><li>Read/write access to all conda-store namespaces/environments.</li><li>Access to JupyterHub Admin page and ability to access users’ JupyterLab spaces.</li><li>Access to Keycloak for user and group management.</li><li>Inherits Grafana administrator permissions from [Grafana administrator scopes](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles).</li></ul> |
+
+   </TabItem>
+   <TabItem value="Superadmin" label="Superadmin">
+
+| Group        | Access to Nebari Resources                                                                           | Roles                                                                                                                                                                    | Permissions Description                                                                                                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `superadmin` | <ul><li>Conda-Store</li><li>Dask</li><li>Jupyterhub</li><li>Argo Workflows</li><li>Grafana</li></ul> | <ul><li>`conda_store_superadmin`</li><li>`dask_admin`</li><li>`jupyterhub_admin`</li><li>`argo_admin`</li><li>`realm_admin` (Keycloak)</li><li>`grafana_admin`</li></ul> | <ul><li>Includes all `admin` access, plus...</li><li>Delete (build and environment) access in conda-store.</li><li>Full realm administration in Keycloak (same as `root`).</li></ul> |
+
+   </TabItem>
+</Tabs>
+
+</div>
+
+                                                                           |
 
 :::info
 Check
