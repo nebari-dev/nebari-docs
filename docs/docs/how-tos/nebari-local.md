@@ -73,6 +73,10 @@ The following steps assume you have:
 Note You will be prompted to enter values for some of the choices above if they are absent from the command line arguments (for example, project name and domain)
 :::
 
+:::note
+If you are deploying for testing purposes, omitting the `--domain` option is recommended to prevent issues related to setting up a DNS domain for your deployment. By default, at the end of your deployment, Nebari will return the external IP associated with the Kubernetes cluster's load balancer.
+:::
+
 Once `nebari init` is executed, you should then be able to see the following output:
 
 ```bash
@@ -124,6 +128,8 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
 
+See the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns) for details.
+
 :::
 
 ### Exposing container network (for MacOS)
@@ -159,6 +165,20 @@ security:
         tag: sha-b4a2d1e
 ```
 
+### Increase fs watches
+
+Depending on your host system, you may need to increase the `fs.inotify.max_user_watches` and
+`fs.inotify.max_user_instances kernel parameters` if you see the error "too many open files" in the logs of
+a failing pod.
+
+```bash
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo sysctl fs.inotify.max_user_instances=512
+```
+
+See the [kind troubleshooting
+docs](https://kind.sigs.k8s.io/docs/user/known-issues/#pod-errors-due-to-too-many-open-files) for more information.
+
 ## Deploying Nebari
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time with:
@@ -172,12 +192,12 @@ If the deployment is successful, you will see the following output:
 ```bash
 [terraform]: Nebari deployed successfully
 Services:
- - argo-workflows -> https://projectname.domain/argo/
- - conda_store -> https://projectname.domain/conda-store/
- - dask_gateway -> https://projectname.domain/gateway/
- - jupyterhub -> https://projectname.domain/
- - keycloak -> https://projectname.domain/auth/
- - monitoring -> https://projectname.domain/monitoring/
+ - argo-workflows -> https://domain/argo/
+ - conda_store -> https://domain/conda-store/
+ - dask_gateway -> https://domain/gateway/
+ - jupyterhub -> https://domain/
+ - keycloak -> https://domain/auth/
+ - monitoring -> https://domain/monitoring/
 Kubernetes kubeconfig located at file:///tmp/NEBARI_KUBECONFIG
 Kubecloak master realm username=root *****
 ...
@@ -188,10 +208,10 @@ Kubecloak master realm username=root *****
 Finally, if everything is set properly you should be able to cURL the JupyterHub Server. Run
 
 ```
-curl -k https://projectname.domain/hub/login
+curl -k https://domain/hub/login
 ```
 
-It's also possible to visit `https://projectname.domain` in your web browser to select the deployment.
+It's also possible to visit `https://domain` in your web browser to select the deployment.
 As default for a local deployment the https certificates generated during deployments aren't signed by a recognized [Certificate Authority (CA)](https://en.wikipedia.org/wiki/Certificate_authority) and are self-signed by [Traefik](https://github.com/traefik/traefik) instead.
 
 Several browsers makes it difficult to view a self-signed certificate that are not added to the certificate registry. So, if you do not want to use Let's Encrypt, you can use the following workarounds to properly view the pages:

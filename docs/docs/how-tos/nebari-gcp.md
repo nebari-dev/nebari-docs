@@ -11,14 +11,18 @@ will walk you through the following steps:
 
 - [Introduction](#introduction)
 - [Sign up for Google Cloud Platform](#sign-up-for-google-cloud-platform)
-- [Set up the `gcloud` CLI](#set-up-the-gcloud-cli)
 - [Authentication](#authentication)
+- [Required GCP APIs](#required-gcp-apis)
 - [Initializing Nebari](#initializing-nebari)
 - [Deploying Nebari](#deploying-nebari)
 - [Destroying Nebari](#destroying-nebari)
 
-For those already familiar with Google Cloud Platform and `gcloud`, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
+For those already familiar with Google Cloud Platform, feel free to skip this first step and jump straight to the [Nebari authentication](#authentication) section of
 this guide.
+
+:::warning important
+Before version 2024.9.1, Nebari relied on users having `gcloud`, Google Cloud's CLI, installed locally on the machine they were deploying Nebari from. If you want to install an older version, make sure to [install it](https://cloud.google.com/sdk/docs/install).
+:::
 
 ## Sign up for Google Cloud Platform
 
@@ -46,12 +50,6 @@ A Nebari deployment on GCP will **NOT** fall into `free tier` usage. Therefore, 
 administrator for more information. If you provision resources outside the free tier, you may be charged. We're not responsible for any charges you may incur if this happens.
 :::
 
-## Set up the `gcloud` CLI
-
-As Nebari executes some preliminary steps to check Kubernetes compatibility within the GCP infrastructure, it needs to use the
-[`gcloud` command line interface (CLI)](https://cloud.google.com/sdk/gcloud) to interact with the Google Cloud Platform. You will have to
-[install the `gcloud` CLI on your system](https://cloud.google.com/sdk/docs/install) before you can use Nebari.
-
 The remaining steps will assume that you are logged in to a GCP account that has admin privileges for the newly created project.
 
 ## Authentication
@@ -66,7 +64,11 @@ management.
 
 If it's your first time creating a service account, please follow
 [these detailed instructions](https://cloud.google.com/iam/docs/creating-managing-service-accounts) to create a Google Service Account with the following roles attached:
-"roles/editor", "roles/resourcemanager.projectIamAdmin" and "roles/container.admin".
+
+- [`roles/editor`](https://cloud.google.com/iam/docs/understanding-roles#editor)
+- [`roles/resourcemanager.projectIamAdmin`](https://cloud.google.com/iam/docs/understanding-roles#resourcemanager.projectIamAdmin)
+- [`roles/container.admin`](https://cloud.google.com/iam/docs/understanding-roles#container.admin)
+- [`roles/storage.admin`](https://cloud.google.com/iam/docs/understanding-roles#storage.admin)
 
 For more information about roles and permissions, see the
 [Google Cloud Platform IAM documentation](https://cloud.google.com/iam/docs/choose-predefined-roles). Remember to check the active project before creating resources, especially if
@@ -114,7 +116,7 @@ startup file (for example, for example in the `~/.bashrc` or `~/.profile` for th
 
 :::note
 The steps in the following sections assume you have (i) completed the [Install Nebari][nebari-install] section, (ii) confirmed that Nebari is successfully
-installed in your environment, (iii) opted for **GCP** as your cloud provider which includes installing and initializing `gcloud`, and (iv) already configured the Nebari
+installed in your environment, (iii) opted for **GCP** as your cloud provider, and (iv) already configured the Nebari
 environment variables. If you had any issues during the installation, please visit the "Get started" section of our [troubleshooting page][nebari-troubleshooting] for further
 guidance.
 :::
