@@ -18,6 +18,19 @@ profiles:
       description: Stable environment with 1 cpu / 1 GB ram
       access: all
       default: true
+      profile_options:
+        image:
+          display_name: Image
+          choices:
+            default:
+              display_name: quay.io/nebari/nebari-jupyterlab:latest
+              default: true
+              kubespawner_override:
+                image: quay.io/nebari/nebari-jupyterlab:latest
+            custom:
+              display_name: <my-container-registry>/myOrg/my-custom-image:mytag
+              kubespawner_override:
+                image: <my-container-registry>/myOrg/my-custom-image:mytag
       kubespawner_override:
         cpu_limit: 1
         cpu_guarantee: 1
@@ -34,6 +47,8 @@ Each profile under `jupyterlab` is a named JupyterLab profile.
 `display_name` is the name of the profile that will be displayed to users.
 
 `description` is a description of the profile that will be displayed to users.
+
+`profile_options` makes it possible to set various sub-options per profile.  See the [Kubespawner docs](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner.profile_list) for more info.
 
 `kubespawner_override` field to define behavior as per the [KubeSpawner](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html) API.
 
