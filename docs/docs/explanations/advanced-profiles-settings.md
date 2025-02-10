@@ -15,27 +15,27 @@ Profiles are used to control the JupyterLab user instances and Dask workers prov
 profiles:
   jupyterlab:
     - display_name: Small Instance
-      description: Stable environment with 1 cpu / 1 GB ram
+      description: Stable environment with 2 cpu / 8 GB ram
       access: all
       default: true
-      profile_options:
+      profile_options:  # optional
         image:
           display_name: Image
           choices:
             default:
-              display_name: quay.io/nebari/nebari-jupyterlab:latest
+              display_name: nebari-jupyterlab:latest
               default: true
               kubespawner_override:
                 image: quay.io/nebari/nebari-jupyterlab:latest
             custom:
-              display_name: <my-container-registry>/myOrg/my-custom-image:mytag
+              display_name: my-custom-image:mytag
               kubespawner_override:
                 image: <my-container-registry>/myOrg/my-custom-image:mytag
       kubespawner_override:
-        cpu_limit: 1
-        cpu_guarantee: 1
-        mem_limit: 1G
-        mem_guarantee: 1G
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 6G
     - display_name: Medium Instance
     ...
 ```
