@@ -48,7 +48,7 @@ Each profile under `jupyterlab` is a named JupyterLab profile.
 
 `description` is a description of the profile that will be displayed to users.
 
-`profile_options` makes it possible to set various sub-options per profile.  See the [Kubespawner docs](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner.profile_list) for more info.
+`profile_options` makes it possible to set various sub-options per profile. See the [Kubespawner docs](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html#kubespawner.KubeSpawner.profile_list) for more info.
 
 `kubespawner_override` field to define behavior as per the [KubeSpawner](https://jupyterhub-kubespawner.readthedocs.io/en/latest/spawner.html) API.
 
