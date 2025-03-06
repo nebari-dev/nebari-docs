@@ -28,6 +28,7 @@ body:
       options:
         - label: "This issue is not a question, feature request, RFC, or anything other than a bug report. Please post those things in GitHub Discussions: https://github.com/nebari-dev/nebari/discussions"
           required: true
+
   - type: textarea
     validations:
       required: true
@@ -36,19 +37,6 @@ body:
       description: |
         What problem(s) did you run into that caused you to request a fix to the documentation or additional
         documentation? What questions do you think we should answer?
-
-  - type: textarea
-    validations:
-      required: true
-    attributes:
-      label: Steps to Resolve this Issue
-      description: |
-        How can the problem be solved? Are there any additional steps required? Do any other pages need to be updated?
-      value: |
-        1.
-        2.
-        3.
-        ...
 
   - type: markdown
     attributes:
