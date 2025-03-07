@@ -48,8 +48,8 @@ If you'd like to retain the latest version of an environment and only remove spe
 ## How do I use preemptible and spot instances on Nebari?
 
 A preemptible or spot VM is an instance that you can create and run at a much lower price than normal instances. Azure
-and Google Cloud platform use the term preemptible, while AWS uses the term spot, and Digital Ocean doesn't support
-these types of instances. However, the cloud provider might stop these instances if it requires access to those
+and Google Cloud platform use the term preemptible, while AWS uses the term spot.
+However, the cloud provider might stop these instances if it requires access to those
 resources for other tasks. Preemptible instances are excess Cloud Provider's capacity, so their availability varies with
 usage.
 
@@ -83,10 +83,6 @@ Spot instances aren't supported at this moment.
 ##### Azure
 
 Preemptible instances aren't supported at this moment.
-
-##### Digital Ocean
-
-Digital Ocean doesn't support these type of instances.
 
 ## Why doesn't my code recognize the GPU(s) on Nebari?
 
