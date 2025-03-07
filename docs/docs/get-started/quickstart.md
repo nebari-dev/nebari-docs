@@ -79,25 +79,7 @@ nebari init aws --project projectname \
 ```
 
   </TabItem>
-  <TabItem value="do" label="Digital Ocean" default>
 
-Provide authentication credentials to Nebari by setting the following environment variables:
-
-```bash
-export DIGITALOCEAN_TOKEN=""          # API token required to generate resources
-export SPACES_ACCESS_KEY_ID=""        # public access key for access spaces
-export SPACES_SECRET_ACCESS_KEY=""    # the private key for access spaces
-```
-
-Create `nebari-config.yaml` with:
-
-```bash
-nebari init do --project projectname \
-  --domain domain \
-  --auth-provider password
-```
-
-  </TabItem>
   <TabItem value="azure" label="Azure" default>
 
 Provide authentication credentials to Nebari by setting the following environment variables:

@@ -121,7 +121,7 @@ If you [changed the initial root password for Keycloak](#change-keycloak-root-pa
 To make adding users easier for new Nebari deployments, we've created a CLI command to help you.
 
 ```shell
-nebari keycloak -c nebari-config.yaml adduser <username> <password>
+nebari keycloak  adduser -c nebari-config.yaml --user <username> <password>
 ```
 
 This will create a new user `<username>` under the `analyst` group, with the initial password provided. Omit the password completely if you are using GitHub or Auth0. It will also add a placeholder email (i.e. `username@your-domain`) to the **Email** field.
