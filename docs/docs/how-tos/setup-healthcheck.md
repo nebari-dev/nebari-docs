@@ -61,3 +61,6 @@ Below is an explanation of the available healthchecks. This list may not be comp
 | daemonset                                  | verifies that a daemonset can be created, fully provisioned, and torn down. This checks the full kubelet functionality of every node in your Kubernetes cluster |
 | deployment                                 | verifies that a fresh deployment can run, deploy multiple pods, pass traffic, do a rolling update (without dropping connections), and clean up successfully     |
 | keycloak-http-check                        | verifies Keycloak is accessible                                                                                                                                 |
+| argo-http-check                            | verifies Argo Workflows Server is accessible                                                                                                                    |
+| dask-gateway-http-check                    | verifies Dask Gateway Gateway API is running                                                                                                                    |
+| grafa-http-check                           | verifies Grafana is accessible                                                                                                                                  |
