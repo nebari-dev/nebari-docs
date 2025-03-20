@@ -63,4 +63,4 @@ Below is an explanation of the available healthchecks. This list may not be comp
 | keycloak-http-check                        | verifies Keycloak is accessible                                                                                                                                 |
 | argo-http-check                            | verifies Argo Workflows Server is accessible                                                                                                                    |
 | dask-gateway-http-check                    | verifies Dask Gateway Gateway API is running                                                                                                                    |
-| grafa-http-check                           | verifies Grafana is accessible                                                                                                                                  |
+| grafana-http-check                           | verifies Grafana is accessible                                                                                                                                  |
