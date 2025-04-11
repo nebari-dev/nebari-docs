@@ -9,6 +9,30 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 
 ---
 
+## Release 2025.4.1 - April 11, 2025
+
+### What's Changed
+
+- [pre-commit.ci] pre-commit autoupdate by @pre-commit-ci in https://github.com/nebari-dev/nebari/pull/2969
+- Add extra services checks to kuberhealthy by @viniciusdc in https://github.com/nebari-dev/nebari/pull/2978
+- Add workflow to run conda-store user journey tests by @soapy1 in https://github.com/nebari-dev/nebari/pull/2895
+- Add support for generating ssl certs via DNS challenge (via Cloudflare) by @aktech in https://github.com/nebari-dev/nebari/pull/2957
+- Skip ingress check when using DNS certs by @aktech in https://github.com/nebari-dev/nebari/pull/3002
+- update deprecated pydantic function by @dcmcand in https://github.com/nebari-dev/nebari/pull/3010
+- Add taint to user and worker nodes by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2605
+- add node taint upgrade step by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/3009
+- Include documentation requirement for new ENH under PR template by @viniciusdc in https://github.com/nebari-dev/nebari/pull/3018
+- refactor keycloak cli command code by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/2968
+- [AUTO] Update CLI doc by @nebari-sensei in https://github.com/nebari-dev/nebari/pull/2999
+- Pin conda-lock < 3.0.0 to fix conda-store user journey test failures by @marcelovilla in https://github.com/nebari-dev/nebari/pull/3020
+- Update usage of `create_user` within pytest fixture call by @viniciusdc in https://github.com/nebari-dev/nebari/pull/3023
+- Revert aks cluster argument to auto_scaling_enabled by @marcelovilla in https://github.com/nebari-dev/nebari/pull/3022
+- ensure default node group taints are used in deployment tests by @Adam-D-Lewis in https://github.com/nebari-dev/nebari/pull/3028
+- Use ubuntu-latest instead of 20.04 in the Code Scanning (Trivy) GHA workflow by @marcelovilla in https://github.com/nebari-dev/nebari/pull/3030
+- Run nebari destroy using conda in local integration tests by @marcelovilla in https://github.com/nebari-dev/nebari/pull/3031
+
+**Full Changelog**: https://github.com/nebari-dev/nebari/compare/2025.3.1...2025.4.1
+
 ## Release 2025.3.1 - March 14, 2025
 
 ### What's Changed
@@ -57,7 +81,8 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 ### New Contributors
 
 - @soapy1 made their first contribution in https://github.com/nebari-dev/nebari/pull2891
-- @smokestacklightnin made their first contribution in https://github.com/nebari-dev/nebari/pull/2839
+- @smokestacklightnin made their first contribution in https://github.com/nebari-dev
+  /nebari/pull/2839
 - @kernel-loophole made their first contribution in https://github.com/nebari-dev/nebari/pull/2916
 
 **Full Changelog**: https://github.com/nebari-dev/nebari/compare/2024.12.1...2025.2.1
@@ -511,8 +536,8 @@ command and follow the instructions
 - CI: Add test coverage by @fangchenli in https://github.com/nebari-dev/nebari/pull/1959
 - nebari cli environment variable handling, support, keycloak, dev tests by @sblair-metrostar in https://github.com/nebari-dev/nebari/pull/1968
 - CI: remove empty notebook to fix pre-commit json check by @fangchenli in https://github.com/nebari-dev/nebari/pull/1976
-- TYP: fix typing error in plugins by @fangchenli in https://github.com/nebari-dev/nebari/pull/1973
-- TYP: fix return class type in hookimpl by @fangchenli in https://github.com/nebari-dev/nebari/pull/1975
+- TYPO: fix typing error in plugins by @fangchenli in https://github.com/nebari-dev/nebari/pull/1973
+- TYPO: fix return class type in hookimpl by @fangchenli in https://github.com/nebari-dev/nebari/pull/1975
 - Allow users to specify Azure tags by @iameskild in https://github.com/nebari-dev/nebari/pull/1967
 - [pre-commit.ci] pre-commit autoupdate by @pre-commit-ci in https://github.com/nebari-dev/nebari/pull/1979
 - Do not try and add argo envs when disabled by @iameskild in https://github.com/nebari-dev/nebari/pull/1926
@@ -540,8 +565,8 @@ command and follow the instructions
 - [pre-commit.ci] pre-commit autoupdate by @pre-commit-ci in https://github.com/nebari-dev/nebari/pull/2047
 - fix typo in guided init for Digital Ocean by @dcmcand in https://github.com/nebari-dev/nebari/pull/2059
 - CI: add do integration by @fangchenli in https://github.com/nebari-dev/nebari/pull/2060
-- TYP: make all subfolders under kubernetes_services/template non-module by @fangchenli in https://github.com/nebari-dev/nebari/pull/2043
-- TYP: fix most typing errors in provider by @fangchenli in https://github.com/nebari-dev/nebari/pull/2038
+- TYPO: make all subfolders under kubernetes_services/template non-module by @fangchenli in https://github.com/nebari-dev/nebari/pull/2043
+- TYPO: fix most typing errors in provider by @fangchenli in https://github.com/nebari-dev/nebari/pull/2038
 - Fix link to documentation on Nebari Deployment home page by @aktech in https://github.com/nebari-dev/nebari/pull/2063
 - TST: enable timeout config in playwright notebook test by @fangchenli in https://github.com/nebari-dev/nebari/pull/1996
 - DEPS: sync supported python version by @fangchenli in https://github.com/nebari-dev/nebari/pull/2065
