@@ -6,7 +6,7 @@ toc_max_heading_level: 3
 
 # Personas
 
-There are a variety of people which may interact with Nebari deployments. Below is a list of personas intended to cover most people who interact with Nebari.
+A variety of people interact with Nebari deployments. The personas below represent the core user groups we support, guiding platform development and UX improvements.
 
 ## 👩‍💻 Data Scientist (End User)
 
@@ -18,13 +18,13 @@ There are a variety of people which may interact with Nebari deployments. Below 
 * Often collaborate with teammates, share notebooks, or publish results.  
 * Focused on analysis and experimentation , not infrastructure.
 
-  ### 🔁 Key Workflows
+### 🔁 Key Workflows
 
 * Explore and analyze data using notebooks.  
 * Share notebooks / results / dashboards with teammates.  
 * Use cloud resources when local compute isn’t enough.
 
-  ### 🤕 Pain Points
+### 🤕 Pain Points
 
 * Struggle to set up the right environment (package conflicts, inconsistent installs).  
 * Installing libraries on institutional machines is often restricted.   
@@ -33,7 +33,7 @@ There are a variety of people which may interact with Nebari deployments. Below 
 * Difficult to reproduce results across machines/environments.  
 * Limited tools for debugging crashes, package errors or environment issues.  
     
-  	Aside from internal discussions, these pain pints are derived from the following sources:  
+Aside from internal discussions, these pain points are derived from the following sources:  
 * [Deploying JupyterHub at your institution \- discuss \- Jupyter Community Forum](https://discourse.jupyter.org/t/deploying-jupyterhub-at-your-institution/723)   
 * [What's Wrong with Computational Notebooks? Pain Points, Needs, and Design Opportunities](https://austinhenley.com/pubs/Chattopadhyay2020CHI_NotebookPainpoints.pdf)   
 * [Old tools, new tricks: Improving the computational notebook experience for data scientists \- Microsoft Research](https://www.microsoft.com/en-us/research/blog/old-tools-new-tricks-improving-the-computational-notebook-experience-for-data-scientists/) 
@@ -57,14 +57,14 @@ There are a variety of people which may interact with Nebari deployments. Below 
 * May not have deep technical knowledge.  
 * Focused on keeping the platform running smoothly and securely for End Users.
 
-  ### 🔁 Key Workflows
+### 🔁 Key Workflows
 
 * Onboard new users, manage roles and permissions.  
 * Monitor system usage, resource consumption and user activity.  
 * Enforce data access, security and compliance policies.  
 * Manage costs and track resource use.
 
-  ### 🤕 Pain Points
+### 🤕 Pain Points
 
 * Managing users manually.  
 * Integrating existing identity auth systems (OAuth, SSO etc.).  
@@ -91,7 +91,7 @@ There are a variety of people which may interact with Nebari deployments. Below 
 * May be part of a central IT/infra team or external maintainers.  
 * Focused on reliability, scaling, security and maintenance.
 
-  ### 🔁 Key Workflows
+### 🔁 Key Workflows
 
 * Deploy and configure the platform.  
 * Set up authentication, storage and compute resources.  
@@ -99,7 +99,7 @@ There are a variety of people which may interact with Nebari deployments. Below 
 * Troubleshoot issues with platform stability or user environments.  
 * Implement security policies and ensure compliance.
 
-  ### 🤕 Pain Points
+### 🤕 Pain Points
 
 * Deployment is complex \- there are many moving parts and a steep learning curve.  
 * Updates can break things, need testing and staging.  
