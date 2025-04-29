@@ -10,7 +10,7 @@ A variety of people interact with Nebari deployments. The personas below represe
 
 ## 👩‍💻 Data Scientist (End User)
 
-### 🤔 Who They Are
+### Who They Are
 
 * Researchers / analysts / data scientists working with datasets and models.  
 * Found in research labs, academia, startups or enterprise teams.  
@@ -18,13 +18,13 @@ A variety of people interact with Nebari deployments. The personas below represe
 * Often collaborate with teammates, share notebooks, or publish results.  
 * Focused on analysis and experimentation , not infrastructure.
 
-### 🔁 Key Workflows
+### Key Workflows
 
 * Explore and analyze data using notebooks.  
 * Share notebooks / results / dashboards with teammates.  
 * Use cloud resources when local compute isn’t enough.
 
-### 🤕 Pain Points
+### Pain Points
 
 * Struggle to set up the right environment (package conflicts, inconsistent installs).  
 * Installing libraries on institutional machines is often restricted.   
@@ -38,7 +38,7 @@ Aside from internal discussions, these pain points are derived from the followin
 * [What's Wrong with Computational Notebooks? Pain Points, Needs, and Design Opportunities](https://austinhenley.com/pubs/Chattopadhyay2020CHI_NotebookPainpoints.pdf)   
 * [Old tools, new tricks: Improving the computational notebook experience for data scientists \- Microsoft Research](https://www.microsoft.com/en-us/research/blog/old-tools-new-tricks-improving-the-computational-notebook-experience-for-data-scientists/) 
 
-### 📋 What They Need
+### What They Need
 
 * On-demand, easy access to scalable compute (larger instances, GPUs).  
 * Simplified, stable environment management.  
@@ -47,9 +47,11 @@ Aside from internal discussions, these pain points are derived from the followin
 * Tools to make work reproducible \- track data, code, environments versions and settings.  
 * Clear error logs and troubleshooting help when things break.
 
+---
+
 ## 🛡️ Platform Manager (Admin)
 
-### 🤔 Who They Are
+### Who They Are
 
 * Admins or IT managers responsible for user access and governance.  
 * Found in enterprise teams or research institutions.  
@@ -57,14 +59,14 @@ Aside from internal discussions, these pain points are derived from the followin
 * May not have deep technical knowledge.  
 * Focused on keeping the platform running smoothly and securely for End Users.
 
-### 🔁 Key Workflows
+### Key Workflows
 
 * Onboard new users, manage roles and permissions.  
 * Monitor system usage, resource consumption and user activity.  
 * Enforce data access, security and compliance policies.  
 * Manage costs and track resource use.
 
-### 🤕 Pain Points
+### Pain Points
 
 * Managing users manually.  
 * Integrating existing identity auth systems (OAuth, SSO etc.).  
@@ -73,7 +75,7 @@ Aside from internal discussions, these pain points are derived from the followin
 * Lack of tools to enforce quotas or shut down idle resources.  
 * Managing permissions for sensitive data is complex.
 
-### 📋 What They Need
+### What They Need
 
 * Easy integration with existing identity providers.  
 * User-friendly dashboard for managing users, roles and permissions.  
@@ -82,16 +84,18 @@ Aside from internal discussions, these pain points are derived from the followin
 * Ability to enforce quotas and shut down idle resources.  
 * Tools for managing shared environments and secure data access.
 
+---
+
 ## 🛠️ DevOps / SysAdmin
 
-### 🤔 Who They Are
+### Who They Are
 
 * Engineers responsible for deploying and maintaining the platform’s infrastructure.  
 * Work with Kubernetes, Terraform, cloud services and CI/CD tools.  
 * May be part of a central IT/infra team or external maintainers.  
 * Focused on reliability, scaling, security and maintenance.
 
-### 🔁 Key Workflows
+### Key Workflows
 
 * Deploy and configure the platform.  
 * Set up authentication, storage and compute resources.  
@@ -99,7 +103,7 @@ Aside from internal discussions, these pain points are derived from the followin
 * Troubleshoot issues with platform stability or user environments.  
 * Implement security policies and ensure compliance.
 
-### 🤕 Pain Points
+### Pain Points
 
 * Deployment is complex \- there are many moving parts and a steep learning curve.  
 * Updates can break things, need testing and staging.  
@@ -107,7 +111,7 @@ Aside from internal discussions, these pain points are derived from the followin
 * Integrating with enterprise tools (auth, storage, CI/CD) can be difficult.  
 * Limited visibility into resource usage or platform health.
 
-### 📋 What They Need
+### What They Need
 
 * Automated deployment tools.  
 * Easy integration with auth, storage and CI/CD systems.  
