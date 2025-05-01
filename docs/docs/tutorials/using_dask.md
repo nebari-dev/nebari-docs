@@ -46,6 +46,15 @@ On a default Nebari deployment, you can select the `nebari-git-nebari-git-dask` 
 :::warning
 Be sure to select an environment which includes `Dask`, and note that the versions of `dask`, `distributed`, and `dask-gateway` must be the same.
 We recommend the [`nebari-dask` metapackage](https://anaconda.org/conda-forge/nebari-dask). We publish this metapackage alongside Nebari to easily provide you with the correct Dask packages and versions, just be sure that the `nebari-dask` version matches your Nebari deployment version.
+
+If the nebari-dask environment does not include all the packages needed, here is a list to create a new environment:
+- ipykernel
+-  python >=3.11.5
+-  bokeh
+-  pip
+-  graphviz
+-  nebari-dask
+  
 :::
 
 Nebari has set of pre-defined options for configuring the Dask profiles that we have access to.
