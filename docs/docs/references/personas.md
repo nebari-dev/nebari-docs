@@ -31,8 +31,7 @@ A variety of people interact with Nebari deployments. The personas below represe
 - Hit compute/memory limits on local or free-tier systems.
 - Collaboration is difficult. Version control and sharing notebooks is not seamless.
 - Difficult to reproduce results across machines/environments.
-- Limited tools for debugging crashes, package errors or environment issues.  
-
+- Limited tools for debugging crashes, package errors or environment issues.
 
 Aside from internal discussions, these pain points are derived from the following sources:
 
