@@ -63,3 +63,19 @@ Nebari follows a nomination process to add new team members[^2], as detailed in 
 | Contributor | Two or more [contributions](/community/introduction/#how-to-contribute) to Nebari with intention to continue contributing regularly           | Any community member (including self)                          | Any Core team member                                                                                  |
 | Core        | [Contributors team](#contributors) member with a record of regular, valuable, and high-quality contributions to Nebari for at least one month | Any community member (including self) and one Core team member | Core team makes a [consent-based decision](https://www.sociocracyforall.org/consent-decision-making/) |
 | Conduct     | Member of the Contributor or Core Team with adequate training to handle CoC reports                                                           | Any community member (including self)                          | Core team makes a [consent-based decision](https://www.sociocracyforall.org/consent-decision-making/) |
+
+Before approving the nomination, Core team members must verify the individual's authenticity and credentials through heuristics like:
+
+* Checking the nominee's GitHub activity history: account creation date, contributions to other open source projects, etc.
+* Interactions with the nominee in community meetings or conferences.
+* Endorsement from a trusted collaborator.
+
+The Owners team is responsible for updating team memberships on GitHub.
+
+## Leave a team
+
+Contributors and Core team members may choose to leave their respective teams at any time and for any reason. They can communicate their decision either privately to the Core team or publicly on the Nebari discussion forum.
+
+To ensure project security, the Core team can make a [consent-based decision](https://www.sociocracyforall.org/consent-decision-making/) to remove inactive members from any team. In this context, _inactive_ refers to individuals who have not engaged in any Nebari spaces, such as GitHub repositories under the Nebari organization or community meetings, for a period of over two months.
+
+The Owners team is responsible for updating team memberships accordingly and documenting the changes in the Nebari discussion forum. By default, former Core team members are added to the Emeritus team unless they explicitly request otherwise.
