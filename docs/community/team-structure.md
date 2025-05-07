@@ -66,9 +66,9 @@ Nebari follows a nomination process to add new team members[^2], as detailed in 
 
 Before approving the nomination, Core team members must verify the individual's authenticity and credentials through heuristics like:
 
-* Checking the nominee's GitHub activity history: account creation date, contributions to other open source projects, etc.
-* Interactions with the nominee in community meetings or conferences.
-* Endorsement from a trusted collaborator.
+- Checking the nominee's GitHub activity history: account creation date, contributions to other open source projects, etc.
+- Interactions with the nominee in community meetings or conferences.
+- Endorsement from a trusted collaborator.
 
 The Owners team is responsible for updating team memberships on GitHub.
 
