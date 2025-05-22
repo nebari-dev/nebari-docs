@@ -66,11 +66,12 @@ Below are two sets of minimal IAM permissions required to deploy and destroy Neb
 :::note
 
 Make sure to replace the following placeholders in the policies with your own values:
+
 - `REGION`: The AWS region where you want to deploy Nebari (e.g., `us-west-2`)
 - `ACCOUNT_ID`: Your AWS account ID (e.g., `123456789012`)
 - `PROJECT_NAME`: The name of your Nebari project, specified under the `project_name` field in your `nebari-config.yaml` file (e.g., `my-nebari-project`)
 - `NAMESPACE`: The namespace you want to use for your Nebari deployment, specified under the `namespace` field in your `nebari-config.yaml` file (e.g., `dev`)
-:::
+  :::
 
 As a [best practice](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#lock-away-credentials), do not use the AWS account `root` user for any task where it's not
 required. Instead, create a new IAM user for each person that requires administrator access. Then make those users administrators by placing them into an "Administrators" (or any other name) user group, to which you attach the policies outlined above.
