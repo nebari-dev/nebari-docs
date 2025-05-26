@@ -135,7 +135,8 @@
                 "resource-groups:DeleteGroup",
                 "resource-groups:GetGroup",
                 "resource-groups:GetGroupConfiguration",
-                "resource-groups:GetGroupQuery"
+                "resource-groups:GetGroupQuery",
+                "resource-groups:GetTags"
             ],
             "Resource": "arn:aws:resource-groups:REGION:ACCOUNT_ID:group/PROJECT_NAME"
         },
