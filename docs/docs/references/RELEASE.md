@@ -24,7 +24,7 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 
 ## Release 2025.4.2 - April 25, 2025
 
-> NOTE: You may notice messages like groups: cannot find name for group ID <number> when using the terminal. These warnings are harmless and do not affect system functionality or permissions. We're aware of the issue and it will be resolved in the next version.
+> NOTE: You may notice messages like groups: cannot find name for group ID xx when using the terminal. These warnings are harmless and do not affect system functionality or permissions. We're aware of the issue and it will be resolved in the next version.
 
 ### What's Changed
 
