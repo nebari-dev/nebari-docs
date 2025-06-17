@@ -94,7 +94,7 @@ amazon_web_services:
       taints:
       gpu: false
       single_subnet: false
-      capacity_type: "SPOT"
+      spot: true
       permissions_boundary:
 ```
 
