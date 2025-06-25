@@ -40,15 +40,15 @@ below.
 
 **Repository Level Settings**
 
-| Section     | Description                                                                  |
-| ----------- | ---------------------------------------------------------------------------- |
-| title       | Title on the gallery tile                                                    |
-| git         | URL of the git repository                                                    |
-| homepage    | (Optional)                                                                   |
-| description | Description of the repository to appear on the gallery tile (Optional)       |
+| Section     | Description                                                                         |
+| ----------- | ----------------------------------------------------------------------------------- |
+| title       | Title on the gallery tile                                                           |
+| git         | URL of the git repository                                                           |
+| homepage    | (Optional)                                                                          |
+| description | Description of the repository to appear on the gallery tile (Optional)              |
 | icon        | URL or base64 encoded image to use an icon to appear on the gallery tile (Optional) |
-| account     | (Optional)                                                                   |
-| token       | Private Access Token to enable access to private repositories (Optional)     |
+| account     | (Optional)                                                                          |
+| token       | Private Access Token to enable access to private repositories (Optional)            |
 
 ### Sample configuration
 
