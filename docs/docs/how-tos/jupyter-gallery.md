@@ -7,7 +7,7 @@ description: Share files or tutorials with your team
 
 [JupyterLab-Gallery ](https://github.com/nebari-dev/jupyterlab-gallery) is a JupyterLab plugin
 that allows users to share a Git Repository. JupyterLab users are presented with a tile in
-the JupyterLab launch screen. Users can choose to download the Gallery.
+the JupyterLab launch screen. Users can choose to download the Exhibit.
 
 By default, if no JupyterLab-Gallery items are added to the config, users will not see this section
 in the JupyterLab Launcher.
@@ -28,7 +28,7 @@ optional config options.
 
 The configuration is set at two different levels. Top level gallery settings define the title of
 the Gallery section and the location in which the repositories are downloaded. The repository
-level settings are defined for each repository. The descriptions of each section are described
+level settings are defined for each repository. The settings in each section are described
 below.
 
 **Top Level Gallery Settings**
@@ -46,7 +46,7 @@ below.
 | git         | URL of the git repository                                                    |
 | homepage    | (Optional)                                                                   |
 | description | Description of the repository to appear on the gallery tile (Optional)       |
-| icon        | base64 encoded image to use an icon to appear on the gallery tile (Optional) |
+| icon        | URL or base64 encoded image to use an icon to appear on the gallery tile (Optional) |
 | account     | (Optional)                                                                   |
 | token       | Private Access Token to enable access to private repositories (Optional)     |
 
