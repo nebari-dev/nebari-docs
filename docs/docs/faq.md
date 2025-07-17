@@ -78,7 +78,25 @@ google_cloud_platform:
 
 ##### Amazon Web Services
 
-Spot instances aren't supported at this moment.
+```yaml
+amazon_web_services:
+  kubernetes_version: '1.31'
+  region: us-east-2
+  availability_zones:
+    - us-east-2a
+    - us-east-2b
+  node_groups:
+  # ...
+    spot-instance-group:
+      instance: m5.2xlarge
+      min_nodes: 1
+      max_nodes: 1
+      taints:
+      gpu: false
+      single_subnet: false
+      spot: true
+      permissions_boundary:
+```
 
 ##### Azure
 
