@@ -42,12 +42,19 @@ module.exports = {
         ],
       },
       {
-        type: "doc",
-        id: "team-structure",
+        type: "category",
+        label: "Design",
+        items: [
+          "design/personas",
+        ]
       },
       {
-        type: "doc",
-        id: "decision-making",
+        type: "category",
+        label: "Governance",
+        items: [
+          "team-structure",
+          "decision-making",
+        ]
       },
       {
         type: "doc",

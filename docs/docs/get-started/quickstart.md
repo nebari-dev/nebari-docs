@@ -1,6 +1,6 @@
 ---
 id: quickstart
-title: Quickstart
+title: CLI overview
 description: A cheat sheet of Nebari commands for returning users.
 ---
 
