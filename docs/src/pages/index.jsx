@@ -6,14 +6,14 @@ import LeavesCircleSvg from "@site/static/img/home/leaves-circle.svg";
 import JarPlantSvg from "@site/static/img/home/jar-plant.svg";
 import RootsPlantSvg from "@site/static/img/home/roots-plant.svg";
 import TwoPlantsSvg from "@site/static/img/home/two-plants.svg";
-import ThreeFramesSvg from "@site/static/img/home/three-frames.svg";
+import DaskSvg from "@site/static/img/home/dask.svg";
+import KeycloakSvg from "@site/static/img/home/keycloak.svg";
 import ScissorStringSvg from "@site/static/img/home/scissor-string.svg";
 import AwsSvg from "@site/static/img/home/aws.svg";
 import AzureSvg from "@site/static/img/home/azure.svg";
 import GcloudSvg from "@site/static/img/home/gcloud.svg";
 import CondaStoreSvg from "@site/static/img/home/conda-store.svg";
 import VSCodeSvg from "@site/static/img/home/vscode.svg";
-import JitsiSvg from "@site/static/img/home/jitsi.svg";
 import ArgoSvg from "@site/static/img/home/argo.svg";
 import JupyterSvg from "@site/static/img/home/jupyter.svg";
 import styles from "./index.module.css";
@@ -29,7 +29,7 @@ export default function HomePage() {
           <div className={styles.sectionContent}>
             <NebariLogoSvg width="158px" role="img" aria-label="Nebari logo" />
             <p className={styles.tagline1}>
-              Your open source data science platform.
+              Your open source data science & AI platform.
             </p>
             <p className={styles.tagline2}>
               Built for scale, designed for collaboration.
@@ -90,7 +90,7 @@ export default function HomePage() {
                 </p>
               </li>
               <li className={styles.pitchItem}>
-                <ThreeFramesSvg aria-hidden="true" height="150px" />
+                <DaskSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Dask powered</span>
                 <p>
                   Nebari ships with Dask so you can scale your work to terabytes
@@ -159,21 +159,26 @@ export default function HomePage() {
 
         <section className={styles.getStartedSection}>
           <div className={styles.sectionContent}>
-            <h2 className={styles.sectionHeading}>Get started with Nebari</h2>
+            <h2 className={styles.sectionHeading}>Quick look at Nebari</h2>
             <p>
               <a
                 href="/docs/get-started"
                 className={styles.getStartedLink2}
               >
-                Learn how to deploy a Nebari instance&nbsp;&nbsp;
+                Learn to deploy a Nebari instance&nbsp;&nbsp;
                 <RightArrowSvg aria-hidden="true" />
               </a>
             </p>
-            <div>
-              <img
-                src="/img/home/nebari-deploy.gif"
-                alt="Deploy Nebari from a YAML file, generated using the Guided Init"
-                width="80%"
+            <div className={styles.videoContainer}>
+              <iframe
+                width="885"
+                height="500"
+                src="https://www.youtube.com/embed/sQTQ_fg2avA?si=cWwUp0pv_zM6jYP9"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
               />
             </div>
           </div>
@@ -196,20 +201,20 @@ export default function HomePage() {
                 VSCode
               </li>
               <li className={styles.integrationsItem}>
-                <img alt="" src="/img/home/grafana.svg" />
-                Grafana
+                <JupyterSvg aria-hidden="true" />
+                Jupyter
               </li>
               <li className={styles.integrationsItem}>
-                <JitsiSvg aria-hidden="true" />
-                Jitsi
+                <KeycloakSvg aria-hidden="true" />
+                Keycloak
+              </li>
+              <li className={styles.integrationsItem}>
+                <DaskSvg aria-hidden="true" />
+                Dask
               </li>
               <li className={styles.integrationsItem}>
                 <ArgoSvg aria-hidden="true" />
                 Argo
-              </li>
-              <li className={styles.integrationsItem}>
-                <JupyterSvg aria-hidden="true" />
-                Jupyter
               </li>
             </ul>
           </div>
