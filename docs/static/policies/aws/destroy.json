@@ -1,0 +1,217 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeNetworkAcls",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeRegions",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcs",
+                "eks:DescribeAddonVersions",
+                "iam:DeleteOpenIDConnectProvider",
+                "iam:DeletePolicy",
+                "iam:GetOpenIDConnectProvider",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:ListPolicyVersions",
+                "kms:ListKeys",
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "kms:DescribeKey",
+                "kms:GetKeyPolicy",
+                "kms:GetKeyRotationStatus",
+                "kms:ListResourceTags",
+                "kms:ScheduleKeyDeletion"
+            ],
+            "Resource": "arn:aws:kms:REGION:ACCOUNT_ID:key/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteBucket",
+                "s3:GetAccelerateConfiguration",
+                "s3:GetBucketAcl",
+                "s3:GetBucketCORS",
+                "s3:GetBucketLogging",
+                "s3:GetBucketObjectLockConfiguration",
+                "s3:GetBucketPolicy",
+                "s3:GetBucketPublicAccessBlock",
+                "s3:GetBucketRequestPayment",
+                "s3:GetBucketTagging",
+                "s3:GetBucketVersioning",
+                "s3:GetBucketWebsite",
+                "s3:GetEncryptionConfiguration",
+                "s3:GetLifecycleConfiguration",
+                "s3:GetReplicationConfiguration",
+                "s3:ListBucket",
+                "s3:ListBucketVersions",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:PutEncryptionConfiguration"
+            ],
+            "Resource": "arn:aws:s3:::PROJECT_NAME-NAMESPACE-terraform-state"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion",
+                "s3:GetObject",
+                "s3:GetObjectTagging",
+                "s3:GetObjectVersion",
+                "s3:ListMultipartUploadParts",
+                "s3:PutObject",
+                "s3:PutObjectAcl",
+                "s3:PutObjectTagging"
+            ],
+            "Resource": "arn:aws:s3:::PROJECT_NAME-NAMESPACE-terraform-state/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:DeleteItem",
+                "dynamodb:DeleteTable",
+                "dynamodb:DescribeContinuousBackups",
+                "dynamodb:DescribeTable",
+                "dynamodb:DescribeTimeToLive",
+                "dynamodb:GetItem",
+                "dynamodb:ListTagsOfResource",
+                "dynamodb:PutItem"
+            ],
+            "Resource": "arn:aws:dynamodb:REGION:ACCOUNT_ID:table/PROJECT_NAME-NAMESPACE-terraform-state-lock"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteCluster",
+                "eks:DescribeCluster"
+            ],
+            "Resource": "arn:aws:eks:REGION:ACCOUNT_ID:cluster/PROJECT_NAME-NAMESPACE"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:DeleteRepository",
+                "ecr:DescribeRepositories",
+                "ecr:ListTagsForResource"
+            ],
+            "Resource": "arn:aws:ecr:REGION:ACCOUNT_ID:repository/PROJECT_NAME-NAMESPACE-jupyterlab"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeleteRole",
+                "iam:DetachRolePolicy",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListInstanceProfilesForRole",
+                "iam:ListRolePolicies"
+            ],
+            "Resource": "arn:aws:iam::ACCOUNT_ID:role/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticfilesystem:DeleteFileSystem",
+                "elasticfilesystem:DescribeFileSystems",
+                "elasticfilesystem:DescribeLifecycleConfiguration"
+            ],
+            "Resource": "arn:aws:elasticfilesystem:REGION:ACCOUNT_ID:file-system/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "resource-groups:DeleteGroup",
+                "resource-groups:GetGroup",
+                "resource-groups:GetGroupConfiguration",
+                "resource-groups:GetGroupQuery",
+                "resource-groups:GetTags"
+            ],
+            "Resource": "arn:aws:resource-groups:REGION:ACCOUNT_ID:group/PROJECT_NAME"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeVpcAttribute"
+            ],
+            "Resource": "arn:aws:ec2:REGION:ACCOUNT_ID:vpc/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "elasticfilesystem:DeleteMountTarget",
+                "elasticfilesystem:DescribeMountTargetSecurityGroups",
+                "elasticfilesystem:DescribeMountTargets"
+            ],
+            "Resource": "arn:aws:elasticfilesystem:REGION:ACCOUNT_ID:file-system/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteNodegroup",
+                "eks:DescribeNodegroup"
+            ],
+            "Resource": "arn:aws:eks:REGION:ACCOUNT_ID:nodegroup/PROJECT_NAME-NAMESPACE/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteAddon",
+                "eks:DescribeAddon"
+            ],
+            "Resource": "arn:aws:eks:REGION:ACCOUNT_ID:addon/PROJECT_NAME-NAMESPACE/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DisassociateRouteTable"
+            ],
+            "Resource": [
+                "arn:aws:ec2:REGION:ACCOUNT_ID:route-table/*",
+                "arn:aws:ec2:REGION:ACCOUNT_ID:subnet/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteRouteTable"
+            ],
+            "Resource": "arn:aws:ec2:REGION:ACCOUNT_ID:route-table/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DetachInternetGateway"
+            ],
+            "Resource": [
+                "arn:aws:ec2:REGION:ACCOUNT_ID:internet-gateway/*",
+                "arn:aws:ec2:REGION:ACCOUNT_ID:vpc/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteSubnet"
+            ],
+            "Resource": "arn:aws:ec2:REGION:ACCOUNT_ID:subnet/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteSecurityGroup"
+            ],
+            "Resource": "arn:aws:ec2:REGION:ACCOUNT_ID:security-group/*"
+        }
+    ]
+}
