@@ -73,6 +73,7 @@ Here's a practical example of creating a network-related alert that monitors net
 This alert monitors for excessive network errors which could indicate connectivity issues, hardware problems, or network congestion.
 
 **Alert Configuration:**
+
 - **Name**: `High Network Error Rate`
 - **Query A** (Network errors):
   ```promql
@@ -91,6 +92,7 @@ This alert monitors for excessive network errors which could indicate connectivi
 - **For**: `3m` (Alert fires after condition persists for 3 minutes)
 
 **Labels:**
+
 ```
 severity: warning
 component: network
@@ -98,6 +100,7 @@ team: infrastructure
 ```
 
 **Annotations:**
+
 ```
 summary: High network error rate detected on {{ $labels.instance }}
 description: Network error rate is {{ $value }}% on interface {{ $labels.device }} of node {{ $labels.instance }}, which exceeds the 1% threshold.
@@ -108,6 +111,7 @@ description: Network error rate is {{ $value }}% on interface {{ $labels.device 
 This alert detects when network interfaces go offline, which is critical for maintaining connectivity.
 
 **Alert Configuration:**
+
 - **Name**: `Network Interface Down`
 - **Query**:
   ```promql
@@ -118,6 +122,7 @@ This alert detects when network interfaces go offline, which is critical for mai
 - **For**: `1m`
 
 **Labels:**
+
 ```
 severity: critical
 component: network
@@ -125,6 +130,7 @@ team: infrastructure
 ```
 
 **Annotations:**
+
 ```
 summary: Network interface down on {{ $labels.instance }}
 description: Network interface {{ $labels.device }} on node {{ $labels.instance }} is down or unreachable.
@@ -135,6 +141,7 @@ description: Network interface {{ $labels.device }} on node {{ $labels.instance 
 Monitor for high bandwidth usage that could impact application performance.
 
 **Alert Configuration:**
+
 - **Name**: `High Network Bandwidth Usage`
 - **Query**:
   ```promql
@@ -145,6 +152,7 @@ Monitor for high bandwidth usage that could impact application performance.
 - **For**: `5m`
 
 **Labels:**
+
 ```
 severity: warning
 component: network
@@ -152,12 +160,14 @@ team: infrastructure
 ```
 
 **Annotations:**
+
 ```
 summary: High bandwidth utilization on {{ $labels.instance }}
 description: Network bandwidth usage is {{ $value }}Gbps on interface {{ $labels.device }} of node {{ $labels.instance }}, approaching capacity limits.
 ```
 
 These network alerts provide comprehensive monitoring similar to enterprise tools and help ensure:
+
 - **Connectivity**: Early detection of interface failures
 - **Performance**: Monitoring for error rates and bandwidth saturation
 - **Reliability**: Proactive alerting before network issues impact users
