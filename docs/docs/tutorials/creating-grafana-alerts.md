@@ -76,25 +76,6 @@ After creating rules, you need to configure **how and when alerts are sent**:
 
 For example, you can create a notification policy that routes all `critical` alerts to Slack, and `warning` alerts to email.
 
-### Example: High CPU Usage Alert
-
-- **Rule name**: `High CPU Usage - Nebari Workers`
-- **Query**:
-  ```promql
-  avg(rate(container_cpu_usage_seconds_total{pod=~"nebari-worker.*"}[5m])) * 100
-  ```
-
-* **Condition**: Greater than 85
-* **For**: 10m
-* **Evaluation interval**: 1m
-* **Labels**:
-
-  - `severity=critical`
-
-* **Notification**: Slack channel `#nebari-alerts`
-
-This rule will fire if average CPU usage across Nebari worker pods stays above 85% for more than 10 minutes, and notify your operations team via Slack.
-
 ---
 
 ## Next Steps
