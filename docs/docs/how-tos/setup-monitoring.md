@@ -136,7 +136,11 @@ End users viewing the logs in `Grafana` will create queries using `Loki` as the 
 Loki's "labels" are used to filter collections of logs from the available [kubernetes_sd](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#kubernetes_sd_config) API endpoints, in a similar way as to how Prometheus handles metrics. These labels are configured through Promtail, which is the agent responsible for collecting and shipping logs to Loki, based on the defined [targets](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs) and scraping configurations.
 :::
 
-For details on how to view specific logs in Loki, check out the document ["How to access system logs (Loki) via Grafana"](access-logs-loki)
+For details on how to view specific logs in Loki, check out the document ["How to access
+system logs (Loki) via Grafana"](access-logs-loki)
+
+For details on how to setup Grafana alerts, check out the document ["How to manage and
+create alerts in Grafana"](creating-grafana-alerts)
 
 ## References
 
@@ -146,3 +150,4 @@ For details on how to view specific logs in Loki, check out the document ["How t
 <!-- Internal links -->
 
 [access-logs-loki]: /how-tos/access-logs-loki.md
+[creating-grafana-alerts]: /tutorials/creating-grafana-alerts.md
