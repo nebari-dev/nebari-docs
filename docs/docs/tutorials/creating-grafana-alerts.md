@@ -80,16 +80,17 @@ For example, you can create a notification policy that routes all `critical` ale
 
 - **Rule name**: `High CPU Usage - Nebari Workers`
 - **Query**:
-    ```promql
-    avg(rate(container_cpu_usage_seconds_total{pod=~"nebari-worker.*"}[5m])) * 100
-    ```
+  ```promql
+  avg(rate(container_cpu_usage_seconds_total{pod=~"nebari-worker.*"}[5m])) * 100
+  ```
 
 * **Condition**: Greater than 85
 * **For**: 10m
 * **Evaluation interval**: 1m
 * **Labels**:
 
-  * `severity=critical`
+  - `severity=critical`
+
 * **Notification**: Slack channel `#nebari-alerts`
 
 This rule will fire if average CPU usage across Nebari worker pods stays above 85% for more than 10 minutes, and notify your operations team via Slack.
@@ -98,9 +99,9 @@ This rule will fire if average CPU usage across Nebari worker pods stays above 8
 
 ## Next Steps
 
-* Regularly review and tune your alert thresholds to match real-world workloads.
-* Use **silences** during maintenance windows to avoid noisy alerts.
-* Explore **alert dashboards** to visualize trends in triggered alerts.
+- Regularly review and tune your alert thresholds to match real-world workloads.
+- Use **silences** during maintenance windows to avoid noisy alerts.
+- Explore **alert dashboards** to visualize trends in triggered alerts.
 
 For more information on handling alerts in Grafana, check out the official Grafana
 documentation: [Create Grafana managed rule](https://grafana.com/docs/grafana/latest/alerting/alerting-rules/create-grafana-managed-rule/)
