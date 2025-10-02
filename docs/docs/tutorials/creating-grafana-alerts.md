@@ -64,6 +64,104 @@ specific monitoring needs.
    - Contact points can be email, Slack, PagerDuty, etc. (configured in the "Contact points" tab).
 5. Save the alert rule.
 
+### Example: Network Performance Alert
+
+Here's a practical example of creating a network-related alert that monitors network connectivity and performance, similar to what enterprise network monitoring tools like WhatsUp Gold would track:
+
+#### Alert: High Network Error Rate
+
+This alert monitors for excessive network errors which could indicate connectivity issues, hardware problems, or network congestion.
+
+**Alert Configuration:**
+- **Name**: `High Network Error Rate`
+- **Query A** (Network errors):
+  ```promql
+  rate(node_network_receive_errs_total[5m]) + rate(node_network_transmit_errs_total[5m])
+  ```
+- **Query B** (Total packets):
+  ```promql
+  rate(node_network_receive_packets_total[5m]) + rate(node_network_transmit_packets_total[5m])
+  ```
+- **Expression** (Error percentage):
+  ```promql
+  (${A} / ${B}) * 100
+  ```
+- **Condition**: `IS ABOVE 1` (Alert when error rate exceeds 1%)
+- **Evaluation interval**: `1m`
+- **For**: `3m` (Alert fires after condition persists for 3 minutes)
+
+**Labels:**
+```
+severity: warning
+component: network
+team: infrastructure
+```
+
+**Annotations:**
+```
+summary: High network error rate detected on {{ $labels.instance }}
+description: Network error rate is {{ $value }}% on interface {{ $labels.device }} of node {{ $labels.instance }}, which exceeds the 1% threshold.
+```
+
+#### Alert: Network Interface Down
+
+This alert detects when network interfaces go offline, which is critical for maintaining connectivity.
+
+**Alert Configuration:**
+- **Name**: `Network Interface Down`
+- **Query**:
+  ```promql
+  up{job="node-exporter"} == 0 or node_network_up == 0
+  ```
+- **Condition**: `IS BELOW 1`
+- **Evaluation interval**: `30s`
+- **For**: `1m`
+
+**Labels:**
+```
+severity: critical
+component: network
+team: infrastructure
+```
+
+**Annotations:**
+```
+summary: Network interface down on {{ $labels.instance }}
+description: Network interface {{ $labels.device }} on node {{ $labels.instance }} is down or unreachable.
+```
+
+#### Alert: High Network Bandwidth Utilization
+
+Monitor for high bandwidth usage that could impact application performance.
+
+**Alert Configuration:**
+- **Name**: `High Network Bandwidth Usage`
+- **Query**:
+  ```promql
+  (rate(node_network_receive_bytes_total[5m]) + rate(node_network_transmit_bytes_total[5m])) * 8 / 1e9
+  ```
+- **Condition**: `IS ABOVE 0.8` (Alert when usage exceeds 800 Mbps on a 1Gbps link)
+- **Evaluation interval**: `1m`
+- **For**: `5m`
+
+**Labels:**
+```
+severity: warning
+component: network
+team: infrastructure
+```
+
+**Annotations:**
+```
+summary: High bandwidth utilization on {{ $labels.instance }}
+description: Network bandwidth usage is {{ $value }}Gbps on interface {{ $labels.device }} of node {{ $labels.instance }}, approaching capacity limits.
+```
+
+These network alerts provide comprehensive monitoring similar to enterprise tools and help ensure:
+- **Connectivity**: Early detection of interface failures
+- **Performance**: Monitoring for error rates and bandwidth saturation
+- **Reliability**: Proactive alerting before network issues impact users
+
 ### Managing Notifications and Policies
 
 After creating rules, you need to configure **how and when alerts are sent**:
