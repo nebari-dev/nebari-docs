@@ -26,7 +26,7 @@ information.
 Once you have the necessary permissions, you can access Grafana by navigating to
 `http://<your-nebari-domain>/monitoring` in your web browser:
 
-![Grafana Home Page](img/tutorials/grafana_home_page_admin.png)
+![Grafana Home Page](/img/tutorials/grafana_home_page_admin.png)
 
 ::note
 If your permissions are correct, you should see the "Administration" section in the left sidebar.
