@@ -139,9 +139,6 @@ Loki's "labels" are used to filter collections of logs from the available [kuber
 For details on how to view specific logs in Loki, check out the document ["How to access
 system logs (Loki) via Grafana"](access-logs-loki)
 
-For details on how to setup Grafana alerts, check out the document ["How to manage and
-create alerts in Grafana"](create-alerts)
-
 ## References
 
 [More information on promtail configurations](https://grafana.com/docs/loki/latest/send-data/promtail/configuration/)
@@ -150,4 +147,3 @@ create alerts in Grafana"](create-alerts)
 <!-- Internal links -->
 
 [access-logs-loki]: /docs/how-tos/access-logs-loki
-[create-alerts]: /docs/tutorials/create-alerts
