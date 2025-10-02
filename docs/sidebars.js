@@ -39,6 +39,7 @@ module.exports = {
         "tutorials/using_dask",
         "tutorials/create-dashboard",
         "tutorials/creating-new-environments",
+        "tutorials/createing-grafana-alerts",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
       ],
