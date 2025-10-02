@@ -140,7 +140,7 @@ For details on how to view specific logs in Loki, check out the document ["How t
 system logs (Loki) via Grafana"](access-logs-loki)
 
 For details on how to setup Grafana alerts, check out the document ["How to manage and
-create alerts in Grafana"](creating-grafana-alerts)
+create alerts in Grafana"](create-alerts)
 
 ## References
 
@@ -150,4 +150,4 @@ create alerts in Grafana"](creating-grafana-alerts)
 <!-- Internal links -->
 
 [access-logs-loki]: /docs/how-tos/access-logs-loki
-[creating-grafana-alerts]: /docs/tutorials/create-alerts
+[create-alerts]: /docs/tutorials/create-alerts
