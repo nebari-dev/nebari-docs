@@ -150,4 +150,4 @@ create alerts in Grafana"](creating-grafana-alerts)
 <!-- Internal links -->
 
 [access-logs-loki]: /docs/how-tos/access-logs-loki
-[creating-grafana-alerts]: /docs/tutorials/creating-grafana-alerts
+[creating-grafana-alerts]: /docs/tutorials/create-alerts
