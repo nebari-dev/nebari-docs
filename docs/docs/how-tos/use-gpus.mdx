@@ -30,16 +30,13 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
 ## 2. Creating environments
 
-  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we do the following.
   ### Build a GPU-compatible environment
-  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-  1. **Create the environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
+  Create the environment specification using `CONDA_OVERRIDE_CUDA`:
 
     Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
     While creating a new config, click on the `**GUI <-> YAML**` Toggle to edit yaml config.
     ```
     channels:
-      - pytorch
       - conda-forge
     dependencies:
       - pytorch
@@ -56,41 +53,6 @@ At the time of writing this document, the latest CUDA version was showing as `12
 
 Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
 :::
-
-  2. **Create the environment specification based on recommendations from the PyTorch documentation**:
-    You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
-    Select the following options to get the latest CUDA version:
-      - PyTorch Build = Stable
-      - Your OS          = Linux
-      - Package          = Conda
-      - Language         = Python
-      - Compute Platform = 12.1 (Select the version that is less than or equal to the `nvidia-smi` output (see above) on your server)
-
-    ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
-
-    The command `conda install` from above is:
-    ```
-    conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-    ```
-    The corresponding yaml config would be:
-    ```
-    channels:
-      - pytorch
-      - nvidia
-      - conda-forge
-    dependencies:
-      - pytorch
-      - pytorch-cuda==12.1
-      - torchvision
-      - torchaudio
-      - ipykernel
-    variables: {}
-    ```
-    :::note
-    The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
-
-    You can use `**GUI <-> YAML**` Toggle to edit the config.
-
 
 ## 3. Validating the setup
   You can check that your GPU server is compatible with your conda environment by opening a Jupyter Notebook, loading the environment, and running the following code:
