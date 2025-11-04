@@ -513,6 +513,32 @@ role-mappings](https://conda.store/conda-store/explanations/conda-store-concepts
 
 </div>
 
+:::note Conda-Store defaults and Nebari’s internal group handling
+Nebari grants some Conda-Store permissions **automatically**, regardless of how your
+Keycloak groups are configured. The authentication class applies these defaults at
+login so users can work even if the Keycloak groups don’t define any `conda_store_*`
+client roles.
+
+**What Nebari applies by default**
+- **Personal namespace** → always **admin**
+  `"{username}/*" → {"admin"}` (cannot be downgraded by scopes).
+- **Deployment default namespace** → **viewer**
+  `"{default_namespace}/*" → {"viewer"}`.
+- **Nebari default groups** (`analyst`, `developer`, `admin`) → **[handled internally](https://github.com/nebari-dev/nebari/blob/main/src/_nebari/stages/kubernetes_services/template/modules/kubernetes/services/conda-store/config/conda_store_config.py#L105)**
+  If a user is in one of these groups, Nebari binds a **same-named namespace** to the
+  user with that group’s effective Conda-Store role (e.g., group `analyst` ⇒ `analyst/*`),
+  **even when the Keycloak group itself has no client roles**.
+- **SuperAdmin** (`conda_store_superadmin`) → full wildcard
+  `"*/*" → {"admin"}` (includes delete & service-token privileges).
+
+**How it reconciles with Keycloak scopes**
+- On each login, Nebari **removes non-default bindings** and re-applies permissions from
+  Keycloak role **scopes** (e.g., `admin!namespace=analyst`).
+- If multiple grants target the same namespace, the **highest** permission wins.
+- Order of precedence (highest → lowest): **SuperAdmin** → **explicit scopes** → **internal defaults**.
+- Changes take effect after the user signs in again.
+:::
+
 ### Creating a Role
 
 The process for creating a role is similar, irrespective of the service. To create a role for a service
