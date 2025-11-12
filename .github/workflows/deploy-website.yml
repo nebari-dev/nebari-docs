@@ -17,10 +17,9 @@ jobs:
 
       - name: Trigger Netlify build 🚀
         env:
-          NETLIFY_WEBHOOK: ${{ secrets.NETLIFY_WEBHOOK }}
-        run: |
-          # Extra safety: mask the value in logs even if it somehow appears
-          echo "::add-mask::$NETLIFY_WEBHOOK"
-
-          # Hit the hook without printing URL or body; fail on HTTP errors
-          curl -fsS -X POST "$NETLIFY_WEBHOOK" -o /dev/null
+          WEBHOOK: ${{ secrets.NETLIFY_WEBHOOK }}
+        uses: wei/curl@v1.1.1
+        with:
+          # Use Actions interpolation (not ${WEBHOOK}). GitHub will mask the secret in logs.
+          # -f: fail on HTTP errors, -sS: silent but show errors, -o /dev/null: drop body
+          args: -fsS -X POST ${{ env.WEBHOOK }} -o /dev/null
