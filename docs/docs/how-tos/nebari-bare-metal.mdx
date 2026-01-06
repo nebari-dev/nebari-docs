@@ -1,0 +1,406 @@
+---
+id: nebari-bare-metal
+title: Deploy Nebari on Bare Metal with K3s
+description: Set up a K3s cluster on bare metal machines and deploy Nebari
+---
+
+# Deploy Nebari on Bare Metal with K3s
+
+This guide walks you through deploying Nebari on bare metal infrastructure using [nebari-k3s](https://github.com/nebari-dev/nebari-k3s), an Ansible-based solution that sets up a production-ready K3s cluster with KubeVIP and MetalLB.
+
+## Overview
+
+The `nebari-k3s` project provides Ansible playbooks to:
+- Deploy a lightweight K3s Kubernetes cluster on bare metal servers
+- Configure KubeVIP for high-availability control plane
+- Set up MetalLB for load balancing
+- Prepare the cluster for Nebari deployment
+
+This approach is ideal for:
+- On-premises deployments
+- Organizations with existing bare metal infrastructure
+- HPC environments transitioning from traditional batch systems
+- Cost-sensitive deployments requiring full hardware control
+
+:::info
+This solution replaces the deprecated `nebari-slurm` project, providing a modern Kubernetes-based alternative for bare metal deployments.
+:::
+
+## Prerequisites
+
+### Infrastructure Requirements
+
+- **Minimum 3 bare metal servers** (recommended for HA):
+  - Control plane nodes: 8 vCPU / 32 GB RAM minimum
+  - Worker nodes: 4 vCPU / 16 GB RAM minimum per node
+  - 200 GB disk space per node
+
+- **Network requirements**:
+  - All nodes on the same subnet
+  - Static IP addresses assigned to each node
+  - SSH access to all nodes
+  - IP range reserved for MetalLB load balancer
+  - Virtual IP address for the Kubernetes API server
+
+### Software Requirements
+
+On your local machine (where you'll run Ansible):
+- Python 3.8+
+- Ansible 2.10+
+- kubectl
+- SSH key access to all nodes
+
+On bare metal nodes:
+- Ubuntu 20.04+ or compatible Linux distribution
+- Passwordless sudo access for the SSH user
+
+## Step 1: Clone nebari-k3s Repository
+
+```bash
+git clone https://github.com/nebari-dev/nebari-k3s.git
+cd nebari-k3s
+```
+
+## Step 2: Configure Inventory
+
+Create an Ansible inventory file describing your cluster:
+
+```yaml
+# inventory.yml
+all:
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+    # K3s configuration
+    k3s_version: v1.28.5+k3s1
+    apiserver_endpoint: "192.168.1.100"  # Virtual IP for API server
+
+    # KubeVIP configuration
+    kube_vip_tag_version: "v0.7.0"
+    kube_vip_interface: "eth0"  # Network interface for VIP
+    kube_vip_lb_ip_range: "192.168.1.200-192.168.1.220"  # IPs for services
+
+    # MetalLB configuration
+    metal_lb_ip_range:
+      - "192.168.1.200-192.168.1.220"
+
+  children:
+    master:
+      hosts:
+        node1:
+          ansible_host: 192.168.1.101
+        node2:
+          ansible_host: 192.168.1.102
+        node3:
+          ansible_host: 192.168.1.103
+
+    node:
+      hosts:
+        node4:
+          ansible_host: 192.168.1.104
+        node5:
+          ansible_host: 192.168.1.105
+        node6:
+          ansible_host: 192.168.1.106
+
+    k3s_cluster:
+      children:
+        master:
+        node:
+```
+
+## Step 3: Run Ansible Playbook
+
+Deploy the K3s cluster:
+
+```bash
+ansible-playbook -i inventory.yml playbook.yaml
+```
+
+This will:
+1. Install K3s on all nodes
+2. Configure the control plane with high availability
+3. Deploy KubeVIP for API server load balancing
+4. Install and configure MetalLB for service load balancing
+5. Set up proper node labels and taints
+
+## Step 4: Sync Kubeconfig
+
+After the playbook completes, sync the kubeconfig to your local machine:
+
+```bash
+# Set environment variables
+export SSH_USER="ubuntu"
+export SSH_HOST="192.168.1.101"  # IP of any master node
+export SSH_KEY_FILE="~/.ssh/id_rsa"
+
+# Sync kubeconfig
+make kubeconfig-sync
+```
+
+Verify cluster access:
+
+```bash
+kubectl get nodes -o wide
+```
+
+You should see all your nodes in a `Ready` state.
+
+## Step 5: Label Nodes for Nebari
+
+Nebari requires specific node labels for scheduling workloads. Label your nodes according to their roles:
+
+```bash
+# Label control plane node(s) as general nodes
+kubectl label nodes node1 node2 node3 \
+  node-role.kubernetes.io/general=true
+
+# Label worker nodes for user workloads
+kubectl label nodes node4 node5 \
+  node-role.kubernetes.io/user=true
+
+# Label worker nodes for Dask workers
+kubectl label nodes node5 node6 \
+  node-role.kubernetes.io/worker=true
+```
+
+:::tip
+You can assign multiple roles to the same node if needed. For example, a node can be both `user` and `worker`.
+:::
+
+## Step 6: Initialize Nebari Configuration
+
+Now initialize Nebari for deployment on your existing cluster:
+
+```bash
+nebari init existing \
+  --project my-nebari \
+  --domain nebari.example.com \
+  --auth-provider github
+```
+
+## Step 7: Configure Nebari for Bare Metal
+
+Edit the generated `nebari-config.yaml` to configure it for your K3s cluster:
+
+```yaml
+project_name: my-nebari
+provider: existing
+domain: nebari.example.com
+
+certificate:
+  type: lets-encrypt
+  acme_email: admin@example.com
+  acme_server: https://acme-v02.api.letsencrypt.org/directory
+
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: <github-oauth-app-client-id>
+      client_secret: <github-oauth-app-client-secret>
+      oauth_callback_url: https://nebari.example.com/hub/oauth_callback
+
+local:
+  # Specify the kubectl context name from your kubeconfig
+  kube_context: "default"  # Or the context name from your K3s cluster
+
+  # Configure node selectors to match your labeled nodes
+  node_selectors:
+    general:
+      key: node-role.kubernetes.io/general
+      value: "true"
+    user:
+      key: node-role.kubernetes.io/user
+      value: "true"
+    worker:
+      key: node-role.kubernetes.io/worker
+      value: "true"
+
+# Configure default profiles
+profiles:
+  jupyterlab:
+    - display_name: Small Instance
+      description: 2 CPU / 8 GB RAM
+      default: true
+      kubespawner_override:
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 5G
+
+    - display_name: Medium Instance
+      description: 4 CPU / 16 GB RAM
+      kubespawner_override:
+        cpu_limit: 4
+        cpu_guarantee: 3
+        mem_limit: 16G
+        mem_guarantee: 10G
+
+  dask_worker:
+    Small Worker:
+      worker_cores_limit: 2
+      worker_cores: 1.5
+      worker_memory_limit: 8G
+      worker_memory: 5G
+      worker_threads: 2
+
+    Medium Worker:
+      worker_cores_limit: 4
+      worker_cores: 3
+      worker_memory_limit: 16G
+      worker_memory: 10G
+      worker_threads: 4
+
+# Optional: Configure storage class
+# default_storage_class: local-path  # K3s default storage class
+```
+
+### Important Configuration Notes
+
+#### Kubernetes Context
+
+The `kube_context` field must match the context name in your kubeconfig. To find available contexts:
+
+```bash
+kubectl config get-contexts
+```
+
+Use the name from the `NAME` column in the output.
+
+#### Node Selectors
+
+Node selectors tell Nebari where to schedule different types of workloads:
+- **general**: Core Nebari services (JupyterHub, monitoring, etc.)
+- **user**: User JupyterLab pods
+- **worker**: Dask worker pods for distributed computing
+
+Make sure the `key` and `value` match the labels you applied to your nodes in Step 5.
+
+## Step 8: Deploy Nebari
+
+Deploy Nebari to your K3s cluster:
+
+```bash
+nebari deploy --config nebari-config.yaml
+```
+
+During deployment, you'll be prompted to update your DNS records. Add an A record pointing your domain to one of the MetalLB IP addresses.
+
+## Step 9: Verify Deployment
+
+Once deployment completes, verify all components are running:
+
+```bash
+kubectl get pods -A
+kubectl get ingress -A
+```
+
+Access Nebari at `https://nebari.example.com` and log in with your configured authentication provider.
+
+## Troubleshooting
+
+### Pods Not Scheduling
+
+If pods remain in `Pending` state:
+
+```bash
+kubectl describe pod <pod-name> -n <namespace>
+```
+
+Common issues:
+- **Node selector mismatch**: Verify labels match between `nebari-config.yaml` and actual node labels
+- **Insufficient resources**: Ensure nodes have enough CPU/memory available
+- **Taints**: Check if nodes have taints that prevent scheduling
+
+### LoadBalancer Services Pending
+
+If services of type `LoadBalancer` remain in `Pending` state:
+
+```bash
+kubectl get svc -A | grep LoadBalancer
+```
+
+Verify MetalLB is running:
+
+```bash
+kubectl get pods -n metallb-system
+```
+
+Check MetalLB configuration:
+
+```bash
+kubectl get ipaddresspool -n metallb-system
+kubectl get l2advertisement -n metallb-system
+```
+
+### API Server Unreachable
+
+If you cannot connect to the cluster:
+
+1. Verify KubeVIP is running on control plane nodes:
+   ```bash
+   ssh ubuntu@192.168.1.101 "sudo k3s kubectl get pods -n kube-system | grep kube-vip"
+   ```
+
+2. Check if the virtual IP is responding:
+   ```bash
+   ping 192.168.1.100
+   ```
+
+3. Verify the network interface is correct in your inventory configuration
+
+## Storage Considerations
+
+K3s includes a default `local-path` storage provisioner that works well for development. For production:
+
+- **Local storage**: K3s local-path provisioner (default)
+- **Network storage**: Configure NFS, Ceph, or other storage classes
+- **Cloud storage**: If running in a hybrid environment, configure cloud CSI drivers
+
+Example NFS storage class configuration:
+
+```yaml
+# Add to nebari-config.yaml under theme.jupyterhub
+storage_class_name: nfs-client
+```
+
+## Scaling Your Cluster
+
+### Adding Worker Nodes
+
+1. Add new nodes to your Ansible inventory
+2. Run the playbook targeting only new nodes:
+   ```bash
+   ansible-playbook -i inventory.yml playbook.yaml --limit new-node
+   ```
+3. Label the new nodes for Nebari workloads
+
+### Upgrading K3s
+
+To upgrade your K3s cluster:
+
+1. Update `k3s_version` in your inventory
+2. Run the playbook:
+   ```bash
+   ansible-playbook -i inventory.yml playbook.yaml
+   ```
+
+:::warning
+Test upgrades in a non-production environment first. Always backup your data before upgrading.
+:::
+
+## Next Steps
+
+- [Configure environment management](/docs/how-tos/nebari-environment-management)
+- [Set up monitoring](/docs/how-tos/setup-monitoring)
+- [Configure backup strategies](/docs/how-tos/manual-backup)
+- [Explore Dask for distributed computing](/docs/tutorials/using_dask)
+
+## Additional Resources
+
+- [nebari-k3s GitHub Repository](https://github.com/nebari-dev/nebari-k3s)
+- [K3s Documentation](https://docs.k3s.io/)
+- [KubeVIP Documentation](https://kube-vip.io/)
+- [MetalLB Documentation](https://metallb.universe.tf/)
