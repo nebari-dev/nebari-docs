@@ -41,7 +41,6 @@ module.exports = {
         "tutorials/creating-new-environments",
         "tutorials/jupyter-scheduler",
         "tutorials/argo-workflows-walkthrough",
-        "tutorials/create-alerts",
       ],
     },
     {

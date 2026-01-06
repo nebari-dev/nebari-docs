@@ -54,6 +54,15 @@ On bare metal nodes:
 - Ubuntu 20.04+ or compatible Linux distribution
 - Passwordless sudo access for the SSH user
 
+:::note Running Ansible
+Ansible requires a Linux/Unix environment. If your workstation runs Windows:
+- Use WSL2 (Windows Subsystem for Linux)
+- Deploy from one of your Linux nodes (e.g., the first control plane node)
+- Use a Linux VM or container
+
+The deployment examples below assume you're running from a Linux environment with direct SSH access to all cluster nodes.
+:::
+
 ## Step 1: Clone nebari-k3s Repository
 
 ```bash
@@ -78,7 +87,7 @@ all:
 
     # KubeVIP configuration
     kube_vip_tag_version: "v0.7.0"
-    kube_vip_interface: "eth0"  # Network interface for VIP
+    kube_vip_interface: "ens5"  # Network interface for VIP (default: ens5)
     kube_vip_lb_ip_range: "192.168.1.200-192.168.1.220"  # IPs for services
 
     # MetalLB configuration
@@ -110,6 +119,206 @@ all:
         node:
 ```
 
+### Advanced Configuration with Custom Data Directory
+
+For production deployments, especially when using dedicated storage volumes, configure K3s to use a custom data directory. This is particularly important when:
+- You have multiple disks (OS disk and separate data disk)
+- You want to use high-performance storage for Kubernetes data
+- You need to manage disk space separately for system and application data
+
+Create or update your `group_vars/all.yaml`:
+
+```yaml
+---
+# K3s version to install
+# Check https://github.com/k3s-io/k3s/releases for available versions
+k3s_version: v1.30.2+k3s2
+
+# Ansible connection user (must have passwordless sudo on all nodes)
+ansible_user: ubuntu
+
+# Network interface used by flannel CNI for pod networking
+# Run 'ip addr show' on your nodes to find the correct interface
+flannel_iface: ens192
+
+# ============ KubeVIP Configuration ============
+# KubeVIP provides a virtual IP for the Kubernetes API server (HA)
+
+# Enable ARP broadcasts for virtual IP
+kube_vip_arp: true
+
+# Network interface where the virtual IP will be configured
+# Must match the interface with connectivity to other nodes
+kube_vip_interface: ens192
+
+# KubeVIP container image version
+kube_vip_tag_version: v0.8.2
+
+# Virtual IP address for Kubernetes API server
+# This IP must be:
+# - In the same subnet as your nodes
+# - Not currently in use by any other device
+# - Accessible from all nodes
+apiserver_endpoint: 192.168.1.100
+
+# ============ Cluster Security ============
+# Shared secret token for K3s cluster nodes to authenticate
+# IMPORTANT: Must be alphanumeric only (no special characters)
+# Generate a secure random token: openssl rand -hex 20
+k3s_token: your-secure-cluster-token
+
+# ============ K3s Server Arguments ============
+# Additional arguments passed to K3s server nodes (control plane)
+extra_server_args: >-
+  --tls-san {{ apiserver_endpoint }}
+  --disable servicelb
+  --disable traefik
+  --write-kubeconfig-mode 644
+  --flannel-iface={{ flannel_iface }}
+  --data-dir /mnt/k3s-data
+
+# --tls-san: Add virtual IP to API server TLS certificate
+# --disable servicelb: Disable built-in load balancer (we use MetalLB)
+# --disable traefik: Disable built-in ingress (Nebari installs its own)
+# --write-kubeconfig-mode 644: Make kubeconfig readable
+# --flannel-iface: Network interface for pod networking
+# --data-dir: Custom location for K3s data (optional, see Step 2.1)
+
+# ============ K3s Agent Arguments ============
+# Additional arguments passed to K3s agent nodes (workers)
+extra_agent_args: >-
+  --flannel-iface={{ flannel_iface }}
+  --data-dir /mnt/k3s-data
+
+# ============ MetalLB Configuration ============
+# MetalLB provides LoadBalancer services on bare metal
+
+# MetalLB type: 'native' (recommended) or 'frr'
+metal_lb_type: native
+
+# MetalLB mode: 'layer2' (simple ARP-based) or 'bgp' (requires BGP router)
+metal_lb_mode: layer2
+
+# MetalLB speaker image version
+metal_lb_speaker_tag_version: v0.14.8
+
+# MetalLB controller image version
+metal_lb_controller_tag_version: v0.14.8
+
+# IP address range for LoadBalancer services
+# Can be a string or list: "192.168.1.200-192.168.1.220" or ["192.168.1.200-192.168.1.220"]
+# These IPs will be assigned to Nebari's ingress and other LoadBalancer services
+# Requirements:
+# - Must be in the same subnet as your nodes
+# - Must not overlap with DHCP ranges or other static IPs
+# - Reserve enough IPs for all services (typically 5-10 is sufficient)
+metal_lb_ip_range: 192.168.1.200-192.168.1.220  # Can also be a list: ["192.168.1.200-192.168.1.220"]
+```
+
+### Variable Reference Summary
+
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `k3s_version` | Yes | - | K3s version to install |
+| `ansible_user` | Yes | - | SSH user with sudo access |
+| `flannel_iface` | Yes | - | Network interface for pod networking |
+| `kube_vip_interface` | Yes | - | Network interface for virtual IP |
+| `kube_vip_tag_version` | No | v0.8.2 | KubeVIP image version |
+| `kube_vip_arp` | No | true | Enable ARP for virtual IP |
+| `apiserver_endpoint` | Yes | - | Virtual IP for Kubernetes API |
+| `k3s_token` | Yes | - | Cluster authentication token (alphanumeric) |
+| `extra_server_args` | No | - | Additional K3s server arguments |
+| `extra_agent_args` | No | - | Additional K3s agent arguments |
+| `metal_lb_type` | No | native | MetalLB implementation type |
+| `metal_lb_mode` | No | layer2 | MetalLB operating mode |
+| `metal_lb_ip_range` | Yes | - | IP range for LoadBalancer services |
+metal_lb_speaker_tag_version: v0.14.8
+metal_lb_controller_tag_version: v0.14.8
+metal_lb_ip_range: 192.168.1.200-192.168.1.220  # Can also be a list: ["192.168.1.200-192.168.1.220"]
+```
+
+:::warning Important: Custom Data Directory
+If you specify `--data-dir /mnt/k3s-data`, you **must** ensure this directory exists and is properly mounted on **all** nodes before running the Ansible playbook. See Step 2.1 below.
+:::
+
+### Step 2.1: Prepare Storage (Required for Custom Data Directory)
+
+If you're using a custom data directory with dedicated storage volumes, prepare them on each node:
+
+#### For worker nodes with separate data disks:
+
+```bash
+# On each node, identify the data disk
+lsblk
+
+# Format the disk (example: /dev/sdb - verify your disk name!)
+sudo mkfs.ext4 /dev/sdb
+
+# Create mount point
+sudo mkdir -p /mnt/k3s-data
+
+# Add to fstab for persistence
+echo '/dev/sdb /mnt/k3s-data ext4 defaults 0 0' | sudo tee -a /etc/fstab
+
+# Mount the disk
+sudo mount -a
+
+# Verify
+df -h /mnt/k3s-data
+```
+
+#### For control plane with large storage requirements (using LVM):
+
+If your control plane node needs flexible storage management (e.g., for backups, persistent volumes):
+
+```bash
+# Check available volume groups
+sudo vgs
+
+# Create logical volume (example: 1.4TB from existing volume group)
+sudo lvcreate -L 1400G -n k3s-data ubuntu-vg
+
+# Format with XFS for better performance with large files
+sudo mkfs.xfs /dev/ubuntu-vg/k3s-data
+
+# Create mount point
+sudo mkdir -p /mnt/k3s-data
+
+# Add to fstab using UUID for reliability
+UUID=$(sudo blkid -s UUID -o value /dev/ubuntu-vg/k3s-data)
+echo "UUID=$UUID /mnt/k3s-data xfs defaults 0 2" | sudo tee -a /etc/fstab
+
+# Mount
+sudo mount -a
+
+# Verify
+df -h /mnt/k3s-data
+lsblk
+```
+
+:::tip Storage Recommendations
+- **XFS**: Better for large files and high I/O workloads (recommended for nodes with databases or large datasets)
+- **ext4**: General purpose, good default choice for most workloads  
+- **Leave space for expansion**: Don't allocate 100% of available storage to allow for future growth
+- **Consistent paths**: Use the same mount point (`/mnt/k3s-data`) on all nodes
+:::
+
+### Step 2.2: Verify Network Interfaces
+
+Ensure you're using the correct network interface names in your configuration:
+
+```bash
+# On each node, list network interfaces
+ip addr show
+
+# Common interface names:
+# - ens192, ens160 (VMware)
+# - eth0, eth1 (AWS, some bare metal)
+# - eno1, eno2 (Dell, HP servers)
+```
+
+Update `flannel_iface` and `kube_vip_interface` in your `group_vars/all.yaml` to match your actual interface names.
+
 ## Step 3: Run Ansible Playbook
 
 Deploy the K3s cluster:
@@ -125,13 +334,29 @@ This will:
 4. Install and configure MetalLB for service load balancing
 5. Set up proper node labels and taints
 
+:::warning Known Issue: Multi-Master Join
+There's a known issue in nebari-k3s where additional master nodes may fail to join the cluster correctly due to the IP filtering task returning multiple IPs. If you encounter this:
+
+1. Check that additional master nodes are running K3s:
+   ```bash
+   ssh user@node2 "sudo systemctl status k3s"
+   ```
+
+2. Verify they can reach the first master node:
+   ```bash
+   ssh user@node2 "curl -k https://192.168.1.101:6443/ping"
+   ```
+
+3. If a node is running but not joined, you may need to manually re-run the join command on that node or investigate the Ansible task that filters the flannel interface IP.
+:::
+
 ## Step 4: Sync Kubeconfig
 
 After the playbook completes, sync the kubeconfig to your local machine:
 
 ```bash
 # Set environment variables
-export SSH_USER="ubuntu"
+export SSH_USER="root"  # Default: root (change if using different user)
 export SSH_HOST="192.168.1.101"  # IP of any master node
 export SSH_KEY_FILE="~/.ssh/id_rsa"
 
@@ -149,25 +374,40 @@ You should see all your nodes in a `Ready` state.
 
 ## Step 5: Label Nodes for Nebari
 
-Nebari requires specific node labels for scheduling workloads. Label your nodes according to their roles:
+Nebari requires specific node labels for scheduling workloads. For optimal resource utilization and proper workload distribution, use the recommended `node-role.nebari.io/group` label:
 
 ```bash
-# Label control plane node(s) as general nodes
+# Label control plane/general nodes
 kubectl label nodes node1 node2 node3 \
-  node-role.kubernetes.io/general=true
+  node-role.nebari.io/group=general
 
-# Label worker nodes for user workloads
-kubectl label nodes node4 node5 \
-  node-role.kubernetes.io/user=true
+# Label user workload nodes  
+kubectl label nodes node4 \
+  node-role.nebari.io/group=user
 
-# Label worker nodes for Dask workers
+# Label Dask worker nodes
 kubectl label nodes node5 node6 \
-  node-role.kubernetes.io/worker=true
+  node-role.nebari.io/group=worker
 ```
 
-:::tip
-You can assign multiple roles to the same node if needed. For example, a node can be both `user` and `worker`.
+:::tip Node Labeling Best Practices
+- **Consistent labeling**: Using `node-role.nebari.io/group` as the label key ensures consistent behavior across all Nebari components
+- **Multiple roles**: A node can have multiple roles if needed (e.g., both `user` and `worker` on the same node)
+- **Control plane nodes**: Typically labeled as `general` to host core Nebari services
+- **Resource optimization**: Proper labeling enables Horizontal Pod Autoscaling (HPA) to fully utilize your cluster resources
+
+**Alternative labeling schemes** (legacy):
+```bash
+# These also work but are less recommended
+kubectl label nodes node1 node-role.kubernetes.io/general=true
+```
 :::
+
+Verify your labels:
+
+```bash
+kubectl get nodes --show-labels
+```
 
 ## Step 6: Initialize Nebari Configuration
 
@@ -205,18 +445,18 @@ security:
 local:
   # Specify the kubectl context name from your kubeconfig
   kube_context: "default"  # Or the context name from your K3s cluster
-
+  
   # Configure node selectors to match your labeled nodes
   node_selectors:
     general:
-      key: node-role.kubernetes.io/general
-      value: "true"
+      key: node-role.nebari.io/group
+      value: general
     user:
-      key: node-role.kubernetes.io/user
-      value: "true"
+      key: node-role.nebari.io/group
+      value: user
     worker:
-      key: node-role.kubernetes.io/worker
-      value: "true"
+      key: node-role.nebari.io/group
+      value: worker
 
 # Configure default profiles
 profiles:
@@ -365,6 +605,61 @@ Example NFS storage class configuration:
 # Add to nebari-config.yaml under theme.jupyterhub
 storage_class_name: nfs-client
 ```
+
+## Storage Considerations
+
+K3s includes a default `local-path` storage provisioner that works well for development. For production:
+
+- **Local storage**: K3s local-path provisioner (default)
+- **Network storage**: Configure NFS, Ceph, or other storage classes
+- **Cloud storage**: If running in a hybrid environment, configure cloud CSI drivers
+
+Example NFS storage class configuration:
+
+```yaml
+# Add to nebari-config.yaml under theme.jupyterhub
+storage_class_name: nfs-client
+```
+
+### Migrating Existing User Data
+
+If you're migrating from an existing system (e.g., Slurm cluster), you can pre-populate user data:
+
+1. **Copy data to the storage node** (typically a control plane node with large storage):
+   ```bash
+   # From old system to new K3s storage
+   rsync -avhP -e ssh /old/home/ user@k3s-node:/mnt/k3s-data/backup/home/
+   ```
+
+2. **Note about user IDs**: User IDs in JupyterHub pods may differ from your existing system. After Nebari deployment:
+   - Check the UID used by JupyterHub: `kubectl exec -it jupyter-<username> -- id`
+   - Adjust file ownership if needed:
+     ```bash
+     # On the storage node
+     sudo chown -R <jupyter-uid>:<jupyter-gid> /mnt/k3s-data/backup/home/<username>
+     ```
+
+3. **Create persistent volume for user data** (if using custom storage):
+   ```yaml
+   apiVersion: v1
+   kind: PersistentVolume
+   metadata:
+     name: user-data-pv
+   spec:
+     capacity:
+       storage: 1000Gi
+     accessModes:
+       - ReadWriteMany
+     hostPath:
+       path: /mnt/k3s-data/users
+   ```
+
+:::tip User Data Best Practices
+- Test data migration with a single user first
+- Verify file permissions match JupyterHub pod UIDs
+- Consider using NFS or similar for multi-node access to user data
+- Keep backups of original data during migration
+:::
 
 ## Scaling Your Cluster
 
