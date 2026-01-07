@@ -29,7 +29,7 @@ This how-to guide covers deploying Nebari on bare metal infrastructure using K3s
 </div>
 
 :::info About This Guide
-This replaces the deprecated `nebari-slurm` project, providing a modern Kubernetes-based approach for bare metal deployments. For cloud deployments, see [Deploy on Existing Kubernetes](/docs/how-tos/nebari-kubernets).
+This replaces the deprecated `nebari-slurm` project, providing a modern Kubernetes-based approach for bare metal deployments. For cloud deployments, see [Deploy on Existing Kubernetes](/docs/how-tos/nebari-kubernetes).
 :::
 
 ---
@@ -271,25 +271,25 @@ A production deployment uses:
 %%{init: {'flowchart': {'curve': 'linear'}}}%%
 flowchart TB
     VIP["Virtual IP<br/>192.168.1.100<br/>(KubeVIP)"]
-    
+
     CP1["Control Node 1<br/>8 vCPU / 32 GB"]
     CP2["Control Node 2<br/>4 vCPU / 16 GB"]
     CP3["Control Node 3<br/>4 vCPU / 16 GB"]
-    
+
     W1["User Node"]
     W2["Worker Node 1"]
     W3["Worker Node 2"]
-    
+
     LB["MetalLB<br/>192.168.1.200-220"]
-    
+
     VIP --> CP1
     VIP --> CP2
     VIP --> CP3
-    
+
     CP1 --> W1
     CP1 --> W2
     CP1 --> W3
-    
+
     LB -.-> W1
     LB -.-> W2
 ```
