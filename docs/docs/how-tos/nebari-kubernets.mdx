@@ -1,19 +1,43 @@
 ---
 id: nebari-kubernetes
-title: How to deploy Nebari on pre-existing infrastructure
-description: Deploying Nebari on an existing Kubernetes infrastructure
+title: Deploy Nebari on Existing Kubernetes Clusters
+description: Deploy Nebari on pre-existing EKS, AKS, GKE, or custom Kubernetes infrastructure
 ---
 
-Nebari can also be deployed on top of Kubernetes clusters. In this documentation,
-we will guide you through the process of deploying Nebari into a pre-existing Kubernetes cluster.
+# Deploy Nebari on Existing Kubernetes Clusters
 
-To make it easier for you to follow along, we will outline the steps for such deployment with a
-simple infrastructure example. We will use tabs to represent the different provider
-steps/configurations. Let's get started!
+Nebari can be deployed on existing Kubernetes clusters across major cloud providers (AWS EKS, Azure AKS, Google Cloud GKE) or custom Kubernetes installations. This guide walks you through the process step by step.
 
-### Evaluating the infrastructure
+:::info
+For bare metal deployments using K3s, see [Deploy Nebari on Bare Metal with K3s](/docs/how-tos/nebari-bare-metal.mdx).
+:::
 
-This is an optional stage and will only be used as part of this guided example, for setting up an initial infrastructure.
+## Prerequisites
+
+Before starting, ensure you have:
+
+- An existing Kubernetes cluster (EKS, AKS, GKE, or custom)
+- `kubectl` configured with access to your cluster
+- Nebari CLI installed ([installation guide](/docs/get-started/installing-nebari))
+- Appropriate node groups/pools with sufficient resources
+- DNS domain for your Nebari deployment
+
+## Overview
+
+The deployment process follows these general steps:
+
+1. Evaluate your existing infrastructure
+2. Create/verify appropriate node groups
+3. Configure `kubectl` context
+4. Initialize Nebari configuration
+5. Configure Nebari for your cluster
+6. Deploy Nebari
+
+Let's walk through this process for each cloud provider.
+
+### Evaluating the Infrastructure
+
+Before deploying Nebari, review your existing cluster to ensure it meets the requirements.
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -22,23 +46,22 @@ import TabItem from '@theme/TabItem';
 <Tabs className="unique-tabs">
 <TabItem value="AWS">
 
-In this example, a basic web app is already running on an EKS cluster. Here is a tutorial on [how to set
-up the Guestbook web app](https://logz.io/blog/amazon-eks-cluster/), containing more details.
+#### AWS EKS Requirements
 
-The existing EKS cluster has one Virtual Private Cloud (VPC) with three subnets, each
-in its Availability Zone, and no node groups. There are three nodes running on a `t3.medium` EC2 instance, but unfortunately,
-Nebari's general node group requires a more powerful instance type.
+For this example, we assume you have an existing EKS cluster. If you need to create one, follow [AWS's EKS setup guide](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
 
-Before proceeding, ensure that the subnets can
-"[automatically assign public IP addresses to instances launched into it](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html#subnet-public-ip)" and
-that there exists an [Identity and Access Management (IAM)](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html) role with the following permissions:
+Your existing EKS cluster should have:
+- **VPC** with at least three subnets in different Availability Zones
+- **Subnets** configured to automatically assign public IP addresses
+- **IAM Role** with the following policies:
+  - `AmazonEKSWorkerNodePolicy`
+  - `AmazonEC2ContainerRegistryReadOnly`
+  - `AmazonEKS_CNI_Policy`
 
-- `AmazonEKSWorkerNodePolicy`
-- `AmazonEC2ContainerRegistryReadOnly`
-- `AmazonEKS_CNI_Policy`
+Additionally, for cluster autoscaling support, ensure the IAM role has the custom policy below:
 
 <details>
-<summary>Custom CNI policy (Click to expand) </summary>
+<summary>Custom CNI and Autoscaling Policy (Click to expand)</summary>
 
 ```json
 {
@@ -70,7 +93,7 @@ that there exists an [Identity and Access Management (IAM)](https://docs.aws.ama
                     "autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled": [
                         "true"
                     ],
-                    "autoscaling:ResourceTag/kubernetes.io/cluster/eaeeks": [
+                    "autoscaling:ResourceTag/kubernetes.io/cluster/<your-cluster-name>": [
                         "owned"
                     ]
                 }
@@ -81,84 +104,388 @@ that there exists an [Identity and Access Management (IAM)](https://docs.aws.ama
 ```
 
 </details>
+
+**Minimum Node Requirements:**
+- **General nodes**: 8 vCPU / 32 GB RAM (e.g., `t3.2xlarge`)
+- **User/Worker nodes**: 4 vCPU / 16 GB RAM (e.g., `t3.xlarge`)
+- **Storage**: 200 GB EBS volume per node
+
+</TabItem>
+
+<TabItem value="Azure">
+
+#### Azure AKS Requirements
+
+For Azure AKS deployments, you need an existing AKS cluster. If you don't have one, follow [Azure's AKS setup guide](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-portal).
+
+Your existing AKS cluster should have:
+- **Resource Group** containing the AKS cluster
+- **Virtual Network** with appropriate subnet sizing
+- **Service Principal or Managed Identity** with required permissions:
+  - `Azure Kubernetes Service RBAC Cluster Admin`
+  - `Contributor` role on the resource group
+
+**Minimum Node Requirements:**
+- **General nodes**: 8 vCPU / 32 GB RAM (e.g., `Standard_D8s_v3`)
+- **User/Worker nodes**: 4 vCPU / 16 GB RAM (e.g., `Standard_D4s_v3`)
+- **Storage**: 200 GB managed disk per node
+
+**Network Requirements:**
+- Ensure your AKS cluster has a public IP or Load Balancer for ingress
+- Configure Network Security Groups (NSGs) to allow HTTPS traffic (port 443)
+
+To check your current AKS configuration:
+
+```bash
+# List your AKS clusters
+az aks list --output table
+
+# Get cluster credentials
+az aks get-credentials --resource-group <resource-group> --name <cluster-name>
+
+# Verify node pools
+az aks nodepool list --resource-group <resource-group> --cluster-name <cluster-name>
+```
+
+</TabItem>
+
+<TabItem value="GCP">
+
+#### Google Cloud GKE Requirements
+
+For GKE deployments, you need an existing GKE cluster. If you need to create one, follow [Google's GKE setup guide](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster).
+
+Your existing GKE cluster should have:
+- **VPC Network** with appropriate subnet configuration
+- **Service Account** with required permissions:
+  - `Kubernetes Engine Admin`
+  - `Service Account User`
+  - `Compute Admin` (for node management)
+
+**Minimum Node Requirements:**
+- **General nodes**: 8 vCPU / 32 GB RAM (e.g., `n2-standard-8`)
+- **User/Worker nodes**: 4 vCPU / 16 GB RAM (e.g., `n2-standard-4`)
+- **Storage**: 200 GB persistent disk per node
+
+**Network Requirements:**
+- Cluster should have HTTP(S) Load Balancing enabled
+- Firewall rules allowing ingress on port 443
+
+To check your current GKE configuration:
+
+```bash
+# List your GKE clusters
+gcloud container clusters list
+
+# Get cluster credentials
+gcloud container clusters get-credentials <cluster-name> --zone <zone>
+
+# Verify node pools
+gcloud container node-pools list --cluster <cluster-name> --zone <zone>
+```
+
 </TabItem>
 </Tabs>
 </div>
 
-### Creating node groups
+### Creating Node Groups
 
-Skip this step if node groups already exists.
+Nebari requires three types of node groups for optimal operation:
+- **general**: Core Nebari services (JupyterHub, monitoring, databases)
+- **user**: User JupyterLab notebook servers
+- **worker**: Dask distributed computing workers
+
+Skip this step if appropriate node groups already exist.
 
 <div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
 <Tabs className="unique-tabs">
 <TabItem value="AWS">
 
-[Follow this guide to create new node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html).
-Be sure to fill in the following fields carefully:
+#### Creating EKS Node Groups
 
-- "Node Group configuration"
-  - `Name` must be either `general`, `user` or `worker`
-  - `Node IAM Role` must be the IAM role described proceeding
-- "Node Group compute configuration"
-  - `Instance type`
-    - The recommended minimum vCPU and memory for a `general` node is 8 vCPU / 32 GB RAM
-    - The recommended minimum vCPU and memory for a `user` and `worker` node is 4 vCPU / 16 GB RAM
-  - `Disk size`
-    - The recommended minimum is 200 GB for the attached EBS (block-storage)
-- "Node Group scaling configuration"
-  - `Minimum size` and `Maximum size` of 1 for the `general` node group
-- "Node Group subnet configuration"
-  - `subnet` include all existing EKS subnets
+Follow [AWS's guide to create managed node groups](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html).
+
+**General Node Group:**
+- **Name**: `general`
+- **Node IAM Role**: The IAM role with policies described above
+- **Instance type**: `t3.2xlarge` or similar (8 vCPU / 32 GB RAM)
+- **Disk size**: 200 GB
+- **Scaling**: Min 1, Max 3, Desired 1
+- **Subnets**: Include all EKS subnets
+
+**User Node Group:**
+- **Name**: `user`
+- **Instance type**: `t3.xlarge` or similar (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Scaling**: Min 0, Max 10, Desired 1
+- **Enable autoscaling**: Yes
+
+**Worker Node Group:**
+- **Name**: `worker`
+- **Instance type**: `t3.xlarge` or similar (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Scaling**: Min 0, Max 20, Desired 1
+- **Enable autoscaling**: Yes
+
+Using AWS CLI:
+
+```bash
+# Create general node group
+aws eks create-nodegroup \
+  --cluster-name <cluster-name> \
+  --nodegroup-name general \
+  --node-role <iam-role-arn> \
+  --subnets <subnet-id-1> <subnet-id-2> <subnet-id-3> \
+  --scaling-config minSize=1,maxSize=3,desiredSize=1 \
+  --instance-types t3.2xlarge \
+  --disk-size 200 \
+  --labels nodegroup=general
+
+# Create user node group
+aws eks create-nodegroup \
+  --cluster-name <cluster-name> \
+  --nodegroup-name user \
+  --node-role <iam-role-arn> \
+  --subnets <subnet-id-1> <subnet-id-2> <subnet-id-3> \
+  --scaling-config minSize=0,maxSize=10,desiredSize=1 \
+  --instance-types t3.xlarge \
+  --disk-size 200 \
+  --labels nodegroup=user
+
+# Create worker node group
+aws eks create-nodegroup \
+  --cluster-name <cluster-name> \
+  --nodegroup-name worker \
+  --node-role <iam-role-arn> \
+  --subnets <subnet-id-1> <subnet-id-2> <subnet-id-3> \
+  --scaling-config minSize=0,maxSize=20,desiredSize=1 \
+  --instance-types t3.xlarge \
+  --disk-size 200 \
+  --labels nodegroup=worker
+```
+
+</TabItem>
+
+<TabItem value="Azure">
+
+#### Creating AKS Node Pools
+
+Follow [Azure's guide to add node pools](https://learn.microsoft.com/en-us/azure/aks/create-node-pools).
+
+**General Node Pool:**
+- **Name**: `general`
+- **VM Size**: `Standard_D8s_v3` (8 vCPU / 32 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 1, Max 3
+- **Labels**: `nodepool=general`
+
+**User Node Pool:**
+- **Name**: `user`
+- **VM Size**: `Standard_D4s_v3` (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 0, Max 10
+- **Enable autoscaling**: Yes
+- **Labels**: `nodepool=user`
+
+**Worker Node Pool:**
+- **Name**: `worker`
+- **VM Size**: `Standard_D4s_v3` (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 0, Max 20
+- **Enable autoscaling**: Yes
+- **Labels**: `nodepool=worker`
+
+Using Azure CLI:
+
+```bash
+RESOURCE_GROUP="<resource-group>"
+CLUSTER_NAME="<cluster-name>"
+
+# Create general node pool
+az aks nodepool add \
+  --resource-group $RESOURCE_GROUP \
+  --cluster-name $CLUSTER_NAME \
+  --name general \
+  --node-count 1 \
+  --min-count 1 \
+  --max-count 3 \
+  --enable-cluster-autoscaler \
+  --node-vm-size Standard_D8s_v3 \
+  --node-osdisk-size 200 \
+  --labels nodepool=general
+
+# Create user node pool
+az aks nodepool add \
+  --resource-group $RESOURCE_GROUP \
+  --cluster-name $CLUSTER_NAME \
+  --name user \
+  --node-count 1 \
+  --min-count 0 \
+  --max-count 10 \
+  --enable-cluster-autoscaler \
+  --node-vm-size Standard_D4s_v3 \
+  --node-osdisk-size 200 \
+  --labels nodepool=user
+
+# Create worker node pool
+az aks nodepool add \
+  --resource-group $RESOURCE_GROUP \
+  --cluster-name $CLUSTER_NAME \
+  --name worker \
+  --node-count 1 \
+  --min-count 0 \
+  --max-count 20 \
+  --enable-cluster-autoscaler \
+  --node-vm-size Standard_D4s_v3 \
+  --node-osdisk-size 200 \
+  --labels nodepool=worker
+```
+
+</TabItem>
+
+<TabItem value="GCP">
+
+#### Creating GKE Node Pools
+
+Follow [Google's guide to add node pools](https://cloud.google.com/kubernetes-engine/docs/how-to/node-pools).
+
+**General Node Pool:**
+- **Name**: `general`
+- **Machine type**: `n2-standard-8` (8 vCPU / 32 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 1, Max 3
+- **Labels**: `nodepool=general`
+
+**User Node Pool:**
+- **Name**: `user`
+- **Machine type**: `n2-standard-4` (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 0, Max 10
+- **Enable autoscaling**: Yes
+- **Labels**: `nodepool=user`
+
+**Worker Node Pool:**
+- **Name**: `worker`
+- **Machine type**: `n2-standard-4` (4 vCPU / 16 GB RAM)
+- **Disk size**: 200 GB
+- **Count**: Min 0, Max 20
+- **Enable autoscaling**: Yes
+- **Labels**: `nodepool=worker`
+
+Using gcloud CLI:
+
+```bash
+CLUSTER_NAME="<cluster-name>"
+ZONE="<zone>"  # e.g., us-central1-a
+
+# Create general node pool
+gcloud container node-pools create general \
+  --cluster=$CLUSTER_NAME \
+  --zone=$ZONE \
+  --machine-type=n2-standard-8 \
+  --disk-size=200 \
+  --num-nodes=1 \
+  --min-nodes=1 \
+  --max-nodes=3 \
+  --enable-autoscaling \
+  --node-labels=nodepool=general
+
+# Create user node pool
+gcloud container node-pools create user \
+  --cluster=$CLUSTER_NAME \
+  --zone=$ZONE \
+  --machine-type=n2-standard-4 \
+  --disk-size=200 \
+  --num-nodes=1 \
+  --min-nodes=0 \
+  --max-nodes=10 \
+  --enable-autoscaling \
+  --node-labels=nodepool=user
+
+# Create worker node pool
+gcloud container node-pools create worker \
+  --cluster=$CLUSTER_NAME \
+  --zone=$ZONE \
+  --machine-type=n2-standard-4 \
+  --disk-size=200 \
+  --num-nodes=1 \
+  --min-nodes=0 \
+  --max-nodes=20 \
+  --enable-autoscaling \
+  --node-labels=nodepool=worker
+```
 
 </TabItem>
 </Tabs>
 </div>
+
+### Configuring kubectl Context
+
+Ensure you're using your cluster's kubectl context. Verify with:
+
+```bash
+kubectl config current-context
+```
+
+If you need to switch contexts:
+
+```bash
+kubectl config use-context <context-name>
+```
+
+To list all available contexts:
+
+```bash
+kubectl config get-contexts
+```
 
 ### Deploying Nebari
 
-Ensure that you are using the existing cluster's `kubectl` context.
+Now you're ready to initialize and deploy Nebari on your existing cluster.
 
 <div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background)', 'padding': '20px' }}>
 <Tabs className="unique-tabs">
 <TabItem value="AWS">
 
-Initialize in the usual manner:
+#### Initialize Nebari Configuration
 
+Initialize Nebari using the `existing` provider:
+
+```bash
+nebari init existing \
+  --project <project_name> \
+  --domain <domain_name> \
+  --auth-provider github
 ```
-python -m nebari init aws --project <project_name> --domain <domain_name> --ci-provider github-actions --auth-provider github --auth-auto-provision
-```
 
-Then update the `nebari-config.yaml` file. The important keys to update are:
+This creates a `nebari-config.yaml` file in your current directory.
 
-- Replace `provider: aws` with `provider: existing`
-- Replace `amazon_web_services` with `local`
-  - And update the `node_selector` and `kube_context` appropriately
+#### Configure nebari-config.yaml
 
-<details>
-<summary>Example nebari-config.yaml (Click to expand)</summary>
+Update the configuration file with your EKS-specific settings. The key sections to modify are:
 
-```
+```yaml
 project_name: <project_name>
 provider: existing
 domain: <domain_name>
+
 certificate:
-  type: self-signed
+  type: lets-encrypt
+  acme_email: admin@example.com
+
 security:
   authentication:
     type: GitHub
     config:
-      client_id:
-      client_secret:
+      client_id: <github-oauth-client-id>
+      client_secret: <github-oauth-client-secret>
       oauth_callback_url: https://<domain_name>/hub/oauth_callback
-...
-ci_cd:
-  type: github-actions
-  branch: main
-terraform_state:
-  type: remote
-namespace: dev
+
 local:
-  kube_context: arn:aws:eks:<region>:xxxxxxxxxxxx:cluster/<existing_cluster_name>
+  # Set this to your EKS cluster context name
+  kube_context: arn:aws:eks:<region>:<account-id>:cluster/<cluster-name>
+
+  # Configure node selectors based on your node group labels
   node_selectors:
     general:
       key: eks.amazonaws.com/nodegroup
@@ -169,25 +496,105 @@ local:
     worker:
       key: eks.amazonaws.com/nodegroup
       value: worker
+
 profiles:
   jupyterlab:
-  - display_name: Small Instance
-    description: Stable environment with 2 cpu / 8 GB ram
-    default: true
-    kubespawner_override:
-      cpu_limit: 2
-      cpu_guarantee: 1.5
-      mem_limit: 8G
-      mem_guarantee: 5G
-      image: quansight/nebari-jupyterlab:latest
-  - display_name: Medium Instance
-    description: Stable environment with 4 cpu / 16 GB ram
-    kubespawner_override:
-      cpu_limit: 4
-      cpu_guarantee: 3
-      mem_limit: 16G
-      mem_guarantee: 10G
-      image: quansight/nebari-jupyterlab:latest
+    - display_name: Small Instance
+      description: 2 CPU / 8 GB RAM
+      default: true
+      kubespawner_override:
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 5G
+
+    - display_name: Medium Instance
+      description: 4 CPU / 16 GB RAM
+      kubespawner_override:
+        cpu_limit: 4
+        cpu_guarantee: 3
+        mem_limit: 16G
+        mem_guarantee: 10G
+
+  dask_worker:
+    Small Worker:
+      worker_cores_limit: 2
+      worker_cores: 1.5
+      worker_memory_limit: 8G
+      worker_memory: 5G
+      worker_threads: 2
+
+    Medium Worker:
+      worker_cores_limit: 4
+      worker_cores: 3
+      worker_memory_limit: 16G
+      worker_memory: 10G
+      worker_threads: 4
+```
+
+<details>
+<summary>Complete example nebari-config.yaml for EKS (Click to expand)</summary>
+
+```yaml
+project_name: my-nebari
+provider: existing
+domain: nebari.example.com
+
+certificate:
+  type: lets-encrypt
+  acme_email: admin@example.com
+
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: your-github-client-id
+      client_secret: your-github-client-secret
+      oauth_callback_url: https://nebari.example.com/hub/oauth_callback
+
+ci_cd:
+  type: github-actions
+  branch: main
+
+terraform_state:
+  type: remote
+
+namespace: dev
+
+local:
+  kube_context: arn:aws:eks:us-west-2:123456789012:cluster/my-eks-cluster
+  node_selectors:
+    general:
+      key: eks.amazonaws.com/nodegroup
+      value: general
+    user:
+      key: eks.amazonaws.com/nodegroup
+      value: user
+    worker:
+      key: eks.amazonaws.com/nodegroup
+      value: worker
+
+profiles:
+  jupyterlab:
+    - display_name: Small Instance
+      description: 2 CPU / 8 GB RAM
+      default: true
+      kubespawner_override:
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 5G
+        image: quansight/nebari-jupyterlab:latest
+
+    - display_name: Medium Instance
+      description: 4 CPU / 16 GB RAM
+      kubespawner_override:
+        cpu_limit: 4
+        cpu_guarantee: 3
+        mem_limit: 16G
+        mem_guarantee: 10G
+        image: quansight/nebari-jupyterlab:latest
+
   dask_worker:
     Small Worker:
       worker_cores_limit: 2
@@ -196,6 +603,7 @@ profiles:
       worker_memory: 5G
       worker_threads: 2
       image: quansight/nebari-dask-worker:latest
+
     Medium Worker:
       worker_cores_limit: 4
       worker_cores: 3
@@ -203,23 +611,346 @@ profiles:
       worker_memory: 10G
       worker_threads: 4
       image: quansight/nebari-dask-worker:latest
+
 environments:
-...
+  environment-default.yaml:
+    name: default
+    channels:
+      - conda-forge
+    dependencies:
+      - python=3.11
+      - ipykernel
+      - ipywidgets
 ```
 
 </details>
 
-Once updated, deploy Nebari. When prompted be ready to manually update the DNS record.
+#### Deploy Nebari
 
-- `local` or "existing" deployments fail if you pass `--dns-auto-provision` or `--disable-prompt`
+Deploy Nebari to your EKS cluster:
 
+```bash
+nebari deploy --config nebari-config.yaml
 ```
-python -m nebari deploy --config nebari-config.yaml
+
+When prompted, update your DNS records to point your domain to the cluster's load balancer. Nebari will provide the necessary DNS configuration details during deployment.
+
+</TabItem>
+
+<TabItem value="Azure">
+
+#### Initialize Nebari Configuration
+
+Initialize Nebari using the `existing` provider:
+
+```bash
+nebari init existing \
+  --project <project_name> \
+  --domain <domain_name> \
+  --auth-provider github
 ```
 
-The deployment completes successfully and all the pods appear to be running and so do the pre-existing Guestbook web
-app.
+#### Configure nebari-config.yaml
+
+Update the configuration file with your AKS-specific settings:
+
+```yaml
+project_name: <project_name>
+provider: existing
+domain: <domain_name>
+
+certificate:
+  type: lets-encrypt
+  acme_email: admin@example.com
+
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: <github-oauth-client-id>
+      client_secret: <github-oauth-client-secret>
+      oauth_callback_url: https://<domain_name>/hub/oauth_callback
+
+local:
+  # Set this to your AKS cluster context name
+  kube_context: <cluster-name>  # e.g., "my-aks-cluster"
+
+  # Configure node selectors based on your node pool labels
+  node_selectors:
+    general:
+      key: agentpool
+      value: general
+    user:
+      key: agentpool
+      value: user
+    worker:
+      key: agentpool
+      value: worker
+
+profiles:
+  jupyterlab:
+    - display_name: Small Instance
+      description: 2 CPU / 8 GB RAM
+      default: true
+      kubespawner_override:
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 5G
+
+    - display_name: Medium Instance
+      description: 4 CPU / 16 GB RAM
+      kubespawner_override:
+        cpu_limit: 4
+        cpu_guarantee: 3
+        mem_limit: 16G
+        mem_guarantee: 10G
+
+  dask_worker:
+    Small Worker:
+      worker_cores_limit: 2
+      worker_cores: 1.5
+      worker_memory_limit: 8G
+      worker_memory: 5G
+      worker_threads: 2
+
+    Medium Worker:
+      worker_cores_limit: 4
+      worker_cores: 3
+      worker_memory_limit: 16G
+      worker_memory: 10G
+      worker_threads: 4
+```
+
+:::tip AKS Node Selectors
+AKS uses `agentpool` as the label key for node pools by default. If you used custom labels when creating your node pools with `--labels`, adjust the `node_selectors` accordingly.
+:::
+
+#### Deploy Nebari
+
+```bash
+nebari deploy --config nebari-config.yaml
+```
+
+Update your DNS records when prompted. You'll need to point your domain to the Azure Load Balancer IP address created by Nebari.
+
+</TabItem>
+
+<TabItem value="GCP">
+
+#### Initialize Nebari Configuration
+
+Initialize Nebari using the `existing` provider:
+
+```bash
+nebari init existing \
+  --project <project_name> \
+  --domain <domain_name> \
+  --auth-provider github
+```
+
+#### Configure nebari-config.yaml
+
+Update the configuration file with your GKE-specific settings:
+
+```yaml
+project_name: <project_name>
+provider: existing
+domain: <domain_name>
+
+certificate:
+  type: lets-encrypt
+  acme_email: admin@example.com
+
+security:
+  authentication:
+    type: GitHub
+    config:
+      client_id: <github-oauth-client-id>
+      client_secret: <github-oauth-client-secret>
+      oauth_callback_url: https://<domain_name>/hub/oauth_callback
+
+local:
+  # Set this to your GKE cluster context name
+  kube_context: gke_<project-id>_<zone>_<cluster-name>
+
+  # Configure node selectors based on your node pool labels
+  node_selectors:
+    general:
+      key: cloud.google.com/gke-nodepool
+      value: general
+    user:
+      key: cloud.google.com/gke-nodepool
+      value: user
+    worker:
+      key: cloud.google.com/gke-nodepool
+      value: worker
+
+profiles:
+  jupyterlab:
+    - display_name: Small Instance
+      description: 2 CPU / 8 GB RAM
+      default: true
+      kubespawner_override:
+        cpu_limit: 2
+        cpu_guarantee: 1.5
+        mem_limit: 8G
+        mem_guarantee: 5G
+
+    - display_name: Medium Instance
+      description: 4 CPU / 16 GB RAM
+      kubespawner_override:
+        cpu_limit: 4
+        cpu_guarantee: 3
+        mem_limit: 16G
+        mem_guarantee: 10G
+
+  dask_worker:
+    Small Worker:
+      worker_cores_limit: 2
+      worker_cores: 1.5
+      worker_memory_limit: 8G
+      worker_memory: 5G
+      worker_threads: 2
+
+    Medium Worker:
+      worker_cores_limit: 4
+      worker_cores: 3
+      worker_memory_limit: 16G
+      worker_memory: 10G
+      worker_threads: 4
+```
+
+:::tip GKE Node Selectors
+GKE automatically applies the `cloud.google.com/gke-nodepool` label to nodes based on their node pool name. If you used custom labels with `--node-labels`, adjust the `node_selectors` accordingly.
+:::
+
+#### Deploy Nebari
+
+```bash
+nebari deploy --config nebari-config.yaml
+```
+
+Update your DNS records when prompted. You'll need to point your domain to the GCP Load Balancer IP address created by Nebari.
 
 </TabItem>
 </Tabs>
 </div>
+
+## Important Configuration Notes
+
+### Understanding kubernetes_context
+
+The `kube_context` field in your `nebari-config.yaml` is critical—it tells Nebari which Kubernetes cluster to deploy to. This must exactly match a context name from your kubeconfig.
+
+To find your context name:
+
+```bash
+kubectl config get-contexts
+```
+
+The output shows all available contexts. Use the value from the `NAME` column:
+
+```
+CURRENT   NAME                                                  CLUSTER                      AUTHINFO
+*         arn:aws:eks:us-west-2:123456789:cluster/my-cluster   arn:aws:eks:...             arn:aws:eks:...
+          gke_my-project_us-central1_my-cluster                gke_my-project_...          gke_my-project_...
+          my-aks-cluster                                        my-aks-cluster              clusterUser_...
+```
+
+### Node Selectors
+
+Node selectors ensure Nebari components are scheduled on the appropriate nodes:
+
+- **general**: Core services (JupyterHub, Prometheus, etc.) - require stable, always-on nodes
+- **user**: User notebook servers - benefit from autoscaling
+- **worker**: Dask workers - benefit from aggressive autoscaling for compute workloads
+
+The node selector keys vary by provider:
+- **AWS EKS**: `eks.amazonaws.com/nodegroup`
+- **Azure AKS**: `agentpool` (default) or custom labels
+- **GCP GKE**: `cloud.google.com/gke-nodepool` (default) or custom labels
+
+You can verify node labels with:
+
+```bash
+kubectl get nodes --show-labels
+```
+
+## Verifying the Deployment
+
+After deployment completes:
+
+1. **Check pods are running:**
+   ```bash
+   kubectl get pods -A
+   ```
+
+2. **Verify ingress is configured:**
+   ```bash
+   kubectl get ingress -A
+   ```
+
+3. **Check services:**
+   ```bash
+   kubectl get svc -A
+   ```
+
+4. **Access Nebari:**
+   Navigate to `https://<your-domain>` in your browser
+
+## Troubleshooting
+
+### Pods Stuck in Pending
+
+If pods remain in `Pending` state:
+
+```bash
+kubectl describe pod <pod-name> -n <namespace>
+```
+
+Common causes:
+- **Node selector mismatch**: Labels in `nebari-config.yaml` don't match actual node labels
+- **Insufficient resources**: Nodes don't have enough CPU/memory
+- **No nodes available**: Node group/pool hasn't scaled up yet
+
+### Authentication Issues
+
+If you can't log in to Nebari:
+
+1. Verify OAuth application credentials in your `nebari-config.yaml`
+2. Check the callback URL matches exactly: `https://<domain>/hub/oauth_callback`
+3. Review JupyterHub logs:
+   ```bash
+   kubectl logs -n <namespace> deployment/hub -f
+   ```
+
+### LoadBalancer Service Pending
+
+If the LoadBalancer service stays in `Pending`:
+
+**AWS EKS:**
+- Verify subnets are tagged correctly for load balancer provisioning
+- Check AWS Load Balancer Controller is installed
+
+**Azure AKS:**
+- Ensure the AKS cluster has permissions to create load balancers
+- Check resource group has available quota
+
+**GCP GKE:**
+- Verify HTTP(S) Load Balancing is enabled on the cluster
+- Check firewall rules allow traffic on port 443
+
+## Next Steps
+
+- [Configure custom environments](/docs/how-tos/nebari-environment-management)
+- [Set up monitoring](/docs/how-tos/setup-monitoring)
+- [Configure backup strategies](/docs/how-tos/manual-backup)
+- [Explore Dask for distributed computing](/docs/tutorials/using_dask)
+
+## Additional Resources
+
+- [AWS EKS Documentation](https://docs.aws.amazon.com/eks/)
+- [Azure AKS Documentation](https://learn.microsoft.com/en-us/azure/aks/)
+- [Google GKE Documentation](https://cloud.google.com/kubernetes-engine/docs)
+- [Kubernetes Documentation](https://kubernetes.io/docs/)

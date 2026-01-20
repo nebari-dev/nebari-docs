@@ -84,6 +84,12 @@ const config = {
       }),
     ],
   ],
+  
+  // Enable Mermaid diagrams
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   // ---------------------------------------------------------------------------
   // Plugins need installing first then add here
   plugins: [
