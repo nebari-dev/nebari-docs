@@ -155,7 +155,7 @@ jupyterlab:
 
 - `jupyterlab.preferred_dir` - Sets the default location in which JupyterLab should open the file browser in.
 
-- `jupyterlab.gallery_settings` - Configures [`jupyterlab-gallery`](https://github.com/nebari-dev/jupyterlab-gallery) extension which enables user to clone (and later synchronise) pre-specified repositories.
+- `jupyterlab.gallery_settings` - Configures [`jupyterlab-gallery`](https://github.com/nebari-dev/jupyterlab-gallery) extension which enables user to clone (and later synchronise) pre-specified repositories. See [How to set up a Git Repository via JupyterLab-Gallery](../how-tos/jupyter-gallery) for more detailed information.
 
 ```yaml
 jupyterlab:

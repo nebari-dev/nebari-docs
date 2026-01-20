@@ -30,67 +30,23 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
 ## 2. Creating environments
 
-  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we do the following.
   ### Build a GPU-compatible environment
-  By default, `conda-store` will build CPU-compatible packages. To build GPU-compatible packages, we have two options:
-  1. **Create the environment specification using `CONDA_OVERRIDE_CUDA` (recommended approach)**:
-
-    Conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
-    While creating a new config, click on the `**GUI <-> YAML**` Toggle to edit yaml config.
-    ```
-    channels:
-      - pytorch
-      - conda-forge
-    dependencies:
-      - pytorch
-      - ipykernel
-    variables:
-      CONDA_OVERRIDE_CUDA: "12.1"
-    ```
-    Alternatively, you can configure the same config using the UI.
-
-    Add the `CONDA_OVERRIDE_CUDA` override to the variables section to tell conda-store to build a GPU-compatible environment.
+  conda-store provides an alternate mechanism to enable GPU environments via the setting of an environment variable as explained in the [conda-store docs](https://conda.store/conda-store-ui/tutorials/create-envs#set-environment-variables).
+  Create the environment specification using `CONDA_OVERRIDE_CUDA` by creating a new environment and clicking on the `**GUI <-> YAML**` toggle to edit the yaml config.
+  ```yaml
+  channels:
+    - conda-forge
+  dependencies:
+    - pytorch
+    - ipykernel
+  variables:
+    CONDA_OVERRIDE_CUDA: "12.4"
+  ```
+  Alternatively, you can configure the same variable using the UI.
 
 :::note
-At the time of writing this document, the latest CUDA version was showing as `12.1`. Please follow the steps below to determine the latest override value for the `CONDA_OVERRIDE_CUDA` environment variable.
-
-Please ensure that your choice from PyTorch documentation is not greater than the highest supported version in the `nvidia-smi` output (captured above).
+At the time of writing this document, the latest CUDA version was showing as `12.4`. Please follow the steps [above](#understanding-gpu-setup-on-the-server) to determine the highest supported version to use as an override value for the `CONDA_OVERRIDE_CUDA` environment variable.
 :::
-
-  2. **Create the environment specification based on recommendations from the PyTorch documentation**:
-    You can check [PyTorch documentation](https://pytorch.org/get-started/locally/) to get a quick list of the necessary CUDA-specific packages.
-    Select the following options to get the latest CUDA version:
-      - PyTorch Build = Stable
-      - Your OS          = Linux
-      - Package          = Conda
-      - Language         = Python
-      - Compute Platform = 12.1 (Select the version that is less than or equal to the `nvidia-smi` output (see above) on your server)
-
-    ![pytorch-linux-conda-version](/img/how-tos/pytorch-linux-conda-version.png)
-
-    The command `conda install` from above is:
-    ```
-    conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-    ```
-    The corresponding yaml config would be:
-    ```
-    channels:
-      - pytorch
-      - nvidia
-      - conda-forge
-    dependencies:
-      - pytorch
-      - pytorch-cuda==12.1
-      - torchvision
-      - torchaudio
-      - ipykernel
-    variables: {}
-    ```
-    :::note
-    The order of the channels is respected by conda, so keep pytorch at the top, then nvidia, then conda-forge.
-
-    You can use `**GUI <-> YAML**` Toggle to edit the config.
-
 
 ## 3. Validating the setup
   You can check that your GPU server is compatible with your conda environment by opening a Jupyter Notebook, loading the environment, and running the following code:
