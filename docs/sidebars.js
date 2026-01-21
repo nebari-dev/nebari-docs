@@ -73,6 +73,7 @@ module.exports = {
         "how-tos/setup-monitoring",
         "how-tos/setup-healthcheck",
         "how-tos/access-logs-loki",
+        "how-tos/configure-azure-rbac",
         "how-tos/use-gpus",
         "how-tos/develop-local-packages",
         "how-tos/install-pip-packages",
