@@ -44,19 +44,6 @@ To create a new group in Keycloak:
 If you wish to organize your groups hierarchically, you can create subgroups by selecting a parent group and adding a
 subgroup.
 
-## Fine-Grained Permissions via Keycloak
-
-Nebari uses [Keycloak](https://www.keycloak.org/) to centrally manage roles, permissions, and scopes for its core
-services like `jupyterhub` and `conda-store`. By default, Nebari provides:
-
-- **Predefined roles** (e.g., `conda_store_admin`, `jupyterhub_developer`)
-- **Default groups** (`admin`, `developer`, `analyst`, `superadmin`)
-- **Clients** corresponding to key Nebari services
-
-These defaults cover most common access requirements. However, when more specific or granular access control is needed,
-administrators can create custom roles and scopes in Keycloak—see
-[Creating Custom Roles with Scopes](#creating-custom-roles-with-scopes).
-
 ## Default Clients and Groups in Nebari
 
 Overview
@@ -249,18 +236,23 @@ import { Table } from '@site/src/components/MarkdownTable';
 </Tabs>
 </div>
 
-## Roles, Groups, and Scopes
+## Roles, Groups, and Scopes in Nebari (via Keycloak)
 
-When managing user access in Nebari, it's helpful to understand how **roles**, **groups**, and **scopes** work together:
+Nebari uses [Keycloak](https://www.keycloak.org/) to manage access for core services like `jupyterhub` and `conda-store`.
+Access is expressed through three related concepts:
 
-* **Roles**: A named set of permissions, while also providing a way to categorize users by their access level or job
-  function. Example: `conda_store_developer` or `jupyterhub_admin`.
-* **Groups**: Collections of users who need similar permissions. For example, the `developer` group might contain
-  multiple roles like `conda_store_developer` and `jupyterhub_developer`.
-* **Scopes**: A service's fine-grained permission entity within a role. For instance, a JupyterHub scope might be
-  `read:users:name`, while a Conda-Store scope might be `admin!namespace=analyst`.
+- **Roles**: Named permission bundles for a specific client/service (e.g., `conda_store_admin`, `jupyterhub_developer`).
+- **Groups**: Collections of users who should receive the same roles (e.g., `admin`, `developer`, `analyst`).
+- **Scopes**: Fine-grained permission strings attached to roles (e.g., `read:users:name` for JupyterHub, or
+  `admin!namespace=analyst` for Conda-Store).
 
-Whenever you create or modify a role in Keycloak, it won’t affect anyone until it’s assigned to a group or user.
+Nebari ships with **default clients, groups, and roles** that cover most needs. When you need more granular control,
+create **custom roles with specific scopes** in Keycloak and assign them to a group (or directly to a user).
+
+:::note
+Creating or editing a role does nothing until it is assigned via **Role Mappings** (to a group or user). Users must log
+out and back in for changes to take effect.
+:::
 
 **Typical Workflow**:
 
