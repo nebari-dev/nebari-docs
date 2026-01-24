@@ -4,6 +4,12 @@ title: Deploy Nebari on AWS
 description: A basic overview of how to deploy Nebari on AWS
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import DeployPolicy from '!!raw-loader!../../static/policies/aws/deploy.json';
+import DestroyPolicy from '!!raw-loader!../../static/policies/aws/destroy.json';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Introduction
 
 This guide is to help first-time users set up an Amazon Web Services (AWS) account specifically for the purpose of using and deploying Nebari at a production scale. In this guide
@@ -41,11 +47,34 @@ happens.
 ## Authentication
 
 In order for Nebari to make requests against the AWS API and create its infrastructure, an authentication method with the appropriate permissions will be required. The best way
-to do this is using an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) with suitable permissions for your AWS account and Elastic Kubernetes Service (EKS).
+to do this is using an [IAM user](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html) with all the necessary permissions.
+
+Below are two sets of minimal IAM permissions required to deploy and destroy Nebari. You may either [create separate IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) for each action or combine them into a single policy that includes all permissions.
+
+<details>
+   <summary>AWS IAM Policies to deploy and destroy Nebari</summary>
+   <Tabs>
+      <TabItem value="deploy" label="Deploy Nebari" default>
+         <CodeBlock language="js">{DeployPolicy}</CodeBlock>
+      </TabItem>
+      <TabItem value="destroy" label="Destroy Nebari">
+         <CodeBlock language="js">{DestroyPolicy}</CodeBlock>
+      </TabItem>
+   </Tabs>
+</details>
+
+:::note
+
+Make sure to replace the following placeholders in the policies with your own values:
+
+- `REGION`: The AWS region where you want to deploy Nebari (e.g., `us-west-2`)
+- `ACCOUNT_ID`: Your AWS account ID (e.g., `123456789012`)
+- `PROJECT_NAME`: The name of your Nebari project, specified under the `project_name` field in your `nebari-config.yaml` file (e.g., `my-nebari-project`)
+- `NAMESPACE`: The namespace you want to use for your Nebari deployment, specified under the `namespace` field in your `nebari-config.yaml` file (e.g., `dev`)
+  :::
 
 As a [best practice](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#lock-away-credentials), do not use the AWS account `root` user for any task where it's not
-required. Instead, create a new IAM user for each person that requires administrator access. Then make those users administrators by placing them into an "Administrators" user
-group, to which you attach the `AdministratorAccess` managed policy.
+required. Instead, create a new IAM user for each person that requires administrator access. Then make those users administrators by placing them into an "Administrators" (or any other name) user group, to which you attach the policies outlined above.
 
 If you are using an already existing IAM user, please refer to
 [Managing access keys for IAM users](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) for detailed information on how to
@@ -63,7 +92,7 @@ Follow these steps to set up your access keys and user accounts:
 
    ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
-4. Select **Attach existing policies directly**, then select `AdministratorAccess` from the list of policies. For more information, please refer to
+4. Select **Attach existing policies directly**, then select the previously created policies to deploy and destroy Nebari from the list of policies. For more information, please refer to
    [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
 5. Then proceed with the new user creation setup.
 
