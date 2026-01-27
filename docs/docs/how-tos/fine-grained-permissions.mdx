@@ -1,0 +1,641 @@
+---
+id: fine-grained-permissions
+title: Creating and Managing Groups, Roles, and Directories
+description: How to configure Keycloak's permissions, groups and roles, and manage group directories in JupyterHub.
+---
+
+## TL;DR
+
+- **Groups** organize users with similar permissions (e.g., `admin`, `developer`, `analyst`)
+- **Roles** define permission bundles for specific services (e.g., `conda_store_admin`, `jupyterhub_developer`)
+- **Scopes** are fine-grained permissions attached to roles (e.g., `read:users:name`)
+- Create roles → Assign to groups → Add users to groups → Users must log out/in for changes to take effect
+- Group directories in JupyterHub require the `allow-group-directory-creation-role` (since version 2024.9.1)
+
+## Overview
+
+Groups are a fundamental and vital part of the Nebari ecosystem. They are used to manage access to a wide range of services within Nebari, including JupyterHub instances, Keycloak realms, Conda environments, and computing resources. By grouping users based on roles, projects, or departments, Nebari simplifies the management of permissions and resource sharing.
+
+Beyond managing access, groups play a crucial role in organizing and sharing data across the JupyterHub ecosystem. Each group can have its own shared directory within JupyterHub, allowing users within the same group to collaborate seamlessly by sharing files and resources. This facilitates team collaboration and ensures that data is organized and accessible to those who need it.
+
+In this document, we will cover:
+
+- [Understanding Roles, Groups, and Scopes](#understanding-roles-groups-and-scopes)
+- [Managing Groups in Keycloak](#managing-groups-in-keycloak)
+- [Default Clients, Groups, and Permissions](#default-clients-groups-and-permissions)
+- [Creating Custom Roles with Scopes](#creating-custom-roles-with-scopes)
+- [Managing Users and Group Membership](#managing-users-and-group-membership)
+- [Managing Group Directories in JupyterHub](#managing-group-directories-in-jupyterhub)
+- [Permission Precedence and Troubleshooting](#permission-precedence-and-troubleshooting)
+
+## Understanding Roles, Groups, and Scopes
+
+Nebari uses [Keycloak](https://www.keycloak.org/) to manage access for core services like `jupyterhub` and `conda-store`. Access is expressed through three related concepts:
+
+- **Roles**: Named permission bundles for a specific client/service (e.g., `conda_store_admin`, `jupyterhub_developer`). Roles define what actions can be performed.
+- **Groups**: Collections of users who should receive the same roles (e.g., `admin`, `developer`, `analyst`). Groups aggregate users with similar responsibilities.
+- **Scopes**: Fine-grained permission strings attached to roles (e.g., `read:users:name` for JupyterHub, or `admin!namespace=analyst` for Conda-Store). Scopes are the actual permissions.
+- **Components**: Specifies the service that a role's scopes apply to (e.g., `jupyterhub` or `conda-store`).
+
+**Permission Flow**: User → Group → Role → Scopes → Permissions
+
+Nebari ships with **default clients, groups, and roles** that cover most needs. When you need more granular control, create **custom roles with specific scopes** in Keycloak and assign them to a group (or directly to a user).
+
+:::note
+Creating or editing a role does nothing until it is assigned via **Role Mappings** (to a group or user). Users must log out and back in for changes to take effect because Keycloak issues new access tokens on login.
+:::
+
+:::tip Technical Note
+Roles in Nebari can stack, meaning that if a user is in one group with role `conda_store_admin` and another group with role `conda_store_viewer`, this user ultimately has the role `conda_store_admin`. In case of different levels of access originating from different groups, precedence is given to the highest level of access. See [Permission Precedence](#permission-precedence-and-troubleshooting) for details.
+:::
+
+## Default Clients, Groups, and Permissions
+
+A fresh Nebari deployment comes with several custom Keycloak clients (services) enabled. You can manage these from **Clients** in the Keycloak admin console:
+```yaml
+clients:
+  - jupyterhub
+  - conda_store
+  - grafana (if monitoring is enabled)
+  - argo-server-sso (if argo is enabled)
+  - forwardauth
+```
+
+To manage and configure these clients, you can navigate to the `Clients` tab within the Keycloak admin console, as illustrated in the image below.
+
+![Keycloak clients](/img/how-tos/fine_grainer_permissions_keycloak_clients.png)
+
+This can be accessed at `<nebari-url>/auth/admin/master/console/#/realms/nebari/clients`
+
+### Default Groups and Their Roles
+
+Groups represent a collection of users that perform similar actions and therefore require similar permissions. By default, Nebari is deployed with the following groups: `admin`, `developer`, and `analyst` (in roughly descending order of permissions and scope).
+
+Roles on the other hand represent the type or category of user. This includes access and permissions that this category of user will need to perform their regular job duties. The differences between `groups` and `roles` are subtle. Particular roles (one or many), like `conda_store_admin`, are associated with a particular group, such as `admin` and any user in this group will then assume the role of `conda_store_admin`.
+
+:::info Shared Folders
+Membership in one of the default groups also grants access to the corresponding shared folder (e.g., the `developer` group has access to `~/shared/developer`). Since `2024.9.1`, Nebari requires a special role to access the shared folders: `allow-group-directory-creation-role`.
+:::
+
+### Default Roles and Permissions
+
+Below is a table that outlines the default roles, groups, and permissions that come with Nebari:
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import { Table } from '@site/src/components/MarkdownTable';
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
+<Tabs>
+  <TabItem value="Analyst" label="Analyst" default>
+    <Table
+      headers={['Resources', 'Roles', 'Permissions']}
+      rows={[
+        [
+          [
+            '- Conda-Store',
+            '- Jupyterhub',
+            '- Argo Workflows',
+            '- Grafana',
+          ],
+          [
+            '- `conda_store_developer`',
+            '- `jupyterhub_developer`',
+            '- `argo_viewer`',
+            '- `grafana_viewer`',
+          ],
+          [
+            '- Default user permissions',
+            '- Access to start JupyterHub servers & generate tokens',
+            '- Read/write in `~/shared/analyst` folder',
+            '- Read access to the `analyst` namespace in Conda-Store (write to personal namespace)',
+            '- Read access to Argo Workflows/Jupyter Scheduler',
+            '- Grafana viewer permissions (see [Grafana Roles](https://grafana.com/docs/grafana/latest/administration/roles-and-permissions/#organization-roles))',
+          ],
+        ],
+      ]}
+    />
+  </TabItem>
+
+  <TabItem value="Developer" label="Developer">
+    <Table
+      headers={['Resources', 'Roles', 'Permissions']}
+      rows={[
+        [
+          [
+            '- Conda-Store',
+            '- Dask',
+            '- Jupyterhub',
+            '- Argo Workflows',
+            '- Grafana',
+          ],
+          [
+            '- `conda_store_developer`',
+            '- `dask_developer`',
+            '- `jupyterhub_developer`',
+            '- `argo_developer`',
+            '- `grafana_developer`',
+          ],
+          [
+            '- Includes all Analyst permissions, plus...',
+            '- Read access to the `developer` namespace in Conda-Store.',
+            '- Ability to create Dask clusters.',
+            '- Read/write access to `~/shared/developer` folder.',
+            '- Read/create access in Argo Workflows & Jupyter Scheduler.',
+            '- Grafana editor permissions.',
+          ],
+        ],
+      ]}
+    />
+  </TabItem>
+
+  <TabItem value="Admin" label="Admin">
+    <Table
+      headers={['Resources', 'Roles', 'Permissions']}
+      rows={[
+        [
+          [
+            '- Conda-Store',
+            '- Dask',
+            '- Jupyterhub',
+            '- Argo Workflows',
+            '- Grafana',
+          ],
+          [
+            '- `conda_store_admin`',
+            '- `dask_admin`',
+            '- `jupyterhub_admin`',
+            '- `argo_admin`',
+            '- `grafana_admin`',
+          ],
+          [
+            '- Includes all Developer permissions, plus...',
+            '- Read/write access to all Conda-Store namespaces.',
+            '- Access to JupyterHub Admin page & user impersonation.',
+            '- Access to Keycloak for user/group management.',
+            '- Grafana administrator permissions.',
+          ],
+        ],
+      ]}
+    />
+  </TabItem>
+
+  <TabItem value="SuperAdmin" label="Super Admin">
+    <Table
+      headers={['Resources', 'Roles', 'Permissions']}
+      rows={[
+        [
+          [
+            '- Conda-Store',
+            '- Dask',
+            '- Jupyterhub',
+            '- Argo Workflows',
+            '- Grafana',
+          ],
+          [
+            '- `conda_store_superadmin`',
+            '- `dask_admin`',
+            '- `jupyterhub_admin`',
+            '- `argo_admin`',
+            '- `realm_admin` (Keycloak)',
+            '- `grafana_admin`',
+          ],
+          [
+            '- Includes all Admin permissions, plus...',
+            '- Delete privileges in Conda-Store (build & environment).',
+            '- Admin API service token privileges in Conda-Store.',
+            '- Full Keycloak realm administration (root-level).',
+          ],
+        ],
+      ]}
+    />
+  </TabItem>
+</Tabs>
+</div>
+
+## Managing Groups in Keycloak
+
+Keycloak is the identity and access management service used in Nebari. It allows you to create and manage users, groups, roles, and permissions. Groups in Keycloak are collections of users, and they can be assigned specific roles that grant permissions to access various services within Nebari.
+
+For detailed information on managing groups in Keycloak, refer to the [Keycloak documentation on Group Management](https://www.keycloak.org/docs/latest/server_admin/#_group_management).
+
+Below we outline the steps specific to Nebari.
+
+### Creating a New Group
+
+To create a new group in Keycloak:
+
+1. **Log in to Keycloak** as an administrator (usually the `root` user).
+2. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
+3. **Create the Group**: Click the **New** button, enter an appropriate name for your new group (e.g., `conda-store-manager`), and save.
+
+If you wish to organize your groups hierarchically, you can create subgroups by selecting a parent group and adding a subgroup.
+
+**Example Workflow**: Creating a `conda-store-manager` group
+
+1. Click **New** in the upper-right corner under **Groups**.
+
+![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
+
+2. Give the new group an appropriate name.
+
+![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
+
+3. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
+
+![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
+
+In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
+
+![Keycloak group conda-store-manager form - role mappings tab focused](/img/how-tos/keycloak_new_group3.png)
+
+### Managing Subgroups
+
+Subgroups allow you to create a hierarchical structure of groups, representing organizational units, projects, or teams.
+
+To manage subgroups:
+
+- **Creating Subgroups**: Select the parent group, navigate to the **Sub Groups** tab, and create a new subgroup.
+- **Assigning Roles to Subgroups**: Assign roles to subgroups following the same process as regular groups.
+- **Use Cases**: Organize groups hierarchically to reflect organizational structures (e.g., `engineering` → `data-science`, `engineering` → `backend`).
+
+For more information, see the [Keycloak documentation on Group Hierarchies](https://www.keycloak.org/docs/latest/server_admin/#group-hierarchies).
+
+### Deleting a Group
+
+To delete a group:
+
+1. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
+2. **Select the Group**: Click on the group you want to delete.
+3. **Delete**: Click the **Delete** button and confirm.
+
+**Important**: Deleting a group does not delete the users in that group. Users will simply lose the permissions associated with that group. Any shared directories associated with the group will remain in the file system but will no longer be mounted for users.
+
+
+## Creating Custom Roles with Scopes
+
+Beyond Nebari's default roles, you can also create your own with highly specific permissions.
+
+### Understanding Components and Scopes
+
+In Nebari, **scopes** are closely tied to the service (client) you're working with—in Keycloak roles we identify them as "components."
+
+#### Components Attribute
+
+The value of the `component` attribute depends on the service we are creating a role for. Currently, Nebari supports:
+
+- `jupyterhub`: to create `jupyterhub` native roles in the `jupyterhub` client.
+- `conda-store`: to create `conda-store` roles in the `conda_store` client.
+
+#### Scope Syntax by Service
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
+##### JupyterHub Scopes
+
+JupyterHub scopes syntax in Nebari follow [JupyterHub's built-in RBAC syntax](https://jupyterhub.readthedocs.io/en/stable/rbac/scopes.html).
+
+**Syntax**: `scope1,scope2,scope3`
+
+**Example**:
+```
+shares!user,read:users:name,read:groups:name
+```
+
+- `shares!user`: Allows sharing servers with other users.
+- `read:users:name`: Grants read access to other users' names.
+- `read:groups:name`: Grants read access to other groups' names.
+
+This combination allows a user to share their server with others (via `shares!user`) and also read other users' and groups' names.
+
+**Common Use Case - App Sharing**:
+```
+shares!user=alice,shares!group=data-science,read:users:name,read:groups:name
+```
+Allows sharing apps with user `alice` and the `data-science` group.
+
+For a complete list of JupyterHub scopes, see the JupyterHub documentation: [https://jupyterhub.readthedocs.io/en/stable/rbac/scopes.html#available-scopes](https://jupyterhub.readthedocs.io/en/stable/rbac/scopes.html#available-scopes)
+
+Nebari extends these scopes for some integrations (e.g., `jhub-apps`) to support sharing apps with users/groups.
+
+---
+
+##### Conda-Store Scopes
+
+Conda-Store scopes are defined at the namespace level.
+
+**Syntax**: `<access_level>!namespace=<namespace_name>`
+
+**Access Levels**: `admin`, `developer`, `viewer`
+
+**Example**:
+```
+admin!namespace=analyst,developer!namespace=nebari-git
+```
+
+- `admin!namespace=analyst`: Grants an **admin** role in the `analyst` namespace.
+- `developer!namespace=nebari-git`: Grants a **developer** role in the `nebari-git` namespace.
+
+**Common Use Case - Multi-namespace Access**:
+```
+admin!namespace=data-science,viewer!namespace=production,viewer!namespace=shared-datasets
+```
+Grants admin access to the team's namespace, but read-only to production and shared datasets.
+
+See: [Conda-Store role mappings](https://conda.store/conda-store/explanations/conda-store-concepts#role-mappings)
+
+</div>
+
+:::note Conda-Store Defaults and Nebari's Internal Group Handling
+Nebari grants some Conda-Store permissions **automatically**, regardless of how your Keycloak groups are configured. The authentication class applies these defaults at login so users can work even if the Keycloak groups don't define any `conda_store_*` client roles.
+
+**What Nebari applies by default**
+
+- **Personal namespace** → always **admin**
+  `"{username}/*" → {"admin"}` (cannot be downgraded by scopes).
+- **Deployment default namespace** → **viewer**
+  `"{default_namespace}/*" → {"viewer"}`.
+- **Nebari default groups** (`analyst`, `developer`, `admin`) → **handled internally**
+  If a user is in one of these groups, Nebari binds a **same-named namespace** to the user with that group's effective Conda-Store role (e.g., group `analyst` ⇒ `analyst/*`), **even when the Keycloak group itself has no client roles**.
+- **SuperAdmin** (`conda_store_superadmin`) → full wildcard
+  `"*/*" → {"admin"}` (includes delete & service-token privileges).
+
+**How it reconciles with Keycloak scopes**
+
+- On each login, Nebari re-applies permissions from Keycloak role **scopes** (e.g., `admin!namespace=analyst`).
+- If multiple grants target the same namespace, the **highest** permission wins.
+- Order of precedence (highest → lowest): **SuperAdmin** → **explicit scopes** → **internal defaults**.
+- Changes take effect after the user signs in again.
+:::
+
+### Step-by-Step: Creating a Custom Role
+
+**Typical Workflow**:
+
+1. **Create** a role (and define its scopes) under the relevant **Client** (e.g., `jupyterhub`, `conda_store`).
+2. **Assign** this role to a **group** (or directly to an individual user).
+3. **Add users** to that group if you haven't already.
+4. **Users log out and back in** for changes to take effect.
+
+#### Step 1: Create the Role
+
+In the following example, we create a new role for the `JupyterHub` client granting permissions to share apps with users and groups.
+
+1. Select the appropriate client and click on **Add Role**.
+
+![Keycloak client add jupyterhub role](/img/how-tos/keycloak_jupyterhub_client.png)
+
+2. On the **Add Role** form, write a meaningful name and description for the role. Click **Save**.
+
+![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_jupyterhub_add_role.png)
+
+3. Now the role has been created, but it does nothing. Add permissions by clicking on the **Attributes** tab and adding `components` and `scopes`.
+
+![Keycloak clients add jupyterhub role attributes](/img/how-tos/keycloak_add_role_attributes.png)
+
+#### Step 2: Assign Role to a Group
+
+Creating a role in Keycloak has no effect on any user or group's permissions until it is assigned.
+
+To add a role to a group:
+
+1. Select **Groups** on the left sidebar and search for the group.
+2. Select that group and click on the **Role Mappings** tab.
+3. Select the client associated with the role from the **Client Roles** dropdown.
+4. Select the role in **Available Roles** and click **Add Selected >>**.
+
+Once complete, any users in this group will inherit the role's permissions after they log out and back in.
+
+#### Step 3: Assign Role to a User (Alternative)
+
+To add a role directly to a user:
+
+1. Select **Users** on the left sidebar and search for the user.
+
+![Keycloak select user](/img/how-tos/keycloak_select_user.png)
+
+2. Select that user and click on the **Role Mappings** tab.
+
+![Keycloak user role mapping tab](/img/how-tos/keycloak_user_role_mapping_tab.png)
+
+3. Select the client associated with the role.
+
+![Keycloak user role mapping roles](/img/how-tos/keycloak_user_role_mapping_roles.png)
+
+4. Select the role in **Available Roles** and click **Add Selected >>**.
+
+![Keycloak user role mapping add role](/img/how-tos/keycloak_user_role_mapping_add_role.png)
+
+### Example: Custom Role Scenarios
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
+**Scenario 1: Data Science Team Lead**
+- **Goal**: Admin access to team namespace, read-only to production
+- **Component**: `conda-store`
+- **Scopes**: `admin!namespace=data-science,viewer!namespace=production`
+
+---
+**Scenario 2: App Collaborator**
+- **Goal**: Share JupyterHub apps with specific users and groups
+- **Component**: `jupyterhub`
+- **Scopes**: `shares!user,shares!group,read:users:name,read:groups:name`
+
+---
+**Scenario 3: Cross-functional Analyst**
+- **Goal**: Developer access to multiple namespaces
+- **Component**: `conda-store`
+- **Scopes**: `developer!namespace=marketing,developer!namespace=sales,viewer!namespace=finance`
+
+</div>
+
+## Managing Users and Group Membership
+
+### Adding Users to a Group
+
+To add users to a group:
+
+1. **Navigate to Users**: Click on **Users** in the left-hand menu.
+2. **Select a User**: Choose the user you want to add to a group.
+3. **Assign to Group**:
+   - Click on the **Groups** tab within the user's details.
+   - Click the **Join** button.
+   - Select the group (and subgroup, if applicable) you wish to add the user to.
+   - Click **Join** to add the user to the group.
+
+Repeat this process for all users who should be part of the group.
+
+### Removing Users from a Group
+
+To remove users from a group:
+
+1. **Navigate to Users**: Click on **Users** in the left-hand menu.
+2. **Select a User**: Choose the user you want to remove from a group.
+3. **Remove from Group**:
+   - Click on the **Groups** tab within the user's details.
+   - Find the group in the **Group Membership** list.
+   - Click **Leave** next to the group name.
+
+The user will immediately lose access to group-level permissions, but changes won't take effect until their next login (when a new access token is issued).
+
+### Removing Roles from Users or Groups
+
+To remove a role from a user or group:
+
+1. Navigate to the user or group's **Role Mappings** tab.
+2. Under **Assigned Roles**, find the role you want to remove.
+3. Select the role and click **Remove selected**.
+
+Again, changes take effect after the user logs out and back in.
+
+## Managing Group Directories in JupyterHub
+
+:::note Important
+As of version `2024.9.1`, JupyterHub creates and mounts directories only for groups with the `allow-group-directory-creation-role`. By default, this includes the `admin`, `analyst`, and `developer` groups. Previously, directories were automatically created for all Keycloak groups. This change gives administrators more control over shared directories and overall access management without cluttering the file system.
+:::
+
+### Understanding Group Directories
+
+A group directory in JupyterHub is a shared folder accessible to all members of a specific group. It provides a shared space within the file system for collaboration.
+
+An example directory structure:
+```yaml
+/shared
+├── admin
+│   ├── file1.txt
+│   └── file2.txt
+├── analyst
+│   ├── file1.txt
+│   └── file2.txt
+└── developer
+    ├── file1.txt
+    └── file2.txt
+```
+
+### Assigning the `allow-group-directory-creation-role` to a Group
+
+To enable directory creation and mounting for a group in JupyterHub, assign the `allow-group-directory-creation-role` to the group in Keycloak.
+
+1. **Navigate to the Group**: Log in to Keycloak as an administrator and select the group.
+2. **Go to Role Mappings**: Click on the **Role Mappings** tab.
+3. **Assign the Role**:
+   - Under **Client Roles**, select the `jupyterhub` client.
+   - Select `allow-group-directory-creation-role` and click **Add selected**.
+
+Users in this group will now have access to the group's shared directory in JupyterHub after they log out and back in.
+
+### Removing Group Directory Access
+
+To remove the group's directory access:
+
+1. **Navigate to the Group's Role Mappings**: Select the group and go to the **Role Mappings** tab.
+2. **Remove the Role**:
+   - Under **Assigned Roles**, select `allow-group-directory-creation-role`.
+   - Click **Remove selected**.
+
+**Data Preservation**: No data is deleted when you remove the role; the directory is simply unmounted from users' JupyterLab sessions.
+
+### Managing Subgroup Directories
+
+Subgroups can have their own directories in JupyterHub if assigned the `allow-group-directory-creation-role`. Assign the role to subgroups as needed to control access and collaboration.
+
+**Example Hierarchy**:
+```yaml
+/shared
+├── engineering
+│   ├── data-science
+│   │   └── models
+│   └── backend
+│       └── configs
+└── marketing
+    └── campaigns
+```
+
+## Permission Precedence and Troubleshooting
+
+### How Permissions Stack
+
+When a user belongs to multiple groups or has multiple roles assigned, Nebari uses the following rules to determine effective permissions:
+
+1. **Highest Permission Wins**: If conflicting permissions exist, the most permissive one takes precedence.
+   - Example: User in both `viewer` group (read-only) and `admin` group (read-write) → user gets read-write access
+
+2. **Service-Specific Precedence**:
+   - **Conda-Store**: SuperAdmin > Explicit Scopes > Internal Defaults > No Access
+   - **JupyterHub**: Scopes are additive; all granted scopes apply
+
+3. **Personal Namespaces**: Always admin access in Conda-Store (cannot be downgraded)
+
+### Common Issues and Solutions
+
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
+#### Issue 1: Changes Not Taking Effect
+
+**Symptom**: User was added to a group or assigned a role, but still can't access resources.
+
+**Solution**:
+- User must **log out completely** and **log back in**
+- Keycloak issues new access tokens on login with updated permissions
+- Refreshing the page is not sufficient
+
+---
+
+#### Issue 2: User Has Too Many Permissions
+
+**Symptom**: User can access resources they shouldn't be able to.
+
+**Solution**:
+1. Check all groups the user belongs to
+2. Check direct role assignments to the user
+3. Remember: highest permission wins, so remove the more permissive role/group
+4. User must log out and back in
+
+---
+
+#### Issue 3: Group Directory Not Appearing
+
+**Symptom**: Users in a group can't see the shared directory.
+
+**Solution**:
+1. Verify the group has `allow-group-directory-creation-role` assigned
+2. User must log out and back in to mount the directory
+3. Check JupyterHub logs for errors
+4. Verify the directory exists in the file system
+
+---
+
+#### Issue 4: Custom Role Not Working
+
+**Symptom**: Created a custom role with scopes, but it has no effect.
+
+**Solution**:
+1. Verify `components` attribute is set correctly (e.g., `jupyterhub` or `conda-store`)
+2. Verify `scopes` attribute syntax matches the service requirements
+3. Ensure role is assigned to a group or user via **Role Mappings**
+4. User must log out and back in
+
+</div>
+
+### Testing Permissions
+
+To verify a user's permissions:
+
+1. **JupyterHub**: Check the user's token scopes via the JupyterHub API:
+```bash
+   curl -H "Authorization: token <user-token>" \
+     https://<nebari-url>/hub/api/user
+```
+
+2. **Conda-Store**: Attempt to access namespaces through the UI or API and observe access levels
+
+3. **Keycloak**: Review the user's **Role Mappings** and **Group Membership** tabs
+
+## See Also
+
+- [Keycloak Official Documentation - Group Management](https://www.keycloak.org/docs/latest/server_admin/#_group_management)
+- [Keycloak Official Documentation - Group Hierarchies](https://www.keycloak.org/docs/latest/server_admin/#group-hierarchies)
+- [JupyterHub RBAC Documentation](https://jupyterhub.readthedocs.io/en/stable/rbac/scopes.html)
+- [Conda-Store Role Mappings](https://conda.store/conda-store/explanations/conda-store-concepts#role-mappings)
