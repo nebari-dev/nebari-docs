@@ -49,64 +49,6 @@ Creating or editing a role does nothing until it is assigned via **Role Mappings
 Roles in Nebari can stack, meaning that if a user is in one group with role `conda_store_admin` and another group with role `conda_store_viewer`, this user ultimately has the role `conda_store_admin`. In case of different levels of access originating from different groups, precedence is given to the highest level of access. See [Permission Precedence](#permission-precedence-and-troubleshooting) for details.
 :::
 
-## Managing Groups in Keycloak
-
-Keycloak is the identity and access management service used in Nebari. It allows you to create and manage users, groups, roles, and permissions. Groups in Keycloak are collections of users, and they can be assigned specific roles that grant permissions to access various services within Nebari.
-
-For detailed information on managing groups in Keycloak, refer to the [Keycloak documentation on Group Management](https://www.keycloak.org/docs/latest/server_admin/#_group_management).
-
-Below we outline the steps specific to Nebari.
-
-### Creating a New Group
-
-To create a new group in Keycloak:
-
-1. **Log in to Keycloak** as an administrator (usually the `root` user).
-2. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
-3. **Create the Group**: Click the **New** button, enter an appropriate name for your new group (e.g., `conda-store-manager`), and save.
-
-If you wish to organize your groups hierarchically, you can create subgroups by selecting a parent group and adding a subgroup.
-
-**Example Workflow**: Creating a `conda-store-manager` group
-
-1. Click **New** in the upper-right corner under **Groups**.
-
-![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
-
-2. Give the new group an appropriate name.
-
-![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
-
-3. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
-
-![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
-
-In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
-
-![Keycloak group conda-store-manager form - role mappings tab focused](/img/how-tos/keycloak_new_group3.png)
-
-### Managing Subgroups
-
-Subgroups allow you to create a hierarchical structure of groups, representing organizational units, projects, or teams.
-
-To manage subgroups:
-
-- **Creating Subgroups**: Select the parent group, navigate to the **Sub Groups** tab, and create a new subgroup.
-- **Assigning Roles to Subgroups**: Assign roles to subgroups following the same process as regular groups.
-- **Use Cases**: Organize groups hierarchically to reflect organizational structures (e.g., `engineering` → `data-science`, `engineering` → `backend`).
-
-For more information, see the [Keycloak documentation on Group Hierarchies](https://www.keycloak.org/docs/latest/server_admin/#group-hierarchies).
-
-### Deleting a Group
-
-To delete a group:
-
-1. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
-2. **Select the Group**: Click on the group you want to delete.
-3. **Delete**: Click the **Delete** button and confirm.
-
-**Important**: Deleting a group does not delete the users in that group. Users will simply lose the permissions associated with that group. Any shared directories associated with the group will remain in the file system but will no longer be mounted for users.
-
 ## Default Clients, Groups, and Permissions
 
 A fresh Nebari deployment comes with several custom Keycloak clients (services) enabled. You can manage these from **Clients** in the Keycloak admin console:
@@ -273,6 +215,65 @@ import { Table } from '@site/src/components/MarkdownTable';
 </Tabs>
 </div>
 
+## Managing Groups in Keycloak
+
+Keycloak is the identity and access management service used in Nebari. It allows you to create and manage users, groups, roles, and permissions. Groups in Keycloak are collections of users, and they can be assigned specific roles that grant permissions to access various services within Nebari.
+
+For detailed information on managing groups in Keycloak, refer to the [Keycloak documentation on Group Management](https://www.keycloak.org/docs/latest/server_admin/#_group_management).
+
+Below we outline the steps specific to Nebari.
+
+### Creating a New Group
+
+To create a new group in Keycloak:
+
+1. **Log in to Keycloak** as an administrator (usually the `root` user).
+2. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
+3. **Create the Group**: Click the **New** button, enter an appropriate name for your new group (e.g., `conda-store-manager`), and save.
+
+If you wish to organize your groups hierarchically, you can create subgroups by selecting a parent group and adding a subgroup.
+
+**Example Workflow**: Creating a `conda-store-manager` group
+
+1. Click **New** in the upper-right corner under **Groups**.
+
+![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
+
+2. Give the new group an appropriate name.
+
+![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
+
+3. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
+
+![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
+
+In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
+
+![Keycloak group conda-store-manager form - role mappings tab focused](/img/how-tos/keycloak_new_group3.png)
+
+### Managing Subgroups
+
+Subgroups allow you to create a hierarchical structure of groups, representing organizational units, projects, or teams.
+
+To manage subgroups:
+
+- **Creating Subgroups**: Select the parent group, navigate to the **Sub Groups** tab, and create a new subgroup.
+- **Assigning Roles to Subgroups**: Assign roles to subgroups following the same process as regular groups.
+- **Use Cases**: Organize groups hierarchically to reflect organizational structures (e.g., `engineering` → `data-science`, `engineering` → `backend`).
+
+For more information, see the [Keycloak documentation on Group Hierarchies](https://www.keycloak.org/docs/latest/server_admin/#group-hierarchies).
+
+### Deleting a Group
+
+To delete a group:
+
+1. **Navigate to Groups**: Click on **Groups** in the left-hand menu.
+2. **Select the Group**: Click on the group you want to delete.
+3. **Delete**: Click the **Delete** button and confirm.
+
+**Important**: Deleting a group does not delete the users in that group. Users will simply lose the permissions associated with that group. Any shared directories associated with the group will remain in the file system but will no longer be mounted for users.
+
+
 ## Creating Custom Roles with Scopes
 
 Beyond Nebari's default roles, you can also create your own with highly specific permissions.
@@ -429,20 +430,26 @@ To add a role directly to a user:
 
 ### Example: Custom Role Scenarios
 
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
 **Scenario 1: Data Science Team Lead**
 - **Goal**: Admin access to team namespace, read-only to production
 - **Component**: `conda-store`
 - **Scopes**: `admin!namespace=data-science,viewer!namespace=production`
 
+---
 **Scenario 2: App Collaborator**
 - **Goal**: Share JupyterHub apps with specific users and groups
 - **Component**: `jupyterhub`
 - **Scopes**: `shares!user,shares!group,read:users:name,read:groups:name`
 
+---
 **Scenario 3: Cross-functional Analyst**
 - **Goal**: Developer access to multiple namespaces
 - **Component**: `conda-store`
 - **Scopes**: `developer!namespace=marketing,developer!namespace=sales,viewer!namespace=finance`
+
+</div>
 
 ## Managing Users and Group Membership
 
@@ -563,6 +570,8 @@ When a user belongs to multiple groups or has multiple roles assigned, Nebari us
 
 ### Common Issues and Solutions
 
+<div style={{'border-radius': '15px', 'border': '2px solid var(--ifm-color-background-3)', 'padding': '20px', 'margin-bottom': '20px'}}>
+
 #### Issue 1: Changes Not Taking Effect
 
 **Symptom**: User was added to a group or assigned a role, but still can't access resources.
@@ -571,6 +580,8 @@ When a user belongs to multiple groups or has multiple roles assigned, Nebari us
 - User must **log out completely** and **log back in**
 - Keycloak issues new access tokens on login with updated permissions
 - Refreshing the page is not sufficient
+
+---
 
 #### Issue 2: User Has Too Many Permissions
 
@@ -582,6 +593,8 @@ When a user belongs to multiple groups or has multiple roles assigned, Nebari us
 3. Remember: highest permission wins, so remove the more permissive role/group
 4. User must log out and back in
 
+---
+
 #### Issue 3: Group Directory Not Appearing
 
 **Symptom**: Users in a group can't see the shared directory.
@@ -592,6 +605,8 @@ When a user belongs to multiple groups or has multiple roles assigned, Nebari us
 3. Check JupyterHub logs for errors
 4. Verify the directory exists in the file system
 
+---
+
 #### Issue 4: Custom Role Not Working
 
 **Symptom**: Created a custom role with scopes, but it has no effect.
@@ -601,6 +616,8 @@ When a user belongs to multiple groups or has multiple roles assigned, Nebari us
 2. Verify `scopes` attribute syntax matches the service requirements
 3. Ensure role is assigned to a group or user via **Role Mappings**
 4. User must log out and back in
+
+</div>
 
 ### Testing Permissions
 
