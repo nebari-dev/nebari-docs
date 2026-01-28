@@ -265,53 +265,17 @@ height as the column of logos to the right */
   margin: auto;
   font-size: 21px;
   line-height: 36px;
+  font-weight: bold;
 }
 
 .integrationsList {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  margin: 76px auto;
-  padding: 0;
-  list-style-type: none;
   justify-items: center;
+  font-size: 19px;
+  line-height: 36px;
 }
 
 .integrationsItem {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 36px;
-
-  background-color: #fff;
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 10px;
-  width: 125px;
-  height: 125px;
-}
-
-.integrationsItem:nth-child(2n) {
-  position: relative;
-  top: 143px;
-  margin-bottom: 90px;
-}
-
-@media screen and (max-width: 996px) {
-  .integrationsList {
-    width: auto;
-    grid-template-columns: 150px 150px;
-    grid-template-rows: auto auto;
-    row-gap: 1em;
-    justify-content: center;
-  }
-
-  .integrationsItem:nth-child(2n) {
-    top: 0;
-    margin-bottom: 0;
-  }
+    display: flex;
+    align-items: center;
 }
