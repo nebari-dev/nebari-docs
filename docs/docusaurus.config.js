@@ -223,6 +223,11 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      announcementBar: {
+      content:
+        '✨ The Nebari project is evolving into an ecosystem of tools, stay tuned for more updates! ✨',
+      isCloseable: true,
+    },
     }),
 };
 
