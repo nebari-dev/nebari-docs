@@ -53,6 +53,7 @@ module.exports = {
         "how-tos/nebari-aws",
         "how-tos/nebari-azure",
         "how-tos/nebari-kubernetes",
+        "how-tos/nebari-bare-metal",
         "how-tos/nebari-local",
         "how-tos/nebari-stages-directory",
         "how-tos/nebari-environment-management",
