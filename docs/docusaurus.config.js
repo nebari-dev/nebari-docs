@@ -225,7 +225,7 @@ const config = {
       },
       announcementBar: {
       content:
-        '✨ The Nebari project is evolving into an ecosystem of tools, stay tuned for more updates! ✨',
+        '✨ Nebari is evolving into an ecosystem of open source tools for AI workflows, stay tuned for more updates! ✨',
       isCloseable: true,
     },
     }),
