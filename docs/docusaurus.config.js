@@ -223,6 +223,11 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      announcementBar: {
+      content:
+        '✨ Nebari is evolving into an ecosystem of open source tools for AI workflows, stay tuned for more updates! ✨',
+      isCloseable: true,
+    },
     }),
 };
 
