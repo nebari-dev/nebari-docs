@@ -47,67 +47,70 @@ export default function HomePage() {
             <ol className={styles.pitchList}>
               <li className={styles.pitchItem}>
                 <LeavesCircleSvg aria-hidden="true" height="150px" />
-                <span className={styles.pitchItemHeading}>Nebari classic</span>
+                <span className={styles.pitchItemHeading}>
+                  <a href="TODO">Nebari classic</a>
+                </span>
                 <p>
                   Cloud-agnostic data science platform with environment management, role-based-access control,
                   and curated app integrations for application deployment, scalability, monitoring, and more.
-                  <br/>
-                  <a href="TODO">Get started →</a>
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
-                <span className={styles.pitchItemHeading}>Nebari core (early access)</span>
+                <span className={styles.pitchItemHeading}>
+                  <a href="TODO">Nebari core (early access)</a>
+                </span>
                 <p>
-                  New and robust core infrastructure layer for platform deployment on popular cloud providers.
+                  New robust core infrastructure layer for platform deployment on popular cloud providers.
                   Security, authentication, role-based access, and observability built-in by design.
-                  <br/>
-                  <a href="TODO">Learn more →</a>
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
-                <span className={styles.pitchItemHeading}>Nebi (early access)</span>
+                <span className={styles.pitchItemHeading}>
+                  <a href="TODO">Nebi (early access)</a>
+                </span>
                 <p>
-                  Tools to manage, share, and collaborate on AI software lifecycle.
-                  SBoMs, licensing, and compliance tools.
-                  <br/>
-                  <a href="TODO">Learn more →</a>
+                  Tools to manage, share, and collaborate on AI software lifecycle across your team.
+                  Includes plans for SBoM generation and compliance checking.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <RootsPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Usage-specific UIs (coming soon)</span>
                 <p>
-                  Jupyter/VSCode for developers, chat & dashboard interfaces for AI users.
+                  Primary user-interface on the infrastructure layer:
+                  Jupyter/VSCode for developers, chat & dashboard interfaces for AI users, and more.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <TwoPlantsSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>AI model serving pack (coming soon)</span>
                 <p>
-                  TODO
+                  Interfaces and frameworks to serve and monitor different AI models
+                  for your development workflow or production applications.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <TwoPlantsSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Agentic AI pack (coming soon)</span>
                 <p>
-                  Frameworks for building, deploying, evaluating, and governing agent-based workflows.
+                  Frameworks for building, deploying, evaluating, and monitoring AI agent-based workflows.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <TwoPlantsSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Data orchestration pack (coming soon)</span>
                 <p>
-                  Data engineering pipeline, governance of data and AI assets.
+                  Tools for building data engineering pipelines and governance of data and AI assets.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <ScissorStringSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Custom integrations</span>
                 <p>
-                  All Nebari tools are based on an open and extensible architecture, that allows quick integration of new tools you may need.
+                  All Nebari projects are developed on an open and extensible architecture,
+                  that allows for quick integration of any new libraries you need.
                 </p>
               </li>
             </ol>
@@ -132,12 +135,12 @@ export default function HomePage() {
                   Deploy anywhere
                 </h2>
                 <p>
-                  Try Nebari on your local machine or deploy it on your cloud of
-                  choice. Nebari is designed to be flexible, extensible, and
+                  Try Nebari-classic on your local machine or deploy it on your cloud of
+                  choice. It is designed to be flexible, extensible, and
                   vendor-agnostic.
                 </p>
                 <p>
-                  Nebari can be seamlessly deployed to the major public cloud
+                  Nebari-classic and new Nebari projects can be seamlessly deployed to the major public cloud
                   providers, including AWS, Azure, and GCP.
                 </p>
               </div>
@@ -166,7 +169,7 @@ export default function HomePage() {
                 href="/docs/get-started"
                 className={styles.getStartedLink2}
               >
-                Learn to deploy a Nebari classic instance&nbsp;&nbsp;
+                Deploy a Nebari classic instance&nbsp;&nbsp;
                 <RightArrowSvg aria-hidden="true" />
               </a>
             </p>
@@ -185,18 +188,34 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className={styles.integrationsSection}>
+        <section className={styles.pitchSection}>
           <div className={styles.sectionContent}>
-            <h2 className={styles.sectionHeading}>Our Vision</h2>
-            <p className={styles.integrationsSubheading}>
-              Enable organizations to rapidly build with AI.
+            <h2 className={styles.sectionHeading}>Development principles</h2>
+            <p className={styles.sectionSubheading}>
+              Our vision: Enable organizations to rapidly build with AI
             </p>
-            <ul className={styles.integrationsList}>
-              <li className={styles.integrationsItem}>Ownership: Lorem ipsum</li>
-              <li className={styles.integrationsItem}>Open source: Lorem ipsum</li>
-              <li className={styles.integrationsItem}>Community-oriented development: Lorem ipsum</li>
-              <li className={styles.integrationsItem}>Modularity / expandability: Lorem ipsum</li>
-            </ul>
+            <ol className={styles.pitchList}>
+              <li className={styles.pitchItem}>
+                <span className={styles.pitchItemHeading}>Open source</span>
+                <p>
+                  All projects are developed under an open source license, and built using open source software.
+                </p>
+              </li>
+              <li className={styles.pitchItem}>
+                <span className={styles.pitchItemHeading}>Community-oriented</span>
+                <p>
+                  All projects welcome contributions and community engagement through project space and community meetings.
+                </p>
+              </li>
+              <li className={styles.pitchItem}>
+                <span className={styles.pitchItemHeading}>Modular design</span>
+                <p>
+                  All projects integrate with each other, while allowing for independent use and extensibility.
+                </p>
+              </li>
+            </ol>
+
+
           </div>
         </section>
       </main>

@@ -24,6 +24,13 @@ because it mixes dark and light sections.
   color: inherit;
 }
 
+.sectionSubheading {
+  text-align: center;
+  font-size: 21px;
+  font-weight: bold;
+  color: inherit;
+}
+
 /*
   Hero
 */
@@ -245,37 +252,4 @@ height as the column of logos to the right */
 
 .getStartedLink2:hover [stroke="#fff"] {
   stroke: var(--nebari-magenta-7);
-}
-
-/*
-  Integrations
-*/
-
-.integrationsSection {
-  background:
-    url(/img/home/abstract-foliage-light.svg) top right no-repeat,
-    var(--ifm-color-white);
-  color: var(--ifm-color-black);
-  padding: 82px;
-}
-
-.integrationsSubheading {
-  text-align: center;
-  max-width: 540px;
-  margin: auto;
-  font-size: 21px;
-  line-height: 36px;
-  font-weight: bold;
-}
-
-.integrationsList {
-  width: 100%;
-  justify-items: center;
-  font-size: 19px;
-  line-height: 36px;
-}
-
-.integrationsItem {
-    display: flex;
-    align-items: center;
 }
