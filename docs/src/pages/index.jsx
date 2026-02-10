@@ -23,8 +23,7 @@ export default function HomePage() {
           <div className={styles.sectionContent}>
             <NebariLogoSvg width="158px" role="img" aria-label="Nebari logo" />
             <p className={styles.tagline1}>
-              {/* Your open source data science & AI platform. */}
-              A fully open source stack for your AI.
+              An open source stack for your AI.
             </p>
             <p className={styles.tagline2}>
               Core infrastructure, curated frameworks and apps, and everything in between.
@@ -48,7 +47,7 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <LeavesCircleSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="TODO">Nebari classic</a>
+                  <a href="https://github.com/nebari-dev/nebari">Nebari classic</a>
                 </span>
                 <p>
                   Cloud-agnostic data science platform with environment management, role-based-access control,
@@ -58,7 +57,7 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="TODO">Nebari core (early access)</a>
+                  <a href="https://github.com/nebari-dev/nebari-infrastructure-core">Nebari core (early access)</a>
                 </span>
                 <p>
                   New robust core infrastructure layer for platform deployment on popular cloud providers.
@@ -68,18 +67,18 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="TODO">Nebi (early access)</a>
+                  <a href="https://github.com/nebari-dev/nebi">Nebi (early access)</a>
                 </span>
                 <p>
                   Tools to manage, share, and collaborate on AI software lifecycle across your team.
-                  Includes plans for SBoM generation and compliance checking.
+                  Includes future plans for SBoM generation and compliance checking.
                 </p>
               </li>
               <li className={styles.pitchItem}>
                 <RootsPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Usage-specific UIs (coming soon)</span>
                 <p>
-                  Primary user-interface on the infrastructure layer:
+                  Multiple UI options available:
                   Jupyter/VSCode for developers, chat & dashboard interfaces for AI users, and more.
                 </p>
               </li>
@@ -87,8 +86,7 @@ export default function HomePage() {
                 <TwoPlantsSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>AI model serving pack (coming soon)</span>
                 <p>
-                  Interfaces and frameworks to serve and monitor different AI models
-                  for your development workflow or production applications.
+                  Serve and monitor different AI models for your development workflow or production applications.
                 </p>
               </li>
               <li className={styles.pitchItem}>
@@ -102,7 +100,7 @@ export default function HomePage() {
                 <TwoPlantsSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>Data orchestration pack (coming soon)</span>
                 <p>
-                  Tools for building data engineering pipelines and governance of data and AI assets.
+                  Tools for building data engineering pipelines, and governance and provenance of data & AI assets.
                 </p>
               </li>
               <li className={styles.pitchItem}>
@@ -110,7 +108,14 @@ export default function HomePage() {
                 <span className={styles.pitchItemHeading}>Custom integrations</span>
                 <p>
                   All Nebari projects are developed on an open and extensible architecture,
-                  that allows for quick integration of any new libraries you need.
+                  that allows for quick integration of any libraries you need.
+                </p>
+              </li>
+              <li className={styles.pitchItem}>
+                <ScissorStringSvg aria-hidden="true" height="150px" />
+                <span className={styles.pitchItemHeading}>Community hub (coming soon)</span>
+                <p>
+                  A space for community members to share their custom packs.
                 </p>
               </li>
             </ol>
@@ -135,12 +140,12 @@ export default function HomePage() {
                   Deploy anywhere
                 </h2>
                 <p>
-                  Try Nebari-classic on your local machine or deploy it on your cloud of
+                  Try Nebari classic on your local machine or deploy it on your cloud of
                   choice. It is designed to be flexible, extensible, and
                   vendor-agnostic.
                 </p>
                 <p>
-                  Nebari-classic and new Nebari projects can be seamlessly deployed to the major public cloud
+                  Nebari classic and new Nebari projects can be seamlessly deployed to the major public cloud
                   providers, including AWS, Azure, and GCP.
                 </p>
               </div>
@@ -191,9 +196,6 @@ export default function HomePage() {
         <section className={styles.pitchSection}>
           <div className={styles.sectionContent}>
             <h2 className={styles.sectionHeading}>Development principles</h2>
-            <p className={styles.sectionSubheading}>
-              Our vision: Enable organizations to rapidly build with AI
-            </p>
             <ol className={styles.pitchList}>
               <li className={styles.pitchItem}>
                 <span className={styles.pitchItemHeading}>Open source</span>
@@ -204,18 +206,16 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <span className={styles.pitchItemHeading}>Community-oriented</span>
                 <p>
-                  All projects welcome contributions and community engagement through project space and community meetings.
+                  All projects welcome community contributions and engagement on various project spaces and community meetings.
                 </p>
               </li>
               <li className={styles.pitchItem}>
-                <span className={styles.pitchItemHeading}>Modular design</span>
+                <span className={styles.pitchItemHeading}>Composable architecture</span>
                 <p>
-                  All projects integrate with each other, while allowing for independent use and extensibility.
+                  All projects have a modular design and integrate with each other, while also allowing for independent use and extensibility.
                 </p>
               </li>
             </ol>
-
-
           </div>
         </section>
       </main>
