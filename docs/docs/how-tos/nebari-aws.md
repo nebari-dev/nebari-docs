@@ -223,12 +223,12 @@ If the deployment is successful, you will see the following output:
 ```bash
 [terraform]: Nebari deployed successfully
 Services:
- - argo-workflows -> https://projectname.domain/argo/
- - conda_store -> https://projectname.domain/conda-store/
- - dask_gateway -> https://projectname.domain/gateway/
- - jupyterhub -> https://projectname.domain/
- - keycloak -> https://projectname.domain/auth/
- - monitoring -> https://projectname.domain/monitoring/
+ - argo-workflows -> https://domain/argo/
+ - conda_store -> https://domain/conda-store/
+ - dask_gateway -> https://domain/gateway/
+ - jupyterhub -> https://domain/
+ - keycloak -> https://domain/auth/
+ - monitoring -> https://domain/monitoring/
 Kubernetes kubeconfig located at file:///tmp/NEBARI_KUBECONFIG
 Kubecloak master realm username=root *****
 ...
