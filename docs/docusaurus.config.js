@@ -18,7 +18,7 @@ const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: "Nebari",
-    description: "Your open source data science platform. Built for scale, designed for collaboration.",
+    description: "An open source stack for your AI.",
     keywords: ["Jupyter", "MLOps", "Kubernetes", "Python", "Dask"],
   },
   domain,
@@ -86,7 +86,7 @@ const config = {
   ],
   // ---------------------------------------------------------------------------
   // Plugins need installing first then add here
-  plugins: [
+    plugins: [
     "docusaurus-plugin-sass",
     require.resolve("docusaurus-lunr-search"),
     [
@@ -97,8 +97,17 @@ const config = {
         routeBasePath: 'community',
         sidebarPath: './sidebarsCommunity.js',
       },
-    ]
-  ],
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'new-nebari',
+        path: 'new-nebari',
+        routeBasePath: 'new-nebari',
+        sidebarPath: './sidebarsNewNebari.js',
+      },
+    ],
+    ],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
@@ -123,7 +132,7 @@ const config = {
         hideOnScroll: false,
         items: [
           {
-            label: "Nebari",
+            label: "Nebari classic",
             position: "left",
             to: "/docs/welcome",
           },
@@ -131,6 +140,11 @@ const config = {
             label: "Community",
             position: "left",
             to: "community/introduction",
+          },
+          {
+            label: "New Nebari",
+            position: "left",
+            to: "new-nebari/roadmap",
           },
           {
             label: "Get Started",
