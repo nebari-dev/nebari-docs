@@ -88,7 +88,7 @@ because it mixes dark and light sections.
 }
 
 /*
-  Why choose Nebari?
+  Ecosystem of tools & Development principles
 */
 
 .pitchSection {
@@ -128,6 +128,16 @@ because it mixes dark and light sections.
   font-size: var(--ifm-h4-font-size);
   margin-bottom: 1em;
   font-weight: 600;
+}
+
+.pitchItemHeadingLink,
+[data-theme=dark] .pitchItemHeadingLink {
+  color: var(--ifm-color-black);
+}
+
+.pitchItemHeadingLink,
+[data-theme=dark] .pitchItemHeadingLink:hover {
+  color: var(--ifm-link-color);
 }
 
 /*
@@ -213,7 +223,7 @@ height as the column of logos to the right */
 }
 
 /*
-  Get started
+  Quick look at Nebari classic
 */
 
 .getStartedSection {

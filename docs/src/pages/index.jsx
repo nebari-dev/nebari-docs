@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <Layout
       title="Nebari Homepage"
-      description="TODO"
+      description="An open source stack for your AI."
     >
       <main className={styles.main}>
         <section className={styles.heroSection}>
@@ -47,7 +47,9 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <LeavesCircleSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="https://github.com/nebari-dev/nebari">Nebari classic</a>
+                  <a href="https://github.com/nebari-dev/nebari" className={styles.pitchItemHeadingLink}>
+                    Nebari classic
+                  </a>
                 </span>
                 <p>
                   Cloud-agnostic data science platform with environment management, role-based-access control,
@@ -57,7 +59,9 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="https://github.com/nebari-dev/nebari-infrastructure-core">Nebari core (early access)</a>
+                  <a href="https://github.com/nebari-dev/nebari-infrastructure-core" className={styles.pitchItemHeadingLink}>
+                    Nebari core (early access)
+                  </a>
                 </span>
                 <p>
                   New robust core infrastructure layer for platform deployment on popular cloud providers.
@@ -67,7 +71,9 @@ export default function HomePage() {
               <li className={styles.pitchItem}>
                 <JarPlantSvg aria-hidden="true" height="150px" />
                 <span className={styles.pitchItemHeading}>
-                  <a href="https://github.com/nebari-dev/nebi">Nebi (early access)</a>
+                  <a href="https://github.com/nebari-dev/nebi" className={styles.pitchItemHeadingLink}>
+                    Nebi (early access)
+                  </a>
                 </span>
                 <p>
                   Tools to manage, share, and collaborate on AI software lifecycle across your team.
