@@ -74,7 +74,11 @@ const config = {
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Nebari blog',
+          blogDescription: 'Posts about the Nebari ecosystem of tools.',
+          postsPerPage: 'ALL',
+        },
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
         },
@@ -136,6 +140,11 @@ const config = {
             label: "Get Started",
             position: "right",
             to: "docs/get-started",
+          },
+          {
+            to: 'blog',
+            label: 'Blog',
+            position: 'right',
           },
           {
             label: "Ecosystem",
