@@ -137,11 +137,6 @@ const config = {
             to: "community/introduction",
           },
           {
-            label: "Get Started",
-            position: "right",
-            to: "docs/get-started",
-          },
-          {
             to: 'blog',
             label: 'Blog',
             position: 'right',
