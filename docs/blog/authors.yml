@@ -1,0 +1,7 @@
+nebari-team:
+  name: Nebari team
+  title: Nebari development team
+  url: https://github.com/nebari-dev
+  image_url: https://github.com/nebari-dev.png
+  socials:
+    github: nebari-dev
