@@ -183,6 +183,12 @@ If you need help with a test case, you can create a draft pull request and messa
 
 [For tips and best practices, read Test your Nebari contribution ->][community-tests]
 
+### Code conventions
+
+Pydantic model fields that default to `None` must include `None` in their type annotation (for example, `Optional[str]`, `str | None`, or `Union[str, None]`).
+Without the explicit `None` type, Pydantic may silently coerce the value and static type checkers cannot detect the mismatch.
+This rule is enforced by `tests/tests_unit/test_code_conventions.py` in the main repository.
+
 ### Document changes
 
 Prioritize including relevant documentation with your contributions to help your code reviewers, Nebari users, as well as other contributors who may interact with your code.
