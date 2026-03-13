@@ -48,17 +48,26 @@ For instructions on installing and deploying Nebari Local, please visit [Deployi
 
 </TabItem>
 
-<TabItem value="existing" label="Pre-existing Kubernetes cluster">
+<TabItem value="existing" label="Existing infrastructure">
 
-This approach is recommended if you are already using Kubernetes and want to deploy Nebari on your existing cluster.
+This approach is recommended if you have existing infrastructure and want to deploy Nebari on:
 
-For instructions on installing and deploying Nebari on an existing Kubernetes cluster, please visit [How to install and setup Nebari on an existing Kubernetes infrastructure](/docs/how-tos/nebari-kubernets.mdx).
+- **Pre-existing Kubernetes clusters** (EKS, AKS, GKE, or custom clusters)
+- **Bare metal servers** using our K3s setup
 
-:::note
-As of now, we have only tested this functionality for AWS, but we are continuously working on expanding to other cloud providers.
+Choose this option if:
+- You have existing cloud-managed Kubernetes clusters (EKS, AKS, GKE)
+- You want to deploy on bare metal infrastructure
+- You're migrating from traditional HPC systems
+- You need full control over your infrastructure
+
+For detailed instructions:
+- [Deploy Nebari on bare metal with K3s](/docs/how-tos/nebari-bare-metal.mdx) - Set up a K3s cluster on bare metal and deploy Nebari
+- [Deploy Nebari on existing Kubernetes clusters](/docs/how-tos/nebari-kubernets.mdx) - Deploy on pre-existing EKS, AKS, GKE, or custom clusters
+
+:::tip
+The bare metal deployment using [nebari-k3s](https://github.com/nebari-dev/nebari-k3s) provides a modern Kubernetes-based alternative to traditional HPC batch systems and replaces the deprecated nebari-slurm project.
 :::
-
-You should choose another installation option, likely a cloud install if you are starting from scratch (you have no compute clusters already in place) and you desire to stand up a production instance of Nebari.
 
 </TabItem>
 </Tabs>
