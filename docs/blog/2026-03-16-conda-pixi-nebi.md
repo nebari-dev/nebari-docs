@@ -86,39 +86,44 @@ We can see that one command pulls in GDAL along with 60+ compiled dependencies, 
 
 ### Where Environments Live
 
-With pip and virtualenv, environments live inside your project directory:
+With pip, environments live inside your project directory:
 
 ```bash
-python -m venv .venv        # creates ./my-project/.venv/
+# creates ./my-project/.venv/
+python -m venv .venv
 source .venv/bin/activate
 ```
 
-conda stores environments in a central directory, separate from your project:
+conda stores environments in a central directory instead:
 
 ```bash
-conda create -n geo-ml python=3.11   # creates ~/miniconda3/envs/geo-ml/
+# creates ~/miniconda3/envs/geo-ml/
+conda create -n geo-ml python=3.11
 conda activate geo-ml
 ```
 
-With pip, each project gets its own environment:
+Imagine you're working on two projects: land cover classification and flood risk analysis. Here's how each tool handles their environments:
 
 ```mermaid
 flowchart LR
-    P1[land-cover/] --> E1[land-cover/.venv/]
-    P2[flood-risk/] --> E2[flood-risk/.venv/]
+    subgraph pip
+        P1[land-cover/] --> E1[land-cover/.venv/]
+        P2[flood-risk/] --> E2[flood-risk/.venv/]
+    end
+    subgraph conda
+        P3[land-cover/] --> E3[~/miniconda3/envs/geo-ml/]
+        P4[flood-risk/] --> E3
+    end
 ```
 
-With conda, multiple projects can share one central environment:
+Here's what the diagram shows:
 
-```mermaid
-flowchart LR
-    P3[land-cover/] --> E3[~/miniconda3/envs/geo-ml/]
-    P4[flood-risk/] --> E3
-```
+- **pip** creates a separate `.venv/` for each project. Python packages are duplicated, and system libraries must be installed separately through your OS package manager.
+- **conda** lets multiple projects share one environment. Python packages and system libraries are all managed in one place.
 
-This makes environments reusable. If you're working on both a land cover classification project and a flood risk analysis, both can share the same `geo-ml` environment rather than installing geopandas and GDAL twice.
+This makes it easy to reuse the same setup across related projects without reinstalling anything.
 
-However, as projects multiply, this becomes hard to track. Was this project using `geo-ml` or `geo-ml-v2`? Nothing in your project directory answers that question.
+However, sharing creates a tracking problem. Since environments live outside project directories, there's no way to tell which environment a project needs just by looking at its files.
 
 ### Two Package Managers, One Environment
 
