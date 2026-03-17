@@ -336,8 +336,8 @@ Unlike conda's manual `conda env export`, pixi also generates a `pixi.lock` file
 
 ```yaml
 # pixi.lock (excerpt)
-- conda: https://conda.anaconda.org/conda-forge/osx-arm64/gdal-3.12.2-py314h0ed7ee7_3.conda
-  sha256: ac9a886dc1b4784da86c10946920031ccf85ebd97bc5e0bf130a2f62582ec229
+- conda: https://conda.anaconda.org/.../gdal-3.12.2.conda
+  sha256: ac9a886dc1b4784da86c10946920031ccf85ebd97...
   md5: 61e0829c9528ca287918fa86e56dbca2
   depends:
   - __osx >=11.0
@@ -387,7 +387,7 @@ pixi run test
 
 Tasks run inside the project environment automatically, with no need to activate first.
 
-### Multi-Platform and Multi-Environment Workspaces
+### Multi-Platform Support
 
 Your team might develop on macOS but deploy to Linux. pixi can target multiple platforms from a single manifest:
 
@@ -403,6 +403,8 @@ channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64", "linux-64", "win-64"]
 ```
+
+### Multiple Environments
 
 Teams might also need separate environments for different purposes, like only keeping testing and linting tools in a dev environment.
 
@@ -456,41 +458,22 @@ ruff check .  # lint any project
 
 ### Limitations of pixi
 
-pixi solves dependency management, but it wasn't designed for environment lifecycle management. It doesn't track how environments change over time, share them independently of code, or control who can modify them.
+pixi solves dependency management, but it wasn't designed for environment lifecycle management. These limitations affect both individual developers and teams:
 
-These limitations affect both individual developers and teams:
-
-#### No version history or diffing
-
-pixi tracks the current state of your environment, not how it got there. When you run `pixi add` or `pixi remove`, the lockfile updates in place:
+**No version history or diffing:** pixi overwrites the lockfile on every `pixi add` or `pixi remove`. There's no built-in way to see what changed or roll back. You could diff `pixi.lock` in git history, but lockfiles pin hundreds of packages, making manual comparison impractical:
 
 ```bash
-# Update a dependency
 pixi add numpy=2.0
-
 # The previous lockfile is gone
-# No way to see what changed or roll back
 ```
 
-You could dig through git history for the last working `pixi.lock`, but lockfiles pin hundreds of packages with exact versions and hashes. Manually diffing them to find the one problematic update is tedious and error-prone.
-
-#### Environments are tied to projects
-
-pixi environments live inside project directories, which means they can't be reused or shared independently. A teammate who wants to get the same environment you used has to clone your entire repo:
+**Environments are tied to projects:** pixi environments live inside project directories. There's no way to share an environment without sharing the entire repo, or publish it as a standalone artifact others can install:
 
 ```bash
-# You can only activate from inside the project
-cd geo-ml && pixi shell
-
-# A colleague can't pull just the environment
-pixi shell --from /path/to/geo-ml   # not supported
+cd geo-ml && pixi shell # must be inside the project
 ```
 
-There's no way to publish an environment as a standalone artifact that others can pull without the code.
-
-#### No governance
-
-pixi has no concept of permissions, approval workflows, or audit trails. Anyone who can edit `pixi.toml` can change the environment, with no way to require approval or track who changed what.
+**No governance:** pixi has no concept of permissions, approval workflows, or audit trails. Anyone who can edit `pixi.toml` can change the environment, with no way to require approval or track who changed what.
 
 ```mermaid
 flowchart TD
