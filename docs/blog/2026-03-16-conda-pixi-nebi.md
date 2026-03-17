@@ -8,36 +8,28 @@ tags: [python, conda, pixi, nebi, reproducibility, environment-management, data-
 
 pip has been the default way to install Python packages for over a decade. For pure Python projects, it works well.
 
-But data science and AI projects rarely stay pure Python. Deep learning and LLM inference need CUDA toolkits and compiled runtimes. Computer vision pipelines depend on OpenCV and FFmpeg.
+But data science and AI projects rarely stay pure Python. They pull in CUDA toolkits for GPU acceleration, OpenCV and FFmpeg for computer vision, and compiled C/C++ libraries for geospatial analysis.
 
-Even common libraries like NumPy and SciPy link against compiled BLAS/LAPACK linear algebra backends. These are system-level dependencies that pip cannot install.
+These are system-level dependencies that pip cannot install.
 
-<!-- truncate -->
-
-In this article, we'll walk through three tools that solve this problem at increasing levels of sophistication:
+In this article, we'll explore three tools, each adding a layer on top of the previous:
 
 - **conda** creates isolated environments with both Python and non-Python dependencies
 - **pixi** adds lockfiles, speed, and a modern developer experience on top of conda-forge
 - **nebi** layers version control and team collaboration on top of pixi workspaces
+
+<!-- truncate -->
+
+## The Problem with pip
 
 To make the comparison concrete, we'll set up the same geospatial ML project with each tool. Its dependencies come from two sources:
 
 - **conda-forge**: geopandas and GDAL (compiled C/C++ geospatial libraries) and LightGBM (optimized compiled binaries)
 - **PyPI**: scikit-learn (pure Python, pip handles it fine)
 
-## conda: The Established Default
-
-conda launched in 2012 to solve a problem pip couldn't: installing Python libraries that depend on compiled C and Fortran code. Before conda, getting libraries like GDAL or SciPy working meant manually compiling system dependencies and debugging platform-specific build failures. Even NumPy required a Fortran compiler.
-
-conda solved this by shipping pre-compiled binaries with all their dependencies bundled. It became the default tool in data science because it made previously painful installations work across platforms.
-
-### pip vs conda-forge
-
 pip installs Python code, but it has no mechanism for installing compiled system libraries, header files, or non-Python dependencies.
 
-This becomes a problem with packages like GDAL. `pip install gdal` downloads Python bindings but expects the underlying C/C++ library to already exist on your machine.
-
-Without it, the build fails:
+This becomes a problem with packages like GDAL. `pip install gdal` only downloads Python bindings. If the underlying C/C++ library isn't already installed, the build fails:
 
 ```bash
 pip install gdal
@@ -66,7 +58,13 @@ brew install gdal
 pip install GDAL==$(gdal-config --version)
 ```
 
-conda removes this step entirely by installing both the Python bindings and the compiled system libraries they depend on:
+## conda: The Established Default
+
+conda launched in 2012 to solve a problem pip couldn't: installing Python libraries that depend on compiled C and Fortran code. Before conda, getting libraries like GDAL or SciPy working meant manually compiling system dependencies and debugging platform-specific build failures. Even NumPy required a Fortran compiler.
+
+conda solved this by shipping pre-compiled binaries with all their dependencies bundled. It became the default tool in data science because it made previously painful installations work across platforms.
+
+conda removes the manual setup entirely by installing both the Python bindings and the compiled system libraries they depend on:
 
 ```bash
 conda install -c conda-forge gdal
