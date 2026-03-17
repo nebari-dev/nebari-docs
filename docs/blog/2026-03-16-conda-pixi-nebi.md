@@ -141,6 +141,15 @@ pip install scikit-learn
 
 This means two package managers modify the same environment independently. conda doesn't know pip installed scikit-learn, and pip doesn't know conda installed numpy. If both install conflicting versions of a shared dependency, neither tool will warn you.
 
+Both tools write to the same environment, but neither checks what the other installed:
+
+```mermaid
+flowchart TD
+    CONDA[conda] -->|installs numpy 1.24| ENV[geo-ml environment]
+    PIP[pip] -->|installs numpy 1.26| ENV
+    CONDA -.-x|no communication| PIP
+```
+
 ### Sharing Environments with Your Team
 
 To make a project reproducible, you need to share the exact environment used to run it. That includes the precise version of every dependency, from Python packages to compiled system libraries.
