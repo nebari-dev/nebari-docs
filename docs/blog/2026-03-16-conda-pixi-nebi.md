@@ -710,3 +710,5 @@ In short:
 - Start with **pixi** for fast, lockfile-based environment management.
 - Add **nebi** when you need version history, team sharing, or access control.
 - Stick with **conda** only if migrating isn't an option for your existing workflow.
+
+Learn more about nebi and how to set it up for your team at [nebi.nebari.dev](https://nebi.nebari.dev/).
