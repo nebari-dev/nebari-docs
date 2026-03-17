@@ -543,11 +543,9 @@ Or run a specific task directly:
 nebi run geo-ml train
 ```
 
-### Team Workflows
+### Setting Up the Server
 
 The features above work locally. For team collaboration, nebi adds a server layer for syncing, sharing, and governing environments.
-
-#### Server Setup
 
 Create an admin account by setting environment variables:
 
@@ -570,7 +568,7 @@ nebi login http://localhost:8460
 
 In production, you'd deploy the server behind a domain like `https://nebi.company.com`.
 
-#### Push and Pull
+### Versioning Environments
 
 pixi overwrites the lockfile on every change. nebi lets you push snapshots as you iterate:
 
@@ -588,9 +586,7 @@ nebi pull geo-ml:v1.0
 
 This pulls the latest `pixi.toml` and `pixi.lock` into the current directory. Running `pixi install` then recreates the exact same environment.
 
-#### Diff Environments
-
-Lockfiles contain hundreds of pinned packages. Manually diffing them is tedious. To see a diff in action, add a package and push a new version:
+**Diff environments:** Lockfiles contain hundreds of pinned packages. Manually diffing them is tedious. To see a diff in action, add a package and push a new version:
 
 ```bash
 pixi add pandas
@@ -611,9 +607,9 @@ nebi diff geo-ml:v1.0 geo-ml:v2.0
 +pandas = ">=3.0.1,<4"
 ```
 
-#### Rolling Back to a Previous Version
+The diff shows that pandas was added between v1.0 and v2.0, without having to scan hundreds of lockfile entries.
 
-If an update breaks your workflow, pull the last working tag and reinstall:
+**Rolling back:** If an update breaks your workflow, pull the last working tag and reinstall:
 
 ```bash
 nebi pull geo-ml:v1.0
@@ -636,7 +632,7 @@ Origin:
   test_nebi:v1.0 (pull)
 ```
 
-#### Shareable Environment Artifacts
+### Sharing and Governance
 
 Server-based sharing works within a team, but requires everyone to connect to the same nebi instance.
 
@@ -646,7 +642,7 @@ For broader distribution, you can publish environments to an OCI registry, the s
 nebi publish my-project
 ```
 
-You can tag a specific version or target a different registry like GitHub Container Registry:
+You can also tag a specific version or target a different registry like GitHub Container Registry:
 
 ```bash
 nebi publish my-project --tag v1.0.0
@@ -665,9 +661,7 @@ Anyone with registry access can then import the environment without needing a ne
 nebi import quay.io/nebari/data-science:v1.0 -o ./my-project
 ```
 
-#### Role-Based Access Control
-
-When multiple teams share environments, you need to control who can publish or modify them. nebi handles this through role-based access control:
+As environments are shared more broadly, you also need to control who can publish or modify them. nebi handles this through role-based access control:
 
 - **Role-based access control (RBAC)**: Control who can push, pull, or modify shared environments
 - **OIDC authentication**: Integrate with existing identity providers so IT teams can enforce access policies
