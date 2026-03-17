@@ -14,9 +14,9 @@ These are system-level dependencies that pip cannot install.
 
 In this article, we'll explore three tools, each adding a layer on top of the previous:
 
-- **conda** creates isolated environments with both Python and non-Python dependencies
-- **pixi** adds lockfiles, speed, and a modern developer experience on top of conda-forge
-- **nebi** layers version control and team collaboration on top of pixi workspaces
+- **[conda](https://github.com/conda/conda)** creates isolated environments with both Python and non-Python dependencies
+- **[pixi](https://github.com/prefix-dev/pixi)** adds lockfiles, speed, and a modern developer experience on top of conda-forge
+- **[nebi](https://github.com/nebari-dev/nebi)** layers version control and team collaboration on top of pixi workspaces
 
 <!-- truncate -->
 
