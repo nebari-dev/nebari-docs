@@ -688,11 +688,9 @@ However, for day-to-day data science development, Docker adds friction that slow
 - **Disk usage**: Docker images for data science often exceed 5-10 GB per project
 - **GPU passthrough**: CUDA access inside containers requires nvidia-docker and driver-specific configuration
 
-pixi and nebi operate at the environment level. You install dependencies and start working immediately.
+In contrast, pixi and nebi give you reproducibility through lockfiles and sharing through registries, all at the environment level with no container overhead.
 
-Lockfiles provide reproducibility. Registry support lets you share environments across teams. All without the container overhead.
-
-## Final Thoughts
+## Summary
 
 Here's how the three tools compare:
 
