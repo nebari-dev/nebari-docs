@@ -139,9 +139,7 @@ conda install -c conda-forge geopandas gdal lightgbm
 pip install scikit-learn
 ```
 
-This means two package managers modify the same environment independently. conda doesn't know pip installed scikit-learn, and pip doesn't know conda installed numpy. If both install conflicting versions of a shared dependency, neither tool will warn you.
-
-Both tools write to the same environment, but neither checks what the other installed:
+This means two package managers modify the same environment independently, but neither checks what the other installed. If both install conflicting versions of a shared dependency, you won't get a warning:
 
 ```mermaid
 flowchart TD
