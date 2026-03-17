@@ -713,16 +713,16 @@ Lockfiles provide reproducibility. Registry support lets you share environments 
 
 Here's how the three tools compare:
 
-| Feature | conda | pixi | nebi |
-|---------|-------|------|------|
-| Compiled system libraries | Yes | Yes | Yes |
-| Fast dependency resolution | No | Yes | Yes |
-| Lockfiles | No | Yes | Yes |
-| Project-based environments | No | Yes | Yes |
-| PyPI + conda-forge support | Limited | Yes | Yes |
-| Environment versioning | No | No | Yes |
-| Team sharing via registries | No | No | Yes |
-| Role-based access control | No | No | Yes |
+| Feature                     | conda   | pixi | nebi |
+| --------------------------- | ------- | ---- | ---- |
+| Compiled system libraries   | Yes     | Yes  | Yes  |
+| Fast dependency resolution  | No      | Yes  | Yes  |
+| Lockfiles                   | No      | Yes  | Yes  |
+| Project-based environments  | No      | Yes  | Yes  |
+| PyPI + conda-forge support  | Limited | Yes  | Yes  |
+| Environment versioning      | No      | No   | Yes  |
+| Team sharing via registries | No      | No   | Yes  |
+| Role-based access control   | No      | No   | Yes  |
 
 In short:
 
