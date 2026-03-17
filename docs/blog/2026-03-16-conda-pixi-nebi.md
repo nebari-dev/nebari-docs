@@ -60,11 +60,7 @@ pip install GDAL==$(gdal-config --version)
 
 ## conda: The Established Default
 
-conda launched in 2012 to solve a problem pip couldn't: installing Python libraries that depend on compiled C and Fortran code. Before conda, getting libraries like GDAL or SciPy working meant manually compiling system dependencies and debugging platform-specific build failures. Even NumPy required a Fortran compiler.
-
-conda solved this by shipping pre-compiled binaries with all their dependencies bundled. It became the default tool in data science because it made previously painful installations work across platforms.
-
-conda removes the manual setup entirely by installing both the Python bindings and the compiled system libraries they depend on:
+conda launched in 2012 to solve exactly this problem. It ships pre-compiled binaries with all their system dependencies bundled, so packages like GDAL work across platforms without manual compilation:
 
 ```bash
 conda install -c conda-forge gdal
