@@ -14,8 +14,8 @@ These are system-level dependencies that uv cannot install.
 
 In this article, we'll explore three tools, each adding a layer on top of the previous:
 
-- **[conda](https://github.com/conda/conda)** creates isolated environments with both Python and non-Python dependencies
-- **[pixi](https://github.com/prefix-dev/pixi)** adds lockfiles, speed, and a modern developer experience on top of conda-forge
+- **[conda](https://github.com/conda/conda)** creates isolated environments with both Python and non-Python dependencies, including R, C++, and system libraries
+- **[pixi](https://github.com/prefix-dev/pixi)** adds lockfiles, multi-platform support, system requirements like CUDA versions, and a built-in task runner on top of conda-forge
 - **[nebi](https://github.com/nebari-dev/nebi)** layers version control and team collaboration on top of pixi workspaces
 
 <!-- truncate -->
