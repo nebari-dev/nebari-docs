@@ -36,10 +36,12 @@ uv add gdal
 ```
 
 ```
-error: Failed to download and build `gdal==3.12.2`
-  Caused by: Build backend failed to build wheel
-  Caused by: FileNotFoundError: [Errno 2]
-    No such file or directory: 'gdal-config'
+× Failed to build `gdal==3.12.2`
+├─▶ The build backend returned an error
+╰─▶ Call to `setuptools.build_meta.build_wheel` failed (exit status: 1)
+
+    gdal_config_error: [Errno 2] No such file or directory: 'gdal-config'
+
     Could not find gdal-config. Make sure you have installed
     the GDAL native library and development headers.
 ```
