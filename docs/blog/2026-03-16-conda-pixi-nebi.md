@@ -1,5 +1,5 @@
 ---
-title: "Set Up Reproducible Python Environments for Data Science: conda, pixi, and nebi"
+title: "From uv to nebi: Reproducible Python Environments for Data Science Teams"
 description: Learn how conda, pixi, and nebi solve Python environment reproducibility for data science teams that need GDAL, CUDA, and C libraries beyond uv.
 slug: conda-pixi-nebi-reproducible-environments
 authors: khuyen-tran
