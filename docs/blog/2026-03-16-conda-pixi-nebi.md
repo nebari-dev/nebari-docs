@@ -1,16 +1,16 @@
 ---
 title: "Set Up Reproducible Python Environments for Data Science: conda, pixi, and nebi"
-description: Learn how conda, pixi, and nebi solve Python environment reproducibility for data science teams that need GDAL, CUDA, and C libraries beyond pip.
+description: Learn how conda, pixi, and nebi solve Python environment reproducibility for data science teams that need GDAL, CUDA, and C libraries beyond uv.
 slug: conda-pixi-nebi-reproducible-environments
 authors: khuyen-tran
 tags: [python, conda, pixi, nebi, reproducibility, environment-management, data-science]
 ---
 
-pip has been the default way to install Python packages for over a decade. For pure Python projects, it works well.
+uv has quickly become the go-to Python package manager. It's fast, handles lockfiles, and manages virtual environments out of the box. For pure Python projects, it works great.
 
 But data science and AI projects rarely stay pure Python. They pull in CUDA toolkits for GPU acceleration, OpenCV and FFmpeg for computer vision, and compiled C/C++ libraries for geospatial analysis.
 
-These are system-level dependencies that pip cannot install.
+These are system-level dependencies that uv cannot install.
 
 In this article, we'll explore three tools, each adding a layer on top of the previous:
 
@@ -20,42 +20,41 @@ In this article, we'll explore three tools, each adding a layer on top of the pr
 
 <!-- truncate -->
 
-## The Problem with pip
+## The Problem with uv
 
 To make the comparison concrete, we'll set up the same geospatial ML project with each tool. Its dependencies come from two sources:
 
 - **conda-forge**: geopandas and GDAL (compiled C/C++ geospatial libraries) and LightGBM (optimized compiled binaries)
-- **PyPI**: scikit-learn (pure Python, pip handles it fine)
+- **PyPI**: scikit-learn (pure Python, uv handles it fine)
 
-pip installs Python code, but it has no mechanism for installing compiled system libraries, header files, or non-Python dependencies.
+uv installs Python packages from PyPI, but it has no mechanism for installing compiled system libraries, header files, or non-Python dependencies.
 
-This becomes a problem with packages like GDAL. `pip install gdal` only downloads Python bindings. If the underlying C/C++ library isn't already installed, the build fails:
+This becomes a problem with packages like GDAL. `uv add gdal` only downloads Python bindings. If the underlying C/C++ library isn't already installed, the build fails:
 
 ```bash
-pip install gdal
+uv add gdal
 ```
 
 ```
-Collecting gdal
-  Downloading gdal-3.12.2.tar.gz (899 kB)
-  Getting requirements to build wheel ... error
-
-  gdal_config_error: No such file or directory: 'gdal-config'
-  Could not find gdal-config. Make sure you have installed
-  the GDAL native library and development headers.
+error: Failed to download and build `gdal==3.12.2`
+  Caused by: Build backend failed to build wheel
+  Caused by: FileNotFoundError: [Errno 2]
+    No such file or directory: 'gdal-config'
+    Could not find gdal-config. Make sure you have installed
+    the GDAL native library and development headers.
 ```
 
-Fixing this means installing GDAL through your OS package manager, then matching the exact version to the pip package:
+Fixing this means installing GDAL through your OS package manager, then matching the exact version to the Python package:
 
 ```bash
 # Ubuntu/Debian: install system library + headers
 sudo apt-get install -y libgdal-dev gdal-bin
 export C_INCLUDE_PATH=/usr/include/gdal
-pip install GDAL==$(gdal-config --version)
+uv add GDAL==$(gdal-config --version)
 
 # macOS: install via Homebrew
 brew install gdal
-pip install GDAL==$(gdal-config --version)
+uv add GDAL==$(gdal-config --version)
 ```
 
 ## conda: The Established Default
@@ -86,11 +85,11 @@ We can see that one command pulls in GDAL along with 60+ compiled dependencies, 
 
 ### Where Environments Live
 
-With pip, environments live inside your project directory:
+With uv, environments live inside your project directory:
 
 ```bash
 # creates ./my-project/.venv/
-python -m venv .venv
+uv venv
 source .venv/bin/activate
 ```
 
@@ -106,7 +105,7 @@ Imagine you're working on two projects: land cover classification and flood risk
 
 ```mermaid
 flowchart LR
-    subgraph pip
+    subgraph uv
         P1[land-cover/] --> E1[land-cover/.venv/]
         P2[flood-risk/] --> E2[flood-risk/.venv/]
     end
@@ -118,7 +117,7 @@ flowchart LR
 
 Here's what the diagram shows:
 
-- **pip** creates a separate `.venv/` for each project. Python packages are duplicated, and system libraries must be installed separately through your OS package manager.
+- **uv** creates a separate `.venv/` for each project. Python packages are duplicated, and system libraries must be installed separately through your OS package manager.
 - **conda** lets multiple projects share one environment. Python packages and system libraries are all managed in one place.
 
 This makes it easy to reuse the same setup across related projects without reinstalling anything.
@@ -175,7 +174,7 @@ dependencies:
     - scikit-learn==1.4.2
 ```
 
-Unlike a `requirements.txt`, this file captures both conda-forge and pip packages in one place. It also records the channel each package came from, so conda knows where to fetch them during installation.
+Unlike uv's `uv.lock`, this file captures both conda-forge and pip packages in one place. It also records the channel each package came from, so conda knows where to fetch them during installation.
 
 Once committed to the repo, a teammate can recreate the environment with:
 
@@ -670,14 +669,6 @@ As environments are shared more broadly, you also need to control who can publis
 
 Together, these features give teams visibility into environment changes and control over who can modify production dependencies.
 
-## Why Not uv?
-
-uv is the fastest Python package manager available. If your project only uses PyPI packages, it's an excellent choice.
-
-However, uv can only manage Python packages. Compiled system libraries like GDAL, CUDA toolkits, and C/C++ dependencies are outside its scope.
-
-pixi handles this by managing both conda-forge and PyPI packages in a single lockfile. nebi then adds versioning, sharing, and access control on top.
-
 ## Why Not Docker?
 
 Docker solves reproducibility at the container level, packaging your entire operating system, libraries, and code into a portable image. For deployment, Docker is the standard.
@@ -694,16 +685,16 @@ In contrast, pixi and nebi give you reproducibility through lockfiles and sharin
 
 Here's how the three tools compare:
 
-| Feature                     | conda   | pixi | nebi |
-| --------------------------- | ------- | ---- | ---- |
-| Compiled system libraries   | Yes     | Yes  | Yes  |
-| Fast dependency resolution  | No      | Yes  | Yes  |
-| Lockfiles                   | No      | Yes  | Yes  |
-| Project-based environments  | No      | Yes  | Yes  |
-| PyPI + conda-forge support  | Limited | Yes  | Yes  |
-| Environment versioning      | No      | No   | Yes  |
-| Team sharing via registries | No      | No   | Yes  |
-| Role-based access control   | No      | No   | Yes  |
+| Feature                     | uv  | conda   | pixi | nebi |
+| --------------------------- | --- | ------- | ---- | ---- |
+| Compiled system libraries   | No  | Yes     | Yes  | Yes  |
+| Fast dependency resolution  | Yes | No      | Yes  | Yes  |
+| Lockfiles                   | Yes | No      | Yes  | Yes  |
+| Project-based environments  | Yes | No      | Yes  | Yes  |
+| PyPI + conda-forge support  | No  | Limited | Yes  | Yes  |
+| Environment versioning      | No  | No      | No   | Yes  |
+| Team sharing via registries | No  | No      | No   | Yes  |
+| Role-based access control   | No  | No      | No   | Yes  |
 
 In short:
 
