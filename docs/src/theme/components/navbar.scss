@@ -4,7 +4,7 @@
 
 .navbar__brand {
   @include link-style(var(--secondary-nebari), var(--secondary-nebari));
-  & { 
+  & {
     text-decoration: none;
   }
 
@@ -36,7 +36,7 @@
 
   .navbar__brand {
     @include link-style(var(--secondary-nebari), var(--secondary-nebari));
-    & { 
+    & {
       text-decoration: none;
     }
   }
@@ -91,13 +91,9 @@ html[data-theme="dark"] .header-github-link:before {
 // ==============================================================================
 
 div[class^="announcementBar_"] {
-  font-weight: 500;
-  height: 70px;
-  background-color: var(--nebari-blue-gray-11);
+  font-weight: 550;
+  height: 50px;
+  background-color: var(--ifm-color-on-background-2);
+  color: var(--ifm-color-content-inverse);
   border-bottom: 2px solid var(--secondary-nebari);
-}
-
-div[class^="announcementBarContent_"] {
-  font-size: 1rem;
-  padding: 20px 0;
 }

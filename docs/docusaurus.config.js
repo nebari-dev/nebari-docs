@@ -2,8 +2,8 @@
 // @ts-check
 
 // https://github.com/FormidableLabs/prism-react-renderer/tree/master/src/themes
-const {themes} = require('prism-react-renderer');
-const lightCodeTheme = themes.nightOwlLight; 
+const { themes } = require('prism-react-renderer');
+const lightCodeTheme = themes.nightOwlLight;
 const darkCodeTheme = themes.nightOwl;
 
 // Adding reusable information
@@ -74,7 +74,11 @@ const config = {
           showLastUpdateAuthor: false,
           showLastUpdateTime: true,
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Nebari blog',
+          blogDescription: 'Posts about the Nebari ecosystem of tools.',
+          postsPerPage: 'ALL',
+        },
         theme: {
           customCss: require.resolve("./src/scss/application.scss"),
         },
@@ -97,16 +101,7 @@ const config = {
         routeBasePath: 'community',
         sidebarPath: './sidebarsCommunity.js',
       },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'nebari-slurm',
-        path: 'nebari-slurm',
-        routeBasePath: 'nebari-slurm',
-        sidebarPath: './sidebarsSlurm.js',
-      },
-    ],
+    ]
   ],
   customFields: { ...customFields },
 
@@ -142,14 +137,9 @@ const config = {
             to: "community/introduction",
           },
           {
-            label: "Nebari Slurm",
-            position: "left",
-            to: "nebari-slurm/overview",
-          },
-          {
-            label: "Get Started",
-            position: "right",
-            to: "docs/get-started",
+            to: 'blog',
+            label: 'Blog',
+            position: 'right',
           },
           {
             label: "Ecosystem",
@@ -180,10 +170,6 @@ const config = {
               {
                 label: "Nebari code repository",
                 href: customFields.githubCodebaseUrl,
-              },
-              {
-                label: "Nebari-Slurm code repository",
-                href: "https://github.com/nebari-dev/nebari-slurm",
               },
               {
                 label: "Nebari documentation repository",
@@ -241,6 +227,11 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      announcementBar: {
+      content:
+        '✨ Nebari is evolving into an ecosystem of open source tools for AI workflows, stay tuned for more updates! ✨',
+      isCloseable: true,
+    },
     }),
 };
 
