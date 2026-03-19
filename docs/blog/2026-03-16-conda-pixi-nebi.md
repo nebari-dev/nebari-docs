@@ -8,9 +8,9 @@ tags: [python, conda, pixi, nebi, reproducibility, environment-management, data-
 
 uv has quickly become the go-to Python package manager. It's fast, handles lockfiles, and manages virtual environments out of the box. For pure Python projects, it works great.
 
-But data science and AI projects rarely stay pure Python. They pull in CUDA toolkits for GPU acceleration, OpenCV and FFmpeg for computer vision, and compiled C/C++ libraries for geospatial analysis.
+But data science and AI projects rarely stay pure Python. Many key packages depend on compiled C/C++ libraries that must be installed at the system level.
 
-These are system-level dependencies that uv cannot install.
+uv can install the Python bindings, but not the system libraries underneath them.
 
 In this article, we'll explore three tools, each adding a layer on top of the previous:
 
@@ -128,7 +128,7 @@ However, sharing creates a tracking problem. Since environments live outside pro
 
 ### Two Package Managers, One Environment
 
-Instead of PyPI, conda uses its own package repository called conda-forge. conda-forge specializes in pre-compiled packages with system-level dependencies bundled in, but it covers far fewer packages than PyPI.
+conda uses its own package channels instead of PyPI. The most popular is [conda-forge](https://conda-forge.org/), a community-maintained channel where packages come with system dependencies pre-compiled and bundled. However, its selection is much smaller than PyPI.
 
 For everything conda-forge doesn't have, you fall back to pip:
 
@@ -206,17 +206,13 @@ pixi, built in Rust by prefix-dev, takes the opposite approach to conda. It mana
 
 ### Installation
 
-Install pixi with the official script:
+Install pixi with the official install script:
 
 ```bash
 curl -fsSL https://pixi.sh/install.sh | sh
 ```
 
-Or with Homebrew:
-
-```bash
-brew install pixi
-```
+See the [pixi documentation](https://pixi.prefix.dev/latest/installation/) for other installation methods.
 
 ### Project-Level Environments
 
@@ -487,7 +483,7 @@ nebi was built to fill these gaps.
 
 ## nebi: Team Environment Collaboration
 
-nebi is a CLI tool that adds version control and team sharing to pixi. Think of it as "git for environments."
+nebi is a CLI and desktop application that adds version control and team sharing to pixi. Think of it as "git for environments."
 
 For individual developers, it adds version history and rollback. For organizations, it adds governance, access control, and shareable environments.
 
