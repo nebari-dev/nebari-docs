@@ -1,0 +1,703 @@
+---
+title: "From uv to nebi: Reproducible Python Environments for Data Science Teams"
+description: Learn how conda, pixi, and nebi solve Python environment reproducibility for data science teams that need GDAL, CUDA, and C libraries beyond uv.
+slug: conda-pixi-nebi-reproducible-environments
+authors: khuyen-tran
+tags: [python, conda, pixi, nebi, reproducibility, environment-management, data-science]
+---
+
+uv has quickly become the go-to Python package manager. It's fast, handles lockfiles, and manages virtual environments out of the box. For pure Python projects, it works great.
+
+But data science and AI projects rarely stay pure Python. Many key packages depend on compiled C/C++ libraries that must be installed at the system level.
+
+uv can install the Python bindings, but not the system libraries underneath them.
+
+In this article, we'll explore three tools, each adding a layer on top of the previous:
+
+- **[conda](https://github.com/conda/conda)** creates isolated environments with both Python and non-Python dependencies, including R, C++, and system libraries
+- **[pixi](https://github.com/prefix-dev/pixi)** adds lockfiles, multi-platform support, system requirements like CUDA versions, and a built-in task runner on top of conda-forge
+- **[nebi](https://github.com/nebari-dev/nebi)** layers version control and team collaboration on top of pixi workspaces
+
+<!-- truncate -->
+
+## The Problem with uv
+
+To make the comparison concrete, we'll set up the same geospatial ML project with each tool. Its dependencies come from two sources:
+
+- **conda-forge**: geopandas and GDAL (compiled C/C++ geospatial libraries) and LightGBM (optimized compiled binaries)
+- **PyPI**: scikit-learn (pure Python, uv handles it fine)
+
+uv installs Python packages from PyPI, but it has no mechanism for installing compiled system libraries, header files, or non-Python dependencies.
+
+This becomes a problem with packages like GDAL. `uv add gdal` only downloads Python bindings. If the underlying C/C++ library isn't already installed, the build fails:
+
+```bash
+uv add gdal
+```
+
+```
+× Failed to build `gdal==3.12.2`
+├─▶ The build backend returned an error
+╰─▶ Call to `setuptools.build_meta.build_wheel` failed (exit status: 1)
+
+    gdal_config_error: [Errno 2] No such file or directory: 'gdal-config'
+
+    Could not find gdal-config. Make sure you have installed
+    the GDAL native library and development headers.
+```
+
+Fixing this means installing GDAL through your OS package manager, then matching the exact version to the Python package:
+
+```bash
+# Ubuntu/Debian: install system library + headers
+sudo apt-get install -y libgdal-dev gdal-bin
+export C_INCLUDE_PATH=/usr/include/gdal
+uv add GDAL==$(gdal-config --version)
+
+# macOS: install via Homebrew
+brew install gdal
+uv add GDAL==$(gdal-config --version)
+```
+
+## conda: The Established Default
+
+conda launched in 2012 to solve exactly this problem. It ships pre-compiled binaries with all their system dependencies bundled, so packages like GDAL work across platforms without manual compilation:
+
+```bash
+conda install -c conda-forge gdal
+```
+
+```
+Solving environment: done
+
+The following NEW packages will be INSTALLED:
+  gdal            3.11.4   # Python bindings
+  libgdal-core    3.11.4   # compiled C/C++ library
+  proj            9.7.1    # coordinate system library
+  geos            3.10.6   # geometry engine
+  geotiff         1.7.4    # GeoTIFF support
+  libspatialite   5.1.0    # spatial SQL engine
+  xerces-c        3.3.0    # XML parser
+  ... and 50+ other compiled dependencies
+
+Total: 72.2 MB
+```
+
+We can see that one command pulls in GDAL along with 60+ compiled dependencies, including the C/C++ library, coordinate system tools, and geometry engines.
+
+### Where Environments Live
+
+With uv, environments live inside your project directory:
+
+```bash
+# creates ./my-project/.venv/
+uv venv
+source .venv/bin/activate
+```
+
+conda stores environments in a central directory instead:
+
+```bash
+# creates ~/miniconda3/envs/geo-ml/
+conda create -n geo-ml python=3.11
+conda activate geo-ml
+```
+
+Imagine you're working on two projects: land cover classification and flood risk analysis. Here's how each tool handles their environments:
+
+```mermaid
+flowchart LR
+    subgraph uv
+        P1[land-cover/] --> E1[land-cover/.venv/]
+        P2[flood-risk/] --> E2[flood-risk/.venv/]
+    end
+    subgraph conda
+        P3[land-cover/] --> E3[~/miniconda3/envs/geo-ml/]
+        P4[flood-risk/] --> E3
+    end
+```
+
+Here's what the diagram shows:
+
+- **uv** creates a separate `.venv/` for each project. Python packages are duplicated, and system libraries must be installed separately through your OS package manager.
+- **conda** lets multiple projects share one environment. Python packages and system libraries are all managed in one place.
+
+This makes it easy to reuse the same setup across related projects without reinstalling anything.
+
+However, sharing creates a tracking problem. Since environments live outside project directories, there's no way to tell which environment a project needs just by looking at its files.
+
+### Two Package Managers, One Environment
+
+conda uses its own package channels instead of PyPI. The most popular is [conda-forge](https://conda-forge.org/), a community-maintained channel where packages come with system dependencies pre-compiled and bundled. However, its selection is much smaller than PyPI.
+
+For everything conda-forge doesn't have, you fall back to pip:
+
+```bash
+# conda-forge packages (non-Python dependencies)
+conda install -c conda-forge geopandas gdal lightgbm
+
+# PyPI packages for Python-only libraries
+pip install scikit-learn
+```
+
+This means two package managers modify the same environment independently, but neither checks what the other installed. If both install conflicting versions of a shared dependency, you won't get a warning:
+
+```mermaid
+flowchart TD
+    CONDA[conda] -->|installs numpy 1.24| ENV[geo-ml environment]
+    PIP[pip] -->|installs numpy 1.26| ENV
+    CONDA -.-x|no communication| PIP
+```
+
+### Sharing Environments with Your Team
+
+To make a project reproducible, you need to share the exact environment used to run it. That includes the precise version of every dependency, from Python packages to compiled system libraries.
+
+conda handles this with `environment.yml`. You export your current environment to a file, commit it to your repo, and teammates use it to recreate the same setup.
+
+To generate the file, run:
+
+```bash
+conda env export > environment.yml
+```
+
+This generates a file listing every package and its version:
+
+```yaml
+name: geo-ml
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11.9
+  - geopandas=0.14.4
+  - gdal=3.8.5
+  - lightgbm=4.3.0
+  - pip:
+    - scikit-learn==1.4.2
+```
+
+Unlike uv's `uv.lock`, this file captures both conda-forge and pip packages in one place. It also records the channel each package came from, so conda knows where to fetch them during installation.
+
+Once committed to the repo, a teammate can recreate the environment with:
+
+```bash
+conda env create -f environment.yml
+```
+
+This works, but notice the file only lists packages you explicitly installed. It doesn't pin the 60+ transitive dependencies underneath them.
+
+For example, geopandas depends on proj, geos, and shapely, but their versions aren't recorded. Running `conda env create` next month may pull newer versions of those libraries, silently changing behavior.
+
+### Good Practices That Aren't Enforced
+
+conda works well when you follow a set of unwritten rules:
+
+- **Always create a named environment before installing anything.** Otherwise packages land in the always-active base environment, where they accumulate and conflict with project environments over time.
+- **Never mix conda and pip install order.** conda can't track what pip installed. If you install pip packages first, a later `conda install` may overwrite them without warning.
+- **Re-export `environment.yml` after every change.** Forget once, and the file your teammates rely on no longer matches the actual environment.
+
+These rules exist because conda doesn't automate what it should. The best tools make good practices the default, not something you have to remember.
+
+pixi was designed around that idea.
+
+## pixi: Modern Environment Management
+
+pixi, built in Rust by prefix-dev, takes the opposite approach to conda. It manages both conda-forge and PyPI dependencies in a single tool, resolving dependencies 10-100x faster while enforcing good practices structurally.
+
+### Installation
+
+Install pixi with the official install script:
+
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
+```
+
+See the [pixi documentation](https://pixi.prefix.dev/latest/installation/) for other installation methods.
+
+### Project-Level Environments
+
+Instead of creating environments separately like conda, pixi defines the environment inside the project directory from the start.
+
+To start a new project, run `pixi init` in your project directory:
+
+```bash
+# Create and enter project directory
+mkdir geo-ml && cd geo-ml
+
+# Initialize pixi project
+pixi init
+```
+
+This creates a `pixi.toml` manifest that tracks dependencies and lives in version control with your code.
+
+```toml
+[workspace]
+authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+channels = ["conda-forge"]
+name = "geo-ml"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+```
+
+Notice that pixi automatically detects your platform and sets `conda-forge` as the default channel. The `[dependencies]` section is empty, ready for you to add packages.
+
+If you're migrating from conda, pixi can import your existing environment directly:
+
+```bash
+pixi init --import environment.yml
+```
+
+### Environment Activation
+
+conda requires you to activate environments by name (`conda activate my-env`). pixi simplifies this by using the current project directory to determine the environment.
+
+```bash
+pixi shell
+```
+
+pixi creates a `.pixi/envs/` directory inside your project, so each environment lives with its code:
+
+```mermaid
+flowchart LR
+    subgraph pixi
+        P1[land-cover/] --> PE1[land-cover/.pixi/envs/]
+        P2[flood-risk/] --> PE2[flood-risk/.pixi/envs/]
+    end
+    subgraph conda
+        C1[land-cover/] --> CE[~/miniconda3/envs/geo-ml/]
+        C2[flood-risk/] --> CE
+    end
+```
+
+For one-off commands, `pixi run` launches the command inside the environment without requiring activation:
+
+```bash
+pixi run python train.py
+```
+
+### Unified Dependency Management
+
+With conda, you need separate tools for conda-forge and PyPI packages. pixi handles both in one command, recording each dependency in the manifest automatically.
+
+Add conda-forge packages and PyPI packages:
+
+```bash
+# conda-forge packages
+pixi add python geopandas gdal lightgbm
+
+# PyPI packages
+pixi add --pypi scikit-learn
+```
+
+Each command updates the `pixi.toml` manifest and regenerates the lockfile automatically. The resulting manifest looks like this:
+
+```toml
+[workspace]
+authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+channels = ["conda-forge"]
+name = "geo-ml"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = ">=3.14.3,<3.15"
+geopandas = ">=1.1.3,<2"
+gdal = ">=3.12.2,<4"
+lightgbm = ">=4.6.0,<5"
+
+[pypi-dependencies]
+scikit-learn = "*"
+```
+
+If your project already uses `pyproject.toml`, pixi can use it as the manifest instead of `pixi.toml`. Initialize with:
+
+```bash
+pixi init --format pyproject
+```
+
+### Automatic Lockfiles
+
+To install all dependencies from `pixi.toml`, run:
+
+```bash
+pixi install
+```
+
+Unlike conda's manual `conda env export`, pixi also generates a `pixi.lock` file automatically. The lockfile pins every transitive dependency to an exact version, hash, and download URL:
+
+```yaml
+# pixi.lock (excerpt)
+- conda: https://conda.anaconda.org/.../gdal-3.12.2.conda
+  sha256: ac9a886dc1b4784da86c10946920031ccf85ebd97...
+  md5: 61e0829c9528ca287918fa86e56dbca2
+  depends:
+  - __osx >=11.0
+  - libcxx >=19
+  - libgdal-core 3.12.2.*
+  - numpy >=1.23,<3
+  license: MIT
+```
+
+To share this with your team, commit both `pixi.toml` and `pixi.lock` to version control. When a teammate runs `pixi install`, they get the exact same environment.
+
+### Built-in Task Runner
+
+Data science projects involve commands that are hard to remember:
+
+```bash
+python src/preprocess.py --input data/raw --output data/processed
+python src/train.py --config configs/experiment_3.yaml --epochs 100
+pytest tests/ -v --cov=src
+```
+
+Teams typically manage these with Makefiles or shell scripts. pixi has a built-in task runner that stores these commands alongside your dependencies, so no one has to memorize them.
+
+To define a task, use `pixi task add`:
+
+```bash
+pixi task add preprocess "python src/preprocess.py --input data/raw --output data/processed"
+pixi task add train "python src/train.py"
+pixi task add test "pytest tests/"
+```
+
+This adds three tasks to `pixi.toml`: `preprocess` runs the data pipeline, `train` starts model training, and `test` runs the test suite.
+
+```toml
+[tasks]
+preprocess = "python src/preprocess.py --input data/raw --output data/processed"
+train = "python src/train.py"
+test = "pytest tests/"
+```
+
+To run any task, use `pixi run` followed by the task name:
+
+```bash
+pixi run train
+pixi run test
+```
+
+Tasks run inside the project environment automatically, with no need to activate first.
+
+### Multi-Platform Support
+
+Your team might develop on macOS but deploy to Linux. pixi can target multiple platforms from a single manifest:
+
+```bash
+pixi workspace platform add linux-64 win-64
+```
+
+This updates `pixi.toml` with the new platforms and regenerates the lockfile with entries for all of them:
+
+```toml
+[workspace]
+channels = ["conda-forge"]
+name = "geo-ml"
+platforms = ["osx-arm64", "linux-64", "win-64"]
+```
+
+### Multiple Environments
+
+Teams might also need separate environments for different purposes, like only keeping testing and linting tools in a dev environment.
+
+pixi supports this with features. A feature groups extra dependencies that you can layer on top of the default environment:
+
+```bash
+pixi add --feature dev pytest ruff
+```
+
+Then create an environment that includes the feature:
+
+```bash
+pixi workspace environment add dev --feature dev
+```
+
+These two commands update `pixi.toml` with the new feature and environment:
+
+```toml
+[feature.dev.dependencies]
+pytest = "*"
+ruff = "*"
+
+[environments]
+dev = ["dev"]
+```
+
+`dev = ["dev"]` means the `dev` environment includes default dependencies plus everything under `[feature.dev.dependencies]`.
+
+To use the dev environment, pass `-e dev` to any pixi command:
+
+```bash
+pixi shell -e dev       # activate an interactive shell
+pixi run -e dev pytest  # run a single command
+```
+
+### Global Tool Installation
+
+Not every tool belongs in a project environment. Code formatters, linters, and interactive shells are useful everywhere but don't need to be a dependency of any specific project. pixi handles this with global installs:
+
+```bash
+pixi global install ipython
+pixi global install ruff
+```
+
+Once installed, they're available from any directory:
+
+```bash
+ipython    # start interactive Python shell
+ruff check .  # lint any project
+```
+
+### Limitations of pixi
+
+pixi solves dependency management, but it wasn't designed for environment lifecycle management. These limitations affect both individual developers and teams:
+
+**No version history or diffing:** pixi overwrites the lockfile on every `pixi add` or `pixi remove`. There's no built-in way to see what changed or roll back. You could diff `pixi.lock` in git history, but lockfiles pin hundreds of packages, making manual comparison impractical:
+
+```bash
+pixi add numpy=2.0
+# The previous lockfile is gone
+```
+
+**Environments are tied to projects:** pixi environments live inside project directories. There's no way to share an environment without sharing the entire repo, or publish it as a standalone artifact others can install:
+
+```bash
+cd geo-ml && pixi shell # must be inside the project
+```
+
+**No governance:** pixi has no concept of permissions, approval workflows, or audit trails. Anyone who can edit `pixi.toml` can change the environment, with no way to require approval or track who changed what.
+
+```mermaid
+flowchart TD
+    A[Alice adds numpy=2.0] --> E[pixi.toml]
+    B[Bob removes scipy] --> E
+    C[Carol adds pandas=1.5] --> E
+```
+
+nebi was built to fill these gaps.
+
+## nebi: Team Environment Collaboration
+
+nebi is a CLI and desktop application that adds version control and team sharing to pixi. Think of it as "git for environments."
+
+For individual developers, it adds version history and rollback. For organizations, it adds governance, access control, and shareable environments.
+
+### Getting Started
+
+nebi builds on top of pixi, so make sure pixi is installed first. Then install nebi:
+
+```bash
+# Install pixi (if not already installed)
+curl -fsSL https://pixi.sh/install.sh | sh
+
+# Install nebi
+curl -fsSL https://nebi.nebari.dev/install.sh | sh
+```
+
+See the [getting started guide](https://nebi.nebari.dev/docs/getting-started) for other installation options.
+
+Then initialize nebi inside an existing pixi project:
+
+```bash
+cd geo-ml
+nebi init
+```
+
+If the directory doesn't have a `pixi.toml` yet, nebi runs `pixi init` automatically.
+
+### Use Workspaces by Name
+
+pixi environments are tied to project directories. nebi lets you activate any tracked workspace by name from any directory. First, see what's available:
+
+```bash
+nebi workspace list
+```
+
+```text
+NAME           PATH
+geo-ml         /home/user/projects/geo-ml
+data-science   /home/user/projects/data-science
+```
+
+With this setup, you can activate the same environment from any directory:
+
+```bash
+cd ~/projects/analysis
+nebi shell geo-ml
+
+cd ~/projects/dashboard
+nebi shell geo-ml
+```
+
+Or run a specific task directly:
+
+```bash
+nebi run geo-ml train
+```
+
+### Setting Up the Server
+
+The features above work locally. For team collaboration, nebi adds a server layer for syncing, sharing, and governing environments.
+
+Create an admin account by setting environment variables:
+
+```bash
+export ADMIN_USERNAME=admin
+export ADMIN_PASSWORD=your-password
+```
+
+Then start the server:
+
+```bash
+nebi serve
+```
+
+This starts a server on `http://localhost:8460`. To connect your CLI to the server, log in:
+
+```bash
+nebi login http://localhost:8460
+```
+
+In production, you'd deploy the server behind a domain like `https://nebi.company.com`.
+
+### Versioning Environments
+
+pixi overwrites the lockfile on every change. nebi lets you push snapshots as you iterate:
+
+```bash
+# Push current state using the project name
+nebi push geo-ml:v1.0
+```
+
+A colleague can reproduce your environment by logging in to the same server and pulling it:
+
+```bash
+nebi login http://localhost:8460
+nebi pull geo-ml:v1.0
+```
+
+This pulls the latest `pixi.toml` and `pixi.lock` into the current directory. Running `pixi install` then recreates the exact same environment.
+
+**Diff environments:** Lockfiles contain hundreds of pinned packages. Manually diffing them is tedious. To see a diff in action, add a package and push a new version:
+
+```bash
+pixi add pandas
+nebi push geo-ml:v2.0
+```
+
+Then compare what changed between versions:
+
+```bash
+nebi diff geo-ml:v1.0 geo-ml:v2.0
+```
+
+```text
+--- test_nebi:v1.0
++++ test_nebi:v2.0
+@@ pixi.toml @@
+ [dependencies]
++pandas = ">=3.0.1,<4"
+```
+
+The diff shows that pandas was added between v1.0 and v2.0, without having to scan hundreds of lockfile entries.
+
+**Rolling back:** If an update breaks your workflow, pull the last working tag and reinstall:
+
+```bash
+nebi pull geo-ml:v1.0
+pixi install
+```
+
+To check which version is currently active, run:
+
+```bash
+nebi status
+```
+
+```text
+Workspace: test_nebi
+Path:      /Users/khuyentran/openteams/test_nebi
+Server:    http://localhost:8460
+
+
+Origin:
+  test_nebi:v1.0 (pull)
+```
+
+### Sharing and Governance
+
+Server-based sharing works within a team, but requires everyone to connect to the same nebi instance.
+
+For broader distribution, you can publish environments to an OCI registry, the same standard behind Docker Hub and GitHub Container Registry:
+
+```bash
+nebi publish my-project
+```
+
+You can also tag a specific version or target a different registry like GitHub Container Registry:
+
+```bash
+nebi publish my-project --tag v1.0.0
+nebi publish my-project --registry ghcr --repo myorg/myenv
+```
+
+To see what's available in the registry:
+
+```bash
+nebi registry list
+```
+
+Anyone with registry access can then import the environment without needing a nebi server:
+
+```bash
+nebi import quay.io/nebari/data-science:v1.0 -o ./my-project
+```
+
+As environments are shared more broadly, you also need to control who can publish or modify them. nebi handles this through role-based access control:
+
+- **Role-based access control (RBAC)**: Control who can push, pull, or modify shared environments
+- **OIDC authentication**: Integrate with existing identity providers so IT teams can enforce access policies
+- **Multi-user collaboration**: Multiple team members track and share environments through a central server
+- **Desktop application**: A graphical interface for managing environments without touching the terminal
+
+Together, these features give teams visibility into environment changes and control over who can modify production dependencies.
+
+## Why Not Docker?
+
+Docker solves reproducibility at the container level, packaging your entire operating system, libraries, and code into a portable image. For deployment, Docker is the standard.
+
+However, for day-to-day data science development, Docker adds friction that slows down iteration:
+
+- **Rebuild overhead**: Every dependency change requires rebuilding the image, even with layer caching
+- **Disk usage**: Docker images for data science often exceed 5-10 GB per project
+- **GPU passthrough**: CUDA access inside containers requires nvidia-docker and driver-specific configuration
+
+In contrast, pixi and nebi give you reproducibility through lockfiles and sharing through registries, all at the environment level with no container overhead.
+
+## Summary
+
+Here's how the three tools compare:
+
+| Feature                     | uv  | conda   | pixi | nebi |
+| --------------------------- | --- | ------- | ---- | ---- |
+| Compiled system libraries   | No  | Yes     | Yes  | Yes  |
+| Fast dependency resolution  | Yes | No      | Yes  | Yes  |
+| Lockfiles                   | Yes | No      | Yes  | Yes  |
+| Project-based environments  | Yes | No      | Yes  | Yes  |
+| PyPI + conda-forge support  | No  | Limited | Yes  | Yes  |
+| Environment versioning      | No  | No      | No   | Yes  |
+| Team sharing via registries | No  | No      | No   | Yes  |
+| Role-based access control   | No  | No      | No   | Yes  |
+
+In short:
+
+- Start with **pixi** for fast, lockfile-based environment management.
+- Add **nebi** when you need version history, team sharing, or access control.
+- Stick with **conda** only if migrating isn't an option for your existing workflow.
+
+Learn more about nebi and how to set it up for your team at [nebi.nebari.dev](https://nebi.nebari.dev/).

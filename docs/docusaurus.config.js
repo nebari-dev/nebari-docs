@@ -38,6 +38,10 @@ const config = {
   tagline: customFields.meta.description,
   url: customFields.url,
   baseUrl: "/",
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "logo/favicon.ico",
