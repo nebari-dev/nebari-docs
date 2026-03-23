@@ -386,19 +386,55 @@ Tasks run inside the project environment automatically, with no need to activate
 
 ### Multi-Platform Support
 
-Your team might develop on macOS but deploy to Linux. pixi can target multiple platforms from a single manifest:
+pixi can target multiple platforms from a single manifest. The lockfile includes platform-specific entries for both Python packages and system libraries.
+
+For example, to support both macOS and Linux from the same project:
 
 ```bash
 pixi workspace platform add linux-64 win-64
 ```
 
-This updates `pixi.toml` with the new platforms and regenerates the lockfile with entries for all of them:
+`pixi.toml` now lists all target platforms:
 
 ```toml
 [workspace]
 channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64", "linux-64", "win-64"]
+```
+
+The lockfile reflects this change. Previously it only contained entries for your machine:
+
+```yaml
+# pixi.lock (single platform)
+packages:
+  osx-arm64:
+    - conda: .../gdal-3.12.3-py314h0ed7ee7_0.conda
+    - conda: .../libgdal-core-3.12.3-h38a4fdb_0.conda
+    - conda: .../proj-9.8.0-hfb14a63_0.conda
+    ...
+```
+
+After adding platforms, pixi resolves the correct binaries for each one:
+
+```yaml
+# pixi.lock (multi-platform)
+packages:
+  linux-64:
+    - conda: .../gdal-3.12.3-py314hd76b233_0.conda
+    - conda: .../libgdal-core-3.12.3-h4f65170_0.conda
+    - conda: .../proj-9.8.0-he0df7b0_0.conda
+    ...
+  osx-arm64:
+    - conda: .../gdal-3.12.3-py314h0ed7ee7_0.conda
+    - conda: .../libgdal-core-3.12.3-h38a4fdb_0.conda
+    - conda: .../proj-9.8.0-hfb14a63_0.conda
+    ...
+  win-64:
+    - conda: .../gdal-3.12.3-py314h589ebb0_0.conda
+    - conda: .../libgdal-core-3.12.3-h977623c_0.conda
+    - conda: .../proj-9.8.0-hd30e2cd_0.conda
+    ...
 ```
 
 ### Multiple Environments
