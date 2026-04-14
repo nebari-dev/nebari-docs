@@ -105,7 +105,21 @@ const config = {
         routeBasePath: 'community',
         sidebarPath: './sidebarsCommunity.js',
       },
-    ]
+    ],
+    [
+      'docusaurus-plugin-cookie-consent',
+      {
+        title: 'Cookie Consent',
+        description: 'We use cookies to analyze site traffic and improve your experience.',
+        links: [{ label: 'Privacy Policy', href: '/docs/privacy' }],
+        googleConsentMode: {
+          enabled: true,
+          waitForUpdate: 500,
+          adsDataRedaction: true,
+          urlPassthrough: false,
+        },
+      },
+    ],
   ],
   customFields: { ...customFields },
 
