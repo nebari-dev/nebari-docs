@@ -52,21 +52,16 @@ const config = {
     locales: ["en"],
   },
   // ---------------------------------------------------------------------------
-  // Add plausible as script
-  scripts: [
-    {
-      src: "https://plausible.io/js/script.js",
-      defer: true,
-      "data-domain": customFields.domain,
-    },
-  ],
-  // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
     [
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
+        gtag: {
+          trackingID: 'G-NXNMX83GGS',
+          anonymizeIP: true,
+        },
         docs: {
           path: "docs",
           routeBasePath: "docs",
@@ -105,8 +100,31 @@ const config = {
         routeBasePath: 'community',
         sidebarPath: './sidebarsCommunity.js',
       },
-    ]
+    ],
   ],
+
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML:
+        "window.dataLayer = window.dataLayer || [];" +
+        "function gtag(){dataLayer.push(arguments);}" +
+        "gtag('consent', 'default', {" +
+        "  ad_storage: 'denied'," +
+        "  ad_user_data: 'denied'," +
+        "  ad_personalization: 'denied'," +
+        "  analytics_storage: 'denied'," +
+        "  functionality_storage: 'denied'," +
+        "  personalization_storage: 'denied'," +
+        "  security_storage: 'granted'," +
+        "  wait_for_update: 500" +
+        "});" +
+        "gtag('set', 'ads_data_redaction', true);",
+    },
+  ],
+
+  clientModules: [require.resolve('./src/cookieConsent.js')],
   customFields: { ...customFields },
 
   // ---------------------------------------------------------------------------
