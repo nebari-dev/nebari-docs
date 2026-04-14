@@ -52,15 +52,6 @@ const config = {
     locales: ["en"],
   },
   // ---------------------------------------------------------------------------
-  // Add plausible as script
-  scripts: [
-    {
-      src: "https://plausible.io/js/script.js",
-      defer: true,
-      "data-domain": customFields.domain,
-    },
-  ],
-  // ---------------------------------------------------------------------------
   // Edit presets
   presets: [
     [
