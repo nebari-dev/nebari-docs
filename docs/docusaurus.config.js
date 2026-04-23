@@ -101,6 +101,15 @@ const config = {
         sidebarPath: './sidebarsCommunity.js',
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'classic',
+        path: 'classic',
+        routeBasePath: 'classic',
+        sidebarPath: './sidebarsClassic.js',
+      },
+    ],
   ],
 
   headTags: [
