@@ -5,4 +5,291 @@ publish = "build/"
 
 # The default HTTP status code is 301, but you can define a different one.
 status = 301
+
+# Redirects: https://docs.netlify.com/manage/routing/redirects/overview/
+
+[[redirects]]
+from = "/docs/welcome"
+to = "/classic/welcome"
+force = true
+
+[[redirects]]
+from = "/docs/get-started"
+to = "/classic/get-started"
+force = true
+
+[[redirects]]
+from = "/docs/get-started/quickstart"
+to = "/classic/get-started/quickstart"
+force = true
+
+[[redirects]]
+from = "/docs/get-started/installing-nebari"
+to = "/classic/get-started/installing-nebari"
+force = true
+
+[[redirects]]
+from = "/docs/get-started/deploy"
+to = "/classic/get-started/deploy"
+force = true
+
+[[redirects]]
+from = "/docs/get-started/cloud-providers"
+to = "/classic/get-started/cloud-providers"
+force = true
+
+
+[[redirects]]
+from = "/docs/tutorials/login-keycloak"
+to = "/classic/tutorials/login-keycloak"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/using_dask"
+to = "/classic/tutorials/using_dask"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/create-dashboard"
+to = "/classic/tutorials/create-dashboard"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/creating-new-environments"
+to = "/classic/tutorials/creating-new-environments"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/create-alerts"
+to = "/classic/tutorials/create-alerts"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/jupyter-scheduler"
+to = "/classic/tutorials/jupyter-scheduler"
+force = true
+
+[[redirects]]
+from = "/docs/tutorials/argo-workflows-walkthrough"
+to = "/classic/tutorials/argo-workflows-walkthrough"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-gcp"
+to = "/classic/how-tos/nebari-gcp"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-aws"
+to = "/classic/how-tos/nebari-aws"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-azure"
+to = "/classic/how-tos/nebari-azure"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-kubernetes"
+to = "/classic/how-tos/nebari-kubernetes"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-local"
+to = "/classic/how-tos/nebari-local"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-stages-directory"
+to = "/classic/how-tos/nebari-stages-directory"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-environment-management"
+to = "/classic/how-tos/nebari-environment-management"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-destroy"
+to = "/classic/how-tos/nebari-destroy"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/domain-registry"
+to = "/classic/how-tos/domain-registry"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/debug-nebari"
+to = "/classic/how-tos/debug-nebari"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/configuring-keycloak"
+to = "/classic/how-tos/configuring-keycloak"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/configuring-smtp"
+to = "/classic/how-tos/configuring-smtp"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/using-vscode"
+to = "/classic/how-tos/using-vscode"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/manual-backup"
+to = "/classic/how-tos/manual-backup"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-upgrade"
+to = "/classic/how-tos/nebari-upgrade"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/kubernetes-version-upgrade"
+to = "/classic/how-tos/kubernetes-version-upgrade"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/setup-argo"
+to = "/classic/how-tos/setup-argo"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/using-argo"
+to = "/classic/how-tos/using-argo"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/jhub-app-launcher"
+to = "/classic/how-tos/jhub-app-launcher"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/idle-culling"
+to = "/classic/how-tos/idle-culling"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/nebari-extension-system"
+to = "/classic/how-tos/nebari-extension-system"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/telemetry"
+to = "/classic/how-tos/telemetry"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/setup-monitoring"
+to = "/classic/how-tos/setup-monitoring"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/setup-healthcheck"
+to = "/classic/how-tos/setup-healthcheck"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/access-logs-loki"
+to = "/classic/how-tos/access-logs-loki"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/use-gpus"
+to = "/classic/how-tos/use-gpus"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/develop-local-packages"
+to = "/classic/how-tos/develop-local-packages"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/install-pip-packages"
+to = "/classic/how-tos/install-pip-packages"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/fine-grained-permissions"
+to = "/classic/how-tos/fine-grained-permissions"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/connect-via-ssh"
+to = "/classic/how-tos/connect-via-ssh"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos/jupyter-gallery"
+to = "/classic/how-tos/jupyter-gallery"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/advanced-configuration"
+to = "/classic/explanations/advanced-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/security-configuration"
+to = "/classic/explanations/security-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/provider-configuration"
+to = "/classic/explanations/provider-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/profile-configuration"
+to = "/classic/explanations/profile-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/customize-themes"
+to = "/classic/explanations/customize-themes"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/environments-configuration"
+to = "/classic/explanations/environments-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/custom-overrides-configuration"
+to = "/classic/explanations/custom-overrides-configuration"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/config-best-practices"
+to = "/classic/explanations/config-best-practices"
+force = true
+
+[[redirects]]
+from = "/docs/explanations/infrastructure-architecture"
+to = "/classic/explanations/infrastructure-architecture"
+force = true
+
+[[redirects]]
+from = "/docs/references/RELEASE"
+to = "/classic/references/RELEASE"
+force = true
+
+[[redirects]]
+from = "/docs/references/personas"
+to = "/classic/references/personas"
+force = true
+
+[[redirects]]
+from = "/docs/troubleshooting"
+to = "/classic/troubleshooting"
+force = true
+
+[[redirects]]
+from = "/docs/faq"
+to = "/classic/faq"
 force = true
