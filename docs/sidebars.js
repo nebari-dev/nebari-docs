@@ -118,4 +118,11 @@ module.exports = {
       id: "faq",
     },
   ],
+  classicSidebar: [
+    {
+      label: "Introduction",
+      type: "doc",
+      id: "classic/welcome",
+    },
+  ],
 };
