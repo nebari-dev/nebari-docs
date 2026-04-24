@@ -29,11 +29,11 @@ By using only the components they need, teams keep their stack lightweight, cost
 
 ## How Nebari works
 
-Nebari has three parts connected through a central registry: **Software Packs** publish **capabilities** to the registry, and **deploy targets** pull from it to run them.
+Nebari has three parts connected through a central registry: **Software Packs** publish **Capabilities** to the registry, and **Deploy Targets** pull from it to run them.
 
 {/* To edit this diagram, open the matching .excalidraw file (same folder) at excalidraw.com, then re-export each variant as SVG. */}
 <ThemedImage
-  alt="The Nebari ecosystem: Software Packs push to the central registry; capabilities pull onto deploy targets."
+  alt="The Nebari ecosystem: Software Packs push to the central registry; Capabilities pull onto Deploy Targets."
   sources={{
     light: useBaseUrl('/img/welcome/ecosystem-diagram-light.svg'),
     dark: useBaseUrl('/img/welcome/ecosystem-diagram-dark.svg'),
@@ -50,7 +50,7 @@ A **Software Pack** is an installable artifact published to the central registry
 
 ### Capabilities
 
-A **capability** is something a team can do with the platform once a Software Pack is installed, like analyzing documents or running a chat assistant. The same capability can be delivered by different packs. Current examples include:
+A **Capability** is something a team can do with the platform once a Software Pack is installed, like analyzing documents or running a chat assistant. The same Capability can be delivered by different packs. Current examples include:
 
 - Document analysis
 - Code review
@@ -58,11 +58,10 @@ A **capability** is something a team can do with the platform once a Software Pa
 - Data extraction
 - Chat assistants
 - Report builders
-- …and more
 
 ### Deploy Targets
 
-A **deploy target** is the infrastructure that hosts your platform.
+A **Deploy Target** is the infrastructure that hosts your platform.
 
 Today, Nebari runs on Kubernetes via **Nebari Kubernetes Platform (NKP)**, the first platform in the Nebari ecosystem. NKP provides the Kubernetes cluster along with the core services that Software Packs build on.
 
