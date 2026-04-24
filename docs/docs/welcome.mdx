@@ -3,6 +3,9 @@ title: Introduction
 slug: /welcome
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 ## The Problem
 
 Building a modern AI or data science platform typically comes down to two approaches:
@@ -16,8 +19,6 @@ Building a modern AI or data science platform typically comes down to two approa
 
 By using only the components they need, teams keep their stack lightweight, cost-effective, and simple to maintain.
 
-{/* TODO(#633): add the ecosystem diagram. */}
-
 ## Key Features
 
 - **Composable**: install only the capabilities your team needs; add more over time.
@@ -28,11 +29,20 @@ By using only the components they need, teams keep their stack lightweight, cost
 
 ## How Nebari works
 
-Nebari breaks the platform into three layers: **Software Packs** (what gets installed), **capabilities** (what the packs deliver), and **deploy targets** (where it all runs).
+Nebari has three parts connected through a central registry: **Software Packs** publish **capabilities** to the registry, and **deploy targets** pull from it to run them.
+
+{/* To edit this diagram, open the matching .excalidraw file (same folder) at excalidraw.com, then re-export each variant as SVG. */}
+<ThemedImage
+  alt="The Nebari ecosystem: Software Packs push to the central registry; capabilities pull onto deploy targets."
+  sources={{
+    light: useBaseUrl('/img/welcome/ecosystem-diagram-light.svg'),
+    dark: useBaseUrl('/img/welcome/ecosystem-diagram-dark.svg'),
+  }}
+/>
 
 ### Software Packs
 
-A **Software Pack** is an installable capability, like an app or plugin. Each pack is self-contained, so teams can mix and match the ones they need. Packs come from three channels:
+A **Software Pack** is an installable artifact published to the central registry. Each pack is self-contained, so teams can browse the registry and install only the ones they need. Packs come from three channels:
 
 - **Official packs** by OpenTeams: enterprise-grade, curated, and reviewed before landing in the central registry.
 - **Internal packs** by customer teams: private to the authoring organization, not published publicly.
@@ -40,7 +50,7 @@ A **Software Pack** is an installable capability, like an app or plugin. Each pa
 
 ### Capabilities
 
-A **capability** is something your team can do with an installed pack. Current offerings include:
+A **capability** is something a team can do with the platform once a Software Pack is installed, like analyzing documents or running a chat assistant. The same capability can be delivered by different packs. Current examples include:
 
 - Document analysis
 - Code review
