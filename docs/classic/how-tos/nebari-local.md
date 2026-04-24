@@ -41,14 +41,14 @@ To use kind, you will also need to install [docker engine](https://docs.docker.c
 
 :::note
 While `kubectl` is not required for kind to work, we do recommended its installation as it provides an excellent interface for interacting with the cluster resources.
-To install kubectl and configure access to the Nebari cluster, refer to [Install and Set Up kubectl](/docs/how-tos/debug-nebari#getting-started-with-kubectl).
+To install kubectl and configure access to the Nebari cluster, refer to [Install and Set Up kubectl](/classic/how-tos/debug-nebari#getting-started-with-kubectl).
 :::
 
 ## Initializing Nebari
 
 The following steps assume you have:
 
-- An installed version of Nebari, for any directions please visit [Install Nebari](/docs/get-started/installing-nebari) section,
+- An installed version of Nebari, for any directions please visit [Install Nebari](/classic/get-started/installing-nebari) section,
 - confirmed that `nebari` is successfully installed in your environment.
 
 1. In your terminal, start by creating a new project folder. For this demonstration, we will name the new folder `nebari-local`:
@@ -128,7 +128,7 @@ If you are a Linux user, you can use the `sudo` command to gain root privileges 
 sudo echo "172.18.1.100  <domain>" | sudo tee -a /etc/hosts
 ```
 
-See the [domain-registry documentation](https://www.nebari.dev/docs/how-tos/domain-registry#what-is-a-dns) for details.
+See the [domain-registry documentation](https://www.nebari.dev/classic/how-tos/domain-registry#what-is-a-dns) for details.
 
 :::
 
@@ -226,7 +226,7 @@ And a workaround for Chrome:
 
 ### Using Let's Encrypt Certificates
 
-If your "local" deployment happens to be exposed to the internet (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates. For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/docs/how-tos/domain-registry) documentation.
+If your "local" deployment happens to be exposed to the internet (e.g. with a load balancer deployed and managed outside of Nebari) and you are able to set up a valid public DNS record, you can instead use Let's Encrypt to provision trusted TLS certificates. For more in-depth on DNS records and how Nebari handles their configuration, you can visit our [Domain Registry](/classic/how-tos/domain-registry) documentation.
 
 To switch the default behavior and use a [Let's Encrypt](https://letsencrypt.org/) signed certificate instead, you can update the following section in your `nebari-config.yaml` file, and then re-run `nebari deploy` as shown above:
 

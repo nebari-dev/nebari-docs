@@ -25,7 +25,7 @@ Nebari prohibits the standard local installation of packages, e.g. `pip install 
 For this reason, all pip installs would instead default to the user's `.local` directory. Unfortunately, _all_ environments will automatically pick up _everything_ has been installed in this directory. It is _extremely_ easy to create a situation in which all environments are broken due to a conflict. In fact, its possible to create a situation that causes a user's JupyterLab server to be unable to start. For this reason, local pip installs are prohibited in Nebari.
 
 :::note
-For more information on developing local packages, check out [the docs on developing packages on Nebari](/docs/how-tos/develop-local-packages).
+For more information on developing local packages, check out [the docs on developing packages on Nebari](/classic/how-tos/develop-local-packages).
 :::
 
 ## Installing packages published on pypi.org
@@ -92,4 +92,4 @@ dependencies:
 
 Now that you've seen several examples of installing pip packages in conda-store, you can go try it out on your own packages!
 
-To learn more about using a "dev" install of local pip package for active development, check out the documentation on [installing a development package](/docs/how-tos/develop-local-packages).
+To learn more about using a "dev" install of local pip package for active development, check out the documentation on [installing a development package](/classic/how-tos/develop-local-packages).

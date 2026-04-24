@@ -134,5 +134,5 @@ Your new user can now log in to Nebari, visit your provided Nebari domain URI wh
 
 <!-- internal links -->
 
-[keycloak-login]: /docs/tutorials/login-keycloak
-[nebari-install]: /docs/get-started/installing-nebari.md
+[keycloak-login]: /classic/tutorials/login-keycloak
+[nebari-install]: /classic/get-started/installing-nebari.md

@@ -19,7 +19,7 @@ theme:
     welcome: |
       Welcome! Learn about Nebari's features and configurations in <a href="https://www.nebari.dev/docs">the
       documentation</a>. If you have any questions or feedback, reach the team on
-      <a href="https://www.nebari.dev/docs/community#getting-support">Nebari's support
+      <a href="https://www.nebari.dev/community#getting-support">Nebari's support
       forums</a>.
     logo: /hub/custom/images/Nebari-Logo-Horizontal-Lockup-White-text.svg
     primary_color: "#cb39ed"

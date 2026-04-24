@@ -74,7 +74,7 @@ Currently, Nebari only supports CloudFlare for [automatic DNS registration](link
 
 Below are the links to detailed documentation on how to create and manage DNS records on a few providers:
 
-- [Cloud DNS](https://cloud.google.com/dns/docs/tutorials/create-domain-tutorial) provider
+- [Cloud DNS](https://cloud.google.com/dns/classic/tutorials/create-domain-tutorial) provider
 - [Amazon Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html) DNS provider
 - [Azure DNS](https://docs.microsoft.com/en-us/azure/dns/dns-getstarted-portal) provider
 

@@ -116,12 +116,12 @@ Once your server is ready, you will be redirected to JupyterLab!
 
 <!-- Internal links -->
 
-[nebari-keycloak]: /docs/how-tos/configuring-keycloak
-[nebari-keycloak-add-user]: /docs/how-tos/configuring-keycloak#adding-a-nebari-user
-[install-jhub-apps]: /docs/how-tos/jhub-app-launcher#installation-on-nebari
-[profile-configuration]: /docs/explanations/profile-configuration
-[troubleshooting]: /docs/troubleshooting
-[create-dashboard]: /docs/tutorials/create-dashboard
+[nebari-keycloak]: /classic/how-tos/configuring-keycloak
+[nebari-keycloak-add-user]: /classic/how-tos/configuring-keycloak#adding-a-nebari-user
+[install-jhub-apps]: /classic/how-tos/jhub-app-launcher#installation-on-nebari
+[profile-configuration]: /classic/explanations/profile-configuration
+[troubleshooting]: /classic/troubleshooting
+[create-dashboard]: /classic/tutorials/create-dashboard
 
 <!-- External links -->
 

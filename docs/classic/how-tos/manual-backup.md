@@ -29,7 +29,7 @@ This specific guide shows how to do this on an AWS cluster and upload to AWS S3.
 
 ### Pre-requisites
 
-- [Install kubectl and update your kubeconfig](/docs/how-tos/debug-nebari#getting-started-with-kubectl)
+- [Install kubectl and update your kubeconfig](/classic/how-tos/debug-nebari#getting-started-with-kubectl)
 - [Install AWS command-line tool](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 ### Pod deployment

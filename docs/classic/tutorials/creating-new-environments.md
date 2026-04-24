@@ -113,5 +113,5 @@ and other necessary packages in the environment.
 
 <!--Update when PR#397 is merged -->
 
-[login-keycloak]: /docs/tutorials/login-keycloak
-[configure-keycloak-groups]: /docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups
+[login-keycloak]: /classic/tutorials/login-keycloak
+[configure-keycloak-groups]: /classic/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups

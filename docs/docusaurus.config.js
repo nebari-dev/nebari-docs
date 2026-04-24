@@ -160,12 +160,17 @@ const config = {
           {
             label: "Nebari",
             position: "left",
-            to: "/docs/welcome",
+            to: "/docs/introduction",
           },
           {
             label: "Community",
             position: "left",
             to: "community/introduction",
+          },
+          {
+            label: "Nebari-classic",
+            position: "left",
+            to: "/classic/welcome",
           },
           {
             to: 'blog',
@@ -219,11 +224,11 @@ const config = {
             items: [
               {
                 label: "Get Started",
-                to: "docs/get-started/installing-nebari",
+                to: "classic/get-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "docs/tutorials",
+                to: "classic/tutorials",
               },
             ],
           },

@@ -146,4 +146,4 @@ system logs (Loki) via Grafana"](access-logs-loki)
 
 <!-- Internal links -->
 
-[access-logs-loki]: /docs/how-tos/access-logs-loki
+[access-logs-loki]: /classic/how-tos/access-logs-loki

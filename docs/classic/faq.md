@@ -7,7 +7,7 @@ but running the `nebari deploy` command again as a Nebari administrator will upd
 
 ## How are conda user environments created? Who creates them?
 
-`Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace. For more details check out the doc on [creating environments in Nebari via conda-store](/docs/tutorials/creating-new-environments).
+`Conda-store` manages all environments on the Nebari. It allows users to create private environments in their own namespace, or shared environments under a group namespace. For more details check out the doc on [creating environments in Nebari via conda-store](/classic/tutorials/creating-new-environments).
 
 Additionally, there is a legacy approach which is still available in Nebari. Administrators can create global environments by specifying the environment in `nebari-config.yml`. Environments specified in this way will be made available for all users and services under the `nebari-git` namespace on `conda-store`.
 
@@ -141,7 +141,7 @@ Until this issue is addressed, we recommend manually shutting down your VS Code 
 <!-- Internal links -->
 
 [dask-tutorial]: tutorials/using_dask.md
-[idle-culler-settings]: https://www.nebari.dev/docs/how-tos/idle-culling
+[idle-culler-settings]: how-tos/idle-culling
 [selecting a profile]: tutorials/login-keycloak#4-select-a-profile
 [using gpus]: how-tos/use-gpus
 [developing-packages]: how-tos/develop-local-packages

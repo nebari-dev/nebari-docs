@@ -7,14 +7,14 @@ description: Access common system logs on Nebari
 
 Below is a step-by-step walkthrough of how to view JupyterHub pod logs in Grafana [Loki](https://grafana.com/docs/loki/latest/). As similar approach can be used to find other commonly accessed logs (summarized at the end of this document).
 
-To view the Loki logs via Grafana in Nebari, you'll need to have [set up monitoring](/docs/how-tos/setup-monitoring) on your deployment.
+To view the Loki logs via Grafana in Nebari, you'll need to have [set up monitoring](/classic/how-tos/setup-monitoring) on your deployment.
 
 ## Getting Started
 
 Access the Monitoring UI for your Nebari installation at \<https://\{your-nebari-domain\}/monitoring/\>.
 
 :::note
-The **Explore** functionality shown below is only available to users who have `grafana_admin` permissions. In Nebari's default configuration, only the users in the `admin` Keycloak user group will have this role. `grafana_admin` is a client role in Keycloak which can be assigned to other groups or users. See [Configure Keycloak](/docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups) for more information.
+The **Explore** functionality shown below is only available to users who have `grafana_admin` permissions. In Nebari's default configuration, only the users in the `admin` Keycloak user group will have this role. `grafana_admin` is a client role in Keycloak which can be assigned to other groups or users. See [Configure Keycloak](/classic/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups) for more information.
 :::
 
 First, click "Explore".

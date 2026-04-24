@@ -509,13 +509,13 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 ## Release 2023.10.1 - October 20, 2023
 
 This release includes a major refactor which introduces a Pluggy-based extension mechanism which allow developers to build new stages. This is the initial implementation
-of the extension mechanism and we expect the interface to be refined overtime. If you're interested in developing your own stage plugin, please refer to [our documentation](https://www.nebari.dev/docs/how-tos/nebari-extension-system#developing-an-extension). When you're ready to upgrade, please download this version from either PyPI or Conda-Forge and run the `nebari upgrade -c nebari-config.yaml`
+of the extension mechanism and we expect the interface to be refined overtime. If you're interested in developing your own stage plugin, please refer to [our documentation](https://www.nebari.dev/classic/how-tos/nebari-extension-system#developing-an-extension). When you're ready to upgrade, please download this version from either PyPI or Conda-Forge and run the `nebari upgrade -c nebari-config.yaml`
 command and follow the instructions
 
 > WARNING: CDS Dashboards was removed in this release and upgrading to this version will result in CDS Dashboards being uninstalled. A replacement dashboarding solution is currently in the works
 > and will be integrated soon.
 
-> WARNING: Given the scope of changes in this release, we highly recommend backing up your system before upgrading. Please refer to our [Manual Backup](https://www.nebari.dev/docs/how-tos/manual-backup) documentation for more details.
+> WARNING: Given the scope of changes in this release, we highly recommend backing up your system before upgrading. Please refer to our [Manual Backup](https://www.nebari.dev/classic/how-tos/manual-backup) documentation for more details.
 
 ### Feature changes and enhancements
 
@@ -529,7 +529,7 @@ command and follow the instructions
 
 > WARNING: CDS Dashboards was removed in this release and upgrading to this version will result in CDS Dashboards being uninstalled. A replacement dashboarding solution is currently in the work and will be integrated soon.
 
-> WARNING: We will be removing and ending support for ClearML, Prefect and kbatch in the next release. The kbatch has been functionally replaced by Argo-Jupyter-Scheduler. We have seen little interest in ClearML and Prefect in recent years, and removing makes sense at this point. However if you wish to continue using them with Nebari we encourage you to [write your own Nebari extension](https://www.nebari.dev/docs/how-tos/nebari-extension-system#developing-an-extension).
+> WARNING: We will be removing and ending support for ClearML, Prefect and kbatch in the next release. The kbatch has been functionally replaced by Argo-Jupyter-Scheduler. We have seen little interest in ClearML and Prefect in recent years, and removing makes sense at this point. However if you wish to continue using them with Nebari we encourage you to [write your own Nebari extension](https://www.nebari.dev/classic/how-tos/nebari-extension-system#developing-an-extension).
 
 ### What's Changed
 
@@ -628,7 +628,7 @@ This is a hot-fix release that resolves an issue whereby users in the `analyst` 
 
 > WARNING: CDS Dashboards will be deprecated soon. Nebari `2023.7.1` will be the last release with support for CDS Dashboards integration. A new dashboard sharing mechanism added in the near future, but some releases in the interim will not have dashboard sharing capabilities..
 
-> WARNING: For those running on AWS, upgrading from previous versions to `2023.7.1` requires a [backup](https://www.nebari.dev/docs/how-tos/manual-backup). Due to changes made to the VPC (See [issue 1884](https://github.com/nebari-dev/nebari/issues/1884) for details), Terraform thinks it needs to destroy and reprovision a new VPC which causes the entire cluster to be destroyed and rebuilt.
+> WARNING: For those running on AWS, upgrading from previous versions to `2023.7.1` requires a [backup](https://www.nebari.dev/classic/how-tos/manual-backup). Due to changes made to the VPC (See [issue 1884](https://github.com/nebari-dev/nebari/issues/1884) for details), Terraform thinks it needs to destroy and reprovision a new VPC which causes the entire cluster to be destroyed and rebuilt.
 
 ### Feature changes and enhancements
 
@@ -638,7 +638,7 @@ This is a hot-fix release that resolves an issue whereby users in the `analyst` 
 
 ### Breaking Changes
 
-- As mentioned in the above WARNING, clusters running on AWS should perform a [manual backup](https://www.nebari.dev/docs/how-tos/manual-backup) before running the upgrade to the latest version as changes to the AWS VPC will cause the cluster to be destroyed and redeployed.
+- As mentioned in the above WARNING, clusters running on AWS should perform a [manual backup](https://www.nebari.dev/classic/how-tos/manual-backup) before running the upgrade to the latest version as changes to the AWS VPC will cause the cluster to be destroyed and redeployed.
 
 ### What's Changed
 
@@ -836,7 +836,7 @@ This is a hot-fix release that resolves an issue whereby users in the `analyst` 
 
 ### **WARNING**
 
-> The project has recently been renamed from QHub to Nebari. If your deployment is is still managed by `qhub`, performing an inplace upgrade will **IRREVOCABLY BREAK** your deployment. This will cause you to lose any data stored on the platform, including but not limited to, NFS (filesystem) data, conda-store environments, Keycloak users and groups, etc. Please [backup](https://www.nebari.dev/docs/how-tos/manual-backup) your data before attempting an upgrade.
+> The project has recently been renamed from QHub to Nebari. If your deployment is is still managed by `qhub`, performing an inplace upgrade will **IRREVOCABLY BREAK** your deployment. This will cause you to lose any data stored on the platform, including but not limited to, NFS (filesystem) data, conda-store environments, Keycloak users and groups, etc. Please [backup](https://www.nebari.dev/classic/how-tos/manual-backup) your data before attempting an upgrade.
 
 ### Feature changes and enhancements
 

@@ -64,9 +64,9 @@ theme:
   jupyterhub:
     hub_title: My Nebari Platform
     hub_subtitle: Your open source data science platform, hosted on Google Cloud Platform
-    welcome: Welcome! Learn about Nebari's features and configurations in <a href="https://www.nebari.dev/docs">the
+    welcome: Welcome! Learn about Nebari's features and configurations in <a href="https://www.nebari.dev/classic">the
       documentation</a>. If you have any questions or feedback, reach the team on
-      <a href="https://www.nebari.dev/docs/community#getting-support">Nebari's support
+      <a href="https://www.nebari.dev/community#getting-support">Nebari's support
       forums</a>!!
     logo: https://raw.githubusercontent.com/nebari-dev/nebari-design/main/logo-mark/horizontal/Nebari-Logo-Horizontal-Lockup-White-text.svg
     display_version: true
@@ -259,7 +259,7 @@ provider: gcp
 domain: demo.nebari.dev
 ```
 
-`project_name`: Determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider's naming conventions. See [Project Naming Conventions](/docs/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
+`project_name`: Determines the base name for all major infrastructure related resources on Nebari. Should be compatible with the Cloud provider's naming conventions. See [Project Naming Conventions](/classic/explanations/configuration-best-practices.mdx#naming-conventions) for more details.
 
 `namespace`: Used in combination with `project_name` to label infrastructure related resources on Nebari and also determines the target [_namespace_](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) used when deploying kubernetes resources. Defaults to `dev`.
 
@@ -273,7 +273,7 @@ domain: demo.nebari.dev
 
 `domain`: The top level URI used to access the application services.
 
-<!-- For more information regarding the format of this field, see [Domain Format](/docs/explanations/config-best-practices#domain-format). -->
+<!-- For more information regarding the format of this field, see [Domain Format](classic/explanations/config-best-practices#domain-format). -->
 <!-- TODO: Complete the Domain Format section and then link to it -->
 
 ### Continuous integration and continuous deployment
@@ -315,7 +315,7 @@ The CI/CD workflow that is best for you will depend on your organization, but th
 - Advanced Nebari users may also want to add a step in their deployment flow that includes a `nebari render` so that the administrator may preview the resulting diffs to IaC and/or CI/CD files before `nebari deploy` is executed.
 
 :::note
-In order for your CI/CD pipeline to be able to deploy changes into your Nebari cloud hosting provider, you must set the appropriate authentication environment variables for your GitLab or GitHub CI/CD execution environment. See the Authentication section for deploing to [AWS](https://www.nebari.dev/docs/how-tos/nebari-aws/#authentication), [Azure](https://www.nebari.dev/docs/how-tos/nebari-azure#authentication), or [GCP](https://www.nebari.dev/docs/how-tos/nebari-gcp/#authentication) for Nebari's required variables. Guidance on how to set these for your repository/project can be found in the documentation for [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/variables) and [GitLab CI/CD](https://docs.gitlab.com/ee/ci/variables/).
+In order for your CI/CD pipeline to be able to deploy changes into your Nebari cloud hosting provider, you must set the appropriate authentication environment variables for your GitLab or GitHub CI/CD execution environment. See the Authentication section for deploing to [AWS](https://www.nebari.dev/classic/how-tos/nebari-aws/#authentication), [Azure](https://www.nebari.dev/classic/how-tos/nebari-azure#authentication), or [GCP](https://www.nebari.dev/classic/how-tos/nebari-gcp/#authentication) for Nebari's required variables. Guidance on how to set these for your repository/project can be found in the documentation for [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/variables) and [GitLab CI/CD](https://docs.gitlab.com/ee/ci/variables/).
 :::
 
 ### Certificates

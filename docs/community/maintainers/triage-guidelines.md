@@ -121,7 +121,7 @@ We have multiple [saved replies][saved-replies] that can be used to help triage 
 
 Support requests should be directed to the following channels:
 
-- [User documentation](https://nebari.dev/docs/welcome)
+- [User documentation](https://nebari.dev/classic/welcome)
 - [Troubleshooting guide][troubleshooting]
 - [User forum in GitHub discussions](https://github.com/orgs/nebari-dev/discussions)
 
@@ -129,5 +129,5 @@ Support requests should be directed to the following channels:
 
 [code-contributions]: community/code-contributions.mdx
 [github-conventions]: community/maintainers/github-conventions.md
-[troubleshooting]: /docs/troubleshooting
+[troubleshooting]: /classic/troubleshooting
 [saved-replies]: community/maintainers/saved-replies.md

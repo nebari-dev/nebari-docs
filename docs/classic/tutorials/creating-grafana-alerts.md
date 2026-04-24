@@ -197,4 +197,4 @@ documentation: [Create Grafana managed rule](https://grafana.com/docs/grafana/la
 
 <!-- internal links -->
 
-[keycloak-roles-permissions]: /docs/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups
+[keycloak-roles-permissions]: /classic/how-tos/configuring-keycloak#in-depth-look-at-roles-and-groups

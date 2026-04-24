@@ -117,7 +117,7 @@ jupyterhub:
 
 Nebari supports a number of configuration options for JupyterLab:
 
-- `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/docs/how-tos/idle-culling) for more information.
+- `jupyterlab.idle_culler` - This is used to configure the idle culler for JupyterLab. See [idle culling](/classic/how-tos/idle-culling) for more information.
 
 ```yaml
 jupyterlab:

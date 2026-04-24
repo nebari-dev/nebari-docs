@@ -7,8 +7,8 @@ description: Configure environments with conda-store
 # Environment configurations
 
 :::tip
-For guidance on managing or creating environments directly with conda-store, see our guide on [Creating new environments on Nebari](/docs/tutorials/creating-new-environments.md).
-If you're looking for information on updating your namespaces after a recent upgrade, refer to our troubleshooting guide on [Migrating namespaces](/docs/troubleshooting.mdx#conda-store-compatibility-migration-steps-when-upgrading-to-045).
+For guidance on managing or creating environments directly with conda-store, see our guide on [Creating new environments on Nebari](/classic/tutorials/creating-new-environments.md).
+If you're looking for information on updating your namespaces after a recent upgrade, refer to our troubleshooting guide on [Migrating namespaces](/classic/troubleshooting.mdx#conda-store-compatibility-migration-steps-when-upgrading-to-045).
 :::
 
 <!-- TODO: Update the time to create environments based in new conda-store updates -->
@@ -88,5 +88,5 @@ To reiterate, the `nebari-git` namespace is modified using nebari-config deploym
 
 :::note
 While it is not possible to interact with these namespaces directly, it is possible to override the conda-store permission model to allow users to modify the environments.
-For more information please refer to [Handle Access to restricted namespaces](/docs/troubleshooting.mdx#handle-access-to-restricted-namespaces)
+For more information please refer to [Handle Access to restricted namespaces](/classic/troubleshooting.mdx#handle-access-to-restricted-namespaces)
 :::

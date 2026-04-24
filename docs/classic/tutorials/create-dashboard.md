@@ -232,6 +232,6 @@ Dashboards and apps can be very handy tools to share information and insights wi
 
 <!-- Internal links -->
 
-[login-keycloak]: /docs/tutorials/login-keycloak
-[create-env]: /docs/tutorials/creating-new-environments
-[jub-app-launcher]: /docs/how-tos/jhub-app-launcher
+[login-keycloak]: /classic/tutorials/login-keycloak
+[create-env]: /classic/tutorials/creating-new-environments
+[jub-app-launcher]: /classic/how-tos/jhub-app-launcher

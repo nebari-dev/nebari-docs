@@ -17,7 +17,7 @@ Nebari blocks the standard local installation of packages, e.g. `pip install -e 
 For this reason, all pip installs would instead default to the user's `.local` directory. Unfortunately, _all_ environments will automatically pick up _everything_ has been installed in this directory. It is _extremely_ easy to create a situation in which all environments are broken due to a conflict. In fact, its possible to create a situation that causes a user's JupyterLab server to be unable to start. For this reason, local pip installs are prohibited in Nebari.
 
 :::note
-For more information, check out [the docs on installing pip packages](/docs/how-tos/install-pip-packages).
+For more information, check out [the docs on installing pip packages](/classic/how-tos/install-pip-packages).
 :::
 
 ## Installing local packages
@@ -63,4 +63,4 @@ To use this environment to run code via the VS Code Python extension, you'll onl
 
 Developing local packages on Nebari involves a few extra steps compared to working directly on your local machine. However, these additional steps are minimal and ensure a well-contained and stable environment.
 
-To learn more about installing pip packages in general, check out the documentation on [installing pip packages from various sources](/docs/how-tos/install-pip-packages).
+To learn more about installing pip packages in general, check out the documentation on [installing pip packages from various sources](/classic/how-tos/install-pip-packages).

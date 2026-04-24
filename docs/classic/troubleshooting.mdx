@@ -168,11 +168,11 @@ This may occur when `dask-gateway-controller` has some internal authentication i
 
 ### Conda-store storage threshold
 
-Nebari has a predefined (and configurable) storage limit for private and shared conda environments created via `conda-store`. A common pitfall is having the created environments fill up the available space, resulting in the following error in the conda-store UI when trying to [create new environments or builds](https://www.nebari.dev/docs/tutorials/creating-new-environments):
+Nebari has a predefined (and configurable) storage limit for private and shared conda environments created via `conda-store`. A common pitfall is having the created environments fill up the available space, resulting in the following error in the conda-store UI when trying to [create new environments or builds](https://www.nebari.dev/classic/tutorials/creating-new-environments):
 
 > `CondaStore.storage_threshold` reached
 
-To remove unused or unwanted environments and free up some space, you can follow the [Delete a conda-store build, environment or namespace](https://www.nebari.dev/docs/troubleshooting#delete-a-conda-store-build-environment-or-namespace) steps.
+To remove unused or unwanted environments and free up some space, you can follow the [Delete a conda-store build, environment or namespace](https://www.nebari.dev/classic/troubleshooting#delete-a-conda-store-build-environment-or-namespace) steps.
 
 While this process does indeed free up space in the storage drive, currently trying to create a new environment or build using the conda-store UI keeps failing because it does not re-scan available space automatically. In order to have conda-store re-scan the available space and allow the creation of new environments and builds, the conda-store worker pod must be restarted.
 
