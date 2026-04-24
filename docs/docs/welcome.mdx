@@ -5,6 +5,7 @@ slug: /welcome
 
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import DocCardList from '@theme/DocCardList';
 
 ## The Problem
 
@@ -73,6 +74,23 @@ Additional targets are planned:
 
 ## Next Steps
 
-- [**Get Started with NKP**](/docs/nkp/get-started): install the platform and run your first cluster.
-- [**Browse Software Packs**](/docs/software-packs/): see the current catalog of capabilities.
-- [**Build a Pack**](/docs/software-packs/build-your-own): author your own capability using the pack template.
+<DocCardList items={[
+  {
+    type: 'link',
+    href: '/docs/nkp/get-started',
+    label: 'Get Started with NKP',
+    description: 'Install the platform and run your first cluster.',
+  },
+  {
+    type: 'link',
+    href: '/docs/software-packs/',
+    label: 'Browse Software Packs',
+    description: 'See the current catalog of Capabilities.',
+  },
+  {
+    type: 'link',
+    href: '/docs/software-packs/build-your-own',
+    label: 'Build a Pack',
+    description: 'Author your own Capability using the pack template.',
+  },
+]}/>
