@@ -130,6 +130,18 @@ because it mixes dark and light sections.
   font-weight: 600;
 }
 
+.pitchItemHeadingLink,
+[data-theme=light] .pitchItemHeadingLink,
+[data-theme=dark] .pitchItemHeadingLink {
+  color: var(--ifm-color-black);
+}
+
+.pitchItemHeadingLink:hover,
+[data-theme=light] .pitchItemHeadingLink:hover,
+[data-theme=dark] .pitchItemHeadingLink:hover {
+  color: var(--ifm-link-color);
+}
+
 /*
   Deploy anywhere
 */
