@@ -20,8 +20,8 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
   You are asking a usage question. The issue tracker is for bugs and new features.
   I'm going to close this issue, but feel free to visit our support resources:
 
-  - [User documentation](https://nebari.dev/docs/welcome)
-  - [Troubleshooting guide](https://nebari.dev/docs/troubleshooting)
+  - [User documentation](https://nebari.dev/classic/welcome)
+  - [Troubleshooting guide](https://nebari.dev/classic/troubleshooting)
   - [User forum](https://github.com/orgs/nebari-dev/discussions)
   ```
 
