@@ -17,7 +17,7 @@ ci:
 repos:
   # Codespell: Spell checks the code and documentation
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         entry: codespell
