@@ -35,7 +35,7 @@ theme:
     version: v2022.10.1
 ```
 
-![A demonstration os the theming customizations](/img/how-tos/nebari_login_screen.png)
+![A demonstration os the theming customizations](/img/classic/how-tos/nebari_login_screen.png)
 
 :::note
 To properly update the image logo, you must ensure that the provided logo field contains an accessible path to the logo. This file must be added in the JupyterHub image, or by passing a valid URL to the logo.

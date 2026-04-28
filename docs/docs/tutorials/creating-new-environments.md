@@ -28,7 +28,7 @@ Nebari has conda-store integrated, and you can use it through the graphical UI.
 
 ## Open `conda-store` web interface
 
-![Conda Store WebUI interface](/img/tutorials/conda_store_webui.png)
+![Conda Store WebUI interface](/img/classic/tutorials/conda_store_webui.png)
 
 There are several options for navigating to conda-store:
 

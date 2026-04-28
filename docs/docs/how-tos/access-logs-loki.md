@@ -19,28 +19,28 @@ The **Explore** functionality shown below is only available to users who have `g
 
 First, click "Explore".
 
-![Grafana Explore Page](/img/how-tos/1_grafana-explore.png)
+![Grafana Explore Page](/img/classic/how-tos/1_grafana-explore.png)
 
 Select Loki as the data source at the top:
 
-![Grafana Select Loki](/img/how-tos/2_grafana-select-loki.png)
+![Grafana Select Loki](/img/classic/how-tos/2_grafana-select-loki.png)
 
 Select a Label to search. For this example, we will select `pod`:
 
-![Grafana Select Loki](/img/how-tos/3_grafana-log-browser-pod.png)
+![Grafana Select Loki](/img/classic/how-tos/3_grafana-log-browser-pod.png)
 
 Begin typing the name of the desired pod. In this case we are looking
 for a JupyterHub pod. The exact name will vary on each deployment but it will begin with `hub-` followed by a unique identifier.
 
-![Grafana Select Loki](/img/how-tos/4_grafana-log-search-pod.png)
+![Grafana Select Loki](/img/classic/how-tos/4_grafana-log-search-pod.png)
 
 Select the pod from the list of pods and then click on "Run Query":
 
-![Grafana Select Loki](/img/how-tos/5_grafana-log-select-pod.png)
+![Grafana Select Loki](/img/classic/how-tos/5_grafana-log-select-pod.png)
 
 After clicking on "Run Query", you should be able to see logs for JupyterHub pod as shown below:
 
-![Grafana Select Loki](/img/how-tos/6_grafana-view-pod-logs.png)
+![Grafana Select Loki](/img/classic/how-tos/6_grafana-view-pod-logs.png)
 
 You can also filter by time by clicking on the time filter on top right (next to "Run query").
 

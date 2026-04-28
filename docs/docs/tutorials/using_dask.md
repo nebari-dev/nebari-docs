@@ -69,7 +69,7 @@ options = gateway.cluster_options()
 options
 ```
 
-![Nebari - Cluster Options UI](/img/tutorials/dask_cluster_options.png)
+![Nebari - Cluster Options UI](/img/classic/tutorials/dask_cluster_options.png)
 
 Using the `Cluster Options` interface, you can specify the `conda` environment for Dask workers, the instance type for the workers, and any additional
 environment variables you'll need.
@@ -97,7 +97,7 @@ By default, you see "Environment", "Cluster Profile", and "Environment Variables
    ```
 
    Once you run the cell, you'll see the following:
-   ![Creating a Gateway Cluster UI](/img/tutorials/dask_cluster_creation.png)
+   ![Creating a Gateway Cluster UI](/img/classic/tutorials/dask_cluster_creation.png)
 
 2. You have the option to choose between `Manual Scaling` and `Adaptive Scaling`.
 
@@ -126,7 +126,7 @@ client
 ```
 
 On executing the cell, you'll see the following:
-![Nebari - Dask client UI showing details of the newly created Dask cluster](/img/tutorials/dask_client.png)
+![Nebari - Dask client UI showing details of the newly created Dask cluster](/img/classic/tutorials/dask_client.png)
 
 The `Dask Client` interface gives us a brief summary of everything we've set up so far.
 
@@ -151,7 +151,7 @@ import TabItem from '@theme/TabItem';
 
 Dask's diagnostic dashboard will open in a new browser tab if you click on the dashboard links displayed in the Client UI or Cluster UI above.
 
-![Dask diagnostic UI - showing four parallel computation streams](/img/tutorials/dask_diagnostic_dashboard.png)
+![Dask diagnostic UI - showing four parallel computation streams](/img/classic/tutorials/dask_diagnostic_dashboard.png)
 
   </TabItem>
   <TabItem value="labextension" label="Dask JupyterLab extension (recommended)">
@@ -163,7 +163,7 @@ as well as embed Dask's dashboard plots directly into JupyterLab panes.
 On JupyterLab, you can select the Dask icon in the left sidebar and click on the magnifying glass icon to view the list of available plots.
 Alternatively, you can copy-and-paste the dashboard link (displayed in the Client UI) in the input field.
 
-![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/tutorials/dask_labextension.png)
+![Dask-labextension UI In JupyterLab - displays the demo notebook and a list of cluster settings](/img/classic/tutorials/dask_labextension.png)
 
   </TabItem>
 </Tabs>

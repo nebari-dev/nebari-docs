@@ -15,7 +15,7 @@ Subsequent nebari deploy actions will NOT undo the SMTP configuration (the Terra
 :::
 
 As an administrator within Keycloak web UI, navigate to the "Nebari" Realm > "Realm Settings" > "Email" tab. The general direct URL for this page is `https://[domain]/auth/admin/nebari/console/#/realms/nebari/smtp-settings`.
-![Keycloak Realm - SMTP Config](/img/how-tos/nebari-smtp.png)
+![Keycloak Realm - SMTP Config](/img/classic/how-tos/nebari-smtp.png)
 
 ## Example - SMTP Using Amazon SES
 

@@ -32,7 +32,7 @@ a command line experience.
 
 Navigate to the Argo UI at `your-nebari-domain.com/argo`.
 
-![Argo Server Landing Page](/img/how-tos/argo_landing_page.png)
+![Argo Server Landing Page](/img/classic/how-tos/argo_landing_page.png)
 
 From this page, you can see all the Argo servers currently running for each
 workflow.
@@ -49,14 +49,14 @@ be culled on their own!
 You can click on each individual workflow to see the DAG and details for each
 step in the workflow.
 
-![Argo workflow detail](/img/how-tos/argo_workflow_details.png)
+![Argo workflow detail](/img/classic/how-tos/argo_workflow_details.png)
 
 ## Submit a workflow
 
 You can submit a workflow through the UI by clicking "+ SUBMIT NEW WORKFLOW" on
 the landing page. Argo offers a template for the workflow yaml format.
 
-![Argo UI submit new workflow](/img/how-tos/argo_submit_new_workflow.png)
+![Argo UI submit new workflow](/img/classic/how-tos/argo_submit_new_workflow.png)
 
 Click `+ CREATE` when you're ready to submit. The yaml format is not the only
 option for generating workflows. Argo also allows you to create workflows via

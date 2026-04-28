@@ -259,4 +259,4 @@ To see all the options available for the destroy command, type the following com
 nebari destroy --help
 ```
 
-![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+![A representation of the output generated when nebari deploy help command is executed.](/img/classic/how-tos/nebari-destroy-help.png)
