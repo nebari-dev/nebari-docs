@@ -16,7 +16,7 @@ export default function HomePage() {
   return (
     <Layout
       title="Nebari Homepage"
-      description="TODO"
+      description="An open source stack for your AI."
     >
       <main className={styles.main}>
         <section className={styles.heroSection}>
