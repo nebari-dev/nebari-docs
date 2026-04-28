@@ -17,7 +17,7 @@ module.exports = {
     {
       label: "Introduction",
       type: "doc",
-      id: "welcome",
+      id: "introduction",
     },
     {
       type: "category",
@@ -116,13 +116,6 @@ module.exports = {
       type: "doc",
       label: "FAQ",
       id: "faq",
-    },
-  ],
-  classicSidebar: [
-    {
-      label: "Introduction",
-      type: "doc",
-      id: "classic/welcome",
     },
   ],
 };
