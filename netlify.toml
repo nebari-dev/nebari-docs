@@ -38,6 +38,10 @@ from = "/docs/get-started/cloud-providers"
 to = "/classic/get-started/cloud-providers"
 force = true
 
+[[redirects]]
+from = "/docs/tutorials"
+to = "/classic/tutorials"
+force = true
 
 [[redirects]]
 from = "/docs/tutorials/login-keycloak"
@@ -72,6 +76,11 @@ force = true
 [[redirects]]
 from = "/docs/tutorials/argo-workflows-walkthrough"
 to = "/classic/tutorials/argo-workflows-walkthrough"
+force = true
+
+[[redirects]]
+from = "/docs/how-tos"
+to = "/classic/how-tos"
 force = true
 
 [[redirects]]
@@ -230,6 +239,11 @@ to = "/classic/how-tos/jupyter-gallery"
 force = true
 
 [[redirects]]
+from = "/docs/explanations"
+to = "/classic/explanations"
+force = true
+
+[[redirects]]
 from = "/docs/explanations/advanced-configuration"
 to = "/classic/explanations/advanced-configuration"
 force = true
@@ -272,6 +286,11 @@ force = true
 [[redirects]]
 from = "/docs/explanations/infrastructure-architecture"
 to = "/classic/explanations/infrastructure-architecture"
+force = true
+
+[[redirects]]
+from = "/docs/references"
+to = "/classic/references"
 force = true
 
 [[redirects]]
