@@ -121,7 +121,7 @@ We have multiple [saved replies][saved-replies] that can be used to help triage 
 
 Support requests should be directed to the following channels:
 
-- [User documentation](https://nebari.dev/docs/welcome)
+- [User documentation](https://nebari.dev/docs/introduction)
 - [Troubleshooting guide][troubleshooting]
 - [User forum in GitHub discussions](https://github.com/orgs/nebari-dev/discussions)
 

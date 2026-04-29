@@ -151,7 +151,7 @@ const config = {
           {
             label: "Nebari",
             position: "left",
-            to: "/docs/welcome",
+            to: "/docs/introduction",
           },
           {
             label: "Community",
