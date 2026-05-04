@@ -24,6 +24,7 @@ module.exports = {
       label: "Get Started",
       link: { type: "doc", id: "get-started/index" },
       items: [
+        "get-started/install",
         "get-started/quickstart",
         "get-started/installing-nebari",
         "get-started/deploy",
