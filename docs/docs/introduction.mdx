@@ -1,3 +1,99 @@
+---
+description: An overview of Nebari, its key features and components.
+---
+
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+import DocCardList from '@theme/DocCardList';
+
 # Introduction
 
-Coming soon.
+## What is Nebari?
+
+**Nebari is an open-source ecosystem for AI and data science platforms.** It's similar to HuggingFace Hub, but for infrastructure: teams browse and install capabilities (document analysis, image generation, chat assistants, code review, and more) onto a platform they control.
+
+Teams pick only the components they need, keeping their stack lightweight, cost-effective, and simple to maintain.
+
+## Why choose Nebari?
+
+Building a modern AI or data science platform typically comes down to two approaches:
+
+- **Build it yourself**: assemble Kubernetes, auth, storage, observability, and more, then maintain it over time. It takes months, and every team re-solves the same integration problems.
+- **Use a ready-made platform**: faster to start, but you are tied to its choices and customization is not easy.
+
+Nebari combines both: ready-made building blocks to design your platform, with the freedom to create and customize your own.
+
+## Key features
+
+- **Composable**: install only the capabilities your team needs; add more over time.
+- **Open ecosystem**: no single vendor controls what you can install. Choose packs from OpenTeams, your own team, or the open-source community.
+- **Built-in foundations**: every pack is automatically secured, connected, and made accessible through the platform UI. No wiring required.
+- **Runs on your infrastructure**: Kubernetes today; cloud-native, bare metal, and edge are on the roadmap.
+- **Open source**: every piece, from infrastructure to packs, is open for inspection, modification, and contribution.
+
+## How Nebari works
+
+Nebari has three parts connected through a central registry: **Software Packs** publish **Capabilities** to the registry, and **Deploy Targets** pull from it to run them.
+
+{/* To edit this diagram, open the matching .excalidraw file (same folder) at excalidraw.com, then re-export each variant as SVG. */}
+<ThemedImage
+  alt="The Nebari ecosystem: Software Packs push to the central registry; Capabilities pull onto Deploy Targets."
+  sources={{
+    light: useBaseUrl('/img/welcome/ecosystem-diagram-light.svg'),
+    dark: useBaseUrl('/img/welcome/ecosystem-diagram-dark.svg'),
+  }}
+/>
+
+### Software Packs
+
+A **Software Pack** is an installable artifact published to the central registry. Each pack is self-contained, so teams can browse the registry and install only the ones they need. Packs come from three channels:
+
+- **Official packs** by OpenTeams: enterprise-grade, curated, and reviewed before landing in the central registry.
+- **Internal packs** by customer teams: private to the authoring organization, not published publicly.
+- **Community packs** by open-source contributors: self-published to a separate community listing, not the central registry.
+
+### Capabilities
+
+A **Capability** is something a team can do with the platform once a Software Pack is installed, like analyzing documents or running a chat assistant. The same Capability can be delivered by different packs. Current examples include:
+
+- Document analysis
+- Code review
+- Image generation
+- Data extraction
+- Chat assistants
+- Report builders
+
+### Deploy Targets
+
+A **Deploy Target** is the infrastructure that hosts your platform.
+
+Today, Nebari runs on Kubernetes via **Nebari Kubernetes Platform (NKP)**, the first platform in the Nebari ecosystem. NKP provides the Kubernetes cluster along with the core services that Software Packs build on.
+
+Additional targets are planned:
+
+- Cloud-native
+- Bare metal
+- Edge
+
+## Next steps
+
+<DocCardList items={[
+  {
+    type: 'link',
+    href: '/docs/nkp/get-started',
+    label: 'Get Started with NKP',
+    description: 'Install the platform and run your first cluster.',
+  },
+  {
+    type: 'link',
+    href: '/docs/software-packs/',
+    label: 'Browse Software Packs',
+    description: 'See the current catalog of Capabilities.',
+  },
+  {
+    type: 'link',
+    href: '/docs/software-packs/build-your-own',
+    label: 'Build a Pack',
+    description: 'Author your own Capability using the pack template.',
+  },
+]}/>

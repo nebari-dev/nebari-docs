@@ -18,7 +18,7 @@ const customFields = {
   copyright: `Copyright © ${new Date().getFullYear()} | Made with 💜   by the Nebari dev team `,
   meta: {
     title: "Nebari",
-    description: "Your open source data science platform. Built for scale, designed for collaboration.",
+    description: "An open source stack for your AI.",
     keywords: ["Jupyter", "MLOps", "Kubernetes", "Python", "Dask"],
   },
   domain,
