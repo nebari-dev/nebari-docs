@@ -122,7 +122,7 @@ pn.Row(combine_plot).servable()
 
 You can run all the cells in your notebook and view the Panel dashboard using the "Preview with Panel" button in the notebook toolbar:
 
-![`About 🌳 - Species and more` dashboard screenshot displaying a bar and line chart of avg_diameter_inch vs species_name](/img/tutorials/trees-dashboard-example.png)
+![`About 🌳 - Species and more` dashboard screenshot displaying a bar and line chart of avg_diameter_inch vs species_name](/img/classic/tutorials/trees-dashboard-example.png)
 
 This interactive feature of Panel makes it possible to rapidly prototype and iterate on dashboards.
 Feel free to add more plots or different styles to your plots!
@@ -151,11 +151,11 @@ CDS Dashboards has been deprecated in 2023.9.1. Nebari 2023.7.1 is the last rele
 
 To begin, click on the top left tab navigate to `File` -> `Hub Control Panel` -> `Dashboards`.
 
-![JupyterLab expanded File menu - Hub Control Panel is highlighted with a surrounding purple box](/img/tutorials/nebari_jupyterlab_file_menu.png)
+![JupyterLab expanded File menu - Hub Control Panel is highlighted with a surrounding purple box](/img/classic/tutorials/nebari_jupyterlab_file_menu.png)
 
 Click on the button `New Dashboard`. You will now be presented with a new window where you'll need to provide additional details for your dashboard (see image below for reference).
 
-![CDS dashboard configuration screenshot](/img/tutorials/window_dashboard_configuration_example.png)
+![CDS dashboard configuration screenshot](/img/classic/tutorials/window_dashboard_configuration_example.png)
 
 1. Give your dashboard a name, for example, `Trees`. This name will be the name of your shareable dashboard, so make sure to give this a meaningful name.
 2. Add a short description, for example, `Insights and more`.
@@ -175,12 +175,12 @@ Also, the **best instance type** for your dashboard will depend on your specific
 :::
 
 An example of available compute instances available within a Nebari instance is shown in the following image:
-![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1 CPU / 4 GB ram is selected](/img/tutorials/window_nebari_select_instance_type.png)
+![Nebari Instance selection UI screenshot for the Trees Dashboard. The radio button for the `Small instance - Stable environment with 1 CPU / 4 GB ram is selected](/img/classic/tutorials/window_nebari_select_instance_type.png)
 
 For this particular tutorial, a small instance should be enough. Once you have made a selection you can click on the **Save** button at the bottom of the window.
 This will trigger the deployment of your dashboard, and you'll be presented with a screen displaying the of this process.
 
-![Nebari window displaying the progress of the Trees' dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/tutorials/nebari_window_dashboard_starting_up.png)
+![Nebari window displaying the progress of the Trees' dashboard deployment. This window displays a message reading "The dashboard is starting up"](/img/classic/tutorials/nebari_window_dashboard_starting_up.png)
 
 If there are no errors encountered during this process, you will be automatically redirected to the dashboard!
 
@@ -201,7 +201,7 @@ To manage an application, click on the three dots in the top right of the corres
 - **Edit** the application details
 - **Delete** the app
 
-![](/img/tutorials/jhub-apps-manage-app.png)
+![](/img/classic/tutorials/jhub-apps-manage-app.png)
 
 </TabItem>
 <TabItem value="cds-dashboards" label="CDS Dashboards (Nebari v2023.7.1 or earlier)">
@@ -216,7 +216,7 @@ Here, you can find the URL of your dashboards which can be shared with other use
 - To delete the server and the resources allocated click on the `delete` button.
 - To make any changes to the existing CDS options, click on the `edit` button.
 
-![Nebari dashboard panel - showing a number of dashboards with corresponding start/delete buttons, as well as several URLs under the "Dashboards from others heading"](/img/tutorials/nebari_dashboard_panel.png).
+![Nebari dashboard panel - showing a number of dashboards with corresponding start/delete buttons, as well as several URLs under the "Dashboards from others heading"](/img/classic/tutorials/nebari_dashboard_panel.png).
 
 </TabItem>
 </Tabs>

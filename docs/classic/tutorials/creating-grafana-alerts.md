@@ -26,7 +26,7 @@ information.
 Once you have the necessary permissions, you can access Grafana by navigating to
 `http://<your-nebari-domain>/monitoring` in your web browser:
 
-![Grafana Home Page](/img/tutorials/grafana_home_page_admin.png)
+![Grafana Home Page](/img/classic/tutorials/grafana_home_page_admin.png)
 
 ::note
 If your permissions are correct, you should see the "Administration" section in the left sidebar.
@@ -37,7 +37,7 @@ alerts.
 
 ## Creating Alerts
 
-![Grafana Alerting Section](/img/tutorials/grafana_alert_rules_page.png)
+![Grafana Alerting Section](/img/classic/tutorials/grafana_alert_rules_page.png)
 
 Nebari comes with a set of pre-configured alert rules that monitor various aspects of
 the cluster, which are deployed as part of the Grafana Helm chart installation stack.

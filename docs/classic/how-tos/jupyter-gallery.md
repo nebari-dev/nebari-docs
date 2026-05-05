@@ -82,20 +82,20 @@ jupyterlab:
 Once the repositories are configured in the Nebari config and redeployed, all users will have
 a section on their JupyterLab Launcher screen for the Gallery.
 
-![JupyterLab Gallery tiles on JupyterLab Launcher screen](/img/how-tos/jupyter-gallery-tiles.png)
+![JupyterLab Gallery tiles on JupyterLab Launcher screen](/img/classic/how-tos/jupyter-gallery-tiles.png)
 
 Each tile points to a different gallery entry in the configuration. The Gallery repositories
 will not be downloaded until users trigger the download for each gallery item. To do so, users
 will hover over the tile and click the download button.
 
-![JupyterLab Gallery tile on hover for undownloaded repo](/img/how-tos/jupyter-gallery-tile-download.png)
+![JupyterLab Gallery tile on hover for undownloaded repo](/img/classic/how-tos/jupyter-gallery-tile-download.png)
 
 The repository will download to the location specified in the config (in each user's private
 space). After the download is complete, hover on the gallery tile present the users with two
 new options - the folder icon allows them to jump to the location in the JupyterLab file browser,
 and the download button allows them to fetch an updated copy of the repo (if available).
 
-![JupyterLab Gallery tile on hover to update repo](/img/how-tos/jupyter-gallery-tile-update.png)
+![JupyterLab Gallery tile on hover to update repo](/img/classic/how-tos/jupyter-gallery-tile-update.png)
 
 ## Conclusion
 
