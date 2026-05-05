@@ -15,7 +15,7 @@ Navigate to the instance homepage.
 
 Once on the site, you will be prompted to log in, similar to the login page shown in the image below. The text on this screen is configurable so your deployment may look slightly different.
 
-![Nebari login screen](/img/how-tos/nebari_login_screen.png)
+![Nebari login screen](/img/classic/how-tos/nebari_login_screen.png)
 
 Nebari uses [Keycloak](https://www.keycloak.org/), an open-source identity and access management tool. Keycloak is a centralized location for administrators to add new users, create user groups and update roles. For more information, see the [How to Configure Keycloak][nebari-keycloak] docs.
 
@@ -34,7 +34,7 @@ To continue the login process,
 select the `Auth0` button and login.
 
 <p align="center">
-<img src="/img/tutorials/keycloak_nebari_login.png" alt="Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through Auth0" width="400"/>
+<img src="/img/classic/tutorials/keycloak_nebari_login.png" alt="Nebari Keycloak auth screen - shows a form to provide username or password or to authenticate through Auth0" width="400"/>
 </p>
 
 ## 3. Navigate the landing page
@@ -43,7 +43,7 @@ select the `Auth0` button and login.
 You may need to "Authorize access" to reach the home page:
 
 <p align="center">
-<img src="/img/tutorials/jhub-apps-authorize.png" alt="Authorize access page with an 'Authorize' button requesting access for JHub Apps, which is a Jupyter Service, to identify the user." width="80%"/>
+<img src="/img/classic/tutorials/jhub-apps-authorize.png" alt="Authorize access page with an 'Authorize' button requesting access for JHub Apps, which is a Jupyter Service, to identify the user." width="80%"/>
 </p>
 :::
 
@@ -54,7 +54,7 @@ lists Nebari's core **services** and allows you to [create and share web apps][c
 
 Click on the **"JupyterLab"** button under **"Quick Access"** to start a server and launch JupyterLab:
 
-![Nebari home page with Services: JupyterLab, Argo, Users, Environments, Monitoring, VSCode; My Apps: JupyterLab (default JupyterLab instance); and Shared Apps.](/img/tutorials/nebari-home.png)
+![Nebari home page with Services: JupyterLab, Argo, Users, Environments, Monitoring, VSCode; My Apps: JupyterLab (default JupyterLab instance); and Shared Apps.](/img/classic/tutorials/nebari-home.png)
 
 :::warning
 This landing page was added recently and is in active development.
@@ -66,13 +66,13 @@ To go back to the legacy version, [disable the launcher in `nebari-config.yaml`]
 ### Launch a new server
 
 Landing page to Launch server:
-![Nebari dashboard main screen - displays a button "Launch Server"](/img/how-tos/nebari_main_launch_hub_page.png)
+![Nebari dashboard main screen - displays a button "Launch Server"](/img/classic/how-tos/nebari_main_launch_hub_page.png)
 
 Click on the **Launch Server** button to select a profile and launch JupyterLab.
 
 :::note
 Nebari versions 2023.12.1 and earlier had a different landing page with core services listed in the top navigation bar:
-![Nebari dashboard main screen - displays a button "Start my server"](/img/how-tos/nebari_main_hub_page.png)
+![Nebari dashboard main screen - displays a button "Start my server"](/img/classic/how-tos/nebari_main_hub_page.png)
 In which case, click on the **Start My Server** button to select a profile and launch JupyterLab.
 :::
 
@@ -82,7 +82,7 @@ The customized profiles (also called "instances", "servers" or "machines") will 
 
 These options are configured by your administrator, learn more in the [Profile Configuration documentation][profile-configuration].
 
-![Nebari select profile](/img/how-tos/nebari_select_profile.png)
+![Nebari select profile](/img/classic/how-tos/nebari_select_profile.png)
 
 Select an appropriate profile and click **"Start"**.
 
@@ -94,14 +94,14 @@ This step may take up to several minutes due to Nebari's use of autoscaling unde
 
 A progress bar is shown while the server is being set up:
 
-![Nebari start server](/img/how-tos/nebari_server_start.png)
+![Nebari start server](/img/classic/how-tos/nebari_server_start.png)
 
 <details>
 <summary>Optional: View Event log</summary>
 
 During this time you might see some log messages that detail the autoscaling process. Click the **Event Log** button to view them:
 
-![Nebari event log](/img/how-tos/keycloak_start_event_logs.png)
+![Nebari event log](/img/classic/how-tos/keycloak_start_event_logs.png)
 
 </details>
 

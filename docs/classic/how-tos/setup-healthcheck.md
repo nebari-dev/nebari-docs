@@ -36,12 +36,12 @@ For example: To see the uptime for the conda-store service, you can run:
 
 in Grafana, which will show you the following chart.
 
-![Grafana chart showing the uptime for conda store](/img/how-tos/nebari-healthchecks.png)
+![Grafana chart showing the uptime for conda store](/img/classic/how-tos/nebari-healthchecks.png)
 
 To see what other healthchecks are available, you can use the metric explorer in Grafana. Select the metric type of `kuberhealthy_check` and the label filter of `check`. The values list will be a list of the checks that
 have metrics available.
 
-![Display of available kuberhealthy metrics in Grafana](/img/how-tos/nebari-healthchecks1.png)
+![Display of available kuberhealthy metrics in Grafana](/img/classic/how-tos/nebari-healthchecks1.png)
 
 :::note
 

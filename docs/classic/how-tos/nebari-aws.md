@@ -90,7 +90,7 @@ Follow these steps to set up your access keys and user accounts:
 2. Give the user a name, and tick **Access Key - Programmatic access**
 3. Click **Next**
 
-   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
+   ![Account setup steps for setting your first IAM user on AWS, the image contains an input for creating your username and two item boxes for selecting the type of credential needed for this account](/img/classic/how-tos/how-tos-aws-new-iam-user.png "Creating your IAM user account")
 
 4. Select **Attach existing policies directly**, then select the previously created policies to deploy and destroy Nebari from the list of policies. For more information, please refer to
    [Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html);
@@ -159,7 +159,7 @@ In this step, you'll run `nebari init` to create the `nebari-config.yaml` file.
    nebari init --guided-init
    ```
 
-   ![A representation of the output generated when Nebari init guided-init command is executed.](/img/how-tos/nebari-aws.png)
+   ![A representation of the output generated when Nebari init guided-init command is executed.](/img/classic/how-tos/nebari-aws.png)
 
 :::tip
 If you prefer not using the `guided-init` command then you can directly run the `init` command.
@@ -232,7 +232,7 @@ To see all the options available for the deploy command, run the following comma
 nebari deploy --help
 ```
 
-![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-deploy-help.png)
+![A representation of the output generated when nebari deploy help command is executed.](/img/classic/how-tos/nebari-deploy-help.png)
 
 With the `nebari-config.yaml` configuration file now created, Nebari can be deployed for the first time. Type the following command on your command line:
 
@@ -276,7 +276,7 @@ To see all the options available for the destroy command, type the following com
 nebari destroy --help
 ```
 
-![A representation of the output generated when nebari deploy help command is executed.](/img/how-tos/nebari-destroy-help.png)
+![A representation of the output generated when nebari deploy help command is executed.](/img/classic/how-tos/nebari-destroy-help.png)
 
 Nebari also has a `destroy` command that works the same way the deploy works but instead of creating the provisioned resources it destroys it.
 

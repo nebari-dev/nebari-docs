@@ -40,7 +40,7 @@ profiles:
     ...
 ```
 
-![Default profiles showing small, medium, and large instances](/img/explanations/profiles-server-options.png)
+![Default profiles showing small, medium, and large instances](/img/classic/explanations/profiles-server-options.png)
 
 Each profile under `jupyterlab` is a named JupyterLab profile.
 

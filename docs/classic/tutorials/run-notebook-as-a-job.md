@@ -31,12 +31,12 @@ By default, only users in the `admin` or `developer` groups will have permission
 
 To submit your job, simply click the `Jupyter-Scheduler` icon on the top of your notebook toolbar.
 
-![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/tutorials/jupyter-scheduler-icon.png)
+![Jupyter-Scheduler UI - location of the icon on the notebook toolbar](/img/classic/tutorials/jupyter-scheduler-icon.png)
 
 This will open a new **Create Job** tab. Fill out the form and click "Create" to create a schedule.
 
 <div align="center">
-  <img src="/img/tutorials/jupyter-scheduler-run-now.png" alt="Jupyter-Scheduler UI - layout of Jupyter-Scheduler UI." width="60%"/>
+  <img src="/img/classic/tutorials/jupyter-scheduler-run-now.png" alt="Jupyter-Scheduler UI - layout of Jupyter-Scheduler UI." width="60%"/>
 </div>
 
 :::note
@@ -45,22 +45,22 @@ Include [`papermill`][papermill] in your conda-store environment.
 
 Once created, the status of the job and the notebook output can be viewed from the Jupyter-Scheduler Notebook Jobs UI:
 
-![Jupyter-Scheduler UI - view the notebook job status](/img/tutorials/jupyter-scheduler-job-status.png)
+![Jupyter-Scheduler UI - view the notebook job status](/img/classic/tutorials/jupyter-scheduler-job-status.png)
 
 The output of your job will be accessible via the download icon in the "Output files" column. After you download the output, new links will replace the icon and point to the location of the downloaded output.
 
 Click on the notebook job name to view more information about the job.
 
-![Jupyter-Scheduler UI - view the notebook job details](/img/tutorials/jupyter-scheduler-job-details.png)
+![Jupyter-Scheduler UI - view the notebook job details](/img/classic/tutorials/jupyter-scheduler-job-details.png)
 
 If you need to reopen the Notebook Jobs tab, look for the icon in the upper right of the JupyterLab launcher tab.
 
-![JupyterLab-Launcher UI - location of Notebook Jobs icon](/img/tutorials/jupyterlab-launcher-notebook-jobs-icon.png)
+![JupyterLab-Launcher UI - location of Notebook Jobs icon](/img/classic/tutorials/jupyterlab-launcher-notebook-jobs-icon.png)
 
 :::info
 As mentioned above, the notebook job will run as an Argo-Workflows workflow. This means the jobs (workflows) are also viewable from the Argo-Workflows UI at `<nebari-domain>/argo`. The name of the workflow is prefixed with `job-<job-id>`, which will match the notebook job ID.
 
-![Argo UI - view the notebook job status from the argo UI](/img/tutorials/jupyter-scheduler-argo-ui.png)
+![Argo UI - view the notebook job status from the argo UI](/img/classic/tutorials/jupyter-scheduler-argo-ui.png)
 
 All associated workflows have a TTL (time-to-live) set to 600 seconds. This means that regardless of whether or not your workflow was successful, it will be deleted after 10 mins from the Argo UI. The downside is that those logs are now gone. However, the upside is that deleted workflows no longer consume compute resources.
 :::
@@ -74,7 +74,7 @@ You can use [crontab.guru][crontab-guru], which is a nifty tool that tries to tr
 :::
 
 <div align="center">
-  <img src="/img/tutorials/jupyter-scheduler-job-definition.png" alt="Jupyter-Scheduler UI - create a job definition to run on a specified schedule." width="60%"/>
+  <img src="/img/classic/tutorials/jupyter-scheduler-job-definition.png" alt="Jupyter-Scheduler UI - create a job definition to run on a specified schedule." width="60%"/>
 </div>
 
 When a job definition is created, a new job is created at each time interval specified by the schedule. These jobs can be inspected by clicking on "Notebook Job Definitions" near the top of the Jupyter-Scheduler UI. From here you have several options, including:
@@ -86,13 +86,13 @@ When a job definition is created, a new job is created at each time interval spe
 - view the **Tags** (by default all job definitions are tagged with `Cron-Workflow`)
 
 <div align="center">
-  <img src="/img/tutorials/jupyter-scheduler-job-def-details.png" alt="Jupyter-Scheduler UI - view a job definition details." width="90%"/>
+  <img src="/img/classic/tutorials/jupyter-scheduler-job-def-details.png" alt="Jupyter-Scheduler UI - view a job definition details." width="90%"/>
 </div>
 
 :::info
 Unlike a regular notebook job, job definitions create Argo-Workflows cron-workflows (workflows that run on a schedule). This cron-workflow in turn creates workflows at each time interval specified by the schedule. Another difference is that the workflow names are prefixed with `job-def-<job-definition-id>`.
 
-![Argo UI - view the job definition from the argo UI](/img/tutorials/jupyter-scheduler-argo-cron-workflow.png)
+![Argo UI - view the job definition from the argo UI](/img/classic/tutorials/jupyter-scheduler-argo-cron-workflow.png)
 :::
 
 :::warning
@@ -104,7 +104,7 @@ Notebook jobs that run on a schedule will run indefinitely so it's the responsib
 Even if your notebook runs normally in JupyterLab, it might fail during a scheduled run.
 
 <div align="center">
-  <img src="/img/tutorials/jupyter-scheduler-job-failed.png" alt="Jupyter-Scheduler UI - view the details of a failed job." width="90%"/>
+  <img src="/img/classic/tutorials/jupyter-scheduler-job-failed.png" alt="Jupyter-Scheduler UI - view the details of a failed job." width="90%"/>
 </div>
 
 You can view the job log and the notebook using either the terminal or the file browser (go to the JupyterLab View menu and enable "Show Hidden Files"). These are the steps to get the logs:

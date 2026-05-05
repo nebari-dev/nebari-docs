@@ -63,7 +63,7 @@ clients:
 
 To manage and configure these clients, you can navigate to the `Clients` tab within the Keycloak admin console, as illustrated in the image below.
 
-![Keycloak clients](/img/how-tos/fine_grainer_permissions_keycloak_clients.png)
+![Keycloak clients](/img/classic/how-tos/fine_grainer_permissions_keycloak_clients.png)
 
 This can be accessed at `<nebari-url>/auth/admin/master/console/#/realms/nebari/clients`
 
@@ -237,19 +237,19 @@ If you wish to organize your groups hierarchically, you can create subgroups by 
 
 1. Click **New** in the upper-right corner under **Groups**.
 
-![Keycloak groups tab screenshot - user groups view](/img/how-tos/keycloak_groups.png)
+![Keycloak groups tab screenshot - user groups view](/img/classic/how-tos/keycloak_groups.png)
 
 2. Give the new group an appropriate name.
 
-![Keycloak add group form - name field set to conda-store-manager](/img/how-tos/keycloak_new_group1.png)
+![Keycloak add group form - name field set to conda-store-manager](/img/classic/how-tos/keycloak_new_group1.png)
 
 3. Under **Role Mapping**, add the appropriate **Client Roles** as needed; there should be no need to update the **Realm Roles**.
 
-![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/how-tos/keycloak_new_group2.png)
+![Keycloak group conda-store-manager form - role mappings tab focused with expanded client roles dropdown](/img/classic/how-tos/keycloak_new_group2.png)
 
 In this example, the new group only has one mapped role, `conda_store_admin`; however, it's possible to attach multiple **Client Roles** to a single group.
 
-![Keycloak group conda-store-manager form - role mappings tab focused](/img/how-tos/keycloak_new_group3.png)
+![Keycloak group conda-store-manager form - role mappings tab focused](/img/classic/how-tos/keycloak_new_group3.png)
 
 ### Managing Subgroups
 
@@ -385,15 +385,15 @@ In the following example, we create a new role for the `JupyterHub` client grant
 
 1. Select the appropriate client and click on **Add Role**.
 
-![Keycloak client add jupyterhub role](/img/how-tos/keycloak_jupyterhub_client.png)
+![Keycloak client add jupyterhub role](/img/classic/how-tos/keycloak_jupyterhub_client.png)
 
 2. On the **Add Role** form, write a meaningful name and description for the role. Click **Save**.
 
-![Keycloak clients add jupyterhub role form](/img/how-tos/keycloak_jupyterhub_add_role.png)
+![Keycloak clients add jupyterhub role form](/img/classic/how-tos/keycloak_jupyterhub_add_role.png)
 
 3. Now the role has been created, but it does nothing. Add permissions by clicking on the **Attributes** tab and adding `components` and `scopes`.
 
-![Keycloak clients add jupyterhub role attributes](/img/how-tos/keycloak_add_role_attributes.png)
+![Keycloak clients add jupyterhub role attributes](/img/classic/how-tos/keycloak_add_role_attributes.png)
 
 #### Step 2: Assign Role to a Group
 
@@ -414,19 +414,19 @@ To add a role directly to a user:
 
 1. Select **Users** on the left sidebar and search for the user.
 
-![Keycloak select user](/img/how-tos/keycloak_select_user.png)
+![Keycloak select user](/img/classic/how-tos/keycloak_select_user.png)
 
 2. Select that user and click on the **Role Mappings** tab.
 
-![Keycloak user role mapping tab](/img/how-tos/keycloak_user_role_mapping_tab.png)
+![Keycloak user role mapping tab](/img/classic/how-tos/keycloak_user_role_mapping_tab.png)
 
 3. Select the client associated with the role.
 
-![Keycloak user role mapping roles](/img/how-tos/keycloak_user_role_mapping_roles.png)
+![Keycloak user role mapping roles](/img/classic/how-tos/keycloak_user_role_mapping_roles.png)
 
 4. Select the role in **Available Roles** and click **Add Selected >>**.
 
-![Keycloak user role mapping add role](/img/how-tos/keycloak_user_role_mapping_add_role.png)
+![Keycloak user role mapping add role](/img/classic/how-tos/keycloak_user_role_mapping_add_role.png)
 
 ### Example: Custom Role Scenarios
 

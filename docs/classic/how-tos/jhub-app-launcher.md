@@ -11,7 +11,7 @@ for deploying web applications via JupyterHub. The App Launcher serves as the "h
 page for Nebari - providing access to various Nebari services (e.g. JupyterLab, VS Code,
 conda-store) and access to deploy custom web apps.
 
-![JHub App Launcher home screen](/img/how-tos/jhub_apps_home.png)
+![JHub App Launcher home screen](/img/classic/how-tos/jhub_apps_home.png)
 
 You can use it to create and share apps using various frameworks such as:
 

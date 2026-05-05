@@ -124,7 +124,7 @@ monitoring:
 
 The architecture diagram below shows a simplified, high level explanation of the logging components on Nebari.
 
-![Grafana](/img/how-tos/grafana-loki-promtail-architecture.png)
+![Grafana](/img/classic/how-tos/grafana-loki-promtail-architecture.png)
 
 `Grafana` is the dashboarding user interface which allows us to use `Loki` as the data source for our logs. `Loki` connects to [`promtail`](https://grafana.com/docs/loki/latest/send-data/promtail/) as it's source.
 

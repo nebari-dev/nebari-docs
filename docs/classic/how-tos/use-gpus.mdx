@@ -12,7 +12,7 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
 
   Follow Steps 1 to 3 in the [Authenticate and launch JupyterLab][login-with-keycloak] tutorial. The UI will show a list of profiles (a.k.a, instances, servers, or machines).
 
-  ![Nebari select profile](/img/how-tos/nebari_select_profile.png)
+  ![Nebari select profile](/img/classic/how-tos/nebari_select_profile.png)
   Your administrator pre-configures these options, as described in [Profile Configuration documentation][profile-configuration].
 
   Select an appropriate GPU Instance and click "Start".
@@ -22,7 +22,7 @@ Overview of using GPUs on Nebari including server setup, environment setup, and 
   1. Once your server starts, it will redirect you to a JupyterLab home page.
   2. Click on the **"Terminal"** icon.
   3. Run the command `nvidia-smi`. The top right corner of the command's output should have the highest supported driver.
-      ![nvidia-smi-output](/img/how-tos/nvidia-smi-output.png)
+      ![nvidia-smi-output](/img/classic/how-tos/nvidia-smi-output.png)
 
   If you get the error `nvidia-smi: command not found`, you are most likely on a non-GPU server. Shutdown your server, and start up a GPU-enabled server.
 
@@ -59,7 +59,7 @@ At the time of writing this document, the latest CUDA version was showing as `12
   ```
   Your output should look something like this:
 
-  ![jupyter-notebook-command-output](/img/how-tos/pytorch-cuda-check.png)
+  ![jupyter-notebook-command-output](/img/classic/how-tos/pytorch-cuda-check.png)
 
 <!-- Internal links -->
 [profile-configuration]: /classic/explanations/profile-configuration
