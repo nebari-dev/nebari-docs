@@ -129,5 +129,5 @@ Support requests should be directed to the following channels:
 
 [code-contributions]: community/code-contributions.mdx
 [github-conventions]: community/maintainers/github-conventions.md
-[troubleshooting]: /docs/troubleshooting
+[troubleshooting]: /classic/troubleshooting
 [saved-replies]: community/maintainers/saved-replies.md
