@@ -21,7 +21,7 @@ It may be helpful to store some of these in [GitHub’s saved replies](https://g
   I'm going to close this issue, but feel free to visit our support resources:
 
   - [User documentation](https://nebari.dev/docs/introduction)
-  - [Troubleshooting guide](https://nebari.dev/docs/troubleshooting)
+  - [Troubleshooting guide](https://nebari.dev/docs/classic/troubleshooting)
   - [User forum](https://github.com/orgs/nebari-dev/discussions)
   ```
 
