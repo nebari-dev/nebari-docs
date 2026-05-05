@@ -68,7 +68,7 @@ The following actions are typically useful:
 
 <!-- Internal links -->
 
-[troubleshooting]: /docs/troubleshooting
+[troubleshooting]: /classic/troubleshooting
 
 <!-- External Links -->
 
