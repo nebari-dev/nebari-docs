@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NKP Architecture Diagram — Source</title>
+  <meta name="description" content="Editable source for the NKP architecture diagram rendered at /img/explanations/nkp-architecture.png. Originally designed in Paper (app.paper.design); this file preserves the layout as standalone JSX so it can be re-edited or re-rendered without Paper.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
+    #root { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function NKPArchitecture() {
+      return (
+        <div style={{ backgroundColor: '#FFFFFF', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', fontSize: '12px', gap: '24px', height: 'fit-content', lineHeight: '16px', paddingTop: '64px', paddingBottom: '56px', paddingLeft: '80px', paddingRight: '80px', width: '960px' }}>
+          <div style={{ backgroundColor: '#FEF6E0', borderColor: '#B45309', borderRadius: '18px', borderStyle: 'solid', borderWidth: '1.5px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '18px', paddingBlock: '24px', paddingInline: '24px' }}>
+            <div style={{ alignItems: 'baseline', boxSizing: 'border-box', display: 'flex', gap: '16px', justifyContent: 'space-between', paddingInline: '4px' }}>
+              <div style={{ color: '#000000', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '18px', fontWeight: 700, letterSpacing: '0.08em', lineHeight: '22px', textTransform: 'uppercase' }}>
+                Cloud or bare-metal provider
+              </div>
+              <div style={{ color: '#000000', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>
+                AWS · GCP · Azure · Hetzner · ...
+              </div>
+            </div>
+            <div style={{ backgroundColor: '#FFFBEB', borderColor: '#92400E', borderRadius: '14px', borderStyle: 'dashed', borderWidth: '1.5px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '16px', paddingBlock: '20px', paddingInline: '24px' }}>
+              <div style={{ alignItems: 'baseline', boxSizing: 'border-box', display: 'flex', gap: '16px', justifyContent: 'space-between' }}>
+                <div style={{ color: '#000000', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '18px', fontWeight: 700, letterSpacing: '0.08em', lineHeight: '22px', textTransform: 'uppercase' }}>
+                  Managed Kubernetes cluster
+                </div>
+                <div style={{ color: '#000000', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>
+                  EKS · GKE · AKS · K3s
+                </div>
+              </div>
+
+              {/* Landing page row */}
+              <div style={{ alignItems: 'center', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', paddingTop: '8px', position: 'relative' }}>
+                <div style={{ alignItems: 'center', backgroundColor: '#ECFDF7', borderColor: '#0F766E', borderRadius: '12px', borderStyle: 'solid', borderWidth: '1.5px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '280px', paddingBlock: '16px', paddingInline: '28px', width: '304px' }}>
+                  <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '22px', fontWeight: 700, lineHeight: '28px' }}>Landing page</div>
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>page for installed Capabilities</div>
+                </div>
+                <div style={{ alignItems: 'center', boxSizing: 'border-box', display: 'flex', gap: '10px', position: 'absolute', right: 506, top: 36 }}>
+                  <div style={{ alignItems: 'center', boxSizing: 'border-box', display: 'flex', gap: '8px', justifyContent: 'flex-end', width: '140px' }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="8" r="3.5" stroke="#0F1015" strokeWidth="1.5" />
+                      <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                    <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '18px', fontWeight: 600, lineHeight: '22px' }}>user</div>
+                  </div>
+                  <div style={{ height: '14px', position: 'relative', width: '80px' }}>
+                    <svg width="80" height="14" viewBox="0 0 80 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 7 L72 7 M66 2 L72 7 L66 12" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <div style={{ bottom: 14, left: 0, paddingBottom: '2px', position: 'absolute', right: 0, textAlign: 'center', color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '14px', lineHeight: '18px' }}>browses</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* shown on arrow */}
+              <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', left: 'calc(50% + 24px)', lineHeight: '20px', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>shown on</div>
+              </div>
+
+              {/* Software Pack row */}
+              <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <div style={{ alignItems: 'center', backgroundColor: '#ECFDF7', borderColor: '#0F766E', borderRadius: '12px', borderStyle: 'solid', borderWidth: '1.5px', display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '280px', paddingBlock: '16px', paddingInline: '28px' }}>
+                  <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '22px', fontWeight: 700, lineHeight: '28px' }}>Software Pack</div>
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>e.g. chat assistant, code review</div>
+                </div>
+                <div style={{ alignItems: 'center', display: 'flex', gap: '10px', position: 'absolute', right: 506, top: 31 }}>
+                  <div style={{ alignItems: 'center', display: 'flex', gap: '8px', justifyContent: 'flex-end', width: '140px' }}>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="8" r="3.5" stroke="#0F1015" strokeWidth="1.5" />
+                      <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                    <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '18px', fontWeight: 600, lineHeight: '22px' }}>developer</div>
+                  </div>
+                  <div style={{ height: '14px', position: 'relative', width: '80px' }}>
+                    <svg width="80" height="14" viewBox="0 0 80 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 7 L72 7 M66 2 L72 7 L66 12" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <div style={{ bottom: 14, left: 0, paddingBottom: '2px', position: 'absolute', right: 0, textAlign: 'center', color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '14px', lineHeight: '18px' }}>builds</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* deploys arrow */}
+              <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', left: 'calc(50% + 24px)', lineHeight: '20px', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>deploys</div>
+              </div>
+
+              {/* Nebari Operator row */}
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div style={{ alignItems: 'center', backgroundColor: '#FEF3C7', borderColor: '#B45309', borderRadius: '12px', borderStyle: 'solid', borderWidth: '1.5px', display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '280px', paddingBlock: '16px', paddingInline: '28px' }}>
+                  <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '22px', fontWeight: 700, lineHeight: '28px' }}>Nebari Operator</div>
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>automation that runs in the cluster</div>
+                </div>
+              </div>
+
+              {/* powers arrow */}
+              <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center', position: 'relative' }}>
+                <svg width="20" height="36" viewBox="0 0 20 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 34 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', left: 'calc(50% + 24px)', lineHeight: '20px', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>powers</div>
+              </div>
+
+              {/* Foundational software box */}
+              <div style={{ alignItems: 'center', backgroundColor: '#FEF3C7', borderColor: '#B45309', borderRadius: '12px', borderStyle: 'solid', borderWidth: '1.5px', display: 'flex', flexDirection: 'column', gap: '8px', paddingBlock: '20px', paddingInline: '32px' }}>
+                <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '22px', fontWeight: 700, lineHeight: '28px' }}>Foundational software</div>
+                <div style={{ alignItems: 'center', display: 'flex', gap: '18px' }}>
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>login</div>
+                  <div style={{ backgroundColor: '#94A3B8', borderRadius: '50%', height: '4px', width: '4px' }} />
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>routing</div>
+                  <div style={{ backgroundColor: '#94A3B8', borderRadius: '50%', height: '4px', width: '4px' }} />
+                  <div style={{ color: '#475569', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>monitoring</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Legend */}
+          <div style={{ alignItems: 'center', display: 'flex', gap: '36px', justifyContent: 'center', paddingBottom: '4px' }}>
+            <div style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+              <div style={{ backgroundColor: '#ECFDF7', borderColor: '#0F766E', borderRadius: '4px', borderStyle: 'solid', borderWidth: '1.5px', height: '20px', width: '20px' }} />
+              <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>What users see and control</div>
+            </div>
+            <div style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+              <div style={{ backgroundColor: '#FEF3C7', borderColor: '#B45309', borderRadius: '4px', borderStyle: 'solid', borderWidth: '1.5px', height: '20px', width: '20px' }} />
+              <div style={{ color: '#0F1015', fontFamily: '"Poppins", system-ui, sans-serif', fontSize: '16px', lineHeight: '20px' }}>Platform-managed, hidden from users</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<NKPArchitecture />);
+  </script>
+</body>
+</html>
