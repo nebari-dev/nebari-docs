@@ -23,31 +23,28 @@ rewriting the others.
 
 ![NKP architecture: layered diagram with Cloud and Kubernetes containers wrapping the Landing page, Software Pack, Nebari Operator, and Foundational software components. A user browses the Landing page; a developer builds the Software Pack. Upward arrows show that the Software Pack is shown on the Landing page, the Nebari Operator deploys the Software Pack, and the Foundational software powers the Nebari Operator.](/img/explanations/nkp-architecture.png)
 
-**Bottom up, here is what each layer is for:**
+**What users and developers see and control**
 
-- **Cloud or bare-metal provider**: the physical infrastructure NKP runs on.
-  This can be cloud VMs (AWS, GCP, Azure), dedicated physical servers from a
-  bare-metal provider (Hetzner, Equinix Metal), or your own machine for local
-  development. It supplies the network, identity, and durable storage every
-  layer above depends on.
-- **Managed Kubernetes cluster**: the engine that runs every container in NKP,
-  including the foundational software and your applications. "Managed" means
-  the cloud provider keeps the cluster healthy and up to date, so you don't
-  have to. Use EKS on AWS, GKE on Google Cloud, AKS on Azure, or K3s locally
-  for development.
-- **Foundational software**: the shared services every Software Pack uses,
-  like user login, traffic routing, and monitoring (collecting logs, metrics,
-  and traces).
-- **Nebari Operator**: an automation component that runs inside the cluster.
-  Whenever a Software Pack arrives, the operator reads its declaration and
-  hooks it into the foundational services (login, routing, monitoring)
-  automatically.
-- **Software Packs**: installable Capabilities like a chat assistant,
-  document analyzer, or code review tool, authored by OpenTeams, customer
-  teams, or the community. Each pack declares its requirements; the operator
-  wires it into the platform.
-- **Dynamic landing page**: the home page where users browse and open the
-  Capabilities installed on the platform.
+- **Dynamic landing page**: the home page where users browse and open
+  installed Capabilities.
+- **Software Pack**: an installable Capability (chat assistant, document
+  analyzer, code review tool, and so on) built by a developer.
+
+**Platform-managed, hidden from users**
+
+- **Nebari Operator**: the automation that deploys each Software Pack and
+  connects it to the Foundational software.
+- **Foundational software**: shared services (TLS, login, traffic routing,
+  monitoring) plus continuous delivery from Git, all powering the operator
+  and every running pack.
+
+**Where it all runs**
+
+- **Managed Kubernetes cluster**: hosts every container above. EKS, GKE, AKS,
+  or K3s for local development.
+- **Cloud or bare-metal provider**: the physical infrastructure underneath.
+  AWS, GCP, Azure, dedicated servers (Hetzner, Equinix Metal), or your own
+  machine for development.
 
 ### What's in the foundational layer
 
