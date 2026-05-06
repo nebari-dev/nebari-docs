@@ -34,9 +34,9 @@ rewriting the others.
 
 - **Nebari Operator**: the automation that deploys each Software Pack and
   connects it to the Foundational software.
-- **Foundational software**: shared services (TLS, login, traffic routing,
-  monitoring) plus continuous delivery from Git, all powering the operator
-  and every running pack.
+- **Foundational software**: shared services (secure connections, login,
+  traffic routing, monitoring, continuous delivery from Git) that power the
+  operator and every running pack.
 
 **Where it all runs**
 
@@ -48,8 +48,8 @@ rewriting the others.
 
 ### What's in the foundational layer
 
-- **cert-manager**: TLS automation. Let's Encrypt with cloud DNS solvers,
-  automatic renewal, wildcards.
+- **cert-manager**: keeps secure connections working. Automatically requests,
+  renews, and rotates HTTPS certificates for every domain in the cluster.
 - **Envoy Gateway**: routing on the Kubernetes Gateway API. Header- and
   weight-based routing, rate limiting, JWT validation.
 - **Keycloak**: OIDC provider with user federation, MFA, and SSO across
