@@ -6,7 +6,7 @@ description: A conceptual tour of how Nebari Kubernetes Platform is layered, wha
 
 # NKP architecture
 
-Nebari Kubernetes Platform (NKP) is the first **Deploy Target** in the Nebari ecosystem: the infrastructure that hosts a Nebari platform and runs the [Software Packs](/docs/introduction#software-packs) installed on it. This page explains how NKP is put together and why, so you can reason about deployments, upgrades, and extension points without reading the source.
+Nebari Kubernetes Platform (NKP) lets developers package AI capabilities without handling auth, routing, or TLS themselves. Users then access those capabilities through one secure platform.
 
 ## The layers, top to bottom
 
@@ -19,8 +19,8 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 **What users and developers see and control**
 
-- **Dynamic landing page**: the home page where users browse and open installed Capabilities.
-- **Software Pack**: an installable Capability (chat assistant, document analyzer, code review tool, and so on) built by a developer.
+- **Dynamic landing page**: the home page where users access the Capabilities installed on the platform.
+- **Software Pack**: an installable Capability (chat assistant, document analyzer, code review tool, and so on) packaged by a developer.
 
 **Platform-managed, hidden from users**
 
