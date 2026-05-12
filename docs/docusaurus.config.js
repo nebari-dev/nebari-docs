@@ -101,6 +101,15 @@ const config = {
         sidebarPath: './sidebarsCommunity.js',
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'classic',
+        path: 'classic',
+        routeBasePath: 'classic',
+        sidebarPath: './sidebarsClassic.js',
+      },
+    ],
   ],
 
   headTags: [
@@ -159,6 +168,11 @@ const config = {
             to: "community/introduction",
           },
           {
+            label: "Nebari-classic (deprecated)",
+            position: "left",
+            to: "/classic/welcome",
+          },
+          {
             to: 'blog',
             label: 'Blog',
             position: 'right',
@@ -210,11 +224,11 @@ const config = {
             items: [
               {
                 label: "Get Started",
-                to: "docs/get-started/installing-nebari",
+                to: "classic/get-started/installing-nebari",
               },
               {
                 label: "Tutorials",
-                to: "docs/tutorials",
+                to: "classic/tutorials",
               },
             ],
           },

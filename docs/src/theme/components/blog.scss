@@ -1,0 +1,51 @@
+// ==============================================================================
+// Blog
+//
+// The global `a { text-decoration: underline }` mixin in core.scss adds an
+// underline to every link, which makes blog post titles, author names, and
+// the "Recent posts" sidebar entries look noisy. Opt the blog out of the
+// underline-at-rest behavior and restore an underline on hover so clickable
+// links keep their affordance — same opt-out pattern used by navbar/menu/
+// footer/admonitions.
+//
+// Scoped to Docusaurus' stable `.blog-wrapper` class (applied to <html> on
+// every blog route except /blog/archive). The archive selector below uses
+// `.plugin-blog`, also added to <html> by the blog plugin.
+// ==============================================================================
+
+.blog-wrapper {
+  header h1,
+  header h2,
+  header h1 a,
+  header h2 a,
+  .avatar a,
+  .avatar__name a,
+  aside nav a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+[data-theme="dark"] .blog-wrapper {
+  header h1,
+  header h2,
+  header h1 a,
+  header h2 a,
+  .avatar a,
+  .avatar__name a,
+  aside nav a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.plugin-blog main ul li a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
