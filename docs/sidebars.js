@@ -24,6 +24,7 @@ module.exports = {
       label: "Get started",
       link: { type: "doc", id: "get-started/index" },
       items: [
+        "get-started/install",
         // Add get started docs here
       ],
     },
