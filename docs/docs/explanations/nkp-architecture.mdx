@@ -66,7 +66,7 @@ This split keeps cluster work (the bottom of the stack) and pack work (the top) 
 
 ## GitOps via ArgoCD
 
-Above the cluster, NKP is **declarative and pull-based**. ArgoCD watches a Git repository (`nebari-foundational-software`) and continuously reconciles the live cluster state to match it.
+ArgoCD is an open-source deployment tool for Kubernetes. It turns every cluster change into a Git commit, so updates land safely, rollbacks take seconds, and the cluster stays in sync without manual intervention.
 
 ArgoCD uses the **app-of-apps** pattern: a top-level Application resource points to a folder of child Applications, each one a piece of foundational software with explicit dependencies.
 
@@ -90,36 +90,41 @@ Software Packs plug into this model from above. A pack ships its workload manife
 
 ## Terraform state and drift detection
 
-`nic` uses a standard **Terraform state file** to track everything it provisioned. State is persisted in a remote backend matched to the provider:
+`nic` keeps a record of everything it has built in a file called the **Terraform state file**. The file lives in shared cloud storage (S3, Cloud Storage, or Blob Storage) that matches your provider:
 
-| Provider | Backend | Locking |
-| --- | --- | --- |
-| AWS | S3 | DynamoDB table |
-| GCP | Cloud Storage | Object generation metadata |
-| Azure | Blob Storage | Blob lease |
-| Local (dev only) | Local file | File lock |
+| Provider | Backend |
+| --- | --- |
+| AWS | S3 |
+| GCP | Cloud Storage |
+| Azure | Blob Storage |
+| Local (dev only) | Local file |
 
-Two operational properties matter here:
+This shared record gives `nic` two abilities:
 
-- **Locking prevents concurrent writes.** Two engineers cannot accidentally apply conflicting changes at the same time; the second `nic deploy` blocks until the first releases the lock.
-- **Drift detection is just `terraform plan`.** Running `nic deploy` against an unchanged config produces a diff between the state file and the live cloud, surfacing any out-of-band changes (a node group resized in the console, an IAM policy edited by hand) as proposed corrections.
+- **Locking:** If two engineers run `nic deploy` at the same time, the second one waits until the first one finishes, so they can't make conflicting changes.
 
-State operations are exposed as first-class CLI verbs:
+  ```mermaid
+  sequenceDiagram
+      participant E1 as Engineer 1
+      participant SF as State file
+      participant E2 as Engineer 2
+      E1->>SF: nic deploy (acquires lock)
+      Note over E1,SF: Lock held by Engineer 1
+      E2->>SF: nic deploy (lock busy, waits)
+      E1->>SF: changes applied, releases lock
+      SF-->>E2: lock available
+      E2->>SF: acquires lock, applies changes
+  ```
 
-```bash
-nic state list                       # list resources tracked in state
-nic state show aws_eks_cluster.main  # inspect one resource
-nic state rm <addr>                  # forget a resource (does not destroy it)
-nic state mv <from> <to>             # rename a resource address
-```
+- **Drift detection:** When someone makes a manual change in the cloud (resizing a node group in the console, editing an IAM policy by hand), the next `nic deploy` spots the difference and proposes a correction to bring things back in line.
 
-### How this differs from Nebari Classic
-
-Classic also used Terraform, but the platform layer above the cluster was installed imperatively at deploy time and configured per-environment. NKP splits that responsibility: `nic`'s state covers infrastructure only, while the platform layer is reconciled by ArgoCD from a Git repository. As a result:
-
-- **Infrastructure drift** is detectable via `nic deploy` (Terraform plan).
-- **Application drift** is detectable via the ArgoCD UI / CLI (sync status).
-- The two surfaces never overlap, so a Terraform run cannot break an application and a pack upgrade cannot rotate a VPC.
+  ```mermaid
+  flowchart LR
+      SF[State file<br/>what nic thinks exists] --> Compare{Compare}
+      Cloud[Live cloud<br/>what actually exists] --> Compare
+      Compare -- match --> OK[Nothing to do]
+      Compare -- differ --> Drift[Drift detected<br/>nic proposes corrections]
+  ```
 
 ## Separation of concerns
 
