@@ -29,69 +29,39 @@
           <div style="color: #000000; font-size: 16px; line-height: 20px;">EKS · GKE · AKS · K3s</div>
         </div>
 
-        <!-- User row: user persona + Landing page -->
-        <div style="align-items: center; display: flex; justify-content: center; padding-top: 8px; position: relative;">
-          <div style="align-items: center; display: flex; gap: 10px; position: absolute; right: 506px; top: 36px;">
-            <div style="align-items: center; display: flex; gap: 8px; justify-content: flex-end; width: 140px;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="8" r="3.5" stroke="#0F1015" stroke-width="1.5"/>
-                <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              <div style="color: #0F1015; font-size: 18px; font-weight: 600; line-height: 22px;">user</div>
-            </div>
-            <div style="height: 14px; position: relative; width: 80px;">
-              <svg width="80" height="14" viewBox="0 0 80 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
-                <path d="M2 7 L72 7 M66 2 L72 7 L66 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <div style="bottom: 14px; left: 0; padding-bottom: 2px; position: absolute; right: 0; text-align: center; color: #475569; font-size: 14px; line-height: 18px; white-space: nowrap;">uses</div>
-            </div>
-          </div>
-          <div style="align-items: center; background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px; width: 304px;">
+        <!-- Landing page box (teal, end-user-facing) -->
+        <div style="align-items: center; display: flex; justify-content: center; padding-top: 8px;">
+          <div style="align-items: center; background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 12px; display: flex; flex-direction: column; flex-shrink: 0; gap: 4px; min-width: 280px; padding: 16px 28px; width: 304px;">
             <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Landing page</div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">page for installed Capabilities</div>
           </div>
         </div>
 
-        <!-- shown on arrow -->
+        <!-- "shown on" arrow -->
         <div style="display: flex; justify-content: center; position: relative;">
-          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">shown on</div>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%); white-space: pre; width: max-content;">shown on</div>
         </div>
 
-        <!-- Developer row: developer persona + Software Pack -->
+        <!-- Software Pack box (purple, developer-built) -->
         <div style="align-items: center; display: flex; justify-content: center; position: relative;">
-          <div style="align-items: center; display: flex; gap: 10px; position: absolute; right: 506px; top: 31px;">
-            <div style="align-items: center; display: flex; gap: 8px; justify-content: flex-end; width: 140px;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="8" r="3.5" stroke="#0F1015" stroke-width="1.5"/>
-                <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              <div style="color: #0F1015; font-size: 18px; font-weight: 600; line-height: 22px;">developer</div>
-            </div>
-            <div style="height: 14px; position: relative; width: 80px;">
-              <svg width="80" height="14" viewBox="0 0 80 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
-                <path d="M2 7 L72 7 M66 2 L72 7 L66 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <div style="bottom: 14px; left: 0; padding-bottom: 2px; position: absolute; right: 0; text-align: center; color: #475569; font-size: 14px; line-height: 18px; white-space: nowrap;">builds</div>
-            </div>
-          </div>
-          <div style="align-items: center; background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px;">
+          <div style="align-items: center; background-color: #F9ECFE; border: 1.5px solid #6B21A8; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px;">
             <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Software Pack</div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">e.g. chat assistant, code review</div>
           </div>
         </div>
 
-        <!-- deploys arrow -->
+        <!-- "deploys" arrow -->
         <div style="align-items: center; display: flex; justify-content: center; position: relative;">
-          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">deploys</div>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%); white-space: pre; width: max-content;">deploys</div>
         </div>
 
-        <!-- Nebari Operator -->
+        <!-- Nebari Operator box (gold, platform-managed) -->
         <div style="display: flex; justify-content: center;">
           <div style="align-items: center; background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px;">
             <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Nebari Operator</div>
@@ -99,26 +69,26 @@
           </div>
         </div>
 
-        <!-- powers arrow -->
+        <!-- "powers" arrow -->
         <div style="align-items: center; display: flex; justify-content: center; position: relative;">
-          <svg width="20" height="36" viewBox="0 0 20 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 34 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="20" height="36" viewBox="0 0 20 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+            <path d="M10 34 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">powers</div>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%); white-space: pre; width: max-content;">powers</div>
         </div>
 
-        <!-- Foundational software -->
+        <!-- Foundational software box (gold, platform-managed) -->
         <div style="align-items: center; background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; padding: 20px 32px;">
           <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Foundational software</div>
           <div style="align-items: center; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;">
             <div style="color: #475569; font-size: 16px; line-height: 20px;">secure connections</div>
-            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="background-color: #94A3B8; border-radius: 50%; flex-shrink: 0; height: 4px; width: 4px;"></div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">login</div>
-            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="background-color: #94A3B8; border-radius: 50%; flex-shrink: 0; height: 4px; width: 4px;"></div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">traffic routing</div>
-            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="background-color: #94A3B8; border-radius: 50%; flex-shrink: 0; height: 4px; width: 4px;"></div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">monitoring</div>
-            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="background-color: #94A3B8; border-radius: 50%; flex-shrink: 0; height: 4px; width: 4px;"></div>
             <div style="color: #475569; font-size: 16px; line-height: 20px;">continuous delivery</div>
           </div>
         </div>
@@ -129,12 +99,16 @@
     <!-- Legend -->
     <div style="align-items: center; display: flex; gap: 36px; justify-content: center; padding-bottom: 4px;">
       <div style="align-items: center; display: flex; gap: 10px;">
-        <div style="background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 4px; height: 20px; width: 20px;"></div>
-        <div style="color: #0F1015; font-size: 16px; line-height: 20px;">What users see and control</div>
+        <div style="background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 4px; flex-shrink: 0; height: 20px; width: 20px;"></div>
+        <div style="color: #0F1015; font-size: 16px; line-height: 20px;">Used by end users</div>
       </div>
       <div style="align-items: center; display: flex; gap: 10px;">
-        <div style="background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 4px; height: 20px; width: 20px;"></div>
-        <div style="color: #0F1015; font-size: 16px; line-height: 20px;">Platform-managed, hidden from users</div>
+        <div style="background-color: #F9ECFE; border: 1.5px solid #6B21A8; border-radius: 4px; flex-shrink: 0; height: 20px; width: 20px;"></div>
+        <div style="color: #0F1015; font-size: 16px; line-height: 20px;">Built by developers</div>
+      </div>
+      <div style="align-items: center; display: flex; gap: 10px;">
+        <div style="background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 4px; flex-shrink: 0; height: 20px; width: 20px;"></div>
+        <div style="color: #0F1015; font-size: 16px; line-height: 20px;">Managed by platform engineers</div>
       </div>
     </div>
 

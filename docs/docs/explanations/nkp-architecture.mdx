@@ -8,7 +8,7 @@ description: A conceptual tour of how Nebari Kubernetes Platform is layered, wha
 
 Nebari Kubernetes Platform (NKP) lets developers package AI capabilities without handling auth, routing, or TLS themselves. Users then access those capabilities through one secure platform.
 
-## The layers, top to bottom
+## How the layers fit together
 
 NKP is a stack of layers, each doing one job. Because the layers connect through stable, well-defined interfaces, you can change one layer without rewriting the others.
 
@@ -17,12 +17,15 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 ![NKP architecture: layered diagram with Cloud and Kubernetes containers wrapping the Landing page, Software Pack, Nebari Operator, and Foundational software components. A user browses the Landing page; a developer builds the Software Pack. Upward arrows show that the Software Pack is shown on the Landing page, the Nebari Operator deploys the Software Pack, and the Foundational software powers the Nebari Operator.](/img/explanations/nkp-architecture.png)
 
-**What users and developers see and control**
+**Used by end users**
 
-- **Dynamic landing page**: the home page where users access the Capabilities installed on the platform.
-- **Software Pack**: an installable Capability (chat assistant, document analyzer, code review tool, and so on) packaged by a developer.
+- **Landing page**: the home page where users access the Capabilities installed on the platform.
 
-**Platform-managed, hidden from users**
+**Built by developers**
+
+- **Software Pack**: an installable Capability (chat assistant, document analyzer, code review tool, and so on).
+
+**Managed by platform engineers**
 
 - **Nebari Operator**: the automation that deploys each Software Pack and connects it to the Foundational software.
 - **Foundational software**: shared services (secure connections, login, traffic routing, monitoring, continuous delivery from Git) that power the operator and every running pack.
@@ -38,18 +41,17 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 - **cert-manager**: keeps secure connections working. Automatically requests, renews, and rotates HTTPS certificates for every domain in the cluster.
 - **Envoy Gateway**: handles traffic routing. Inspects incoming requests and forwards each one to the right service, with built-in rate limiting and authentication checks.
 - **Keycloak**: handles login. One sign-on covers every app on the platform (ArgoCD, Grafana, Software Packs), with support for multi-factor authentication and connection to an existing identity provider like Active Directory.
-- **ArgoCD**: keeps the cluster in sync with a Git repository. Whenever the platform team commits a change to Git (a new pack, an updated config), ArgoCD applies it to the cluster automatically.
-- **LGTM telemetry stack**: collects logs, metrics, and traces from every running pack and presents them in shared dashboards.
+- **OpenTelemetry Collector**: collects logs, metrics, and traces from every running pack so they can be forwarded to an observability backend.
 
 </details>
 
 ## The `nic` CLI
 
-The `nic` CLI (short for **Nebari Infrastructure Core**) is the command-line tool for managing NKP: installing, updating, tearing down, plus inspecting the cloud resources underneath.
+The `nic` CLI (short for **Nebari Infrastructure Core**) is the command-line tool for installing, updating, and tearing down NKP's cloud infrastructure.
 
 ### What `nic` does
 
-- **Creates the cloud infrastructure.** This includes the network, the managed Kubernetes cluster and its worker machines, the identity and access controls, and the persistent storage. Under the hood, `nic` uses Terraform to do this.
+- **Creates the cloud infrastructure.** This includes the network, the managed Kubernetes cluster and its worker machines, the identity and access controls, and the persistent storage.
 - **Prepares the cluster.** Sets up the basic Kubernetes structures the platform relies on: organizational groupings (namespaces), permission rules (RBAC), storage templates (storage classes), and network rules (network policies).
 - **Installs ArgoCD.** ArgoCD is the GitOps engine that delivers everything above the cluster (the foundational software, the operator, and the packs). `nic` installs it directly so the rest of the platform can flow in from a Git repository.
 
@@ -66,31 +68,21 @@ This split keeps cluster work (the bottom of the stack) and pack work (the top) 
 
 ## GitOps via ArgoCD
 
-ArgoCD is an open-source deployment tool for Kubernetes. It turns every cluster change into a Git commit, so updates land safely, rollbacks take seconds, and the cluster stays in sync without manual intervention.
+[ArgoCD](https://github.com/argoproj/argo-cd) is an open-source deployment tool for Kubernetes. It installs and updates every foundational component on the cluster from two kinds of sources:
 
-ArgoCD uses the **app-of-apps** pattern: a top-level Application resource points to a folder of child Applications, each one a piece of foundational software with explicit dependencies.
+- **OpenTeams Git repositories:** for OpenTeams-built pieces like the [landing page](https://github.com/nebari-dev/nebari-landing) and the [Nebari Operator](https://github.com/nebari-dev/nebari-operator).
+- **Upstream Helm charts:** for external open-source pieces like [Keycloak](https://github.com/keycloak/keycloak), [cert-manager](https://github.com/cert-manager/cert-manager), [Envoy Gateway](https://github.com/envoyproxy/gateway), and the [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector).
 
-```mermaid
-flowchart LR
-  git[(Git repo<br/>foundational-software)] -->|pulled by| argo[ArgoCD]
-  argo -->|reconciles| cm[cert-manager]
-  argo -->|reconciles| eg[Envoy Gateway]
-  argo -->|reconciles| kc[Keycloak]
-  argo -->|reconciles| obs[Observability stack]
-  argo -->|reconciles| op[Nebari Operator]
-```
+A few properties follow from this:
 
-Three properties follow from this:
+- **No hidden changes:** Every piece of software in the cluster is there because ArgoCD pulled it from a known source. Nothing runs that you can't trace back to a repository or a Helm chart.
+- **Self-healing:** If a user manually deletes or changes something in the cluster, ArgoCD detects the difference and restores it from the source.
+- **Audit trail and easy rollback:** Every platform change is captured in Git, so you can see who changed what and when, and undoing a change is a single `git revert`.
+- **Independent updates:** Each Software Pack moves on its own cadence. Updating one pack doesn't require coordinating with the others, and removing one leaves the rest untouched.
 
-- **Single source of truth.** What is in Git is what is in the cluster. There is no "live but undocumented" configuration drift on the application side.
-- **Self-healing.** If an operator deletes a resource by hand, ArgoCD puts it back on the next reconciliation tick.
-- **Auditable change.** Every platform change is a Git commit; rollbacks are a Git revert.
+## State and locking
 
-Software Packs plug into this model from above. A pack ships its workload manifests plus a `NebariApplication` custom resource that declares what the pack needs (domain, paths, auth scope, dashboards). Once that custom resource lands in the cluster, the Nebari Operator picks it up and runs the four reconciliation steps described in the layers section.
-
-## Terraform state and drift detection
-
-`nic` keeps a record of everything it has built in a file called the **Terraform state file**. The file lives in shared cloud storage (S3, Cloud Storage, or Blob Storage) that matches your provider:
+`nic` keeps a record of everything it has built. For providers that use Terraform under the hood (AWS, GCP, Azure, local), the state file lives in cloud storage that matches the provider. For other providers, the underlying tool handles state in its own way.
 
 | Provider | Backend |
 | --- | --- |
@@ -116,34 +108,7 @@ This shared record gives `nic` two abilities:
       E2->>SF: acquires lock, applies changes
   ```
 
-- **Drift detection:** When someone makes a manual change in the cloud (resizing a node group in the console, editing an IAM policy by hand), the next `nic deploy` spots the difference and proposes a correction to bring things back in line.
-
-  ```mermaid
-  flowchart LR
-      SF[State file<br/>what nic thinks exists] --> Compare{Compare}
-      Cloud[Live cloud<br/>what actually exists] --> Compare
-      Compare -- match --> OK[Nothing to do]
-      Compare -- differ --> Drift[Drift detected<br/>nic proposes corrections]
-  ```
-
-## Separation of concerns
-
-NKP is built around three roles with non-overlapping lifecycles:
-
-| Role | What they own | Tools they use |
-| --- | --- | --- |
-| **Platform team** | Cluster, foundational software, identity, telemetry | `nic` CLI, Terraform state, ArgoCD admin |
-| **Pack developer** | A Software Pack (Helm chart, manifests, `NebariApplication`) | Pack template, Git, the central registry |
-| **End user** | Capabilities exposed in the landing page | Browser, Keycloak login |
-
-The boundary is enforced by the architecture, not by convention:
-
-- A pack developer never needs cluster admin or Terraform credentials. They publish a pack to the registry; the operator and ArgoCD do the rest.
-- A platform team upgrade (rotating cert-manager, resizing nodes, swapping the ingress controller) does not require coordination with pack developers.
-- An end user never sees Kubernetes. They see a Capability on the landing page and click into it.
-
-This is the "why" behind the layering: each role can move at its own cadence without breaking the others.
-
+- **Catches manual changes:** When someone makes a manual change in the cloud (resizing a node group in the console, editing an IAM policy by hand), running `nic deploy --dry-run` shows the difference, and `nic deploy` applies the correction.
 ## Where to go next
 
 - [Get started with NKP](/docs/nkp/get-started): install the platform and run your first cluster.
