@@ -82,9 +82,7 @@ A few properties follow from this:
 
 ## State and locking
 
-For the AWS provider, `nic` runs Terraform under the hood and stores the state file in an S3 bucket with native locking enabled. Other providers (Hetzner via `hetzner-k3s`, local via Kind) manage their own state.
-
-On AWS, this shared record gives `nic` two abilities:
+`nic` keeps a record of everything it builds. This record gives `nic` two abilities:
 
 - **Locking:** If two engineers run `nic deploy` at the same time, the second one waits until the first one finishes, so they can't make conflicting changes.
 
