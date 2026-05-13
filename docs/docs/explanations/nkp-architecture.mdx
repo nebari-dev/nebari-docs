@@ -32,8 +32,8 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 **Where it all runs**
 
-- **Managed Kubernetes cluster**: hosts every container above. EKS, GKE, AKS, or K3s for local development.
-- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, GCP, Azure, dedicated servers (Hetzner, Equinix Metal), or your own machine for development.
+- **Managed Kubernetes cluster**: hosts every container above. EKS for AWS, K3s for Hetzner and local development.
+- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, Hetzner, or your own machine for development.
 
 <details>
 <summary>**What's in the foundational layer**</summary>
@@ -82,16 +82,9 @@ A few properties follow from this:
 
 ## State and locking
 
-`nic` keeps a record of everything it has built. For providers that use Terraform under the hood (AWS, GCP, Azure, local), the state file lives in cloud storage that matches the provider. For other providers, the underlying tool handles state in its own way.
+For the AWS provider, `nic` runs Terraform under the hood and stores the state file in an S3 bucket with native locking enabled. Other providers (Hetzner via `hetzner-k3s`, local via Kind) manage their own state.
 
-| Provider | Backend |
-| --- | --- |
-| AWS | S3 |
-| GCP | Cloud Storage |
-| Azure | Blob Storage |
-| Local (dev only) | Local file |
-
-This shared record gives `nic` two abilities:
+On AWS, this shared record gives `nic` two abilities:
 
 - **Locking:** If two engineers run `nic deploy` at the same time, the second one waits until the first one finishes, so they can't make conflicting changes.
 
