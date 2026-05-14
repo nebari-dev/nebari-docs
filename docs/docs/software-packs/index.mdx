@@ -1,10 +1,43 @@
 ---
 title: Software Packs
 slug: /software-packs/
+description: A catalog of Software Packs you can install on a Nebari Kubernetes Platform cluster.
 ---
 
-:::note[Coming soon]
+# Software Packs
 
-Tracked in [#631](https://github.com/nebari-dev/nebari-docs/issues/631).
+**Software Packs are the apps you install on Nebari.** Browse the catalog and pick the capabilities your team needs: dashboards, model serving, chat assistants, document analysis, and more. Every pack plugs into Nebari's single sign-on, routing, and TLS automatically, so users reach them through one secure entry point.
 
-:::
+## Installing a pack
+
+The exact commands depend on the pack, but every pack follows the same three steps:
+
+1. Make sure your Nebari cluster is up and running.
+2. Follow the pack's install instructions, usually one command that adds it to your cluster.
+3. Open your cluster's landing page; the new capability appears there once it finishes installing.
+
+## Official packs
+
+Packs maintained by OpenTeams and listed in the central Nebari registry.
+
+| Pack | Description | Source |
+| --- | --- | --- |
+| [Chat](./chat-pack.mdx) | Drop-in GenAI chat app for Nebari (React UI + Ravnar agent backend) with Keycloak SSO. | [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) |
+| [Data Science](./data-science-pack.mdx) | JupyterHub with jhub-apps for deploying and managing data science notebooks and apps. | [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) |
+| [LGTM Observability](./lgtm-pack.mdx) | Grafana LGTM stack (Loki, Grafana, Tempo, Mimir) for logs, metrics, traces, and dashboards. | [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) |
+| [LLM Serving](./llm-serving-pack.mdx) | Serve large language models with per-model auth and rate limiting through Envoy AI Gateway. | [nebari-llm-serving-pack](https://github.com/nebari-dev/nebari-llm-serving-pack) |
+| [Longhorn Backup](./longhorn-backup-pack.mdx) | Longhorn-native snapshot and S3 backup schedule for the cluster's default storage. | [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) |
+| [MLflow](./mlflow-pack.mdx) | MLflow experiment tracking and model registry with Keycloak auth and PostgreSQL backend. | [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) |
+| [Nebi](./nebi-pack.mdx) | Multi-user Pixi environment management on Nebari clusters. | [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) |
+| [Pi Coding Agent](./pi-coding-agent-pack.mdx) | Adds the Pi coding agent (with OpenAI Codex integration) to a Nebari JupyterHub deployment. | [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) |
+| [Provenance Collector](./provenance-collector-pack.mdx) | Compliance-grade container provenance: discovers images, verifies signatures, detects SLSA and SBOMs. | [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) |
+| [Ray Serve](./rayserve-pack.mdx) | Distributed model and application serving with Ray Serve on Kubernetes via the RayService CRD. | [nebari-rayserve-pack](https://github.com/nebari-dev/nebari-rayserve-pack) |
+| [Superset](./superset-pack.mdx) | Apache Superset for BI dashboards, with Keycloak OAuth and role-based access control. | [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) |
+
+All packs above are maintained by [nebari-dev](https://github.com/nebari-dev) and are considered **official**.
+
+## Community packs
+
+A **community pack** is a Software Pack maintained outside OpenTeams. It follows the same structure as an official pack and can be installed on any Nebari cluster.
+
+Want to share your pack with the Nebari community? See [Build your own pack](./build-your-own.mdx) to get started.

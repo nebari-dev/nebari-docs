@@ -1,3 +1,0 @@
-# Software packs
-
-Coming soon.
