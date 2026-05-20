@@ -10,13 +10,13 @@ This guide walks through deploying NKP on AWS using `nic`, the Nebari Infrastruc
 
 A `nic deploy` on AWS provisions:
 
-- An **EKS cluster** (control plane plus a managed user node group) in a dedicated VPC across two availability zones.
-- An **EFS file system** for shared persistent storage, with mount targets in each private subnet.
-- The **AWS Load Balancer Controller**, authenticated via EKS Pod Identity (no IRSA service-account annotations).
-- A **GitOps bootstrap:** ArgoCD installed into the cluster via the embedded Helm SDK, then ArgoCD syncs cert-manager, Envoy Gateway, PostgreSQL + Keycloak, an OpenTelemetry Collector, the Nebari Operator, and the Nebari Landing Page from your Git repo.
-- Optional **Cloudflare DNS records** for the cluster's public endpoint (otherwise `nic` prints the exact A/CNAME record you need to create).
+- An **[EKS cluster](https://aws.amazon.com/eks/)** (control plane plus a managed user node group) in a dedicated [VPC](https://aws.amazon.com/vpc/) across two availability zones.
+- An **[EFS file system](https://aws.amazon.com/efs/)** for shared persistent storage, with mount targets in each private subnet.
+- The **[AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/)**, authenticated via [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identity.html) (no [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) service-account annotations).
+- A **GitOps bootstrap:** [ArgoCD](https://argo-cd.readthedocs.io/) installed into the cluster via the embedded [Helm SDK](https://helm.sh/docs/topics/advanced/#go-sdk), then ArgoCD syncs [cert-manager](https://cert-manager.io/), [Envoy Gateway](https://gateway.envoyproxy.io/) (the Kubernetes [Gateway API](https://gateway-api.sigs.k8s.io/) implementation), PostgreSQL + [Keycloak](https://www.keycloak.org/), an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/), the [Nebari Operator](https://github.com/nebari-dev/nebari-operator), and the Nebari Landing Page from your Git repo.
+- Optional **[Cloudflare](https://www.cloudflare.com/) DNS records** for the cluster's public endpoint (otherwise `nic` prints the exact A/CNAME record you need to create).
 
-OpenTofu state is stored in an S3 bucket with **native lockfile-based locking** (the `.tflock` object pattern from OpenTofu/Terraform 1.10; no DynamoDB table is created). The bucket is created by `nic` on first deploy, with a deterministic name of the form `nic-tfstate-<project_name>-<region>-<account-id-hash>`. Public access is fully blocked and versioning is enabled.
+[OpenTofu](https://opentofu.org/) state is stored in an S3 bucket with **native lockfile-based locking** (the `.tflock` object pattern from [OpenTofu/Terraform 1.10](https://opentofu.org/docs/language/settings/backends/s3/#native-s3-state-locking); no DynamoDB table is created). The bucket is created by `nic` on first deploy, with a deterministic name of the form `nic-tfstate-<project_name>-<region>-<account-id-hash>`. Public access is fully blocked and versioning is enabled.
 
 ## Prerequisites
 
@@ -51,7 +51,7 @@ export AWS_DEFAULT_REGION="us-west-2"
 ### Local tools
 
 - **`nic` CLI:** Build from source with `make build` in [nebari-infrastructure-core](https://github.com/nebari-dev/nebari-infrastructure-core), or run `make install` to drop the binary into `$GOPATH/bin`. `nic` downloads and pins its own OpenTofu binary, so you don't install OpenTofu separately.
-- **`kubectl` and the `aws` CLI:** For verification after deploy. `nic` itself does not depend on them.
+- **[`kubectl`](https://kubernetes.io/docs/reference/kubectl/) and the [`aws` CLI](https://aws.amazon.com/cli/):** For verification after deploy. `nic` itself does not depend on them.
 
 ### GitOps repository
 
@@ -79,8 +79,8 @@ Single-AZ deployments (one entry in `availability_zones`) cut NAT-gateway costs 
 Save the file below as `aws-config.yaml` and edit the marked values. This is a working baseline; trim or expand the node groups to match your workload.
 
 ```yaml title="aws-config.yaml"
-# Used to name the S3 state bucket, DynamoDB lock table, EKS cluster,
-# and most tagged AWS resources. 3-47 chars, lowercase. Must not start with "aws".
+# Used to name the S3 state bucket, EKS cluster, and most tagged AWS
+# resources. 3-47 chars, lowercase. Must not start with "aws".
 project_name: my-nebari-aws
 
 # Public hostname for the cluster. You must own this domain (or its zone)
@@ -158,9 +158,9 @@ cluster:
       throughput_mode: bursting    # Switch to "elastic" for spiky workloads.
       encrypted: true
 
-    # Longhorn distributed block storage is enabled by default on AWS and
-    # provides replicated PVs with snapshot support alongside EFS. Disable
-    # it if you only need EFS-backed shared storage.
+    # Longhorn (https://longhorn.io/) distributed block storage is enabled
+    # by default on AWS and provides replicated PVs with snapshot support
+    # alongside EFS. Disable it if you only need EFS-backed shared storage.
     # longhorn:
     #   enabled: true
     #   replica_count: 2
@@ -292,7 +292,7 @@ Full setup (token scopes, record names, edge cases) is covered in the dedicated 
 
 **Pods can't reach the internet.** Check NAT gateway health and route-table associations on the private subnets. A common cause is shrinking `availability_zones` after the first deploy without re-running `nic deploy` to converge state.
 
-**`Error: Error acquiring the state lock`.** OpenTofu writes a `.tflock` object next to the state file in S3 while an apply is running. If a previous `nic deploy` or `nic destroy` was killed (Ctrl-C, lost network, terminated VM), the lock can be left behind. There is no `nic unlock` command today; recover by either running `tofu force-unlock <LOCK_ID>` against the state bucket, or by deleting the `.tflock` S3 object directly. Tracked upstream in [nebari-infrastructure-core#64](https://github.com/nebari-dev/nebari-infrastructure-core/issues/64).
+**`Error: Error acquiring the state lock`.** OpenTofu writes a `.tflock` object next to the state file in S3 while an apply is running. If a previous `nic deploy` or `nic destroy` was killed (Ctrl-C, lost network, terminated VM), the lock can be left behind. There is no `nic unlock` command today; recover by either running [`tofu force-unlock`](https://opentofu.org/docs/cli/commands/force-unlock/) `<LOCK_ID>` against the state bucket, or by deleting the `.tflock` S3 object directly. Tracked upstream in [nebari-infrastructure-core#64](https://github.com/nebari-dev/nebari-infrastructure-core/issues/64).
 
 ## Next steps
 
