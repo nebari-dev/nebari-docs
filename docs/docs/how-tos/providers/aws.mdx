@@ -79,8 +79,8 @@ Single-AZ deployments (one entry in `availability_zones`) cut NAT-gateway costs 
 Save the file below as `aws-config.yaml` and edit the marked values. This is a working baseline; trim or expand the node groups to match your workload.
 
 ```yaml title="aws-config.yaml"
-# Used to name the S3 state bucket, EKS cluster, and most tagged AWS
-# resources. 3-47 chars, lowercase. Must not start with "aws".
+# Names the S3 state bucket, EKS cluster, and most tagged AWS resources.
+# Lowercase alphanumeric (with - and _), under ~30 chars.
 project_name: my-nebari-aws
 
 # Public hostname for the cluster. You must own this domain (or its zone)
@@ -190,12 +190,12 @@ nic deploy -f aws-config.yaml --dry-run
 nic deploy -f aws-config.yaml
 ```
 
-A first deployment typically takes 25-40 minutes. The bulk of the time is EKS control-plane creation (about 10 minutes) and ArgoCD syncing foundational services after the cluster comes up.
+Allow at least 30 minutes for the first deployment. The bulk of the time is EKS control-plane creation (about 10 minutes) and ArgoCD syncing foundational services after the cluster comes up.
 
 If you need to extend the default timeout (large clusters, slow regions), pass `--timeout 1h`.
 
 :::tip[No DNS provider configured?]
-If you don't include a `dns:` block, `nic` waits for the Envoy Gateway `Service` to receive a load-balancer hostname and prints the exact A/CNAME record you need to create at your domain registrar. Add the record before the Let's Encrypt challenge times out (a few minutes) so cert-manager can issue the TLS certificate.
+If you don't include a `dns:` block, `nic` waits for the Envoy Gateway `Service` to receive a load-balancer hostname and prints the exact A/CNAME record you need to create at your domain registrar. Create the record so cert-manager can complete the [HTTP-01 ACME challenge](https://cert-manager.io/docs/configuration/acme/http01/) and issue the TLS certificate.
 :::
 
 ## Verify
@@ -286,7 +286,7 @@ Full setup (token scopes, record names, edge cases) is covered in the dedicated 
 
 **ArgoCD applications stuck in `OutOfSync` or `Unknown`.** Confirm the Git repository URL is reachable from the cluster and that the SSH key or token in your `.env` has read access. `kubectl logs -n argocd deploy/argocd-repo-server` shows fetch errors.
 
-**`AccessDenied` during deploy.** Re-run with `OTEL_EXPORTER=console nic deploy -f aws-config.yaml` to surface the exact API call. The error message names the missing action; add it to your IAM policy and retry.
+**`AccessDenied` during deploy.** The OpenTofu output that `nic` streams to stderr names the IAM action that failed (for example, `iam:CreateOpenIDConnectProvider`). Add the missing action to your IAM policy and retry.
 
 **`nic destroy` leaves resources behind.** Usually a load balancer that the AWS LBC created but didn't get a chance to clean up. Delete it from the AWS console and re-run `nic destroy --force`.
 
