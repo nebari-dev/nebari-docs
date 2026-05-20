@@ -70,6 +70,7 @@ module.exports = {
             "software-packs/pi-coding-agent-pack",
             "software-packs/provenance-collector-pack",
             "software-packs/rayserve-pack",
+            "software-packs/skillsctl-pack",
             "software-packs/superset-pack",
           ],
         },
