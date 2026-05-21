@@ -18,7 +18,7 @@ The exact commands depend on the pack, but every pack follows the same three ste
 
 ## Official packs
 
-Packs maintained by OpenTeams and listed in the central Nebari registry.
+Packs maintained by OpenTeams and listed in the central Nebari registry. Each pack declares a maturity level. See [How packs mature](#how-packs-mature) below for definitions, and the [pack dashboard](https://github.com/nebari-dev/software-pack-dashboard) for the current level of each pack.
 
 | Pack | Description | Source |
 | --- | --- | --- |
@@ -36,6 +36,19 @@ Packs maintained by OpenTeams and listed in the central Nebari registry.
 | [Superset](./superset-pack.mdx) | BI dashboards and ad-hoc data exploration through a web UI, behind your Nebari single sign-on. | [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) |
 
 All packs above are maintained by [nebari-dev](https://github.com/nebari-dev) and are considered **official**.
+
+### How packs mature
+
+A pack's level reflects how stable, tested, and supported it is.
+
+| Level         | What you can expect                                                       | Intended for       |
+| ------------- | ------------------------------------------------------------------------- | ------------------ |
+| Experimental  | May not install or work; can disappear at any time                        | Contributors only  |
+| Alpha         | Happy path works on a current dev cluster; limitations documented         | Internal demos     |
+| Beta          | Stable enough for a pilot with engineering support; APIs may still shift  | Customer pilots    |
+| GA (v1.0+)    | Fully supported, with a documented upgrade and security-fix story         | Production         |
+
+A pack at any level can also be marked **Deprecated**, with a sunset date (when it will be retired) and a migration path. Avoid new deployments.
 
 ## Community packs
 
