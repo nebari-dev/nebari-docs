@@ -31,19 +31,21 @@ Nebari combines both: ready-made building blocks to design your platform, with t
 
 ## How Nebari works
 
-Nebari has three parts connected through a central registry: **Software Packs** publish **Capabilities** to the registry, and **Deploy Targets** pull from it to run them.
+Nebari has two parts that work together:
+
+- **Software Packs** package **Capabilities** and publish them on GitHub.
+- **Deploy Targets** install those packs onto your infrastructure and run them.
 
 {/* Diagram source: docs/static/img/welcome/_sources/ecosystem-diagram.html
     (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
-![The Nebari ecosystem: Software Packs push to the central registry; Capabilities pull onto Deploy Targets.](/img/welcome/ecosystem-diagram.png)
+![The Nebari ecosystem: Software Packs publish Capabilities on GitHub; Deploy Targets install them onto your infrastructure.](/img/welcome/ecosystem-diagram.png)
 
 ### Software Packs
 
-A **Software Pack** is an installable artifact published to the central registry. Each pack is self-contained, so teams can browse the registry and install only the ones they need. Packs come from three channels:
+A **Software Pack** is an installable artifact published to a GitHub repository. Each pack is self-contained, so teams can browse what's available and install only the ones they need. Packs come from two channels:
 
-- **Official packs** by OpenTeams: enterprise-grade, curated, and reviewed before landing in the central registry.
-- **Internal packs** by customer teams: private to the authoring organization, not published publicly.
-- **Community packs** by open-source contributors: self-published to a separate community listing, not the central registry.
+- **Official packs** by OpenTeams: enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization.
+- **Community packs** by open-source contributors: published on GitHub by individual maintainers or by businesses building on Nebari.
 
 ### Capabilities
 

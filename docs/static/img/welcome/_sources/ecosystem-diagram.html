@@ -4,75 +4,66 @@
   <meta charset="UTF-8">
   <title>Nebari Ecosystem Diagram — Source</title>
   <meta name="description" content="Editable source for the Nebari ecosystem diagram rendered at /img/welcome/ecosystem-diagram.png. Plain HTML with inline styles, openable in any browser, re-importable into Paper via the write_html MCP tool.">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
     .artboard { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
   </style>
 </head>
 <body>
-  <div class="artboard" style="background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px; align-items: center; padding: 48px 64px; width: 1600px; font-family: 'Poppins', system-ui, sans-serif;">
+  <div class="artboard" style="background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px; align-items: center; padding: 56px 64px; width: 1600px; font-family: 'Poppins', system-ui, sans-serif;">
 
-    <div style="color: #0F1015; font-size: 36px; font-weight: 700; line-height: 44px; text-align: center;">The Nebari Ecosystem</div>
+    <div style="color: #1C1D26; font-size: 40px; font-weight: 700; line-height: 48px; letter-spacing: -0.01em; text-align: center;">The Nebari Ecosystem</div>
 
-    <div style="display: flex; flex-direction: row; align-items: center; gap: 32px; align-self: stretch; justify-content: center;">
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 40px; align-self: stretch; justify-content: center;">
 
-      <!-- Column 1 — Software Packs (teal) -->
-      <div style="align-self: flex-start; border: 2px dashed #20AAA1; border-radius: 12px; display: flex; flex-direction: column; gap: 16px; padding: 20px 16px;">
-        <div style="color: #20AAA1; font-size: 20px; font-weight: 700; line-height: 24px; text-align: center;">Software Packs</div>
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          <div style="align-items: center; background-color: #F1F1F6; border: 3px solid #20AAA1; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">🏢 Official packs</div>
-          <div style="align-items: center; background-color: #F1F1F6; border: 3px solid #20AAA1; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">🔧 Internal packs</div>
-          <div style="align-items: center; background-color: #F1F1F6; border: 3px solid #20AAA1; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">🌐 Community packs</div>
+      <!-- Left part — Software Packs (teal) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 36px 28px; width: 480px; background-color: #FFFFFF; border: 2px dashed #2BD0C4; border-radius: 18px;">
+        <div style="font-size: 18px; font-weight: 700; color: #2BD0C4; letter-spacing: 0.14em; text-transform: uppercase;">Software Packs</div>
+        <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+          <div style="display: flex; align-items: center; justify-content: center; padding: 14px 20px; background-color: #F4FDFB; border: 1px solid #2BD0C4; border-radius: 12px; font-size: 28px; font-weight: 500; color: #1C1D26;">Chat assistant</div>
+          <div style="display: flex; align-items: center; justify-content: center; padding: 14px 20px; background-color: #F4FDFB; border: 1px solid #2BD0C4; border-radius: 12px; font-size: 28px; font-weight: 500; color: #1C1D26;">Document analyzer</div>
+          <div style="display: flex; align-items: center; justify-content: center; padding: 14px 20px; background-color: #F4FDFB; border: 1px solid #2BD0C4; border-radius: 12px; font-size: 28px; font-weight: 500; color: #1C1D26;">Code review</div>
         </div>
+        <div style="font-size: 22px; font-weight: 400; color: rgba(28,29,38,0.6); font-style: italic;">Capabilities</div>
       </div>
 
-      <!-- push arrow -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-        <div style="color: #0F1015; font-size: 18px; line-height: 22px;">push</div>
-        <svg width="80" height="20" viewBox="0 0 80 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 10 L70 10 M62 4 L70 10 L62 16" stroke="#0F1015" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <!-- Channel — publish → GitHub → install -->
+      <div style="display: flex; flex-direction: row; align-items: center; gap: 20px;">
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="font-size: 22px; font-weight: 500; color: rgba(28,29,38,0.7); letter-spacing: 0.02em;">publish</div>
+          <svg width="120" height="14" viewBox="0 0 120 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 7 H 104" stroke="#1C1D26" stroke-opacity="0.7" stroke-width="2"/>
+            <path d="M104 1 L 118 7 L 104 13 Z" fill="#1C1D26" fill-opacity="0.7"/>
+          </svg>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 18px 24px; background-color: #F6F6F8; border: 1.5px solid #6E6E76; border-radius: 999px; white-space: nowrap;">
+          <svg width="28" height="28" viewBox="0 0 16 16" fill="#1C1D26" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <div style="font-size: 28px; font-weight: 700; color: #1C1D26;">GitHub</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <div style="font-size: 22px; font-weight: 500; color: rgba(28,29,38,0.7); letter-spacing: 0.02em;">install</div>
+          <svg width="120" height="14" viewBox="0 0 120 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 7 H 104" stroke="#1C1D26" stroke-opacity="0.7" stroke-width="2"/>
+            <path d="M104 1 L 118 7 L 104 13 Z" fill="#1C1D26" fill-opacity="0.7"/>
+          </svg>
+        </div>
+
       </div>
 
-      <!-- Column 2 — Sample Capabilities (purple) -->
-      <div style="align-self: flex-start; border: 2px dashed #BA18DD; border-radius: 12px; display: flex; flex-direction: column; gap: 16px; padding: 20px 20px;">
-        <div style="color: #BA18DD; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; line-height: 24px; text-align: center;">SAMPLE CAPABILITIES</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <div style="display: flex; gap: 10px;">
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">📄 Document analysis</div>
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">💻 Code review</div>
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">🎨 Image generation</div>
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">🔍 Data extraction</div>
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">🤖 Chat assistants</div>
-            <div style="align-items: center; background-color: #F1F1F6; border: 2px solid #BA18DD; border-radius: 8px; display: flex; height: 64px; justify-content: center; padding: 16px 12px; width: 180px; color: #0F1015; font-size: 18px; line-height: 22px; text-align: center;">📊 Report builders</div>
-          </div>
+      <!-- Right part — Deploy Targets (amber) -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 36px 28px; width: 480px; background-color: #FFFFFF; border: 2px dashed #EDA61D; border-radius: 18px;">
+        <div style="font-size: 18px; font-weight: 700; color: #EDA61D; letter-spacing: 0.14em; text-transform: uppercase;">Deploy Targets</div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 28px 24px; width: 100%; background-color: #FEF8EB; border: 1px solid #EDA61D; border-radius: 14px;">
+          <div style="font-size: 28px; font-weight: 600; color: #1C1D26;">NKP cluster</div>
+          <div style="font-size: 22px; font-weight: 400; color: rgba(28,29,38,0.6);">(your infrastructure)</div>
         </div>
-        <div style="align-items: center; background-color: #BA18DD; border-radius: 8px; display: flex; flex-direction: column; gap: 4px; justify-content: center; padding: 20px 24px;">
-          <div style="color: #FFFFFF; font-size: 22px; font-weight: 700; line-height: 28px; text-align: center;">📦 Central Registry</div>
-          <div style="color: #FFFFFF; font-size: 18px; line-height: 22px; text-align: center;">Software Packs catalog</div>
-        </div>
-      </div>
-
-      <!-- pull arrow -->
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
-        <div style="color: #0F1015; font-size: 18px; line-height: 22px;">pull</div>
-        <svg width="80" height="20" viewBox="0 0 80 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 10 L70 10 M62 4 L70 10 L62 16" stroke="#0F1015" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-
-      <!-- Column 3 — Deploy Targets (amber) -->
-      <div style="align-self: flex-start; border: 2px dashed #EAB54E; border-radius: 12px; display: flex; flex-direction: column; gap: 16px; padding: 20px 16px;">
-        <div style="color: #EAB54E; font-size: 20px; font-weight: 700; letter-spacing: 0.04em; line-height: 24px; text-align: center;">DEPLOY TARGETS</div>
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="align-items: center; background-color: #F1F1F6; border: 3px solid #EAB54E; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">☸️ Kubernetes</div>
-          <div style="align-items: center; background-color: #F1F1F6; border: 2px dashed #EAB54E; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">☁️ Cloud-native</div>
-          <div style="align-items: center; background-color: #F1F1F6; border: 2px dashed #EAB54E; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">🖥️ Bare metal</div>
-          <div style="align-items: center; background-color: #F1F1F6; border: 2px dashed #EAB54E; border-radius: 8px; display: flex; justify-content: center; min-width: 240px; padding: 18px 24px; color: #0F1015; font-size: 20px; line-height: 24px;">📱 Edge</div>
-        </div>
+        <div style="font-size: 22px; font-weight: 400; color: rgba(28,29,38,0.6); font-style: italic;">running Capabilities</div>
       </div>
 
     </div>
