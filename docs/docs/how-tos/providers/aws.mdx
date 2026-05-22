@@ -6,296 +6,221 @@ description: End-to-end how-to for deploying NKP on AWS EKS, including IAM, cost
 
 This guide walks through deploying NKP on AWS using `nic`, the Nebari Infrastructure Core CLI. It targets operators who own day-to-day cluster operations and need to understand the IAM and cost realities before provisioning.
 
-## What you'll deploy
+## What your team gets
 
-A `nic deploy` on AWS provisions:
+When `nic deploy` finishes, your team will have:
 
-- An **[EKS cluster](https://aws.amazon.com/eks/)** (control plane plus a managed user node group) in a dedicated [VPC](https://aws.amazon.com/vpc/) across two availability zones.
-- An **[EFS file system](https://aws.amazon.com/efs/)** for shared persistent storage, with mount targets in each private subnet.
-- The **[AWS Load Balancer Controller](https://kubernetes-sigs.github.io/aws-load-balancer-controller/)**, authenticated via [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identity.html) (no [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) service-account annotations).
-- A **GitOps bootstrap:** [ArgoCD](https://argo-cd.readthedocs.io/) installed into the cluster via the embedded [Helm SDK](https://helm.sh/docs/topics/advanced/#go-sdk), then ArgoCD syncs [cert-manager](https://cert-manager.io/), [Envoy Gateway](https://gateway.envoyproxy.io/) (the Kubernetes [Gateway API](https://gateway-api.sigs.k8s.io/) implementation), PostgreSQL + [Keycloak](https://www.keycloak.org/), an [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/), the [Nebari Operator](https://github.com/nebari-dev/nebari-operator), and the Nebari Landing Page from your Git repo.
-- Optional **[Cloudflare](https://www.cloudflare.com/) DNS records** for the cluster's public endpoint (otherwise `nic` prints the exact A/CNAME record you need to create).
-
-[OpenTofu](https://opentofu.org/) state is stored in an S3 bucket with **native lockfile-based locking** (the `.tflock` object pattern from [OpenTofu/Terraform 1.10](https://opentofu.org/docs/language/settings/backends/s3/#native-s3-state-locking); no DynamoDB table is created). The bucket is created by `nic` on first deploy, with a deterministic name of the form `nic-tfstate-<project_name>-<region>-<account-id-hash>`. Public access is fully blocked and versioning is enabled.
+- **A managed Kubernetes cluster** ready for workloads (AWS EKS, multi-AZ by default).
+- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
+- **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
+- **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
+- **Shared storage** that pods on any node can mount ([EFS](https://aws.amazon.com/efs/)).
+- **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+- **OpenTelemetry** collection ready to plug into your observability backend.
 
 ## Prerequisites
 
 ### AWS account
 
-- An AWS account with billing enabled. NKP does **not** fit within the AWS free tier; EKS, NAT gateways, and EFS all bill from day one. Review [AWS EKS pricing](https://aws.amazon.com/eks/pricing/) before proceeding.
-- Two or more availability zones in your target region (the example uses `us-west-2a` and `us-west-2b`).
+You'll need access to an AWS account you can deploy into. If you don't have one, [sign up for AWS](https://aws.amazon.com/free/).
+
+- **Region:** pick one where [EKS is available](https://docs.aws.amazon.com/eks/latest/userguide/eks-regions.html) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
+- **Quotas:** confirm your region has enough [EKS service quota](https://docs.aws.amazon.com/eks/latest/userguide/service-quotas.html) for the cluster you're about to create. New accounts often need an increase.
+- **Cost:** NKP does not fit within the free tier; EKS, NAT gateways, and EFS all bill from day one.
 
 ### IAM permissions
 
-The credentials you use to run `nic deploy` need broad permissions to create and manage the resources listed above. At minimum, the operator IAM user or role needs:
+Running `nic deploy` needs IAM permissions across these services:
 
-- **EC2 / VPC:** Create and delete VPCs, subnets, internet gateways, NAT gateways, route tables, security groups, and EFS mount-target ENIs.
-- **EKS:** Create and delete clusters, managed node groups, and add-ons; describe add-on versions.
-- **IAM:** Create roles, attach managed policies, create OIDC providers, and create EKS Pod Identity associations (`iam:PassRole`, `iam:CreateOpenIDConnectProvider`, `iam:AttachRolePolicy`).
-- **EFS:** Create file systems, mount targets, and access points.
-- **S3:** Create and read/write the OpenTofu state bucket (`nic-tfstate-<project>-<region>-<hash>`), including `PutBucketVersioning` and `PutPublicAccessBlock`. State locking uses an in-bucket `.tflock` object, so **no DynamoDB table is needed**.
-- **KMS:** Create CMKs used to encrypt EKS secrets and EFS data, and schedule them for deletion.
-- **ECR (optional):** Create repositories if you push custom container images into the cluster account.
-- **Resource Groups:** Create and tag a resource group for the deployment.
+- **Base:** STS, S3 (state bucket), EC2 core, EKS.
+- **VPC:** EC2 VPC/subnet/NAT/route-table/security-group/VPC-endpoint actions.
+- **IAM:** role create/delete/attach/PassRole.
+- **EFS:** file-system and mount-target actions.
 
-For a first deployment, an admin user is the fastest path to a working cluster. For production, scope the policy down to the resources `nic` actually touches; the [AWS provider source](https://github.com/nebari-dev/nebari-infrastructure-core/tree/main/pkg/provider/aws) and the [terraform modules](https://github.com/nebari-dev/nebari-infrastructure-core/tree/main/terraform) are the authoritative reference for every action required.
+For a first deployment, admin credentials are the fastest path. For production, deploy once with admin, then use [IAM Access Analyzer's policy generation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html) (or CloudTrail) to derive a least-privilege policy from the API calls `nic` actually made. NIC does not ship a pre-built policy today.
 
-Set credentials as environment variables in the shell where you run `nic`:
+### Install nic
+
+The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager). Install it from source:
 
 ```bash
-export AWS_ACCESS_KEY_ID="..."
-export AWS_SECRET_ACCESS_KEY="..."
-export AWS_DEFAULT_REGION="us-west-2"
+git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
+cd nebari-infrastructure-core
+make install
 ```
-
-### Local tools
-
-- **`nic` CLI:** Build from source with `make build` in [nebari-infrastructure-core](https://github.com/nebari-dev/nebari-infrastructure-core), or run `make install` to drop the binary into `$GOPATH/bin`. `nic` downloads and pins its own OpenTofu binary, so you don't install OpenTofu separately.
-- **[`kubectl`](https://kubernetes.io/docs/reference/kubectl/) and the [`aws` CLI](https://aws.amazon.com/cli/):** For verification after deploy. `nic` itself does not depend on them.
 
 ### GitOps repository
 
-`nic` requires a Git repository that ArgoCD watches for foundational service manifests. Create an empty repo (GitHub, GitLab, or any Git host reachable from the cluster) and have one of these ready:
+NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
 
-- An SSH private key with write access to the repo, exposed via the `GIT_SSH_PRIVATE_KEY` environment variable.
-- Or a personal access token, exposed via `GIT_TOKEN`.
+You'll need:
 
-Copy `.env.example` from the `nebari-infrastructure-core` repo to `.env` and fill in the secret values. `nic` loads `.env` at deploy time.
+1. **An empty Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **Two GitHub personal access tokens** scoped to the GitOps repo. For each, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
+   - **`GIT_TOKEN`** (used by `nic`): set **Contents: read+write**.
+   - **`ARGOCD_GIT_TOKEN`** (used by ArgoCD in the cluster): set **Contents: read-only**.
+
+### Secrets and credentials
+
+NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From the `nebari-infrastructure-core` clone you made above, copy the template into your working directory:
+
+```bash
+cp /path/to/nebari-infrastructure-core/.env.example .env
+```
+
+Then fill in the values you need.
+
+Uncomment and fill in at least the AWS credentials and **both** GitOps tokens. NIC needs two separate GitHub personal access tokens for the GitOps repo:
+
+- **`GIT_TOKEN`** (read+write): `nic` uses this from your machine to write ArgoCD application manifests into the repo during deploy.
+- **`ARGOCD_GIT_TOKEN`** (read-only): ArgoCD running inside the cluster uses this to continuously pull and apply the foundational-software manifests, keeping the cluster's state in sync with the repo.
+
+Using two scoped tokens means the cluster-side credential only has read access, limiting blast radius if the cluster is compromised.
+
+```bash
+# AWS credentials (pick one pattern)
+AWS_PROFILE=my-sso-profile          # SSO / IAM Identity Center
+# AWS_ACCESS_KEY_ID=...             # OR static keys
+# AWS_SECRET_ACCESS_KEY=...
+
+# GitOps repo access (two tokens)
+GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
+ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
+```
 
 ## Cost considerations
 
-Plan for the following baseline charges, even on an idle cluster. Numbers are order-of-magnitude for `us-west-2`; check the [AWS pricing pages](https://aws.amazon.com/pricing/) for current rates in your region.
+A NKP deployment provisions several AWS services that bill from day one. Check the AWS pricing pages for current rates in your region.
 
-| Component | Cost driver | Why it's there |
-|-----------|-------------|----------------|
-| EKS control plane | ~$0.10/hour (~$73/month) per cluster | Required for any managed Kubernetes on AWS. |
-| NAT gateways | ~$0.045/hour per gateway, plus per-GB data processing | One NAT per AZ so private-subnet nodes can pull images and reach AWS APIs. Multi-AZ doubles the cost but is needed for zone redundancy. |
-| EFS | Per-GB-month storage, plus throughput charges if `throughput_mode: provisioned` | Backs shared `/home` for JupyterHub users. `bursting` mode is the default and cheap at low utilization. |
+- **[EKS control plane](https://aws.amazon.com/eks/pricing/):** flat per-cluster hourly rate.
+- **[EC2 instances](https://aws.amazon.com/ec2/pricing/on-demand/)** in your node groups: instance hours per running node.
+- **[EBS root volumes](https://aws.amazon.com/ebs/pricing/)** on each node: per-GB-month for node disks.
+- **[NAT gateways](https://aws.amazon.com/vpc/pricing/):** one per AZ. Hourly rate per gateway plus per-GB data processing.
+- **[NLBs](https://aws.amazon.com/elasticloadbalancing/pricing/):** the AWS Load Balancer Controller creates one for ingress. Hourly rate plus Load Balancer Capacity Units (LCU).
+- **[EFS](https://aws.amazon.com/efs/pricing/):** per-GB-month for shared cluster storage. `bursting` is the default and is cheap at low utilization.
 
-Single-AZ deployments (one entry in `availability_zones`) cut NAT-gateway costs in half but remove zone redundancy for the data plane.
+Configuring a single AZ (`availability_zones: [us-west-2a]`) halves your NAT-gateway bill, but the entire cluster goes down if that AZ has an outage. Reasonable for short-lived test deploys; not for production.
 
-## Annotated configuration
+## Configuration
 
-Save the file below as `aws-config.yaml` and edit the marked values. This is a working baseline; trim or expand the node groups to match your workload.
+Copy a starter config from the `nebari-infrastructure-core` clone you made above. Pick the one that matches your DNS setup:
 
-```yaml title="aws-config.yaml"
-# Names the S3 state bucket, EKS cluster, and most tagged AWS resources.
-# Lowercase alphanumeric (with - and _), under ~30 chars.
-project_name: my-nebari-aws
+- **`aws-config.yaml`** for any DNS provider: you'll create A/CNAME records manually at deploy time using values `nic` prints.
+- **`aws-config-with-dns.yaml`** for Cloudflare-hosted domains: `nic` creates the records automatically.
 
-# Public hostname for the cluster. You must own this domain (or its zone)
-# and either delegate to Cloudflare (see DNS section) or create the
-# A/CNAME record manually after deploy.
-domain: nebari.example.com
-
-certificate:
-  type: letsencrypt           # Use Let's Encrypt via cert-manager.
-  acme:
-    email: admin@example.com  # Used for renewal notices and account recovery.
-
-# ArgoCD pulls foundational service manifests from this repo on every
-# deploy and on its own sync interval.
-git_repository:
-  url: "git@github.com:my-org/my-gitops-repo.git"
-  branch: main
-  path: "clusters/my-nebari-aws"  # Optional subdirectory inside the repo.
-  auth:
-    ssh_key_env: GIT_SSH_PRIVATE_KEY
-    # token_env: GIT_TOKEN          # Use this instead for HTTPS auth.
-
-cluster:
-  aws:
-    region: us-west-2
-    kubernetes_version: "1.34"
-    availability_zones:
-      - us-west-2a
-      - us-west-2b               # Drop to a single AZ to halve NAT costs.
-    vpc_cidr_block: "10.10.0.0/16" # Default if omitted is 10.0.0.0/16.
-    endpoint_private_access: true
-    endpoint_public_access: true   # Set false to restrict the API to in-VPC clients.
-    enabled_log_types:             # EKS control-plane log types sent to CloudWatch.
-      - api
-      - audit
-
-    # To adopt existing AWS networking instead of letting nic create a VPC:
-    # existing_vpc_id: vpc-xxxxxxxx
-    # existing_private_subnet_ids: [subnet-aaa, subnet-bbb]
-    # existing_security_group_id: sg-xxxxxxxx
-
-    # To pin to pre-created IAM roles (useful when an SCP blocks role creation):
-    # existing_cluster_role_arn: arn:aws:iam::123456789012:role/eks-cluster
-    # existing_node_role_arn:    arn:aws:iam::123456789012:role/eks-node
-    # permissions_boundary:      arn:aws:iam::123456789012:policy/operator-boundary
-
-    node_groups:
-      user:
-        instance: m7i.xlarge
-        min_nodes: 1               # At least one user node is required.
-        max_nodes: 5
-        # ami_type: AL2023_x86_64_STANDARD  # default; use AL2023_x86_64_NVIDIA for GPU,
-        #                                   # AL2023_ARM_64_STANDARD for Graviton.
-        # gpu: true                         # shortcut for the NVIDIA AMI.
-        # spot: true                        # use SPOT capacity (cheaper, can be reclaimed).
-        # disk_size: 100                    # EBS root volume in GiB.
-        # labels: { workload: user }
-        # taints:
-        #   - key: nebari.example/dedicated
-        #     value: user
-        #     effect: NO_SCHEDULE
-      # Add additional groups for workers, GPUs, ARM, or AWS Neuron.
-      # See examples/aws-config.yaml in nebari-infrastructure-core for the
-      # full set of options.
-
-    # The AWS Load Balancer Controller authenticates via EKS Pod Identity.
-    # Enabled by default; uncomment to override the chart version.
-    # aws_load_balancer_controller:
-    #   enabled: true
-    #   chart_version: "3.2.1"
-
-    efs:
-      enabled: true
-      performance_mode: generalPurpose
-      throughput_mode: bursting    # Switch to "elastic" for spiky workloads.
-      encrypted: true
-
-    # Longhorn (https://longhorn.io/) distributed block storage is enabled
-    # by default on AWS and provides replicated PVs with snapshot support
-    # alongside EFS. Disable it if you only need EFS-backed shared storage.
-    # longhorn:
-    #   enabled: true
-    #   replica_count: 2
-    #   dedicated_nodes: false
-
-    tags:
-      Environment: development
-      Project: nebari
+```bash
+cp /path/to/nebari-infrastructure-core/examples/aws-config.yaml aws-config.yaml
+# or, for the Cloudflare variant:
+cp /path/to/nebari-infrastructure-core/examples/aws-config-with-dns.yaml aws-config.yaml
 ```
 
-For the full list of fields (brownfield VPC adoption, custom KMS keys, AWS Load Balancer Controller overrides, advanced node-group options), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md) in the upstream repo.
+:::note
+In later steps, `<config-file>` refers to the local copy you just created (e.g., `aws-config.yaml`).
+:::
 
-A version of this file that also configures Cloudflare DNS is at [`examples/aws-config-with-dns.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config-with-dns.yaml).
+At minimum, edit these fields:
+
+- `project_name`: lowercase alphanumeric (with `-` and `_`), under ~30 chars; names the S3 state bucket, EKS cluster, and tagged resources.
+- `domain`: a hostname you own.
+- `git_repository.url`: the URL of the empty GitOps repo you created above.
+- `git_repository.auth.token_env`: set to `GIT_TOKEN` to use the PAT path you set up in `.env`.
+- `cluster.aws.region` and `availability_zones`: pick a region with EKS support and at least two AZs.
+
+For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
 ## Deploy
 
-From the directory containing your `aws-config.yaml`:
+From the directory containing your config file:
 
 ```bash
 # Quick syntax and shape check; no AWS calls.
-nic validate -f aws-config.yaml
+nic validate -f <config-file>
 
 # Preview what will change without touching AWS.
-nic deploy -f aws-config.yaml --dry-run
+nic deploy -f <config-file> --dry-run
 
 # Actually provision.
-nic deploy -f aws-config.yaml
+nic deploy -f <config-file>
 ```
 
 Allow at least 30 minutes for the first deployment. The bulk of the time is EKS control-plane creation (about 10 minutes) and ArgoCD syncing foundational services after the cluster comes up.
 
 If you need to extend the default timeout (large clusters, slow regions), pass `--timeout 1h`.
 
-:::tip[No DNS provider configured?]
-If you don't include a `dns:` block, `nic` waits for the Envoy Gateway `Service` to receive a load-balancer hostname and prints the exact A/CNAME record you need to create at your domain registrar. Create the record so cert-manager can complete the [HTTP-01 ACME challenge](https://cert-manager.io/docs/configuration/acme/http01/) and issue the TLS certificate.
-:::
+**After deploy**, DNS handling depends on which config you chose:
+
+- **`aws-config.yaml`:** `nic` prints an A/CNAME record at the end of deploy. Create it at your DNS provider before the cluster becomes reachable.
+- **`aws-config-with-dns.yaml`:** `nic` creates the DNS records automatically.
+
+## IAM roles `nic` creates in your account
+
+`nic deploy` creates a few IAM roles in your account so the cluster, the nodes, and the in-cluster controllers can each do their AWS work safely:
+
+| Role | Purpose |
+|------|---------|
+| EKS cluster role | Lets EKS create the network interfaces, security groups, and log groups the cluster needs. |
+| EKS node-group role | Grants nodes the standard EKS worker, ECR-read-only, and CNI policies. |
+| AWS Load Balancer Controller role | Lets the in-cluster controller create and manage load balancers for ingress. |
+| EFS CSI driver role | Lets the in-cluster driver mount EFS into pods. |
 
 ## Verify
 
-After `nic deploy` returns, generate a kubeconfig and check the cluster:
+:::note
+The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and the [AWS CLI](https://aws.amazon.com/cli/). Install them if you don't have them.
+:::
+
+After `nic deploy` returns, point your kubectl at the cluster and check it:
 
 ```bash
-nic kubeconfig -f aws-config.yaml -o kubeconfig.yaml
-export KUBECONFIG="$PWD/kubeconfig.yaml"
+aws eks update-kubeconfig --name <project-name> --region <region>
 
 kubectl get nodes
 kubectl get pods -A
 kubectl get applications -n argocd
 ```
 
-All ArgoCD applications should reach `Synced` and `Healthy` within a few minutes. Visit `https://<domain>` to land on the Launchpad and sign in with the Keycloak root credentials that `nic` printed at the end of deploy.
+Substitute `<project-name>` and `<region>` with the values from your config.
 
-## Update an existing deployment (reconcile workflow)
+All ArgoCD applications should reach `Synced` and `Healthy` within a few minutes. Then:
 
-`nic` is declarative: edit `aws-config.yaml` and re-run `nic deploy -f aws-config.yaml`. OpenTofu state in S3 ensures only the diff is applied, so the same command both creates and reconciles infrastructure. There is no separate `nic plan`, `nic state`, or `nic status` subcommand today; **`nic deploy --dry-run` is the supported way to inspect drift** before applying it.
+1. Visit `https://<your-domain>` (the value of `domain:` in your config) to confirm DNS, TLS, and ingress are working. You should land on the Launchpad.
+2. Sign in with the Keycloak root credentials `nic` printed at the end of deploy to confirm SSO is working.
 
-Common day-two changes that are safe to do this way:
+:::tip
+For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after the `update-kubeconfig` step.
+:::
 
-- Adjusting `min_nodes` or `max_nodes` on a node group.
-- Adding a new node group (for example, a `gpu` group).
-- Adding or removing tags.
-- Switching `throughput_mode` on EFS.
+## Update an existing deployment
 
-Use `--dry-run` first to see exactly what will change:
+To change something about a running cluster (scale a node group, add a `gpu` group, change tags, switch EFS throughput), edit your config and re-run:
 
 ```bash
-nic deploy -f aws-config.yaml --dry-run
+nic deploy -f <config-file> --dry-run    # preview the diff
+nic deploy -f <config-file>              # apply it
 ```
 
-Changes that destroy data (shrinking VPC CIDR, removing AZs, deleting a node group with running pods) require manual draining or backup first.
+`nic` is declarative, so only the diff is applied.
 
 :::warning
-Changing `region`, `project_name`, or `vpc_cidr_block` after the first deploy triggers destructive resource recreation. Treat these as one-way decisions.
+Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive resource recreation. Treat these as one-way decisions.
 :::
 
 ## Destroy
 
+When you're done with the cluster (testing complete, project ended, or you want to start fresh), tear it down with `nic destroy`. Run a dry-run first to see what will be removed:
+
 ```bash
 # Preview what will be destroyed.
-nic destroy -f aws-config.yaml --dry-run
+nic destroy -f <config-file> --dry-run
 
 # Tear down everything nic created.
-nic destroy -f aws-config.yaml
+nic destroy -f <config-file>
 ```
 
-`nic destroy` removes EKS, node groups, EFS, VPC components, the state bucket, and the lock table. If a resource fails to delete (a common cause is an NLB the AWS LBC hasn't cleaned up yet), retry with `--force` after you remove the offending resource manually:
+`nic destroy` removes EKS, node groups, EFS, VPC components, and the state bucket. If a resource fails to delete (commonly, a leftover load balancer from the cluster's ingress), remove it manually in the AWS console and retry with `--force`:
 
 ```bash
 nic destroy -f aws-config.yaml --force
 ```
 
 Always confirm in the AWS console that no orphan resources remain. NAT gateways, load balancers, and EBS volumes can keep billing if they're not cleaned up.
-
-## IAM roles that `nic` creates
-
-`nic` provisions several IAM roles inside your account so the cluster and its add-ons can call AWS APIs without long-lived credentials. You don't manage these directly, but understanding them helps when auditing or troubleshooting. If a Service Control Policy in your organization blocks role creation, you can pre-create the cluster and node roles yourself and point `nic` at them via `existing_cluster_role_arn` and `existing_node_role_arn` in the `cluster.aws` block; set `permissions_boundary` to apply an org-wide IAM boundary to every role `nic` creates.
-
-| Role | Trust | Purpose |
-|------|-------|---------|
-| EKS cluster role | EKS control plane | Lets EKS create the ENIs, security groups, and CloudWatch log groups that back the cluster. |
-| EKS node-group role | EC2 (for nodes in managed groups) | Grants nodes the standard `AmazonEKSWorkerNodePolicy`, `AmazonEC2ContainerRegistryReadOnly`, and CNI policies. |
-| AWS Load Balancer Controller Pod Identity role | EKS Pod Identity | Lets the LBC create and manage ALBs and NLBs in response to Kubernetes `Service` and `Ingress` objects. Created via the EKS Pod Identity association, not IRSA. |
-| EFS CSI driver role | EKS service account (IRSA) | Lets the CSI driver mount EFS access points into pods. |
-| OIDC provider for the cluster | n/a (federation endpoint) | Backs IRSA for any service account that needs scoped AWS access. |
-
-Source: see [`pkg/provider/aws/`](https://github.com/nebari-dev/nebari-infrastructure-core/tree/main/pkg/provider/aws) for the role wiring and the [terraform modules](https://github.com/nebari-dev/nebari-infrastructure-core/tree/main/terraform) for the policies attached.
-
-## Optional: Cloudflare DNS automation
-
-If you delegate `domain` to Cloudflare, `nic` can manage the A/CNAME records pointing to the cluster's load balancer for you. Add a `dns` block to your config and expose your Cloudflare API token via `CLOUDFLARE_API_TOKEN`:
-
-```yaml
-dns:
-  cloudflare:
-    zone_name: example.com
-```
-
-Full setup (token scopes, record names, edge cases) is covered in the dedicated DNS how-to once published. The example config at [`aws-config-with-dns.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config-with-dns.yaml) is the current reference.
-
-## Troubleshooting
-
-**EKS cluster stuck in `CREATING`.** Usually a quota issue (VPCs, NAT gateways, or Elastic IPs) or a transient EKS service problem. Check the AWS EKS console and CloudTrail for the cluster role's `CreateCluster` call. Request a quota increase if you see a `LimitExceeded` error.
-
-**ArgoCD applications stuck in `OutOfSync` or `Unknown`.** Confirm the Git repository URL is reachable from the cluster and that the SSH key or token in your `.env` has read access. `kubectl logs -n argocd deploy/argocd-repo-server` shows fetch errors.
-
-**`AccessDenied` during deploy.** The OpenTofu output that `nic` streams to stderr names the IAM action that failed (for example, `iam:CreateOpenIDConnectProvider`). Add the missing action to your IAM policy and retry.
-
-**`nic destroy` leaves resources behind.** Usually a load balancer that the AWS LBC created but didn't get a chance to clean up. Delete it from the AWS console and re-run `nic destroy --force`.
-
-**Pods can't reach the internet.** Check NAT gateway health and route-table associations on the private subnets. A common cause is shrinking `availability_zones` after the first deploy without re-running `nic deploy` to converge state.
-
-**`Error: Error acquiring the state lock`.** OpenTofu writes a `.tflock` object next to the state file in S3 while an apply is running. If a previous `nic deploy` or `nic destroy` was killed (Ctrl-C, lost network, terminated VM), the lock can be left behind. There is no `nic unlock` command today; recover by either running [`tofu force-unlock`](https://opentofu.org/docs/cli/commands/force-unlock/) `<LOCK_ID>` against the state bucket, or by deleting the `.tflock` S3 object directly. Tracked upstream in [nebari-infrastructure-core#64](https://github.com/nebari-dev/nebari-infrastructure-core/issues/64).
-
-## Next steps
-
-- Read the [architecture explainer](/docs/explanations/) for how the foundational services fit together.
-- Set up [DNS](/docs/how-tos/) automation and explore [Longhorn](/docs/how-tos/) as an alternative to EFS.
-- Install your first [software pack](/docs/software-packs/) (Data Science, ML, or Observability).
