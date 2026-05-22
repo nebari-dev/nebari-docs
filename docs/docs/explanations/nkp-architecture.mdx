@@ -6,7 +6,14 @@ description: A conceptual tour of how Nebari Kubernetes Platform is layered, wha
 
 # NKP architecture
 
-Nebari Kubernetes Platform (NKP) lets developers package AI capabilities without handling auth, routing, or TLS themselves. Users then access those capabilities through one secure platform.
+Nebari Kubernetes Platform (NKP) is how end users get to AI capabilities like chat assistants, document analyzers, and code review tools, without their team having to assemble a platform first.
+
+Developers package each capability as a **Software Pack**. NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
+
+Software Packs come from two places:
+
+- **Official packs** maintained by OpenTeams.
+- **Community packs** built and maintained by anyone outside OpenTeams: open-source contributors, businesses building on Nebari, or your own internal team.
 
 ## How the layers fit together
 
@@ -19,7 +26,8 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 **Used by end users**
 
-- **Landing page**: the home page where users access the Capabilities installed on the platform.
+- **Capabilities**: the AI features end users actually rely on (chat assistants, document analyzers, code review tools, and so on).
+- **Landing page**: the home page where users sign in and open each installed Capability.
 
 **Built by developers**
 
@@ -82,7 +90,7 @@ A few properties follow from this:
 
 ## State and locking
 
-`nic` keeps a record of everything it builds. This record gives `nic` two abilities:
+For providers that use OpenTofu under the hood (AWS today), `nic` keeps a state record of everything it builds. This record gives `nic` two abilities on those providers:
 
 - **Locking:** If two engineers run `nic deploy` at the same time, the second one waits until the first one finishes, so they can't make conflicting changes.
 
@@ -100,6 +108,9 @@ A few properties follow from this:
   ```
 
 - **Catches manual changes:** When someone makes a manual change in the cloud (resizing a node group in the console, editing an IAM policy by hand), running `nic deploy --dry-run` shows the difference, and `nic deploy` applies the correction.
+
+Providers that don't use OpenTofu (Hetzner today) take a different provisioning path and don't rely on this state file.
+
 ## Where to go next
 
 - [Get started with NKP](/docs/nkp/get-started): install the platform and run your first cluster.
