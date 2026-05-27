@@ -1,7 +1,7 @@
 ---
 title: Deploy NKP on Hetzner Cloud
 slug: /how-tos/providers/hetzner
-description: End-to-end how-to for deploying NKP on Hetzner Cloud with k3s, including EU data residency, cost considerations, and the reconcile workflow.
+description: End-to-end how-to for deploying NKP on Hetzner Cloud with k3s, including EU data residency, cost considerations, and the deploy-update-destroy lifecycle.
 ---
 
 This guide walks through deploying NKP on Hetzner Cloud with `nic` (the Nebari Infrastructure Core CLI), from an empty Hetzner account to a running cluster you can manage and tear down.
@@ -42,6 +42,10 @@ You'll add this token to your `.env` file in the next step.
 
 The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager). Install it from source:
 
+:::note
+`make install` compiles `nic` from source using Go. Install [Go 1.21 or later](https://go.dev/doc/install) before running these commands.
+:::
+
 ```bash
 git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
 cd nebari-infrastructure-core
@@ -51,24 +55,24 @@ make install
 If `nic version` reports `command not found`, add `$GOPATH/bin` to your `PATH`:
 
 ```bash
-echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
+echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc  # or ~/.bashrc for bash
 source ~/.zshrc
 ```
 
 ### GitOps repository
 
-NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
+`nic` uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
 
 You'll need:
 
 1. **An empty Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
-2. **Two GitHub personal access tokens** scoped to the GitOps repo. For each, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
+2. **Two personal access tokens** scoped to the GitOps repo. The steps below are for GitHub — for GitLab, Gitea, or other hosts, generate equivalent tokens with read+write and read-only repository access respectively. For GitHub, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
    - **`GIT_TOKEN`** (used by `nic`): set **Contents: read+write**.
    - **`ARGOCD_GIT_TOKEN`** (used by ArgoCD in the cluster): set **Contents: read-only**.
 
 ### Secrets and credentials
 
-NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
+`nic` reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
 
 ```bash
 cd /path/to/your-gitops-repo
@@ -77,7 +81,7 @@ cp /path/to/nebari-infrastructure-core/.env.example .env
 
 Ensure `.env` is in your `.gitignore` before you commit anything:
 
-```
+```text
 # .gitignore
 .env
 ```
@@ -99,7 +103,7 @@ A NKP deployment on Hetzner Cloud provisions three categories of resources that 
 
 - **[Servers](https://www.hetzner.com/cloud/):** per-hour billing for each node. The examples below use `cpx31` (4 vCPU / 8 GB RAM AMD), which strikes a good balance between price and capacity. Master nodes and worker nodes use the same type by default.
 - **[Load balancer](https://www.hetzner.com/cloud/load-balancer):** `nic` creates one Hetzner LB for cluster ingress. Flat hourly rate plus traffic.
-- **[Block volumes](https://www.hetzner.com/storage/object-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing.
+- **[Block volumes](https://www.hetzner.com/storage/block-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing.
 
 Hetzner is significantly cheaper than equivalent AWS deployments because there is no managed Kubernetes control-plane fee, no NAT gateways, no VPC interface endpoints, and no per-mount-target EFS charge. A minimal three-node `cpx31` cluster (one master, two workers) plus one load balancer typically costs a fraction of an equivalent EKS setup.
 
@@ -204,7 +208,9 @@ Allow 10–15 minutes for the first deployment. The bulk of the time is k3s clus
 
 If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
 
-**After deploy,** `nic` prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP before the cluster becomes reachable over HTTPS.
+:::important
+After `nic deploy` completes, it prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP. The cluster will not be reachable over HTTPS until this record propagates.
+:::
 
 ## Verify
 
@@ -212,7 +218,7 @@ If you need to extend the default timeout (large clusters, slow network), pass `
 The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Install it if you don't have it.
 :::
 
-NIC writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it and check the cluster:
+`nic` writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it and check the cluster:
 
 ```bash
 export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
@@ -303,12 +309,12 @@ Fix: copy the `~/.cache/nic/hetzner-k3s/ssh/` directory from the original machin
 
 ### Incomplete SSH key pair
 
-If only one of `hetzner_ed25519` / `hetzner_ed25519.pub` exists in the cache (e.g., after a partial copy), NIC errors rather than silently regenerating the pair.
+If only one of `hetzner_ed25519` / `hetzner_ed25519.pub` exists in the cache (e.g., after a partial copy), `nic` errors rather than silently regenerating the pair.
 
 Fix: delete both files and re-run `nic deploy` to generate a fresh pair:
 
 ```bash
-rm ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519*
+rm ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519*  # deletes both private key and .pub
 nic deploy -f <config-file>
 ```
 
