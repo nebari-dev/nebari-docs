@@ -130,6 +130,9 @@ A NKP deployment provisions several AWS services that bill from day one. Check t
 - **[NAT gateways](https://aws.amazon.com/vpc/pricing/):** one per AZ (minimum two, since EKS requires two AZs). Hourly rate per gateway plus per-GB data processing.
 - **[NLBs](https://aws.amazon.com/elasticloadbalancing/pricing/):** the AWS Load Balancer Controller creates one for ingress. Hourly rate plus Load Balancer Capacity Units (LCU).
 - **[EFS](https://aws.amazon.com/efs/pricing/):** per-GB-month for shared cluster storage. `bursting` is the default and is cheap at low utilization.
+- **[VPC interface endpoints](https://aws.amazon.com/privatelink/pricing/):** around nine created by default. Hourly rate per endpoint per AZ, plus per-GB data processing.
+- **[KMS](https://aws.amazon.com/kms/pricing/):** one customer-managed key for EKS secrets encryption. Per-key-month plus per-request.
+- **[CloudWatch Logs](https://aws.amazon.com/cloudwatch/pricing/):** EKS control-plane log ingestion and storage.
 
 ## Configuration
 
