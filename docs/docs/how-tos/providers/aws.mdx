@@ -4,7 +4,7 @@ slug: /how-tos/providers/aws
 description: End-to-end how-to for deploying NKP on AWS EKS, including IAM, cost considerations, and the reconcile workflow.
 ---
 
-This guide walks through deploying NKP on AWS using `nic`, the Nebari Infrastructure Core CLI. It targets operators who own day-to-day cluster operations and need to understand the IAM and cost realities before provisioning.
+This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastructure Core CLI), from an empty AWS account to a running cluster you can manage and tear down.
 
 ## What your team gets
 
@@ -16,7 +16,6 @@ When `nic deploy` finishes, your team will have:
 - **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
 - **Shared storage** that pods on any node can mount ([EFS](https://aws.amazon.com/efs/)).
 - **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
-- **OpenTelemetry** collection ready to plug into your observability backend.
 
 ## Prerequisites
 
@@ -30,14 +29,9 @@ You'll need access to an AWS account you can deploy into. If you don't have one,
 
 ### IAM permissions
 
-Running `nic deploy` needs IAM permissions across these services:
+Running `nic deploy` (and `nic destroy`) needs permissions across S3, EC2, EKS, IAM, EFS, SSM, CloudWatch Logs, and Elastic Load Balancing.
 
-- **Base:** STS, S3 (state bucket), EC2 core, EKS.
-- **VPC:** EC2 VPC/subnet/NAT/route-table/security-group/VPC-endpoint actions.
-- **IAM:** role create/delete/attach/PassRole.
-- **EFS:** file-system and mount-target actions.
-
-For a first deployment, admin credentials are the fastest path. For production, deploy once with admin, then use [IAM Access Analyzer's policy generation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html) (or CloudTrail) to derive a least-privilege policy from the API calls `nic` actually made. NIC does not ship a pre-built policy today.
+For a first deployment, admin credentials are the fastest path. For production, [create a customer-managed policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) from this [least-privilege IAM policy](/policies/aws/nic-deploy.json) and attach it to your deploy user or role.
 
 ### Install nic
 
@@ -133,11 +127,9 @@ A NKP deployment provisions several AWS services that bill from day one. Check t
 - **[EKS control plane](https://aws.amazon.com/eks/pricing/):** flat per-cluster hourly rate.
 - **[EC2 instances](https://aws.amazon.com/ec2/pricing/on-demand/)** in your node groups: instance hours per running node.
 - **[EBS root volumes](https://aws.amazon.com/ebs/pricing/)** on each node: per-GB-month for node disks.
-- **[NAT gateways](https://aws.amazon.com/vpc/pricing/):** one per AZ. Hourly rate per gateway plus per-GB data processing.
+- **[NAT gateways](https://aws.amazon.com/vpc/pricing/):** one per AZ (minimum two, since EKS requires two AZs). Hourly rate per gateway plus per-GB data processing.
 - **[NLBs](https://aws.amazon.com/elasticloadbalancing/pricing/):** the AWS Load Balancer Controller creates one for ingress. Hourly rate plus Load Balancer Capacity Units (LCU).
 - **[EFS](https://aws.amazon.com/efs/pricing/):** per-GB-month for shared cluster storage. `bursting` is the default and is cheap at low utilization.
-
-Configuring a single AZ (`availability_zones: [us-west-2a]`) halves your NAT-gateway bill, but the entire cluster goes down if that AZ has an outage. Reasonable for short-lived test deploys; not for production.
 
 ## Configuration
 
@@ -241,14 +233,29 @@ kubectl get applications -n argocd
 
 Substitute `<project-name>` and `<region>` with the values from your config, and `<aws-profile>` with the AWS profile name from your `~/.aws/config` (e.g., your SSO profile). Omit `--profile <aws-profile>` if your AWS credentials are already the shell default.
 
-All ArgoCD applications should reach `Synced` and `Healthy` within a few minutes. Then:
+:::note
+If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours). Re-authenticate with `aws sso login --profile <aws-profile>` and retry.
+:::
 
-1. Visit `https://<your-domain>` (the value of `domain:` in your config) to confirm DNS, TLS, and ingress are working. You should land on the Launchpad.
-2. Sign in with the Keycloak root credentials `nic` printed at the end of deploy to confirm SSO is working.
+All ArgoCD applications should reach `Healthy` within a few minutes (some may show `OutOfSync`, which is fine).
 
 :::tip
 For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after the `update-kubeconfig` step.
 :::
+
+## First sign-in
+
+`nic` does not create an end-user account, so create one in Keycloak before you can sign in:
+
+1. Get the Keycloak admin credentials:
+   ```bash
+   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
+   ```
+2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
+3. Switch the realm dropdown (top-left) from `master` to `nebari`.
+4. Go to **Users → Add user**, set a username and email, and save.
+5. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
+6. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
 
 ## Update an existing deployment
 
