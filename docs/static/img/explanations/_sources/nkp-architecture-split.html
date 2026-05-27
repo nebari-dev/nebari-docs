@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NKP Architecture — Pack vs Cluster Work — Source</title>
+  <meta name="description" content="Editable source for the NKP pack-work / cluster-work split diagram, rendered at /img/explanations/nkp-architecture-split.png. Plain HTML with inline styles, openable in any browser, re-importable into Paper via the write_html MCP tool.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
+    .artboard { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <div class="artboard" style="background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; padding: 64px 80px 56px; width: 960px; font-family: 'Poppins', system-ui, sans-serif;">
+
+    <!-- Cloud container -->
+    <div style="background-color: #FEF6E0; border: 1.5px solid #B45309; border-radius: 18px; display: flex; flex-direction: column; gap: 18px; padding: 24px;">
+
+      <div style="align-items: baseline; display: flex; gap: 16px; justify-content: space-between; padding: 0 4px;">
+        <div style="color: #000000; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; line-height: 22px; text-transform: uppercase;">Cloud or bare-metal provider</div>
+        <div style="color: #000000; font-size: 16px; line-height: 20px;">AWS · GCP · Azure · Hetzner · ...</div>
+      </div>
+
+      <!-- K8s container -->
+      <div style="background-color: #FFFBEB; border: 1.5px dashed #92400E; border-radius: 14px; display: flex; flex-direction: column; gap: 16px; padding: 20px 24px;">
+
+        <div style="align-items: baseline; display: flex; gap: 16px; justify-content: space-between;">
+          <div style="color: #000000; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; line-height: 22px; text-transform: uppercase;">Managed Kubernetes cluster</div>
+          <div style="color: #000000; font-size: 16px; line-height: 20px;">EKS · GKE · AKS · K3s</div>
+        </div>
+
+        <!-- PACK WORK banner -->
+        <div style="align-items: center; display: flex; gap: 12px; padding: 4px 0;">
+          <div style="background-color: #0F766E; border-radius: 999px; flex: 1; height: 1.5px; opacity: 0.5;"></div>
+          <div style="align-items: center; display: flex; flex-direction: column; gap: 2px;">
+            <div style="color: #0F766E; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; line-height: 18px; text-transform: uppercase;">Pack work</div>
+            <div style="color: #475569; font-size: 14px; line-height: 18px;">shipped via Git</div>
+          </div>
+          <div style="background-color: #0F766E; border-radius: 999px; flex: 1; height: 1.5px; opacity: 0.5;"></div>
+        </div>
+
+        <!-- Landing page -->
+        <div style="align-items: center; display: flex; justify-content: center; padding-top: 8px;">
+          <div style="align-items: center; background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px; width: 304px;">
+            <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Landing page</div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">page for installed Capabilities</div>
+          </div>
+        </div>
+
+        <!-- shown on arrow -->
+        <div style="display: flex; justify-content: center; position: relative;">
+          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">shown on</div>
+        </div>
+
+        <!-- Software Pack -->
+        <div style="align-items: center; display: flex; justify-content: center;">
+          <div style="align-items: center; background-color: #ECFDF7; border: 1.5px solid #0F766E; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px;">
+            <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Software Pack</div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">e.g. chat assistant, code review</div>
+          </div>
+        </div>
+
+        <!-- deploys arrow (boundary crossing) -->
+        <div style="align-items: center; display: flex; justify-content: center; position: relative;">
+          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 30 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">deploys</div>
+        </div>
+
+        <!-- CLUSTER WORK banner -->
+        <div style="align-items: center; display: flex; gap: 12px; padding: 4px 0;">
+          <div style="background-color: #CB39EC; border-radius: 999px; flex: 1; height: 1.5px; opacity: 0.5;"></div>
+          <div style="align-items: center; display: flex; flex-direction: column; gap: 2px;">
+            <div style="color: #CB39EC; font-size: 14px; font-weight: 700; letter-spacing: 0.12em; line-height: 18px; text-transform: uppercase;">Cluster work</div>
+            <div style="color: #475569; font-size: 14px; line-height: 18px;">provisioned by nic CLI</div>
+          </div>
+          <div style="background-color: #CB39EC; border-radius: 999px; flex: 1; height: 1.5px; opacity: 0.5;"></div>
+        </div>
+
+        <!-- Nebari Operator -->
+        <div style="display: flex; justify-content: center;">
+          <div style="align-items: center; background-color: #FAF5FF; border: 1.5px solid #CB39EC; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 16px 28px;">
+            <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Nebari Operator</div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">automation that runs in the cluster</div>
+          </div>
+        </div>
+
+        <!-- powers arrow -->
+        <div style="align-items: center; display: flex; justify-content: center; position: relative;">
+          <svg width="20" height="36" viewBox="0 0 20 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 34 L10 6 M4 12 L10 6 L16 12" stroke="#0F1015" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="color: #475569; font-size: 16px; left: calc(50% + 24px); line-height: 20px; position: absolute; top: 50%; transform: translateY(-50%);">powers</div>
+        </div>
+
+        <!-- Foundational software -->
+        <div style="align-items: center; background-color: #FAF5FF; border: 1.5px solid #CB39EC; border-radius: 12px; display: flex; flex-direction: column; gap: 8px; padding: 20px 32px;">
+          <div style="color: #0F1015; font-size: 22px; font-weight: 700; line-height: 28px;">Foundational software</div>
+          <div style="align-items: center; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;">
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">secure connections</div>
+            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">login</div>
+            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">traffic routing</div>
+            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">monitoring</div>
+            <div style="background-color: #94A3B8; border-radius: 50%; height: 4px; width: 4px;"></div>
+            <div style="color: #475569; font-size: 16px; line-height: 20px;">continuous delivery</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
