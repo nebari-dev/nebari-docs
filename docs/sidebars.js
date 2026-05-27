@@ -32,7 +32,7 @@ module.exports = {
       label: "Explanations",
       link: { type: "doc", id: "explanations/index" },
       items: [
-        // Add explanation docs here
+        "explanations/nkp-architecture",
       ],
     },
         {
