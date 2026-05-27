@@ -49,6 +49,13 @@ cd nebari-infrastructure-core
 make install
 ```
 
+If `nic version` reports `command not found`, add `$GOPATH/bin` to your `PATH`:
+
+```bash
+echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 ### GitOps repository
 
 NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
@@ -62,28 +69,59 @@ You'll need:
 
 ### Secrets and credentials
 
-NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From the `nebari-infrastructure-core` clone you made above, copy the template into your working directory:
+NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
 
 ```bash
+cd /path/to/your-gitops-repo
 cp /path/to/nebari-infrastructure-core/.env.example .env
 ```
 
-Then fill in the values you need.
+Ensure to add `.env` to your repo's `.gitignore` before you commit anything:
 
-Uncomment and fill in at least the AWS credentials and **both** GitOps tokens. NIC needs two separate GitHub personal access tokens for the GitOps repo:
+```
+# .gitignore
+.env
+```
+
+Then uncomment and fill in the AWS block and the GitOps tokens.
+
+#### AWS credentials
+
+NIC uses the AWS Go SDK's standard credential chain, so any of these work:
+
+- **`AWS_PROFILE=<name>`:** points to an SSO or static profile in `~/.aws/config`. For SSO, run `aws sso login --profile <name>` first so the session is valid.
+- **`AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY`:** static IAM user keys. Use only if you've created an IAM user with the required permissions.
+- **`AWS_SESSION_TOKEN`** (in addition to the above): required if your keys are temporary (e.g., copied from the AWS access portal's "Access keys" popup).
+
+Pick one pattern for `.env`:
+
+```bash
+AWS_PROFILE=my-sso-profile  # SSO / IAM Identity Center
+# OR static keys:
+# AWS_ACCESS_KEY_ID=AKIA...
+# AWS_SECRET_ACCESS_KEY=...
+# AWS_SESSION_TOKEN=...     # only if keys are temporary
+```
+
+Verify the credentials work before deploying:
+
+```bash
+source .env
+aws sts get-caller-identity
+```
+
+You should see your AWS account ID and the role/user the credentials resolve to.
+
+#### GitOps repo tokens
+
+NIC needs two GitHub personal access tokens for the GitOps repo:
 
 - **`GIT_TOKEN`** (read+write): `nic` uses this from your machine to write ArgoCD application manifests into the repo during deploy.
 - **`ARGOCD_GIT_TOKEN`** (read-only): ArgoCD running inside the cluster uses this to continuously pull and apply the foundational-software manifests, keeping the cluster's state in sync with the repo.
 
-Using two scoped tokens means the cluster-side credential only has read access, limiting blast radius if the cluster is compromised.
+Splitting the credentials this way limits what an attacker could do if they got into the cluster: they'd only be able to read the GitOps repo, not commit changes back to it.
 
 ```bash
-# AWS credentials (pick one pattern)
-AWS_PROFILE=my-sso-profile          # SSO / IAM Identity Center
-# AWS_ACCESS_KEY_ID=...             # OR static keys
-# AWS_SECRET_ACCESS_KEY=...
-
-# GitOps repo access (two tokens)
 GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
 ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
 ```
@@ -111,7 +149,7 @@ Copy a starter config from the `nebari-infrastructure-core` clone you made above
 ```bash
 cp /path/to/nebari-infrastructure-core/examples/aws-config.yaml aws-config.yaml
 # or, for the Cloudflare variant:
-cp /path/to/nebari-infrastructure-core/examples/aws-config-with-dns.yaml aws-config.yaml
+cp /path/to/nebari-infrastructure-core/examples/aws-config-with-dns.yaml aws-config-with-dns.yaml
 ```
 
 :::note
@@ -120,11 +158,32 @@ In later steps, `<config-file>` refers to the local copy you just created (e.g.,
 
 At minimum, edit these fields:
 
-- `project_name`: lowercase alphanumeric (with `-` and `_`), under ~30 chars; names the S3 state bucket, EKS cluster, and tagged resources.
-- `domain`: a hostname you own.
-- `git_repository.url`: the URL of the empty GitOps repo you created above.
-- `git_repository.auth.token_env`: set to `GIT_TOKEN` to use the PAT path you set up in `.env`.
-- `cluster.aws.region` and `availability_zones`: pick a region with EKS support and at least two AZs.
+```yaml
+project_name: my-cluster  # lowercase alphanumeric
+domain: nebari.example.com  # a hostname you own
+
+certificate:
+  acme:
+    email: you@example.com  # required for Let's Encrypt; renewal notices go here
+
+git_repository:
+  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
+  path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
+  auth:
+    token_env: GIT_TOKEN  # matches the GIT_TOKEN set in .env
+
+cluster:
+  aws:
+    region: us-west-2  # an EKS-supported region
+    availability_zones:
+      - us-west-2a  # at least two AZs
+      - us-west-2b
+
+# Only if you used aws-config-with-dns.yaml:
+dns:
+  cloudflare:
+    zone_name: example.com  # your Cloudflare zone (parent of `domain`)
+```
 
 For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
@@ -136,7 +195,7 @@ From the directory containing your config file:
 # Quick syntax and shape check; no AWS calls.
 nic validate -f <config-file>
 
-# Preview what will change without touching AWS.
+# Validates config and credentials; no resources are created.
 nic deploy -f <config-file> --dry-run
 
 # Actually provision.
@@ -161,6 +220,7 @@ If you need to extend the default timeout (large clusters, slow regions), pass `
 | EKS cluster role | Lets EKS create the network interfaces, security groups, and log groups the cluster needs. |
 | EKS node-group role | Grants nodes the standard EKS worker, ECR-read-only, and CNI policies. |
 | AWS Load Balancer Controller role | Lets the in-cluster controller create and manage load balancers for ingress. |
+| EBS CSI driver role | Lets the in-cluster driver mount EBS volumes into pods. |
 | EFS CSI driver role | Lets the in-cluster driver mount EFS into pods. |
 
 ## Verify
@@ -172,14 +232,14 @@ The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and the
 After `nic deploy` returns, point your kubectl at the cluster and check it:
 
 ```bash
-aws eks update-kubeconfig --name <project-name> --region <region>
+aws eks update-kubeconfig --name <project-name> --region <region> --profile <aws-profile>
 
 kubectl get nodes
 kubectl get pods -A
 kubectl get applications -n argocd
 ```
 
-Substitute `<project-name>` and `<region>` with the values from your config.
+Substitute `<project-name>` and `<region>` with the values from your config, and `<aws-profile>` with the AWS profile name from your `~/.aws/config` (e.g., your SSO profile). Omit `--profile <aws-profile>` if your AWS credentials are already the shell default.
 
 All ArgoCD applications should reach `Synced` and `Healthy` within a few minutes. Then:
 
@@ -195,7 +255,7 @@ For an interactive view of all cluster resources (especially handy while watchin
 To change something about a running cluster (scale a node group, add a `gpu` group, change tags, switch EFS throughput), edit your config and re-run:
 
 ```bash
-nic deploy -f <config-file> --dry-run    # preview the diff
+nic deploy -f <config-file> --dry-run    # verify config resolves; no resources changed
 nic deploy -f <config-file>              # apply it
 ```
 
