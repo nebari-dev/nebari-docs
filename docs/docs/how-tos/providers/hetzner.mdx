@@ -1,0 +1,321 @@
+---
+title: Deploy NKP on Hetzner Cloud
+slug: /how-tos/providers/hetzner
+description: End-to-end how-to for deploying NKP on Hetzner Cloud with k3s, including EU data residency, cost considerations, and the reconcile workflow.
+---
+
+This guide walks through deploying NKP on Hetzner Cloud with `nic` (the Nebari Infrastructure Core CLI), from an empty Hetzner account to a running cluster you can manage and tear down.
+
+Hetzner is the recommended starting point for most teams: it is the cheapest production-capable provider supported by NKP, offers EU data residency (GDPR-friendly locations in Germany and Finland), and requires no IAM policies, NAT gateways, or managed-Kubernetes fees — just servers, one load balancer, and block volumes.
+
+## What your team gets
+
+When `nic deploy` finishes, your team will have:
+
+- **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
+- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
+- **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
+- **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
+- **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
+- **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+
+## Prerequisites
+
+### Hetzner Cloud account
+
+You'll need a Hetzner Cloud account. If you don't have one, [sign up at console.hetzner.cloud](https://console.hetzner.cloud/).
+
+- **Location:** pick a datacenter where you want your cluster. EU options — `fsn1` (Falkenstein, Germany), `nbg1` (Nuremberg, Germany), `hel1` (Helsinki, Finland) — keep data inside the EU and are GDPR-friendly. US options are `ash` (Ashburn, VA) and `hil` (Hillsboro, OR); Singapore is `sin`.
+- **Cost:** Hetzner Cloud has no free tier; servers, load balancers, and volumes all bill from the moment they're created.
+
+### API token
+
+`nic` authenticates to Hetzner using a project-scoped API token:
+
+1. Open [console.hetzner.cloud](https://console.hetzner.cloud/), select your project, and go to **Security → API Tokens**.
+2. Click **Generate API token**, give it a description (e.g., `nic-deploy`), and choose **Read & Write**.
+3. Copy the token immediately — it is shown only once.
+
+You'll add this token to your `.env` file in the next step.
+
+### Install nic
+
+The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager). Install it from source:
+
+```bash
+git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
+cd nebari-infrastructure-core
+make install
+```
+
+If `nic version` reports `command not found`, add `$GOPATH/bin` to your `PATH`:
+
+```bash
+echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### GitOps repository
+
+NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
+
+You'll need:
+
+1. **An empty Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **Two GitHub personal access tokens** scoped to the GitOps repo. For each, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
+   - **`GIT_TOKEN`** (used by `nic`): set **Contents: read+write**.
+   - **`ARGOCD_GIT_TOKEN`** (used by ArgoCD in the cluster): set **Contents: read-only**.
+
+### Secrets and credentials
+
+NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
+
+```bash
+cd /path/to/your-gitops-repo
+cp /path/to/nebari-infrastructure-core/.env.example .env
+```
+
+Ensure `.env` is in your `.gitignore` before you commit anything:
+
+```
+# .gitignore
+.env
+```
+
+Then uncomment and fill in the Hetzner and GitOps token lines:
+
+```bash
+# Hetzner Cloud
+HETZNER_TOKEN=your-hetzner-api-token
+
+# GitOps tokens
+GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
+ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
+```
+
+## Cost considerations
+
+A NKP deployment on Hetzner Cloud provisions three categories of resources that bill from day one. Check [Hetzner's pricing page](https://www.hetzner.com/cloud/) for current rates.
+
+- **[Servers](https://www.hetzner.com/cloud/):** per-hour billing for each node. The examples below use `cpx31` (4 vCPU / 8 GB RAM AMD), which strikes a good balance between price and capacity. Master nodes and worker nodes use the same type by default.
+- **[Load balancer](https://www.hetzner.com/cloud/load-balancer):** `nic` creates one Hetzner LB for cluster ingress. Flat hourly rate plus traffic.
+- **[Block volumes](https://www.hetzner.com/storage/object-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing.
+
+Hetzner is significantly cheaper than equivalent AWS deployments because there is no managed Kubernetes control-plane fee, no NAT gateways, no VPC interface endpoints, and no per-mount-target EFS charge. A minimal three-node `cpx31` cluster (one master, two workers) plus one load balancer typically costs a fraction of an equivalent EKS setup.
+
+## Configuration
+
+Copy the starter config from the `nebari-infrastructure-core` clone:
+
+```bash
+cp /path/to/nebari-infrastructure-core/examples/hetzner-config.yaml hetzner-config.yaml
+```
+
+:::note
+In later steps, `<config-file>` refers to this local copy (`hetzner-config.yaml`).
+:::
+
+At minimum, edit these fields:
+
+```yaml
+project_name: my-cluster          # lowercase alphanumeric, hyphens, underscores
+domain: nebari.example.com        # a hostname you own
+
+certificate:
+  type: letsencrypt
+  acme:
+    email: you@example.com        # required for Let's Encrypt; renewal notices go here
+
+git_repository:
+  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
+  path: clusters/my-cluster       # subdirectory in the repo; conventionally matches project_name
+  auth:
+    token_env: GIT_TOKEN          # matches GIT_TOKEN set in .env
+
+cluster:
+  hetzner:
+    # REQUIRED: datacenter location.
+    # EU (GDPR-friendly): fsn1 (Falkenstein, DE), nbg1 (Nuremberg, DE), hel1 (Helsinki, FI)
+    # US: ash (Ashburn, VA), hil (Hillsboro, OR)
+    # Asia: sin (Singapore)
+    location: fsn1
+
+    # REQUIRED: Kubernetes version. Short form ("1.32") is resolved to the latest
+    # k3s patch release automatically. Use the explicit form ("v1.32.0+k3s1") to pin.
+    kubernetes_version: "1.32"
+
+    # OPTIONAL: allow application pods on control-plane nodes.
+    # Default: true — enables single-node clusters and better utilisation of small instances.
+    # Set to false for production clusters where you want dedicated masters
+    # that only run etcd and the Kubernetes API server.
+    # schedule_workloads_on_masters: false
+
+    node_groups:
+      # Exactly one node group must have master: true.
+      # Count must be odd (1, 3, 5) when running HA embedded etcd.
+      master:
+        instance_type: cpx31      # 4 vCPU / 8 GB — good general-purpose starting point
+        count: 1
+        master: true
+
+      workers:
+        instance_type: cpx31
+        count: 2
+
+    # OPTIONAL: bring your own SSH keys.
+    # If omitted, NIC auto-generates an ed25519 key pair at
+    # ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519{,.pub}.
+    #
+    # WARNING: the SSH key is required for ALL cluster operations (redeploy, destroy,
+    # scale). If you manage the cluster from multiple machines, either copy the
+    # auto-generated keys to each machine or configure explicit paths here so the
+    # same key is always available.
+    # ssh:
+    #   public_key_path: "~/.ssh/id_ed25519.pub"
+    #   private_key_path: "~/.ssh/id_ed25519"
+
+    # OPTIONAL: restrict SSH and Kubernetes API access.
+    # Defaults to 0.0.0.0/0 (open to all) — restrict to your office/VPN CIDRs for production.
+    # network:
+    #   ssh_allowed_cidrs:
+    #     - 203.0.113.0/24
+    #   api_allowed_cidrs:
+    #     - 203.0.113.0/24
+```
+
+For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+
+## Deploy
+
+From the directory containing your config file and `.env`:
+
+```bash
+# Quick syntax and shape check; no Hetzner API calls.
+nic validate -f <config-file>
+
+# Validates config and credentials; no resources are created.
+nic deploy -f <config-file> --dry-run
+
+# Actually provision.
+nic deploy -f <config-file>
+```
+
+Allow 10–15 minutes for the first deployment. The bulk of the time is k3s cluster creation and ArgoCD syncing the foundational services after the cluster comes up.
+
+If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
+
+**After deploy,** `nic` prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP before the cluster becomes reachable over HTTPS.
+
+## Verify
+
+:::note
+The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Install it if you don't have it.
+:::
+
+NIC writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it and check the cluster:
+
+```bash
+export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
+
+kubectl get nodes
+kubectl get pods -A
+kubectl get applications -n argocd
+```
+
+Substitute `<project_name>` with the value of `project_name` in your config.
+
+All ArgoCD applications should reach `Healthy` within a few minutes of the cluster coming up (some may briefly show `Progressing` or `OutOfSync` — this is normal).
+
+:::tip
+For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after setting `KUBECONFIG`.
+:::
+
+## First sign-in
+
+`nic` does not create an end-user account, so create one in Keycloak before you can sign in:
+
+1. Get the Keycloak admin credentials:
+   ```bash
+   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
+   ```
+2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
+3. Switch the realm dropdown (top-left) from `master` to `nebari`.
+4. Go to **Users → Add user**, set a username and email, and save.
+5. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
+6. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
+
+## Update an existing deployment
+
+To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run:
+
+```bash
+nic deploy -f <config-file> --dry-run    # verify config resolves; no resources changed
+nic deploy -f <config-file>              # apply it
+```
+
+`nic` is declarative, so only the diff is applied.
+
+:::warning
+Changing `location` or `project_name` triggers destructive resource recreation. Treat these as one-way decisions.
+:::
+
+## Destroy
+
+When you're done with the cluster, tear it down with `nic destroy`. Run a dry-run first to see what will be removed:
+
+```bash
+# Preview what will be destroyed.
+nic destroy -f <config-file> --dry-run
+
+# Tear down everything nic created.
+nic destroy -f <config-file>
+```
+
+`nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers. This is more automatic than the AWS teardown — you rarely need to clean up manually.
+
+:::note
+If you set `persist_data: true` in your config, CSI volumes labelled `persist=true` are **skipped** during destroy and will continue to bill. Remove them manually from the [Hetzner Cloud Console](https://console.hetzner.cloud/) when you no longer need them.
+:::
+
+If a resource fails to delete and `nic destroy` exits with an error, retry with `--force`:
+
+```bash
+nic destroy -f <config-file> --force
+```
+
+Always confirm in the Hetzner Cloud Console that no orphan servers, volumes, or load balancers remain after destroy.
+
+## Troubleshooting
+
+### `HETZNER_TOKEN` not set or invalid
+
+`nic validate` and `nic deploy` fail immediately with `HETZNER_TOKEN environment variable is required` if the token is missing from `.env`, or with an authentication error if the token has the wrong scope.
+
+Fix: re-check that `HETZNER_TOKEN` is set in `.env` **and** that the token was generated with **Read & Write** permissions (not read-only).
+
+### SSH key missing on a second machine
+
+`nic` generates an ed25519 key pair at `~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519{,.pub}` on the first machine that runs `nic deploy`. Subsequent operations (`nic deploy`, `nic destroy`, scale) all require that same key.
+
+If you switch to a different machine and those files are absent, `nic` will fail to connect to the cluster nodes.
+
+Fix: copy the `~/.cache/nic/hetzner-k3s/ssh/` directory from the original machine, **or** add explicit `ssh.public_key_path` / `ssh.private_key_path` entries in your config pointing to a key that is available everywhere (e.g., a shared key in your secrets manager).
+
+### Incomplete SSH key pair
+
+If only one of `hetzner_ed25519` / `hetzner_ed25519.pub` exists in the cache (e.g., after a partial copy), NIC errors rather than silently regenerating the pair.
+
+Fix: delete both files and re-run `nic deploy` to generate a fresh pair:
+
+```bash
+rm ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519*
+nic deploy -f <config-file>
+```
+
+### Orphaned resources after a failed destroy
+
+If `nic destroy` fails mid-run, some Hetzner resources may be left behind and continue billing.
+
+Fix:
+1. Retry with `--force`: `nic destroy -f <config-file> --force`
+2. Open the [Hetzner Cloud Console](https://console.hetzner.cloud/) and verify that no stray **servers**, **volumes**, or **load balancers** named after your `project_name` remain. Delete any you find.
