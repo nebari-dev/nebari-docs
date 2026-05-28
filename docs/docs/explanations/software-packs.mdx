@@ -6,11 +6,9 @@ description: A conceptual tour of Software Packs, the NebariApp Custom Resource,
 
 # Pack architecture
 
-A **Software Pack** is a self-contained, installable artifact published to a GitHub repository. Once installed on NKP, it delivers a [Capability](/docs/introduction#capabilities) such as a chat assistant, a document analyzer, or a model-serving stack.
+A **Software Pack** is a self-contained, installable artifact published to a GitHub repository. Once installed on NKP, it delivers a Capability such as a chat assistant, BI dashboards, or a model-serving stack.
 
 Each pack is already wired into the platform's login, routing, and TLS, so users can open it from the landing page and start working.
-
-This page explains how packs fit into NKP and what happens between publishing one on GitHub and opening it from the landing page.
 
 ## Why packs exist
 
@@ -26,7 +24,7 @@ A platform that ships everything in one bundle is heavy to install, expensive to
 A Software Pack is two things glued together:
 
 - **An ArgoCD `Application`** that points at the pack's GitHub repository. ArgoCD reads it and installs the pack's workloads.
-- **A `NebariApp` resource** that asks the platform to connect the pack to login, routing, and TLS automatically.
+- **A `NebariApp` resource** that tells the [Nebari Operator](https://github.com/nebari-dev/nebari-operator) to connect the pack to login, routing, and TLS automatically.
 
 ## The NebariApp resource
 
@@ -65,33 +63,27 @@ From this, the Nebari Operator creates:
 - A **`Certificate`** for `hostname`, so visitors connect over HTTPS instead of plain HTTP.
 - A **Keycloak login** for the pack, so visitors sign in once and use the same account everywhere on the platform.
 
-All of this happens without the pack author writing a single integration by hand. They write the `NebariApp`; the operator builds the rest.
+In short, the pack author writes only the `NebariApp`; the operator handles the rest.
 
 For the full list of `NebariApp` fields, see the [operator configuration reference](https://github.com/nebari-dev/nebari-operator/blob/main/docs/configuration-reference.md).
 
 ## Pack lifecycle
 
-A pack moves through four stages, from a repo on GitHub to a tile on the landing page:
+A pack takes four steps to get from a GitHub repo to the landing page:
 
-1. **A platform engineer installs the pack via GitOps.** They add the pack's ArgoCD `Application` manifest to the cluster's GitOps repo (or apply it directly). ArgoCD picks it up.
-2. **ArgoCD deploys the pack's workloads.** Containers, services, configmaps, and the `NebariApp` resource all land in the target namespace.
-3. **The Nebari Operator reconciles the `NebariApp`** and wires the pack into the platform.
-4. **The pack appears on the landing page** as an available Capability.
+1. **The pack is installed onto a cluster via ArgoCD.** An ArgoCD `Application` manifest points at the pack's repo, and ArgoCD syncs from there.
+2. **ArgoCD deploys the pack's workloads and the `NebariApp` into the cluster.**
+3. **The Nebari Operator picks up the `NebariApp`** and creates the routing, certificate, and login that the pack needs.
+4. **The pack appears on the [landing page](https://github.com/nebari-dev/nebari-landing)** as an available Capability.
 
-Removing a pack is the reverse: delete the ArgoCD `Application`, and the `NebariApp` plus the workloads go with it. The operator's finalizer cleans up the HTTPRoute, the TLS certificate, and the OAuth client it created.
+{/* Diagram source: docs/static/img/explanations/_sources/pack-lifecycle.html
+    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
+
+![Pack lifecycle diagram: the pack's GitHub repo (Helm chart plus NebariApp) sits outside the Managed Kubernetes cluster and is synced by ArgoCD. Inside the cluster, ArgoCD deploys the pack workloads and NebariApp resource, which is picked up by the Nebari Operator. The operator creates the HTTPRoute, Certificate, and Keycloak login, and the pack appears on the landing page.](/img/explanations/pack-lifecycle.png)
 
 ## Where packs come from
 
 Packs are published to GitHub repositories, and they come from two channels:
 
-- **Official packs by OpenTeams.** Enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. Use these as your default starting point.
-- **Community packs.** Built and maintained by open-source contributors: individual maintainers, or businesses building on Nebari. Useful, but treat them with the same care you'd treat any third-party dependency: read the source, pin the version, understand who maintains it.
-
-Internal teams can also build packs the same way and install them from their own private repos, no different from how the official and community packs work. The only thing that changes between a pack from OpenTeams, an outside contributor, or your own team is who you trust to write it.
-
-## Where to go next
-
-- [NKP architecture](/docs/explanations/nkp-architecture): the wider layered view of NKP, with the foundational software and `nic` CLI in context.
-- [Nebari Operator quickstart](https://github.com/nebari-dev/nebari-operator/blob/main/docs/quickstart.md): deploy a `NebariApp` end-to-end on a local Kind cluster.
-- [Software pack template](https://github.com/nebari-dev/nebari-software-pack-template): the scaffold to start building a pack.
-- Example packs: [LLM serving](https://github.com/nebari-dev/nebari-llm-serving-pack), [Superset](https://github.com/nebari-dev/nebari-superset-pack), [KServe deployment](https://github.com/nebari-dev/nebari-kserve-deployment).
+- **Official packs.** Maintained by OpenTeams and published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. See the [pack catalog](/docs/software-packs/) for the current list.
+- **Community packs.** Anyone outside OpenTeams can build one, whether that's an open-source maintainer or your own team. A community pack follows the same structure as an official pack. See [Build your own pack](/docs/software-packs/build-your-own) to author one.
