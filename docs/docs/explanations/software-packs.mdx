@@ -1,0 +1,109 @@
+---
+title: Pack architecture
+id: software-packs
+description: A conceptual tour of Software Packs, the NebariApp Custom Resource, and how the Nebari Operator wires each pack into routing, login, TLS, and the landing page.
+---
+
+# Pack architecture
+
+A **Software Pack** is a self-contained, installable artifact published to a GitHub repository. Once installed on NKP, it delivers a [Capability](/docs/introduction#capabilities) such as a chat assistant, a document analyzer, or a model-serving stack.
+
+Each pack is already wired into the platform's login, routing, and TLS, so users can open it from the landing page and start working.
+
+This page explains how packs fit into NKP and what happens between publishing one on GitHub and opening it from the landing page.
+
+## Why packs exist
+
+A platform that ships everything in one bundle is heavy to install, expensive to run, and slow to change. Packs solve this by giving NKP four properties:
+
+- **Composable:** install only the Capabilities your users need. A team using Superset doesn't have to install LLM Serving, and vice versa.
+- **Independent upgrades:** each pack upgrades on its own. Pulling in a new version of one pack leaves every other pack untouched.
+- **Bring your own pack:** if no existing pack does what you need, you can build one yourself using the same template and resources OpenTeams uses.
+- **Failures don't spread:** if one pack breaks, the other packs keep working. You can debug, roll back, or remove the broken one without touching anything else.
+
+## What a pack contains
+
+A Software Pack is two things glued together:
+
+- **An ArgoCD `Application`** that points at the pack's GitHub repository. ArgoCD reads it and installs the pack's workloads.
+- **A `NebariApp` resource** that asks the platform to connect the pack to login, routing, and TLS automatically.
+
+## The NebariApp resource
+
+A `NebariApp` is a short file the pack author writes. It names a hostname, a service to expose, and whether to require login:
+
+```yaml
+apiVersion: reconcilers.nebari.dev/v1
+kind: NebariApp
+metadata:
+  name: hello-app
+  namespace: demo
+spec:
+  # public URL for the pack
+  hostname: hello.nebari.local
+
+  # workload to send traffic to
+  service:
+    name: hello-service
+    port: 80
+
+  # HTTPS via cert-manager
+  routing:
+    tls:
+      enabled: true
+
+  # single sign-on via Keycloak
+  auth:
+    enabled: true
+    provider: keycloak
+    provisionClient: true
+```
+
+From this, the Nebari Operator creates:
+
+- An **`HTTPRoute`** that sends traffic for `hostname` to the `service`, so the pack is reachable from the outside.
+- A **`Certificate`** for `hostname`, so visitors connect over HTTPS instead of plain HTTP.
+- A **Keycloak login** for the pack, so visitors sign in once and use the same account everywhere on the platform.
+
+Once the operator marks the `NebariApp` `Ready`, the pack appears on the NKP landing page as an available Capability.
+
+All of this happens without the pack author writing a single integration by hand. They write the `NebariApp`; the operator builds the rest.
+
+For the full list of `NebariApp` fields, see the [operator configuration reference](https://github.com/nebari-dev/nebari-operator/blob/main/docs/configuration-reference.md).
+
+## Pack lifecycle
+
+A pack moves through four stages, from a repo on GitHub to a tile on the landing page:
+
+1. **A platform engineer installs the pack via GitOps.** They add the pack's ArgoCD `Application` manifest to the cluster's GitOps repo (or apply it directly). ArgoCD picks it up.
+2. **ArgoCD deploys the pack's workloads.** Containers, services, configmaps, and the `NebariApp` resource all land in the target namespace.
+3. **The Nebari Operator reconciles the `NebariApp`.** It provisions the HTTPRoute, the TLS certificate, the OAuth client, and any other integration objects the pack declared.
+4. **The pack appears on the landing page.** Once the operator marks the `NebariApp` `Ready`, the landing page surfaces the pack as an available Capability.
+
+Removing a pack is the reverse: delete the ArgoCD `Application`, and the `NebariApp` plus the workloads go with it. The operator's finalizer cleans up the HTTPRoute, the TLS certificate, and the OAuth client it created.
+
+## Where packs come from
+
+Packs are published to GitHub repositories, and they come from two channels:
+
+- **Official packs by OpenTeams.** Enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. Use these as your default starting point.
+- **Community packs.** Built and maintained by open-source contributors: individual maintainers, or businesses building on Nebari. Useful, but treat them with the same care you'd treat any third-party dependency: read the source, pin the version, understand who maintains it.
+
+Internal teams can also build packs against the same `NebariApp` contract and install them from their own private repos, no different from how the official and community packs work. There's no privileged "inside the platform" tier; the only thing that changes between a pack from OpenTeams, an outside contributor, or your own team is who you trust to write the manifest.
+
+## Relationship to the Nebari Operator
+
+The Nebari Operator is what makes packs feel turnkey. Without it:
+
+- An ArgoCD `Application` still deploys the pack's workloads.
+- But nothing creates the HTTPRoute, the TLS certificate, or the Keycloak client, and the pack doesn't surface on the landing page.
+- The pack would not be reachable through the platform's ingress, and would have no single sign-on.
+
+In other words: the pack is the payload; the operator is the wiring. They're loosely coupled by the `NebariApp` resource, which is why a pack author can ship updates without coordinating with the operator team, and the operator team can ship updates without coordinating with every pack.
+
+## Where to go next
+
+- [NKP architecture](/docs/explanations/nkp-architecture): the wider layered view of NKP, with the foundational software and `nic` CLI in context.
+- [Nebari Operator quickstart](https://github.com/nebari-dev/nebari-operator/blob/main/docs/quickstart.md): deploy a `NebariApp` end-to-end on a local Kind cluster.
+- [Software pack template](https://github.com/nebari-dev/nebari-software-pack-template): the scaffold to start building a pack.
+- Example packs: [LLM serving](https://github.com/nebari-dev/nebari-llm-serving-pack), [Superset](https://github.com/nebari-dev/nebari-superset-pack), [KServe deployment](https://github.com/nebari-dev/nebari-kserve-deployment).
