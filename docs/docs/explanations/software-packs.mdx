@@ -65,8 +65,6 @@ From this, the Nebari Operator creates:
 - A **`Certificate`** for `hostname`, so visitors connect over HTTPS instead of plain HTTP.
 - A **Keycloak login** for the pack, so visitors sign in once and use the same account everywhere on the platform.
 
-Once the operator marks the `NebariApp` `Ready`, the pack appears on the NKP landing page as an available Capability.
-
 All of this happens without the pack author writing a single integration by hand. They write the `NebariApp`; the operator builds the rest.
 
 For the full list of `NebariApp` fields, see the [operator configuration reference](https://github.com/nebari-dev/nebari-operator/blob/main/docs/configuration-reference.md).
@@ -77,8 +75,8 @@ A pack moves through four stages, from a repo on GitHub to a tile on the landing
 
 1. **A platform engineer installs the pack via GitOps.** They add the pack's ArgoCD `Application` manifest to the cluster's GitOps repo (or apply it directly). ArgoCD picks it up.
 2. **ArgoCD deploys the pack's workloads.** Containers, services, configmaps, and the `NebariApp` resource all land in the target namespace.
-3. **The Nebari Operator reconciles the `NebariApp`.** It provisions the HTTPRoute, the TLS certificate, the OAuth client, and any other integration objects the pack declared.
-4. **The pack appears on the landing page.** Once the operator marks the `NebariApp` `Ready`, the landing page surfaces the pack as an available Capability.
+3. **The Nebari Operator reconciles the `NebariApp`** and wires the pack into the platform.
+4. **The pack appears on the landing page** as an available Capability.
 
 Removing a pack is the reverse: delete the ArgoCD `Application`, and the `NebariApp` plus the workloads go with it. The operator's finalizer cleans up the HTTPRoute, the TLS certificate, and the OAuth client it created.
 
@@ -89,17 +87,7 @@ Packs are published to GitHub repositories, and they come from two channels:
 - **Official packs by OpenTeams.** Enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. Use these as your default starting point.
 - **Community packs.** Built and maintained by open-source contributors: individual maintainers, or businesses building on Nebari. Useful, but treat them with the same care you'd treat any third-party dependency: read the source, pin the version, understand who maintains it.
 
-Internal teams can also build packs against the same `NebariApp` contract and install them from their own private repos, no different from how the official and community packs work. There's no privileged "inside the platform" tier; the only thing that changes between a pack from OpenTeams, an outside contributor, or your own team is who you trust to write the manifest.
-
-## Relationship to the Nebari Operator
-
-The Nebari Operator is what makes packs feel turnkey. Without it:
-
-- An ArgoCD `Application` still deploys the pack's workloads.
-- But nothing creates the HTTPRoute, the TLS certificate, or the Keycloak client, and the pack doesn't surface on the landing page.
-- The pack would not be reachable through the platform's ingress, and would have no single sign-on.
-
-In other words: the pack is the payload; the operator is the wiring. They're loosely coupled by the `NebariApp` resource, which is why a pack author can ship updates without coordinating with the operator team, and the operator team can ship updates without coordinating with every pack.
+Internal teams can also build packs the same way and install them from their own private repos, no different from how the official and community packs work. The only thing that changes between a pack from OpenTeams, an outside contributor, or your own team is who you trust to write it.
 
 ## Where to go next
 
