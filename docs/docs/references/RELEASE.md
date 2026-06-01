@@ -1221,7 +1221,7 @@ Explicit user facing changes:
 
 ### What's Changed
 
-<details>
+`<details>`
 
 - Enabling Vale CI with GitHub Actions by @HarshCasper in https://github.com/Quansight/qhub/pull/871
 - Qhub upgrade by @danlester in https://github.com/Quansight/qhub/pull/870
