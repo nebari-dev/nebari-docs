@@ -56,7 +56,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
-        // Add software pack docs here
+        "software-packs/nebariapp-tutorial",
       ],
     },
   ]
