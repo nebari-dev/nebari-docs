@@ -56,24 +56,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
-        {
-          type: "category",
-          label: "Available packs",
-          items: [
-            "software-packs/chat-pack",
-            "software-packs/data-science-pack",
-            "software-packs/lgtm-pack",
-            "software-packs/llm-serving-pack",
-            "software-packs/longhorn-backup-pack",
-            "software-packs/mlflow-pack",
-            "software-packs/nebi-pack",
-            "software-packs/pi-coding-agent-pack",
-            "software-packs/provenance-collector-pack",
-            "software-packs/rayserve-pack",
-            "software-packs/skillsctl-pack",
-            "software-packs/superset-pack",
-          ],
-        },
+        "software-packs/build-your-own",
       ],
     },
   ]
