@@ -232,7 +232,7 @@ This creates a `pixi.toml` manifest that tracks dependencies and lives in versio
 
 ```toml
 [workspace]
-authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+authors = ["Alice <alice@example.com>"]
 channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64"]
@@ -297,7 +297,7 @@ Each command updates the `pixi.toml` manifest and regenerates the lockfile autom
 
 ```toml
 [workspace]
-authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+authors = ["Alice <alice@example.com>"]
 channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64"]
@@ -556,8 +556,8 @@ nebi workspace list
 
 ```text
 NAME           PATH
-geo-ml         /home/user/projects/geo-ml
-data-science   /home/user/projects/data-science
+geo-ml         /home/alice/projects/geo-ml
+data-science   /home/alice/projects/data-science
 ```
 
 With this setup, you can activate the same environment from any directory:
@@ -657,7 +657,7 @@ nebi status
 
 ```text
 Workspace: geo-ml
-Path:      /Users/khuyentran/openteams/geo-ml
+Path:      /home/alice/projects/geo-ml
 Server:    http://localhost:8460
 
 
