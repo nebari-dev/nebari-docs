@@ -35,20 +35,25 @@ For a first deployment, admin credentials are the fastest path. For production, 
 
 ### Install nic
 
-The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager). Install it from source:
+The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager).
+
+Download the prebuilt binary for your platform from the [latest release](https://github.com/nebari-dev/nebari-infrastructure-core/releases/latest), extract it, and move `nic` somewhere on your `PATH`:
 
 ```bash
-git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
-cd nebari-infrastructure-core
-make install
+tar -xzf nebari-infrastructure-core_*.tar.gz
+sudo mv nic /usr/local/bin/
+nic version
 ```
 
-If `nic version` reports `command not found`, add `$GOPATH/bin` to your `PATH`:
+:::note[macOS users]
+If you see a `"nic" Not Opened` dialog saying Apple could not verify the binary, click **Done** (not **Move to Trash**) and remove the quarantine flag:
 
 ```bash
-echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc
-source ~/.zshrc
+sudo xattr -d com.apple.quarantine /usr/local/bin/nic
 ```
+
+Then re-run `nic version`.
+:::
 
 ### GitOps repository
 
@@ -56,18 +61,18 @@ NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets 
 
 You'll need:
 
-1. **An empty Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
-2. **Two GitHub personal access tokens** scoped to the GitOps repo. For each, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
-   - **`GIT_TOKEN`** (used by `nic`): set **Contents: read+write**.
-   - **`ARGOCD_GIT_TOKEN`** (used by ArgoCD in the cluster): set **Contents: read-only**.
+1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
+
+   For production, we recommend generating a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only**, used by ArgoCD inside the cluster. If you skip it, ArgoCD will reuse `GIT_TOKEN` (which means the cluster has write access to your GitOps repo).
 
 ### Secrets and credentials
 
-NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
+NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
 
 ```bash
 cd /path/to/your-gitops-repo
-cp /path/to/nebari-infrastructure-core/.env.example .env
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
 ```
 
 Ensure to add `.env` to your repo's `.gitignore` before you commit anything:
@@ -108,16 +113,11 @@ You should see your AWS account ID and the role/user the credentials resolve to.
 
 #### GitOps repo tokens
 
-NIC needs two GitHub personal access tokens for the GitOps repo:
-
-- **`GIT_TOKEN`** (read+write): `nic` uses this from your machine to write ArgoCD application manifests into the repo during deploy.
-- **`ARGOCD_GIT_TOKEN`** (read-only): ArgoCD running inside the cluster uses this to continuously pull and apply the foundational-software manifests, keeping the cluster's state in sync with the repo.
-
-Splitting the credentials this way limits what an attacker could do if they got into the cluster: they'd only be able to read the GitOps repo, not commit changes back to it.
+Add the tokens you generated to `.env`:
 
 ```bash
-GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
-ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
+GIT_TOKEN=github_pat_...
+ARGOCD_GIT_TOKEN=github_pat_... # optional
 ```
 
 ## Cost considerations
@@ -136,15 +136,17 @@ A NKP deployment provisions several AWS services that bill from day one. Check t
 
 ## Configuration
 
-Copy a starter config from the `nebari-infrastructure-core` clone you made above. Pick the one that matches your DNS setup:
+Pick the starter config that matches your DNS setup:
 
-- **`aws-config.yaml`** for any DNS provider: you'll create A/CNAME records manually at deploy time using values `nic` prints.
-- **`aws-config-with-dns.yaml`** for Cloudflare-hosted domains: `nic` creates the records automatically.
+- **[`aws-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config.yaml)** for any DNS provider: you'll create A/CNAME records manually at deploy time using values `nic` prints.
+- **[`aws-config-with-dns.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config-with-dns.yaml)** for Cloudflare-hosted domains: `nic` creates the records automatically.
+
+Download the one you want into the directory you'll deploy from:
 
 ```bash
-cp /path/to/nebari-infrastructure-core/examples/aws-config.yaml aws-config.yaml
-# or, for the Cloudflare variant:
-cp /path/to/nebari-infrastructure-core/examples/aws-config-with-dns.yaml aws-config-with-dns.yaml
+# Pick one:
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/aws-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/aws-config-with-dns.yaml
 ```
 
 :::note
@@ -179,6 +181,14 @@ dns:
   cloudflare:
     zone_name: example.com  # your Cloudflare zone (parent of `domain`)
 ```
+
+:::note[Cloudflare DNS]
+To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:DNS:Edit` permission on the zone in `dns.cloudflare.zone_name` and add it to `.env`:
+
+```bash
+CLOUDFLARE_API_TOKEN=...
+```
+:::
 
 For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
