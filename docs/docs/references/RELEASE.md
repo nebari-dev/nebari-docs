@@ -72,7 +72,7 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 
 ## Release 2025.4.2 - April 25, 2025
 
-> NOTE: You may notice messages like `groups: cannot find name for group ID <number>` when using the terminal. These warnings are harmless and do not affect system functionality or permissions. We're aware of the issue and it will be resolved in the next version.
+> NOTE: You may notice messages like groups: cannot find name for group ID `<number>` when using the terminal. These warnings are harmless and do not affect system functionality or permissions. We're aware of the issue and it will be resolved in the next version.
 
 ### What's Changed
 
@@ -154,8 +154,7 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 ### New Contributors
 
 - @soapy1 made their first contribution in https://github.com/nebari-dev/nebari/pull2891
-- @smokestacklightnin made their first contribution in https://github.com/nebari-dev
-  /nebari/pull/2839
+- @smokestacklightnin made their first contribution in https://github.com/nebari-dev/nebari/pull/2839
 - @kernel-loophole made their first contribution in https://github.com/nebari-dev/nebari/pull/2916
 
 **Full Changelog**: https://github.com/nebari-dev/nebari/compare/2024.12.1...2025.2.1
@@ -1221,7 +1220,7 @@ Explicit user facing changes:
 
 ### What's Changed
 
-`<details>`
+<details>
 
 - Enabling Vale CI with GitHub Actions by @HarshCasper in https://github.com/Quansight/qhub/pull/871
 - Qhub upgrade by @danlester in https://github.com/Quansight/qhub/pull/870

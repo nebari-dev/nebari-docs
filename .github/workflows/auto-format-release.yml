@@ -42,15 +42,28 @@ jobs:
           import re
           from pathlib import Path
 
+          # HTML tags MDX renders natively; do not wrap these in backticks.
+          HTML_PASSTHROUGH = {
+              "details", "summary", "kbd", "mark", "br", "hr",
+              "code", "pre", "em", "strong", "b", "i", "u",
+              "del", "ins", "abbr", "sup", "sub", "small",
+          }
+
           path = Path("docs/docs/references/RELEASE.md")
           text = path.read_text()
           pattern = re.compile(r"<([a-z][a-zA-Z0-9_-]*)>")
+
+          def replace(match: re.Match) -> str:
+              tag = match.group(1)
+              if tag in HTML_PASSTHROUGH:
+                  return match.group(0)
+              return f"`<{tag}>`"
 
           def fix_line(line: str) -> str:
               # Skip parts already inside inline backticks; escape <token> elsewhere.
               segments = re.split(r"(`[^`]*`)", line)
               return "".join(
-                  seg if seg.startswith("`") else pattern.sub(r"`<\1>`", seg)
+                  seg if seg.startswith("`") else pattern.sub(replace, seg)
                   for seg in segments
               )
 
