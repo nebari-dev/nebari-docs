@@ -1,5 +1,10 @@
 name: Auto-format imported RELEASE.md
 
+# NOTE: This workflow is expected to be deprecated soon.
+# Scheduled releases of nebari (classic) are no longer happening
+# on a regular schedule, so this auto-format step will rarely
+# run and may be removed once upstream sync activity stops entirely.
+#
 # When the upstream sync bot opens a PR that touches
 # docs/docs/references/RELEASE.md, the file often arrives with two
 # common problems that block CI:
