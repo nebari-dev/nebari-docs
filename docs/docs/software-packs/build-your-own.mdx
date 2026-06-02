@@ -11,19 +11,9 @@ If a workload you'd like to run on Nebari isn't already in the catalog, you can 
 
 ## What's in a pack?
 
-A pack is a Git repo with two pieces:
+A software pack is a Kubernetes application bundled with a `NebariApp` custom resource. The Nebari Operator reads the `NebariApp` to wire up routing, TLS, and authentication for your app.
 
-- **A Kubernetes deployment of your application:** Helm, Kustomize, or plain YAML are all first-class.
-- **A `NebariApp` resource:** Tells the Nebari Operator to wire up routing, TLS, and authentication for your app.
-
-Here's how ArgoCD turns your pack's two pieces into resources on the cluster:
-
-```mermaid
-graph TB
-    Argo["ArgoCD<br/>reads your pack repo"]
-    Argo -->|applies| Deploy["Kubernetes deployment<br/>your application"]
-    Argo -->|applies| NA["NebariApp resource<br/>integration point"]
-```
+If your app already runs on Kubernetes (via Helm, Kustomize, or plain YAML), adding a `NebariApp` resource is all it takes.
 
 ## Start from the template
 
@@ -35,6 +25,25 @@ To use the template:
 2. Clone your new repo.
 3. Pick the example closest to your application.
 4. Follow the instructions in the README to deploy your pack to a Nebari cluster.
+
+## Deploying a pack
+
+To deploy a pack, commit an **ArgoCD Application** to your gitops repo. This Application is a small YAML file that tells ArgoCD which pack to deploy and how to configure it. From there, ArgoCD:
+
+- Reads the Application.
+- Pulls in the pack.
+- Applies the Application's values to the pack.
+- Applies the resulting resources to the cluster.
+
+```mermaid
+flowchart TB
+    GitOps["gitops repo
+    ArgoCD Application"] --> Argo["ArgoCD"]
+    Pack["pack repo
+    manifests + NebariApp"] --> Argo
+    Argo -- applies --> Cluster["Cluster
+    Deployment + NebariApp resource"]
+```
 
 ## Private and internal packs
 
