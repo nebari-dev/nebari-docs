@@ -25,7 +25,7 @@ When `nic deploy` finishes, your team will have:
 
 You'll need a Hetzner Cloud account. If you don't have one, [sign up at console.hetzner.cloud](https://console.hetzner.cloud/).
 
-- **Location:** pick a datacenter where you want your cluster. EU options — `fsn1` (Falkenstein, Germany), `nbg1` (Nuremberg, Germany), `hel1` (Helsinki, Finland) — keep data inside the EU and are GDPR-friendly. US options are `ash` (Ashburn, VA) and `hil` (Hillsboro, OR); Singapore is `sin`.
+- **Location:** pick a datacenter where you want your cluster. Choose from one of the [availability zones](https://docs.hetzner.com/cloud/general/locations/).
 - **Cost:** Hetzner Cloud has no free tier; servers, load balancers, and volumes all bill from the moment they're created.
 
 ### API token
@@ -36,7 +36,7 @@ You'll need a Hetzner Cloud account. If you don't have one, [sign up at console.
 2. Click **Generate API token**, give it a description (e.g., `nic-deploy`), and choose **Read & Write**.
 3. Copy the token immediately — it is shown only once.
 
-You'll add this token to your `.env` file in the next step.
+You'll add this token to your `.env` file. See the [Secrets and credentials](#secrets-and-credentials) section below for details.
 
 ### Install nic
 
@@ -138,22 +138,9 @@ git_repository:
 
 cluster:
   hetzner:
-    # REQUIRED: datacenter location.
-    # EU (GDPR-friendly): fsn1 (Falkenstein, DE), nbg1 (Nuremberg, DE), hel1 (Helsinki, FI)
-    # US: ash (Ashburn, VA), hil (Hillsboro, OR)
-    # Asia: sin (Singapore)
-    location: fsn1
-
-    # REQUIRED: Kubernetes version. Short form ("1.32") is resolved to the latest
-    # k3s patch release automatically. Use the explicit form ("v1.32.0+k3s1") to pin.
     kubernetes_version: "1.32"
-
-    # OPTIONAL: allow application pods on control-plane nodes.
-    # Default: true — enables single-node clusters and better utilisation of small instances.
-    # Set to false for production clusters where you want dedicated masters
-    # that only run etcd and the Kubernetes API server.
-    # schedule_workloads_on_masters: false
-
+    # REQUIRED: datacenter location.
+    location: fsn1
     node_groups:
       # Exactly one node group must have master: true.
       # Count must be odd (1, 3, 5) when running HA embedded etcd.
@@ -161,32 +148,12 @@ cluster:
         instance_type: cpx31      # 4 vCPU / 8 GB — good general-purpose starting point
         count: 1
         master: true
-
       workers:
         instance_type: cpx31
         count: 2
-
-    # OPTIONAL: bring your own SSH keys.
-    # If omitted, NIC auto-generates an ed25519 key pair at
-    # ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519{,.pub}.
-    #
-    # WARNING: the SSH key is required for ALL cluster operations (redeploy, destroy,
-    # scale). If you manage the cluster from multiple machines, either copy the
-    # auto-generated keys to each machine or configure explicit paths here so the
-    # same key is always available.
-    # ssh:
-    #   public_key_path: "~/.ssh/id_ed25519.pub"
-    #   private_key_path: "~/.ssh/id_ed25519"
-
-    # OPTIONAL: restrict SSH and Kubernetes API access.
-    # Defaults to 0.0.0.0/0 (open to all) — restrict to your office/VPN CIDRs for production.
-    # network:
-    #   ssh_allowed_cidrs:
-    #     - 203.0.113.0/24
-    #   api_allowed_cidrs:
-    #     - 203.0.113.0/24
 ```
 
+For more configuration options, see the [Hetzner provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#hetzner-provider-configuration).
 For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
 ## Deploy
@@ -209,7 +176,10 @@ Allow 10–15 minutes for the first deployment. The bulk of the time is k3s clus
 If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
 
 :::important
-After `nic deploy` completes, it prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP. The cluster will not be reachable over HTTPS until this record propagates.
+If you configure dns with cloudflare, you must have the `CLOUDFLARE_API_TOKEN` environment variable set with a token that has permissions to edit DNS records for your domain. This is required for `nic` to create the necessary DNS record for your cluster's load balancer. 
+Otherwise after `nic deploy` completes, it prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP. The cluster will not be reachable over HTTPS until this record propagates.
+
+See [DNS configuration](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration) for details.
 :::
 
 ## Verify
