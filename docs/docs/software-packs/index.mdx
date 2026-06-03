@@ -10,10 +10,12 @@ description: A catalog of Software Packs you can install on a Nebari Kubernetes 
 
 ## Installing a pack
 
-The exact commands depend on the pack, but every pack follows the same three steps:
+To install any pack:
 
 1. Make sure your Nebari cluster is up and running.
-2. Follow the pack's install instructions, usually one command that adds it to your cluster.
+2. Install the pack. Every pack's README documents the exact steps; pick one of two paths:
+   - **Recommended:** add it to your gitops repo as a new ArgoCD Application that references the pack. ArgoCD then deploys it onto your cluster.
+   - **Alternative:** install the pack's chart manually with Helm.
 3. Open your cluster's landing page; the new capability appears there once it finishes installing.
 
 ## Official packs
