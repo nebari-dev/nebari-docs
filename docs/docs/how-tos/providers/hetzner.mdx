@@ -40,35 +40,34 @@ You'll add this token to your `.env` file in the next step.
 
 ### Install nic
 
-The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager). Install it from source:
+Download the prebuilt binary for your platform from the [latest release](https://github.com/nebari-dev/nebari-infrastructure-core/releases/latest), extract it, and move `nic` somewhere on your `PATH`:
 
-:::note
-`make install` compiles `nic` from source using Go. Install [Go 1.21 or later](https://go.dev/doc/install) before running these commands.
+```bash
+tar -xzf nebari-infrastructure-core_*.tar.gz
+sudo mv nic /usr/local/bin/
+nic version
+```
+
+:::note[macOS users]
+If you see a `"nic" Not Opened` dialog saying Apple could not verify the binary, click **Done** (not **Move to Trash**) and remove the quarantine flag:
+
+```bash
+sudo xattr -d com.apple.quarantine /usr/local/bin/nic
+```
+
+Then re-run `nic version`.
 :::
-
-```bash
-git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
-cd nebari-infrastructure-core
-make install
-```
-
-If `nic version` reports `command not found`, add `$GOPATH/bin` to your `PATH`:
-
-```bash
-echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.zshrc  # or ~/.bashrc for bash
-source ~/.zshrc
-```
 
 ### GitOps repository
 
-`nic` uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
+NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
 
 You'll need:
 
-1. **An empty Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
-2. **Two personal access tokens** scoped to the GitOps repo. The steps below are for GitHub — for GitLab, Gitea, or other hosts, generate equivalent tokens with read+write and read-only repository access respectively. For GitHub, go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories** and pick your GitOps repo, then generate. The two tokens differ only in the **Contents** permission:
-   - **`GIT_TOKEN`** (used by `nic`): set **Contents: read+write**.
-   - **`ARGOCD_GIT_TOKEN`** (used by ArgoCD in the cluster): set **Contents: read-only**.
+1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
+
+   For production, we recommend generating a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only**, used by ArgoCD inside the cluster. If you skip it, ArgoCD will reuse `GIT_TOKEN` (which means the cluster has write access to your GitOps repo).
 
 ### Secrets and credentials
 
@@ -109,11 +108,8 @@ Hetzner is significantly cheaper than equivalent AWS deployments because there i
 
 ## Configuration
 
-Copy the starter config from the `nebari-infrastructure-core` clone:
-
-```bash
-cp /path/to/nebari-infrastructure-core/examples/hetzner-config.yaml hetzner-config.yaml
-```
+Download the starter config from the `nebari-infrastructure-core`:
+- **[`hetzner-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/hetzner-config.yaml)**.
 
 :::note
 In later steps, `<config-file>` refers to this local copy (`hetzner-config.yaml`).
@@ -228,8 +224,6 @@ kubectl get pods -A
 kubectl get applications -n argocd
 ```
 
-Substitute `<project_name>` with the value of `project_name` in your config.
-
 All ArgoCD applications should reach `Healthy` within a few minutes of the cluster coming up (some may briefly show `Progressing` or `OutOfSync` — this is normal).
 
 :::tip
@@ -290,38 +284,3 @@ nic destroy -f <config-file> --force
 ```
 
 Always confirm in the Hetzner Cloud Console that no orphan servers, volumes, or load balancers remain after destroy.
-
-## Troubleshooting
-
-### `HETZNER_TOKEN` not set or invalid
-
-`nic validate` and `nic deploy` fail immediately with `HETZNER_TOKEN environment variable is required` if the token is missing from `.env`, or with an authentication error if the token has the wrong scope.
-
-Fix: re-check that `HETZNER_TOKEN` is set in `.env` **and** that the token was generated with **Read & Write** permissions (not read-only).
-
-### SSH key missing on a second machine
-
-`nic` generates an ed25519 key pair at `~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519{,.pub}` on the first machine that runs `nic deploy`. Subsequent operations (`nic deploy`, `nic destroy`, scale) all require that same key.
-
-If you switch to a different machine and those files are absent, `nic` will fail to connect to the cluster nodes.
-
-Fix: copy the `~/.cache/nic/hetzner-k3s/ssh/` directory from the original machine, **or** add explicit `ssh.public_key_path` / `ssh.private_key_path` entries in your config pointing to a key that is available everywhere (e.g., a shared key in your secrets manager).
-
-### Incomplete SSH key pair
-
-If only one of `hetzner_ed25519` / `hetzner_ed25519.pub` exists in the cache (e.g., after a partial copy), `nic` errors rather than silently regenerating the pair.
-
-Fix: delete both files and re-run `nic deploy` to generate a fresh pair:
-
-```bash
-rm ~/.cache/nic/hetzner-k3s/ssh/hetzner_ed25519*  # deletes both private key and .pub
-nic deploy -f <config-file>
-```
-
-### Orphaned resources after a failed destroy
-
-If `nic destroy` fails mid-run, some Hetzner resources may be left behind and continue billing.
-
-Fix:
-1. Retry with `--force`: `nic destroy -f <config-file> --force`
-2. Open the [Hetzner Cloud Console](https://console.hetzner.cloud/) and verify that no stray **servers**, **volumes**, or **load balancers** named after your `project_name` remain. Delete any you find.
