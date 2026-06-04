@@ -1,7 +1,7 @@
 ---
 title: Deploy NKP on AWS
 slug: /how-tos/providers/aws
-description: End-to-end how-to for deploying NKP on AWS EKS, including IAM, cost considerations, and the reconcile workflow.
+description: End-to-end how-to for deploying, updating, and destroying NKP on AWS EKS, including IAM and cost considerations.
 ---
 
 This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastructure Core CLI), from an empty AWS account to a running cluster you can manage and tear down.
@@ -14,8 +14,8 @@ When `nic deploy` finishes, your team will have:
 - **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
 - **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
 - **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
-- **Shared storage** that pods on any node can mount ([EFS](https://aws.amazon.com/efs/)).
-- **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+- **Version-controlled app deployments:** roll out or roll back any app on the cluster by committing to a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+- **Optional shared storage** ([EFS](https://aws.amazon.com/efs/)) that pods on any node can mount when enabled in your config.
 
 ## Prerequisites
 
@@ -32,6 +32,10 @@ You'll need access to an AWS account you can deploy into. If you don't have one,
 Running `nic deploy` (and `nic destroy`) needs permissions across S3, EC2, EKS, IAM, EFS, SSM, CloudWatch Logs, and Elastic Load Balancing.
 
 For a first deployment, admin credentials are the fastest path. For production, [create a customer-managed policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) from this [least-privilege IAM policy](/policies/aws/nic-deploy.json) and attach it to your deploy user or role.
+
+:::note
+The policy grants the minimum for a complete cluster with all optional features (EFS, brownfield VPC adoption). If you don't use those, you can omit the corresponding permissions.
+:::
 
 ### Install nic
 
@@ -226,7 +230,7 @@ If you need to extend the default timeout (large clusters, slow regions), pass `
 | EKS node-group role | Grants nodes the standard EKS worker, ECR-read-only, and CNI policies. |
 | AWS Load Balancer Controller role | Lets the in-cluster controller create and manage load balancers for ingress. |
 | EBS CSI driver role | Lets the in-cluster driver mount EBS volumes into pods. |
-| EFS CSI driver role | Lets the in-cluster driver mount EFS into pods. |
+| EFS CSI driver role (if EFS enabled) | Lets the in-cluster driver mount EFS into pods. |
 
 ## Verify
 
@@ -234,17 +238,29 @@ If you need to extend the default timeout (large clusters, slow regions), pass `
 The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and the [AWS CLI](https://aws.amazon.com/cli/). Install them if you don't have them.
 :::
 
-After `nic deploy` returns, point your kubectl at the cluster and check it:
+After `nic deploy` returns, point your kubectl at the cluster:
 
 ```bash
-aws eks update-kubeconfig --name <project-name> --region <region> --profile <aws-profile>
-
-kubectl get nodes
-kubectl get pods -A
-kubectl get applications -n argocd
+nic kubeconfig -f <config-file> -o ~/.kube/nebari.yaml
+export KUBECONFIG=~/.kube/nebari.yaml
 ```
 
-Substitute `<project-name>` and `<region>` with the values from your config, and `<aws-profile>` with the AWS profile name from your `~/.aws/config` (e.g., your SSO profile). Omit `--profile <aws-profile>` if your AWS credentials are already the shell default.
+Substitute `<config-file>` with the local config you created earlier (e.g., `aws-config.yaml`).
+
+`KUBECONFIG` tells `kubectl` to read `~/.kube/nebari.yaml`, a standalone kubeconfig for this cluster, instead of the default. Add this line to your shell rc to persist.
+
+Verify the cluster is responsive:
+
+```bash
+kubectl get nodes
+kubectl get pods -A
+```
+
+Then check the foundational ArgoCD applications are syncing:
+
+```bash
+kubectl get applications -n argocd
+```
 
 :::note
 If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours). Re-authenticate with `aws sso login --profile <aws-profile>` and retry.
@@ -253,7 +269,7 @@ If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO ses
 All ArgoCD applications should reach `Healthy` within a few minutes (some may show `OutOfSync`, which is fine).
 
 :::tip
-For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after the `update-kubeconfig` step.
+For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after the `nic kubeconfig` step.
 :::
 
 ## First sign-in
