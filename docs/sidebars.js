@@ -40,7 +40,11 @@ module.exports = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
-        // Add how-to guides here
+        {
+          type: "category",
+          label: "Providers",
+          items: ["how-tos/providers/aws"],
+        },
       ],
     },
     {
