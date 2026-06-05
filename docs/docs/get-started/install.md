@@ -4,10 +4,11 @@ description: Learn to install the Nebari kubernetes platform
 
 # Install NIC
 
-Nebari Infrastructure Core (NIC) provisions a production-grade platform (Kubernetes cluster).
-It is the foundational layer of the Nebari ecosystem, that includes platform essentials like authentication (SSO), user management, observability, TLS certification, and more. You can set up software packs (like the data science pack with specific tools like JupyterLab) on top of this layer.
+Nebari Infrastructure Core (NIC) is a CLI that sets up a production-grade Kubernetes cluster and installs the platform essentials that run on top of it.
+It is the foundational layer of the Nebari ecosystem, that includes platform essentials like authentication (SSO), user management, observability, TLS certification, and more.
 
-<!-- TODO: Link to architecture explanation when ready. -->
+You can set up software packs (like the data science pack for specific tools like JupyterLab) on top of this layer.
+Learn more about how different Nebari projects and components interact in [NKP architecture](/docs/explanations/nkp-architecture).
 
 ## Download
 
@@ -20,7 +21,7 @@ From the [NIC release assets](https://github.com/nebari-dev/nebari-infrastructur
 Extract the tarball:
 
 ```sh
-tar -xzf nic_v0.2.0_xyz.tar.gz
+tar -xzf nebari-infrastructure-core_0.7.0_linux_x86_64.tar.gz
 ```
 
 Move it to an appropriate folder on PATH:
@@ -29,7 +30,7 @@ Move it to an appropriate folder on PATH:
 sudo mv nic /usr/local/bin/
 ```
 
-Ensure this location in on your user PATH with `echo $PATH`.
+Ensure this location is on your user PATH with `echo $PATH`.
 If not, you can add it to PATH with `export PATH=$PATH:/path/to/dir`.
 
 :::info[MacOS verification error]
