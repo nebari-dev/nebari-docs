@@ -33,7 +33,7 @@ module.exports = {
       label: "Explanations",
       link: { type: "doc", id: "explanations/index" },
       items: [
-        // Add explanation docs here
+        "explanations/nkp-architecture",
       ],
     },
         {
@@ -41,7 +41,11 @@ module.exports = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
-        // Add how-to guides here
+        {
+          type: "category",
+          label: "Providers",
+          items: ["how-tos/providers/aws"],
+        },
       ],
     },
     {
@@ -57,7 +61,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
-        // Add software pack docs here
+        "software-packs/build-your-own",
       ],
     },
   ]

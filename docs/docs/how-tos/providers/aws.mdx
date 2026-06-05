@@ -1,0 +1,322 @@
+---
+title: Deploy NKP on AWS
+slug: /how-tos/providers/aws
+description: End-to-end how-to for deploying, updating, and destroying NKP on AWS EKS, including IAM and cost considerations.
+---
+
+This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastructure Core CLI), from an empty AWS account to a running cluster you can manage and tear down.
+
+## What your team gets
+
+When `nic deploy` finishes, your team will have:
+
+- **A managed Kubernetes cluster** ready for workloads (AWS EKS, multi-AZ by default).
+- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
+- **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
+- **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
+- **Version-controlled app deployments:** roll out or roll back any app on the cluster by committing to a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+- **Optional shared storage** ([EFS](https://aws.amazon.com/efs/)) that pods on any node can mount when enabled in your config.
+
+## Prerequisites
+
+### AWS account
+
+You'll need access to an AWS account you can deploy into. If you don't have one, [sign up for AWS](https://aws.amazon.com/free/).
+
+- **Region:** pick one where [EKS is available](https://docs.aws.amazon.com/eks/latest/userguide/eks-regions.html) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
+- **Quotas:** confirm your region has enough [EKS service quota](https://docs.aws.amazon.com/eks/latest/userguide/service-quotas.html) for the cluster you're about to create. New accounts often need an increase.
+- **Cost:** NKP does not fit within the free tier; EKS, NAT gateways, and EFS all bill from day one.
+
+### IAM permissions
+
+Running `nic deploy` (and `nic destroy`) needs permissions across S3, EC2, EKS, IAM, EFS, SSM, CloudWatch Logs, and Elastic Load Balancing.
+
+For a first deployment, admin credentials are the fastest path. For production, [create a customer-managed policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html) from this [least-privilege IAM policy](/policies/aws/nic-deploy.json) and attach it to your deploy user or role.
+
+:::note
+The policy grants the minimum for a complete cluster with all optional features (EFS, brownfield VPC adoption). If you don't use those, you can omit the corresponding permissions.
+:::
+
+### Install nic
+
+The `nic` CLI provisions the Kubernetes cluster and bootstraps the foundational software (ArgoCD, Envoy Gateway, Keycloak, cert-manager).
+
+Download the prebuilt binary for your platform from the [latest release](https://github.com/nebari-dev/nebari-infrastructure-core/releases/latest), extract it, and move `nic` somewhere on your `PATH`:
+
+```bash
+tar -xzf nebari-infrastructure-core_*.tar.gz
+sudo mv nic /usr/local/bin/
+nic version
+```
+
+:::note[macOS users]
+If you see a `"nic" Not Opened` dialog saying Apple could not verify the binary, click **Done** (not **Move to Trash**) and remove the quarantine flag:
+
+```bash
+sudo xattr -d com.apple.quarantine /usr/local/bin/nic
+```
+
+Then re-run `nic version`.
+:::
+
+### GitOps repository
+
+NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
+
+You'll need:
+
+1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
+
+   For production, we recommend generating a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only**, used by ArgoCD inside the cluster. If you skip it, ArgoCD will reuse `GIT_TOKEN` (which means the cluster has write access to your GitOps repo).
+
+### Secrets and credentials
+
+NIC reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
+
+```bash
+cd /path/to/your-gitops-repo
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
+```
+
+Ensure to add `.env` to your repo's `.gitignore` before you commit anything:
+
+```
+# .gitignore
+.env
+```
+
+Then uncomment and fill in the AWS block and the GitOps tokens.
+
+#### AWS credentials
+
+NIC uses the AWS Go SDK's standard credential chain, so any of these work:
+
+- **`AWS_PROFILE=<name>`:** points to an SSO or static profile in `~/.aws/config`. For SSO, run `aws sso login --profile <name>` first so the session is valid.
+- **`AWS_ACCESS_KEY_ID` + `AWS_SECRET_ACCESS_KEY`:** static IAM user keys. Use only if you've created an IAM user with the required permissions.
+- **`AWS_SESSION_TOKEN`** (in addition to the above): required if your keys are temporary (e.g., copied from the AWS access portal's "Access keys" popup).
+
+Pick one pattern for `.env`:
+
+```bash
+AWS_PROFILE=my-sso-profile  # SSO / IAM Identity Center
+# OR static keys:
+# AWS_ACCESS_KEY_ID=AKIA...
+# AWS_SECRET_ACCESS_KEY=...
+# AWS_SESSION_TOKEN=...     # only if keys are temporary
+```
+
+Verify the credentials work before deploying:
+
+```bash
+source .env
+aws sts get-caller-identity
+```
+
+You should see your AWS account ID and the role/user the credentials resolve to.
+
+#### GitOps repo tokens
+
+Add the tokens you generated to `.env`:
+
+```bash
+GIT_TOKEN=github_pat_...
+ARGOCD_GIT_TOKEN=github_pat_... # optional
+```
+
+## Cost considerations
+
+A NKP deployment provisions several AWS services that bill from day one. Check the AWS pricing pages for current rates in your region.
+
+- **[EKS control plane](https://aws.amazon.com/eks/pricing/):** flat per-cluster hourly rate.
+- **[EC2 instances](https://aws.amazon.com/ec2/pricing/on-demand/)** in your node groups: instance hours per running node.
+- **[EBS root volumes](https://aws.amazon.com/ebs/pricing/)** on each node: per-GB-month for node disks.
+- **[NAT gateways](https://aws.amazon.com/vpc/pricing/):** one per AZ (minimum two, since EKS requires two AZs). Hourly rate per gateway plus per-GB data processing.
+- **[NLBs](https://aws.amazon.com/elasticloadbalancing/pricing/):** the AWS Load Balancer Controller creates one for ingress. Hourly rate plus Load Balancer Capacity Units (LCU).
+- **[EFS](https://aws.amazon.com/efs/pricing/):** per-GB-month for shared cluster storage. `bursting` is the default and is cheap at low utilization.
+- **[VPC interface endpoints](https://aws.amazon.com/privatelink/pricing/):** around nine created by default. Hourly rate per endpoint per AZ, plus per-GB data processing.
+- **[KMS](https://aws.amazon.com/kms/pricing/):** one customer-managed key for EKS secrets encryption. Per-key-month plus per-request.
+- **[CloudWatch Logs](https://aws.amazon.com/cloudwatch/pricing/):** EKS control-plane log ingestion and storage.
+
+## Configuration
+
+Pick the starter config that matches your DNS setup:
+
+- **[`aws-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config.yaml)** for any DNS provider: you'll create A/CNAME records manually at deploy time using values `nic` prints.
+- **[`aws-config-with-dns.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/aws-config-with-dns.yaml)** for Cloudflare-hosted domains: `nic` creates the records automatically.
+
+Download the one you want into the directory you'll deploy from:
+
+```bash
+# Pick one:
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/aws-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/aws-config-with-dns.yaml
+```
+
+:::note
+In later steps, `<config-file>` refers to the local copy you just created (e.g., `aws-config.yaml`).
+:::
+
+At minimum, edit these fields:
+
+```yaml
+project_name: my-cluster  # lowercase alphanumeric
+domain: nebari.example.com  # a hostname you own
+
+certificate:
+  acme:
+    email: you@example.com  # required for Let's Encrypt; renewal notices go here
+
+git_repository:
+  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
+  path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
+  auth:
+    token_env: GIT_TOKEN  # matches the GIT_TOKEN set in .env
+
+cluster:
+  aws:
+    region: us-west-2  # an EKS-supported region
+    availability_zones:
+      - us-west-2a  # at least two AZs
+      - us-west-2b
+
+# Only if you used aws-config-with-dns.yaml:
+dns:
+  cloudflare:
+    zone_name: example.com  # your Cloudflare zone (parent of `domain`)
+```
+
+:::note[Cloudflare DNS]
+To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:DNS:Edit` permission on the zone in `dns.cloudflare.zone_name` and add it to `.env`:
+
+```bash
+CLOUDFLARE_API_TOKEN=...
+```
+:::
+
+For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+
+## Deploy
+
+From the directory containing your config file:
+
+```bash
+# Quick syntax and shape check; no AWS calls.
+nic validate -f <config-file>
+
+# Validates config and credentials; no resources are created.
+nic deploy -f <config-file> --dry-run
+
+# Actually provision.
+nic deploy -f <config-file>
+```
+
+Allow at least 30 minutes for the first deployment. The bulk of the time is EKS control-plane creation (about 10 minutes) and ArgoCD syncing foundational services after the cluster comes up.
+
+If you need to extend the default timeout (large clusters, slow regions), pass `--timeout 1h`.
+
+**After deploy**, DNS handling depends on which config you chose:
+
+- **`aws-config.yaml`:** `nic` prints an A/CNAME record at the end of deploy. Create it at your DNS provider before the cluster becomes reachable.
+- **`aws-config-with-dns.yaml`:** `nic` creates the DNS records automatically.
+
+## IAM roles `nic` creates in your account
+
+`nic deploy` creates a few IAM roles in your account so the cluster, the nodes, and the in-cluster controllers can each do their AWS work safely:
+
+| Role | Purpose |
+|------|---------|
+| EKS cluster role | Lets EKS create the network interfaces, security groups, and log groups the cluster needs. |
+| EKS node-group role | Grants nodes the standard EKS worker, ECR-read-only, and CNI policies. |
+| AWS Load Balancer Controller role | Lets the in-cluster controller create and manage load balancers for ingress. |
+| EBS CSI driver role | Lets the in-cluster driver mount EBS volumes into pods. |
+| EFS CSI driver role (if EFS enabled) | Lets the in-cluster driver mount EFS into pods. |
+
+## Verify
+
+:::note
+The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/) and the [AWS CLI](https://aws.amazon.com/cli/). Install them if you don't have them.
+:::
+
+After `nic deploy` returns, point your kubectl at the cluster:
+
+```bash
+nic kubeconfig -f <config-file> -o ~/.kube/nebari.yaml
+export KUBECONFIG=~/.kube/nebari.yaml
+```
+
+Substitute `<config-file>` with the local config you created earlier (e.g., `aws-config.yaml`).
+
+`KUBECONFIG` tells `kubectl` to read `~/.kube/nebari.yaml`, a standalone kubeconfig for this cluster, instead of the default. Add this line to your shell rc to persist.
+
+Verify the cluster is responsive:
+
+```bash
+kubectl get nodes
+kubectl get pods -A
+```
+
+Then check the foundational ArgoCD applications are syncing:
+
+```bash
+kubectl get applications -n argocd
+```
+
+:::note
+If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours). Re-authenticate with `aws sso login --profile <aws-profile>` and retry.
+:::
+
+All ArgoCD applications should reach `Healthy` within a few minutes (some may show `OutOfSync`, which is fine).
+
+:::tip
+For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after the `nic kubeconfig` step.
+:::
+
+## First sign-in
+
+`nic` does not create an end-user account, so create one in Keycloak before you can sign in:
+
+1. Get the Keycloak admin credentials:
+   ```bash
+   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
+   ```
+2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
+3. Switch the realm dropdown (top-left) from `master` to `nebari`.
+4. Go to **Users → Add user**, set a username and email, and save.
+5. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
+6. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
+
+## Update an existing deployment
+
+To change something about a running cluster (scale a node group, add a `gpu` group, change tags, switch EFS throughput), edit your config and re-run:
+
+```bash
+nic deploy -f <config-file> --dry-run    # verify config resolves; no resources changed
+nic deploy -f <config-file>              # apply it
+```
+
+`nic` is declarative, so only the diff is applied.
+
+:::warning
+Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive resource recreation. Treat these as one-way decisions.
+:::
+
+## Destroy
+
+When you're done with the cluster (testing complete, project ended, or you want to start fresh), tear it down with `nic destroy`. Run a dry-run first to see what will be removed:
+
+```bash
+# Preview what will be destroyed.
+nic destroy -f <config-file> --dry-run
+
+# Tear down everything nic created.
+nic destroy -f <config-file>
+```
+
+`nic destroy` removes EKS, node groups, EFS, VPC components, and the state bucket. If a resource fails to delete (commonly, a leftover load balancer from the cluster's ingress), remove it manually in the AWS console and retry with `--force`:
+
+```bash
+nic destroy -f aws-config.yaml --force
+```
+
+Always confirm in the AWS console that no orphan resources remain. NAT gateways, load balancers, and EBS volumes can keep billing if they're not cleaned up.
