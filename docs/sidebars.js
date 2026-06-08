@@ -24,6 +24,7 @@ module.exports = {
       label: "Get started",
       link: { type: "doc", id: "get-started/index" },
       items: [
+        "get-started/install",
         // Add get started docs here
       ],
     },
@@ -43,7 +44,7 @@ module.exports = {
         {
           type: "category",
           label: "Providers",
-          items: ["how-tos/providers/hetzner"],
+          items: ["how-tos/providers/aws", "how-tos/providers/hetzner"],
         },
       ],
     },
@@ -60,7 +61,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
-        // Add software pack docs here
+        "software-packs/build-your-own",
       ],
     },
   ]

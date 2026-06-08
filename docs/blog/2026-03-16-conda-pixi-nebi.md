@@ -232,7 +232,7 @@ This creates a `pixi.toml` manifest that tracks dependencies and lives in versio
 
 ```toml
 [workspace]
-authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+authors = ["Alice <alice@example.com>"]
 channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64"]
@@ -297,7 +297,7 @@ Each command updates the `pixi.toml` manifest and regenerates the lockfile autom
 
 ```toml
 [workspace]
-authors = ["Khuyen Tran <khuyentran@codecut.ai>"]
+authors = ["Alice <alice@example.com>"]
 channels = ["conda-forge"]
 name = "geo-ml"
 platforms = ["osx-arm64"]
@@ -525,17 +525,17 @@ For individual developers, it adds version history and rollback. For organizatio
 
 ### Getting Started
 
-nebi builds on top of pixi, so make sure pixi is installed first. Then install nebi:
+nebi builds on top of pixi, so make sure pixi is installed first. Then install nebi using pixi:
 
 ```bash
 # Install pixi (if not already installed)
 curl -fsSL https://pixi.sh/install.sh | sh
 
 # Install nebi
-curl -fsSL https://nebi.nebari.dev/install.sh | sh
+pixi global install nebi
 ```
 
-See the [getting started guide](https://nebi.nebari.dev/docs/getting-started) for other installation options.
+See the [installation guide](https://nebi.nebari.dev/docs/installation) for other installation options, including the install script, conda, and source builds.
 
 Then initialize nebi inside an existing pixi project:
 
@@ -556,8 +556,8 @@ nebi workspace list
 
 ```text
 NAME           PATH
-geo-ml         /home/user/projects/geo-ml
-data-science   /home/user/projects/data-science
+geo-ml         /home/alice/projects/geo-ml
+data-science   /home/alice/projects/data-science
 ```
 
 With this setup, you can activate the same environment from any directory:
@@ -633,8 +633,8 @@ nebi diff geo-ml:v1.0 geo-ml:v2.0
 ```
 
 ```text
---- test_nebi:v1.0
-+++ test_nebi:v2.0
+--- geo-ml:v1.0
++++ geo-ml:v2.0
 @@ pixi.toml @@
  [dependencies]
 +pandas = ">=3.0.1,<4"
@@ -656,13 +656,13 @@ nebi status
 ```
 
 ```text
-Workspace: test_nebi
-Path:      /Users/khuyentran/openteams/test_nebi
+Workspace: geo-ml
+Path:      /home/alice/projects/geo-ml
 Server:    http://localhost:8460
 
 
 Origin:
-  test_nebi:v1.0 (pull)
+  geo-ml:v1.0 (pull)
 ```
 
 ### Sharing and Governance
