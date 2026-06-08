@@ -24,6 +24,7 @@ module.exports = {
       label: "Get started",
       link: { type: "doc", id: "get-started/index" },
       items: [
+        "get-started/install",
         // Add get started docs here
       ],
     },
@@ -40,7 +41,11 @@ module.exports = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
-        // Add how-to guides here
+        {
+          type: "category",
+          label: "Providers",
+          items: ["how-tos/providers/aws"],
+        },
       ],
     },
     {
@@ -57,6 +62,7 @@ module.exports = {
       link: { type: "doc", id: "software-packs/index" },
       items: [
         "software-packs/nebariapp-tutorial",
+        "software-packs/build-your-own",
       ],
     },
   ]
