@@ -34,6 +34,7 @@ module.exports = {
       link: { type: "doc", id: "explanations/index" },
       items: [
         "explanations/nkp-architecture",
+        "explanations/software-packs",
       ],
     },
         {
