@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Same pack, many deployments — Source</title>
+  <meta name="description" content="Editable source for the same-pack-many-deployments diagram rendered at /img/explanations/same-pack-many-deployments.png. Plain HTML with inline styles, openable in any browser, re-importable into Paper via the write_html MCP tool.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
+    .artboard { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <div class="artboard" style="background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; padding: 40px 80px; width: 920px; font-family: 'Poppins', system-ui, sans-serif;">
+
+    <!-- Pack repo (centered, hugs content) -->
+    <div style="align-self: center; align-items: center; background-color: #F9ECFE; border: 1.5px solid #6B21A8; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; padding: 18px 32px;">
+      <div style="color: #2A1F33; font-size: 24px; line-height: 30px;">Pack repo</div>
+      <div style="color: #2A1F33; font-size: 18px; line-height: 24px; opacity: 0.75;">manifests + NebariApp</div>
+    </div>
+
+    <!-- Bracket + "referenced by" labels connecting pack repo to two Applications -->
+    <div style="position: relative; width: 760px; height: 100px;">
+      <svg viewBox="0 0 760 100" width="760" height="100" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; display: block;">
+        <path d="M 380 0 L 380 20 L 212 20 L 212 96 M 206 90 L 212 96 L 218 90" stroke="#2A1F33" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M 380 0 L 380 20 L 548 20 L 548 96 M 542 90 L 548 96 L 554 90" stroke="#2A1F33" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <div style="position: absolute; left: 212px; top: 46px; transform: translateX(-50%); background-color: #FFFFFF; padding: 0 8px; display: flex; align-items: center;">
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px; white-space: nowrap;">referenced by</div>
+      </div>
+      <div style="position: absolute; left: 548px; top: 46px; transform: translateX(-50%); background-color: #FFFFFF; padding: 0 8px; display: flex; align-items: center;">
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px; white-space: nowrap;">referenced by</div>
+      </div>
+    </div>
+
+    <!-- Applications row (prod and staging Applications referencing the same pack) -->
+    <div style="display: flex; gap: 56px; justify-content: center; margin-top: -16px;">
+      <div style="align-items: center; background-color: #F9ECFE; border: 1.5px solid #6B21A8; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 18px 32px;">
+        <div style="color: #2A1F33; font-size: 24px; line-height: 30px;">Application A</div>
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px; opacity: 0.75;">values: prod</div>
+      </div>
+      <div style="align-items: center; background-color: #F9ECFE; border: 1.5px solid #6B21A8; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 280px; padding: 18px 32px;">
+        <div style="color: #2A1F33; font-size: 24px; line-height: 30px;">Application B</div>
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px; opacity: 0.75;">values: staging</div>
+      </div>
+    </div>
+
+    <!-- Deploys arrows row (long arrow shafts with white-backed "deploys" labels in the middle) -->
+    <div style="display: flex; gap: 56px; justify-content: center; margin-top: -16px;">
+      <div style="position: relative; width: 280px; height: 80px;">
+        <svg viewBox="0 0 20 80" width="20" height="80" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 130px; top: 0; display: block;">
+          <path d="M 10 0 L 10 76 M 4 70 L 10 76 L 16 70" stroke="#2A1F33" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div style="position: absolute; left: 50%; top: 28px; transform: translateX(-50%); background-color: #FFFFFF; padding: 0 8px; display: flex; align-items: center;">
+          <div style="color: #2A1F33; font-size: 18px; line-height: 24px; white-space: nowrap;">deploys</div>
+        </div>
+      </div>
+      <div style="position: relative; width: 280px; height: 80px;">
+        <svg viewBox="0 0 20 80" width="20" height="80" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 130px; top: 0; display: block;">
+          <path d="M 10 0 L 10 76 M 4 70 L 10 76 L 16 70" stroke="#2A1F33" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div style="position: absolute; left: 50%; top: 28px; transform: translateX(-50%); background-color: #FFFFFF; padding: 0 8px; display: flex; align-items: center;">
+          <div style="color: #2A1F33; font-size: 18px; line-height: 24px; white-space: nowrap;">deploys</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instances row (prod and staging deployed instances) -->
+    <div style="display: flex; gap: 56px; justify-content: center; margin-top: -16px;">
+      <div style="align-items: center; background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 12px; display: flex; flex-direction: column; min-width: 280px; padding: 18px 32px;">
+        <div style="color: #2A1F33; font-size: 24px; line-height: 30px;">prod instance</div>
+      </div>
+      <div style="align-items: center; background-color: #FEF3C7; border: 1.5px solid #B45309; border-radius: 12px; display: flex; flex-direction: column; min-width: 280px; padding: 18px 32px;">
+        <div style="color: #2A1F33; font-size: 24px; line-height: 30px;">staging instance</div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div style="display: flex; gap: 40px; justify-content: center; align-items: center; padding-top: 16px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 20px; height: 20px; border-radius: 4px; background-color: #F9ECFE; border: 1.5px solid #6B21A8;"></div>
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px;">Declared in Git</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 20px; height: 20px; border-radius: 4px; background-color: #FEF3C7; border: 1.5px solid #B45309;"></div>
+        <div style="color: #2A1F33; font-size: 18px; line-height: 24px;">Running in cluster</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
