@@ -40,23 +40,7 @@ You'll add this token to your `.env` file. See the [Secrets and credentials](#se
 
 ### Install nic
 
-Download the prebuilt binary for your platform from the [latest release](https://github.com/nebari-dev/nebari-infrastructure-core/releases/latest), extract it, and move `nic` somewhere on your `PATH`:
-
-```bash
-tar -xzf nebari-infrastructure-core_*.tar.gz
-sudo mv nic /usr/local/bin/
-nic version
-```
-
-:::note[macOS users]
-If you see a `"nic" Not Opened` dialog saying Apple could not verify the binary, click **Done** (not **Move to Trash**) and remove the quarantine flag:
-
-```bash
-sudo xattr -d com.apple.quarantine /usr/local/bin/nic
-```
-
-Then re-run `nic version`.
-:::
+Follow the [Install NIC](/docs/get-started/install) guide to download and install the `nic` CLI for your platform.
 
 ### GitOps repository
 
