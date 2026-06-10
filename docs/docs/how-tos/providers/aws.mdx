@@ -8,7 +8,7 @@ This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastruct
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have all [standard NKP services](/how-tos/deploy#what-every-deployment-includes) plus:
+When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
 
 - **A managed Kubernetes cluster** ready for workloads (AWS EKS, multi-AZ by default).
 - **Optional shared storage** ([EFS](https://aws.amazon.com/efs/)) that pods on any node can mount when enabled in your config.
@@ -39,7 +39,7 @@ Follow the [Install NIC](/docs/get-started/install) guide to download and instal
 
 ### GitOps repository
 
-See [GitOps repository](/how-tos/deploy#gitops-repository) in the deploy lifecycle guide.
+See [GitOps repository](/docs/how-tos/deploy#gitops-repository) in the deploy lifecycle guide.
 
 ### Secrets and credentials
 
@@ -50,7 +50,7 @@ cd /path/to/your-gitops-repo
 curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
 ```
 
-Then uncomment and fill in the AWS block and the GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
+Then uncomment and fill in the AWS block and the GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
 
 #### AWS credentials
 
@@ -142,16 +142,16 @@ dns:
 ```
 
 :::note[Cloudflare DNS]
-To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:DNS:Edit` permission on the zone in `dns.cloudflare.zone_name`. See [DNS](/how-tos/deploy#dns) in the deploy lifecycle guide for how to add it to `.env`.
+To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:DNS:Edit` permission on the zone in `dns.cloudflare.zone_name`. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for how to add it to `.env`.
 :::
 
 For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
 ## Deploy
 
-Run the deploy commands as described in [Deploy](/how-tos/deploy#deploy) in the deploy lifecycle guide. Allow at least 30 minutes for the first deployment — EKS control-plane creation takes about 10 minutes, followed by ArgoCD syncing foundational services.
+Run the deploy commands as described in [Deploy](/docs/how-tos/deploy#deploy) in the deploy lifecycle guide. Allow at least 30 minutes for the first deployment — EKS control-plane creation takes about 10 minutes, followed by ArgoCD syncing foundational services.
 
-**After deploy**, DNS handling depends on which config you chose: `aws-config.yaml` requires a manual A/CNAME record; `aws-config-with-dns.yaml` creates DNS records automatically. See [DNS](/how-tos/deploy#dns) in the deploy lifecycle guide for details.
+**After deploy**, DNS handling depends on which config you chose: `aws-config.yaml` requires a manual A/CNAME record; `aws-config-with-dns.yaml` creates DNS records automatically. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for details.
 
 ## IAM roles `nic` creates in your account
 
@@ -182,7 +182,7 @@ Substitute `<config-file>` with the local config you created earlier (e.g., `aws
 
 `KUBECONFIG` tells `kubectl` to read `~/.kube/nebari.yaml`, a standalone kubeconfig for this cluster, instead of the default. Add this line to your shell rc to persist.
 
-Then follow the [Verify](/how-tos/deploy#verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
+Then follow the [Verify](/docs/how-tos/deploy#verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
 
 :::note
 If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours). Re-authenticate with `aws sso login --profile <aws-profile>` and retry.
@@ -190,11 +190,11 @@ If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO ses
 
 ## First sign-in
 
-See [First sign-in](/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
+See [First sign-in](/docs/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
 
 ## Update an existing deployment
 
-To change something about a running cluster (scale a node group, add a `gpu` group, change tags, switch EFS throughput), edit your config and re-run the deploy commands as described in [Update an existing deployment](/how-tos/deploy#update-an-existing-deployment) in the deploy lifecycle guide.
+To change something about a running cluster (scale a node group, add a `gpu` group, change tags, switch EFS throughput), edit your config and re-run the deploy commands as described in [Update an existing deployment](/docs/how-tos/deploy#update-an-existing-deployment) in the deploy lifecycle guide.
 
 :::warning
 Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive resource recreation. Treat these as one-way decisions.
@@ -202,7 +202,7 @@ Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive reso
 
 ## Destroy
 
-Run the destroy commands as described in [Destroy](/how-tos/deploy#destroy) in the deploy lifecycle guide.
+Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy) in the deploy lifecycle guide.
 
 `nic destroy` removes EKS, node groups, EFS, VPC components, and the state bucket. If a resource fails to delete (commonly, a leftover load balancer from the cluster's ingress), remove it manually in the AWS console before retrying with `--force`.
 
