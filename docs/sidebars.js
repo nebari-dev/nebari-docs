@@ -24,6 +24,7 @@ module.exports = {
       label: "Get started",
       link: { type: "doc", id: "get-started/index" },
       items: [
+        "get-started/install",
         // Add get started docs here
       ],
     },
@@ -33,6 +34,7 @@ module.exports = {
       link: { type: "doc", id: "explanations/index" },
       items: [
         "explanations/nkp-architecture",
+        "explanations/software-packs",
       ],
     },
         {
@@ -44,6 +46,7 @@ module.exports = {
           type: "category",
           label: "Providers",
           items: [
+            "how-tos/providers/aws",
             "how-tos/providers/azure",
             "how-tos/providers/gcp",
             "how-tos/providers/local",
@@ -64,7 +67,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
-        // Add software pack docs here
+        "software-packs/build-your-own",
       ],
     },
   ]

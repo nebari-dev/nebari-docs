@@ -8,7 +8,7 @@ NKP currently supports a single production deploy target. The other providers ar
 
 | Provider | Status |
 | --- | --- |
-| AWS | ✅ Supported |
+| [AWS](/how-tos/providers/aws) | ✅ Supported |
 | [Google Cloud Platform (GCP)](/how-tos/providers/gcp) | 🚧 Planned |
 | [Microsoft Azure](/how-tos/providers/azure) | 🚧 Planned |
 | [Local (K3s)](/how-tos/providers/local) | 🚧 Planned |
