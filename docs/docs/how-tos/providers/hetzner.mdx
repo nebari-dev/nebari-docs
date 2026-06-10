@@ -10,7 +10,7 @@ Hetzner is the recommended starting point for most teams: it is the cheapest pro
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have all [standard NKP services](/how-tos/deploy#what-every-deployment-includes) plus:
+When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
 
 - **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
 - **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
@@ -40,7 +40,7 @@ Follow the [Install NIC](/docs/get-started/install) guide to download and instal
 
 ### GitOps repository
 
-See [GitOps repository](/how-tos/deploy#gitops-repository) in the deploy lifecycle guide.
+See [GitOps repository](/docs/how-tos/deploy#gitops-repository) in the deploy lifecycle guide.
 
 ### Secrets and credentials
 
@@ -51,7 +51,7 @@ cd /path/to/your-gitops-repo
 cp /path/to/nebari-infrastructure-core/.env.example .env
 ```
 
-Then uncomment and fill in the Hetzner token and GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
+Then uncomment and fill in the Hetzner token and GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
 
 ```bash
 # Hetzner Cloud
@@ -120,9 +120,9 @@ For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NI
 
 ## Deploy
 
-Run the deploy commands as described in [Deploy](/how-tos/deploy#deploy) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
+Run the deploy commands as described in [Deploy](/docs/how-tos/deploy#deploy) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
 
-See [DNS](/how-tos/deploy#dns) in the deploy lifecycle guide for DNS setup (Cloudflare or manual A record). For full DNS configuration options, see the [NIC DNS configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration).
+See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for DNS setup (Cloudflare or manual A record). For full DNS configuration options, see the [NIC DNS configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration).
 
 ## Verify
 
@@ -132,15 +132,15 @@ See [DNS](/how-tos/deploy#dns) in the deploy lifecycle guide for DNS setup (Clou
 export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
 ```
 
-Then follow the [Verify](/how-tos/deploy#verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
+Then follow the [Verify](/docs/how-tos/deploy#verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
 
 ## First sign-in
 
-See [First sign-in](/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
+See [First sign-in](/docs/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
 
 ## Update an existing deployment
 
-To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run the deploy commands as described in [Update an existing deployment](/how-tos/deploy#update-an-existing-deployment) in the deploy lifecycle guide.
+To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run the deploy commands as described in [Update an existing deployment](/docs/how-tos/deploy#update-an-existing-deployment) in the deploy lifecycle guide.
 
 :::warning
 Changing `location` or `project_name` triggers destructive resource recreation. Treat these as one-way decisions.
@@ -148,7 +148,7 @@ Changing `location` or `project_name` triggers destructive resource recreation. 
 
 ## Destroy
 
-Run the destroy commands as described in [Destroy](/how-tos/deploy#destroy) in the deploy lifecycle guide.
+Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy) in the deploy lifecycle guide.
 
 `nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers. This is more automatic than the AWS teardown — you rarely need to clean up manually.
 
