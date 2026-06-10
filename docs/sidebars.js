@@ -45,6 +45,7 @@ module.exports = {
         {
           type: "category",
           label: "Providers",
+          link: { type: "doc", id: "how-tos/providers/index" },
           items: [
             "how-tos/providers/aws",
             "how-tos/providers/azure",
