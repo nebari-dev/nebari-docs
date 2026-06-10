@@ -10,14 +10,10 @@ Hetzner is the recommended starting point for most teams: it is the cheapest pro
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have:
+When `nic deploy` finishes, your team will have all [standard NKP services](/how-tos/deploy#what-every-deployment-includes) plus:
 
 - **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
-- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
-- **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
-- **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
 - **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
-- **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
 
 ## Prerequisites
 
@@ -44,40 +40,22 @@ Follow the [Install NIC](/docs/get-started/install) guide to download and instal
 
 ### GitOps repository
 
-NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
-
-You'll need:
-
-1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
-2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
-
-   For production, we recommend generating a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only**, used by ArgoCD inside the cluster. If you skip it, ArgoCD will reuse `GIT_TOKEN` (which means the cluster has write access to your GitOps repo).
+See [GitOps repository](/how-tos/deploy#gitops-repository) in the deploy lifecycle guide.
 
 ### Secrets and credentials
 
-`nic` reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). From inside your GitOps repo clone, copy the template:
+From inside your GitOps repo clone, copy the template:
 
 ```bash
 cd /path/to/your-gitops-repo
 cp /path/to/nebari-infrastructure-core/.env.example .env
 ```
 
-Ensure `.env` is in your `.gitignore` before you commit anything:
-
-```text
-# .gitignore
-.env
-```
-
-Then uncomment and fill in the Hetzner and GitOps token lines:
+Then uncomment and fill in the Hetzner token and GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
 
 ```bash
 # Hetzner Cloud
 HETZNER_TOKEN=your-hetzner-api-token
-
-# GitOps tokens
-GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
-ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
 ```
 
 ## Cost considerations
@@ -142,76 +120,27 @@ For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NI
 
 ## Deploy
 
-From the directory containing your config file and `.env`:
+Run the deploy commands as described in [Deploy](/how-tos/deploy#deploy) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
 
-```bash
-# Quick syntax and shape check; no Hetzner API calls.
-nic validate -f <config-file>
-
-# Validates config and credentials; no resources are created.
-nic deploy -f <config-file> --dry-run
-
-# Actually provision.
-nic deploy -f <config-file>
-```
-
-Allow 10–15 minutes for the first deployment. The bulk of the time is k3s cluster creation and ArgoCD syncing the foundational services after the cluster comes up.
-
-If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
-
-:::important
-If you configure dns with cloudflare, you must have the `CLOUDFLARE_API_TOKEN` environment variable set with a token that has permissions to edit DNS records for your domain. This is required for `nic` to create the necessary DNS record for your cluster's load balancer. 
-Otherwise after `nic deploy` completes, it prints the load balancer's public IP address. Create an **A record** at your DNS provider pointing `<your-domain>` to that IP. The cluster will not be reachable over HTTPS until this record propagates.
-
-See [DNS configuration](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration) for details.
-:::
+See [DNS](/how-tos/deploy#dns) in the deploy lifecycle guide for DNS setup (Cloudflare or manual A record). For full DNS configuration options, see the [NIC DNS configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration).
 
 ## Verify
 
-:::note
-The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Install it if you don't have it.
-:::
-
-`nic` writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it and check the cluster:
+`nic` writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it:
 
 ```bash
 export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
-
-kubectl get nodes
-kubectl get pods -A
-kubectl get applications -n argocd
 ```
 
-All ArgoCD applications should reach `Healthy` within a few minutes of the cluster coming up (some may briefly show `Progressing` or `OutOfSync` — this is normal).
-
-:::tip
-For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after setting `KUBECONFIG`.
-:::
+Then follow the [Verify](/how-tos/deploy#verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
 
 ## First sign-in
 
-`nic` does not create an end-user account, so create one in Keycloak before you can sign in:
-
-1. Get the Keycloak admin credentials:
-   ```bash
-   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
-   ```
-2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
-3. Switch the realm dropdown (top-left) from `master` to `nebari`.
-4. Go to **Users → Add user**, set a username and email, and save.
-5. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
-6. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
+See [First sign-in](/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
 
 ## Update an existing deployment
 
-To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run:
-
-```bash
-nic deploy -f <config-file> --dry-run    # verify config resolves; no resources changed
-nic deploy -f <config-file>              # apply it
-```
-
-`nic` is declarative, so only the diff is applied.
+To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run the deploy commands as described in [Update an existing deployment](/how-tos/deploy#update-an-existing-deployment) in the deploy lifecycle guide.
 
 :::warning
 Changing `location` or `project_name` triggers destructive resource recreation. Treat these as one-way decisions.
@@ -219,26 +148,12 @@ Changing `location` or `project_name` triggers destructive resource recreation. 
 
 ## Destroy
 
-When you're done with the cluster, tear it down with `nic destroy`. Run a dry-run first to see what will be removed:
-
-```bash
-# Preview what will be destroyed.
-nic destroy -f <config-file> --dry-run
-
-# Tear down everything nic created.
-nic destroy -f <config-file>
-```
+Run the destroy commands as described in [Destroy](/how-tos/deploy#destroy) in the deploy lifecycle guide.
 
 `nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers. This is more automatic than the AWS teardown — you rarely need to clean up manually.
 
 :::note
 If you set `persist_data: true` in your config, CSI volumes labelled `persist=true` are **skipped** during destroy and will continue to bill. Remove them manually from the [Hetzner Cloud Console](https://console.hetzner.cloud/) when you no longer need them.
 :::
-
-If a resource fails to delete and `nic destroy` exits with an error, retry with `--force`:
-
-```bash
-nic destroy -f <config-file> --force
-```
 
 Always confirm in the Hetzner Cloud Console that no orphan servers, volumes, or load balancers remain after destroy.
