@@ -4,7 +4,7 @@ slug: /how-tos/deploy
 description: Common GitOps setup, deploy, verify, update, and destroy steps shared by all NIC-managed providers.
 ---
 
-This page covers the lifecycle steps that are common across all NIC-managed providers: setting up a GitOps repository, storing credentials, running `nic deploy`, verifying the cluster, signing in for the first time, updating, and tearing down.
+Start on your provider's page — it walks you through the full deployment and links here for the shared steps. This page covers the lifecycle steps that are common across all NIC-managed providers: setting up a GitOps repository, storing credentials, running `nic deploy`, verifying the cluster, signing in for the first time, updating, and tearing down.
 
 Provider-specific prerequisites, configuration, and cost notes are on each provider's page ([AWS](/docs/how-tos/providers/aws)).
 
@@ -15,7 +15,7 @@ Regardless of provider, when `nic deploy` finishes your cluster will have:
 - **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
 - **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
 - **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
-- **GitOps-driven updates:** future changes flow through a Git repo you own ([ArgoCD](https://argo-cd.readthedocs.io/)).
+- **GitOps-driven updates:** roll out or roll back apps by committing to your GitOps repo — ArgoCD reconciles the cluster to match ([ArgoCD](https://argo-cd.readthedocs.io/)).
 
 Each provider adds storage and cluster-type specifics — see the provider pages for details.
 
@@ -45,33 +45,12 @@ Add your GitOps tokens to `.env`:
 
 ```bash
 GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
-ARGOCD_GIT_TOKEN=github_pat_...      # read-only, used by ArgoCD to pull manifests
+ARGOCD_GIT_TOKEN=github_pat_...      # optional, read-only; used by ArgoCD to pull manifests
 ```
 
 ## Configuration
 
-Download a starter config from your provider's page. At minimum, every config requires these fields:
-
-```yaml
-project_name: my-cluster          # lowercase alphanumeric, hyphens, underscores
-domain: nebari.example.com        # a hostname you own
-
-certificate:
-  acme:
-    email: you@example.com        # required for Let's Encrypt; renewal notices go here
-
-git_repository:
-  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
-  path: clusters/my-cluster       # subdirectory in the repo; conventionally matches project_name
-  auth:
-    token_env: GIT_TOKEN          # matches GIT_TOKEN set in .env
-
-cluster:
-  <provider>:
-    # Provider-specific fields — see your provider's page for required options.
-```
-
-For the full schema, see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+Download a starter config from your provider's page. For the full schema, see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
 
 ## Deploy
 
@@ -95,7 +74,7 @@ If you need to extend the default timeout (large clusters, slow network), pass `
 After deploy completes, your cluster needs a DNS record to be reachable:
 
 - **Cloudflare-managed domains:** add `CLOUDFLARE_API_TOKEN` to your `.env` with `Zone:DNS:Edit` permission on your domain's zone. `nic` creates the record automatically.
-- **All other DNS providers:** `nic` prints the load balancer's IP address or hostname at the end of deploy. Create an **A record** at your DNS provider pointing your domain to that value. The cluster will not be reachable over HTTPS until the record propagates.
+- **All other DNS providers:** `nic` prints the load balancer's IP address or hostname at the end of deploy. Create an **A/CNAME record** at your DNS provider pointing your domain to that value. The cluster will not be reachable over HTTPS until the record propagates.
 
 ## Verify
 
