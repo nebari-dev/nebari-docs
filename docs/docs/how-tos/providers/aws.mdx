@@ -142,7 +142,7 @@ dns:
 ```
 
 :::note[Cloudflare DNS]
-To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:DNS:Edit` permission on the zone in `dns.cloudflare.zone_name`. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for how to add it to `.env`.
+To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:Read` and `DNS:Edit` permissions on the zone in `dns.cloudflare.zone_name`. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for how to add it to `.env`.
 :::
 
 For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
