@@ -44,11 +44,11 @@ See [GitOps repository](/docs/how-tos/deploy#gitops-repository) in the deploy li
 
 ### Secrets and credentials
 
-From inside your GitOps repo clone, copy the template:
+From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
 
 ```bash
 cd /path/to/your-gitops-repo
-cp /path/to/nebari-infrastructure-core/.env.example .env
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
 ```
 
 Then uncomment and fill in the Hetzner token and GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/deploy#secrets-and-credentials) in the deploy lifecycle guide.
