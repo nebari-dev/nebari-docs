@@ -39,6 +39,8 @@ export default [{
     "plugin:jsx-a11y/recommended",
     "prettier",
 )), {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+
     plugins: {
         import: fixupPluginRules(_import),
         "jsx-a11y": fixupPluginRules(jsxA11Y),
