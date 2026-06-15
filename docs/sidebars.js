@@ -42,10 +42,18 @@ module.exports = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
+        "how-tos/deploy",
         {
           type: "category",
           label: "Providers",
-          items: ["how-tos/providers/aws", "how-tos/providers/hetzner"],
+          link: { type: "doc", id: "how-tos/providers/index" },
+          items: [
+            "how-tos/providers/hetzner",
+            "how-tos/providers/aws", 
+            "how-tos/providers/azure",
+            "how-tos/providers/gcp",
+            "how-tos/providers/local",
+          ],
         },
       ],
     },
