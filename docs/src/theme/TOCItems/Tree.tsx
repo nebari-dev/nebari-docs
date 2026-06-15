@@ -17,12 +17,10 @@ function TOCItemTree({
       {toc.map((heading) => {
         // Parse the heading ID to check if it has "provider::actualId"
         let providerQuery = null;
-        let actualId = heading.id;
 
         if (heading.id.includes('::')) {
-          const [provider, ...rest] = heading.id.split('::');
+          const [provider] = heading.id.split('::');
           providerQuery = provider;
-          actualId = rest.join('::'); // In case there's more than one '::', join back the rest.
         }
 
         // If a provider is found, build the URL with the query param

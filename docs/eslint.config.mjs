@@ -30,6 +30,7 @@ export default [{
         "**/.docusaurus",
         "**/docusaurus.config.ts",
         "**/typings",
+        "**/eslint.config.mjs",
     ],
 }, ...fixupConfigRules(compat.extends(
     "eslint:recommended",
@@ -83,5 +84,17 @@ export default [{
         }],
 
         "react/display-name": 1,
+        "react/jsx-props-no-spreading": "off",
+
+        "import/no-unresolved": ["error", {
+            ignore: ["^@theme/", "^@theme-original/", "^@site/", "^@docusaurus/"],
+        }],
+    },
+}, {
+    files: ["**/*.{ts,tsx}"],
+
+    rules: {
+        "no-undef": "off",
+        "react/require-default-props": "off",
     },
 }];

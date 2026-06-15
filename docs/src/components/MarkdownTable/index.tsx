@@ -18,13 +18,14 @@ export function Table({ headers, rows }: MarkdownTableProps) {
         <table>
             <thead>
                 <tr>
-                    {headers.map((header, headerIdx) => (
-                        <th key={headerIdx}>{header}</th>
+                    {headers.map((header) => (
+                        <th key={header}>{header}</th>
                     ))}
                 </tr>
             </thead>
             <tbody>
                 {rows.map((rowData, rowIdx) => (
+                    // eslint-disable-next-line react/no-array-index-key
                     <tr key={rowIdx}>
                         {rowData.map((cellData, cellIdx) => {
                             // If the cellData is an array of strings, join them with "\n"
@@ -33,6 +34,7 @@ export function Table({ headers, rows }: MarkdownTableProps) {
                                 : dedent(cellData);
 
                             return (
+                                /* eslint-disable-next-line react/no-array-index-key */
                                 <td key={cellIdx}>
                                     <ReactMarkdown>{cellContent}</ReactMarkdown>
                                 </td>
