@@ -2,7 +2,8 @@ import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
 import _import from "eslint-plugin-import";
 import jsxA11Y from "eslint-plugin-jsx-a11y";
 import globals from "globals";
-import babelParser from "@babel/eslint-parser";
+import tsParser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -27,7 +28,7 @@ export default [{
         "**/examples/",
         "**/build",
         "**/.docusaurus",
-        "**/docusaurus.config.js",
+        "**/docusaurus.config.ts",
         "**/typings",
     ],
 }, ...fixupConfigRules(compat.extends(
@@ -41,6 +42,7 @@ export default [{
     plugins: {
         import: fixupPluginRules(_import),
         "jsx-a11y": fixupPluginRules(jsxA11Y),
+        "@typescript-eslint": tsPlugin,
     },
 
     languageOptions: {
@@ -49,7 +51,7 @@ export default [{
             ...globals.node,
         },
 
-        parser: babelParser,
+        parser: tsParser,
         ecmaVersion: 2018,
         sourceType: "module",
 
@@ -71,9 +73,11 @@ export default [{
         "jsx-a11y/label-has-for": 0,
         "no-console": 1,
         "react/react-in-jsx-scope": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
 
         "react/jsx-filename-extension": [1, {
-            extensions: [".js", ".jsx"],
+            extensions: [".js", ".jsx", ".ts", ".tsx"],
         }],
 
         "react/display-name": 1,

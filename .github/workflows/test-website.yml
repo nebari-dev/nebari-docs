@@ -12,29 +12,23 @@ jobs:
         working-directory: ./docs
     steps:
       - name: Check out repository 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Get yarn cache directory path 🪄
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache dependencies 🧪
-        uses: actions/cache@v4
-        id: yarn-cache
+      - name: Set up Node 🔧
+        uses: actions/setup-node@v4
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
 
       - name: Install dependencies 📦
-        run: yarn install
+        run: npm ci
 
       - name: Lint 🔍
-        run: yarn run lint
+        run: npm run lint
 
       - name: Format 🥇
-        run: yarn run format
+        run: npm run format
 
       - name: Build site 🔨
-        run: yarn run build
+        run: npm run build

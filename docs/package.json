@@ -24,19 +24,19 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "lint": "eslint \"*.{js,jsx,css,scss}\"",
-    "lint:fix": "yarn run lint -- --fix",
+    "lint": "eslint \"*.{js,jsx,ts,tsx,css,scss}\"",
+    "lint:fix": "npm run lint -- --fix",
     "format": "prettier --check \"**/*.{md, mdx, json, toml}\"",
     "format:fix": "prettier --write \"**/*.{md, mdx, json, toml}\"",
     "prepare": "cd .. && husky install docs/.husky",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "**/*.{js,jsx,css}": [
-      "yarn run lint:fix"
+    "**/*.{js,jsx,ts,tsx,css}": [
+      "npm run lint:fix"
     ],
     "**/*.{json,md,mdx,toml}": [
-      "yarn run format:fix"
+      "npm run format:fix"
     ]
   },
   "dependencies": {
@@ -57,11 +57,13 @@
     "vanilla-cookieconsent": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.25.1",
     "@docusaurus/module-type-aliases": "3.5.0",
+    "@docusaurus/tsconfig": "3.5.0",
     "@eslint/compat": "^1.1.1",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
     "eslint": "^9.9.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -73,7 +75,8 @@
     "husky": "^9.1.4",
     "lint-staged": "^15.2.8",
     "netlify-plugin-cache": "^1.0.3",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.0"
   },
   "browserslist": {
     "production": [

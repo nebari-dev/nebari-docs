@@ -22,7 +22,7 @@ repos:
       - id: codespell
         entry: codespell
         language: python
-        exclude: ^docs/yarn.lock
+        exclude: ^docs/package-lock.json
         args:
           - -L aks
 
