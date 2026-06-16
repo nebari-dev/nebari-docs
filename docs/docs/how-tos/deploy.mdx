@@ -134,20 +134,4 @@ Some config fields trigger destructive resource recreation when changed. Check y
 
 ## Destroy
 
-When you're done with the cluster, tear it down with `nic destroy`. Run a dry-run first to see what will be removed:
-
-```bash
-# Preview what will be destroyed.
-nic destroy -f <config-file> --dry-run
-
-# Tear down everything nic created.
-nic destroy -f <config-file>
-```
-
-If a resource fails to delete and `nic destroy` exits with an error, retry with `--force`:
-
-```bash
-nic destroy -f <config-file> --force
-```
-
-Always confirm in your cloud provider's console that no orphan resources remain after destroy. See your provider's page for provider-specific cleanup notes.
+When you're done with the cluster, tear it down with `nic destroy`: see [Destroy a cluster](/docs/how-tos/destroy-cluster).
