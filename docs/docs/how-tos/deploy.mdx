@@ -5,7 +5,7 @@ description: Common GitOps setup, deploy, verify, update, and destroy steps shar
 ---
 
 :::note
-Start on your provider's page — it walks you through the full deployment and links here for the shared steps. This page covers the lifecycle steps that are common across all NIC-managed providers: setting up a GitOps repository, storing credentials, running `nic deploy`, verifying the cluster, signing in for the first time, updating, and tearing down.
+Start on your provider's page — it walks you through the full deployment and links here for the shared steps. This page covers the lifecycle steps that are common across all NIC-managed providers: setting up a GitOps repository, storing credentials, deploying and verifying the cluster, signing in for the first time, updating, and tearing down.
 :::
 
 Provider-specific prerequisites, configuration, and cost notes are on each [provider's page](/docs/how-tos/providers).
@@ -50,58 +50,16 @@ GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
 ARGOCD_GIT_TOKEN=github_pat_...      # optional, read-only; used by ArgoCD to pull manifests
 ```
 
-## Configuration
+## Deploy and verify
 
-Download a starter config from your provider's page. For the full schema, see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+Download a starter config, validate it, provision the cluster, retrieve a kubeconfig, and confirm the cluster is healthy: see [Deploy a cluster](/docs/how-tos/deploy-cluster).
 
-## Deploy
-
-From the directory containing your config file and `.env`:
-
-```bash
-# Quick syntax and shape check; no provider API calls.
-nic validate -f <config-file>
-
-# Validates config and credentials; no resources are created.
-nic deploy -f <config-file> --dry-run
-
-# Actually provision.
-nic deploy -f <config-file>
-```
-
-If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
-
-### DNS
+## DNS
 
 After deploy completes, your cluster needs a DNS record to be reachable:
 
 - **Cloudflare-managed domains:** add `CLOUDFLARE_API_TOKEN` to your `.env` with `Zone:DNS:Edit` permission on your domain's zone. `nic` creates the record automatically.
 - **All other DNS providers:** `nic` prints the load balancer's IP address or hostname at the end of deploy. Create an **A/CNAME record** at your DNS provider pointing your domain to that value. The cluster will not be reachable over HTTPS until the record propagates.
-
-## Verify
-
-:::note
-The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Install it if you don't have it.
-:::
-
-After setting `KUBECONFIG` (see your provider's page), check that the cluster is responsive:
-
-```bash
-kubectl get nodes
-kubectl get pods -A
-```
-
-Then check the foundational ArgoCD applications are syncing:
-
-```bash
-kubectl get applications -n argocd
-```
-
-All ArgoCD applications should reach `Healthy` within a few minutes (some may briefly show `Progressing` or `OutOfSync` — this is normal).
-
-:::tip
-For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after setting `KUBECONFIG`.
-:::
 
 ## First sign-in
 
