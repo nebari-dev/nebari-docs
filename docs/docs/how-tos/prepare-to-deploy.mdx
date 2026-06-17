@@ -1,0 +1,45 @@
+---
+title: Prepare to deploy
+slug: /how-tos/prepare-to-deploy
+description: "One-time setup before deploying an NKP cluster: create a GitOps repository and store your credentials in a .env file."
+---
+
+This tutorial walks you through the two setup steps required before deploying NKP:
+
+- creating a **GitOps repository** where `nic` can commit app manifests
+- creating a **`.env` file** with your credentials
+
+Provider-specific credentials and configuration are covered on each [provider page](/docs/how-tos/providers).
+
+## GitOps repository
+
+NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster. For how this fits into the platform, see [NKP architecture](/docs/explanations/nkp-architecture).
+
+You'll need:
+
+1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
+2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
+
+:::tip[Recommended for production]
+Generate a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only** for ArgoCD to use inside the cluster. If you skip it, ArgoCD reuses `GIT_TOKEN`, which gives the cluster write access to your GitOps repo.
+:::
+
+## Secrets and credentials
+
+`nic` reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)).
+
+Ensure `.env` is in your `.gitignore` before you commit anything:
+
+```text
+# .gitignore
+.env
+```
+
+Add your GitOps tokens to `.env`:
+
+```bash
+GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
+ARGOCD_GIT_TOKEN=github_pat_...      # optional, read-only; used by ArgoCD to pull manifests
+```
+
+Your [provider's page](/docs/how-tos/providers) lists the provider credentials (cloud keys or profiles) that also belong in this `.env`.

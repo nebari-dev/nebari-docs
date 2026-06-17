@@ -42,7 +42,10 @@ module.exports = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
+        "how-tos/prepare-to-deploy",
         "how-tos/deploy",
+        "how-tos/deploy-cluster",
+        "how-tos/destroy-cluster",
         {
           type: "category",
           label: "Providers",
