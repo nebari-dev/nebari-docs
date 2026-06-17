@@ -17,10 +17,14 @@ export default function LayoutWrapper(props: Props): JSX.Element {
       {isClassic && (
         <Admonition type="danger" title="Deprecated">
           <p>
-            <strong>Nebari Classic is deprecated.</strong> There is no migration
-            path today. See the{' '}
+            <strong>The original Nebari project is now called Nebari Classic, and is in maintenance mode.</strong>
+            <br></br>
+            We'll continue to provide security updates and key bug fixes; however, no new features are planned at this time.
+            We're using the lessons learned from Nebari Classic to build a new Nebari ecosystem of tools, on a more robust foundation with a modular architecture.
+            <br></br>
+            See the{' '}
             <Link to="/docs/introduction">current Nebari documentation</Link>{' '}
-            for the supported platform.
+            for details on the new platform.
           </p>
         </Admonition>
       )}
