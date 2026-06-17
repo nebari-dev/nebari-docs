@@ -5,7 +5,7 @@ description: Common GitOps setup, deploy, verify, update, and destroy steps shar
 ---
 
 :::note
-Start on your provider's page — it walks you through the full deployment and links here for the shared steps. This page covers the lifecycle steps that are common across all NIC-managed providers: setting up a GitOps repository, storing credentials, running `nic deploy`, verifying the cluster, signing in for the first time, updating, and tearing down.
+Start on your provider's page — it walks you through the full deployment and links here for the shared steps. This page covers the lifecycle steps that are common across all NIC-managed providers: running `nic deploy`, verifying the cluster, signing in for the first time, updating, and tearing down.
 :::
 
 Provider-specific prerequisites, configuration, and cost notes are on each [provider's page](/docs/how-tos/providers).
@@ -21,34 +21,9 @@ Regardless of provider, when `nic deploy` finishes your cluster will have:
 
 Each provider adds storage and cluster-type specifics — see the provider pages for details.
 
-## GitOps repository
+## Set up your repository and credentials
 
-NIC uses GitOps: it commits ArgoCD app manifests to a Git repo you own and lets ArgoCD sync them into the cluster.
-
-You'll need:
-
-1. **A Git repo on any host reachable from the cluster** (GitHub, GitLab, Bitbucket, self-hosted Gitea, etc.).
-2. **A GitHub personal access token** (`GIT_TOKEN`) scoped to the GitOps repo with **Contents: read+write**. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta), choose **Only select repositories**, pick your GitOps repo, and generate.
-
-   For production, we recommend generating a second token (`ARGOCD_GIT_TOKEN`) with **Contents: read-only**, used by ArgoCD inside the cluster. If you skip it, ArgoCD will reuse `GIT_TOKEN` (which means the cluster has write access to your GitOps repo).
-
-## Secrets and credentials
-
-`nic` reads secrets from a `.env` file in the directory you run `nic` from (loaded via [godotenv](https://github.com/joho/godotenv)). See your provider's page for instructions on downloading the `.env` template.
-
-Ensure `.env` is in your `.gitignore` before you commit anything:
-
-```text
-# .gitignore
-.env
-```
-
-Add your GitOps tokens to `.env`:
-
-```bash
-GIT_TOKEN=github_pat_...             # read+write, used by nic during deploy
-ARGOCD_GIT_TOKEN=github_pat_...      # optional, read-only; used by ArgoCD to pull manifests
-```
+Before deploying, create your GitOps repository and `.env` credentials: see [Prepare to deploy](/docs/how-tos/prepare-to-deploy).
 
 ## Configuration
 
