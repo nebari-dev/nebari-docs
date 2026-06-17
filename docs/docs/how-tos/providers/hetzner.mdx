@@ -152,7 +152,7 @@ Changing `location` or `project_name` triggers destructive resource recreation. 
 
 Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy) in the deploy lifecycle guide.
 
-`nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers. This is more automatic than the AWS teardown — you rarely need to clean up manually.
+`nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers.
 
 :::note
 If you set `persist_data: true` in your config, CSI volumes labelled `persist=true` are **skipped** during destroy and will continue to bill. Remove them manually from the [Hetzner Cloud Console](https://console.hetzner.cloud/) when you no longer need them.
