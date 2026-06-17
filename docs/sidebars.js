@@ -44,7 +44,9 @@ module.exports = {
       items: [
         "how-tos/prepare-to-deploy",
         "how-tos/deploy",
+        "how-tos/deploy-cluster",
         "how-tos/update-cluster",
+        "how-tos/destroy-cluster",
         {
           type: "category",
           label: "Providers",
