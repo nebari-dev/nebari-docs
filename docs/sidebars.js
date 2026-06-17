@@ -43,6 +43,7 @@ module.exports = {
       link: { type: "doc", id: "how-tos/index" },
       items: [
         "how-tos/deploy",
+        "how-tos/update-cluster",
         {
           type: "category",
           label: "Providers",
