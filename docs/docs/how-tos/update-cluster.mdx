@@ -1,0 +1,27 @@
+---
+title: Update a cluster
+slug: /how-tos/update-cluster
+description: "Apply configuration changes to a running NKP cluster by re-running nic deploy, which reconciles the cluster to match your config."
+---
+
+To change a running cluster, edit your config and re-run `nic deploy`. `nic` is declarative: it compares your config against the cluster's current state and applies only the difference. These steps are the same across all providers; see your [provider's page](/docs/how-tos/providers) for provider-specific fields.
+
+## Apply a change
+
+Most changes, such as scaling a node group, adding a node group, or changing tags, update the cluster without recreating it. Preview the change first, then apply it:
+
+```bash
+nic deploy -f <config-file> --dry-run    # show what would change; nothing is modified
+nic deploy -f <config-file>              # apply it
+```
+
+## Immutable fields
+
+Some fields (cluster identity, network foundation) can't be changed on a running cluster. Changing one requires destroying and recreating it. The exact fields are provider-specific: see your [provider's page](/docs/how-tos/providers).
+
+## Reconcile drift
+
+If something is changed outside `nic` (for example, in your cloud provider's console), the cluster drifts from your config. To reconcile:
+
+- **Preview:** `nic deploy --dry-run` shows which resources drifted and how `nic` will fix them.
+- **Apply:** `nic deploy` updates them back to your config.
