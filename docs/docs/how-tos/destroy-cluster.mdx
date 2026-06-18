@@ -1,0 +1,42 @@
+---
+title: Destroy a cluster
+slug: /how-tos/destroy-cluster
+description: "Tear down an NKP cluster with nic destroy: dry-run, teardown order, retrying with --force, and checking for orphan resources."
+---
+
+When you're done with a cluster, tear it down with `nic destroy`. These steps are the same across all providers; see your [provider's page](/docs/how-tos/providers) for provider-specific cleanup notes.
+
+## Destroy
+
+Run a dry-run first to see what will be removed, then destroy:
+
+```bash
+# Preview what will be destroyed; no resources are removed.
+nic destroy -f <config-file> --dry-run
+
+# Tear down everything nic created (prompts for confirmation first).
+nic destroy -f <config-file>
+```
+
+`nic destroy` prompts for confirmation before removing anything. Pass `--auto-approve` to skip the prompt in automation.
+
+If a resource fails to delete and `nic destroy` exits with an error, retry with `--force` to continue past errors instead of aborting:
+
+```bash
+nic destroy -f <config-file> --force
+```
+
+## Order of teardown
+
+`nic destroy` tears things down in this order:
+
+1. Validates your config and selects the provider.
+2. Prompts for confirmation (skipped with `--auto-approve` or `--dry-run`).
+3. Cleans up DNS records, if a DNS provider is configured.
+4. Destroys the cluster infrastructure.
+
+A `--dry-run` previews the changes without removing anything, including DNS records.
+
+## Check for orphan resources
+
+Always confirm in your cloud provider's console that no orphan resources remain after destroy. Resources that bill hourly (load balancers, NAT gateways, volumes) are worth checking first. See your [provider's page](/docs/how-tos/providers) for provider-specific cleanup notes.

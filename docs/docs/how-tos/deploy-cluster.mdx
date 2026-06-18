@@ -1,0 +1,68 @@
+---
+title: Deploy a cluster
+slug: /how-tos/deploy-cluster
+description: "Deploy and verify an NKP cluster with nic: validate the config, provision, retrieve the kubeconfig, and confirm the cluster is healthy."
+---
+
+This how-to covers the deploy-and-verify steps shared across all NIC-managed providers: validating your config, provisioning with `nic deploy`, retrieving a kubeconfig, and confirming the cluster is healthy. For how `nic` provisions a cluster, see [NKP architecture](/docs/explanations/nkp-architecture).
+
+:::note
+These steps are the same across all providers. For prerequisites, configuration, and cost notes specific to your environment, see your [provider's page](/docs/how-tos/providers).
+:::
+
+## Configuration
+
+Download a starter config from your provider's page. For the full schema, see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+
+## Deploy
+
+From the directory containing your config file and `.env`:
+
+```bash
+# Quick syntax and shape check; no provider API calls.
+nic validate -f <config-file>
+
+# Validates config and credentials; no resources are created.
+nic deploy -f <config-file> --dry-run
+
+# Actually provision.
+nic deploy -f <config-file>
+```
+
+If you need to extend the default timeout (large clusters, slow network), pass `--timeout 1h`.
+
+## Retrieve the kubeconfig
+
+`nic deploy` does not set your `kubectl` context. Generate a kubeconfig for the new cluster and point `kubectl` at it:
+
+```bash
+# Write the kubeconfig to a file (omit -o to print to stdout).
+nic kubeconfig -f <config-file> -o kubeconfig.yaml
+
+export KUBECONFIG=$(pwd)/kubeconfig.yaml
+```
+
+## Verify
+
+:::note
+The steps below use [`kubectl`](https://kubernetes.io/docs/tasks/tools/). Install it if you don't have it.
+:::
+
+Check that the cluster is responsive:
+
+```bash
+kubectl get nodes
+kubectl get pods -A
+```
+
+Then check the foundational ArgoCD applications are syncing:
+
+```bash
+kubectl get applications -n argocd
+```
+
+All ArgoCD applications should reach `Healthy` within a few minutes (some may briefly show `Progressing` or `OutOfSync` — this is normal).
+
+:::tip
+For an interactive view of all cluster resources (especially handy while watching ArgoCD apps sync), install [k9s](https://k9scli.io/) and run it after setting `KUBECONFIG`.
+:::
