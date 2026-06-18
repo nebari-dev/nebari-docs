@@ -168,7 +168,7 @@ const config = {
             to: "community/introduction",
           },
           {
-            label: "Nebari-classic (deprecated)",
+            label: "Nebari-classic (Sunsetting)",
             position: "left",
             to: "/classic/welcome",
           },

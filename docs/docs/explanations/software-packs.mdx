@@ -1,11 +1,69 @@
 ---
-title: Software Packs
+title: Pack architecture
 id: software-packs
-slug: /explanations/software-packs
+description: A conceptual tour of Software Packs, the NebariApp Custom Resource, and how the Nebari Operator wires each pack into routing, login, TLS, and the landing page.
 ---
 
-:::note[Coming soon]
+# Pack architecture
 
-Tracked in [#626](https://github.com/nebari-dev/nebari-docs/issues/626).
+A **Software Pack** is a self-contained, installable artifact published to a git repository. Once installed on NKP, it delivers a Capability such as a chat assistant, BI dashboards, or a model-serving stack.
 
-:::
+Each pack is already wired into the platform's login, routing, and TLS, so users can open it from the landing page and start working.
+
+## Why packs exist
+
+A platform that ships everything in one bundle is heavy to install, expensive to run, slow to change, and carries unused components that widen the attack surface. Packs solve this by giving NKP four properties:
+
+- **Composable:** install only the Capabilities your users need. A team using Superset doesn't have to install LLM Serving, and vice versa.
+- **Independent upgrades:** each pack upgrades on its own. Pulling in a new version of one pack leaves every other pack untouched.
+- **Bring your own pack:** if no existing pack does what you need, you can build one yourself using the same template and resources OpenTeams uses.
+- **Smaller blast radius:** if one pack breaks, the other packs keep working. You can debug, roll back, or remove the broken one without touching anything else.
+
+## What a pack contains
+
+A Software Pack is a set of Kubernetes manifests, including:
+
+- **Your workloads** (Deployments, Services, ConfigMaps, and anything else your application needs).
+- **A `NebariApp` resource** that tells the [Nebari Operator](https://github.com/nebari-dev/nebari-operator) to connect the pack to login, routing, and TLS automatically. The [configuration reference](https://github.com/nebari-dev/nebari-operator/blob/main/docs/configuration-reference.md) lists the fields you can set.
+
+A pack is deployed by an ArgoCD `Application` (kept in a separate gitops repo) that references the pack and supplies its values. The same pack can therefore be deployed many times on one cluster with different configurations.
+
+For example, you can deploy the same pack to production and staging by adding two Applications to your gitops repo with different values:
+
+{/* Diagram source: docs/static/img/explanations/_sources/same-pack-many-deployments.html
+    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
+
+![Same pack, many deployments: a single pack repo (manifests plus NebariApp) is referenced by two ArgoCD Applications, one with values for prod and one with values for staging. Each Application deploys the pack to its own cluster instance.](/img/explanations/same-pack-many-deployments.png)
+
+## The NebariApp resource
+
+The pack ships a `NebariApp` manifest that declares how the pack should integrate with the platform: which hostname to expose, which Kubernetes Service should receive traffic, whether to enable TLS, and whether to require login.
+
+From the `NebariApp`, the Nebari Operator creates:
+
+- An **`HTTPRoute`** that sends traffic for the hostname to the target service.
+- A **`Certificate`** for the hostname, so users connect over HTTPS.
+- A **Keycloak client** that lets users authenticate with their existing platform account.
+
+The pack writes the manifest as a template; the ArgoCD Application supplies the values (hostname, service name, and so on) at deploy time.
+
+## Pack lifecycle
+
+A pack takes four steps to get from a git repo to the landing page:
+
+1. **The pack is installed onto a cluster via ArgoCD.** An ArgoCD `Application` manifest points at the pack's repo, and ArgoCD syncs from there.
+2. **ArgoCD deploys the pack's workloads and the `NebariApp` into the cluster.**
+3. **The Nebari Operator picks up the `NebariApp`** and creates the routing, certificate, and Keycloak client that the pack needs.
+4. **The pack appears on the [landing page](https://github.com/nebari-dev/nebari-landing)** as an available Capability.
+
+{/* Diagram source: docs/static/img/explanations/_sources/pack-lifecycle.html
+    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
+
+![Pack lifecycle diagram: the pack's GitHub repo (Helm chart plus NebariApp) sits outside the Managed Kubernetes cluster and is synced by ArgoCD. Inside the cluster, ArgoCD deploys the pack workloads and NebariApp resource, which is picked up by the Nebari Operator. The operator creates the HTTPRoute, Certificate, and Keycloak client, and the pack appears on the landing page.](/img/explanations/pack-lifecycle.png)
+
+## Where packs come from
+
+Packs are published to git repositories, and they come from two channels:
+
+- **Official packs.** Maintained by OpenTeams and published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. See the [pack catalog](/docs/software-packs/) for the current list.
+- **Community packs.** Anyone outside OpenTeams can build one, whether that's an open-source maintainer or your own team. A community pack follows the same structure as an official pack. See [Build your own pack](/docs/software-packs/build-your-own) to author one.
