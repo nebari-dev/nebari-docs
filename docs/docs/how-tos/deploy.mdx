@@ -38,17 +38,7 @@ After deploy completes, your cluster needs a DNS record to be reachable:
 
 ## First sign-in
 
-`nic` does not create an end-user account, so create one in Keycloak before you can sign in:
-
-1. Get the Keycloak admin credentials:
-   ```bash
-   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
-   ```
-2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
-3. Switch the realm dropdown (top-left) from `master` to `nebari`.
-4. Go to **Users → Add user**, set a username and email, and save.
-5. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
-6. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
+`nic` does not create an end-user account, so create one in Keycloak before you can sign in: see [Keycloak authentication](/docs/how-tos/keycloak-auth).
 
 ## Update an existing deployment
 
