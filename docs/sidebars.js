@@ -48,6 +48,7 @@ module.exports = {
         "how-tos/cloudflare-dns",
         "how-tos/update-cluster",
         "how-tos/destroy-cluster",
+        "how-tos/keycloak-auth",
         {
           type: "category",
           label: "Providers",
