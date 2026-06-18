@@ -52,7 +52,8 @@ module.exports = {
           label: "Providers",
           link: { type: "doc", id: "how-tos/providers/index" },
           items: [
-            "how-tos/providers/aws",
+            "how-tos/providers/hetzner",
+            "how-tos/providers/aws", 
             "how-tos/providers/azure",
             "how-tos/providers/gcp",
             "how-tos/providers/local",
