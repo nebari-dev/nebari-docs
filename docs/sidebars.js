@@ -75,6 +75,7 @@ module.exports = {
       label: "Software packs",
       link: { type: "doc", id: "software-packs/index" },
       items: [
+        "software-packs/deploy-locally",
         "software-packs/build-your-own",
       ],
     },
