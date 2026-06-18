@@ -1,0 +1,47 @@
+---
+title: Cloudflare DNS
+slug: /how-tos/cloudflare-dns
+description: "Configure DNS for an NKP cluster: let nic manage Cloudflare records automatically, or create records manually with any DNS provider."
+---
+
+After deploy, your cluster needs DNS records so its services resolve over HTTPS. `nic` can manage these automatically through Cloudflare, or you can create them manually with any DNS provider.
+
+## Cloudflare (automatic)
+
+:::note
+These go in the `.env` and provider config from your [provider's page](/docs/how-tos/providers), before you run `nic deploy`.
+:::
+
+1. [Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with **Zone:Read** and **DNS:Edit** permissions on your domain's zone, and add it to the `.env` in the directory you deploy from:
+
+   ```bash
+   CLOUDFLARE_API_TOKEN=...
+   ```
+
+2. Set the zone in your provider config file (for example, `aws-config.yaml`), using the parent zone of your `domain`:
+
+   ```yaml
+   dns:
+     cloudflare:
+       zone_name: example.com
+   ```
+
+Once the load balancer endpoint is ready, `nic` creates two records pointing at it:
+
+- `<domain>`: your cluster's domain.
+- `*.<domain>`: a wildcard so subdomains like `keycloak.<domain>` resolve.
+
+:::warning[Changing the domain leaves old records behind]
+If you change `domain` and redeploy, `nic` creates the new records but leaves the old domain's records in place. Delete them yourself in Cloudflare.
+:::
+
+## Other DNS providers (manual)
+
+Without Cloudflare, `nic` prints the load balancer's IP or hostname at the end of deploy. Create two records at your DNS provider, both pointing at it:
+
+- `<domain>`
+- `*.<domain>`
+
+Use an **A** record for an IP or a **CNAME** for a hostname. The cluster is not reachable over HTTPS until they propagate.
+
+For the full `dns` configuration schema, see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#dns-provider-configuration).
