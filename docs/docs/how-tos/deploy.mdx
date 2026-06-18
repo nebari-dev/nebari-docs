@@ -52,18 +52,7 @@ After deploy completes, your cluster needs a DNS record to be reachable:
 
 ## Update an existing deployment
 
-To change something about a running cluster, edit your config and re-run:
-
-```bash
-nic deploy -f <config-file> --dry-run    # verify config resolves; no resources changed
-nic deploy -f <config-file>              # apply it
-```
-
-`nic` is declarative, so only the diff is applied.
-
-:::warning
-Some config fields trigger destructive resource recreation when changed. Check your provider's page for which fields these are.
-:::
+To change a running cluster, edit your config and re-run `nic deploy`: see [Update a cluster](/docs/how-tos/update-cluster).
 
 ## Destroy
 
