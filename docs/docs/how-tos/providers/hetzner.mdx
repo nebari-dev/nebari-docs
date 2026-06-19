@@ -1,0 +1,161 @@
+---
+title: Hetzner
+slug: /how-tos/providers/hetzner
+description: End-to-end how-to for deploying NKP on Hetzner Cloud with k3s, including EU data residency, cost considerations, and the deploy-update-destroy lifecycle.
+---
+
+This guide walks through deploying NKP on Hetzner Cloud with `nic` (the Nebari Infrastructure Core CLI), from an empty Hetzner account to a running cluster you can manage and tear down.
+
+Hetzner is the recommended starting point for most teams: it is the cheapest production-capable provider supported by NKP, offers EU data residency (GDPR-friendly locations in Germany and Finland), and requires no IAM policies, NAT gateways, or managed-Kubernetes fees — just servers, one load balancer, and block volumes.
+
+## What your team gets
+
+When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
+
+- **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
+- **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
+
+## Prerequisites
+
+### Hetzner Cloud account
+
+You'll need a Hetzner Cloud account. If you don't have one, [sign up at console.hetzner.cloud](https://console.hetzner.cloud/).
+
+- **Location:** pick a datacenter where you want your cluster. Choose from one of the [availability zones](https://docs.hetzner.com/cloud/general/locations/).
+- **Cost:** Hetzner Cloud has no free tier; servers, load balancers, and volumes all bill from the moment they're created.
+
+### API token
+
+`nic` authenticates to Hetzner using a project-scoped API token:
+
+1. Open [console.hetzner.cloud](https://console.hetzner.cloud/), select your project, and go to **Security → API Tokens**.
+2. Click **Generate API token**, give it a description (e.g., `nic-deploy`), and choose **Read & Write**.
+3. Copy the token immediately — it is shown only once.
+
+You'll add this token to your `.env` file. See the [Secrets and credentials](#secrets-and-credentials) section below for details.
+
+### Install nic
+
+Follow the [Install NIC](/docs/get-started/install) guide to download and install the `nic` CLI for your platform.
+
+### GitOps repository
+
+See [GitOps repository](/docs/how-tos/prepare-to-deploy#gitops-repository) in the Prepare to deploy guide.
+
+### Secrets and credentials
+
+From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
+
+```bash
+cd /path/to/your-gitops-repo
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
+```
+
+Then uncomment and fill in the Hetzner token and GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/prepare-to-deploy#secrets-and-credentials) in the Prepare to deploy guide.
+
+```bash
+# Hetzner Cloud
+HETZNER_TOKEN=your-hetzner-api-token
+```
+
+## Cost considerations
+
+A NKP deployment on Hetzner Cloud provisions three categories of resources that bill from day one. Check [Hetzner's pricing page](https://www.hetzner.com/cloud/) for current rates.
+
+- **[Servers](https://www.hetzner.com/cloud/):** per-hour billing for each node. The examples below use `cpx31` (4 vCPU / 8 GB RAM AMD), which strikes a good balance between price and capacity. Master nodes and worker nodes use the same type by default.
+- **[Load balancer](https://www.hetzner.com/cloud/load-balancer):** `nic` creates one Hetzner LB for cluster ingress. Flat hourly rate plus traffic.
+- **[Block volumes](https://www.hetzner.com/storage/block-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing.
+
+Hetzner is significantly cheaper than equivalent AWS deployments because there is no managed Kubernetes control-plane fee, no NAT gateways, no VPC interface endpoints, and no per-mount-target EFS charge. A minimal three-node `cpx31` cluster (one master, two workers) plus one load balancer typically costs a fraction of an equivalent EKS setup.
+
+## Configuration
+
+Download the starter config from the `nebari-infrastructure-core`:
+- **[`hetzner-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/hetzner-config.yaml)**.
+
+```bash
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/hetzner-config.yaml
+```
+
+:::note
+In later steps, `<config-file>` refers to this local copy (`hetzner-config.yaml`).
+:::
+
+At minimum, edit these fields:
+
+```yaml
+project_name: my-cluster          # lowercase alphanumeric, hyphens, underscores
+domain: nebari.example.com        # a hostname you own
+
+certificate:
+  type: letsencrypt
+  acme:
+    email: you@example.com        # required for Let's Encrypt; renewal notices go here
+
+git_repository:
+  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
+  path: clusters/my-cluster       # subdirectory in the repo; conventionally matches project_name
+  auth:
+    token_env: GIT_TOKEN          # matches GIT_TOKEN set in .env
+
+cluster:
+  hetzner:
+    kubernetes_version: "1.32"
+    # REQUIRED: datacenter location.
+    location: fsn1
+    node_groups:
+      # Exactly one node group must have master: true.
+      # Count must be odd (1, 3, 5) when running HA embedded etcd.
+      master:
+        instance_type: cpx31      # 4 vCPU / 8 GB — good general-purpose starting point
+        count: 1
+        master: true
+      workers:
+        instance_type: cpx31
+        count: 2
+```
+
+For more configuration options, see the [Hetzner provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#hetzner-provider-configuration).
+For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
+
+## Deploy
+
+Run the deploy commands as described in [Deploy and verify](/docs/how-tos/deploy#deploy-and-verify) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
+
+
+See [Cloudflare DNS](/docs/how-tos/cloudflare-dns) for DNS setup (Cloudflare or manual A record).
+
+## Verify
+
+`nic` writes the kubeconfig to `~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig`. Point `kubectl` at it:
+
+```bash
+export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
+```
+
+Then follow the [Deploy and verify](/docs/how-tos/deploy#deploy-and-verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
+
+
+## First sign-in
+
+See [Keycloak authentication](/docs/how-tos/keycloak-auth) for first sign-in.
+
+## Update an existing deployment
+
+To change something about a running cluster (scale a node group, add a `gpu` group, change instance types, restrict network access), edit your config and re-run the deploy commands as described in [Update a cluster](/docs/how-tos/update-cluster).
+
+:::warning
+Changing `location` or `project_name` triggers destructive resource recreation. Treat these as one-way decisions.
+:::
+
+## Destroy
+
+Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy) in the deploy lifecycle guide.
+
+`nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers.
+
+:::note
+If you set `persist_data: true` in your config, CSI volumes labelled `persist=true` are **skipped** during destroy and will continue to bill. Remove them manually from the [Hetzner Cloud Console](https://console.hetzner.cloud/) when you no longer need them.
+:::
+
+Always confirm in the Hetzner Cloud Console that no orphan servers, volumes, or load balancers remain after destroy.

@@ -1,0 +1,75 @@
+---
+title: Keycloak authentication
+slug: /how-tos/keycloak-auth
+description: "How NKP uses Keycloak for single sign-on: the operator wires it up automatically, and you manage users, groups, and access in the nebari realm."
+---
+
+NKP uses [Keycloak](https://www.keycloak.org/) for single sign-on across all cluster services. The Nebari Operator wires Keycloak up for you, so day to day you mostly manage users and groups, not client configuration.
+
+## Single sign-on
+
+Single sign-on is wired into every app for you.
+
+When a pack installs, NKP reads its [`NebariApp`](/docs/explanations/software-packs#the-nebariapp-resource) and sets up its login, so it appears on the Launchpad with platform-account sign-in.
+
+In Keycloak you manage only **users and groups**. Per-app auth lives in the `NebariApp`.
+
+## Admin access
+
+The admin account has full control over Keycloak: create and manage users, organize them into groups, and adjust realm settings. You'll use it for the rest of this guide.
+
+To sign in to the admin console:
+
+1. Get the Keycloak admin credentials:
+
+   ```bash
+   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
+   ```
+
+2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
+3. Switch the realm dropdown (top-left) from `master` to `nebari`.
+
+## Create your first user
+
+`nic` does not create an end-user account, so create one before you can sign in:
+
+1. In the `nebari` realm, go to **Users → Add user**, set a username and email, and save.
+2. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
+3. Visit `https://<your-domain>` and sign in with the new user. You should land on the Launchpad.
+
+## Users, groups, and access
+
+Apps can restrict access to specific **groups**, enforced at the gateway from each user's `groups` claim. To let someone into a restricted app, add them to the group it requires.
+
+Manage this in the `nebari` realm:
+
+- **Groups → Create group** to add a group, then assign members on the group's **Members** tab (or from a user's **Groups** tab).
+- An app that doesn't restrict by group is open to any signed-in user.
+
+## Customizing per app
+
+You can define an app's access in its `NebariApp` manifest instead of the console. Because the manifest is in Git, the access rules are version-controlled and reviewed like code:
+
+```yaml
+spec:
+  auth:
+    enabled: true
+    provider: keycloak
+    groups:
+      - data-scientists          # groups allowed to use the app
+    enforceAtGateway: true       # enforce group membership at the gateway
+    keycloakConfig:
+      groups:
+        - name: data-scientists  # create the group in the nebari realm and add members
+          members:
+            - alice
+            - bob
+```
+
+- `groups` lists the groups allowed to use the app.
+- `enforceAtGateway: true` blocks users outside those groups at the gateway. Without it, group membership isn't enforced.
+- `keycloakConfig.groups` creates those groups in the `nebari` realm and adds the listed members.
+
+The operator reconciles all of this on the next deploy. For one-off changes, edit groups and memberships directly in the admin console.
+
+For all `spec.auth` fields, see the [NebariApp configuration reference](https://github.com/nebari-dev/nebari-operator/blob/main/docs/configuration-reference.md#auth).

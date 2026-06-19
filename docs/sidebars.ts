@@ -40,13 +40,20 @@ const sidebars: SidebarsConfig = {
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
       items: [
+        "how-tos/prepare-to-deploy",
         "how-tos/deploy",
+        "how-tos/deploy-cluster",
+        "how-tos/cloudflare-dns",
+        "how-tos/update-cluster",
+        "how-tos/destroy-cluster",
+        "how-tos/keycloak-auth",
         {
           type: "category",
           label: "Providers",
           link: { type: "doc", id: "how-tos/providers/index" },
           items: [
-            "how-tos/providers/aws",
+            "how-tos/providers/hetzner",
+            "how-tos/providers/aws", 
             "how-tos/providers/azure",
             "how-tos/providers/gcp",
             "how-tos/providers/local",
