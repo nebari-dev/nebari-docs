@@ -8,9 +8,10 @@ This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastruct
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have a fully configured NKP cluster plus:
+When `nic deploy` finishes, your team will have:
 
-- **A managed Kubernetes cluster** ready for workloads (AWS EKS, multi-AZ by default).
+- **Single sign-on, automatic TLS, and ingress**, all configured.
+- **A managed Kubernetes cluster** (AWS EKS, multi-AZ by default) running it.
 - **Optional shared storage** ([EFS](https://aws.amazon.com/efs/)) that pods on any node can mount when enabled in your config.
 
 ## Prerequisites
