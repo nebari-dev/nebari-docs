@@ -31,10 +31,7 @@ Download a starter config, validate it, provision the cluster, retrieve a kubeco
 
 ## DNS
 
-After deploy completes, your cluster needs a DNS record to be reachable:
-
-- **Cloudflare-managed domains:** add `CLOUDFLARE_API_TOKEN` to your `.env` with `Zone:DNS:Edit` permission on your domain's zone. `nic` creates the record automatically.
-- **All other DNS providers:** `nic` prints the load balancer's IP address or hostname at the end of deploy. Create an **A/CNAME record** at your DNS provider pointing your domain to that value. The cluster will not be reachable over HTTPS until the record propagates.
+After deploy completes, your cluster needs DNS records to be reachable: see [Cloudflare DNS](/docs/how-tos/cloudflare-dns).
 
 ## First sign-in
 

@@ -45,6 +45,7 @@ module.exports = {
         "how-tos/prepare-to-deploy",
         "how-tos/deploy",
         "how-tos/deploy-cluster",
+        "how-tos/cloudflare-dns",
         "how-tos/update-cluster",
         "how-tos/destroy-cluster",
         "how-tos/keycloak-auth",
