@@ -47,6 +47,7 @@ module.exports = {
         "how-tos/deploy-cluster",
         "how-tos/update-cluster",
         "how-tos/destroy-cluster",
+        "how-tos/opentelemetry",
         {
           type: "category",
           label: "Providers",
