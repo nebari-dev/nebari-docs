@@ -142,7 +142,7 @@ dns:
 ```
 
 :::note[Cloudflare DNS]
-To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:Read` and `DNS:Edit` permissions on the zone in `dns.cloudflare.zone_name`. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for how to add it to `.env`.
+To use `aws-config-with-dns.yaml`, [generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with `Zone:Read` and `DNS:Edit` permissions on the zone in `dns.cloudflare.zone_name`. See [Cloudflare DNS](/docs/how-tos/cloudflare-dns) for how to add it to `.env`.
 :::
 
 For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-group options, Longhorn, log types), see the [NIC configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md).
@@ -151,7 +151,7 @@ For the full schema (brownfield VPC adoption, custom KMS keys, advanced node-gro
 
 Follow [Deploy a cluster](/docs/how-tos/deploy-cluster) to deploy and verify. The first deployment takes at least 30 minutes (about 10 for the EKS control plane, then ArgoCD syncing).
 
-**After deploy**, DNS handling depends on which config you chose: `aws-config.yaml` requires a manual A/CNAME record; `aws-config-with-dns.yaml` creates DNS records automatically. See [DNS](/docs/how-tos/deploy#dns) in the deploy lifecycle guide for details.
+**After deploy**, DNS handling depends on which config you chose: `aws-config.yaml` requires a manual A/CNAME record; `aws-config-with-dns.yaml` creates DNS records automatically. See [Cloudflare DNS](/docs/how-tos/cloudflare-dns) for details.
 
 :::note
 Verifying on AWS also needs the [AWS CLI](https://aws.amazon.com/cli/) — the generated kubeconfig calls `aws eks get-token` to authenticate. If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours); run `aws sso login --profile <aws-profile>` and retry.
@@ -171,7 +171,7 @@ Verifying on AWS also needs the [AWS CLI](https://aws.amazon.com/cli/) — the g
 
 ## First sign-in
 
-See [First sign-in](/docs/how-tos/deploy#first-sign-in) in the deploy lifecycle guide.
+See [Keycloak authentication](/docs/how-tos/keycloak-auth) for first sign-in.
 
 ## Update an existing deployment
 
