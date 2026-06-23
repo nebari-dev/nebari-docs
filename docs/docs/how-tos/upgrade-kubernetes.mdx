@@ -20,13 +20,13 @@ NKP supports in-place Kubernetes version upgrades via `nic deploy`. Edit the `ku
 1.32 → 1.33 → 1.34
 ```
 
-Skipping a version (for example, 1.32 → 1.34 directly) will fail validation. Downgrades are not supported.
+Skipping a version (for example, 1.32 → 1.34 directly) will be rejected by EKS during deploy. Downgrades are not supported.
 
 **Hetzner (k3s):** k3s upgrades also go one minor version at a time. The `kubernetes_version` field accepts `"1.32"`, `"1.32.0"`, or a full release tag like `"v1.32.12+k3s1"`. Specifying `"1.32"` resolves to the latest stable k3s patch release for that minor version.
 
 ### Operator and pack compatibility
 
-The Nebari Operator and Software Packs run inside the cluster and follow its Kubernetes version. There is no separate compatibility matrix to check before upgrading.
+The Nebari Operator and Software Packs run inside the cluster and follow its Kubernetes version. There is no separate compatibility matrix to check before upgrading. **AWS:** After upgrading, verify your EKS managed add-ons (kube-proxy, CoreDNS, VPC CNI) are on versions compatible with the new cluster version — check the **Add-ons** tab in the AWS EKS console and update any that are flagged.
 
 ## Upgrade steps
 
@@ -71,7 +71,7 @@ These steps are the same for all providers.
 EKS upgrades in two phases:
 
 1. **Control plane** upgrades first. The Kubernetes API server and control-plane components are updated to the new version. This takes around 10 minutes and is handled by AWS.
-2. **Node groups** roll one at a time. For each managed node group, EKS cordons, drains, and replaces nodes with the new AMI — one node at a time. Node groups upgrade sequentially after the control plane finishes.
+2. **Node groups** roll one at a time. For each managed node group, EKS launches a replacement node, waits for it to become Ready, then drains and terminates the old one — one node at a time per node group. Node groups upgrade sequentially after the control plane finishes.
 
 Plan for a total time of 20–40 minutes depending on the number of node groups and their sizes.
 
@@ -85,7 +85,7 @@ During node rolling, pods on the node being replaced are evicted and rescheduled
 
 - The **Nebari Operator** may be briefly unavailable while the node it runs on is replaced.
 - **Software Packs**, ArgoCD, Keycloak, and other foundational apps may be briefly unavailable during the rollout of the node they run on.
-- **ArgoCD continues reconciling** throughout — any app that falls out of sync during the rollout is restored automatically once the replacement node is ready.
+- Once **ArgoCD's replacement pod is ready**, any apps that fell out of sync during the rollout are restored automatically.
 
 Multi-replica workloads tolerate rolling node replacement without downtime, provided their replicas are spread across nodes. Single-replica packs will have a brief interruption while their pod is rescheduled.
 

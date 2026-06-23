@@ -15,6 +15,10 @@ nic deploy -f <config-file> --dry-run    # show what would change; nothing is mo
 nic deploy -f <config-file>              # apply it
 ```
 
+:::note[Upgrading the Kubernetes version]
+Bumping `kubernetes_version` has additional requirements. See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) — EKS and k3s both require one-minor-version increments.
+:::
+
 ## Immutable fields
 
 Some fields (cluster identity, network foundation) can't be changed on a running cluster. Changing one requires destroying and recreating it. The exact fields are provider-specific: see your [provider's page](/docs/how-tos/providers).
