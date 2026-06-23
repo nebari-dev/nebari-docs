@@ -191,6 +191,16 @@ EKS requires one-minor-version increments — you cannot skip versions or downgr
 
 Skipping a version (for example, 1.32 → 1.34 directly) is rejected by EKS during deploy.
 
+Set `kubernetes_version` under `cluster.aws` in your config:
+
+```yaml
+cluster:
+  aws:
+    kubernetes_version: "1.33"   # was "1.32"
+```
+
+EKS accepts bare minor versions (`"1.33"`) — patch versions are not required.
+
 EKS upgrades in two phases:
 
 1. **Control plane** upgrades first. The Kubernetes API server and control-plane components are updated to the new version. This takes around 10 minutes and is handled by AWS.
