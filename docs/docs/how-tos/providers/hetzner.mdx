@@ -148,6 +148,10 @@ To change something about a running cluster (scale a node group, add a `gpu` gro
 Changing `location` or `project_name` triggers destructive resource recreation. Treat these as one-way decisions.
 :::
 
+:::note[Upgrading the Kubernetes version]
+To upgrade the k3s Kubernetes version, see [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes). Bump `kubernetes_version` by one minor version at a time.
+:::
+
 ## Destroy
 
 Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy) in the deploy lifecycle guide.
