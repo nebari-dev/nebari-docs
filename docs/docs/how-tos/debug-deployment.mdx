@@ -59,7 +59,7 @@ kubectl describe application <name> -n argocd
 
 What to look for:
 
-- **`SyncStatus`**: `Synced` means ArgoCD has applied the latest manifests; `OutOfSync` means it hasn't.
+- **`SyncStatus`**: `Synced` (good), `OutOfSync` (hasn't applied the latest manifests), `Unknown` (can't reach the source repo — check the ArgoCD server logs).
 - **`Health`**: `Healthy` (good), `Progressing` (still starting up), `Degraded` (something is wrong).
 - A `Degraded` application includes a human-readable message in `Status.Conditions` — read it before looking elsewhere.
 
