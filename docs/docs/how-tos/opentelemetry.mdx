@@ -1,0 +1,59 @@
+---
+title: OpenTelemetry
+slug: /how-tos/opentelemetry
+description: "Export OpenTelemetry traces from nic with the OTEL_EXPORTER and OTEL_ENDPOINT env vars: console, OTLP, or both, including sending to a local collector."
+---
+
+To debug a slow or failing deploy, you can have `nic` emit a **trace**: a timeline of its work. Using [OpenTelemetry](https://opentelemetry.io/), an open standard, it records each step it runs (parsing your config, calling your cloud provider, each deploy stage) with how long it took and whether it failed.
+
+By default `nic` collects these traces but doesn't export them. This page covers how to export them: choosing an exporter, setting the endpoint, and sending to a local collector.
+
+## Choose an exporter
+
+An exporter controls where `nic` sends its traces. Set `OTEL_EXPORTER` to one of:
+
+| Value | Behavior |
+|---|---|
+| `none` (default) | Records traces but sends them nowhere. |
+| `console` | Sends traces to your terminal (pretty-printed stdout). |
+| `otlp` | Sends traces to a collector over OTLP gRPC, at the address in `OTEL_ENDPOINT`. |
+| `both` | Sends traces to your terminal and a collector. |
+
+Set `OTEL_EXPORTER` on the command you run, to print traces for a single deploy:
+
+```bash
+OTEL_EXPORTER=console nic deploy -f <config-file>
+```
+
+Or set it in your `.env` so it applies to every `nic` run from that directory:
+
+```bash
+# .env
+OTEL_EXPORTER=console
+```
+
+## Send traces to a collector
+
+A collector is a separate process that receives your traces and sends them on to a tracing backend for storage and viewing.
+
+For `otlp` and `both`, `nic` sends traces over **OTLP gRPC** to the collector address in `OTEL_ENDPOINT`, which defaults to `localhost:4317`.
+
+### Local collector
+
+To capture traces locally, run a collector with an OTLP gRPC receiver on `localhost:4317`. That is the default endpoint, so you set only the exporter:
+
+```bash
+OTEL_EXPORTER=otlp nic deploy -f <config-file>
+```
+
+### Remote collector
+
+To send to a collector elsewhere, set `OTEL_ENDPOINT` to its address alongside `OTEL_EXPORTER`:
+
+```bash
+OTEL_EXPORTER=otlp \
+  OTEL_ENDPOINT=otel-collector.example.com:4317 \
+  nic deploy -f <config-file>
+```
+
+Set `OTEL_EXPORTER=both` to watch traces in your terminal and send them to the collector at the same time.
