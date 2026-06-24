@@ -1,3 +1,5 @@
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
+
 /**
  * Creating a sidebar enables you to:
  - create an ordered group of docs
@@ -8,11 +10,7 @@
 
  Create as many sidebars as you want.
  */
-// @ts-check
-
-/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-
-module.exports = {
+const sidebars: SidebarsConfig = {
   sidebar: [
     {
       label: "Introduction",
@@ -104,7 +102,7 @@ module.exports = {
       link: { type: "doc", id: "references/index" },
       items: [
         "references/RELEASE",
-        "references/personas"
+        "references/personas",
       ],
     },
     {
@@ -119,3 +117,5 @@ module.exports = {
     },
   ],
 };
+
+export default sidebars;

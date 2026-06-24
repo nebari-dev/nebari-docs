@@ -1,13 +1,21 @@
 import ExecutionEnvironment from '@docusaurus/ExecutionEnvironment';
 
+declare global {
+  interface Window {
+    dataLayer: unknown[];
+  }
+}
+
 if (ExecutionEnvironment.canUseDOM) {
   (async () => {
     const CookieConsent = await import('vanilla-cookieconsent');
     await import('vanilla-cookieconsent/dist/cookieconsent.css');
 
-    const updateGtag = (analyticsGranted) => {
+    const updateGtag = (analyticsGranted: boolean): void => {
       window.dataLayer = window.dataLayer || [];
-      const gtag = (...args) => window.dataLayer.push(args);
+      const gtag = (...args: unknown[]): void => {
+        window.dataLayer.push(args);
+      };
       gtag('consent', 'update', {
         analytics_storage: analyticsGranted ? 'granted' : 'denied',
       });

@@ -1,3 +1,6 @@
+import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
+
+
 /**
  * Creating a sidebar enables you to:
  - create an ordered group of docs
@@ -8,11 +11,7 @@
 
  Create as many sidebars as you want.
  */
-// @ts-check
-
-/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-
-module.exports = {
+const sidebars: SidebarsConfig = {
   sidebar: [
     {
       label: "Introduction",
@@ -25,7 +24,6 @@ module.exports = {
       link: { type: "doc", id: "get-started/index" },
       items: [
         "get-started/install",
-        // Add get started docs here
       ],
     },
     {
@@ -37,7 +35,7 @@ module.exports = {
         "explanations/software-packs",
       ],
     },
-        {
+    {
       type: "category",
       label: "How-to guides",
       link: { type: "doc", id: "how-tos/index" },
@@ -67,9 +65,7 @@ module.exports = {
       type: "category",
       label: "References",
       link: { type: "doc", id: "references/index" },
-      items: [
-        // Add reference docs here
-      ],
+      items: [],
     },
     {
       type: "category",
@@ -79,5 +75,7 @@ module.exports = {
         "software-packs/build-your-own",
       ],
     },
-  ]
-}
+  ],
+};
+
+export default sidebars;

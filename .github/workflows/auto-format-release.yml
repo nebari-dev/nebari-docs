@@ -78,7 +78,7 @@ jobs:
       - name: Run Prettier on RELEASE.md
         working-directory: ./docs
         run: |
-          yarn install --frozen-lockfile
+          npm ci
           npx prettier --write docs/references/RELEASE.md
 
       - name: Commit changes back to the PR
