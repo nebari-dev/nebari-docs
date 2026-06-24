@@ -181,6 +181,35 @@ To change something about a running cluster (scale a node group, add a `gpu` gro
 Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive resource recreation. Treat these as one-way decisions.
 :::
 
+## Upgrade Kubernetes version
+
+EKS requires one-minor-version increments — you cannot skip versions or downgrade. To go from 1.32 to 1.34 you must upgrade twice:
+
+```
+1.32 → 1.33 → 1.34
+```
+
+Skipping a version (for example, 1.32 → 1.34 directly) is rejected by EKS during deploy.
+
+Set `kubernetes_version` under `cluster.aws` in your config:
+
+```yaml
+cluster:
+  aws:
+    kubernetes_version: "1.33"   # was "1.32"
+```
+
+EKS accepts bare minor versions (`"1.33"`) — patch versions are not required.
+
+EKS upgrades in two phases:
+
+1. **Control plane** upgrades first. The Kubernetes API server and control-plane components are updated to the new version. This takes around 10 minutes and is handled by AWS.
+2. **Node groups** roll one at a time. EKS launches a replacement node, waits for it to become Ready, then drains and terminates the old one — one node at a time per node group. Node groups upgrade sequentially after the control plane finishes. Plan for 20–40 minutes total depending on the number of node groups.
+
+After upgrading, verify your EKS managed add-ons (kube-proxy, CoreDNS, VPC CNI) are on versions compatible with the new cluster version — check the **Add-ons** tab in the AWS EKS console and update any that are flagged.
+
+See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgrade commands and post-upgrade verification steps.
+
 ## Destroy
 
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster).
