@@ -20,7 +20,7 @@ The steps below that use `kubectl` require the CLI installed and `KUBECONFIG` se
 nic deploy -f config.yaml 2>&1 | tee deploy.log
 ```
 
-For deeper traces — showing exactly which internal step hung — enable the built-in OpenTelemetry console exporter:
+For deeper traces — showing exactly which internal step hung — enable the built-in OpenTelemetry console exporter (`OTEL_EXPORTER` is a `nic`-specific variable; valid values are `none`, `console`, `otlp`, and `both`):
 
 ```bash
 OTEL_EXPORTER=console nic deploy -f config.yaml
@@ -153,6 +153,7 @@ Each condition includes a `Message` field explaining why it is `False` — read 
 | `nic deploy` hangs after "ArgoCD installed" | [`nic deploy` common failures](#common-nic-deploy-failures); [ArgoCD applications](#argocd-applications) |
 | ArgoCD app stuck in `Progressing` or `Degraded` | [ArgoCD applications](#argocd-applications) |
 | Pod in `CrashLoopBackOff` or `ImagePullBackOff` | [Foundational software pods](#foundational-software-pods) |
+| Nebari Operator pod crashing or not connecting to Keycloak | [Nebari Operator](#nebari-operator) |
 | TLS certificate not issuing | [Foundational software pods — cert-manager](#foundational-software-pods) |
 | Can't sign in / Keycloak error | [Foundational software pods — Keycloak](#foundational-software-pods) |
 | `NebariApp` not `Ready` | [NebariApp status](#nebariapp-status) |
