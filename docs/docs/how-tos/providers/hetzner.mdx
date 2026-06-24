@@ -150,7 +150,7 @@ Changing `location` or `project_name` triggers destructive resource recreation. 
 
 ## Upgrade Kubernetes version
 
-The `kubernetes_version` field accepts `"1.32"`, `"1.32.0"`, or a full release tag like `"v1.32.12+k3s1"`. Specifying `"1.32"` resolves to the latest stable k3s patch release for that minor version. Downgrades are not supported.
+The `kubernetes_version` field accepts `"1.32"`, `"1.32.0"`, or a full release tag like `"v1.32.12+k3s1"`. Specifying `"1.32"` resolves to the latest stable k3s patch release for that minor version.
 
 `hetzner-k3s` handles the rolling upgrade: it upgrades the control plane node first, then each worker node in turn.
 
