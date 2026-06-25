@@ -68,7 +68,7 @@ module.exports = {
       label: "References",
       link: { type: "doc", id: "references/index" },
       items: [
-        // Add reference docs here
+        "references/personas",
       ],
     },
     {
