@@ -1,12 +1,16 @@
 # Personas
 
-Nebari Kubernetes Platform (NKP) is designed around three primary roles. Understanding these roles clarifies who is responsible for each layer of the platform and what each group needs from the documentation.
+Nebari Kubernetes Platform (NKP) is designed around three primary roles. Understanding these roles clarifies who is responsible for each layer of the platform and what each group needs to be successful.
 
 ---
 
 ## Platform admin
 
-**Who they are:** Infrastructure engineers, DevOps practitioners, or IT administrators responsible for standing up and maintaining the platform. They are comfortable with Kubernetes, cloud providers, and infrastructure-as-code tooling such as OpenTofu or Terraform. They may work within a central platform team or provide services to multiple internal teams.
+**Who they are:**
+
+- Infrastructure engineers, DevOps practitioners, or IT administrators responsible for standing up and maintaining the platform
+- Comfortable with Kubernetes, cloud providers, and infrastructure-as-code tooling such as OpenTofu or Terraform
+- May work within a central platform team or provide services to multiple internal teams
 
 **What they do:**
 
@@ -16,13 +20,23 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 - Control user access, quotas, and security policies
 - Monitor cluster health, costs, and resource utilization
 
-**What they need from the docs:** Step-by-step deployment guides, configuration reference for the `nic` CLI and its YAML schema, upgrade and migration procedures, troubleshooting guides for infrastructure-level issues, and clear explanations of how packs integrate with the foundational services.
+**What they need:**
+
+- Declarative, repeatable tooling that abstracts cloud provider differences
+- Reliable upgrade paths with minimal manual intervention
+- Clear visibility into cluster health, resource consumption, and costs
+- Fine-grained access controls and policy enforcement
+- The ability to integrate packs with foundational services such as SSO, routing, and observability without manual configuration
 
 ---
 
 ## Pack developer
 
-**Who they are:** Software engineers or platform specialists who build and publish reusable capabilities for the platform. They understand Kubernetes custom resources, Helm charts, and how the Nebari Operator works. They may be internal to an organization building proprietary tooling, or open-source contributors publishing packs for the broader community.
+**Who they are:**
+
+- Software engineers or platform specialists who build and publish reusable capabilities for the platform
+- Familiar with Kubernetes custom resources, Helm charts, and how the Nebari Operator works
+- May be internal to an organization building proprietary tooling, or open-source contributors publishing packs for the broader community
 
 **What they do:**
 
@@ -31,13 +45,22 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 - Test packs against different cluster configurations and platform versions
 - Publish packs to a registry for platform admins to discover and install
 
-**What they need from the docs:** The `NebariApp` CRD specification, the operator's reconciliation model, integration contracts for SSO and routing, pack authoring guides, and versioning and publishing conventions.
+**What they need:**
+
+- Well-defined contracts for how packs integrate with the platform's SSO, routing, TLS, and telemetry layers
+- A reliable operator reconciliation model they can test against
+- Clear versioning and compatibility guarantees
+- A publishing mechanism that makes packs discoverable and installable without requiring platform admin intervention in the development loop
 
 ---
 
 ## End user
 
-**Who they are:** Data scientists, ML engineers, researchers, and analysts who use the tools and environments the platform provides. They are proficient in Python or R and work daily with Jupyter notebooks, ML frameworks, and data pipelines. They are generally not responsible for infrastructure and expect the platform to simply work.
+**Who they are:**
+
+- Data scientists, ML engineers, researchers, and analysts who use the tools and environments the platform provides
+- Proficient in Python or R, working daily with Jupyter notebooks, ML frameworks, and data pipelines
+- Generally not responsible for infrastructure and expect the platform to simply work
 
 **What they do:**
 
@@ -46,4 +69,10 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 - Collaborate with colleagues by sharing notebooks, dashboards, and results
 - Scale computation to cluster resources without managing infrastructure themselves
 
-**What they need from the docs:** Getting-started guides for their specific tools (JupyterHub, VS Code, Argo Workflows, etc.), how to request access or additional resources, and troubleshooting guides for common environment issues.
+**What they need:**
+
+- Immediate access to pre-configured, stable environments without installation friction
+- Scalable compute that can be requested on demand without involving infrastructure teams
+- Reliable collaboration and sharing mechanisms
+- Reproducible environments across sessions and teammates
+- Clear paths to escalate when something isn't working
