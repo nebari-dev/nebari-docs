@@ -1,10 +1,59 @@
 ---
 title: Software Packs
 slug: /software-packs/
+description: A catalog of Software Packs you can install on a Nebari Kubernetes Platform cluster.
 ---
 
-:::note[Coming soon]
+# Software Packs
 
-Tracked in [#631](https://github.com/nebari-dev/nebari-docs/issues/631).
+**[Software Packs](../explanations/software-packs.mdx) are the apps you install on Nebari.** Browse the catalog and pick the capabilities your team needs: dashboards, model serving, chat assistants, document analysis, and more. Every pack plugs into Nebari's single sign-on, routing, and TLS automatically, so users reach them through one secure entry point.
 
-:::
+## Installing a pack
+
+To install any pack:
+
+1. Make sure your Nebari cluster is up and running.
+2. Install the pack. Every pack's README documents the exact steps; pick one of two paths:
+   - **Recommended:** add it to your gitops repo as a new ArgoCD Application that references the pack. ArgoCD then deploys it onto your cluster.
+   - **Alternative:** install the pack's chart manually with Helm.
+3. Open your cluster's landing page; the new capability appears there once it finishes installing.
+
+## Official packs
+
+Packs maintained by OpenTeams and listed in the central Nebari registry. Each pack declares a maturity level. See [How packs mature](#how-packs-mature) below for definitions, and the [pack dashboard](https://github.com/nebari-dev/software-pack-dashboard) for the current level of each pack.
+
+| Pack | Description | Source |
+| --- | --- | --- |
+| Chat | A team chat app with customizable AI agents, ready to use behind your Nebari single sign-on. | [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) |
+| Data Science | JupyterHub with room to publish interactive apps alongside notebooks, behind your Nebari single sign-on. | [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) |
+| LGTM Observability | Grafana's LGTM stack (Loki, Grafana, Tempo, Mimir) for logs, metrics, traces, and dashboards on your Nebari cluster. | [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) |
+| LLM Serving | A managed API for running large language models on your cluster, with per-model access control and rate limits. | [nebari-llm-serving-pack](https://github.com/nebari-dev/nebari-llm-serving-pack) |
+| Longhorn Backup | Hourly snapshots and daily off-site S3 backups for every volume on your cluster's default storage. | [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) |
+| MLflow | Experiment tracking and a model registry for your ML team, with Nebari single sign-on. | [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) |
+| Nebi | Shared, reproducible Python and data science environments managed from a single CLI. | [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) |
+| Pi Coding Agent | AI-assisted coding inside your team's JupyterHub notebook sessions. | [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) |
+| Provenance Collector | A compliance scanner that proves what's running on your cluster and where each piece came from. | [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) |
+| Ray Serve | Distributed serving for ML models and Python apps, with autoscaling built in. | [nebari-rayserve-pack](https://github.com/nebari-dev/nebari-rayserve-pack) |
+| skillsctl | A CLI and registry for discovering, installing, and publishing Claude Code skills on your Nebari cluster. | [skillsctl](https://github.com/nebari-dev/skillsctl) |
+| Superset | BI dashboards and ad-hoc data exploration through a web UI, behind your Nebari single sign-on. | [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) |
+
+All packs above are maintained by [nebari-dev](https://github.com/nebari-dev) and are considered **official**.
+
+### How packs mature
+
+A pack's level reflects how stable, tested, and supported it is.
+
+| Level         | What you can expect                                                       | Intended for       |
+| ------------- | ------------------------------------------------------------------------- | ------------------ |
+| Experimental  | May not install or work; can disappear at any time                        | Contributors only  |
+| Alpha         | Happy path works on a current dev cluster; limitations documented         | Internal demos     |
+| Beta          | Stable enough for a pilot with engineering support; APIs may still shift  | Customer pilots    |
+| GA (v1.0+)    | Fully supported, with a documented upgrade and security-fix story         | Production         |
+
+A pack at any level can also be marked **Deprecated**, with a sunset date (when it will be retired) and a migration path. Avoid new deployments.
+
+## Community packs
+
+A **community pack** is a Software Pack maintained outside OpenTeams. It follows the same structure as an official pack and can be installed on any Nebari cluster.
+
+Want to share your pack with the Nebari community? See [Build your own pack](./build-your-own.mdx) to get started.
