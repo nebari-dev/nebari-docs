@@ -1,0 +1,284 @@
+---
+title: Software pack tutorial
+id: deploy-locally
+slug: /software-packs/deploy-locally
+description: A hands-on walkthrough that brings up a local Nebari cluster and deploys a Software Pack onto it, so you can watch the Nebari Operator wire up routing and TLS in practice.
+---
+
+# Software pack tutorial
+
+A Software Pack connects an existing app to Nebari rather than rewriting it. This tutorial walks you through deploying one onto a local Nebari cluster from scratch.
+
+By the end, you'll have:
+
+- A local Nebari cluster running on your laptop
+- A real application deployed as a pack, reachable at its own hostname over HTTPS
+
+## Prerequisites
+
+You'll need:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Kind](https://kind.sigs.k8s.io/)
+- [`kubectl`](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh/)
+- [`yq`](https://github.com/mikefarah/yq)
+- [Go 1.21+](https://go.dev/dl/)
+
+Clone [Nebari Infrastructure Core (NIC)](https://github.com/nebari-dev/nebari-infrastructure-core) and run the cluster steps from its repository root:
+
+```bash
+git clone https://github.com/nebari-dev/nebari-infrastructure-core.git
+cd nebari-infrastructure-core
+```
+
+## 1. Bring up a local Nebari cluster
+
+Run one command to build the `nic` binary and create a Kind cluster named `nebari-local`:
+
+```bash
+make localkind-up
+```
+
+When this finishes, your local cluster is running the same [foundational software](/docs/explanations/nkp-architecture) a real Nebari cluster has, including:
+
+- ArgoCD (deploys packs via GitOps)
+- cert-manager (issues HTTPS certificates)
+- Envoy Gateway (routes traffic by hostname)
+- MetalLB (hands out load-balancer IP addresses)
+- Keycloak (handles user sign-in)
+- Nebari Operator (watches for `NebariApp` resources and wires them into routing and TLS)
+
+Confirm the operator is running:
+
+```bash
+kubectl get pods -n nebari-operator-system
+```
+
+```bash title="Output"
+NAME                                                  READY   STATUS    RESTARTS   AGE
+nebari-operator-controller-manager-66d9f7fcdf-rlbqc   1/1     Running   0          90s
+```
+
+## 2. Explore the pack
+
+The example you'll deploy, [`wrap-existing-chart`](https://github.com/nebari-dev/nebari-software-pack-template/tree/main/examples/wrap-existing-chart), wraps [podinfo](https://github.com/stefanprodan/podinfo), a small open-source web app. To build your own pack, you'd wrap your app instead of podinfo.
+
+Clone it outside the `nebari-infrastructure-core` repo:
+
+```bash
+git clone https://github.com/nebari-dev/nebari-software-pack-template.git
+cd nebari-software-pack-template/examples/wrap-existing-chart
+```
+
+The pack is a small Helm chart in the `chart/` directory:
+
+```text
+wrap-existing-chart/
+└── chart/
+    ├── Chart.yaml
+    ├── values.yaml
+    └── templates/
+        └── nebariapp.yaml
+```
+
+Three files show how it wraps podinfo:
+
+- [`chart/Chart.yaml`](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/examples/wrap-existing-chart/chart/Chart.yaml) lists podinfo as a dependency:
+
+  ```yaml
+  dependencies:
+    - name: podinfo
+      version: 6.10.1
+      repository: oci://ghcr.io/stefanprodan/charts
+  ```
+
+  For your own app, swap podinfo for your chart's name, version, and repository.
+
+- [`chart/values.yaml`](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/examples/wrap-existing-chart/chart/values.yaml) holds the `NebariApp` configuration plus any overrides for the upstream chart:
+
+  ```yaml
+  nebariapp:
+    enabled: false
+    # hostname: my-pack.nebari.example.com  # required when enabled
+    service:
+      port: 9898
+
+  podinfo:                # values passed to the upstream chart
+    ui:
+      message: "Hello from Nebari!"
+  ```
+
+  For your own app, set the service port to match it, and rename the `podinfo` override block to your chart's name.
+
+- [`chart/templates/nebariapp.yaml`](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/examples/wrap-existing-chart/chart/templates/nebariapp.yaml) points the operator at podinfo's Service:
+
+  ```yaml
+  apiVersion: reconcilers.nebari.dev/v1
+  kind: NebariApp
+  metadata:
+    name: {{ include "my-pack.fullname" . }}
+  spec:
+    hostname: {{ .Values.nebariapp.hostname }}
+    service:
+      name: {{ .Values.nebariapp.service.name | default (include "my-pack.podinfo-service-name" .) }}
+      port: {{ .Values.nebariapp.service.port | default 9898 }}
+  ```
+
+  For your own app, set `nebariapp.service.name` to its Service name. Names vary by chart, so confirm it with `helm template myrelease ./chart/ | grep -A2 "kind: Service"`.
+
+Notice that the `NebariApp` is the one thing the pack adds for Nebari. Everything else comes from podinfo's chart.
+
+## 3. Deploy the pack
+
+You can deploy the pack two ways: an ArgoCD `Application` (the recommended, production-like path) or a direct `helm install` (quickest locally).
+
+Start with creating the `demo` namespace and labeling it so the operator will manage resources in it:
+
+```bash
+kubectl create namespace demo
+kubectl label namespace demo nebari.dev/managed=true
+```
+
+### ArgoCD Application (recommended)
+
+ArgoCD is Nebari's GitOps engine: it pulls manifests from a git repo and keeps the cluster in sync with them.
+
+To deploy the pack, register an `Application` that tells ArgoCD where the pack lives and what values to use. Save this as `application.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mypack  # your pack's name
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/nebari-dev/nebari-software-pack-template  # your pack's repo
+    targetRevision: main
+    path: examples/wrap-existing-chart/chart # path to the chart in that repo
+    helm:
+      valuesObject:
+        nebariapp:
+          enabled: true
+          hostname: mypack.nebari.local # hostname to expose the app at
+          routing:
+            tls:
+              enabled: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo  # namespace to deploy into
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+```
+
+Apply it with `kubectl apply -f application.yaml`. ArgoCD pulls the chart, including the upstream podinfo dependency, and the operator wires up the `NebariApp`.
+
+### Helm install
+
+`helm install` deploys the chart to the cluster in one command, straight from your local copy. Run it from your clone:
+
+```bash
+helm dependency update ./chart/
+
+helm install mypack ./chart/ \
+  --namespace demo \
+  --set nebariapp.enabled=true \
+  --set nebariapp.hostname=mypack.nebari.local \
+  --set nebariapp.routing.tls.enabled=true
+```
+
+- `helm dependency update` fetches the upstream podinfo chart the pack wraps.
+- `helm install` deploys the pack as release `mypack` into `demo`, with the `NebariApp` enabled, a hostname set, and TLS turned on.
+
+## 4. Check what the operator created
+
+The operator picks up the `NebariApp` and creates the routing and certificate for it. Verify the `NebariApp` is `Ready`:
+
+```bash
+kubectl describe nebariapp -n demo
+```
+
+In the `Conditions` block at the bottom, find the `Ready` condition. As long as its `Status` is `True`, the operator finished setting up the app, creating:
+
+- An **`HTTPRoute`** that sends traffic for `mypack.nebari.local` to podinfo's Service
+- A **`Certificate`** for `mypack.nebari.local` so users connect over HTTPS
+
+The app is only reachable inside the cluster, so port-forward the gateway to a local port to reach it from your machine.
+
+First, look up the gateway service name:
+
+```bash
+GATEWAY_SVC=$(kubectl get svc -n envoy-gateway-system \
+  -l gateway.envoyproxy.io/owning-gateway-name=nebari-gateway \
+  -o jsonpath='{.items[0].metadata.name}')
+```
+
+Then forward its HTTPS port to local port 8443:
+
+```bash
+kubectl port-forward -n envoy-gateway-system "svc/$GATEWAY_SVC" 8443:443
+```
+
+`port-forward` keeps running, so send the request from another terminal:
+
+```bash
+curl -k --resolve mypack.nebari.local:8443:127.0.0.1 https://mypack.nebari.local:8443
+```
+
+- `--resolve` keeps the `mypack.nebari.local` hostname (which the route and certificate require) while connecting to the forwarded port.
+- `-k` accepts the cluster's self-signed certificate without verifying it.
+
+You should get podinfo's JSON greeting back, including the `message` the chart set in `values.yaml`:
+
+```json title="Output"
+{
+  "hostname": "mypack-podinfo-657dbffc8d-bh7mc",
+  "version": "6.10.1",
+  "message": "Hello from Nebari!",
+  "goos": "linux",
+  "goarch": "arm64",
+  "runtime": "go1.25.6"
+}
+```
+
+## 5. Clean up
+
+When you're finished, remove the pack, then tear down the cluster.
+
+### Remove the pack
+
+If you used ArgoCD, delete the `Application` first, or ArgoCD will re-sync and recreate the pack:
+
+```bash
+kubectl delete application mypack -n argocd
+```
+
+If you used Helm, uninstall the release:
+
+```bash
+helm uninstall mypack -n demo
+```
+
+### Tear down the cluster
+
+Delete the namespace, then destroy the local cluster:
+
+```bash
+kubectl delete namespace demo
+
+# from the nebari-infrastructure-core repo
+make localkind-down
+```
+
+## Where to go next
+
+- [Pack architecture](/docs/explanations/software-packs): how packs, the `NebariApp`, and the operator fit together.
+- [NKP architecture](/docs/explanations/nkp-architecture): the platform and foundational software a pack runs on.
+- [Software Packs catalog](/docs/software-packs/): browse the packs OpenTeams and the community have already built.
+- [Build your own pack](/docs/software-packs/build-your-own): wrap your own chart as a reusable pack.
