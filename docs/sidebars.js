@@ -49,6 +49,7 @@ module.exports = {
         "how-tos/update-cluster",
         "how-tos/destroy-cluster",
         "how-tos/keycloak-auth",
+        "how-tos/enterprise-tls-proxy",
         {
           type: "category",
           label: "Providers",
