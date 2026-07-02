@@ -43,7 +43,6 @@ module.exports = {
       link: { type: "doc", id: "how-tos/index" },
       items: [
         "how-tos/prepare-to-deploy",
-        "how-tos/deploy",
         "how-tos/deploy-cluster",
         "how-tos/cloudflare-dns",
         "how-tos/update-cluster",
