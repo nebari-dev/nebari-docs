@@ -12,11 +12,11 @@ title: "RFD - Title"
 <!-- Use this guide to set the status: Draft 🚧 / Open for comments 💬/ Accepted ✅ /Implemented 🚀/ Obsolete 🗃  -->
 
 | Status            | Draft 🚧 / Open for comments 💬/ Accepted ✅ /Implemented 🚀/ Obsolete 🗃 |
-| ----------------- | ------------------------------------------------------------------------- |
-| Author(s)         | GitHub handle                                                             |
-| Date Created      | dd-MM-YYY                                                                 |
-| Date Last updated | dd-MM-YYY                                                                 |
-| Decision deadline | dd-MM-YYY                                                                 |
+| ----------------- | ------------------------------------------------------------------------ |
+| Author(s)         | GitHub handle                                                            |
+| Date Created      | dd-MM-YYY                                                                |
+| Date Last updated | dd-MM-YYY                                                                |
+| Decision deadline | dd-MM-YYY                                                                |
 
 # Title
 
