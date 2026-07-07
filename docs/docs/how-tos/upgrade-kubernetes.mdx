@@ -1,0 +1,75 @@
+---
+title: Upgrade Kubernetes version
+slug: /how-tos/upgrade-kubernetes
+description: How to upgrade the Kubernetes version of an NKP cluster — common steps that work across all providers.
+---
+
+:::note
+This page covers NKP clusters managed by `nic`. Classic clusters are not covered here.
+:::
+
+NKP supports in-place Kubernetes version upgrades via `nic deploy`. Edit the `kubernetes_version` field in your config and re-run deploy — `nic` handles the rest.
+
+## Before you upgrade
+
+Version constraints and accepted formats vary by provider — see your [provider's page](/docs/how-tos/providers) before upgrading.
+
+The Nebari Operator and Software Packs run inside the cluster and follow its Kubernetes version. There is no separate compatibility matrix to check before upgrading.
+
+## Upgrade steps
+
+These steps are the same for all providers.
+
+1. Edit `kubernetes_version` in your config. See your [provider's page](/docs/how-tos/providers) for provider specific requirements.
+
+2. Validate the config:
+
+   ```bash
+   nic validate -f <config-file>
+   ```
+
+3. Preview what will change:
+
+   ```bash
+   nic deploy -f <config-file> --dry-run
+   ```
+
+4. Apply the upgrade:
+
+   ```bash
+   nic deploy -f <config-file>
+   ```
+
+## Operator and pack considerations
+
+During node rolling, pods on the node being replaced are evicted and rescheduled elsewhere:
+
+- The **Nebari Operator** may be briefly unavailable while the node it runs on is replaced.
+- **Software Packs**, ArgoCD, Keycloak, and other foundational apps may be briefly unavailable during the rollout of the node they run on.
+- Once **ArgoCD's replacement pod is ready**, any apps that fell out of sync during the rollout are restored automatically.
+
+Multi-replica workloads tolerate rolling node replacement without downtime, provided their replicas are spread across nodes. Single-replica packs will have a brief interruption while their pod is rescheduled.
+
+## Verify the upgrade
+
+After deploy completes, check that all nodes are running the new version:
+
+```bash
+kubectl get nodes -o wide
+```
+
+All nodes should show the target version in the `VERSION` column. Then verify ArgoCD apps are healthy:
+
+```bash
+kubectl get applications -n argocd
+```
+
+All applications should reach `Healthy`. Any that are briefly `Progressing` after the upgrade will self-correct within a few minutes.
+
+## See also
+
+- [NKP architecture](/docs/explanations/nkp-architecture) — conceptual overview of how the platform layers fit together
+- [Deploy lifecycle](/docs/how-tos/deploy) — full deploy, update, and destroy reference
+- [Update a cluster](/docs/how-tos/update-cluster) — other config changes you can make to a running cluster
+- [AWS provider](/docs/how-tos/providers/aws) — EKS-specific upgrade constraints and mechanics
+- [Hetzner provider](/docs/how-tos/providers/hetzner) — k3s-specific upgrade constraints and mechanics

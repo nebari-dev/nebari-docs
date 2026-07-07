@@ -1,0 +1,246 @@
+---
+title: Enterprise TLS-inspecting proxy
+slug: /how-tos/enterprise-tls-proxy
+description: "Configure an organization CA trust_bundle so a NIC deployment succeeds end-to-end when all egress is routed through a TLS-inspecting proxy."
+---
+
+Many enterprise networks route all outbound HTTPS through a proxy that terminates and re-signs TLS with an organization-owned Certificate Authority (CA). Every connection a workload makes — to the EKS control plane, to image registries, to PyPI, to an external identity provider — then presents a certificate signed by that org CA instead of the public web PKI. Unless the org CA is trusted at every layer, those connections fail certificate verification and the deployment never comes up.
+
+This page describes how to make a NIC deployment succeed end-to-end in that environment. You provide the org CA once, through a single `trust_bundle` config field, and NIC propagates it to the two places that need it: the **node OS trust store** and **in-pod trust stores** for the applications that do not consult the OS store.
+
+:::note[Scope]
+This covers _outbound_ (egress) TLS interception only. Inbound TLS and bring-your-own ingress certificates are out of scope.
+:::
+
+## When you need this
+
+Configure `trust_bundle` if any of the following is true for your environment:
+
+- **TLS-inspecting egress proxy.** Outbound HTTPS is intercepted and re-signed with an org CA that is not in the public trust pool. This is the primary case.
+- **No internet gateway / private-only egress.** Nodes reach the internet (ECR, registries, PyPI) only through a forward proxy that does TLS inspection.
+- **Private container registries** fronted by a TLS-inspecting appliance.
+
+If your network does _not_ re-sign TLS — egress is open, or the proxy is a plain forward proxy that does not touch certificates — you do **not** need this. Leave `trust_bundle` unset and the deployment behaves exactly as before.
+
+## How the CA bundle reaches every layer
+
+```
+            trust_bundle (path | inline PEM)
+                        │
+        ┌───────────────┴────────────────┐
+        ▼                                 ▼
+  NODE OS TRUST                      IN-POD TRUST
+  (AWS worker nodes)                 (trust-manager)
+        │                                 │
+  base64 → extra_ca_bundle          Bundle CR "nebari-trust-bundle"
+  Terraform var                     projects a ConfigMap into
+        │                           every namespace
+  installed into the OS                    │
+  trust store before                ┌──────┴───────────────┐
+  kubelet/containerd start          ▼          ▼           ▼
+        │                        ArgoCD     Keycloak    JupyterHub
+  covers image pulls,            repo-      truststore  singleuser /
+  ECR, control plane             server                 Ray pods
+```
+
+NIC reads `trust_bundle` once and drives both mechanisms from it:
+
+1. **Node OS trust store** — the org CA is installed into the operating-system trust store on every worker node, before the kubelet starts. This is what lets the node pull container images and reach the control plane at all.
+2. **In-pod trust** — [cert-manager's trust-manager](https://cert-manager.io/docs/trust/trust-manager/) is deployed as a foundational app and projects the org CA as a ConfigMap into every namespace. Foundational apps and software packs that ship their own trust store (ArgoCD, Keycloak, Python/Node/JVM workloads) mount that ConfigMap and point their TLS clients at it.
+
+Both halves are necessary. Without node trust, the cluster never bootstraps (images cannot be pulled). Without in-pod trust, the cluster comes up but applications like Keycloak, ArgoCD, and user notebooks still fail on their own outbound TLS calls.
+
+## Configuration reference
+
+`trust_bundle` is a **top-level** field in the NIC config (a sibling of `project_name`, `domain`, and `cluster`). It accepts the org CA as either a file path or inline PEM. **Exactly one** of `path` or `inline` may be set.
+
+```yaml
+project_name: my-nebari
+domain: nebari.example.com
+
+# Organization CA bundle for TLS-inspected egress.
+# Exactly one of `path` or `inline` may be set.
+trust_bundle:
+  # A PEM file on the machine running `nic`:
+  path: /etc/ssl/certs/my-org-ca.pem
+
+  # OR inline PEM:
+  # inline: |
+  #   -----BEGIN CERTIFICATE-----
+  #   MIIB...
+  #   -----END CERTIFICATE-----
+
+cluster:
+  aws:
+    region: us-west-2
+    # ...
+```
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `trust_bundle.path` | string | Filesystem path to a PEM file **on the operator's machine** (the host running `nic`). Read at deploy time. |
+| `trust_bundle.inline` | string | The PEM text itself, inline in the config. |
+
+**Validation.** At deploy time NIC resolves the bundle once and validates it:
+
+- Setting both `path` and `inline` is an error (`only one of path or inline may be set`).
+- The resolved content must contain at least one `-----BEGIN CERTIFICATE-----` marker, or you get `no PEM certificate found`.
+- Any `PRIVATE KEY` block is rejected. Only certificates are distributed — never keys. A CA bundle is public material; treat it as such.
+
+A bundle may contain multiple concatenated PEM certificates (e.g. an intermediate plus a root). All of them are propagated.
+
+:::note[One bundle per deployment]
+v1 distributes a single bundle everywhere. Per-component CA overrides are out of scope.
+:::
+
+## What happens where
+
+### Node OS trust store (AWS)
+
+The resolved PEM is base64-encoded and passed to the AWS EKS module as the `extra_ca_bundle` Terraform variable. The module installs it into each worker node's OS trust store via the launch-template user data, **before nodeadm and the kubelet start**, so containerd image pulls, ECR access, and the kubelet's connection to the control plane all succeed on first boot.
+
+The install is OS-aware, selected per node group by AMI type:
+
+| Node AMI | Mechanism |
+|----------|-----------|
+| **AL2023 / AL2** (default) | Cloud-init pre-nodeadm shell script writes the cert to `/etc/pki/ca-trust/source/anchors/org-ca.crt` and runs `update-ca-trust extract`. The bundle then lands in `/etc/pki/tls/certs/ca-bundle.crt`. |
+| **Bottlerocket** | Configured declaratively via `settings.pki.org-ca` (`data = <base64 PEM>`, `trusted = true`); no shell script. |
+
+When `trust_bundle` is unset, no user-data hooks are rendered and launch templates are unchanged.
+
+:::note[AWS only, for now]
+Node-level trust installation is implemented for AWS. The GCP and Azure providers are not yet built, so per-provider node bootstrap for them is deferred. For the **local** and **existing-cluster** paths, see [Operator responsibilities](#operator-responsibilities-local-and-existing-clusters).
+:::
+
+### In-pod trust: trust-manager
+
+When `trust_bundle` is set, NIC deploys two foundational ArgoCD applications:
+
+- **`trust-manager`** (sync-wave 3) — the `trust-manager` chart from `https://charts.jetstack.io` (pinned to `v0.22.1`), installed into the `cert-manager` namespace. (trust-manager runs alongside cert-manager, which is already a foundational component.)
+- **`trust-bundle`** (sync-wave 4) — a trust-manager `Bundle` custom resource named **`nebari-trust-bundle`**. Its source is the org CA PEM (rendered inline into the manifest at GitOps-write time), and its target is a ConfigMap projected into **every namespace** (`namespaceSelector: {}`).
+
+The result is a ConfigMap available cluster-wide:
+
+| Property | Value |
+|----------|-------|
+| ConfigMap name | `nebari-trust-bundle` |
+| Data key | `ca-certificates.crt` |
+| Namespaces | all (foundational and software-pack namespaces alike) |
+
+Applications consume this ConfigMap to trust the org CA. These manifests are only written to the GitOps repo when `trust_bundle` is configured; deployments without a bundle are byte-for-byte unchanged.
+
+### Per-application trust
+
+Different applications trust certificates in different ways. Some read the OS store; the ones below ship their own and have to be wired up explicitly. The common pattern is: mount the org CA, concatenate it with the image's system bundle into a combined file, and point the standard CA environment variables at that combined file.
+
+| Component | Source of CA | Mechanism | Env / config |
+|-----------|--------------|-----------|--------------|
+| **ArgoCD repo-server** | install-time ConfigMap `argocd-org-ca` (key `ca.crt`) — _not_ the projected bundle, see note below | init container merges system + org CA into `/etc/ssl/certs-combined/ca-bundle.crt` (emptyDir) | `SSL_CERT_FILE`, `GIT_SSL_CAINFO`, `CURL_CA_BUNDLE` → combined path |
+| **Keycloak** | projected `nebari-trust-bundle` ConfigMap (key `ca-certificates.crt`) mounted at `/etc/nebari/truststore` | Keycloak 26 (Quarkus) native truststore | `KC_TRUSTSTORE_PATHS=/etc/nebari/truststore` |
+| **JupyterHub singleuser / jhub-apps** | projected `nebari-trust-bundle` ConfigMap (key `ca-certificates.crt`) | init container merges system + org CA into `/etc/ssl/certs-extra/ca-bundle.crt` (emptyDir) | `REQUESTS_CA_BUNDLE`, `SSL_CERT_FILE`, `NODE_EXTRA_CA_CERTS`, `CURL_CA_BUNDLE`, `GIT_SSL_CAINFO` → merged path |
+| **Ray head + worker** | ConfigMap named by `orgCABundle.configMapName` (key `ca.crt`) | init container merges system + org CA into `/shared/combined-ca.crt` (emptyDir) | `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE`, `CURL_CA_BUNDLE`, `GIT_SSL_CAINFO` → combined path |
+
+A few component-specific details worth knowing:
+
+- **ArgoCD trusts the CA at install time, not from trust-manager.** The repo-server is the component that _pulls the trust-manager chart through the proxy_ — so trust-manager's projected ConfigMap does not yet exist when the repo-server first needs the CA. NIC therefore creates a small install-time ConfigMap (`argocd-org-ca`) and mounts it directly. Only the repo-server is wired; the application-controller and API server do not make TLS-inspected egress calls. NIC deliberately leaves `argocd-tls-certs-cm` empty — entries there make Argo pass `--ca-file`, which _replaces_ the system trust pool instead of augmenting it and breaks cross-host redirects.
+- **Keycloak uses its native truststore, not `X509_CA_BUNDLE`.** That variable is a WildFly-image feature; the chart here ships Keycloak 26 on Quarkus, which ignores it. `KC_TRUSTSTORE_PATHS` points at the mounted bundle directory and feeds every outbound TLS call (IdP federation, token introspection).
+- **JupyterHub trust is opt-in per the data-science pack.** The singleuser wiring is gated by a Helm value (`custom.trust-bundle-enabled`, default `false`) and the ConfigMap mount is `optional: true`, so a spawn on a cluster without trust-manager degrades cleanly to just the system bundle. Once enabled, users can `pip install` from PyPI through the proxy **without** `--trusted-host`. The ConfigMap name and key are overridable (`custom.trust-bundle-configmap`, `custom.trust-bundle-key`) but default to the trust-manager convention.
+- **Ray reads from a ConfigMap by name.** The Ray pack mounts whatever ConfigMap you name in `orgCABundle.configMapName` (default `org-ca-bundle`, key `ca.crt`). To consume the trust-manager-projected bundle directly, point it at `nebari-trust-bundle`. Note that the projected bundle's key is `ca-certificates.crt`, not `ca.crt`, so either supply your own ConfigMap with the `ca.crt` key or adjust accordingly.
+
+## Operator setup (the machine running `nic`)
+
+NIC itself is a Go binary, and Go reads the **operating-system trust store** on Linux and macOS. The host you run `nic` from must therefore already trust the org CA at the OS level — this is normally handled by your organization's standard workstation provisioning, not by NIC.
+
+Verify before deploying:
+
+```bash
+# Linux (Debian/Ubuntu): the CA should be in the system bundle
+openssl verify -CApath /etc/ssl/certs /path/to/my-org-ca.pem
+
+# Quick end-to-end check that your shell trusts the proxy:
+curl -fsS https://pypi.org/simple/ -o /dev/null && echo "egress TLS OK"
+```
+
+If `nic` itself cannot make TLS calls (to AWS APIs, the GitOps remote, etc.) the deploy fails before any cluster resources are created. Fix the operator host's trust store first.
+
+Then point NIC at the same CA:
+
+```yaml
+trust_bundle:
+  path: /etc/ssl/certs/my-org-ca.pem
+```
+
+and deploy as usual:
+
+```bash
+nic deploy --config my-config.yaml
+```
+
+## Verification
+
+After a deploy with `trust_bundle` set, confirm each layer trusts the org CA.
+
+**1. Node OS trust store** (AWS, AL2023 — via a debug pod or SSM session on a node):
+
+```bash
+# The cert should be present and folded into the system bundle:
+ls -l /etc/pki/ca-trust/source/anchors/org-ca.crt
+openssl crl2pkcs7 -nocrl -certfile /etc/pki/tls/certs/ca-bundle.crt \
+  | openssl pkcs7 -print_certs -noout | grep -i "<your org CA subject>"
+```
+
+**2. trust-manager projection** — the ConfigMap should exist in every namespace:
+
+```bash
+kubectl get bundle nebari-trust-bundle
+kubectl get configmap nebari-trust-bundle -n keycloak \
+  -o jsonpath='{.data.ca-certificates\.crt}' | head
+```
+
+**3. Per-application trust** — check the env var and the file inside a pod:
+
+```bash
+# ArgoCD repo-server
+kubectl exec -n argocd deploy/argocd-repo-server -- printenv SSL_CERT_FILE
+kubectl exec -n argocd deploy/argocd-repo-server -- \
+  sh -c 'grep -c BEGIN /etc/ssl/certs-combined/ca-bundle.crt'
+
+# Keycloak
+kubectl exec -n keycloak sts/keycloak -- printenv KC_TRUSTSTORE_PATHS
+
+# JupyterHub singleuser (in a running user pod)
+kubectl exec -n <jhub-ns> <singleuser-pod> -- printenv REQUESTS_CA_BUNDLE
+```
+
+**4. End-to-end user test** — the definition-of-done for the epic. From a JupyterHub notebook terminal, with no workarounds:
+
+```bash
+pip install --no-cache-dir requests   # succeeds through the proxy, no --trusted-host
+python -c "import requests; requests.get('https://pypi.org'); print('TLS OK')"
+```
+
+A clean `nic deploy` into a cluster with all egress forced through the TLS-inspecting proxy should complete with no component hitting a certificate verification failure.
+
+## Troubleshooting
+
+**`x509: certificate signed by unknown authority` / `CERTIFICATE_VERIFY_FAILED` / `SSL: CERTIFICATE_VERIFY_FAILED` / `unable to get local issuer certificate`**
+
+These are all the same root cause: the connecting process does not trust the org CA. Work outward from where it fails:
+
+- **Nodes never become Ready / `ImagePullBackOff` on system pods** → the node OS trust store does not have the CA. Confirm `trust_bundle` was set at deploy time and that the EKS launch templates were updated (step 1 above). This must be in place before anything else can work.
+- **An application pod fails its own outbound calls** → check that the `nebari-trust-bundle` ConfigMap exists in that namespace (step 2) and that the pod's CA env var points at a file that actually contains the org CA (step 3).
+- **`pip install` fails in a notebook** → the data-science pack's `custom.trust-bundle-enabled` is likely still `false`, or the pod predates the projection. Restart the user server after enabling.
+- **ArgoCD repo-server fails to pull a chart over HTTPS** → verify the `argocd-org-ca` ConfigMap exists and the repo-server has `SSL_CERT_FILE`/`GIT_SSL_CAINFO`/`CURL_CA_BUNDLE` set. Note that on a cluster where ArgoCD is _already_ installed at the pinned chart version, a values-only change is not re-applied until the chart version is bumped; this takes effect on fresh installs.
+- **Ray pods managed by ArgoCD show "synced/healthy" but TLS still fails** → if your ArgoCD `ignoreDifferences` rule covers `/spec/rayClusterConfig`, ArgoCD stops managing the CA injection that lives there and silently never applies it. Narrow the ignore rule and verify with `kubectl exec ... -- printenv SSL_CERT_FILE`, not sync status.
+
+**Some Python clients still fail even with the env vars set.** A few libraries hardcode their own trust source and ignore `SSL_CERT_FILE` / `REQUESTS_CA_BUNDLE`. The notable one is `httpx`, which defaults to `certifi`'s bundle. Application code must build an SSL context explicitly, e.g. `httpx.Client(verify=ssl.create_default_context())`.
+
+**The CA bundle changed (rotation).** Update `trust_bundle` and re-run `nic deploy`. The install-time ConfigMaps are upserted and the trust-manager Bundle is re-rendered. Automatic CA rotation is out of scope; rotation is an operator-driven redeploy.
+
+## Operator responsibilities (local and existing clusters)
+
+NIC installs the CA into the node OS trust store only for clusters it creates on **AWS**. For the **local** provider and **existing/bring-your-own** clusters, NIC does not control node provisioning, so installing the org CA into each node's OS trust store is the operator's responsibility and must be done **before** pointing NIC at the cluster.
+
+NIC documents this requirement but does not prescribe a mechanism — use whatever fits your platform (a node bootstrap script, a machine image, a DaemonSet that writes to a hostPath, your existing configuration-management tooling, etc.). The requirement is simply: every node's OS trust store must contain the org CA so that containerd/CRI image pulls and the kubelet's control-plane connection succeed.
+
+The in-pod half (trust-manager and the per-application wiring) still works normally on these clusters once `trust_bundle` is set, because it operates inside Kubernetes and does not depend on the node bootstrap path.

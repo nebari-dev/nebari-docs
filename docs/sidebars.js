@@ -47,9 +47,11 @@ module.exports = {
         "how-tos/deploy-cluster",
         "how-tos/cloudflare-dns",
         "how-tos/update-cluster",
+        "how-tos/upgrade-kubernetes",
         "how-tos/destroy-cluster",
         "how-tos/keycloak-auth",
         "how-tos/debug-deployment",
+        "how-tos/enterprise-tls-proxy",
         {
           type: "category",
           label: "Providers",
