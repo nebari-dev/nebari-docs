@@ -1,3 +1,8 @@
+---
+title: Personas
+description: The three primary roles NKP is designed around and what each one needs from the platform.
+---
+
 # Personas
 
 Nebari Kubernetes Platform (NKP) is designed around three primary roles. Understanding these roles clarifies who is responsible for each layer of the platform and what each group needs to be successful.
@@ -14,8 +19,8 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 
 **What they do:**
 
-- Provision clusters across cloud providers (AWS, GCP, Azure, Hetzner) or on-premises using the `nic` CLI
-- Manage the foundational services bundled with every deployment: identity (Keycloak), API gateway (Envoy), observability, and GitOps (ArgoCD)
+- Provision clusters across cloud providers (AWS, GCP, Azure, Hetzner), or connect to an existing on-premises cluster, using the `nic` CLI
+- Manage the foundational services bundled with every deployment: identity (Keycloak), API gateway (Envoy), TLS certificates (cert-manager), telemetry (OpenTelemetry), and GitOps (ArgoCD)
 - Install, update, and remove software packs to extend the platform's capabilities
 - Control user access, quotas, and security policies
 - Monitor cluster health, costs, and resource utilization
@@ -26,7 +31,7 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 - Reliable upgrade paths with minimal manual intervention
 - Clear visibility into cluster health, resource consumption, and costs
 - Fine-grained access controls and policy enforcement
-- The ability to integrate packs with foundational services such as SSO, routing, and observability without manual configuration
+- The ability to integrate packs with foundational services such as SSO, routing, and telemetry without manual configuration
 
 ---
 
@@ -40,8 +45,8 @@ Nebari Kubernetes Platform (NKP) is designed around three primary roles. Underst
 
 **What they do:**
 
-- Author `NebariApp` custom resources that define a software pack's components, dependencies, and configuration
-- Package tools (notebook environments, model serving, experiment tracking, dashboards) so they integrate automatically with SSO, TLS, routing, and telemetry
+- Package tools (notebook environments, model serving, experiment tracking, dashboards) as Helm charts / ArgoCD applications, defining their components, dependencies, and configuration
+- Author `NebariApp` custom resources so their tools automatically integrate with the platform's routing, TLS, SSO, and landing page
 - Test packs against different cluster configurations and platform versions
 - Publish packs to a registry for platform admins to discover and install
 
