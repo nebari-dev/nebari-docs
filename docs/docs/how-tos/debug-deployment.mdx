@@ -1,10 +1,10 @@
 ---
 title: Debug a deployment
 slug: /how-tos/debug-deployment
-description: How to diagnose a stuck or failing NKP deployment — covering both the nic deploy phase and post-deploy cluster health.
+description: How to diagnose a stuck or failing NKP deployment, covering both the nic deploy phase and post-deploy cluster health.
 ---
 
-This guide covers debugging a stuck or failing NKP deployment. It is scoped to NKP only — for Classic Nebari, see [Troubleshooting](/classic/troubleshooting).
+This guide covers debugging a stuck or failing Nebari Kubernetes Platform (NKP) deployment. It is scoped to NKP only. For Classic Nebari, see [Troubleshooting](/classic/troubleshooting).
 
 :::note
 The steps below that use `kubectl` require the CLI installed and `KUBECONFIG` set. See [Deploy a cluster](/docs/how-tos/deploy-cluster#retrieve-the-kubeconfig) for how to retrieve the kubeconfig.
@@ -20,7 +20,7 @@ The steps below that use `kubectl` require the CLI installed and `KUBECONFIG` se
 nic deploy -f config.yaml 2>&1 | tee deploy.log
 ```
 
-For deeper traces — showing exactly which internal step hung — enable the built-in OpenTelemetry console exporter (`OTEL_EXPORTER` is a `nic`-specific variable; valid values are `none`, `console`, `otlp`, and `both`):
+For deeper traces that show exactly which internal step hung, enable the built-in OpenTelemetry console exporter (`OTEL_EXPORTER` is a `nic`-specific variable; valid values are `none`, `console`, `otlp`, and `both`):
 
 ```bash
 OTEL_EXPORTER=console nic deploy -f config.yaml
@@ -43,7 +43,7 @@ After `nic deploy` returns, the cluster still needs ArgoCD to sync and start all
 
 ### ArgoCD applications
 
-Start here — ArgoCD is the engine that delivers everything else.
+Start here: ArgoCD is the engine that delivers everything else.
 
 List all applications and their sync and health status:
 
@@ -59,9 +59,9 @@ kubectl describe application <name> -n argocd
 
 What to look for:
 
-- **`SyncStatus`**: `Synced` (good), `OutOfSync` (hasn't applied the latest manifests), `Unknown` (can't reach the source repo — check the ArgoCD server logs).
+- **`SyncStatus`**: `Synced` (good), `OutOfSync` (hasn't applied the latest manifests), `Unknown` (can't reach the source repo; check the ArgoCD server logs).
 - **`Health`**: `Healthy` (good), `Progressing` (still starting up), `Degraded` (something is wrong).
-- A `Degraded` application includes a human-readable message in `Status.Conditions` — read it before looking elsewhere.
+- A `Degraded` application includes a human-readable message in `Status.Conditions`. Read it before looking elsewhere.
 
 Check ArgoCD server logs directly:
 
@@ -89,7 +89,9 @@ kubectl get pods -n <namespace>
 kubectl logs -n <namespace> <pod-name>
 ```
 
-**cert-manager:** A healthy ArgoCD application for cert-manager does not guarantee that TLS certificates are being issued. Also check:
+#### cert-manager
+
+A healthy ArgoCD application for cert-manager does not guarantee that TLS certificates are being issued. Also check:
 
 ```bash
 kubectl get certificates -A
@@ -98,7 +100,9 @@ kubectl describe certificate <name> -n <namespace>
 
 A `False` ready status usually means a DNS-01 challenge timeout or a Let's Encrypt rate limit. The `describe` output includes the challenge URL and the specific error message from the ACME server.
 
-**Keycloak:** If Keycloak pods are running but the sign-in page is unreachable, check whether the HTTPRoute was created:
+#### Keycloak
+
+If Keycloak pods are running but the sign-in page is unreachable, check whether the HTTPRoute was created:
 
 ```bash
 kubectl get httproutes -A
@@ -142,24 +146,24 @@ The four status conditions and what each one tracks:
 | `AuthReady` | OIDC client provisioned in Keycloak |
 | `Ready` | All three above are `True` |
 
-Each condition includes a `Message` field explaining why it is `False` — read that before checking logs.
+Each condition includes a `Message` field explaining why it is `False`. Read that before checking logs.
 
 ## Symptom index
 
 | Symptom | Where to look |
 |---|---|
 | `nic deploy` exits with an error immediately | [`nic deploy` common failures](#common-nic-deploy-failures) |
-| `nic deploy` times out | [`nic deploy` common failures](#common-nic-deploy-failures) — timeout row |
+| `nic deploy` times out | [`nic deploy` common failures](#common-nic-deploy-failures), timeout row |
 | `nic deploy` hangs after "ArgoCD installed" | [`nic deploy` common failures](#common-nic-deploy-failures); [ArgoCD applications](#argocd-applications) |
 | ArgoCD app stuck in `Progressing` or `Degraded` | [ArgoCD applications](#argocd-applications) |
 | Pod in `CrashLoopBackOff` or `ImagePullBackOff` | [Foundational software pods](#foundational-software-pods) |
 | Nebari Operator pod crashing or not connecting to Keycloak | [Nebari Operator](#nebari-operator) |
-| TLS certificate not issuing | [Foundational software pods — cert-manager](#foundational-software-pods) |
-| Can't sign in / Keycloak error | [Foundational software pods — Keycloak](#foundational-software-pods) |
+| TLS certificate not issuing | [cert-manager](#cert-manager) |
+| Can't sign in / Keycloak error | [Keycloak](#keycloak) |
 | `NebariApp` not `Ready` | [NebariApp status](#nebariapp-status) |
 
 ## Related pages
 
-- [NKP architecture](/docs/explanations/nkp-architecture) — understand how the layers fit together before debugging
-- [Deploy a cluster](/docs/how-tos/deploy-cluster) — the deploy steps this page assumes you've run
-- [Providers](/docs/how-tos/providers) — provider-specific prerequisites and configuration
+- [NKP architecture](/docs/explanations/nkp-architecture): understand how the layers fit together before debugging
+- [Deploy a cluster](/docs/how-tos/deploy-cluster): the deploy steps this page assumes you've run
+- [Providers](/docs/how-tos/providers): provider-specific prerequisites and configuration
