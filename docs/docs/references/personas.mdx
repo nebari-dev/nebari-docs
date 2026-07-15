@@ -1,0 +1,83 @@
+---
+title: Personas
+description: An overview of NKP's three primary roles and what each one needs from the platform.
+---
+
+# Personas
+
+Nebari Kubernetes Platform (NKP) organizes its work around three primary roles. Understanding these roles clarifies who is responsible for each layer of the platform and what each group needs to be successful.
+
+---
+
+## Platform admin
+
+**Who they are:**
+
+- Infrastructure engineers, DevOps practitioners, or IT administrators responsible for standing up and maintaining the platform
+- Comfortable with Kubernetes, cloud providers, and infrastructure-as-code tooling such as OpenTofu or Terraform
+- May work within a central platform team or provide services to multiple internal teams
+
+**What they do:**
+
+- Provision clusters across cloud providers (AWS, GCP, Azure, Hetzner), or connect to an existing on-premises cluster, using the `nic` CLI
+- Manage the foundational services bundled with every deployment: identity (Keycloak), API gateway (Envoy), TLS certificates (cert-manager), telemetry (OpenTelemetry), and GitOps (ArgoCD)
+- Install, update, and remove software packs to extend the platform's capabilities
+- Control user access, quotas, and security policies
+- Monitor cluster health, costs, and resource utilization
+
+**What they need:**
+
+- Declarative, repeatable tooling that abstracts cloud provider differences
+- Reliable upgrade paths with minimal manual intervention
+- Clear visibility into cluster health, resource consumption, and costs
+- Fine-grained access controls and policy enforcement
+- The ability to integrate packs with foundational services such as SSO, routing, and telemetry without manual configuration
+
+---
+
+## Pack developer
+
+**Who they are:**
+
+- Software engineers or platform specialists who build and publish reusable capabilities for the platform
+- Familiar with Kubernetes custom resources, Helm charts, and how the Nebari Operator works
+- May be internal to an organization building proprietary tooling, or open source contributors publishing packs for the broader community
+
+**What they do:**
+
+- Package tools (notebook environments, model serving, experiment tracking, dashboards) as Helm charts / ArgoCD applications, defining their components, dependencies, and configuration
+- Author `NebariApp` custom resources so their tools automatically integrate with the platform's routing, TLS, SSO, and landing page
+- Test packs against different cluster configurations and platform versions
+- Publish packs to a registry for platform admins to discover and install
+
+**What they need:**
+
+- Well-defined contracts for how packs integrate with the platform's SSO, routing, TLS, and telemetry layers
+- A reliable operator reconciliation model they can test against
+- Clear versioning and compatibility guarantees
+- A publishing mechanism that makes packs discoverable and installable without requiring platform admin intervention in the development loop
+
+---
+
+## End user
+
+**Who they are:**
+
+- Data scientists, machine learning (ML) engineers, researchers, and analysts who use the tools and environments the platform provides
+- Proficient in Python or R, working daily with Jupyter notebooks, ML frameworks, and data pipelines
+- Generally not responsible for infrastructure and expect the platform to work without extra effort on their part
+
+**What they do:**
+
+- Log in through the platform landing page and launch notebook environments or other deployed tools
+- Run experiments, train models, and analyze data using pre-configured environments
+- Collaborate with colleagues by sharing notebooks, dashboards, and results
+- Scale computation to cluster resources without managing infrastructure themselves
+
+**What they need:**
+
+- Immediate access to pre-configured, stable environments without installation friction
+- Scalable compute they can request on demand without involving infrastructure teams
+- Reliable collaboration and sharing mechanisms
+- Reproducible environments across sessions and teammates
+- Clear paths to escalate when something isn't working
