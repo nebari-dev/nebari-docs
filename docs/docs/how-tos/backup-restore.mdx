@@ -18,7 +18,7 @@ Every volume on the default `longhorn` StorageClass is covered automatically, wi
 Backups are [incremental](https://longhorn.io/docs/latest/snapshots-and-backups/backup-and-restore/). After the first full copy, each run uploads only the blocks that changed, so routine backups stay small and fast.
 
 :::note
-Longhorn backs up whole volumes at the block level, so you cannot exclude individual paths (for example `.cache` or other regenerable dotfiles) from a home backup. Trimming what gets backed up is a storage-layout decision — keep regenerable data off the backed-up volume — not a backup setting.
+Longhorn backs up whole volumes at the block level, so you cannot exclude individual paths (for example `.cache` or other regenerable dotfiles) from a home backup. Trimming what gets backed up is a storage-layout decision (keep regenerable data off the backed-up volume), not a backup setting.
 :::
 
 ## Enable backups
@@ -54,7 +54,7 @@ nic deploy -f <config-file>
 ```
 
 :::warning[Enabling on an existing cluster]
-Backup resources are applied during the configuration phase of `nic deploy`, which runs only after the infrastructure phase. On an existing cluster, that phase may roll node groups (for example, to pick up a newer Amazon Machine Image, or AMI), and if the roll fails the deploy aborts before backups are configured — there is no partial apply. If a deploy fails partway, resolve the failure, re-run `nic deploy`, and confirm backups landed as shown below.
+Backup resources are applied during the configuration phase of `nic deploy`, which runs only after the infrastructure phase. On an existing cluster, that phase may roll node groups (for example, to pick up a newer Amazon Machine Image, or AMI), and if the roll fails the deploy aborts before backups are configured; there is no partial apply. If a deploy fails partway, resolve the failure, re-run `nic deploy`, and confirm backups landed as shown below.
 :::
 
 ## Confirm backups are running
@@ -80,8 +80,8 @@ NKP schedules and configures backups but does not orchestrate restores; restorin
    kubectl get pvc <pvc-name> -n <namespace> -o jsonpath='{.spec.volumeName}'
    ```
 3. **Restore the backup.** In the Longhorn UI under **Backup**, select the volume's backup and choose **Restore**. Longhorn creates a new volume from the backup.
-4. **Bind a claim to the restored volume.** On the restored volume in the Longhorn UI, use **Create PV/PVC** to create a `PersistentVolume` and a bound claim. To reuse the workload's original claim, delete the old claim first, then set the new claim's name and namespace to match it — for a JupyterHub home, the claim name is what KubeSpawner looks up, so it must match exactly.
-5. **Restart the workload**, then **verify by opening the data** in it, not just by checksum — a checksum proves the restore matches the source, not that the source itself was intact. For a JupyterHub home, restart the user's server and KubeSpawner reattaches the claim by name.
+4. **Bind a claim to the restored volume.** On the restored volume in the Longhorn UI, use **Create PV/PVC** to create a `PersistentVolume` and a bound claim. To reuse the workload's original claim, delete the old claim first, then set the new claim's name and namespace to match it. For a JupyterHub home, the claim name is what KubeSpawner looks up, so it must match exactly.
+5. **Restart the workload**, then **verify by opening the data** in it, not just by checksum. A checksum proves the restore matches the source, not that the source itself was intact. For a JupyterHub home, restart the user's server and KubeSpawner reattaches the claim by name.
 
 For a shared (ReadWriteMany) volume, wait for its `share-manager` pod in `longhorn-system` to become `Ready` before the workload can mount the restored volume.
 
@@ -94,7 +94,7 @@ A restore writes lock objects into the object store, so the credentials must be 
 Because the backups live off-cluster, a lost cluster is replaceable: point a new cluster at the same bucket and the backups are still there. For JupyterHub, recovery needs no per-user migration, because a user's home volume name is a pure function of their login. With `username_claim: preferred_username` and `pvc_name_template: claim-{username}` (the data science pack defaults), a user's home is always the claim `claim-<username>`. Restore their backup into a claim of exactly that name and KubeSpawner adopts it on their next spawn.
 
 1. **Deploy the new cluster** with the same `backups.longhorn.s3.bucket` and credentials, and the same JupyterHub `username_claim` and `pvc_name_template` as the original.
-2. **Recreate the user** in the new cluster's Keycloak realm with the same username, so their `preferred_username` — and therefore their claim name — matches.
+2. **Recreate the user** in the new cluster's Keycloak realm with the same username, so their `preferred_username`, and therefore their claim name, matches.
 3. **Discover the backups.** Longhorn syncs the backup target on a poll cycle (about five minutes). To discover them immediately, request a sync:
    ```bash
    kubectl -n longhorn-system patch backuptarget default --type=merge \
