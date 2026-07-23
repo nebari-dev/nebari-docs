@@ -4,7 +4,7 @@ slug: /how-tos/backup-restore
 description: "Enable off-cluster Longhorn backups, confirm they are running, and restore data within a cluster or onto a new one, including JupyterHub user homes."
 ---
 
-NKP backs up your cluster's persistent data, including JupyterHub user homes, to off-cluster object storage using Longhorn's native backups. This guide shows you how to enable backups, confirm they are running, and restore data both within a cluster and onto a fresh one. For the full configuration schema (S3-compatible endpoints, Azure, credential and teardown options), see the [Longhorn backups reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/longhorn-backups.md).
+NKP backs up your cluster's persistent data, including JupyterHub user homes, to off-cluster object storage using Longhorn's native backups. Backups cover volumes on Longhorn, so this guide applies to clusters where Longhorn is the storage layer. It shows you how to enable backups, confirm they are running, and restore data both within a cluster and onto a fresh one. For the full configuration schema (S3-compatible endpoints, Azure, credential and teardown options), see the [Longhorn backups reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/longhorn-backups.md).
 
 ## What gets backed up
 
@@ -17,13 +17,15 @@ Every volume on the default `longhorn` StorageClass is covered automatically, wi
 
 Backups are [incremental](https://longhorn.io/docs/latest/snapshots-and-backups/backup-and-restore/). After the first full copy, each run uploads only the blocks that changed, so routine backups stay small and fast.
 
+Each backup is self-contained and independently restorable. When retention deletes older backups, Longhorn removes only the data no remaining backup still needs, so pruning never affects the backups you keep.
+
 :::note
 Longhorn backs up whole volumes at the block level, so you cannot exclude individual paths (for example `.cache` or other regenerable dotfiles) from a home backup. Trimming what gets backed up is a storage-layout decision (keep regenerable data off the backed-up volume), not a backup setting.
 :::
 
 ## Enable backups
 
-Add a `backups.longhorn` block to your cluster config and re-run `nic deploy`. This minimal example enables keyless backups to a new S3 bucket on AWS:
+Add a `backups.longhorn` block to your cluster config and re-run `nic deploy`. This minimal example enables backups to a new S3 bucket on AWS:
 
 ```yaml
 backups:
@@ -34,6 +36,8 @@ backups:
       region: us-west-2
       prefix: my-cluster/
       create_bucket: true # NKP creates the bucket (AWS and Azure only)
+      access_key_id_env: LONGHORN_S3_ACCESS_KEY_ID
+      secret_access_key_env: LONGHORN_S3_SECRET_ACCESS_KEY
     schedules:
       snapshot:
         cron: "0 * * * *" # hourly
@@ -45,7 +49,7 @@ backups:
         concurrency: 3
 ```
 
-On a native AWS target, leave the credential fields out: NKP provisions an Amazon EKS Pod Identity association for Longhorn scoped to this bucket, so there are no static keys to create or rotate. To use static keys, an S3-compatible endpoint (MinIO, Wasabi, Cloudflare R2), or Azure Blob, see the [configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/longhorn-backups.md).
+The `*_env` fields name the environment variables that hold your S3 credentials; export them before you run `nic deploy`. On AWS you can instead omit both fields to use keyless [EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html) auth, where NKP provisions a role-based association for Longhorn and stores no static keys. For S3-compatible endpoints (MinIO, Wasabi, Cloudflare R2), Azure Blob, and the full set of credential options, see the [configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/longhorn-backups.md).
 
 Apply the change:
 
