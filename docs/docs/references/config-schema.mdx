@@ -1,0 +1,17 @@
+---
+title: 'Configuration schema'
+id: config-schema
+description: 'Auto-generated reference for the nebari-config.yaml schema, rendered from the NIC JSON Schema.'
+---
+
+import NicSchemaLoader from '@site/src/components/NicSchemaLoader';
+
+# Configuration schema
+
+The Nebari Infrastructure Core (NIC) configuration file (`nebari-config.yaml`)
+is validated against a JSON Schema generated directly from the Go config structs
+in [`nebari-infrastructure-core`](https://github.com/nebari-dev/nebari-infrastructure-core).
+The reference below is loaded from that schema at build time, so it always
+matches the config the CLI actually accepts.
+
+<NicSchemaLoader />
