@@ -131,17 +131,12 @@
   color: var(--ifm-color-primary);
 }
 
-.groupLabel .rule {
-  flex: 1;
-  height: 1px;
-  background: var(--ifm-color-emphasis-200);
-}
-
-/* ---- field row: name | detail ---- */
+/* ---- field row: name + inline meta, with a below block for the rest ---- */
 .fieldRow {
-  display: grid;
-  grid-template-columns: minmax(150px, 232px) minmax(0, 1fr);
-  gap: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
   padding: 12px 12px 12px 14px;
   margin-left: -17px;
   border-top: 1px solid var(--ifm-color-emphasis-200);
@@ -152,24 +147,8 @@
   background: var(--ifm-background-surface-color);
 }
 
-.fieldRow:last-child {
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
-}
-
 .fieldRowRequired {
   border-left-color: var(--ifm-color-primary);
-}
-
-.nameCol,
-.detailCol {
-  min-width: 0;
-}
-
-.breadcrumb {
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 11px;
-  color: var(--ifm-color-emphasis-500);
-  margin-bottom: 2px;
 }
 
 .fieldName {
@@ -190,6 +169,35 @@
   overflow-wrap: anywhere;
 }
 
+/* Description, YAML snippets and nested blocks stack full-width under the name. */
+.below {
+  flex: 0 0 100%;
+  padding-left: 18px;
+  margin-top: 2px;
+}
+
+/* ---- nested field row: no hairline; full path on hover ---- */
+.fieldRowNested {
+  padding: 9px 0 9px 10px;
+  margin-left: -18px;
+  border-left: 2px solid transparent;
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 56px);
+}
+
+.fieldRowNestedRequired {
+  border-left-color: var(--ifm-color-primary);
+}
+
+.fieldNameNested {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 13.5px;
+  font-weight: 650;
+  color: var(--ifm-font-color-base);
+  cursor: help;
+  border-bottom: 1px dotted var(--ifm-color-emphasis-400);
+  overflow-wrap: anywhere;
+}
+
 /* ---- meta chips ---- */
 .meta {
   display: flex;
@@ -198,8 +206,13 @@
   gap: 6px;
 }
 
-.metaEnum {
-  margin-top: 6px;
+.metaInline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  vertical-align: baseline;
 }
 
 .chip {

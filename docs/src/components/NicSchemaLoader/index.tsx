@@ -378,10 +378,63 @@ function NestedFields({
   );
 }
 
-// One field, rendered as a two-column grid row: the name on the left, its type,
-// modifiers, description and nested body on the right. `nested` is true only for
-// rows inside a <details> (deeper than a section's direct fields); it turns on
-// the dotted-path breadcrumb and suppresses the required/optional group labels.
+// Type / required / keyed / default / pattern / enum, all inline on the field
+// name's line. Shared between top-level rows (flex) and nested rows (inline).
+function MetaChips({
+  schema,
+  required,
+  emptyObject,
+  mapValue,
+}: {
+  schema: JSONSchema;
+  required: boolean;
+  emptyObject: boolean;
+  mapValue: JSONSchema | null;
+}) {
+  return (
+    <>
+      <span className={styles.chip}>
+        {mapValue ? (
+          <>
+            map&lt;string, <span className={styles.accent}>{typeLabel(mapValue)}</span>&gt;
+          </>
+        ) : (
+          typeLabel(schema)
+        )}
+      </span>
+      {required && <span className={`${styles.chip} ${styles.chipRequired}`}>required</span>}
+      {emptyObject && <span className={`${styles.chip} ${styles.chipKeyed}`}>keyed by provider</span>}
+      {schema.default !== undefined && (
+        <span className={styles.metaTag}>
+          <span className={styles.k}>default</span>
+          <span className={styles.v}>{JSON.stringify(schema.default)}</span>
+        </span>
+      )}
+      {schema.pattern && (
+        <span className={styles.metaTag} title="Value must match this regular expression">
+          <span className={styles.k}>pattern</span>
+          <span className={styles.v}>{schema.pattern}</span>
+        </span>
+      )}
+      {schema.enum && (
+        <>
+          <span className={styles.enumLabel}>one of</span>
+          {schema.enum.map((v) => (
+            <span key={String(v)} className={`${styles.chip} ${styles.chipEnum}`}>
+              {String(v)}
+            </span>
+          ))}
+        </>
+      )}
+    </>
+  );
+}
+
+// One field. The name and its inline metadata sit on one line; descriptions,
+// YAML snippets and nested blocks stack below. `nested` is true only for rows
+// inside a <details> (deeper than a section's direct fields): those show their
+// full dotted path as a hover tooltip (not a breadcrumb line), drop the row
+// hairline, and suppress the required/optional group labels.
 function Field({
   name,
   schema,
@@ -417,98 +470,80 @@ function Field({
         ? 'dns-providers'
         : null;
 
+  const below = (
+    <>
+      {schema.description && <FieldDescription description={schema.description} />}
+      {emptyObject && providerRef && (
+        <p className={styles.description}>
+          Configured per provider. See <a href={`#${providerRef}`}>the provider section below</a>.
+        </p>
+      )}
+      {schema.examples && schema.examples.length > 0 && (
+        <CodeBlock language="yaml">
+          {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
+        </CodeBlock>
+      )}
+      {mapOfObjects && (
+        <CodeBlock language="yaml">{yamlSkeleton(name, mapOfObjects, true)}</CodeBlock>
+      )}
+      {nestedObject && (
+        <NestedFields
+          label={plural(objProps, 'nested field')}
+          schema={nestedObject}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+      {arrayItems && (
+        <NestedFields
+          label={`${plural(Object.keys(arrayItems.properties ?? {}).length, 'item field')}${requiredHint(arrayItems)}`}
+          schema={arrayItems}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+      {mapOfObjects && (
+        <NestedFields
+          label={`${plural(Object.keys(mapOfObjects.properties ?? {}).length, 'entry field')}${requiredHint(mapOfObjects)}`}
+          schema={mapOfObjects}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+    </>
+  );
+
+  const chips = (
+    <MetaChips schema={schema} required={required} emptyObject={emptyObject} mapValue={mapValue} />
+  );
+
+  if (nested) {
+    return (
+      <div className={`${styles.fieldRowNested} ${required ? styles.fieldRowNestedRequired : ''}`}>
+        <code id={id} title={fieldPath.join('.')} className={styles.fieldNameNested}>
+          {name}
+        </code>
+        <span className={styles.metaInline}>{chips}</span>
+        {below}
+      </div>
+    );
+  }
+
+  const hasBelow =
+    !!schema.description ||
+    (emptyObject && !!providerRef) ||
+    (!!schema.examples && schema.examples.length > 0) ||
+    !!nestedObject ||
+    !!arrayItems ||
+    !!mapOfObjects;
+
   return (
     <div className={`${styles.fieldRow} ${required ? styles.fieldRowRequired : ''}`}>
-      <div className={styles.nameCol}>
-        {nested && fieldPath.length > 1 && (
-          <div className={styles.breadcrumb}>{fieldPath.slice(0, -1).join('.')}.</div>
-        )}
-        <Heading as={`h${headingLevel}`} id={id} className={styles.fieldName}>
-          <code>{name}</code>
-        </Heading>
-      </div>
-
-      <div className={styles.detailCol}>
-        <div className={styles.meta}>
-          <span className={styles.chip}>
-            {mapValue ? (
-              <>
-                map&lt;string, <span className={styles.accent}>{typeLabel(mapValue)}</span>&gt;
-              </>
-            ) : (
-              typeLabel(schema)
-            )}
-          </span>
-          {required && <span className={`${styles.chip} ${styles.chipRequired}`}>required</span>}
-          {emptyObject && <span className={`${styles.chip} ${styles.chipKeyed}`}>keyed by provider</span>}
-          {schema.default !== undefined && (
-            <span className={styles.metaTag}>
-              <span className={styles.k}>default</span>
-              <span className={styles.v}>{JSON.stringify(schema.default)}</span>
-            </span>
-          )}
-          {schema.pattern && (
-            <span className={styles.metaTag} title="Value must match this regular expression">
-              <span className={styles.k}>pattern</span>
-              <span className={styles.v}>{schema.pattern}</span>
-            </span>
-          )}
-        </div>
-
-        {schema.enum && (
-          <div className={`${styles.meta} ${styles.metaEnum}`}>
-            <span className={styles.enumLabel}>one of</span>
-            {schema.enum.map((v) => (
-              <span key={String(v)} className={`${styles.chip} ${styles.chipEnum}`}>
-                {String(v)}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {schema.description && <FieldDescription description={schema.description} />}
-
-        {emptyObject && providerRef && (
-          <p className={styles.description}>
-            Configured per provider. See <a href={`#${providerRef}`}>the provider section below</a>.
-          </p>
-        )}
-
-        {schema.examples && schema.examples.length > 0 && (
-          <CodeBlock language="yaml">
-            {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
-          </CodeBlock>
-        )}
-
-        {mapOfObjects && (
-          <CodeBlock language="yaml">{yamlSkeleton(name, mapOfObjects, true)}</CodeBlock>
-        )}
-
-        {nestedObject && (
-          <NestedFields
-            label={plural(objProps, 'nested field')}
-            schema={nestedObject}
-            path={fieldPath}
-            level={level + 1}
-          />
-        )}
-        {arrayItems && (
-          <NestedFields
-            label={`${plural(Object.keys(arrayItems.properties ?? {}).length, 'item field')}${requiredHint(arrayItems)}`}
-            schema={arrayItems}
-            path={fieldPath}
-            level={level + 1}
-          />
-        )}
-        {mapOfObjects && (
-          <NestedFields
-            label={`${plural(Object.keys(mapOfObjects.properties ?? {}).length, 'entry field')}${requiredHint(mapOfObjects)}`}
-            schema={mapOfObjects}
-            path={fieldPath}
-            level={level + 1}
-          />
-        )}
-      </div>
+      <Heading as={`h${headingLevel}`} id={id} className={styles.fieldName}>
+        <code>{name}</code>
+      </Heading>
+      <span className={styles.meta}>{chips}</span>
+      {hasBelow && <div className={styles.below}>{below}</div>}
     </div>
   );
 }
@@ -559,14 +594,12 @@ function FieldList({
       {!nested && requiredNames.length > 0 && (
         <div className={`${styles.groupLabel} ${styles.groupLabelRequired}`}>
           <span className={styles.tag}>Required</span>
-          <span className={styles.rule} />
         </div>
       )}
       {requiredNames.map(renderField)}
       {!nested && optionalNames.length > 0 && (
         <div className={styles.groupLabel}>
           <span className={styles.tag}>Optional</span>
-          <span className={styles.rule} />
         </div>
       )}
       {optionalNames.map(renderField)}
