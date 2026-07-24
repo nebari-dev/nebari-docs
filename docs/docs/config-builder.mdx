@@ -21,12 +21,10 @@ Pick a cloud provider, set the always-required fields, and copy a starter
 the full set of options lives in the
 [Configuration schema](/docs/references/config-schema) reference.
 
-<NicConfigBuilder />
+## Before you deploy
 
-## Next steps
-
-The generated file is a **starting point**, not a finished config. Before you
-deploy:
+The file this builder generates is a **starting point**, not a finished config.
+Before you deploy:
 
 - Validate it with `nic validate -f nebari-config.yaml`, which checks it against
   the schema the CLI actually accepts.
@@ -40,3 +38,5 @@ DNS credentials (for example a Cloudflare API token) are read from environment
 variables at deploy time, not stored in this file. The builder only sets the
 `zone_id` that selects which zone to manage.
 :::
+
+<NicConfigBuilder />
