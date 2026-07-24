@@ -25,6 +25,9 @@ type ProviderMeta = {
   regionLabel?: string;
   regions?: string[];
   instances?: string[];
+  // Whether the provider's schema carries `longhorn.dedicated_nodes` (Longhorn on
+  // a dedicated storage node group). Set only for providers where that is true.
+  dedicatedStorage?: boolean;
 };
 
 const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
@@ -33,6 +36,7 @@ const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
     regionLabel: 'region',
     regions: ['us-west-2', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
     instances: ['m5.large', 'm5.xlarge', 'm5.2xlarge'],
+    dedicatedStorage: true,
   },
   gcp: { label: 'GCP', stub: true },
   azure: { label: 'Azure', stub: true },
@@ -50,6 +54,7 @@ type BuilderState = {
   instance: string;
   minNodes: number;
   maxNodes: number;
+  dedicatedStorage: boolean;
   useCloudflare: boolean;
   zoneId: string;
 };
@@ -65,6 +70,7 @@ const initialFor = (provider: ProviderKey): BuilderState => ({
   instance: PROVIDERS[provider].instances?.[0] ?? '',
   minNodes: 1,
   maxNodes: 5,
+  dedicatedStorage: false,
   useCloudflare: true,
   zoneId: '',
 });
@@ -85,14 +91,35 @@ function buildYaml(s: BuilderState): string {
     lines.push('  type: self-signed');
   }
 
+  const dedicated = s.dedicatedStorage && meta.dedicatedStorage;
+
   lines.push('cluster:');
   lines.push(`  ${s.provider}:`);
-  lines.push(`    ${meta.regionLabel}: ${s.region}`);
+  lines.push(`    ${meta.regionLabel ?? 'region'}: ${s.region}`);
   lines.push('    node_groups:');
   lines.push(`      ${s.nodeGroupName || 'general'}:`);
   lines.push(`        instance: ${s.instance}`);
   lines.push(`        min_nodes: ${s.minNodes}`);
   lines.push(`        max_nodes: ${s.maxNodes}`);
+  if (dedicated) {
+    // A dedicated, tainted storage pool. The label is Longhorn's default
+    // node_selector; the taint keeps other workloads off. Longhorn confines
+    // replica disks to nodes carrying this label.
+    lines.push('      storage:');
+    lines.push(`        instance: ${s.instance}`);
+    lines.push('        min_nodes: 1');
+    lines.push('        max_nodes: 1');
+    lines.push('        labels:');
+    lines.push('          node.longhorn.io/storage: "true"');
+    lines.push('        taints:');
+    lines.push('          - key: node.longhorn.io/storage');
+    lines.push('            value: "true"');
+    lines.push('            effect: NO_SCHEDULE');
+  }
+  if (dedicated) {
+    lines.push('    longhorn:');
+    lines.push('      dedicated_nodes: true');
+  }
 
   if (s.useCloudflare) {
     lines.push('dns:');
@@ -270,6 +297,26 @@ export default function NicConfigBuilder(): JSX.Element {
             </label>
           </div>
         </fieldset>
+
+        {meta.dedicatedStorage && (
+          <fieldset className={styles.group}>
+            <legend className={styles.legend}>Longhorn storage</legend>
+            <label className={styles.checkbox}>
+              <input
+                type="checkbox"
+                checked={state.dedicatedStorage}
+                onChange={(e) => set('dedicatedStorage', e.target.checked)}
+              />
+              <span>Dedicated storage node group</span>
+            </label>
+            <p className={styles.hint}>
+              Adds a tainted <code>storage</code> node group and sets{' '}
+              <code>longhorn.dedicated_nodes</code>, confining Longhorn replicas to it. On an
+              existing cluster this is a manual migration; see the{' '}
+              <Link to="/docs/references/config-schema">configuration schema</Link>.
+            </p>
+          </fieldset>
+        )}
 
         <fieldset className={styles.group}>
           <legend className={styles.legend}>DNS</legend>
