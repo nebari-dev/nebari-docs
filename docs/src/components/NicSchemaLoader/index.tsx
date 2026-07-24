@@ -53,7 +53,7 @@ type LoadedSchemas = {
 // (nebari-infrastructure-core#362) lands on a tagged release, the release tags
 // below become selectable; until then this preview entry tracks the branch.
 const DEFAULT_REPO = 'nebari-dev/nebari-infrastructure-core';
-const DEFAULT_REF = 'feat/config-schema-gen';
+const DEFAULT_REF = 'feat/config-schema-gen-v2';
 
 const schemasBase = (repo: string, ref: string) =>
   `https://raw.githubusercontent.com/${repo}/${ref}/schemas`;
