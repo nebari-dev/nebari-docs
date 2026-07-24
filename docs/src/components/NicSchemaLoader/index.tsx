@@ -256,92 +256,14 @@ function typeLabel(schema: JSONSchema): string {
   return schema.type ?? (schema.properties ? 'object' : 'any');
 }
 
-// invopop emits godoc verbatim, which repeats the field name in Go casing
-// ("Email is the email address..."). Strip that lead-in so the description
-// reads as prose. Purely cosmetic; leaves the description intact if it does not
-// match the pattern.
-function cleanDescription(desc: string): string {
-  const stripped = desc.replace(
-    /^[A-Z][A-Za-z0-9]* (is|are|holds|controls|specifies|represents|configures|defines|sets|enables|contains|determines|provides|indicates) /,
-    '',
-  );
-  if (stripped === desc) {
-    return desc;
-  }
-  return stripped.charAt(0).toUpperCase() + stripped.slice(1);
-}
-
-// Turn `owner/repo#N` references (which sometimes leak from internal godoc)
-// into links rather than rendering bare implementation noise.
-const issueRefLink = {
-  text: ({ children }: { children: React.ReactNode }) => {
-    const parts = React.Children.toArray(children).map((child) => {
-      if (typeof child !== 'string') {
-        return child;
-      }
-      return child.split(/(\b[\w-]+\/[\w.-]+#\d+\b)/g).map((seg, i) => {
-        const m = seg.match(/^([\w-]+\/[\w.-]+)#(\d+)$/);
-        return m ? (
-          // eslint-disable-next-line react/no-array-index-key
-          <a key={i} href={`https://github.com/${m[1]}/issues/${m[2]}`}>
-            {seg}
-          </a>
-        ) : (
-          seg
-        );
-      });
-    });
-    return <>{parts}</>;
-  },
-};
-
+// Render the schema's description verbatim as markdown. No rewriting or
+// stripping: the page shows exactly what the schema carries.
 function FieldDescription({ description }: { description: string }) {
   return (
     <div className={styles.description}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={issueRefLink}>
-        {cleanDescription(description)}
-      </ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
     </div>
   );
-}
-
-// A minimal YAML skeleton for a map/object field: keys are the required fields
-// plus the first couple of optionals. Derived mechanically from the schema; far
-// clearer than prose for shapes like `node_groups`.
-function yamlSkeleton(name: string, valueSchema: JSONSchema, isMap: boolean): string {
-  const props = valueSchema.properties ?? {};
-  const required = new Set(valueSchema.required ?? []);
-  const keys = Object.keys(props).sort((a, b) => {
-    const ra = required.has(a);
-    const rb = required.has(b);
-    if (ra !== rb) {
-      return ra ? -1 : 1;
-    }
-    return 0;
-  });
-  const shown = keys.filter((k) => required.has(k));
-  for (const k of keys) {
-    if (shown.length >= 3) {
-      break;
-    }
-    if (!shown.includes(k)) {
-      shown.push(k);
-    }
-  }
-  const placeholder = (s: JSONSchema) => {
-    const t = Array.isArray(s.type) ? s.type[0] : s.type;
-    if (t === 'boolean') return 'true';
-    if (t === 'integer' || t === 'number') return '0';
-    if (t === 'array') return '[]';
-    return `<${typeLabel(s)}>`;
-  };
-  const body = shown.map(
-    (k) => `    ${k}: ${placeholder(props[k])}${required.has(k) ? '   # required' : ''}`,
-  );
-  if (isMap) {
-    return `${name}:\n  <name>:\n${body.join('\n')}`;
-  }
-  return `${name}:\n${body.map((l) => l.slice(2)).join('\n')}`;
 }
 
 function requiredHint(valueSchema: JSONSchema): string {
@@ -378,17 +300,16 @@ function NestedFields({
   );
 }
 
-// Type / required / keyed / default / pattern / enum, all inline on the field
-// name's line. Shared between top-level rows (flex) and nested rows (inline).
+// Type / required / default / pattern / enum, all inline on the field name's
+// line. Everything shown is read from the schema. Shared between top-level rows
+// (flex) and nested rows (inline).
 function MetaChips({
   schema,
   required,
-  emptyObject,
   mapValue,
 }: {
   schema: JSONSchema;
   required: boolean;
-  emptyObject: boolean;
   mapValue: JSONSchema | null;
 }) {
   return (
@@ -403,7 +324,6 @@ function MetaChips({
         )}
       </span>
       {required && <span className={`${styles.chip} ${styles.chipRequired}`}>required</span>}
-      {emptyObject && <span className={`${styles.chip} ${styles.chipKeyed}`}>keyed by provider</span>}
       {schema.default !== undefined && (
         <span className={styles.metaTag}>
           <span className={styles.k}>default</span>
@@ -430,11 +350,11 @@ function MetaChips({
   );
 }
 
-// One field. The name and its inline metadata sit on one line; descriptions,
-// YAML snippets and nested blocks stack below. `nested` is true only for rows
-// inside a <details> (deeper than a section's direct fields): those show their
-// full dotted path as a hover tooltip (not a breadcrumb line), drop the row
-// hairline, and suppress the required/optional group labels.
+// One field. The name and its inline metadata sit on one line; the description,
+// schema examples and nested blocks stack below. Everything is read from the
+// schema. `nested` is true only for rows inside a <details> (deeper than a
+// section's direct fields): those show their full dotted path as a hover tooltip
+// (not a breadcrumb line), drop the row hairline, and suppress the group labels.
 function Field({
   name,
   schema,
@@ -457,34 +377,16 @@ function Field({
   const objProps = schema.properties ? Object.keys(schema.properties).length : 0;
   const mapValue = mapValueSchema(schema);
   const nestedObject = schema.type === 'object' && objProps > 0 ? schema : null;
-  const emptyObject = schema.type === 'object' && objProps === 0 && !mapValue;
   const arrayItems = schema.type === 'array' && schema.items?.properties ? schema.items : null;
   const mapOfObjects = mapValue && mapValue.properties ? mapValue : null;
-
-  // Top-level `cluster`/`dns` are opaque here (keyed by provider); point at the
-  // provider sections that render their fields rather than an empty toggle.
-  const providerRef =
-    path.length === 0 && name === 'cluster'
-      ? 'cluster-providers'
-      : path.length === 0 && name === 'dns'
-        ? 'dns-providers'
-        : null;
 
   const below = (
     <>
       {schema.description && <FieldDescription description={schema.description} />}
-      {emptyObject && providerRef && (
-        <p className={styles.description}>
-          Configured per provider. See <a href={`#${providerRef}`}>the provider section below</a>.
-        </p>
-      )}
       {schema.examples && schema.examples.length > 0 && (
         <CodeBlock language="yaml">
           {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
         </CodeBlock>
-      )}
-      {mapOfObjects && (
-        <CodeBlock language="yaml">{yamlSkeleton(name, mapOfObjects, true)}</CodeBlock>
       )}
       {nestedObject && (
         <NestedFields
@@ -513,9 +415,7 @@ function Field({
     </>
   );
 
-  const chips = (
-    <MetaChips schema={schema} required={required} emptyObject={emptyObject} mapValue={mapValue} />
-  );
+  const chips = <MetaChips schema={schema} required={required} mapValue={mapValue} />;
 
   if (nested) {
     return (
@@ -531,7 +431,6 @@ function Field({
 
   const hasBelow =
     !!schema.description ||
-    (emptyObject && !!providerRef) ||
     (!!schema.examples && schema.examples.length > 0) ||
     !!nestedObject ||
     !!arrayItems ||
@@ -564,12 +463,7 @@ function FieldList({
   const names = Object.keys(properties);
 
   if (names.length === 0) {
-    return (
-      <Admonition type="note">
-        This section is keyed by provider name; see the provider-specific
-        reference below for its fields.
-      </Admonition>
-    );
+    return <Admonition type="note">This schema defines no fields.</Admonition>;
   }
 
   const requiredNames = names.filter((n) => required.has(n)).sort();
@@ -816,11 +710,11 @@ function renderSections(data: LoadedSchemas): JSX.Element {
 
       {data.cluster.length > 0 && (
         <section className={styles.section}>
-          <SectionHead id="cluster-providers" title="Cluster providers" meta="exactly one applies" />
-          <p className={styles.sectionIntro}>
-            Configured under <code>cluster.&lt;provider&gt;</code>. Exactly one
-            provider is set per deployment.
-          </p>
+          <SectionHead
+            id="cluster-providers"
+            title="Cluster providers"
+            meta={plural(data.cluster.length, 'provider')}
+          />
           <Tabs queryString="cluster-provider">
             {data.cluster.map(({ name, schema }) => (
               <TabItem key={name} value={name} label={name}>
@@ -833,11 +727,11 @@ function renderSections(data: LoadedSchemas): JSX.Element {
 
       {data.dns.length > 0 && (
         <section className={styles.section}>
-          <SectionHead id="dns-providers" title="DNS providers" meta="exactly one applies" />
-          <p className={styles.sectionIntro}>
-            Configured under <code>dns.&lt;provider&gt;</code>. Credentials (API
-            tokens) are read from environment variables, not from config.
-          </p>
+          <SectionHead
+            id="dns-providers"
+            title="DNS providers"
+            meta={plural(data.dns.length, 'provider')}
+          />
           <Tabs queryString="dns-provider">
             {data.dns.map(({ name, schema }) => (
               <TabItem key={name} value={name} label={name}>
