@@ -1,0 +1,121 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.toolbar select {
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--ifm-global-radius);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+}
+
+.previewBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.1rem 0.45rem;
+  border-radius: 1rem;
+  background: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-contrast-foreground);
+  border: 1px solid var(--ifm-color-warning-dark);
+}
+
+/* One field entry. A colored left border makes required fields scannable while
+   scrolling past collapsed content (Infima variable => dark-mode aware). */
+.field {
+  padding: 0.1rem 0 0.1rem 0.75rem;
+  margin: 0.75rem 0;
+  border-left: 3px solid transparent;
+}
+
+.fieldRequired {
+  border-left-color: var(--ifm-color-primary);
+}
+
+.breadcrumb {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  font-family: var(--ifm-font-family-monospace);
+  margin-bottom: 0.15rem;
+}
+
+.name {
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Single-line facts row that replaces the old per-field table. */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.25rem 0 0.4rem;
+  font-size: 0.85rem;
+}
+
+.chip {
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.chipRequired {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-contrast-foreground, #fff);
+}
+
+.chipOptional {
+  background: transparent;
+  color: var(--ifm-color-emphasis-600);
+  border: 1px dashed var(--ifm-color-emphasis-300);
+}
+
+.enumList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+/* Divider that separates required fields from optional ones. */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ifm-color-emphasis-300);
+}
+
+/* Vertical guide so nesting depth is visible while scrolling. */
+.nested {
+  border-left: 2px solid var(--ifm-color-emphasis-200);
+  padding-left: 0.75rem;
+  margin-left: 0.1rem;
+}
+
+.description :global(p:last-child) {
+  margin-bottom: 0.3rem;
+}
+
+/* Long, unbreakable values (URLs in descriptions, regex patterns). */
+.field :global(code) {
+  overflow-wrap: anywhere;
+}
