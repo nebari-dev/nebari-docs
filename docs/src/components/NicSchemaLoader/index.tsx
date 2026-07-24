@@ -299,7 +299,15 @@ function Field({
 function FieldList({ schema, level }: { schema: JSONSchema; level: number }) {
   const properties = schema.properties ?? {};
   const required = new Set(schema.required ?? []);
-  const entries = Object.entries(properties).sort(([a], [b]) => a.localeCompare(b));
+  // Required fields first, then optional; alphabetical within each group.
+  const entries = Object.entries(properties).sort(([a], [b]) => {
+    const ra = required.has(a);
+    const rb = required.has(b);
+    if (ra !== rb) {
+      return ra ? -1 : 1;
+    }
+    return a.localeCompare(b);
+  });
 
   if (entries.length === 0) {
     return (
@@ -325,6 +333,52 @@ function FieldList({ schema, level }: { schema: JSONSchema; level: number }) {
   );
 }
 
+type VersionOption = { value: string; label: string };
+
+// The branch that carries schemas/ today. Kept as an explicit, default option
+// so the reference renders before any tagged release ships the schemas (no
+// release tag has schemas/ until nebari-infrastructure-core#362 lands). Once it
+// does, the release tags fetched below become selectable and this preview entry
+// can be dropped.
+const PREVIEW_OPTION: VersionOption = {
+  value: DEFAULT_REF,
+  label: `${DEFAULT_REF} (preview)`,
+};
+
+// Fetch the upstream release tags so the reader can view the schema for a
+// specific NIC version. Non-fatal on failure - the preview option alone renders
+// the page.
+function useVersions(repo: string): VersionOption[] {
+  const [tags, setTags] = useState<VersionOption[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch(
+          `https://api.github.com/repos/${repo}/tags?per_page=100`,
+          { headers: { Accept: 'application/vnd.github+json' } },
+        );
+        if (!res.ok) {
+          return;
+        }
+        const json: { name: string }[] = await res.json();
+        if (!cancelled) {
+          setTags(json.map((t) => ({ value: t.name, label: t.name })));
+        }
+      } catch {
+        /* leave tags empty; the preview option is enough */
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [repo]);
+
+  return [PREVIEW_OPTION, ...tags];
+}
+
 export default function NicSchemaLoader({
   repo = DEFAULT_REPO,
   ref = DEFAULT_REF,
@@ -332,48 +386,90 @@ export default function NicSchemaLoader({
   repo?: string;
   ref?: string;
 }): JSX.Element {
-  const { data, loading, error } = useNicSchemas(repo, ref);
+  const [selectedRef, setSelectedRef] = useState(ref);
+  const versions = useVersions(repo);
+  const { data, loading, error } = useNicSchemas(repo, selectedRef);
 
+  const selector = (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        marginBottom: '1rem',
+      }}
+    >
+      <label htmlFor="nic-schema-version">
+        <strong>NIC version</strong>
+      </label>
+      <select
+        id="nic-schema-version"
+        value={selectedRef}
+        onChange={(e) => setSelectedRef(e.target.value)}
+      >
+        {versions.map((v) => (
+          <option key={v.value} value={v.value}>
+            {v.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+
+  let body: React.ReactNode;
   if (loading) {
-    return <p>Loading configuration schema…</p>;
-  }
-  if (error) {
-    return (
+    body = <p>Loading configuration schema…</p>;
+  } else if (error) {
+    body = (
       <Admonition type="danger" title="Could not load the configuration schema">
         <p>{error}</p>
         <p>
-          The reference is generated from{' '}
+          No generated schema was found for <code>{selectedRef}</code>. Release
+          tags only carry a schema once{' '}
           <a
-            href={`https://github.com/${repo}/tree/${ref}/schemas`}
+            href={`https://github.com/${repo}/tree/${selectedRef}/schemas`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <code>{repo}</code> <code>schemas/</code>
-          </a>
-          .
+            <code>schemas/</code>
+          </a>{' '}
+          ships in that version; pick the preview entry to view the latest.
         </p>
       </Admonition>
     );
-  }
-  if (!data) {
-    return null;
+  } else if (!data) {
+    body = null;
+  } else {
+    body = (
+      <>
+        <Admonition type="info">
+          This reference is generated automatically from the{' '}
+          <a
+            href={`https://github.com/${repo}/tree/${selectedRef}/schemas`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            NIC configuration JSON Schema
+          </a>{' '}
+          (<code>{selectedRef}</code>). It cannot drift from the config the code
+          actually accepts.
+        </Admonition>
+        {renderSections(data)}
+      </>
+    );
   }
 
   return (
     <>
-      <Admonition type="info">
-        This reference is generated automatically from the{' '}
-        <a
-          href={`https://github.com/${repo}/tree/${ref}/schemas`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          NIC configuration JSON Schema
-        </a>{' '}
-        (currently tracking <code>{ref}</code>). It cannot drift from the config
-        the code actually accepts.
-      </Admonition>
+      {selector}
+      {body}
+    </>
+  );
+}
 
+function renderSections(data: LoadedSchemas): JSX.Element {
+  return (
+    <>
       <Heading as="h2" id="top-level">
         Top-level configuration
       </Heading>
