@@ -1,0 +1,35 @@
+---
+title: 'Config builder'
+id: config-builder
+description: 'Generate a starter nebari-config.yaml: pick a cloud and DNS provider, set the required fields, and copy the result.'
+hide_table_of_contents: true
+---
+
+import NicConfigBuilder from '@site/src/components/NicConfigBuilder';
+
+# Config builder
+
+Pick a cloud provider, set the always-required fields, and copy a starter
+`nebari-config.yaml` to begin from. This covers the minimum a deployment needs;
+the full set of options lives in the
+[Configuration schema](/docs/references/config-schema) reference.
+
+<NicConfigBuilder />
+
+## Next steps
+
+The generated file is a **starting point**, not a finished config. Before you
+deploy:
+
+- Validate it with `nic validate -f nebari-config.yaml`, which checks it against
+  the schema the CLI actually accepts.
+- Fill in any provider-specific and optional fields (networking, storage,
+  authentication, backups) from the [Configuration schema](/docs/references/config-schema).
+- Follow [Prepare to deploy](/docs/how-tos/prepare-to-deploy) and
+  [Deploy](/docs/how-tos/deploy) to bring the cluster up.
+
+:::note
+DNS credentials (for example a Cloudflare API token) are read from environment
+variables at deploy time, not stored in this file. The builder only sets the
+`zone_id` that selects which zone to manage.
+:::
