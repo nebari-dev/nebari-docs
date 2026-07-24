@@ -495,6 +495,106 @@ function FieldList({
   );
 }
 
+type TocSection = {
+  id: string;
+  label: string;
+  children: { id: string; label: string }[];
+};
+
+// Build the right-side TOC from the loaded schema. The page hides Docusaurus's
+// native TOC (every field heading is rendered at runtime, so the static TOC is
+// empty); this mirrors the section headings plus the always-visible top-level
+// fields, in the same required-then-optional order FieldList renders them.
+// Provider fields live in mutually-exclusive tabs and collapsed Details, so the
+// TOC stops at the section heading for those rather than listing hidden anchors.
+function buildToc(data: LoadedSchemas): TocSection[] {
+  const props = data.topLevel.properties ?? {};
+  const required = new Set(data.topLevel.required ?? []);
+  const names = Object.keys(props);
+  const ordered = [
+    ...names.filter((n) => required.has(n)).sort(),
+    ...names.filter((n) => !required.has(n)).sort(),
+  ];
+
+  const sections: TocSection[] = [
+    {
+      id: 'top-level',
+      label: 'Top-level configuration',
+      children: ordered.map((n) => ({ id: pathId([n]), label: n })),
+    },
+  ];
+  if (data.cluster.length > 0) {
+    sections.push({ id: 'cluster-providers', label: 'Cluster providers', children: [] });
+  }
+  if (data.dns.length > 0) {
+    sections.push({ id: 'dns-providers', label: 'DNS providers', children: [] });
+  }
+  return sections;
+}
+
+// Highlight the entry nearest the top of the viewport as the reader scrolls.
+function useActiveId(ids: string[]): string | null {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (els.length === 0) {
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id);
+        }
+      },
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ids.join('|')]);
+
+  return activeId;
+}
+
+function SchemaToc({ sections }: { sections: TocSection[] }): JSX.Element {
+  const ids = sections.flatMap((s) => [s.id, ...s.children.map((c) => c.id)]);
+  const activeId = useActiveId(ids);
+
+  const link = (id: string, label: string, extra: string) => (
+    <a
+      href={`#${id}`}
+      className={`${styles.tocLink} ${extra} ${activeId === id ? styles.tocLinkActive : ''}`}
+    >
+      {label}
+    </a>
+  );
+
+  return (
+    <nav className={styles.toc} aria-label="Configuration schema contents">
+      <div className={styles.tocTitle}>On this page</div>
+      <ul className={styles.tocList}>
+        {sections.map((s) => (
+          <li key={s.id}>
+            {link(s.id, s.label, styles.tocSection)}
+            {s.children.length > 0 && (
+              <ul className={styles.tocChildList}>
+                {s.children.map((c) => (
+                  <li key={c.id}>{link(c.id, c.label, styles.tocChild)}</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 export default function NicSchemaLoader({
   repo = DEFAULT_REPO,
   ref = DEFAULT_REF,
@@ -554,11 +654,16 @@ export default function NicSchemaLoader({
     body = renderSections(data);
   }
 
+  const sections = data && !loading && !error ? buildToc(data) : [];
+
   return (
-    <>
-      {toolbar}
-      {body}
-    </>
+    <div className={styles.layout}>
+      <div className={styles.content}>
+        {toolbar}
+        {body}
+      </div>
+      {sections.length > 0 && <SchemaToc sections={sections} />}
+    </div>
   );
 }
 

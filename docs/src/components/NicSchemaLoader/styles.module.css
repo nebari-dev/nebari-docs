@@ -1,3 +1,86 @@
+/* Two-column layout: schema body + a sticky, schema-derived TOC. The page sets
+   hide_table_of_contents because the native TOC is empty here (every field
+   heading is rendered at runtime), so this component supplies its own rail. */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 14rem;
+  gap: 2rem;
+  align-items: start;
+}
+
+.content {
+  min-width: 0;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+  max-height: calc(100vh - var(--ifm-navbar-height) - 2rem);
+  overflow-y: auto;
+  font-size: 0.85rem;
+  border-left: 1px solid var(--ifm-color-emphasis-300);
+  padding-left: 1rem;
+}
+
+.tocTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.5rem;
+}
+
+.tocList,
+.tocChildList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tocChildList {
+  padding-left: 0.75rem;
+}
+
+.tocLink {
+  display: block;
+  padding: 0.15rem 0 0.15rem 0.5rem;
+  margin-left: -0.5rem;
+  border-left: 2px solid transparent;
+  color: var(--ifm-color-emphasis-700);
+  text-decoration: none;
+}
+
+.tocLink:hover {
+  color: var(--ifm-color-primary);
+}
+
+.tocSection {
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
+.tocChild {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+}
+
+.tocLinkActive {
+  color: var(--ifm-color-primary);
+  border-left-color: var(--ifm-color-primary);
+}
+
+/* Below the Docusaurus content breakpoint, collapse to a single column and drop
+   the rail (the same point at which the native right TOC would hide). */
+@media (max-width: 996px) {
+  .layout {
+    display: block;
+  }
+  .toc {
+    display: none;
+  }
+}
+
 .toolbar {
   display: flex;
   align-items: center;
