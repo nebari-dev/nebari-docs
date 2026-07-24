@@ -1,6 +1,5 @@
 import Admonition from '@theme/Admonition';
 import CodeBlock from '@theme/CodeBlock';
-import Details from '@theme/Details';
 import Heading from '@theme/Heading';
 import TabItem from '@theme/TabItem';
 import Tabs from '@theme/Tabs';
@@ -249,7 +248,7 @@ function typeLabel(schema: JSONSchema): string {
   }
   const mapValue = mapValueSchema(schema);
   if (mapValue) {
-    return `map<${typeLabel(mapValue)}>`;
+    return `map<string, ${typeLabel(mapValue)}>`;
   }
   if (Array.isArray(schema.type)) {
     return schema.type.join(' | ');
@@ -350,100 +349,166 @@ function requiredHint(valueSchema: JSONSchema): string {
   return req.length ? ` — requires ${req.join(', ')}` : '';
 }
 
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+// A compact collapsible for object/array/map field bodies. Native <details> so
+// the caret and dashed toggle match the field-grid system (@theme/Details
+// renders a heavier admonition-style box).
+function NestedFields({
+  label,
+  schema,
+  path,
+  level,
+}: {
+  label: string;
+  schema: JSONSchema;
+  path: string[];
+  level: number;
+}) {
+  return (
+    <details className={styles.nestedDetails}>
+      <summary className={styles.nestedToggle}>
+        <span className={styles.caret}>▸</span>
+        <span>{label}</span>
+      </summary>
+      <div className={styles.nested}>
+        <FieldList schema={schema} path={path} level={level} nested />
+      </div>
+    </details>
+  );
+}
+
+// One field, rendered as a two-column grid row: the name on the left, its type,
+// modifiers, description and nested body on the right. `nested` is true only for
+// rows inside a <details> (deeper than a section's direct fields); it turns on
+// the dotted-path breadcrumb and suppresses the required/optional group labels.
 function Field({
   name,
   schema,
   required,
   path,
   level,
+  nested,
 }: {
   name: string;
   schema: JSONSchema;
   required: boolean;
   path: string[];
   level: number;
+  nested: boolean;
 }) {
   const fieldPath = [...path, name];
   const id = pathId(fieldPath);
-  const nestedObject = schema.type === 'object' && schema.properties;
-  const arrayItems = schema.type === 'array' && schema.items?.properties ? schema.items : null;
-  const mapValue = mapValueSchema(schema);
-  const mapOfObjects = mapValue && mapValue.properties ? mapValue : null;
   const headingLevel = Math.min(level, 6) as 2 | 3 | 4 | 5 | 6;
 
-  return (
-    <div className={`${styles.field} ${required ? styles.fieldRequired : ''}`}>
-      {fieldPath.length > 1 && (
-        <div className={styles.breadcrumb}>{fieldPath.join('.')}</div>
-      )}
-      <Heading as={`h${headingLevel}`} id={id}>
-        <span className={styles.name}>{name}</span>
-      </Heading>
+  const objProps = schema.properties ? Object.keys(schema.properties).length : 0;
+  const mapValue = mapValueSchema(schema);
+  const nestedObject = schema.type === 'object' && objProps > 0 ? schema : null;
+  const emptyObject = schema.type === 'object' && objProps === 0 && !mapValue;
+  const arrayItems = schema.type === 'array' && schema.items?.properties ? schema.items : null;
+  const mapOfObjects = mapValue && mapValue.properties ? mapValue : null;
 
-      <div className={styles.meta}>
-        <span className={styles.chip}>{typeLabel(schema)}</span>
-        <span className={`${styles.chip} ${required ? styles.chipRequired : styles.chipOptional}`}>
-          {required ? 'required' : 'optional'}
-        </span>
-        {schema.default !== undefined && (
-          <span className={styles.chip}>default: {JSON.stringify(schema.default)}</span>
+  // Top-level `cluster`/`dns` are opaque here (keyed by provider); point at the
+  // provider sections that render their fields rather than an empty toggle.
+  const providerRef =
+    path.length === 0 && name === 'cluster'
+      ? 'cluster-providers'
+      : path.length === 0 && name === 'dns'
+        ? 'dns-providers'
+        : null;
+
+  return (
+    <div className={`${styles.fieldRow} ${required ? styles.fieldRowRequired : ''}`}>
+      <div className={styles.nameCol}>
+        {nested && fieldPath.length > 1 && (
+          <div className={styles.breadcrumb}>{fieldPath.slice(0, -1).join('.')}.</div>
         )}
-        {schema.pattern && (
-          <span className={styles.chip} title="Value must match this regular expression">
-            pattern: {schema.pattern}
-          </span>
-        )}
+        <Heading as={`h${headingLevel}`} id={id} className={styles.fieldName}>
+          <code>{name}</code>
+        </Heading>
       </div>
 
-      {schema.enum && (
-        <div className={styles.enumList}>
-          {schema.enum.map((v) => (
-            <code key={String(v)}>{String(v)}</code>
-          ))}
+      <div className={styles.detailCol}>
+        <div className={styles.meta}>
+          <span className={styles.chip}>
+            {mapValue ? (
+              <>
+                map&lt;string, <span className={styles.accent}>{typeLabel(mapValue)}</span>&gt;
+              </>
+            ) : (
+              typeLabel(schema)
+            )}
+          </span>
+          {required && <span className={`${styles.chip} ${styles.chipRequired}`}>required</span>}
+          {emptyObject && <span className={`${styles.chip} ${styles.chipKeyed}`}>keyed by provider</span>}
+          {schema.default !== undefined && (
+            <span className={styles.metaTag}>
+              <span className={styles.k}>default</span>
+              <span className={styles.v}>{JSON.stringify(schema.default)}</span>
+            </span>
+          )}
+          {schema.pattern && (
+            <span className={styles.metaTag} title="Value must match this regular expression">
+              <span className={styles.k}>pattern</span>
+              <span className={styles.v}>{schema.pattern}</span>
+            </span>
+          )}
         </div>
-      )}
 
-      {schema.description && <FieldDescription description={schema.description} />}
-
-      {schema.examples && schema.examples.length > 0 && (
-        <CodeBlock language="yaml">
-          {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
-        </CodeBlock>
-      )}
-
-      {mapOfObjects && (
-        <CodeBlock language="yaml">{yamlSkeleton(name, mapOfObjects, true)}</CodeBlock>
-      )}
-
-      {nestedObject && (
-        <Details summary={<summary>{`${name} fields (${Object.keys(schema.properties ?? {}).length})`}</summary>}>
-          <div className={styles.nested}>
-            <FieldList schema={schema} path={fieldPath} level={level + 1} />
+        {schema.enum && (
+          <div className={`${styles.meta} ${styles.metaEnum}`}>
+            <span className={styles.enumLabel}>one of</span>
+            {schema.enum.map((v) => (
+              <span key={String(v)} className={`${styles.chip} ${styles.chipEnum}`}>
+                {String(v)}
+              </span>
+            ))}
           </div>
-        </Details>
-      )}
-      {arrayItems && (
-        <Details
-          summary={
-            <summary>{`${name} item fields (${Object.keys(arrayItems.properties ?? {}).length})${requiredHint(arrayItems)}`}</summary>
-          }
-        >
-          <div className={styles.nested}>
-            <FieldList schema={arrayItems} path={fieldPath} level={level + 1} />
-          </div>
-        </Details>
-      )}
-      {mapOfObjects && (
-        <Details
-          summary={
-            <summary>{`${name} entry fields (${Object.keys(mapOfObjects.properties ?? {}).length})${requiredHint(mapOfObjects)}`}</summary>
-          }
-        >
-          <div className={styles.nested}>
-            <FieldList schema={mapOfObjects} path={fieldPath} level={level + 1} />
-          </div>
-        </Details>
-      )}
+        )}
+
+        {schema.description && <FieldDescription description={schema.description} />}
+
+        {emptyObject && providerRef && (
+          <p className={styles.description}>
+            Configured per provider. See <a href={`#${providerRef}`}>the provider section below</a>.
+          </p>
+        )}
+
+        {schema.examples && schema.examples.length > 0 && (
+          <CodeBlock language="yaml">
+            {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
+          </CodeBlock>
+        )}
+
+        {mapOfObjects && (
+          <CodeBlock language="yaml">{yamlSkeleton(name, mapOfObjects, true)}</CodeBlock>
+        )}
+
+        {nestedObject && (
+          <NestedFields
+            label={plural(objProps, 'nested field')}
+            schema={nestedObject}
+            path={fieldPath}
+            level={level + 1}
+          />
+        )}
+        {arrayItems && (
+          <NestedFields
+            label={`${plural(Object.keys(arrayItems.properties ?? {}).length, 'item field')}${requiredHint(arrayItems)}`}
+            schema={arrayItems}
+            path={fieldPath}
+            level={level + 1}
+          />
+        )}
+        {mapOfObjects && (
+          <NestedFields
+            label={`${plural(Object.keys(mapOfObjects.properties ?? {}).length, 'entry field')}${requiredHint(mapOfObjects)}`}
+            schema={mapOfObjects}
+            path={fieldPath}
+            level={level + 1}
+          />
+        )}
+      </div>
     </div>
   );
 }
@@ -452,10 +517,12 @@ function FieldList({
   schema,
   path,
   level,
+  nested = false,
 }: {
   schema: JSONSchema;
   path: string[];
   level: number;
+  nested?: boolean;
 }) {
   const properties = schema.properties ?? {};
   const required = new Set(schema.required ?? []);
@@ -481,14 +548,26 @@ function FieldList({
       required={required.has(name)}
       path={path}
       level={level}
+      nested={nested}
     />
   );
 
+  // Group labels only mark a section's direct fields; nested rows are already
+  // scoped by their <details> toggle and left-border, so labelling them adds noise.
   return (
     <>
+      {!nested && requiredNames.length > 0 && (
+        <div className={`${styles.groupLabel} ${styles.groupLabelRequired}`}>
+          <span className={styles.tag}>Required</span>
+          <span className={styles.rule} />
+        </div>
+      )}
       {requiredNames.map(renderField)}
-      {requiredNames.length > 0 && optionalNames.length > 0 && (
-        <div className={styles.divider}>Optional fields</div>
+      {!nested && optionalNames.length > 0 && (
+        <div className={styles.groupLabel}>
+          <span className={styles.tag}>Optional</span>
+          <span className={styles.rule} />
+        </div>
       )}
       {optionalNames.map(renderField)}
     </>
@@ -609,8 +688,8 @@ export default function NicSchemaLoader({
 
   const toolbar = (
     <div className={styles.toolbar}>
-      <label htmlFor="nic-schema-version">
-        <strong>NIC version</strong>
+      <label className={styles.toolbarLabel} htmlFor="nic-schema-version">
+        NIC version
       </label>
       <select
         id="nic-schema-version"
@@ -624,12 +703,13 @@ export default function NicSchemaLoader({
         ))}
       </select>
       {isPreview && <span className={styles.previewBadge}>unreleased</span>}
+      <span className={styles.toolbarSpacer} />
       <a
         href={`https://github.com/${repo}/tree/${selectedRef}/schemas`}
         target="_blank"
         rel="noopener noreferrer"
       >
-        source
+        source ↗
       </a>
     </div>
   );
@@ -667,20 +747,44 @@ export default function NicSchemaLoader({
   );
 }
 
+function SectionHead({
+  id,
+  title,
+  meta,
+}: {
+  id: string;
+  title: string;
+  meta: string;
+}) {
+  return (
+    <div className={styles.sectionHead}>
+      <Heading as="h2" id={id}>
+        {title}
+      </Heading>
+      <span className={styles.sectionMeta}>{meta}</span>
+    </div>
+  );
+}
+
 function renderSections(data: LoadedSchemas): JSX.Element {
+  const tlNames = Object.keys(data.topLevel.properties ?? {});
+  const tlRequired = (data.topLevel.required ?? []).length;
+
   return (
     <>
-      <Heading as="h2" id="top-level">
-        Top-level configuration
-      </Heading>
-      <FieldList schema={data.topLevel} path={[]} level={3} />
+      <section className={styles.section}>
+        <SectionHead
+          id="top-level"
+          title="Top-level configuration"
+          meta={`${plural(tlNames.length, 'field')} · ${tlRequired} required`}
+        />
+        <FieldList schema={data.topLevel} path={[]} level={3} />
+      </section>
 
       {data.cluster.length > 0 && (
-        <>
-          <Heading as="h2" id="cluster-providers">
-            Cluster providers
-          </Heading>
-          <p>
+        <section className={styles.section}>
+          <SectionHead id="cluster-providers" title="Cluster providers" meta="exactly one applies" />
+          <p className={styles.sectionIntro}>
             Configured under <code>cluster.&lt;provider&gt;</code>. Exactly one
             provider is set per deployment.
           </p>
@@ -691,15 +795,13 @@ function renderSections(data: LoadedSchemas): JSX.Element {
               </TabItem>
             ))}
           </Tabs>
-        </>
+        </section>
       )}
 
       {data.dns.length > 0 && (
-        <>
-          <Heading as="h2" id="dns-providers">
-            DNS providers
-          </Heading>
-          <p>
+        <section className={styles.section}>
+          <SectionHead id="dns-providers" title="DNS providers" meta="exactly one applies" />
+          <p className={styles.sectionIntro}>
             Configured under <code>dns.&lt;provider&gt;</code>. Credentials (API
             tokens) are read from environment variables, not from config.
           </p>
@@ -710,7 +812,7 @@ function renderSections(data: LoadedSchemas): JSX.Element {
               </TabItem>
             ))}
           </Tabs>
-        </>
+        </section>
       )}
     </>
   );
