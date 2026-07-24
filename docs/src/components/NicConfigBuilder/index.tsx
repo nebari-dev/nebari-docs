@@ -1,3 +1,4 @@
+import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import React, { useMemo, useState } from 'react';
 
@@ -16,9 +17,14 @@ type ProviderKey = 'aws' | 'gcp' | 'azure' | 'hetzner';
 
 type ProviderMeta = {
   label: string;
-  regionLabel: string;
-  regions: string[];
-  instances: string[];
+  // `stub: true` means the cloud is supported by NIC but not yet wired into this
+  // builder; its tab shows a hand-off notice instead of a form. To enable a
+  // provider, drop `stub` and fill regionLabel/regions/instances with values
+  // confirmed against the schema (do not guess).
+  stub?: boolean;
+  regionLabel?: string;
+  regions?: string[];
+  instances?: string[];
 };
 
 const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
@@ -28,24 +34,9 @@ const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
     regions: ['us-west-2', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
     instances: ['m5.large', 'm5.xlarge', 'm5.2xlarge'],
   },
-  gcp: {
-    label: 'GCP',
-    regionLabel: 'region',
-    regions: ['us-central1', 'us-east1', 'europe-west1'],
-    instances: ['e2-standard-4', 'n2-standard-4', 'n2-standard-8'],
-  },
-  azure: {
-    label: 'Azure',
-    regionLabel: 'region',
-    regions: ['eastus', 'westeurope', 'australiaeast'],
-    instances: ['Standard_D4s_v5', 'Standard_D8s_v5'],
-  },
-  hetzner: {
-    label: 'Hetzner',
-    regionLabel: 'location',
-    regions: ['nbg1', 'fsn1', 'hel1'],
-    instances: ['cpx31', 'cpx41', 'cpx51'],
-  },
+  gcp: { label: 'GCP', stub: true },
+  azure: { label: 'Azure', stub: true },
+  hetzner: { label: 'Hetzner', stub: true },
 };
 
 type BuilderState = {
@@ -67,11 +58,11 @@ const initialFor = (provider: ProviderKey): BuilderState => ({
   provider,
   projectName: 'my-nebari',
   domain: 'nebari.example.com',
-  region: PROVIDERS[provider].regions[0],
+  region: PROVIDERS[provider].regions?.[0] ?? '',
   certType: 'lets-encrypt',
   acmeEmail: 'admin@example.com',
   nodeGroupName: 'general',
-  instance: PROVIDERS[provider].instances[0],
+  instance: PROVIDERS[provider].instances?.[0] ?? '',
   minNodes: 1,
   maxNodes: 5,
   useCloudflare: true,
@@ -125,29 +116,51 @@ export default function NicConfigBuilder(): JSX.Element {
     setState((prev) => ({
       ...prev,
       provider,
-      region: PROVIDERS[provider].regions[0],
-      instance: PROVIDERS[provider].instances[0],
+      region: PROVIDERS[provider].regions?.[0] ?? '',
+      instance: PROVIDERS[provider].instances?.[0] ?? '',
     }));
 
-  return (
-    <div className={styles.builder}>
-      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-        <fieldset className={styles.group}>
-          <legend className={styles.legend}>Cloud provider</legend>
-          <div className={styles.pills}>
-            {(Object.keys(PROVIDERS) as ProviderKey[]).map((key) => (
-              <button
-                key={key}
-                type="button"
-                className={`${styles.pill} ${state.provider === key ? styles.pillActive : ''}`}
-                onClick={() => changeProvider(key)}
-              >
-                {PROVIDERS[key].label}
-              </button>
-            ))}
-          </div>
-        </fieldset>
+  const providerSelector = (
+    <fieldset className={styles.group}>
+      <legend className={styles.legend}>Cloud provider</legend>
+      <div className={styles.pills}>
+        {(Object.keys(PROVIDERS) as ProviderKey[]).map((key) => (
+          <button
+            key={key}
+            type="button"
+            className={`${styles.pill} ${state.provider === key ? styles.pillActive : ''}`}
+            onClick={() => changeProvider(key)}
+          >
+            {PROVIDERS[key].label}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
 
+  // A supported cloud that this builder does not yet cover: hand the reader off
+  // to the schema reference rather than emitting a half-guessed config.
+  if (meta.stub) {
+    return (
+      <div className={styles.wrapper}>
+        {providerSelector}
+        <div className={styles.stub}>
+          <p>
+            Nebari supports {meta.label}, but it is not yet wired into this UI. Write the
+            YAML by hand using the{' '}
+            <Link to="/docs/references/config-schema">configuration schema</Link> for the
+            full set of fields.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      {providerSelector}
+      <div className={styles.builder}>
+      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div className={styles.row}>
           <label className={styles.field}>
             <span className={styles.label}>project_name</span>
@@ -170,14 +183,14 @@ export default function NicConfigBuilder(): JSX.Element {
         <div className={styles.row}>
           <label className={styles.field}>
             <span className={styles.label}>
-              cluster.{state.provider}.{meta.regionLabel}
+              cluster.{state.provider}.{meta.regionLabel ?? 'region'}
             </span>
             <select
               className={styles.input}
               value={state.region}
               onChange={(e) => set('region', e.target.value)}
             >
-              {meta.regions.map((r) => (
+              {(meta.regions ?? []).map((r) => (
                 <option key={r} value={r}>
                   {r}
                 </option>
@@ -226,7 +239,7 @@ export default function NicConfigBuilder(): JSX.Element {
                 value={state.instance}
                 onChange={(e) => set('instance', e.target.value)}
               >
-                {meta.instances.map((i) => (
+                {(meta.instances ?? []).map((i) => (
                   <option key={i} value={i}>
                     {i}
                   </option>
@@ -290,6 +303,7 @@ export default function NicConfigBuilder(): JSX.Element {
         <CodeBlock language="yaml" title="nebari-config.yaml">
           {yaml}
         </CodeBlock>
+      </div>
       </div>
     </div>
   );
