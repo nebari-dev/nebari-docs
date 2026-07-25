@@ -9,8 +9,8 @@ import styles from './styles.module.css';
  * cloud provider, a DNS provider, and a handful of always-required fields, then
  * emits a minimal but valid-shaped config to copy. It is intentionally curated
  * rather than schema-driven: the full field set lives in the
- * [Configuration schema](/references/config-schema) reference, and the emitted
- * file is a starting point to refine and check with `nic validate`.
+ * [Configuration schema](/docs/references/config-schema) reference, and the
+ * emitted file is a starting point to refine and check with `nic validate`.
  */
 
 type ProviderKey = 'aws' | 'gcp' | 'azure' | 'hetzner';
@@ -19,14 +19,19 @@ type ProviderMeta = {
   label: string;
   // `stub: true` means the cloud is supported by NIC but not yet wired into this
   // builder; its tab shows a hand-off notice instead of a form. To enable a
-  // provider, drop `stub` and fill regionLabel/regions/instances with values
-  // confirmed against the schema (do not guess).
+  // provider, drop `stub` and fill the fields below with values confirmed
+  // against the schema (do not guess).
   stub?: boolean;
   regionLabel?: string;
   regions?: string[];
   instances?: string[];
-  // Whether the provider's schema carries `longhorn.dedicated_nodes` (Longhorn on
-  // a dedicated storage node group). Set only for providers where that is true.
+  // Node-group shape the provider's schema expects: 'aws' uses
+  // instance/min_nodes/max_nodes; 'hetzner' uses instance_type/count and needs a
+  // master group. kubernetes_version is required by every provider's schema.
+  nodeShape?: 'aws' | 'hetzner';
+  kubernetesVersion?: string;
+  // Whether the provider can express a dedicated Longhorn storage node group.
+  // Requires per-node-group labels/taints, which the Hetzner schema lacks.
   dedicatedStorage?: boolean;
 };
 
@@ -36,11 +41,20 @@ const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
     regionLabel: 'region',
     regions: ['us-west-2', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
     instances: ['m5.large', 'm5.xlarge', 'm5.2xlarge'],
+    nodeShape: 'aws',
+    kubernetesVersion: '1.34',
     dedicatedStorage: true,
   },
   gcp: { label: 'GCP', stub: true },
   azure: { label: 'Azure', stub: true },
-  hetzner: { label: 'Hetzner', stub: true },
+  hetzner: {
+    label: 'Hetzner',
+    regionLabel: 'location',
+    regions: ['fsn1', 'nbg1', 'hel1', 'ash', 'hil', 'sin'],
+    instances: ['cpx21', 'cpx31', 'cpx41', 'cpx51'],
+    nodeShape: 'hetzner',
+    kubernetesVersion: '1.32',
+  },
 };
 
 type BuilderState = {
@@ -48,7 +62,8 @@ type BuilderState = {
   projectName: string;
   domain: string;
   region: string;
-  certType: 'lets-encrypt' | 'self-signed';
+  kubernetesVersion: string;
+  certType: 'letsencrypt' | 'selfsigned';
   acmeEmail: string;
   nodeGroupName: string;
   instance: string;
@@ -64,7 +79,8 @@ const initialFor = (provider: ProviderKey): BuilderState => ({
   projectName: 'my-nebari',
   domain: 'nebari.example.com',
   region: PROVIDERS[provider].regions?.[0] ?? '',
-  certType: 'lets-encrypt',
+  kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
+  certType: 'letsencrypt',
   acmeEmail: 'admin@example.com',
   nodeGroupName: 'general',
   instance: PROVIDERS[provider].instances?.[0] ?? '',
@@ -83,42 +99,60 @@ function buildYaml(s: BuilderState): string {
   lines.push(`domain: ${s.domain || 'nebari.example.com'}`);
 
   lines.push('certificate:');
-  if (s.certType === 'lets-encrypt') {
-    lines.push('  type: lets-encrypt');
+  if (s.certType === 'letsencrypt') {
+    lines.push('  type: letsencrypt');
     lines.push('  acme:');
     lines.push(`    email: ${s.acmeEmail || 'admin@example.com'}`);
   } else {
-    lines.push('  type: self-signed');
+    lines.push('  type: selfsigned');
   }
 
-  const dedicated = s.dedicatedStorage && meta.dedicatedStorage;
+  const k8s = s.kubernetesVersion || meta.kubernetesVersion || '';
+  const group = s.nodeGroupName || 'general';
 
   lines.push('cluster:');
   lines.push(`  ${s.provider}:`);
-  lines.push(`    ${meta.regionLabel ?? 'region'}: ${s.region}`);
-  lines.push('    node_groups:');
-  lines.push(`      ${s.nodeGroupName || 'general'}:`);
-  lines.push(`        instance: ${s.instance}`);
-  lines.push(`        min_nodes: ${s.minNodes}`);
-  lines.push(`        max_nodes: ${s.maxNodes}`);
-  if (dedicated) {
-    // A dedicated, tainted storage pool. The label is Longhorn's default
-    // node_selector; the taint keeps other workloads off. Longhorn confines
-    // replica disks to nodes carrying this label.
-    lines.push('      storage:');
+
+  if (meta.nodeShape === 'hetzner') {
+    // Hetzner (k3s) needs exactly one master node group; the builder adds it and
+    // treats the named group as workers. Node groups use instance_type/count.
+    const workers = group === 'master' ? 'workers' : group;
+    lines.push(`    location: ${s.region}`);
+    lines.push(`    kubernetes_version: "${k8s}"`);
+    lines.push('    node_groups:');
+    lines.push('      master:');
+    lines.push(`        instance_type: ${s.instance}`);
+    lines.push('        count: 1');
+    lines.push('        master: true');
+    lines.push(`      ${workers}:`);
+    lines.push(`        instance_type: ${s.instance}`);
+    lines.push(`        count: ${s.maxNodes}`);
+  } else {
+    const dedicated = s.dedicatedStorage && meta.dedicatedStorage;
+    lines.push(`    region: ${s.region}`);
+    lines.push(`    kubernetes_version: "${k8s}"`);
+    lines.push('    node_groups:');
+    lines.push(`      ${group}:`);
     lines.push(`        instance: ${s.instance}`);
-    lines.push('        min_nodes: 1');
-    lines.push('        max_nodes: 1');
-    lines.push('        labels:');
-    lines.push('          node.longhorn.io/storage: "true"');
-    lines.push('        taints:');
-    lines.push('          - key: node.longhorn.io/storage');
-    lines.push('            value: "true"');
-    lines.push('            effect: NO_SCHEDULE');
-  }
-  if (dedicated) {
-    lines.push('    longhorn:');
-    lines.push('      dedicated_nodes: true');
+    lines.push(`        min_nodes: ${s.minNodes}`);
+    lines.push(`        max_nodes: ${s.maxNodes}`);
+    if (dedicated) {
+      // A dedicated, tainted storage pool. The label is Longhorn's default
+      // node_selector; the taint keeps other workloads off. Longhorn confines
+      // replica disks to nodes carrying this label.
+      lines.push('      storage:');
+      lines.push(`        instance: ${s.instance}`);
+      lines.push('        min_nodes: 1');
+      lines.push('        max_nodes: 1');
+      lines.push('        labels:');
+      lines.push('          node.longhorn.io/storage: "true"');
+      lines.push('        taints:');
+      lines.push('          - key: node.longhorn.io/storage');
+      lines.push('            value: "true"');
+      lines.push('            effect: NO_SCHEDULE');
+      lines.push('    longhorn:');
+      lines.push('      dedicated_nodes: true');
+    }
   }
 
   if (s.useCloudflare) {
@@ -134,17 +168,20 @@ export default function NicConfigBuilder(): JSX.Element {
   const [state, setState] = useState<BuilderState>(() => initialFor('aws'));
   const meta = PROVIDERS[state.provider];
   const yaml = useMemo(() => buildYaml(state), [state]);
+  const isHetzner = meta.nodeShape === 'hetzner';
 
   const set = <K extends keyof BuilderState>(key: K, value: BuilderState[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
 
-  // Switching provider resets the region/instance to that provider's defaults.
+  // Switching provider resets the per-provider defaults (region, instance,
+  // kubernetes_version) to that provider's values.
   const changeProvider = (provider: ProviderKey) =>
     setState((prev) => ({
       ...prev,
       provider,
       region: PROVIDERS[provider].regions?.[0] ?? '',
       instance: PROVIDERS[provider].instances?.[0] ?? '',
+      kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
     }));
 
   const providerSelector = (
@@ -187,170 +224,201 @@ export default function NicConfigBuilder(): JSX.Element {
     <div className={styles.wrapper}>
       {providerSelector}
       <div className={styles.builder}>
-      <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-        <div className={styles.row}>
-          <label className={styles.field}>
-            <span className={styles.label}>project_name</span>
-            <input
-              className={styles.input}
-              value={state.projectName}
-              onChange={(e) => set('projectName', e.target.value)}
-            />
-          </label>
-          <label className={styles.field}>
-            <span className={styles.label}>domain</span>
-            <input
-              className={styles.input}
-              value={state.domain}
-              onChange={(e) => set('domain', e.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className={styles.row}>
-          <label className={styles.field}>
-            <span className={styles.label}>
-              cluster.{state.provider}.{meta.regionLabel ?? 'region'}
-            </span>
-            <select
-              className={styles.input}
-              value={state.region}
-              onChange={(e) => set('region', e.target.value)}
-            >
-              {(meta.regions ?? []).map((r) => (
-                <option key={r} value={r}>
-                  {r}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className={styles.field}>
-            <span className={styles.label}>certificate.type</span>
-            <select
-              className={styles.input}
-              value={state.certType}
-              onChange={(e) => set('certType', e.target.value as BuilderState['certType'])}
-            >
-              <option value="lets-encrypt">lets-encrypt</option>
-              <option value="self-signed">self-signed</option>
-            </select>
-          </label>
-        </div>
-
-        {state.certType === 'lets-encrypt' && (
-          <label className={styles.field}>
-            <span className={styles.label}>certificate.acme.email</span>
-            <input
-              className={styles.input}
-              value={state.acmeEmail}
-              onChange={(e) => set('acmeEmail', e.target.value)}
-            />
-          </label>
-        )}
-
-        <fieldset className={styles.group}>
-          <legend className={styles.legend}>Default node group</legend>
+        <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           <div className={styles.row}>
             <label className={styles.field}>
-              <span className={styles.label}>name</span>
+              <span className={styles.label}>project_name</span>
               <input
                 className={styles.input}
-                value={state.nodeGroupName}
-                onChange={(e) => set('nodeGroupName', e.target.value)}
+                value={state.projectName}
+                onChange={(e) => set('projectName', e.target.value)}
               />
             </label>
             <label className={styles.field}>
-              <span className={styles.label}>instance</span>
+              <span className={styles.label}>domain</span>
+              <input
+                className={styles.input}
+                value={state.domain}
+                onChange={(e) => set('domain', e.target.value)}
+              />
+            </label>
+          </div>
+
+          <div className={styles.row}>
+            <label className={styles.field}>
+              <span className={styles.label}>
+                cluster.{state.provider}.{meta.regionLabel ?? 'region'}
+              </span>
               <select
                 className={styles.input}
-                value={state.instance}
-                onChange={(e) => set('instance', e.target.value)}
+                value={state.region}
+                onChange={(e) => set('region', e.target.value)}
               >
-                {(meta.instances ?? []).map((i) => (
-                  <option key={i} value={i}>
-                    {i}
+                {(meta.regions ?? []).map((r) => (
+                  <option key={r} value={r}>
+                    {r}
                   </option>
                 ))}
               </select>
             </label>
+            <label className={styles.field}>
+              <span className={styles.label}>cluster.{state.provider}.kubernetes_version</span>
+              <input
+                className={styles.input}
+                value={state.kubernetesVersion}
+                onChange={(e) => set('kubernetesVersion', e.target.value)}
+              />
+            </label>
           </div>
+
           <div className={styles.row}>
             <label className={styles.field}>
-              <span className={styles.label}>min_nodes</span>
-              <input
+              <span className={styles.label}>certificate.type</span>
+              <select
                 className={styles.input}
-                type="number"
-                min={0}
-                value={state.minNodes}
-                onChange={(e) => set('minNodes', Number(e.target.value))}
-              />
+                value={state.certType}
+                onChange={(e) => set('certType', e.target.value as BuilderState['certType'])}
+              >
+                <option value="letsencrypt">letsencrypt</option>
+                <option value="selfsigned">selfsigned</option>
+              </select>
             </label>
-            <label className={styles.field}>
-              <span className={styles.label}>max_nodes</span>
-              <input
-                className={styles.input}
-                type="number"
-                min={1}
-                value={state.maxNodes}
-                onChange={(e) => set('maxNodes', Number(e.target.value))}
-              />
-            </label>
+            {state.certType === 'letsencrypt' && (
+              <label className={styles.field}>
+                <span className={styles.label}>certificate.acme.email</span>
+                <input
+                  className={styles.input}
+                  value={state.acmeEmail}
+                  onChange={(e) => set('acmeEmail', e.target.value)}
+                />
+              </label>
+            )}
           </div>
-        </fieldset>
 
-        {meta.dedicatedStorage && (
           <fieldset className={styles.group}>
-            <legend className={styles.legend}>Longhorn storage</legend>
+            <legend className={styles.legend}>Node group</legend>
+            <div className={styles.row}>
+              <label className={styles.field}>
+                <span className={styles.label}>name</span>
+                <input
+                  className={styles.input}
+                  value={state.nodeGroupName}
+                  onChange={(e) => set('nodeGroupName', e.target.value)}
+                />
+              </label>
+              <label className={styles.field}>
+                <span className={styles.label}>{isHetzner ? 'instance_type' : 'instance'}</span>
+                <select
+                  className={styles.input}
+                  value={state.instance}
+                  onChange={(e) => set('instance', e.target.value)}
+                >
+                  {(meta.instances ?? []).map((i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            {isHetzner ? (
+              <div className={styles.row}>
+                <label className={styles.field}>
+                  <span className={styles.label}>count</span>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    min={1}
+                    value={state.maxNodes}
+                    onChange={(e) => set('maxNodes', Number(e.target.value))}
+                  />
+                </label>
+              </div>
+            ) : (
+              <div className={styles.row}>
+                <label className={styles.field}>
+                  <span className={styles.label}>min_nodes</span>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    min={0}
+                    value={state.minNodes}
+                    onChange={(e) => set('minNodes', Number(e.target.value))}
+                  />
+                </label>
+                <label className={styles.field}>
+                  <span className={styles.label}>max_nodes</span>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    min={1}
+                    value={state.maxNodes}
+                    onChange={(e) => set('maxNodes', Number(e.target.value))}
+                  />
+                </label>
+              </div>
+            )}
+            {isHetzner && (
+              <p className={styles.hint}>
+                Hetzner (k3s) needs a master node group; the builder adds one automatically
+                alongside this worker group.
+              </p>
+            )}
+          </fieldset>
+
+          {meta.dedicatedStorage && (
+            <fieldset className={styles.group}>
+              <legend className={styles.legend}>Longhorn storage</legend>
+              <label className={styles.checkbox}>
+                <input
+                  type="checkbox"
+                  checked={state.dedicatedStorage}
+                  onChange={(e) => set('dedicatedStorage', e.target.checked)}
+                />
+                <span>Dedicated storage node group</span>
+              </label>
+              <p className={styles.hint}>
+                Adds a tainted <code>storage</code> node group and sets{' '}
+                <code>longhorn.dedicated_nodes</code>, confining Longhorn replicas to it. On
+                an existing cluster this is a manual migration; see the{' '}
+                <Link to="/docs/references/config-schema">configuration schema</Link>.
+              </p>
+            </fieldset>
+          )}
+
+          <fieldset className={styles.group}>
+            <legend className={styles.legend}>DNS</legend>
             <label className={styles.checkbox}>
               <input
                 type="checkbox"
-                checked={state.dedicatedStorage}
-                onChange={(e) => set('dedicatedStorage', e.target.checked)}
+                checked={state.useCloudflare}
+                onChange={(e) => set('useCloudflare', e.target.checked)}
               />
-              <span>Dedicated storage node group</span>
+              <span>Manage DNS with Cloudflare</span>
             </label>
-            <p className={styles.hint}>
-              Adds a tainted <code>storage</code> node group and sets{' '}
-              <code>longhorn.dedicated_nodes</code>, confining Longhorn replicas to it. On an
-              existing cluster this is a manual migration; see the{' '}
-              <Link to="/docs/references/config-schema">configuration schema</Link>.
-            </p>
+            {state.useCloudflare && (
+              <label className={styles.field}>
+                <span className={styles.label}>dns.cloudflare.zone_id</span>
+                <input
+                  className={styles.input}
+                  placeholder="<your-cloudflare-zone-id>"
+                  value={state.zoneId}
+                  onChange={(e) => set('zoneId', e.target.value)}
+                />
+              </label>
+            )}
           </fieldset>
-        )}
+        </form>
 
-        <fieldset className={styles.group}>
-          <legend className={styles.legend}>DNS</legend>
-          <label className={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={state.useCloudflare}
-              onChange={(e) => set('useCloudflare', e.target.checked)}
-            />
-            <span>Manage DNS with Cloudflare</span>
-          </label>
-          {state.useCloudflare && (
-            <label className={styles.field}>
-              <span className={styles.label}>dns.cloudflare.zone_id</span>
-              <input
-                className={styles.input}
-                placeholder="<your-cloudflare-zone-id>"
-                value={state.zoneId}
-                onChange={(e) => set('zoneId', e.target.value)}
-              />
-            </label>
-          )}
-        </fieldset>
-      </form>
-
-      <div className={styles.output}>
-        <div className={styles.outputHead}>
-          <span className={styles.outputTitle}>nebari-config.yaml</span>
-          <span className={styles.starterBadge}>starter</span>
+        <div className={styles.output}>
+          <div className={styles.outputHead}>
+            <span className={styles.outputTitle}>nebari-config.yaml</span>
+            <span className={styles.starterBadge}>starter</span>
+          </div>
+          <CodeBlock language="yaml" title="nebari-config.yaml">
+            {yaml}
+          </CodeBlock>
         </div>
-        <CodeBlock language="yaml" title="nebari-config.yaml">
-          {yaml}
-        </CodeBlock>
-      </div>
       </div>
     </div>
   );
