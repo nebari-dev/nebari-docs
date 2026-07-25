@@ -281,9 +281,9 @@ export default function NicConfigBuilder(): JSX.Element {
 
   return (
     <div className={styles.wrapper}>
-      {providerCards}
       <div className={styles.builder}>
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+          {providerCards}
           <Section label="Deployment">
             <div className={styles.grid2}>
               <LabeledField label="Project name" schemaKey="project_name" required>
