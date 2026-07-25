@@ -257,6 +257,8 @@
 
 /* ---- stub hand-off ---- */
 .stub {
+  max-width: 560px;
+  margin-top: 22px;
   padding: 22px 24px;
   border: 1px dashed var(--ifm-color-emphasis-300);
   border-radius: 9px;
