@@ -1,146 +1,221 @@
-/* Guided config builder: a form on the left, live YAML on the right. Colors ride
-   on Infima theme variables, so it follows light/dark automatically. */
+/* Guided config builder (single-form layout). Colors ride on Infima theme
+   variables, so the form follows light/dark automatically. */
 .wrapper {
   margin: 1.5rem 0;
 }
 
-/* Provider selector spans the full width above the two-column body. */
-.wrapper > .group {
-  margin-bottom: 18px;
+/* ---- provider cards ---- */
+.providerLabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 9px;
 }
 
+.providerCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.providerCard {
+  text-align: left;
+  cursor: pointer;
+  padding: 11px 13px;
+  border: 1.5px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.providerCard:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.providerCardActive {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-contrast-background);
+}
+
+.providerCardStub .providerName {
+  color: var(--ifm-color-emphasis-600);
+}
+
+.providerName {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.providerStatus {
+  display: block;
+  font-size: 10.5px;
+  margin-top: 3px;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.providerCardActive .providerStatus {
+  color: var(--ifm-color-primary-dark);
+}
+
+/* ---- two-column body: form + sticky output ---- */
 .builder {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 28px;
   align-items: start;
-}
-
-/* Hand-off notice shown for a supported cloud the builder does not cover yet. */
-.stub {
-  padding: 20px 22px;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: var(--ifm-global-radius);
-  background: var(--ifm-background-surface-color);
-}
-
-.stub p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--ifm-color-emphasis-700);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 24px;
   min-width: 0;
 }
 
-.group {
-  margin: 0;
-  padding: 14px 16px 16px;
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: var(--ifm-global-radius);
-  background: var(--ifm-background-surface-color);
+/* ---- section ---- */
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
 }
 
-.legend {
-  padding: 0 6px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+.sectionLabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--ifm-color-emphasis-700);
+  color: var(--ifm-color-emphasis-600);
 }
 
-.row {
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--ifm-color-emphasis-200);
+}
+
+.sectionNote {
+  margin: -8px 0 13px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* ---- field grids ---- */
+.grid2 {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
 }
 
-.row + .row {
-  margin-top: 14px;
+.gridNode {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr;
+  gap: 16px 14px;
+}
+
+.gridNodeHetzner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.7fr;
+  gap: 16px 14px;
 }
 
 .field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   min-width: 0;
 }
 
-.label {
+.fieldLabelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+.req {
+  color: var(--ifm-color-primary);
+  margin-left: 3px;
+}
+
+.fieldKey {
   font-family: var(--ifm-font-family-monospace);
-  font-size: 12px;
-  color: var(--ifm-color-emphasis-700);
+  font-size: 11px;
+  color: var(--ifm-color-emphasis-500);
   overflow-wrap: anywhere;
 }
 
 .input {
   width: 100%;
-  padding: 7px 9px;
-  font-size: 14px;
+  box-sizing: border-box;
   font-family: var(--ifm-font-family-monospace);
+  font-size: 13.5px;
   color: var(--ifm-font-color-base);
-  background: var(--ifm-background-color);
+  padding: 9px 11px;
   border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: var(--ifm-global-radius);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+  outline: none;
 }
 
 .input:focus {
-  outline: none;
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 0 0 2px var(--ifm-color-primary-contrast-background);
+  box-shadow: 0 0 0 3px var(--ifm-color-primary-contrast-background);
 }
 
-.pills {
+/* ---- options (checkboxes with descriptions) ---- */
+.options {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-direction: column;
+  gap: 11px;
 }
 
-.pill {
-  font-family: var(--ifm-font-family-monospace);
+.option {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.option input {
+  margin: 2px 0 0;
+  width: 15px;
+  height: 15px;
+  accent-color: var(--ifm-color-primary);
+  flex: none;
+}
+
+.optionTitle {
+  display: block;
   font-size: 13px;
-  padding: 6px 14px;
-  cursor: pointer;
-  color: var(--ifm-color-emphasis-700);
-  background: var(--ifm-background-color);
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: var(--ifm-global-radius);
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
 }
 
-.pill:hover {
-  border-color: var(--ifm-color-primary);
-}
-
-.pillActive {
-  font-weight: 650;
-  color: var(--ifm-color-primary-dark);
-  background: var(--ifm-color-primary-contrast-background);
-  border-color: var(--ifm-color-primary);
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--ifm-color-emphasis-800);
-  cursor: pointer;
-  margin-bottom: 12px;
-}
-
-.hint {
-  margin: 0;
-  font-size: 12.5px;
+.optionDesc {
+  display: block;
+  font-size: 12px;
   line-height: 1.5;
   color: var(--ifm-color-emphasis-600);
+  margin-top: 2px;
 }
 
+.zoneWrap {
+  margin-left: 26px;
+  max-width: 340px;
+}
+
+/* ---- sticky output ---- */
 .output {
   position: sticky;
   top: calc(var(--ifm-navbar-height) + 16px);
@@ -150,7 +225,7 @@
 .outputHead {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 8px;
 }
 
@@ -161,22 +236,83 @@
   color: var(--ifm-color-emphasis-800);
 }
 
-.starterBadge {
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 2px 8px;
-  border-radius: 999px;
-  color: var(--ifm-color-emphasis-700);
-  background: var(--ifm-color-emphasis-200);
+.spacer {
+  flex: 1;
 }
 
+.btn {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 5px;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-dark);
+}
+
+/* ---- stub hand-off ---- */
+.stub {
+  padding: 22px 24px;
+  border: 1px dashed var(--ifm-color-emphasis-300);
+  border-radius: 9px;
+  background: var(--ifm-background-surface-color);
+}
+
+.stubTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ifm-font-color-base);
+  margin-bottom: 7px;
+}
+
+.stub p {
+  margin: 0 0 16px;
+  max-width: 52ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.stubLink {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 13px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* ---- responsive ---- */
 @media (max-width: 996px) {
   .builder {
     grid-template-columns: minmax(0, 1fr);
   }
   .output {
     position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .providerCards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid2,
+  .gridNode,
+  .gridNodeHetzner {
+    grid-template-columns: 1fr;
   }
 }

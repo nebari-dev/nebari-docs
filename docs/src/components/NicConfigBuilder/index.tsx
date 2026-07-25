@@ -164,6 +164,44 @@ function buildYaml(s: BuilderState): string {
   return `${lines.join('\n')}\n`;
 }
 
+// A labelled control: human label + the schema key it maps to, above the input.
+function LabeledField({
+  label,
+  schemaKey,
+  required,
+  children,
+}: {
+  label: string;
+  schemaKey: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={styles.field}>
+      <div className={styles.fieldLabelRow}>
+        <label className={styles.fieldLabel}>
+          {label}
+          {required && <span className={styles.req}>*</span>}
+        </label>
+        <span className={styles.fieldKey}>{schemaKey}</span>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Section({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div className={styles.sectionHead}>
+        <span className={styles.sectionLabel}>{label}</span>
+        <span className={styles.rule} />
+      </div>
+      {children}
+    </div>
+  );
+}
+
 export default function NicConfigBuilder(): JSX.Element {
   const [state, setState] = useState<BuilderState>(() => initialFor('aws'));
   const meta = PROVIDERS[state.provider];
@@ -184,22 +222,41 @@ export default function NicConfigBuilder(): JSX.Element {
       kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
     }));
 
-  const providerSelector = (
-    <fieldset className={styles.group}>
-      <legend className={styles.legend}>Cloud provider</legend>
-      <div className={styles.pills}>
-        {(Object.keys(PROVIDERS) as ProviderKey[]).map((key) => (
-          <button
-            key={key}
-            type="button"
-            className={`${styles.pill} ${state.provider === key ? styles.pillActive : ''}`}
-            onClick={() => changeProvider(key)}
-          >
-            {PROVIDERS[key].label}
-          </button>
-        ))}
+  const download = () => {
+    const blob = new Blob([yaml], { type: 'text/yaml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'nebari-config.yaml';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  };
+
+  const providerCards = (
+    <div>
+      <div className={styles.providerLabel}>Cloud provider</div>
+      <div className={styles.providerCards}>
+        {(Object.keys(PROVIDERS) as ProviderKey[]).map((key) => {
+          const p = PROVIDERS[key];
+          const active = state.provider === key;
+          return (
+            <button
+              key={key}
+              type="button"
+              className={`${styles.providerCard} ${active ? styles.providerCardActive : ''} ${
+                p.stub ? styles.providerCardStub : ''
+              }`}
+              onClick={() => changeProvider(key)}
+            >
+              <span className={styles.providerName}>{p.label}</span>
+              <span className={styles.providerStatus}>{p.stub ? 'Not wired yet' : 'Ready'}</span>
+            </button>
+          );
+        })}
       </div>
-    </fieldset>
+    </div>
   );
 
   // A supported cloud that this builder does not yet cover: hand the reader off
@@ -207,14 +264,16 @@ export default function NicConfigBuilder(): JSX.Element {
   if (meta.stub) {
     return (
       <div className={styles.wrapper}>
-        {providerSelector}
+        {providerCards}
         <div className={styles.stub}>
+          <div className={styles.stubTitle}>Not wired into this builder yet</div>
           <p>
-            Nebari supports {meta.label}, but it is not yet wired into this UI. Write the
-            YAML by hand using the{' '}
-            <Link to="/docs/references/config-schema">configuration schema</Link> for the
-            full set of fields.
+            NIC supports {meta.label}, but its regions and machine types are not confirmed
+            against the schema, so the builder will not guess them.
           </p>
+          <Link className={styles.stubLink} to="/docs/references/config-schema">
+            Write it from the schema →
+          </Link>
         </div>
       </div>
     );
@@ -222,92 +281,94 @@ export default function NicConfigBuilder(): JSX.Element {
 
   return (
     <div className={styles.wrapper}>
-      {providerSelector}
+      {providerCards}
       <div className={styles.builder}>
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-          <div className={styles.row}>
-            <label className={styles.field}>
-              <span className={styles.label}>project_name</span>
-              <input
-                className={styles.input}
-                value={state.projectName}
-                onChange={(e) => set('projectName', e.target.value)}
-              />
-            </label>
-            <label className={styles.field}>
-              <span className={styles.label}>domain</span>
-              <input
-                className={styles.input}
-                value={state.domain}
-                onChange={(e) => set('domain', e.target.value)}
-              />
-            </label>
-          </div>
-
-          <div className={styles.row}>
-            <label className={styles.field}>
-              <span className={styles.label}>
-                cluster.{state.provider}.{meta.regionLabel ?? 'region'}
-              </span>
-              <select
-                className={styles.input}
-                value={state.region}
-                onChange={(e) => set('region', e.target.value)}
-              >
-                {(meta.regions ?? []).map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className={styles.field}>
-              <span className={styles.label}>cluster.{state.provider}.kubernetes_version</span>
-              <input
-                className={styles.input}
-                value={state.kubernetesVersion}
-                onChange={(e) => set('kubernetesVersion', e.target.value)}
-              />
-            </label>
-          </div>
-
-          <div className={styles.row}>
-            <label className={styles.field}>
-              <span className={styles.label}>certificate.type</span>
-              <select
-                className={styles.input}
-                value={state.certType}
-                onChange={(e) => set('certType', e.target.value as BuilderState['certType'])}
-              >
-                <option value="letsencrypt">letsencrypt</option>
-                <option value="selfsigned">selfsigned</option>
-              </select>
-            </label>
-            {state.certType === 'letsencrypt' && (
-              <label className={styles.field}>
-                <span className={styles.label}>certificate.acme.email</span>
+          <Section label="Deployment">
+            <div className={styles.grid2}>
+              <LabeledField label="Project name" schemaKey="project_name" required>
                 <input
                   className={styles.input}
-                  value={state.acmeEmail}
-                  onChange={(e) => set('acmeEmail', e.target.value)}
+                  value={state.projectName}
+                  onChange={(e) => set('projectName', e.target.value)}
                 />
-              </label>
-            )}
-          </div>
+              </LabeledField>
+              <LabeledField label="Domain" schemaKey="domain">
+                <input
+                  className={styles.input}
+                  value={state.domain}
+                  onChange={(e) => set('domain', e.target.value)}
+                />
+              </LabeledField>
+              <LabeledField label="Certificate" schemaKey="certificate.type">
+                <select
+                  className={styles.input}
+                  value={state.certType}
+                  onChange={(e) => set('certType', e.target.value as BuilderState['certType'])}
+                >
+                  <option value="letsencrypt">letsencrypt</option>
+                  <option value="selfsigned">selfsigned</option>
+                </select>
+              </LabeledField>
+              {state.certType === 'letsencrypt' && (
+                <LabeledField label="ACME email" schemaKey="certificate.acme.email">
+                  <input
+                    className={styles.input}
+                    value={state.acmeEmail}
+                    onChange={(e) => set('acmeEmail', e.target.value)}
+                  />
+                </LabeledField>
+              )}
+            </div>
+          </Section>
 
-          <fieldset className={styles.group}>
-            <legend className={styles.legend}>Node group</legend>
-            <div className={styles.row}>
-              <label className={styles.field}>
-                <span className={styles.label}>name</span>
+          <Section label="Cluster">
+            <div className={styles.grid2}>
+              <LabeledField
+                label={isHetzner ? 'Location' : 'Region'}
+                schemaKey={`cluster.${state.provider}.${meta.regionLabel ?? 'region'}`}
+                required
+              >
+                <select
+                  className={styles.input}
+                  value={state.region}
+                  onChange={(e) => set('region', e.target.value)}
+                >
+                  {(meta.regions ?? []).map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+              </LabeledField>
+              <LabeledField label="Kubernetes version" schemaKey="kubernetes_version" required>
+                <input
+                  className={styles.input}
+                  value={state.kubernetesVersion}
+                  onChange={(e) => set('kubernetesVersion', e.target.value)}
+                />
+              </LabeledField>
+            </div>
+          </Section>
+
+          <Section label="Node group">
+            <p className={styles.sectionNote}>
+              The pool your workloads land on. Add more later in the config file.
+              {isHetzner && ' Hetzner (k3s) also needs a master group, which the builder adds automatically.'}
+            </p>
+            <div className={isHetzner ? styles.gridNodeHetzner : styles.gridNode}>
+              <LabeledField label="Name" schemaKey="key">
                 <input
                   className={styles.input}
                   value={state.nodeGroupName}
                   onChange={(e) => set('nodeGroupName', e.target.value)}
                 />
-              </label>
-              <label className={styles.field}>
-                <span className={styles.label}>{isHetzner ? 'instance_type' : 'instance'}</span>
+              </LabeledField>
+              <LabeledField
+                label="Instance"
+                schemaKey={isHetzner ? 'instance_type' : 'instance'}
+                required
+              >
                 <select
                   className={styles.input}
                   value={state.instance}
@@ -319,105 +380,99 @@ export default function NicConfigBuilder(): JSX.Element {
                     </option>
                   ))}
                 </select>
-              </label>
+              </LabeledField>
+              {isHetzner ? (
+                <LabeledField label="Count" schemaKey="count" required>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    min={1}
+                    value={state.maxNodes}
+                    onChange={(e) => set('maxNodes', Number(e.target.value))}
+                  />
+                </LabeledField>
+              ) : (
+                <>
+                  <LabeledField label="Min" schemaKey="min_nodes">
+                    <input
+                      className={styles.input}
+                      type="number"
+                      min={0}
+                      value={state.minNodes}
+                      onChange={(e) => set('minNodes', Number(e.target.value))}
+                    />
+                  </LabeledField>
+                  <LabeledField label="Max" schemaKey="max_nodes">
+                    <input
+                      className={styles.input}
+                      type="number"
+                      min={1}
+                      value={state.maxNodes}
+                      onChange={(e) => set('maxNodes', Number(e.target.value))}
+                    />
+                  </LabeledField>
+                </>
+              )}
             </div>
-            {isHetzner ? (
-              <div className={styles.row}>
-                <label className={styles.field}>
-                  <span className={styles.label}>count</span>
-                  <input
-                    className={styles.input}
-                    type="number"
-                    min={1}
-                    value={state.maxNodes}
-                    onChange={(e) => set('maxNodes', Number(e.target.value))}
-                  />
-                </label>
-              </div>
-            ) : (
-              <div className={styles.row}>
-                <label className={styles.field}>
-                  <span className={styles.label}>min_nodes</span>
-                  <input
-                    className={styles.input}
-                    type="number"
-                    min={0}
-                    value={state.minNodes}
-                    onChange={(e) => set('minNodes', Number(e.target.value))}
-                  />
-                </label>
-                <label className={styles.field}>
-                  <span className={styles.label}>max_nodes</span>
-                  <input
-                    className={styles.input}
-                    type="number"
-                    min={1}
-                    value={state.maxNodes}
-                    onChange={(e) => set('maxNodes', Number(e.target.value))}
-                  />
-                </label>
-              </div>
-            )}
-            {isHetzner && (
-              <p className={styles.hint}>
-                Hetzner (k3s) needs a master node group; the builder adds one automatically
-                alongside this worker group.
-              </p>
-            )}
-          </fieldset>
+          </Section>
 
-          {meta.dedicatedStorage && (
-            <fieldset className={styles.group}>
-              <legend className={styles.legend}>Longhorn storage</legend>
-              <label className={styles.checkbox}>
+          <Section label="Options">
+            <div className={styles.options}>
+              {meta.dedicatedStorage && (
+                <label className={styles.option}>
+                  <input
+                    type="checkbox"
+                    checked={state.dedicatedStorage}
+                    onChange={(e) => set('dedicatedStorage', e.target.checked)}
+                  />
+                  <span>
+                    <span className={styles.optionTitle}>Dedicated storage nodes for Longhorn</span>
+                    <span className={styles.optionDesc}>
+                      Adds a tainted <code>storage</code> node group so replica disks stay off
+                      your workload nodes. Changing this on a live cluster is a manual migration.
+                    </span>
+                  </span>
+                </label>
+              )}
+              <label className={styles.option}>
                 <input
                   type="checkbox"
-                  checked={state.dedicatedStorage}
-                  onChange={(e) => set('dedicatedStorage', e.target.checked)}
+                  checked={state.useCloudflare}
+                  onChange={(e) => set('useCloudflare', e.target.checked)}
                 />
-                <span>Dedicated storage node group</span>
+                <span>
+                  <span className={styles.optionTitle}>Let Nebari manage DNS with Cloudflare</span>
+                  <span className={styles.optionDesc}>
+                    Your API token comes from the environment at deploy time; only the zone id
+                    goes in this file.
+                  </span>
+                </span>
               </label>
-              <p className={styles.hint}>
-                Adds a tainted <code>storage</code> node group and sets{' '}
-                <code>longhorn.dedicated_nodes</code>, confining Longhorn replicas to it. On
-                an existing cluster this is a manual migration; see the{' '}
-                <Link to="/docs/references/config-schema">configuration schema</Link>.
-              </p>
-            </fieldset>
-          )}
-
-          <fieldset className={styles.group}>
-            <legend className={styles.legend}>DNS</legend>
-            <label className={styles.checkbox}>
-              <input
-                type="checkbox"
-                checked={state.useCloudflare}
-                onChange={(e) => set('useCloudflare', e.target.checked)}
-              />
-              <span>Manage DNS with Cloudflare</span>
-            </label>
-            {state.useCloudflare && (
-              <label className={styles.field}>
-                <span className={styles.label}>dns.cloudflare.zone_id</span>
-                <input
-                  className={styles.input}
-                  placeholder="<your-cloudflare-zone-id>"
-                  value={state.zoneId}
-                  onChange={(e) => set('zoneId', e.target.value)}
-                />
-              </label>
-            )}
-          </fieldset>
+              {state.useCloudflare && (
+                <div className={styles.zoneWrap}>
+                  <LabeledField label="Zone id" schemaKey="dns.cloudflare.zone_id" required>
+                    <input
+                      className={styles.input}
+                      placeholder="<your-cloudflare-zone-id>"
+                      value={state.zoneId}
+                      onChange={(e) => set('zoneId', e.target.value)}
+                    />
+                  </LabeledField>
+                </div>
+              )}
+            </div>
+          </Section>
         </form>
 
         <div className={styles.output}>
           <div className={styles.outputHead}>
             <span className={styles.outputTitle}>nebari-config.yaml</span>
-            <span className={styles.starterBadge}>starter</span>
+            <span className={styles.spacer} />
+            <button type="button" className={styles.btn} onClick={download}>
+              Download
+            </button>
           </div>
-          <CodeBlock language="yaml" title="nebari-config.yaml">
-            {yaml}
-          </CodeBlock>
+          <CodeBlock language="yaml">{yaml}</CodeBlock>
         </div>
       </div>
     </div>
