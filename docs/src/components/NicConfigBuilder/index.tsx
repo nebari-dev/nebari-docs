@@ -65,6 +65,11 @@ type BuilderState = {
   kubernetesVersion: string;
   certType: 'letsencrypt' | 'selfsigned';
   acmeEmail: string;
+  gitUrl: string;
+  gitBranch: string;
+  gitPath: string;
+  gitAuthMethod: 'token' | 'ssh';
+  gitEnvVar: string;
   nodeGroupName: string;
   instance: string;
   minNodes: number;
@@ -82,6 +87,11 @@ const initialFor = (provider: ProviderKey): BuilderState => ({
   kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
   certType: 'letsencrypt',
   acmeEmail: 'admin@example.com',
+  gitUrl: 'https://github.com/my-org/my-nebari-config.git',
+  gitBranch: 'main',
+  gitPath: 'clusters/my-nebari',
+  gitAuthMethod: 'token',
+  gitEnvVar: 'GIT_TOKEN',
   nodeGroupName: 'general',
   instance: PROVIDERS[provider].instances?.[0] ?? '',
   minNodes: 1,
@@ -106,6 +116,17 @@ function buildYaml(s: BuilderState): string {
   } else {
     lines.push('  type: selfsigned');
   }
+
+  lines.push('git_repository:');
+  lines.push(`  url: ${s.gitUrl || '<repo-url>'}`);
+  lines.push(`  branch: ${s.gitBranch || 'main'}`);
+  lines.push(`  path: ${s.gitPath || '<path>'}`);
+  lines.push('  auth:');
+  lines.push(
+    `    ${s.gitAuthMethod === 'ssh' ? 'ssh_key_env' : 'token_env'}: ${
+      s.gitEnvVar || (s.gitAuthMethod === 'ssh' ? 'GIT_SSH_PRIVATE_KEY' : 'GIT_TOKEN')
+    }`,
+  );
 
   const k8s = s.kubernetesVersion || meta.kubernetesVersion || '';
   const group = s.nodeGroupName || 'general';
@@ -319,6 +340,66 @@ export default function NicConfigBuilder(): JSX.Element {
                   />
                 </LabeledField>
               )}
+            </div>
+          </Section>
+
+          <Section label="Git repository">
+            <p className={styles.sectionNote}>
+              NIC pushes rendered manifests to this GitOps repo; foundational services sync
+              from it. Credentials are read from an environment variable at deploy time.
+            </p>
+            <LabeledField label="Repository URL" schemaKey="git_repository.url" required>
+              <input
+                className={styles.input}
+                value={state.gitUrl}
+                onChange={(e) => set('gitUrl', e.target.value)}
+              />
+            </LabeledField>
+            <div className={styles.grid2} style={{ marginTop: '16px' }}>
+              <LabeledField label="Branch" schemaKey="git_repository.branch" required>
+                <input
+                  className={styles.input}
+                  value={state.gitBranch}
+                  onChange={(e) => set('gitBranch', e.target.value)}
+                />
+              </LabeledField>
+              <LabeledField label="Path" schemaKey="git_repository.path" required>
+                <input
+                  className={styles.input}
+                  value={state.gitPath}
+                  onChange={(e) => set('gitPath', e.target.value)}
+                />
+              </LabeledField>
+              <LabeledField label="Auth method" schemaKey="git_repository.auth">
+                <select
+                  className={styles.input}
+                  value={state.gitAuthMethod}
+                  onChange={(e) => {
+                    const m = e.target.value as BuilderState['gitAuthMethod'];
+                    setState((prev) => ({
+                      ...prev,
+                      gitAuthMethod: m,
+                      gitEnvVar: m === 'ssh' ? 'GIT_SSH_PRIVATE_KEY' : 'GIT_TOKEN',
+                    }));
+                  }}
+                >
+                  <option value="token">token (HTTPS)</option>
+                  <option value="ssh">ssh key</option>
+                </select>
+              </LabeledField>
+              <LabeledField
+                label={state.gitAuthMethod === 'ssh' ? 'SSH key env var' : 'Token env var'}
+                schemaKey={`git_repository.auth.${
+                  state.gitAuthMethod === 'ssh' ? 'ssh_key_env' : 'token_env'
+                }`}
+                required
+              >
+                <input
+                  className={styles.input}
+                  value={state.gitEnvVar}
+                  onChange={(e) => set('gitEnvVar', e.target.value)}
+                />
+              </LabeledField>
             </div>
           </Section>
 
