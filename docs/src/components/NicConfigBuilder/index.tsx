@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
 
@@ -185,6 +185,23 @@ function buildYaml(s: BuilderState): string {
   return `${lines.join('\n')}\n`;
 }
 
+// URL-safe encoding of the builder state, so a link reproduces the exact form a
+// user built. Called only in the browser (guarded by callers).
+function encodeState(s: BuilderState): string {
+  const bytes = new TextEncoder().encode(JSON.stringify(s));
+  let bin = '';
+  bytes.forEach((b) => {
+    bin += String.fromCharCode(b);
+  });
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function decodeState(param: string): Partial<BuilderState> {
+  const b64 = param.replace(/-/g, '+').replace(/_/g, '/');
+  const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes)) as Partial<BuilderState>;
+}
+
 // A labelled control: human label + the schema key it maps to, above the input.
 function LabeledField({
   label,
@@ -225,9 +242,57 @@ function Section({ label, children }: { label: string; children: React.ReactNode
 
 export default function NicConfigBuilder(): JSX.Element {
   const [state, setState] = useState<BuilderState>(() => initialFor('aws'));
+  const [modalOpen, setModalOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const meta = PROVIDERS[state.provider];
   const yaml = useMemo(() => buildYaml(state), [state]);
   const isHetzner = meta.nodeShape === 'hetzner';
+
+  // Restore state from a shared link and show the config front-and-centre.
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const c = new URLSearchParams(window.location.search).get('c');
+    if (!c) {
+      return;
+    }
+    try {
+      const decoded = decodeState(c);
+      setState((prev) => ({ ...prev, ...decoded }));
+      setModalOpen(true);
+    } catch {
+      /* ignore malformed share links */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!modalOpen) {
+      return undefined;
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [modalOpen]);
+
+  const shareUrl =
+    typeof window === 'undefined'
+      ? ''
+      : `${window.location.origin}${window.location.pathname}?c=${encodeState(state)}`;
+
+  const copyLink = () => {
+    try {
+      navigator.clipboard.writeText(shareUrl);
+    } catch {
+      /* clipboard unavailable */
+    }
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 1600);
+  };
 
   const set = <K extends keyof BuilderState>(key: K, value: BuilderState[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
@@ -549,6 +614,9 @@ export default function NicConfigBuilder(): JSX.Element {
           <div className={styles.outputHead}>
             <span className={styles.outputTitle}>nebari-config.yaml</span>
             <span className={styles.spacer} />
+            <button type="button" className={styles.btn} onClick={() => setModalOpen(true)}>
+              Share
+            </button>
             <button type="button" className={styles.btn} onClick={download}>
               Download
             </button>
@@ -556,6 +624,44 @@ export default function NicConfigBuilder(): JSX.Element {
           <CodeBlock language="yaml">{yaml}</CodeBlock>
         </div>
       </div>
+
+      {modalOpen && (
+        <div className={styles.overlay} onClick={() => setModalOpen(false)}>
+          <div
+            className={styles.dialog}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Generated configuration"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.dialogHead}>
+              <span className={styles.outputTitle}>nebari-config.yaml</span>
+              <span className={styles.spacer} />
+              <button type="button" className={styles.btn} onClick={download}>
+                Download
+              </button>
+              <button
+                type="button"
+                className={styles.btn}
+                onClick={() => setModalOpen(false)}
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className={styles.dialogBody}>
+              <CodeBlock language="yaml">{yaml}</CodeBlock>
+            </div>
+            <div className={styles.shareRow}>
+              <span className={styles.shareLabel}>Share link</span>
+              <input className={styles.input} readOnly value={shareUrl} onFocus={(e) => e.target.select()} />
+              <button type="button" className={styles.btn} onClick={copyLink}>
+                {copiedLink ? 'Copied' : 'Copy link'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
