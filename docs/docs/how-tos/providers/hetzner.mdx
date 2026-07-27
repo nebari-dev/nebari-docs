@@ -64,7 +64,7 @@ A NKP deployment on Hetzner Cloud provisions three categories of resources that 
 
 - **[Servers](https://www.hetzner.com/cloud/):** per-hour billing for each node. The examples below use `cpx31` (4 vCPU / 8 GB RAM AMD), which strikes a good balance between price and capacity. Master nodes and worker nodes use the same type by default.
 - **[Load balancer](https://www.hetzner.com/cloud/load-balancer):** `nic` creates one Hetzner LB for cluster ingress. Flat hourly rate plus traffic.
-- **[Block volumes](https://www.hetzner.com/storage/block-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing.
+- **[Block volumes](https://www.hetzner.com/storage/block-storage):** Longhorn uses Hetzner block volumes for persistent storage. Per-GB-month billing. To protect this data off-cluster, see [Back up and restore data](/docs/how-tos/backup-restore).
 
 Hetzner is significantly cheaper than equivalent AWS deployments because there is no managed Kubernetes control-plane fee, no NAT gateways, no VPC interface endpoints, and no per-mount-target EFS charge. A minimal three-node `cpx31` cluster (one master, two workers) plus one load balancer typically costs a fraction of an equivalent EKS setup.
 
