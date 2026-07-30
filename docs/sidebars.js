@@ -29,6 +29,11 @@ module.exports = {
       ],
     },
     {
+      type: "doc",
+      id: "config-builder",
+      label: "Config builder",
+    },
+    {
       type: "category",
       label: "Explanations",
       link: { type: "doc", id: "explanations/index" },
@@ -73,6 +78,7 @@ module.exports = {
       link: { type: "doc", id: "references/index" },
       items: [
         "references/personas",
+        "references/config-schema",
       ],
     },
     {

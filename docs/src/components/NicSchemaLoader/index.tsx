@@ -1,0 +1,746 @@
+import Admonition from '@theme/Admonition';
+import CodeBlock from '@theme/CodeBlock';
+import Heading from '@theme/Heading';
+import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+
+import styles from './styles.module.css';
+
+/**
+ * NicSchemaLoader renders the Nebari Infrastructure Core (NIC) configuration
+ * reference directly from the JSON Schema that `nebari-infrastructure-core`
+ * generates from its Go config structs (`schemas/`, produced by `make
+ * schemas`). Because the schema is generated from the source of truth, this
+ * page cannot drift from the config the CLI actually accepts.
+ *
+ * Producer contract (schemas/manifest.json):
+ *   { "providers": [...], "dns": [...], "top_level": "nebari-config.json" }
+ * Each referenced file is a self-contained JSON Schema whose root `$ref`
+ * points into its own `$defs` (e.g. `#/$defs/aws.Config`).
+ */
+
+type JSONSchema = {
+  type?: string | string[];
+  title?: string;
+  description?: string;
+  properties?: Record<string, JSONSchema>;
+  required?: string[];
+  items?: JSONSchema;
+  enum?: unknown[];
+  default?: unknown;
+  examples?: unknown[];
+  pattern?: string;
+  additionalProperties?: boolean | JSONSchema;
+  $ref?: string;
+};
+
+type Manifest = {
+  providers: string[];
+  dns: string[];
+  top_level: string;
+};
+
+type LoadedSchemas = {
+  topLevel: JSONSchema;
+  cluster: { name: string; schema: JSONSchema }[];
+  dns: { name: string; schema: JSONSchema }[];
+};
+
+// Source of truth. Once the schema-generation pipeline
+// (nebari-infrastructure-core#362) lands on a tagged release, the release tags
+// below become selectable; until then this preview entry tracks the branch.
+const DEFAULT_REPO = 'nebari-dev/nebari-infrastructure-core';
+const DEFAULT_REF = 'feat/config-schema-gen-v2';
+
+const schemasBase = (repo: string, ref: string) =>
+  `https://raw.githubusercontent.com/${repo}/${ref}/schemas`;
+
+const slug = (name: string) => name.replace(/[_.]/g, '-').toLowerCase();
+
+// Field id from the full config path, so ids are unique across providers
+// (a bare `enabled` occurs in five different `$defs`).
+const pathId = (path: string[]) => path.map(slug).join('-');
+
+const refKey = (ref: string) => ref.replace('#/$defs/', '');
+
+/**
+ * Inline every internal `#/$defs/...` reference against the file's own `$defs`
+ * map. The generated schemas use recursive same-file pointer refs that generic
+ * `$ref` resolvers leave untouched. `seen` guards against cycles.
+ */
+function deref(
+  node: JSONSchema,
+  defs: Record<string, JSONSchema>,
+  seen: Set<string>,
+): JSONSchema {
+  if (node === null || typeof node !== 'object') {
+    return node;
+  }
+  if (Array.isArray(node)) {
+    return node.map((n) => deref(n, defs, seen)) as unknown as JSONSchema;
+  }
+  if (typeof node.$ref === 'string') {
+    const key = refKey(node.$ref);
+    if (seen.has(key) || !defs[key]) {
+      return { type: 'object', description: node.description };
+    }
+    const target = deref(defs[key], defs, new Set(seen).add(key));
+    return node.description && !target.description
+      ? { ...target, description: node.description }
+      : target;
+  }
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(node)) {
+    if (k === '$defs') {
+      continue;
+    }
+    out[k] = deref(v as JSONSchema, defs, seen);
+  }
+  return out as JSONSchema;
+}
+
+async function loadSchemaFile(base: string, path: string): Promise<JSONSchema> {
+  const res = await fetch(`${base}/${path}`, {
+    headers: { Accept: 'application/json' },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ${path}: ${res.status} ${res.statusText}`);
+  }
+  const doc = (await res.json()) as JSONSchema & { $defs?: Record<string, JSONSchema> };
+  const defs = doc.$defs ?? {};
+  const entryKey = typeof doc.$ref === 'string' ? refKey(doc.$ref) : null;
+  const entry = entryKey && defs[entryKey] ? defs[entryKey] : doc;
+  return deref(entry, defs, new Set(entryKey ? [entryKey] : []));
+}
+
+function useNicSchemas(repo: string, ref: string) {
+  const [data, setData] = useState<LoadedSchemas | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const base = schemasBase(repo, ref);
+    setLoading(true);
+    setError(null);
+
+    async function load() {
+      try {
+        const manifestRes = await fetch(`${base}/manifest.json`, {
+          headers: { Accept: 'application/json' },
+        });
+        if (!manifestRes.ok) {
+          throw new Error(
+            `Failed to fetch manifest.json: ${manifestRes.status} ${manifestRes.statusText}`,
+          );
+        }
+        const manifest: Manifest = await manifestRes.json();
+
+        const [topLevel, cluster, dns] = await Promise.all([
+          loadSchemaFile(base, manifest.top_level),
+          Promise.all(
+            manifest.providers.map(async (name) => ({
+              name,
+              schema: await loadSchemaFile(base, `providers/${name}.json`),
+            })),
+          ),
+          Promise.all(
+            manifest.dns.map(async (name) => ({
+              name,
+              schema: await loadSchemaFile(base, `providers/${name}.json`),
+            })),
+          ),
+        ]);
+
+        if (!cancelled) {
+          setData({ topLevel, cluster, dns });
+          setLoading(false);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : String(err));
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [repo, ref]);
+
+  return { data, loading, error };
+}
+
+type VersionOption = { value: string; label: string };
+
+const PREVIEW_OPTION: VersionOption = {
+  value: DEFAULT_REF,
+  label: `${DEFAULT_REF} (preview)`,
+};
+
+// Fetch upstream release tags so a reader can view the schema for a specific
+// NIC version. Non-fatal on failure - the preview option alone renders the
+// page. (Follow-up: replace with a committed schema-versions.json published by
+// the NIC release workflow, so the toggle only lists versions that actually
+// ship schemas/.)
+function useVersions(repo: string): VersionOption[] {
+  const [tags, setTags] = useState<VersionOption[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch(
+          `https://api.github.com/repos/${repo}/tags?per_page=100`,
+          { headers: { Accept: 'application/vnd.github+json' } },
+        );
+        if (!res.ok) {
+          return;
+        }
+        const json: { name: string }[] = await res.json();
+        if (!cancelled) {
+          setTags(json.map((t) => ({ value: t.name, label: t.name })));
+        }
+      } catch {
+        /* leave tags empty; the preview option is enough */
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [repo]);
+
+  return [PREVIEW_OPTION, ...tags];
+}
+
+// A map type is an object with no fixed properties whose value shape is an
+// `additionalProperties` schema (Go `map[string]T`).
+function mapValueSchema(schema: JSONSchema): JSONSchema | null {
+  if (
+    schema.type === 'object' &&
+    !schema.properties &&
+    schema.additionalProperties &&
+    typeof schema.additionalProperties === 'object'
+  ) {
+    return schema.additionalProperties;
+  }
+  return null;
+}
+
+function typeLabel(schema: JSONSchema): string {
+  if (schema.enum) {
+    return 'enum';
+  }
+  if (schema.type === 'array') {
+    const it = schema.items;
+    const itType = it
+      ? Array.isArray(it.type)
+        ? it.type.join(' | ')
+        : it.type ?? (it.properties ? 'object' : 'any')
+      : 'any';
+    return `array<${itType}>`;
+  }
+  const mapValue = mapValueSchema(schema);
+  if (mapValue) {
+    return `map<string, ${typeLabel(mapValue)}>`;
+  }
+  if (Array.isArray(schema.type)) {
+    return schema.type.join(' | ');
+  }
+  return schema.type ?? (schema.properties ? 'object' : 'any');
+}
+
+// Render the schema's description verbatim as markdown. No rewriting or
+// stripping: the page shows exactly what the schema carries.
+function FieldDescription({ description }: { description: string }) {
+  return (
+    <div className={styles.description}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
+    </div>
+  );
+}
+
+function requiredHint(valueSchema: JSONSchema): string {
+  const req = valueSchema.required ?? [];
+  return req.length ? ` — requires ${req.join(', ')}` : '';
+}
+
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+// A compact collapsible for object/array/map field bodies. Native <details> so
+// the caret and dashed toggle match the field-grid system (@theme/Details
+// renders a heavier admonition-style box).
+function NestedFields({
+  label,
+  schema,
+  path,
+  level,
+}: {
+  label: string;
+  schema: JSONSchema;
+  path: string[];
+  level: number;
+}) {
+  return (
+    <details className={styles.nestedDetails}>
+      <summary className={styles.nestedToggle}>
+        <span className={styles.caret}>▸</span>
+        <span>{label}</span>
+      </summary>
+      <div className={styles.nested}>
+        <FieldList schema={schema} path={path} level={level} nested />
+      </div>
+    </details>
+  );
+}
+
+// Type / required / default / pattern / enum, all inline on the field name's
+// line. Everything shown is read from the schema. Shared between top-level rows
+// (flex) and nested rows (inline).
+function MetaChips({
+  schema,
+  required,
+  mapValue,
+}: {
+  schema: JSONSchema;
+  required: boolean;
+  mapValue: JSONSchema | null;
+}) {
+  return (
+    <>
+      <span className={styles.chip}>
+        {mapValue ? (
+          <>
+            map&lt;string, <span className={styles.accent}>{typeLabel(mapValue)}</span>&gt;
+          </>
+        ) : (
+          typeLabel(schema)
+        )}
+      </span>
+      {required && <span className={`${styles.chip} ${styles.chipRequired}`}>required</span>}
+      {schema.default !== undefined && (
+        <span className={styles.metaTag}>
+          <span className={styles.k}>default</span>
+          <span className={styles.v}>{JSON.stringify(schema.default)}</span>
+        </span>
+      )}
+      {schema.pattern && (
+        <span className={styles.metaTag} title="Value must match this regular expression">
+          <span className={styles.k}>pattern</span>
+          <span className={styles.v}>{schema.pattern}</span>
+        </span>
+      )}
+      {schema.enum && (
+        <>
+          <span className={styles.enumLabel}>one of</span>
+          {schema.enum.map((v) => (
+            <span key={String(v)} className={`${styles.chip} ${styles.chipEnum}`}>
+              {String(v)}
+            </span>
+          ))}
+        </>
+      )}
+    </>
+  );
+}
+
+// One field. The name and its inline metadata sit on one line; the description,
+// schema examples and nested blocks stack below. Everything is read from the
+// schema. `nested` is true only for rows inside a <details> (deeper than a
+// section's direct fields): those show their full dotted path as a hover tooltip
+// (not a breadcrumb line), drop the row hairline, and suppress the group labels.
+function Field({
+  name,
+  schema,
+  required,
+  path,
+  level,
+  nested,
+}: {
+  name: string;
+  schema: JSONSchema;
+  required: boolean;
+  path: string[];
+  level: number;
+  nested: boolean;
+}) {
+  const fieldPath = [...path, name];
+  const id = pathId(fieldPath);
+  const headingLevel = Math.min(level, 6) as 2 | 3 | 4 | 5 | 6;
+
+  const objProps = schema.properties ? Object.keys(schema.properties).length : 0;
+  const mapValue = mapValueSchema(schema);
+  const nestedObject = schema.type === 'object' && objProps > 0 ? schema : null;
+  const arrayItems = schema.type === 'array' && schema.items?.properties ? schema.items : null;
+  const mapOfObjects = mapValue && mapValue.properties ? mapValue : null;
+
+  const below = (
+    <>
+      {schema.description && <FieldDescription description={schema.description} />}
+      {schema.examples && schema.examples.length > 0 && (
+        <CodeBlock language="yaml">
+          {schema.examples.map((e) => (typeof e === 'string' ? e : JSON.stringify(e))).join('\n')}
+        </CodeBlock>
+      )}
+      {nestedObject && (
+        <NestedFields
+          label={plural(objProps, 'nested field')}
+          schema={nestedObject}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+      {arrayItems && (
+        <NestedFields
+          label={`${plural(Object.keys(arrayItems.properties ?? {}).length, 'item field')}${requiredHint(arrayItems)}`}
+          schema={arrayItems}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+      {mapOfObjects && (
+        <NestedFields
+          label={`${plural(Object.keys(mapOfObjects.properties ?? {}).length, 'entry field')}${requiredHint(mapOfObjects)}`}
+          schema={mapOfObjects}
+          path={fieldPath}
+          level={level + 1}
+        />
+      )}
+    </>
+  );
+
+  const chips = <MetaChips schema={schema} required={required} mapValue={mapValue} />;
+
+  if (nested) {
+    return (
+      <div className={`${styles.fieldRowNested} ${required ? styles.fieldRowNestedRequired : ''}`}>
+        <code id={id} title={fieldPath.join('.')} className={styles.fieldNameNested}>
+          {name}
+        </code>
+        <span className={styles.metaInline}>{chips}</span>
+        {below}
+      </div>
+    );
+  }
+
+  const hasBelow =
+    !!schema.description ||
+    (!!schema.examples && schema.examples.length > 0) ||
+    !!nestedObject ||
+    !!arrayItems ||
+    !!mapOfObjects;
+
+  return (
+    <div className={`${styles.fieldRow} ${required ? styles.fieldRowRequired : ''}`}>
+      <Heading as={`h${headingLevel}`} id={id} className={styles.fieldName}>
+        <code>{name}</code>
+      </Heading>
+      <span className={styles.meta}>{chips}</span>
+      {hasBelow && <div className={styles.below}>{below}</div>}
+    </div>
+  );
+}
+
+function FieldList({
+  schema,
+  path,
+  level,
+  nested = false,
+}: {
+  schema: JSONSchema;
+  path: string[];
+  level: number;
+  nested?: boolean;
+}) {
+  const properties = schema.properties ?? {};
+  const required = new Set(schema.required ?? []);
+  const names = Object.keys(properties);
+
+  if (names.length === 0) {
+    return <Admonition type="note">This schema defines no fields.</Admonition>;
+  }
+
+  const requiredNames = names.filter((n) => required.has(n)).sort();
+  const optionalNames = names.filter((n) => !required.has(n)).sort();
+
+  const renderField = (name: string) => (
+    <Field
+      key={name}
+      name={name}
+      schema={properties[name]}
+      required={required.has(name)}
+      path={path}
+      level={level}
+      nested={nested}
+    />
+  );
+
+  // Group labels only mark a section's direct fields; nested rows are already
+  // scoped by their <details> toggle and left-border, so labelling them adds noise.
+  return (
+    <>
+      {!nested && requiredNames.length > 0 && (
+        <div className={`${styles.groupLabel} ${styles.groupLabelRequired}`}>
+          <span className={styles.tag}>Required</span>
+        </div>
+      )}
+      {requiredNames.map(renderField)}
+      {!nested && optionalNames.length > 0 && (
+        <div className={styles.groupLabel}>
+          <span className={styles.tag}>Optional</span>
+        </div>
+      )}
+      {optionalNames.map(renderField)}
+    </>
+  );
+}
+
+type TocSection = {
+  id: string;
+  label: string;
+  children: { id: string; label: string }[];
+};
+
+// Build the right-side TOC from the loaded schema. The page hides Docusaurus's
+// native TOC (every field heading is rendered at runtime, so the static TOC is
+// empty); this mirrors the section headings plus the always-visible top-level
+// fields, in the same required-then-optional order FieldList renders them.
+// Provider fields live in mutually-exclusive tabs and collapsed Details, so the
+// TOC stops at the section heading for those rather than listing hidden anchors.
+function buildToc(data: LoadedSchemas): TocSection[] {
+  const props = data.topLevel.properties ?? {};
+  const required = new Set(data.topLevel.required ?? []);
+  const names = Object.keys(props);
+  const ordered = [
+    ...names.filter((n) => required.has(n)).sort(),
+    ...names.filter((n) => !required.has(n)).sort(),
+  ];
+
+  const sections: TocSection[] = [
+    {
+      id: 'top-level',
+      label: 'Top-level configuration',
+      children: ordered.map((n) => ({ id: pathId([n]), label: n })),
+    },
+  ];
+  if (data.cluster.length > 0) {
+    sections.push({ id: 'cluster-providers', label: 'Cluster providers', children: [] });
+  }
+  if (data.dns.length > 0) {
+    sections.push({ id: 'dns-providers', label: 'DNS providers', children: [] });
+  }
+  return sections;
+}
+
+// Highlight the entry nearest the top of the viewport as the reader scrolls.
+function useActiveId(ids: string[]): string | null {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (els.length === 0) {
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) {
+          setActiveId(visible[0].target.id);
+        }
+      },
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [ids.join('|')]);
+
+  return activeId;
+}
+
+function SchemaToc({ sections }: { sections: TocSection[] }): JSX.Element {
+  const ids = sections.flatMap((s) => [s.id, ...s.children.map((c) => c.id)]);
+  const activeId = useActiveId(ids);
+
+  const link = (id: string, label: string, extra: string) => (
+    <a
+      href={`#${id}`}
+      className={`${styles.tocLink} ${extra} ${activeId === id ? styles.tocLinkActive : ''}`}
+    >
+      {label}
+    </a>
+  );
+
+  return (
+    <nav className={styles.toc} aria-label="Configuration schema contents">
+      <div className={styles.tocTitle}>On this page</div>
+      <ul className={styles.tocList}>
+        {sections.map((s) => (
+          <li key={s.id}>
+            {link(s.id, s.label, styles.tocSection)}
+            {s.children.length > 0 && (
+              <ul className={styles.tocChildList}>
+                {s.children.map((c) => (
+                  <li key={c.id}>{link(c.id, c.label, styles.tocChild)}</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+export default function NicSchemaLoader({
+  repo = DEFAULT_REPO,
+  ref = DEFAULT_REF,
+}: {
+  repo?: string;
+  ref?: string;
+}): JSX.Element {
+  const [selectedRef, setSelectedRef] = useState(ref);
+  const versions = useVersions(repo);
+  const { data, loading, error } = useNicSchemas(repo, selectedRef);
+  const isPreview = selectedRef === DEFAULT_REF;
+
+  const toolbar = (
+    <div className={styles.toolbar}>
+      <label className={styles.toolbarLabel} htmlFor="nic-schema-version">
+        NIC version
+      </label>
+      <select
+        id="nic-schema-version"
+        value={selectedRef}
+        onChange={(e) => setSelectedRef(e.target.value)}
+      >
+        {versions.map((v) => (
+          <option key={v.value} value={v.value}>
+            {v.label}
+          </option>
+        ))}
+      </select>
+      {isPreview && <span className={styles.previewBadge}>unreleased</span>}
+      <span className={styles.toolbarSpacer} />
+      <a
+        href={`https://github.com/${repo}/tree/${selectedRef}/schemas`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        source ↗
+      </a>
+    </div>
+  );
+
+  let body: React.ReactNode;
+  if (loading) {
+    body = <p>Loading configuration schema…</p>;
+  } else if (error) {
+    body = (
+      <Admonition type="danger" title="Could not load the configuration schema">
+        <p>{error}</p>
+        <p>
+          No generated schema was found for <code>{selectedRef}</code>. Release
+          tags only carry a schema once <code>schemas/</code> ships in that
+          version; pick the preview entry to view the latest.
+        </p>
+      </Admonition>
+    );
+  } else if (!data) {
+    body = null;
+  } else {
+    body = renderSections(data);
+  }
+
+  const sections = data && !loading && !error ? buildToc(data) : [];
+
+  return (
+    <div className={styles.layout}>
+      <div className={styles.content}>
+        {toolbar}
+        {body}
+      </div>
+      {sections.length > 0 && <SchemaToc sections={sections} />}
+    </div>
+  );
+}
+
+function SectionHead({
+  id,
+  title,
+  meta,
+}: {
+  id: string;
+  title: string;
+  meta: string;
+}) {
+  return (
+    <div className={styles.sectionHead}>
+      <Heading as="h2" id={id}>
+        {title}
+      </Heading>
+      <span className={styles.sectionMeta}>{meta}</span>
+    </div>
+  );
+}
+
+function renderSections(data: LoadedSchemas): JSX.Element {
+  const tlNames = Object.keys(data.topLevel.properties ?? {});
+  const tlRequired = (data.topLevel.required ?? []).length;
+
+  return (
+    <>
+      <section className={styles.section}>
+        <SectionHead
+          id="top-level"
+          title="Top-level configuration"
+          meta={`${plural(tlNames.length, 'field')} · ${tlRequired} required`}
+        />
+        <FieldList schema={data.topLevel} path={[]} level={3} />
+      </section>
+
+      {data.cluster.length > 0 && (
+        <section className={styles.section}>
+          <SectionHead
+            id="cluster-providers"
+            title="Cluster providers"
+            meta={plural(data.cluster.length, 'provider')}
+          />
+          <Tabs queryString="cluster-provider">
+            {data.cluster.map(({ name, schema }) => (
+              <TabItem key={name} value={name} label={name}>
+                <FieldList schema={schema} path={['cluster', name]} level={3} />
+              </TabItem>
+            ))}
+          </Tabs>
+        </section>
+      )}
+
+      {data.dns.length > 0 && (
+        <section className={styles.section}>
+          <SectionHead
+            id="dns-providers"
+            title="DNS providers"
+            meta={plural(data.dns.length, 'provider')}
+          />
+          <Tabs queryString="dns-provider">
+            {data.dns.map(({ name, schema }) => (
+              <TabItem key={name} value={name} label={name}>
+                <FieldList schema={schema} path={['dns', name]} level={3} />
+              </TabItem>
+            ))}
+          </Tabs>
+        </section>
+      )}
+    </>
+  );
+}
