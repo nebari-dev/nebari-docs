@@ -358,7 +358,7 @@
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  background: var(--ifm-background-color);
+  background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 10px;
   box-shadow: 0 12px 44px rgba(0, 0, 0, 0.35);
@@ -370,7 +370,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 14px;
-  background: var(--ifm-background-color);
+  background: var(--ifm-background-surface-color);
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
 }
 
