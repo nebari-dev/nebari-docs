@@ -1,6 +1,7 @@
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import styles from './styles.module.css';
 
@@ -798,7 +799,9 @@ export default function NicConfigBuilder(): JSX.Element {
         </div>
       </div>
 
-      {modalOpen && (
+      {modalOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
         <div className={styles.overlay} onClick={() => setModalOpen(false)}>
           <div
             className={styles.dialog}
@@ -838,8 +841,9 @@ export default function NicConfigBuilder(): JSX.Element {
               </button>
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </div>
   );
 }

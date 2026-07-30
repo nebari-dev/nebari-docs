@@ -103,7 +103,9 @@
 /* ---- two-column body: form + sticky output ---- */
 .builder {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  /* ~55% form / ~45% YAML; both tracks can shrink so long lines scroll inside
+     the code block rather than widening the layout. */
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 28px;
   align-items: start;
 }
