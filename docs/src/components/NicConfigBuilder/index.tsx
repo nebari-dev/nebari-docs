@@ -695,15 +695,10 @@ export default function NicConfigBuilder(): JSX.Element {
               >
                 <input
                   className={styles.input}
-                  list={`instances-${derived.name}`}
+                  placeholder={derived.instances[0] ?? (isHetzner ? 'e.g. cpx31' : 'e.g. m5.xlarge')}
                   value={state.instance}
                   onChange={(e) => set('instance', e.target.value)}
                 />
-                <datalist id={`instances-${derived.name}`}>
-                  {derived.instances.map((i) => (
-                    <option key={i} value={i} />
-                  ))}
-                </datalist>
               </LabeledField>
               {isHetzner ? (
                 <LabeledField label="Count" schemaKey="count" required>
@@ -820,7 +815,7 @@ export default function NicConfigBuilder(): JSX.Element {
               </button>
               <button
                 type="button"
-                className={styles.btn}
+                className={styles.iconBtn}
                 onClick={() => setModalOpen(false)}
                 aria-label="Close"
               >

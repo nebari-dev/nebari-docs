@@ -370,8 +370,15 @@
 }
 
 .dialogBody {
-  padding: 14px 14px 0;
+  padding: 14px;
   overflow: auto;
+}
+
+/* Let the code block sit flush in the padded body (Docusaurus adds its own
+   bottom margin, which throws off the modal's spacing). */
+.dialogBody :global(.theme-code-block),
+.dialogBody :global(pre) {
+  margin-bottom: 0;
 }
 
 .shareRow {
@@ -380,6 +387,7 @@
   gap: 8px;
   padding: 12px 14px;
   border-top: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
 }
 
 .shareLabel {
@@ -389,8 +397,28 @@
   white-space: nowrap;
 }
 
+/* The link fills the row; the label and button keep their intrinsic size. */
 .shareRow .input {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
   font-size: 12px;
+}
+
+.iconBtn {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ifm-color-emphasis-600);
+  background: none;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.iconBtn:hover {
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-200);
 }
 
 /* ---- responsive ---- */
