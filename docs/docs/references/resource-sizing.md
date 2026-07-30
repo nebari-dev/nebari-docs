@@ -35,7 +35,7 @@ A hard CPU limit mainly adds tail latency, which is the wrong trade-off for the 
 | Component               | Pod                                                       | CPU request | Memory request | CPU limit | Memory limit |
 | ----------------------- | --------------------------------------------------------- | ----------- | -------------- | --------- | ------------ |
 | ArgoCD                  | application-controller                                    | 100m        | 512Mi          | 500m      | 1Gi          |
-| ArgoCD                  | repo-server                                               | 25m         | 128Mi          | 500m      | 512Mi        |
+| ArgoCD                  | repo-server                                               | 25m         | 128Mi          | 500m      | 1Gi          |
 | ArgoCD                  | server                                                    | 25m         | 64Mi           | 200m      | 128Mi        |
 | ArgoCD                  | applicationset-controller                                 | 25m         | 64Mi           | 200m      | 128Mi        |
 | ArgoCD                  | redis                                                     | 25m         | 64Mi           | 200m      | 128Mi        |
@@ -60,11 +60,12 @@ A hard CPU limit mainly adds tail latency, which is the wrong trade-off for the 
 
 NKP disables the ArgoCD dex pod entirely, because it wires ArgoCD's sign-in directly to Keycloak and never uses dex.
 
-The ArgoCD application-controller also receives a `GOMEMLIMIT` environment variable set to 90% of its memory limit.
-`GOMEMLIMIT` is a soft ceiling that prompts the Go runtime to collect garbage before the hard limit stops the pod, and it is [ArgoCD's recommended way to avoid controller restarts under memory pressure](https://argo-cd.readthedocs.io/en/latest/operator-manual/high_availability/).
+The ArgoCD application-controller and repo-server also receive a `GOMEMLIMIT` environment variable set to 90% of their memory limit.
+`GOMEMLIMIT` is a soft ceiling that prompts the Go runtime to collect garbage before the hard limit stops the pod, and it is [ArgoCD's recommended way to avoid restarts under memory pressure](https://argo-cd.readthedocs.io/en/latest/operator-manual/high_availability/).
+These two components get it because their memory spikes far above what they use at rest, so a limit sized from resting usage stops them during ordinary work.
 
 :::note
-If you raise the application-controller's memory limit, raise `GOMEMLIMIT` to match.
+If you raise the memory limit on either of these components, raise `GOMEMLIMIT` to match.
 Changing the limit on its own moves the point at which the pod stops, without giving the Go runtime any reason to reclaim memory sooner.
 :::
 
@@ -83,8 +84,11 @@ A managed cloud cluster carries many more API objects than a single-node one, be
 Expect roughly 230Mi to 290Mi at idle on a base deployment, with higher spikes during reconciliation.
 
 **ArgoCD repo-server.**
-Memory spikes while generating manifests.
-If a sync stops with an out-of-memory error, raise this component's memory limit before changing anything else.
+Memory spikes while generating manifests and drops back afterwards, which makes its resting usage a poor guide to what it needs.
+On a 14-application cluster it rests near 45Mi and peaks around 660Mi, because a cold manifest cache means it renders every application at once.
+A fresh deployment is therefore its heaviest moment, not its lightest.
+If a sync stops with an out-of-memory error, raise the memory limit and `GOMEMLIMIT` together.
+If it still runs out, ArgoCD's other lever is the `--parallelismlimit` flag, which caps how many manifest generations run at the same time.
 
 **cert-manager controller and cainjector.**
 Both cache TLS Secrets in memory, so their memory use follows the number and size of the certificates in your cluster.
