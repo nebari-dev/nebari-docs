@@ -55,6 +55,7 @@ module.exports = {
         "how-tos/upgrade-kubernetes",
         "how-tos/destroy-cluster",
         "how-tos/keycloak-auth",
+        "how-tos/backup-restore",
         "how-tos/debug-deployment",
         "how-tos/enterprise-tls-proxy",
         {
