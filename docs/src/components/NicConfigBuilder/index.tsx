@@ -5,60 +5,178 @@ import React, { useEffect, useMemo, useState } from 'react';
 import styles from './styles.module.css';
 
 /**
- * NicConfigBuilder is a guided starter for `nebari-config.yaml`. It asks for a
- * cloud provider, a DNS provider, and a handful of always-required fields, then
- * emits a minimal but valid-shaped config to copy. It is intentionally curated
- * rather than schema-driven: the full field set lives in the
- * [Configuration schema](/docs/references/config-schema) reference, and the
- * emitted file is a starting point to refine and check with `nic validate`.
+ * NicConfigBuilder is a guided starter for `nebari-config.yaml`. The provider
+ * list and each provider's structure (region key, node-group shape, whether a
+ * dedicated Longhorn storage pool is expressible) are derived at build time from
+ * the same JSON Schema the CLI validates against, for the selected NIC version.
+ *
+ * The one thing the schema does not carry is region/machine-type *values* (they
+ * are free-form strings), so a small curated map supplies suggestions for them;
+ * the fields stay editable. The emitted file is a starting point to refine and
+ * check with `nic validate`.
  */
 
-type ProviderKey = 'aws' | 'gcp' | 'azure' | 'hetzner';
+const DEFAULT_REPO = 'nebari-dev/nebari-infrastructure-core';
+const DEFAULT_REF = 'feat/config-schema-gen-v2';
 
-type ProviderMeta = {
-  label: string;
-  // `stub: true` means the cloud is supported by NIC but not yet wired into this
-  // builder; its tab shows a hand-off notice instead of a form. To enable a
-  // provider, drop `stub` and fill the fields below with values confirmed
-  // against the schema (do not guess).
-  stub?: boolean;
-  regionLabel?: string;
-  regions?: string[];
-  instances?: string[];
-  // Node-group shape the provider's schema expects: 'aws' uses
-  // instance/min_nodes/max_nodes; 'hetzner' uses instance_type/count and needs a
-  // master group. kubernetes_version is required by every provider's schema.
-  nodeShape?: 'aws' | 'hetzner';
-  kubernetesVersion?: string;
-  // Whether the provider can express a dedicated Longhorn storage node group.
-  // Requires per-node-group labels/taints, which the Hetzner schema lacks.
-  dedicatedStorage?: boolean;
-};
+const schemasBase = (repo: string, ref: string) =>
+  `https://raw.githubusercontent.com/${repo}/${ref}/schemas`;
 
-const PROVIDERS: Record<ProviderKey, ProviderMeta> = {
+// The only non-schema data: region/instance suggestions and a starter
+// kubernetes_version per provider (the schema has none of these as values).
+// Providers absent here still work — region/instance become free-text.
+type Hint = { label: string; k8s: string; regions: string[]; instances: string[] };
+
+const CURATED_HINTS: Record<string, Hint> = {
   aws: {
     label: 'AWS',
-    regionLabel: 'region',
+    k8s: '1.34',
     regions: ['us-west-2', 'us-east-1', 'eu-west-1', 'ap-southeast-2'],
     instances: ['m5.large', 'm5.xlarge', 'm5.2xlarge'],
-    nodeShape: 'aws',
-    kubernetesVersion: '1.34',
-    dedicatedStorage: true,
   },
-  gcp: { label: 'GCP', stub: true },
-  azure: { label: 'Azure', stub: true },
   hetzner: {
     label: 'Hetzner',
-    regionLabel: 'location',
+    k8s: '1.32',
     regions: ['fsn1', 'nbg1', 'hel1', 'ash', 'hil', 'sin'],
     instances: ['cpx21', 'cpx31', 'cpx41', 'cpx51'],
-    nodeShape: 'hetzner',
-    kubernetesVersion: '1.32',
   },
+  gcp: { label: 'GCP', k8s: '1.32', regions: [], instances: [] },
+  azure: { label: 'Azure', k8s: '1.32', regions: [], instances: [] },
 };
 
+type JSONSchema = {
+  type?: string | string[];
+  properties?: Record<string, JSONSchema>;
+  $defs?: Record<string, JSONSchema>;
+};
+
+type Derived = {
+  name: string;
+  label: string;
+  regionKey: 'region' | 'location';
+  nodeShape: 'aws' | 'hetzner';
+  dedicatedStorage: boolean;
+  regions: string[];
+  instances: string[];
+  k8s: string;
+};
+
+// Derive a provider's shape from its schema. Returns null for providers with no
+// region/node-groups (existing, local) — not buildable as a greenfield starter.
+function deriveProvider(name: string, doc: JSONSchema): Derived | null {
+  const defs = doc.$defs ?? {};
+  const cfg = Object.entries(defs).find(([k]) => k.endsWith('.Config'))?.[1];
+  const props = cfg?.properties ?? {};
+  const hasRegion = 'region' in props;
+  const hasLocation = 'location' in props;
+  if (!hasRegion && !hasLocation) {
+    return null;
+  }
+  const ng = Object.entries(defs).find(([k]) => k.toLowerCase().endsWith('nodegroup'))?.[1];
+  const ngProps = ng?.properties ?? {};
+  if (Object.keys(ngProps).length === 0) {
+    return null;
+  }
+  const hint = CURATED_HINTS[name];
+  return {
+    name,
+    label: hint?.label ?? name.toUpperCase(),
+    regionKey: hasLocation ? 'location' : 'region',
+    nodeShape: 'instance_type' in ngProps ? 'hetzner' : 'aws',
+    dedicatedStorage: 'longhorn' in props && 'labels' in ngProps && 'taints' in ngProps,
+    regions: hint?.regions ?? [],
+    instances: hint?.instances ?? [],
+    k8s: hint?.k8s ?? '1.32',
+  };
+}
+
+function useProviders(repo: string, ref: string) {
+  const [data, setData] = useState<Derived[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const base = schemasBase(repo, ref);
+    setLoading(true);
+    setError(null);
+
+    async function load() {
+      try {
+        const mres = await fetch(`${base}/manifest.json`, {
+          headers: { Accept: 'application/json' },
+        });
+        if (!mres.ok) {
+          throw new Error(`Failed to fetch manifest.json: ${mres.status} ${mres.statusText}`);
+        }
+        const manifest = (await mres.json()) as { providers?: string[] };
+        const derived = await Promise.all(
+          (manifest.providers ?? []).map(async (name) => {
+            const r = await fetch(`${base}/providers/${name}.json`, {
+              headers: { Accept: 'application/json' },
+            });
+            if (!r.ok) {
+              return null;
+            }
+            return deriveProvider(name, (await r.json()) as JSONSchema);
+          }),
+        );
+        if (!cancelled) {
+          setData(derived.filter((d): d is Derived => d !== null));
+          setLoading(false);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : String(err));
+          setLoading(false);
+        }
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [repo, ref]);
+
+  return { data, loading, error };
+}
+
+type VersionOption = { value: string; label: string };
+const PREVIEW_OPTION: VersionOption = { value: DEFAULT_REF, label: `${DEFAULT_REF} (preview)` };
+
+// Upstream release tags, so the builder can target a specific NIC version.
+// Non-fatal on failure — the preview option alone drives the builder.
+function useVersions(repo: string): VersionOption[] {
+  const [tags, setTags] = useState<VersionOption[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${repo}/tags?per_page=100`, {
+          headers: { Accept: 'application/vnd.github+json' },
+        });
+        if (!res.ok) {
+          return;
+        }
+        const json = (await res.json()) as { name: string }[];
+        if (!cancelled) {
+          setTags(json.map((t) => ({ value: t.name, label: t.name })));
+        }
+      } catch {
+        /* preview option is enough */
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [repo]);
+  return [PREVIEW_OPTION, ...tags];
+}
+
 type BuilderState = {
-  provider: ProviderKey;
+  provider: string;
   projectName: string;
   domain: string;
   region: string;
@@ -79,12 +197,12 @@ type BuilderState = {
   zoneId: string;
 };
 
-const initialFor = (provider: ProviderKey): BuilderState => ({
-  provider,
+const INITIAL_STATE: BuilderState = {
+  provider: '',
   projectName: 'my-nebari',
   domain: 'nebari.example.com',
-  region: PROVIDERS[provider].regions?.[0] ?? '',
-  kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
+  region: '',
+  kubernetesVersion: '',
   certType: 'letsencrypt',
   acmeEmail: 'admin@example.com',
   gitUrl: 'https://github.com/my-org/my-nebari-config.git',
@@ -93,16 +211,15 @@ const initialFor = (provider: ProviderKey): BuilderState => ({
   gitAuthMethod: 'token',
   gitEnvVar: 'GIT_TOKEN',
   nodeGroupName: 'general',
-  instance: PROVIDERS[provider].instances?.[0] ?? '',
+  instance: '',
   minNodes: 1,
   maxNodes: 5,
   dedicatedStorage: false,
   useCloudflare: true,
   zoneId: '',
-});
+};
 
-function buildYaml(s: BuilderState): string {
-  const meta = PROVIDERS[s.provider];
+function buildYaml(s: BuilderState, d: Derived): string {
   const lines: string[] = [];
 
   lines.push(`project_name: ${s.projectName || 'my-nebari'}`);
@@ -128,13 +245,13 @@ function buildYaml(s: BuilderState): string {
     }`,
   );
 
-  const k8s = s.kubernetesVersion || meta.kubernetesVersion || '';
+  const k8s = s.kubernetesVersion || d.k8s;
   const group = s.nodeGroupName || 'general';
 
   lines.push('cluster:');
   lines.push(`  ${s.provider}:`);
 
-  if (meta.nodeShape === 'hetzner') {
+  if (d.nodeShape === 'hetzner') {
     // Hetzner (k3s) needs exactly one master node group; the builder adds it and
     // treats the named group as workers. Node groups use instance_type/count.
     const workers = group === 'master' ? 'workers' : group;
@@ -149,8 +266,8 @@ function buildYaml(s: BuilderState): string {
     lines.push(`        instance_type: ${s.instance}`);
     lines.push(`        count: ${s.maxNodes}`);
   } else {
-    const dedicated = s.dedicatedStorage && meta.dedicatedStorage;
-    lines.push(`    region: ${s.region}`);
+    const dedicated = s.dedicatedStorage && d.dedicatedStorage;
+    lines.push(`    ${d.regionKey}: ${s.region}`);
     lines.push(`    kubernetes_version: "${k8s}"`);
     lines.push('    node_groups:');
     lines.push(`      ${group}:`);
@@ -241,12 +358,16 @@ function Section({ label, children }: { label: string; children: React.ReactNode
 }
 
 export default function NicConfigBuilder(): JSX.Element {
-  const [state, setState] = useState<BuilderState>(() => initialFor('aws'));
+  const [selectedRef, setSelectedRef] = useState(DEFAULT_REF);
+  const versions = useVersions(DEFAULT_REPO);
+  const { data: providers, loading, error } = useProviders(DEFAULT_REPO, selectedRef);
+  const [state, setState] = useState<BuilderState>(INITIAL_STATE);
   const [modalOpen, setModalOpen] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
-  const meta = PROVIDERS[state.provider];
-  const yaml = useMemo(() => buildYaml(state), [state]);
-  const isHetzner = meta.nodeShape === 'hetzner';
+
+  const derived = providers?.find((p) => p.name === state.provider) ?? null;
+  const isHetzner = derived?.nodeShape === 'hetzner';
+  const yaml = useMemo(() => (derived ? buildYaml(state, derived) : ''), [state, derived]);
 
   // Restore state from a shared link and show the config front-and-centre.
   useEffect(() => {
@@ -258,13 +379,33 @@ export default function NicConfigBuilder(): JSX.Element {
       return;
     }
     try {
-      const decoded = decodeState(c);
-      setState((prev) => ({ ...prev, ...decoded }));
+      setState((prev) => ({ ...prev, ...decodeState(c) }));
       setModalOpen(true);
     } catch {
       /* ignore malformed share links */
     }
   }, []);
+
+  // Once providers load, pick a default provider (and its suggested defaults)
+  // unless the state already names a valid one (e.g. from a shared link).
+  useEffect(() => {
+    if (!providers || providers.length === 0) {
+      return;
+    }
+    setState((prev) => {
+      if (prev.provider && providers.some((p) => p.name === prev.provider)) {
+        return prev;
+      }
+      const p = providers[0];
+      return {
+        ...prev,
+        provider: p.name,
+        region: p.regions[0] ?? prev.region,
+        instance: p.instances[0] ?? prev.instance,
+        kubernetesVersion: prev.kubernetesVersion || p.k8s,
+      };
+    });
+  }, [providers]);
 
   useEffect(() => {
     if (!modalOpen) {
@@ -297,16 +438,16 @@ export default function NicConfigBuilder(): JSX.Element {
   const set = <K extends keyof BuilderState>(key: K, value: BuilderState[K]) =>
     setState((prev) => ({ ...prev, [key]: value }));
 
-  // Switching provider resets the per-provider defaults (region, instance,
-  // kubernetes_version) to that provider's values.
-  const changeProvider = (provider: ProviderKey) =>
+  const changeProvider = (name: string) => {
+    const p = providers?.find((x) => x.name === name);
     setState((prev) => ({
       ...prev,
-      provider,
-      region: PROVIDERS[provider].regions?.[0] ?? '',
-      instance: PROVIDERS[provider].instances?.[0] ?? '',
-      kubernetesVersion: PROVIDERS[provider].kubernetesVersion ?? '',
+      provider: name,
+      region: p?.regions[0] ?? '',
+      instance: p?.instances[0] ?? '',
+      kubernetesVersion: p?.k8s ?? prev.kubernetesVersion,
     }));
+  };
 
   const download = () => {
     const blob = new Blob([yaml], { type: 'text/yaml' });
@@ -320,24 +461,71 @@ export default function NicConfigBuilder(): JSX.Element {
     setTimeout(() => URL.revokeObjectURL(url), 2000);
   };
 
+  const isPreview = selectedRef === DEFAULT_REF;
+  const versionBar = (
+    <div className={styles.versionBar}>
+      <label className={styles.versionLabel} htmlFor="nic-builder-version">
+        NIC version
+      </label>
+      <select
+        id="nic-builder-version"
+        className={styles.input}
+        value={selectedRef}
+        onChange={(e) => setSelectedRef(e.target.value)}
+      >
+        {versions.map((v) => (
+          <option key={v.value} value={v.value}>
+            {v.label}
+          </option>
+        ))}
+      </select>
+      {isPreview && <span className={styles.previewBadge}>unreleased</span>}
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <div className={styles.wrapper}>
+        {versionBar}
+        <p>Loading providers from the {selectedRef} schema…</p>
+      </div>
+    );
+  }
+
+  if (error || !providers || providers.length === 0) {
+    return (
+      <div className={styles.wrapper}>
+        {versionBar}
+        <div className={styles.stub}>
+          <div className={styles.stubTitle}>Could not load the schema</div>
+          <p>
+            No provider schema was found for <code>{selectedRef}</code>. Release tags carry a
+            schema only once <code>schemas/</code> ships in that version; pick the preview
+            entry, or write the config by hand from the{' '}
+            <Link to="/docs/references/config-schema">configuration schema</Link>.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const providerCards = (
     <div>
       <div className={styles.providerLabel}>Cloud provider</div>
       <div className={styles.providerCards}>
-        {(Object.keys(PROVIDERS) as ProviderKey[]).map((key) => {
-          const p = PROVIDERS[key];
-          const active = state.provider === key;
+        {providers.map((p) => {
+          const active = state.provider === p.name;
           return (
             <button
-              key={key}
+              key={p.name}
               type="button"
-              className={`${styles.providerCard} ${active ? styles.providerCardActive : ''} ${
-                p.stub ? styles.providerCardStub : ''
-              }`}
-              onClick={() => changeProvider(key)}
+              className={`${styles.providerCard} ${active ? styles.providerCardActive : ''}`}
+              onClick={() => changeProvider(p.name)}
             >
               <span className={styles.providerName}>{p.label}</span>
-              <span className={styles.providerStatus}>{p.stub ? 'Not wired yet' : 'Ready'}</span>
+              <span className={styles.providerStatus}>
+                {p.regions.length ? 'Suggested values' : 'Free-text values'}
+              </span>
             </button>
           );
         })}
@@ -345,28 +533,18 @@ export default function NicConfigBuilder(): JSX.Element {
     </div>
   );
 
-  // A supported cloud that this builder does not yet cover: hand the reader off
-  // to the schema reference rather than emitting a half-guessed config.
-  if (meta.stub) {
+  if (!derived) {
     return (
       <div className={styles.wrapper}>
+        {versionBar}
         {providerCards}
-        <div className={styles.stub}>
-          <div className={styles.stubTitle}>Not wired into this builder yet</div>
-          <p>
-            NIC supports {meta.label}, but its regions and machine types are not confirmed
-            against the schema, so the builder will not guess them.
-          </p>
-          <Link className={styles.stubLink} to="/docs/references/config-schema">
-            Write it from the schema →
-          </Link>
-        </div>
       </div>
     );
   }
 
   return (
     <div className={styles.wrapper}>
+      {versionBar}
       <div className={styles.builder}>
         <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
           {providerCards}
@@ -472,20 +650,20 @@ export default function NicConfigBuilder(): JSX.Element {
             <div className={styles.grid2}>
               <LabeledField
                 label={isHetzner ? 'Location' : 'Region'}
-                schemaKey={`cluster.${state.provider}.${meta.regionLabel ?? 'region'}`}
+                schemaKey={`cluster.${state.provider}.${derived.regionKey}`}
                 required
               >
-                <select
+                <input
                   className={styles.input}
+                  list={`regions-${derived.name}`}
                   value={state.region}
                   onChange={(e) => set('region', e.target.value)}
-                >
-                  {(meta.regions ?? []).map((r) => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
+                />
+                <datalist id={`regions-${derived.name}`}>
+                  {derived.regions.map((r) => (
+                    <option key={r} value={r} />
                   ))}
-                </select>
+                </datalist>
               </LabeledField>
               <LabeledField label="Kubernetes version" schemaKey="kubernetes_version" required>
                 <input
@@ -515,17 +693,12 @@ export default function NicConfigBuilder(): JSX.Element {
                 schemaKey={isHetzner ? 'instance_type' : 'instance'}
                 required
               >
-                <select
+                <input
                   className={styles.input}
+                  placeholder={derived.instances[0] ?? (isHetzner ? 'e.g. cpx31' : 'e.g. m5.xlarge')}
                   value={state.instance}
                   onChange={(e) => set('instance', e.target.value)}
-                >
-                  {(meta.instances ?? []).map((i) => (
-                    <option key={i} value={i}>
-                      {i}
-                    </option>
-                  ))}
-                </select>
+                />
               </LabeledField>
               {isHetzner ? (
                 <LabeledField label="Count" schemaKey="count" required>
@@ -564,7 +737,7 @@ export default function NicConfigBuilder(): JSX.Element {
 
           <Section label="Options">
             <div className={styles.options}>
-              {meta.dedicatedStorage && (
+              {derived.dedicatedStorage && (
                 <label className={styles.option}>
                   <input
                     type="checkbox"
@@ -642,7 +815,7 @@ export default function NicConfigBuilder(): JSX.Element {
               </button>
               <button
                 type="button"
-                className={styles.btn}
+                className={styles.iconBtn}
                 onClick={() => setModalOpen(false)}
                 aria-label="Close"
               >
@@ -654,7 +827,12 @@ export default function NicConfigBuilder(): JSX.Element {
             </div>
             <div className={styles.shareRow}>
               <span className={styles.shareLabel}>Share link</span>
-              <input className={styles.input} readOnly value={shareUrl} onFocus={(e) => e.target.select()} />
+              <input
+                className={styles.input}
+                readOnly
+                value={shareUrl}
+                onFocus={(e) => e.target.select()}
+              />
               <button type="button" className={styles.btn} onClick={copyLink}>
                 {copiedLink ? 'Copied' : 'Copy link'}
               </button>

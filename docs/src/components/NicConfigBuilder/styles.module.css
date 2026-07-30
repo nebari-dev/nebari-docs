@@ -4,6 +4,45 @@
   margin: 1.5rem 0;
 }
 
+/* ---- version selector ---- */
+.versionBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 22px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-global-radius);
+}
+
+.versionLabel {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.versionBar .input {
+  width: auto;
+  font-size: 12.5px;
+  padding: 5px 8px;
+}
+
+.previewBadge {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--ifm-color-warning-dark, #8a5a00);
+  background: var(--ifm-color-warning-contrast-background, #fdf4e3);
+  border: 1px solid currentColor;
+}
+
 /* ---- provider cards ---- */
 .providerLabel {
   font-size: 10.5px;
@@ -331,8 +370,15 @@
 }
 
 .dialogBody {
-  padding: 14px 14px 0;
+  padding: 14px;
   overflow: auto;
+}
+
+/* Let the code block sit flush in the padded body (Docusaurus adds its own
+   bottom margin, which throws off the modal's spacing). */
+.dialogBody :global(.theme-code-block),
+.dialogBody :global(pre) {
+  margin-bottom: 0;
 }
 
 .shareRow {
@@ -341,6 +387,7 @@
   gap: 8px;
   padding: 12px 14px;
   border-top: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
 }
 
 .shareLabel {
@@ -350,8 +397,28 @@
   white-space: nowrap;
 }
 
+/* The link fills the row; the label and button keep their intrinsic size. */
 .shareRow .input {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
   font-size: 12px;
+}
+
+.iconBtn {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ifm-color-emphasis-600);
+  background: none;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.iconBtn:hover {
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-200);
 }
 
 /* ---- responsive ---- */
