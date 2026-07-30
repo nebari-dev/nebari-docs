@@ -73,6 +73,7 @@ module.exports = {
       link: { type: "doc", id: "references/index" },
       items: [
         "references/personas",
+        "references/resource-sizing",
       ],
     },
     {
