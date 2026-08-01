@@ -154,7 +154,8 @@ This file is copied to nebari-dev/nebari-docs using a GitHub Action. -->
 ### New Contributors
 
 - @soapy1 made their first contribution in https://github.com/nebari-dev/nebari/pull2891
-- @smokestacklightnin made their first contribution in https://github.com/nebari-dev/nebari/pull/2839
+- @smokestacklightnin made their first contribution in https://github.com/nebari-dev
+  /nebari/pull/2839
 - @kernel-loophole made their first contribution in https://github.com/nebari-dev/nebari/pull/2916
 
 **Full Changelog**: https://github.com/nebari-dev/nebari/compare/2024.12.1...2025.2.1
