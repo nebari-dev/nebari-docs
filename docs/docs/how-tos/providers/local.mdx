@@ -94,14 +94,14 @@ You can also write a standalone kubeconfig with `nic kubeconfig -f <config-file>
 
 ## Access
 
-`domain` (for example `nebari.local`) is not a real DNS name, so you map it to the gateway's LoadBalancer IP on your own machine. Find the IP that MetalLB assigned to the gateway service, then add it to your `/etc/hosts`:
+`domain` (for example `nebari.local`) is not a real DNS name, so you map it to the gateway's LoadBalancer IP on your own machine. Find the IP that MetalLB assigned to the gateway service, then add it to your `/etc/hosts` (replace `<gateway-ip>` with that address):
 
-```bash
-# <gateway-ip>  nebari.local
+```
+<gateway-ip>  nebari.local
 ```
 
 :::tip
-Because the certificate is self-signed, your browser will warn the first time you visit. You can safely accept the exception for a local cluster. If the browser refuses to show an "accept the risk" option, type <code>thisisunsafe</code> while the warning page is focused in Chrome, or set `network.stricttransportsecurity.preloadlist` to `false` in Firefox's `about:config`.
+Because the certificate is self-signed, your browser will warn the first time you visit. You can safely accept the exception for a local cluster. If the browser refuses to show an "accept the risk" option, type `thisisunsafe` while the warning page is focused in Chrome, or set `network.stricttransportsecurity.preloadlist` to `false` in Firefox's `about:config`.
 :::
 
 The [local kind development guide](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/local-kind-development.md) covers the gateway service name, port overrides, and networking in more detail.

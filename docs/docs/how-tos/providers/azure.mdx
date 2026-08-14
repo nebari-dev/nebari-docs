@@ -9,7 +9,7 @@ description: End-to-end how-to for deploying, updating, and destroying NKP on Az
 This guide walks you through a deployment from end to end — from an empty subscription to a running cluster you can manage and tear down. If you have deployed NKP on AWS, the flow will feel familiar: the differences are mostly in how you authenticate and in a few Azure-specific fields.
 
 :::warning[A cloud deployment is not free]
-Deploying NKP on Azure provisions real, billed infrastructure — it is **not** a free-tier workload. The AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer all bill from the moment they are created, and the smallest working cluster needs multi-GB VMs (the example uses 4 vCPU / 16 GB nodes) that are well beyond free-tier sizes. You can create a free Azure account and its 30-day credit can fund a short evaluation, but to try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
+A NKP deployment on Azure will **not** fall within free-tier usage — the AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer lead to additional charges, and the smallest working cluster needs multi-GB VMs well beyond free-tier sizes. We recommend reviewing the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/), or checking with your cloud administrator, before you deploy. A free Azure account's 30-day credit can fund a short evaluation, but to try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
 :::
 
 ## What your team gets
@@ -31,11 +31,11 @@ You will need an Azure subscription you can deploy into. A [free Azure account](
 
 - **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
 - **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase, and NKP will not warn you before you hit the limit.
-- **Cost:** the AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer bill from the moment they are created. See [Cost considerations](#cost-considerations) for the full list.
+- **Cost:** NKP is a billed workload; see [Cost considerations](#cost-considerations) for the full breakdown of what charges.
 
 ### Credentials
 
-`nic` needs one thing from you directly — your **subscription ID** — and resolves everything else through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/azure-sdk-authentication). It tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
+`nic` needs one thing from you directly — your **subscription ID** — and resolves everything else through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/sdk/authentication/authentication-overview). It tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
 
 For most people the simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
 
@@ -135,8 +135,7 @@ cluster:
     region: eastus                # an AKS-supported region (required)
     kubernetes_version: "1.34"
     node_groups:                  # at least one pool is required
-      # AKS needs one System node pool for cluster services. Mark it explicitly:
-      # nic defaults an unset `mode` to User, so without this you get no System pool.
+      # One pool must be mode: System (see the warning below).
       system:
         instance: Standard_D4_v3
         min_nodes: 1

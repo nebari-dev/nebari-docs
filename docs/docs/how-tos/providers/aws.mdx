@@ -7,7 +7,7 @@ description: End-to-end how-to for deploying, updating, and destroying NKP on AW
 This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastructure Core CLI), from an empty AWS account to a running cluster you can manage and tear down.
 
 :::warning[A cloud deployment is not free]
-Deploying NKP on AWS provisions real, billed infrastructure — it is **not** a free-tier workload. The EKS control plane, NAT gateways, and load balancers bill regardless of instance size, and the smallest working cluster needs multi-GB nodes (the example uses a 4 vCPU / 16 GB instance) that are well beyond free-tier sizes. To try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
+A NKP deployment on AWS will **not** fall within free-tier usage — some of its components (the EKS control plane, NAT gateways, and load balancers) lead to additional charges regardless of instance size, and the smallest working cluster needs multi-GB nodes well beyond free-tier sizes. We recommend reviewing the [AWS pricing documentation](https://aws.amazon.com/pricing/), or checking with your cloud administrator, before you deploy. To try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
 :::
 
 ## What your team gets
@@ -23,7 +23,7 @@ When `nic deploy` finishes, your team will have all [standard NKP services](/doc
 
 You'll need access to an AWS account you can deploy into. If you don't have one, [create an AWS account](https://aws.amazon.com/) — a new account works, but keep the note above in mind: NKP is a billed workload, not a free-tier one.
 
-- **Region:** pick one where [EKS is available](https://docs.aws.amazon.com/eks/latest/userguide/eks-regions.html) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
+- **Region:** pick one where [EKS is available](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
 - **Quotas:** confirm your region has enough [EKS service quota](https://docs.aws.amazon.com/eks/latest/userguide/service-quotas.html) for the cluster you're about to create. New accounts often need an increase.
 - **Cost:** EKS, NAT gateways, load balancers, and EFS all bill from day one, regardless of instance size. See [Cost considerations](#cost-considerations) for the full list.
 
