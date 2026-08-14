@@ -106,6 +106,45 @@ Because the certificate is self-signed, your browser will warn the first time yo
 
 The [local kind development guide](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/local-kind-development.md) covers the gateway service name, port overrides, and networking in more detail.
 
+## Use a locally-trusted certificate (optional)
+
+The self-signed certificate is fine for a quick look, but you can avoid the browser warning entirely with [mkcert](https://github.com/FiloSottile/mkcert). mkcert installs a local certificate authority (CA) that your browser trusts and then issues certificates signed by it, so NKP serves a certificate the browser accepts and `https://nebari.local` gets a normal padlock.
+
+First, [install mkcert](https://github.com/FiloSottile/mkcert#installation) and trust its local CA (a one-time step):
+
+```bash
+mkcert -install
+```
+
+Then generate a certificate that covers your domain. NKP serves some services as subdomains (`keycloak.<domain>`, `argocd.<domain>`), so include a wildcard alongside the apex; a wildcard on its own does not match the bare `nebari.local`:
+
+```bash
+mkcert nebari.local "*.nebari.local"
+# writes nebari.local+1.pem and nebari.local+1-key.pem in the current directory
+```
+
+Point your config at those files with `certificate.type: existing`, using absolute paths:
+
+```yaml
+project_name: my-nebari-local
+domain: nebari.local
+
+certificate:
+  type: existing
+  files:
+    cert_file: /absolute/path/to/nebari.local+1.pem
+    key_file: /absolute/path/to/nebari.local+1-key.pem
+
+cluster:
+  local: {}
+```
+
+Deploy (or re-deploy) with this config. `nic` reads the two files from your machine, creates the gateway TLS secret in the cluster, and the gateway serves your mkcert certificate. Because you trusted the local CA with `mkcert -install`, `nebari.local` and its subdomains now load without a warning.
+
+:::note
+Make sure `nebari.local` resolves to the gateway IP first (see [Access](#access)) so the certificate matches the address you visit. Re-running `nic deploy` with updated files refreshes the certificate in place. For the full set of certificate options (environment variables, a pre-created secret, non-local domains), see the upstream [custom TLS certificate guide](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/custom-tls-certificate.md).
+:::
+
 ## First sign-in
 
 See [Keycloak authentication](/docs/how-tos/keycloak-auth) for first sign-in.
