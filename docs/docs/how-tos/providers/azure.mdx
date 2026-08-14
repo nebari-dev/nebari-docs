@@ -1,11 +1,191 @@
 ---
 title: Microsoft Azure
 slug: /how-tos/providers/azure
-description: Planned NKP support for Microsoft Azure.
+description: End-to-end how-to for deploying, updating, and destroying NKP on Azure AKS, including credentials and cost considerations.
 ---
 
-import PlannedProvider from '@site/src/components/PlannedProvider';
+This guide walks through deploying NKP on Microsoft Azure with `nic` (the Nebari Infrastructure Core CLI), from an empty subscription to a running cluster you can manage and tear down. `nic` provisions a managed AKS cluster, analogous to the AWS EKS path.
 
-# Microsoft Azure
+## What your team gets
 
-<PlannedProvider stub="azure" />
+When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
+
+- **A managed Kubernetes cluster** ready for workloads (Azure AKS, with a System and one or more User node pools).
+- **Block storage** through Azure managed disks (the `managed-csi` StorageClass).
+
+:::note
+Shared read-write-many storage (the Longhorn/EFS equivalent) is not yet wired for Azure, so persistent volumes are read-write-once managed disks.
+:::
+
+## Prerequisites
+
+### Azure subscription
+
+You'll need access to an Azure subscription you can deploy into. If you don't have one, [create a free account](https://azure.microsoft.com/free/).
+
+- **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
+- **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase.
+- **Cost:** NKP does not fit within the free tier; the AKS node pool VMs, managed disks, and load balancer all bill from day one.
+
+### Credentials
+
+`nic` requires your subscription ID and resolves everything else through the standard Azure credential chain ([`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/azure-sdk-authentication)), which tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
+
+The simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
+
+```bash
+az login
+az account show --query id --output tsv   # this is your subscription ID
+```
+
+For automation, create a service principal instead and use its client/tenant/secret:
+
+```bash
+az ad sp create-for-rbac --name nic-deploy --role Contributor \
+  --scopes /subscriptions/<subscription-id>
+```
+
+### Install nic
+
+Follow the [Install NIC](/docs/get-started/install) guide to download and install the `nic` CLI for your platform.
+
+### GitOps repository
+
+See [GitOps repository](/docs/how-tos/prepare-to-deploy#gitops-repository) in the Prepare to deploy guide.
+
+### Secrets and credentials
+
+From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
+
+```bash
+cd /path/to/your-gitops-repo
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
+```
+
+Then set your subscription ID and the GitOps tokens. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/prepare-to-deploy#secrets-and-credentials) in the Prepare to deploy guide.
+
+```bash
+# Azure
+AZURE_SUBSCRIPTION_ID=00000000-0000-0000-0000-000000000000  # az account show --query id
+# Service-principal auth (only if you are not using `az login`):
+# AZURE_CLIENT_ID=...
+# AZURE_TENANT_ID=...
+# AZURE_CLIENT_SECRET=...
+```
+
+`nic` exports `AZURE_SUBSCRIPTION_ID` to the underlying OpenTofu run as `ARM_SUBSCRIPTION_ID`; you don't need to set the `ARM_*` variables yourself.
+
+## Cost considerations
+
+A NKP deployment provisions several Azure services that bill from day one. Check the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/) for current rates in your region.
+
+- **[AKS control plane](https://azure.microsoft.com/pricing/details/kubernetes-service/):** the `Free` SKU tier (the example default) has no control-plane charge; `Standard` adds a per-cluster hourly fee for the uptime SLA.
+- **[Virtual machines](https://azure.microsoft.com/pricing/details/virtual-machines/linux/)** in your node pools: per-hour VM cost for each running node.
+- **[Managed disks](https://azure.microsoft.com/pricing/details/managed-disks/):** OS disks on each node plus any `managed-csi` persistent volumes.
+- **[Load balancer](https://azure.microsoft.com/pricing/details/load-balancer/):** the Standard Load Balancer AKS uses for ingress, plus a public IP.
+- **[Bandwidth](https://azure.microsoft.com/pricing/details/bandwidth/):** outbound data transfer.
+
+## Configuration
+
+Download the starter config from `nebari-infrastructure-core`:
+
+- **[`azure-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/azure-config.yaml)**.
+
+```bash
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/azure-config.yaml
+```
+
+:::note
+In later steps, `<config-file>` refers to this local copy (`azure-config.yaml`).
+:::
+
+At minimum, edit these fields:
+
+```yaml
+project_name: my-cluster          # lowercase alphanumeric
+domain: nebari.example.com        # a hostname you own
+
+certificate:
+  type: letsencrypt
+  acme:
+    email: you@example.com        # required for Let's Encrypt; renewal notices go here
+
+git_repository:
+  url: "git@github.com:<your-org>/<your-gitops-repo>.git"
+  path: clusters/my-cluster       # subdirectory in the repo; conventionally matches project_name
+  auth:
+    ssh_key_env: GIT_SSH_PRIVATE_KEY
+
+cluster:
+  azure:
+    region: eastus                # an AKS-supported region
+    kubernetes_version: "1.34"
+    node_groups:
+      # Exactly one node group must be mode: System (it hosts cluster services).
+      system:
+        instance: Standard_D4_v3
+        min_nodes: 1
+        max_nodes: 3
+        mode: System
+      user:
+        instance: Standard_D8_v3
+        min_nodes: 1
+        max_nodes: 5
+```
+
+By default `nic` creates a resource group named `<project_name>-rg`. Set `resource_group_name` to deploy into one you manage.
+
+For the full schema (custom networking, private clusters, `sku_tier`, Node Auto Provisioning, authorized IP ranges), see the [Azure provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#25-clusterazure-aks).
+
+## Deploy and verify
+
+Follow [Deploy a cluster](/docs/how-tos/deploy-cluster) to deploy and verify. The first deployment takes at least 20 minutes as AKS provisions the control plane and node pools, followed by ArgoCD syncing foundational services.
+
+Azure does not write a kubeconfig to a cache path. Fetch a cluster-admin kubeconfig with `nic` and point `kubectl` at it:
+
+```bash
+nic kubeconfig -f <config-file> -o kubeconfig
+export KUBECONFIG=$PWD/kubeconfig
+```
+
+Then follow the [Deploy and verify](/docs/how-tos/deploy#deploy-and-verify) steps to check the cluster and ArgoCD applications. See [Cloudflare DNS](/docs/how-tos/cloudflare-dns) for DNS setup (Cloudflare or a manual A record).
+
+## First sign-in
+
+See [Keycloak authentication](/docs/how-tos/keycloak-auth) for first sign-in.
+
+## Update an existing deployment
+
+To change something about a running cluster (scale a node pool, add a pool, change tags), edit your config and re-run the deploy commands as described in [Update a cluster](/docs/how-tos/update-cluster).
+
+:::warning
+Changing `region`, `project_name`, or `resource_group_name` triggers destructive resource recreation. Treat these as one-way decisions.
+:::
+
+## Upgrade Kubernetes version
+
+AKS upgrades one minor version at a time — you cannot skip versions or downgrade. To go from 1.32 to 1.34 you must upgrade twice:
+
+```
+1.32 → 1.33 → 1.34
+```
+
+Set `kubernetes_version` under `cluster.azure` in your config:
+
+```yaml
+cluster:
+  azure:
+    kubernetes_version: "1.33"   # was "1.32"
+```
+
+AKS upgrades the control plane first, then rolls each node pool one node at a time — surging in a new node, waiting for it to become Ready, then draining and removing the old one. Plan for 20–40 minutes total depending on the number of node pools.
+
+See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgrade commands and post-upgrade verification steps.
+
+## Destroy
+
+Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster).
+
+`nic destroy` removes the AKS cluster, its node pools, the load balancer, and (when `nic` created it) the `<project_name>-rg` resource group. If a resource fails to delete, remove it manually in the Azure portal before retrying with `--force`.
+
+Always confirm in the Azure portal that no orphan resources remain — VMs, managed disks, public IPs, and load balancers can keep billing if they're left behind.
