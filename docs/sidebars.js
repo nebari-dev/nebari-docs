@@ -59,10 +59,10 @@ module.exports = {
           link: { type: "doc", id: "how-tos/providers/index" },
           items: [
             "how-tos/providers/hetzner",
-            "how-tos/providers/aws", 
+            "how-tos/providers/aws",
             "how-tos/providers/azure",
-            "how-tos/providers/gcp",
             "how-tos/providers/local",
+            "how-tos/providers/gcp",
           ],
         },
       ],

@@ -6,6 +6,10 @@ description: End-to-end how-to for deploying, updating, and destroying NKP on AW
 
 This guide walks through deploying NKP on AWS with `nic` (the Nebari Infrastructure Core CLI), from an empty AWS account to a running cluster you can manage and tear down.
 
+:::warning[A cloud deployment is not free]
+A NKP deployment on AWS will **not** fall within free-tier usage. Some of its components (the EKS control plane, NAT gateways, and load balancers) lead to additional charges regardless of instance size, and the smallest working cluster needs multi-GB nodes well beyond free-tier sizes. We recommend reviewing the [AWS pricing documentation](https://aws.amazon.com/pricing/), or checking with your cloud administrator, before you deploy. To try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
+:::
+
 ## What your team gets
 
 When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
@@ -17,11 +21,11 @@ When `nic deploy` finishes, your team will have all [standard NKP services](/doc
 
 ### AWS account
 
-You'll need access to an AWS account you can deploy into. If you don't have one, [sign up for AWS](https://aws.amazon.com/free/).
+You'll need access to an AWS account you can deploy into. If you don't have one, [create an AWS account](https://aws.amazon.com/); a new account works, but keep the note above in mind: NKP is a billed workload, not a free-tier one.
 
-- **Region:** pick one where [EKS is available](https://docs.aws.amazon.com/eks/latest/userguide/eks-regions.html) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
+- **Region:** pick one where [EKS is available](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) and has at least two [availability zones](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html). The example uses `us-west-2a` and `us-west-2b`.
 - **Quotas:** confirm your region has enough [EKS service quota](https://docs.aws.amazon.com/eks/latest/userguide/service-quotas.html) for the cluster you're about to create. New accounts often need an increase.
-- **Cost:** NKP does not fit within the free tier; EKS, NAT gateways, and EFS all bill from day one.
+- **Cost:** EKS, NAT gateways, load balancers, and EFS all bill from day one, regardless of instance size. See [Cost considerations](#cost-considerations) for the full list.
 
 ### IAM permissions
 
@@ -154,7 +158,7 @@ Follow [Deploy a cluster](/docs/how-tos/deploy-cluster) to deploy and verify. Th
 **After deploy**, DNS handling depends on which config you chose: `aws-config.yaml` requires a manual A/CNAME record; `aws-config-with-dns.yaml` creates DNS records automatically. See [Cloudflare DNS](/docs/how-tos/cloudflare-dns) for details.
 
 :::note
-Verifying on AWS also needs the [AWS CLI](https://aws.amazon.com/cli/) — the generated kubeconfig calls `aws eks get-token` to authenticate. If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours); run `aws sso login --profile <aws-profile>` and retry.
+Verifying on AWS also needs the [AWS CLI](https://aws.amazon.com/cli/): the generated kubeconfig calls `aws eks get-token` to authenticate. If `kubectl` fails with `Token has expired and refresh failed`, your AWS SSO session timed out (default 8 hours); run `aws sso login --profile <aws-profile>` and retry.
 :::
 
 ## IAM roles `nic` creates in your account
@@ -183,7 +187,7 @@ Changing `region`, `project_name`, or `vpc_cidr_block` triggers destructive reso
 
 ## Upgrade Kubernetes version
 
-EKS requires one-minor-version increments — you cannot skip versions or downgrade. To go from 1.32 to 1.34 you must upgrade twice:
+EKS requires one-minor-version increments; you cannot skip versions or downgrade. To go from 1.32 to 1.34 you must upgrade twice:
 
 ```
 1.32 → 1.33 → 1.34
@@ -199,14 +203,14 @@ cluster:
     kubernetes_version: "1.33"   # was "1.32"
 ```
 
-EKS accepts bare minor versions (`"1.33"`) — patch versions are not required.
+EKS accepts bare minor versions (`"1.33"`); patch versions are not required.
 
 EKS upgrades in two phases:
 
 1. **Control plane** upgrades first. The Kubernetes API server and control-plane components are updated to the new version. This takes around 10 minutes and is handled by AWS.
-2. **Node groups** roll one at a time. EKS launches a replacement node, waits for it to become Ready, then drains and terminates the old one — one node at a time per node group. Node groups upgrade sequentially after the control plane finishes. Plan for 20–40 minutes total depending on the number of node groups.
+2. **Node groups** roll one at a time. EKS launches a replacement node, waits for it to become Ready, then drains and terminates the old one, one node at a time per node group. Node groups upgrade sequentially after the control plane finishes. Plan for 20–40 minutes total depending on the number of node groups.
 
-After upgrading, verify your EKS managed add-ons (kube-proxy, CoreDNS, VPC CNI) are on versions compatible with the new cluster version — check the **Add-ons** tab in the AWS EKS console and update any that are flagged.
+After upgrading, verify your EKS managed add-ons (kube-proxy, CoreDNS, VPC CNI) are on versions compatible with the new cluster version; check the **Add-ons** tab in the AWS EKS console and update any that are flagged.
 
 See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgrade commands and post-upgrade verification steps.
 
