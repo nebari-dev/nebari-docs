@@ -8,6 +8,10 @@ description: End-to-end how-to for deploying, updating, and destroying NKP on Az
 
 This guide walks you through a deployment from end to end — from an empty subscription to a running cluster you can manage and tear down. If you have deployed NKP on AWS, the flow will feel familiar: the differences are mostly in how you authenticate and in a few Azure-specific fields.
 
+:::warning[A cloud deployment is not free]
+Deploying NKP on Azure provisions real, billed infrastructure — it is **not** a free-tier workload. The AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer all bill from the moment they are created, and the smallest working cluster needs multi-GB VMs (the example uses 4 vCPU / 16 GB nodes) that are well beyond free-tier sizes. You can create a free Azure account and its 30-day credit can fund a short evaluation, but to try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
+:::
+
 ## What your team gets
 
 When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
@@ -23,11 +27,11 @@ Shared read-write-many storage (the Longhorn or EFS equivalent) is not yet wired
 
 ### Azure subscription
 
-You will need access to an Azure subscription you can deploy into. If you do not have one, [create a free account](https://azure.microsoft.com/free/).
+You will need an Azure subscription you can deploy into. A [free Azure account](https://azure.microsoft.com/free/) is enough to create one and comes with a 30-day credit, but keep the note above in mind — NKP itself is a billed workload, not a free-tier one.
 
 - **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
 - **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase, and NKP will not warn you before you hit the limit.
-- **Cost:** NKP does not fit within the free tier. The node-pool VMs, managed disks, and load balancer all bill from the moment they are created.
+- **Cost:** the AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer bill from the moment they are created. See [Cost considerations](#cost-considerations) for the full list.
 
 ### Credentials
 
