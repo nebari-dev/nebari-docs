@@ -6,10 +6,10 @@ description: End-to-end how-to for deploying, updating, and destroying NKP on Az
 
 [Microsoft Azure](https://azure.microsoft.com/) is Microsoft's public cloud. NKP deploys onto it as a managed [AKS (Azure Kubernetes Service)](https://learn.microsoft.com/azure/aks/) cluster, so Azure runs and upgrades the Kubernetes control plane for you while `nic` (the Nebari Infrastructure Core CLI) provisions the cluster, the node pools, and the supporting infrastructure.
 
-This guide walks you through a deployment from end to end — from an empty subscription to a running cluster you can manage and tear down. If you have deployed NKP on AWS, the flow will feel familiar: the differences are mostly in how you authenticate and in a few Azure-specific fields.
+This guide walks you through a deployment from end to end: from an empty subscription to a running cluster you can manage and tear down. If you have deployed NKP on AWS, the flow will feel familiar: the differences are mostly in how you authenticate and in a few Azure-specific fields.
 
 :::warning[A cloud deployment is not free]
-A NKP deployment on Azure will **not** fall within free-tier usage — the AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer lead to additional charges, and the smallest working cluster needs multi-GB VMs well beyond free-tier sizes. We recommend reviewing the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/), or checking with your cloud administrator, before you deploy. A free Azure account's 30-day credit can fund a short evaluation, but to try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
+A NKP deployment on Azure will **not** fall within free-tier usage. The AKS control plane is free on the default `Free` SKU, but the node VMs, managed disks, and load balancer lead to additional charges, and the smallest working cluster needs multi-GB VMs well beyond free-tier sizes. We recommend reviewing the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/), or checking with your cloud administrator, before you deploy. A free Azure account's 30-day credit can fund a short evaluation, but to try NKP at no cost, deploy locally with the [Local (kind)](/docs/how-tos/providers/local) provider instead.
 :::
 
 ## What your team gets
@@ -27,7 +27,7 @@ Shared read-write-many storage (the Longhorn or EFS equivalent) is not yet wired
 
 ### Azure subscription
 
-You will need an Azure subscription you can deploy into. A [free Azure account](https://azure.microsoft.com/free/) is enough to create one and comes with a 30-day credit, but keep the note above in mind — NKP itself is a billed workload, not a free-tier one.
+You will need an Azure subscription you can deploy into. A [free Azure account](https://azure.microsoft.com/free/) is enough to create one and comes with a 30-day credit, but keep the note above in mind: NKP itself is a billed workload, not a free-tier one.
 
 - **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
 - **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase, and NKP will not warn you before you hit the limit.
@@ -35,7 +35,7 @@ You will need an Azure subscription you can deploy into. A [free Azure account](
 
 ### Credentials
 
-`nic` needs one thing from you directly — your **subscription ID** — and resolves everything else through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/sdk/authentication/authentication-overview). It tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
+`nic` needs one thing from you directly, your **subscription ID**, and resolves everything else through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/sdk/authentication/authentication-overview). It tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
 
 For most people the simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
 
@@ -96,7 +96,7 @@ A NKP deployment provisions several Azure services that bill from day one. Check
 - **[Bandwidth](https://azure.microsoft.com/pricing/details/bandwidth/):** outbound data transfer.
 
 :::note[Shared state storage]
-`nic` also creates a small, cheap Terraform state backend — a resource group `nic-tfstate-rg` with a storage account and a `tfstate` container. It is **shared across every cluster you deploy in the subscription** and is deliberately **not removed by `nic destroy`**. Delete it by hand only once you are done with all clusters.
+`nic` also creates a small, cheap Terraform state backend: a resource group `nic-tfstate-rg` with a storage account and a `tfstate` container. It is **shared across every cluster you deploy in the subscription** and is deliberately **not removed by `nic destroy`**. Delete it by hand only once you are done with all clusters.
 :::
 
 ## Configuration
@@ -190,7 +190,7 @@ cluster:
     kubernetes_version: "1.33"   # was "1.32"
 ```
 
-`nic` passes the version straight through to AKS and does not sequence the upgrade itself — the rules come from AKS. AKS upgrades **one minor version at a time** and does not allow skipping versions or downgrading, so going from 1.32 to 1.34 means upgrading twice (`1.32 → 1.33 → 1.34`). AKS upgrades the control plane first, then rolls each node pool a node at a time — surging in a new node, waiting for it to become Ready, then draining and removing the old one. Plan for 20–40 minutes depending on the number of node pools.
+`nic` passes the version straight through to AKS and does not sequence the upgrade itself; the rules come from AKS. AKS upgrades **one minor version at a time** and does not allow skipping versions or downgrading, so going from 1.32 to 1.34 means upgrading twice (`1.32 → 1.33 → 1.34`). AKS upgrades the control plane first, then rolls each node pool a node at a time: surging in a new node, waiting for it to become Ready, then draining and removing the old one. Plan for 20–40 minutes depending on the number of node pools.
 
 See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgrade commands and post-upgrade verification steps.
 
@@ -198,7 +198,7 @@ See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgra
 
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster).
 
-`nic destroy` removes the AKS cluster, its node pools, the load balancer, and (when `nic` created it) the `<project_name>-rg` resource group. It does **not** remove the shared `nic-tfstate-rg` state backend — remove that by hand once you are finished with every cluster in the subscription.
+`nic destroy` removes the AKS cluster, its node pools, the load balancer, and (when `nic` created it) the `<project_name>-rg` resource group. It does **not** remove the shared `nic-tfstate-rg` state backend; remove that by hand once you are finished with every cluster in the subscription.
 
 :::warning
 Always confirm in the Azure portal that no orphan resources remain. VMs, managed disks, public IPs, and load balancers keep billing if they are left behind. If a resource fails to delete, remove it manually before retrying with `--force`.

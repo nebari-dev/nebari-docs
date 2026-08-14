@@ -4,7 +4,7 @@ slug: /how-tos/providers/local
 description: Run NKP locally on kind (Kubernetes in Docker) for development and testing, with nic.
 ---
 
-NKP supports a **local mode** that lets you run the whole platform on a single machine — a laptop, a workstation, or a VM — without a cloud account. It is meant as a way to develop against NKP, preview its functionality, or debug a configuration with a quick feedback loop. We do not recommend it for production: anything a cloud provides (managed Kubernetes, cloud load balancers, managed storage) is stood up locally instead, so it will not match a real deployment one-for-one.
+NKP supports a **local mode** that lets you run the whole platform on a single machine (a laptop, a workstation, or a VM) without a cloud account. It is meant as a way to develop against NKP, preview its functionality, or debug a configuration with a quick feedback loop. We do not recommend it for production: anything a cloud provides (managed Kubernetes, cloud load balancers, managed storage) is stood up locally instead, so it will not match a real deployment one-for-one.
 
 This guide walks you through running NKP locally with `nic` (the Nebari Infrastructure Core CLI) on [kind](https://kind.sigs.k8s.io/).
 
@@ -12,7 +12,7 @@ This guide walks you through running NKP locally with `nic` (the Nebari Infrastr
 
 [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker") runs a Kubernetes cluster inside a container on your machine. It was built for testing Kubernetes itself, but it is also an excellent target for local development: it starts fast, needs no cloud resources, and tears down cleanly.
 
-`nic` **embeds** the kind library directly, so you do **not** install the `kind` CLI separately — `nic` drives your container runtime for you. The local provider stands up a single-node cluster and then installs the same NKP services you would get on a cloud provider.
+`nic` **embeds** the kind library directly, so you do **not** install the `kind` CLI separately; `nic` drives your container runtime for you. The local provider stands up a single-node cluster and then installs the same NKP services you would get on a cloud provider.
 
 ## What your team gets
 
@@ -26,7 +26,7 @@ When `nic deploy` finishes, you will have a local NKP cluster with all [standard
 
 ### A container runtime
 
-kind runs Kubernetes inside a container, so you need **Docker or Podman** installed and running — `nic` auto-detects whichever you have. That is the only external dependency; there is no `kind` binary to install.
+kind runs Kubernetes inside a container, so you need **Docker or Podman** installed and running; `nic` auto-detects whichever you have. That is the only external dependency; there is no `kind` binary to install.
 
 :::tip
 This mode runs everything on your machine, so give the container runtime some headroom. A few CPU cores and several GB of RAM is a comfortable starting point (roughly 4 CPU / 8 GB); a busy cluster with many services will want more. This is a practical recommendation, not a hard requirement.
@@ -38,7 +38,7 @@ Follow the [Install NIC](/docs/get-started/install) guide to download and instal
 
 ### GitOps repository (optional)
 
-Unlike the cloud providers, local deployments do **not** require a remote GitOps repository. If you omit the `git_repository` section, `nic` auto-creates and mounts a local one at `~/.nic/gitops/<project_name>` — the zero-configuration path, and the one we recommend while developing. To point at a specific repository instead, see the options in the [starter config](#configuration) below.
+Unlike the cloud providers, local deployments do **not** require a remote GitOps repository. If you omit the `git_repository` section, `nic` auto-creates and mounts a local one at `~/.nic/gitops/<project_name>`, the zero-configuration path and the one we recommend while developing. To point at a specific repository instead, see the options in the [starter config](#configuration) below.
 
 ## Configuration
 
@@ -54,7 +54,7 @@ curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/
 In later steps, `<config-file>` refers to this local copy (`local-config.yaml`).
 :::
 
-A local config needs very little — the provider fills in sensible defaults, so a minimal file is enough to get started:
+A local config needs very little: the provider fills in sensible defaults, so a minimal file is enough to get started:
 
 ```yaml
 project_name: my-nebari-local
@@ -66,7 +66,7 @@ cluster:
   local: {}                       # kind defaults; no region, no node groups
 ```
 
-There are no node groups, no region, and no `kubernetes_version` field: kind runs a single node, and its Kubernetes version comes from the kind `node_image`. The whole `cluster.local` block is optional and only exists to tune kind — the node image, extra host mounts, the HTTPS port (default `443`), and the MetalLB address pool.
+There are no node groups, no region, and no `kubernetes_version` field: kind runs a single node, and its Kubernetes version comes from the kind `node_image`. The whole `cluster.local` block is optional and only exists to tune kind: the node image, extra host mounts, the HTTPS port (default `443`), and the MetalLB address pool.
 
 For GitOps you have three options: omit `git_repository` for the auto-created local repo (recommended for development), point `git_repository.url` at a local `file://` path, or use a remote repository. For the full schema, see the [Local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#23-clusterlocal-kind-for-development) and the dedicated [local kind development guide](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/local-kind-development.md).
 
@@ -118,4 +118,4 @@ Run the destroy commands as described in [Destroy](/docs/how-tos/deploy#destroy)
 nic destroy -f <config-file>
 ```
 
-`nic destroy` deletes the kind cluster and its container. Because everything runs locally, there are no cloud resources to reconcile afterward — the only thing that may linger is the shared kind Docker network, which kind removes once no kind clusters remain.
+`nic destroy` deletes the kind cluster and its container. Because everything runs locally, there are no cloud resources to reconcile afterward; the only thing that may linger is the shared kind Docker network, which kind removes once no kind clusters remain.
