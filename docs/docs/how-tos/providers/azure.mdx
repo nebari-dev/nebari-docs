@@ -4,46 +4,50 @@ slug: /how-tos/providers/azure
 description: End-to-end how-to for deploying, updating, and destroying NKP on Azure AKS, including credentials and cost considerations.
 ---
 
-This guide walks through deploying NKP on Microsoft Azure with `nic` (the Nebari Infrastructure Core CLI), from an empty subscription to a running cluster you can manage and tear down. `nic` provisions a managed AKS cluster, analogous to the AWS EKS path.
+[Microsoft Azure](https://azure.microsoft.com/) is Microsoft's public cloud. NKP deploys onto it as a managed [AKS (Azure Kubernetes Service)](https://learn.microsoft.com/azure/aks/) cluster, so Azure runs and upgrades the Kubernetes control plane for you while `nic` (the Nebari Infrastructure Core CLI) provisions the cluster, the node pools, and the supporting infrastructure.
+
+This guide walks you through a deployment from end to end — from an empty subscription to a running cluster you can manage and tear down. If you have deployed NKP on AWS, the flow will feel familiar: the differences are mostly in how you authenticate and in a few Azure-specific fields.
 
 ## What your team gets
 
 When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy#what-every-deployment-includes) plus:
 
-- **A managed Kubernetes cluster** ready for workloads (Azure AKS, with a System and one or more User node pools).
+- **A managed Kubernetes cluster** ready for workloads (Azure AKS, with a System node pool and one or more User node pools).
 - **Block storage** through Azure managed disks (the `managed-csi` StorageClass).
 
 :::note
-Shared read-write-many storage (the Longhorn/EFS equivalent) is not yet wired for Azure, so persistent volumes are read-write-once managed disks.
+Shared read-write-many storage (the Longhorn or EFS equivalent) is not yet wired for Azure, so persistent volumes are read-write-once managed disks. NKP also fixes a couple of cluster settings you cannot currently override: networking uses [Azure CNI Overlay](https://learn.microsoft.com/azure/aks/azure-cni-overlay), and the cluster runs under a user-assigned managed identity.
 :::
 
 ## Prerequisites
 
 ### Azure subscription
 
-You'll need access to an Azure subscription you can deploy into. If you don't have one, [create a free account](https://azure.microsoft.com/free/).
+You will need access to an Azure subscription you can deploy into. If you do not have one, [create a free account](https://azure.microsoft.com/free/).
 
 - **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
-- **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase.
-- **Cost:** NKP does not fit within the free tier; the AKS node pool VMs, managed disks, and load balancer all bill from day one.
+- **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. New subscriptions often need an increase, and NKP will not warn you before you hit the limit.
+- **Cost:** NKP does not fit within the free tier. The node-pool VMs, managed disks, and load balancer all bill from the moment they are created.
 
 ### Credentials
 
-`nic` requires your subscription ID and resolves everything else through the standard Azure credential chain ([`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/azure-sdk-authentication)), which tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
+`nic` needs one thing from you directly — your **subscription ID** — and resolves everything else through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/azure-sdk-authentication). It tries, in order: environment variables (`AZURE_CLIENT_ID` + `AZURE_TENANT_ID` + `AZURE_CLIENT_SECRET`), workload identity, managed identity, and finally the Azure CLI.
 
-The simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
+For most people the simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
 
 ```bash
 az login
-az account show --query id --output tsv   # this is your subscription ID
+az account show --query id --output tsv   # this prints your subscription ID
 ```
 
-For automation, create a service principal instead and use its client/tenant/secret:
+:::tip
+For automation or CI, create a service principal instead and use its client, tenant, and secret values (the first branch of the credential chain):
 
 ```bash
 az ad sp create-for-rbac --name nic-deploy --role Contributor \
   --scopes /subscriptions/<subscription-id>
 ```
+:::
 
 ### Install nic
 
@@ -73,17 +77,23 @@ AZURE_SUBSCRIPTION_ID=00000000-0000-0000-0000-000000000000  # az account show --
 # AZURE_CLIENT_SECRET=...
 ```
 
-`nic` exports `AZURE_SUBSCRIPTION_ID` to the underlying OpenTofu run as `ARM_SUBSCRIPTION_ID`; you don't need to set the `ARM_*` variables yourself.
+:::note
+You only ever set `AZURE_SUBSCRIPTION_ID`. `nic` passes it through to the underlying OpenTofu run as `ARM_SUBSCRIPTION_ID`, so you do not need to set any `ARM_*` variables yourself.
+:::
 
 ## Cost considerations
 
 A NKP deployment provisions several Azure services that bill from day one. Check the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/) for current rates in your region.
 
-- **[AKS control plane](https://azure.microsoft.com/pricing/details/kubernetes-service/):** the `Free` SKU tier (the example default) has no control-plane charge; `Standard` adds a per-cluster hourly fee for the uptime SLA.
-- **[Virtual machines](https://azure.microsoft.com/pricing/details/virtual-machines/linux/)** in your node pools: per-hour VM cost for each running node.
-- **[Managed disks](https://azure.microsoft.com/pricing/details/managed-disks/):** OS disks on each node plus any `managed-csi` persistent volumes.
+- **[AKS control plane](https://azure.microsoft.com/pricing/details/kubernetes-service/):** the `Free` SKU tier (the default) has no control-plane charge; switching `sku_tier` to `Standard` adds a per-cluster hourly fee for an uptime SLA.
+- **[Virtual machines](https://azure.microsoft.com/pricing/details/virtual-machines/linux/)** in your node pools: per-hour cost for each running node.
+- **[Managed disks](https://azure.microsoft.com/pricing/details/managed-disks/):** an OS disk on each node (128 GB by default) plus any `managed-csi` persistent volumes your workloads request.
 - **[Load balancer](https://azure.microsoft.com/pricing/details/load-balancer/):** the Standard Load Balancer AKS uses for ingress, plus a public IP.
 - **[Bandwidth](https://azure.microsoft.com/pricing/details/bandwidth/):** outbound data transfer.
+
+:::note[Shared state storage]
+`nic` also creates a small, cheap Terraform state backend — a resource group `nic-tfstate-rg` with a storage account and a `tfstate` container. It is **shared across every cluster you deploy in the subscription** and is deliberately **not removed by `nic destroy`**. Delete it by hand only once you are done with all clusters.
+:::
 
 ## Configuration
 
@@ -118,10 +128,11 @@ git_repository:
 
 cluster:
   azure:
-    region: eastus                # an AKS-supported region
+    region: eastus                # an AKS-supported region (required)
     kubernetes_version: "1.34"
-    node_groups:
-      # Exactly one node group must be mode: System (it hosts cluster services).
+    node_groups:                  # at least one pool is required
+      # AKS needs one System node pool for cluster services. Mark it explicitly:
+      # nic defaults an unset `mode` to User, so without this you get no System pool.
       system:
         instance: Standard_D4_v3
         min_nodes: 1
@@ -133,7 +144,11 @@ cluster:
         max_nodes: 5
 ```
 
-By default `nic` creates a resource group named `<project_name>-rg`. Set `resource_group_name` to deploy into one you manage.
+:::warning
+Give exactly one node pool `mode: System`. `nic` does not add one for you and defaults an omitted `mode` to `User`; a config with no System pool passes `nic validate` but AKS rejects it at deploy time.
+:::
+
+By default `nic` creates a resource group named `<project_name>-rg`. Set `resource_group_name` to deploy into one you already manage.
 
 For the full schema (custom networking, private clusters, `sku_tier`, Node Auto Provisioning, authorized IP ranges), see the [Azure provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/design-doc/appendix/16-configuration-reference.md#25-clusterazure-aks).
 
@@ -141,7 +156,7 @@ For the full schema (custom networking, private clusters, `sku_tier`, Node Auto 
 
 Follow [Deploy a cluster](/docs/how-tos/deploy-cluster) to deploy and verify. The first deployment takes at least 20 minutes as AKS provisions the control plane and node pools, followed by ArgoCD syncing foundational services.
 
-Azure does not write a kubeconfig to a cache path. Fetch a cluster-admin kubeconfig with `nic` and point `kubectl` at it:
+Azure does not write a kubeconfig to a local cache path. Fetch a cluster-admin kubeconfig with `nic` and point `kubectl` at it:
 
 ```bash
 nic kubeconfig -f <config-file> -o kubeconfig
@@ -164,13 +179,7 @@ Changing `region`, `project_name`, or `resource_group_name` triggers destructive
 
 ## Upgrade Kubernetes version
 
-AKS upgrades one minor version at a time — you cannot skip versions or downgrade. To go from 1.32 to 1.34 you must upgrade twice:
-
-```
-1.32 → 1.33 → 1.34
-```
-
-Set `kubernetes_version` under `cluster.azure` in your config:
+To upgrade, set `kubernetes_version` under `cluster.azure` and re-deploy:
 
 ```yaml
 cluster:
@@ -178,7 +187,7 @@ cluster:
     kubernetes_version: "1.33"   # was "1.32"
 ```
 
-AKS upgrades the control plane first, then rolls each node pool one node at a time — surging in a new node, waiting for it to become Ready, then draining and removing the old one. Plan for 20–40 minutes total depending on the number of node pools.
+`nic` passes the version straight through to AKS and does not sequence the upgrade itself — the rules come from AKS. AKS upgrades **one minor version at a time** and does not allow skipping versions or downgrading, so going from 1.32 to 1.34 means upgrading twice (`1.32 → 1.33 → 1.34`). AKS upgrades the control plane first, then rolls each node pool a node at a time — surging in a new node, waiting for it to become Ready, then draining and removing the old one. Plan for 20–40 minutes depending on the number of node pools.
 
 See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgrade commands and post-upgrade verification steps.
 
@@ -186,6 +195,8 @@ See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes) for the upgra
 
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster).
 
-`nic destroy` removes the AKS cluster, its node pools, the load balancer, and (when `nic` created it) the `<project_name>-rg` resource group. If a resource fails to delete, remove it manually in the Azure portal before retrying with `--force`.
+`nic destroy` removes the AKS cluster, its node pools, the load balancer, and (when `nic` created it) the `<project_name>-rg` resource group. It does **not** remove the shared `nic-tfstate-rg` state backend — remove that by hand once you are finished with every cluster in the subscription.
 
-Always confirm in the Azure portal that no orphan resources remain — VMs, managed disks, public IPs, and load balancers can keep billing if they're left behind.
+:::warning
+Always confirm in the Azure portal that no orphan resources remain. VMs, managed disks, public IPs, and load balancers keep billing if they are left behind. If a resource fails to delete, remove it manually before retrying with `--force`.
+:::
