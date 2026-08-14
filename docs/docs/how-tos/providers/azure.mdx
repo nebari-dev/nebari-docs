@@ -148,7 +148,7 @@ cluster:
 ```
 
 :::warning
-Give exactly one node pool `mode: System`. `nic` does not add one for you and defaults an omitted `mode` to `User`; a config with no System pool passes `nic validate` but AKS rejects it at deploy time.
+AKS needs one **System** node pool to host cluster services, and `nic` does not add one for you. Set `mode: System` on exactly one of your pools; a pool with no `mode` defaults to `User`. A config with no System pool still passes `nic validate`, but AKS rejects it when it provisions the cluster.
 :::
 
 By default `nic` creates a resource group named `<project_name>-rg`. Set `resource_group_name` to deploy into one you already manage.
