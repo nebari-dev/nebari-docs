@@ -6,6 +6,12 @@
     a {
       @include link-hover(--ifm-color-primary);
     }
+    // diagrams and screenshots sit on their own line - center them.
+    // scoped to direct-child paragraphs so inline badges in lists are untouched.
+    img {
+      display: block;
+      margin-inline: auto;
+    }
   }
 
   img {

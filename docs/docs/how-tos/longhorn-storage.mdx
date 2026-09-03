@@ -1,0 +1,214 @@
+---
+title: Manage Longhorn storage
+slug: /how-tos/longhorn-storage
+description: "Decide whether Longhorn is the right storage layer for your cluster, tune it through your NKP config, and drain or recover storage nodes without losing volume data."
+---
+
+NKP runs your platform as **pods**, spread across a set of machines called **nodes**. When a node fails, Kubernetes restarts its pods on a different node.
+
+A cloud disk belongs to one node, in one availability zone. So a pod that restarts elsewhere cannot reach its own data, and will not start.
+
+[Longhorn](https://longhorn.io/) is the storage layer NKP installs to solve that. It keeps a copy of every volume, called a **replica**, on several nodes, so the data is already there wherever the pod lands.
+
+This guide covers four tasks:
+
+- Decide whether Longhorn fits your cluster
+- Configure it in your cluster config
+- Safely remove a node for maintenance without losing volume data
+- Recover after a node fails abruptly
+
+For how storage fits into the wider platform, see [NKP architecture](/docs/explanations/nkp-architecture). To back its volumes up off-cluster, see [Back up and restore data](/docs/how-tos/backup-restore).
+
+## When to use Longhorn
+
+Every NKP cluster runs one of two storage layers:
+- **A cloud-native storage class** uses your provider's own disks, with no storage system to operate. Choose it when one node writes to each volume and workloads stay in one zone.
+- **Longhorn** replicates each volume across several nodes. Choose it when volumes must survive a node or zone loss, or several nodes must mount one volume.
+
+{/* Diagram source: docs/static/img/how-tos/_sources/longhorn-node-failure.html
+    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
+
+![Two panels compare a node loss across zones. With a cloud-native class, the single volume sits on Node A in zone A and Node B has none; after Node A fails the volume is stranded and the pod cannot start. With Longhorn, a volume replica sits on the node in each zone; after Node A fails the replica in zone B survives and the pod starts.](/img/how-tos/longhorn-node-failure.png)
+
+In the diagram above:
+
+- **Cloud-native:** Node B is still empty when Node A fails, so the pod has no data to start from.
+- **Longhorn:** Node B already holds a replica when Node A fails, so the pod finds its data and starts.
+
+## Where Longhorn is available
+
+NKP installs Longhorn on three providers. To change the default on your provider, see [Configure Longhorn](#configure-longhorn).
+
+| Provider | Default | To change |
+| --- | --- | --- |
+| AWS | On | `cluster.aws.longhorn.enabled: false` to disable |
+| Hetzner | On | `cluster.hetzner.longhorn.enabled: false` to disable |
+| Existing cluster | Off | `cluster.existing.longhorn: {}` to enable |
+
+Azure, GCP, and local clusters use their own cloud-native storage class instead.
+
+## Configure Longhorn
+
+Longhorn settings live in the cluster config file you pass to `nic`. If you do not have one yet, start from a [starter config on your provider's page](/docs/how-tos/providers).
+
+Add a `longhorn` block under your provider, at `cluster.<provider>.longhorn`. An empty block is the minimal opt-in, and every field has a working default:
+
+```yaml
+cluster:
+  aws:          # or hetzner, or existing
+    longhorn: {}
+```
+
+:::note
+Do not confuse this with `backups.longhorn`, which is top-level and configures off-cluster backups instead. See [Back up and restore data](/docs/how-tos/backup-restore).
+:::
+
+### Configuration reference
+
+Set any of these inside the `longhorn` block at `cluster.<provider>.longhorn`. They control how many replicas Longhorn keeps, where it puts them, and how much CPU it reserves.
+
+| Field | Type | Default | What it does |
+| --- | --- | --- | --- |
+| `enabled` | bool | `true` when the block is present | Whether to install Longhorn. |
+| `replica_count` | int | `2` | Replicas of each volume. More replicas survive more simultaneous node failures, and use proportionally more disk. |
+| `dedicated_nodes` | bool | `false` | Keep replica data on a separate storage node group instead of on your workload nodes. See [Dedicated storage nodes](#dedicated-storage-nodes). |
+| `node_selector` | map | `{node.longhorn.io/storage: "true"}` | Label your storage nodes with this key and value. Only applies when `dedicated_nodes` is `true`. |
+| `instance_manager_cpu_percent` | int (0-40) | `12` | Reserve this percentage of each node's CPU for Longhorn. Set `0` for none. |
+
+Two defaults are worth reviewing before you run production workloads:
+
+- **`replica_count: 2`** is fine for small clusters, where disk is tight and two nodes may be all you have. For production raise it to 3, so a second failure before the rebuild finishes does not destroy the volume.
+- **`instance_manager_cpu_percent`** reserves 12 percent of every node's CPU for Longhorn, which is fine on large nodes but a real cost on small ones. Lower it if your pods are struggling to schedule.
+
+### Apply a change
+
+Set the fields you want in the `longhorn` block. For example, to keep three replicas of each volume instead of two:
+
+```yaml
+cluster:
+  aws:
+    longhorn:
+      replica_count: 3
+```
+
+Then re-run `nic deploy`:
+
+```bash
+nic deploy -f <config-file>
+```
+
+## Dedicated storage nodes
+
+By default, Longhorn puts volume replicas on whatever nodes your cluster already has, so the same machine runs workloads and stores data.
+
+A node holding a replica cannot be deleted without destroying that copy. When demand drops, those nodes stay running and you keep paying for them.
+
+Using dedicated storage nodes sends replicas to a **node group**, a set of identically configured machines, used only for storage. Your workload nodes then stay disposable and scale down cleanly.
+
+{/* Diagram source: docs/static/img/how-tos/_sources/dedicated-storage-nodes.html
+    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
+
+![Two panels compare node use as demand drops. By default each node holds both a pod and a replica, so when the pods go the replicas keep both nodes running. With dedicated nodes the workload nodes hold only pods and are removed when demand drops, leaving just the storage node with its replica.](/img/how-tos/dedicated-storage-nodes.png)
+
+To set this up, define a storage node group in `node_groups` and set `dedicated_nodes: true`:
+
+```yaml
+cluster:
+  aws:
+    node_groups:
+      storage:
+        instance: m7i.large
+        min_nodes: 3
+        max_nodes: 3
+        labels:
+          node.longhorn.io/storage: "true"
+
+    longhorn:
+      dedicated_nodes: true
+```
+
+For a fully annotated config, see [`examples/longhorn-backups-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/longhorn-backups-config.yaml).
+
+
+## Drain a node for maintenance
+
+Machines need maintenance eventually: a reboot, a resize, a replacement. Doing that while pods are running kills them abruptly. Draining the node avoids that by moving the pods elsewhere before you touch the machine.
+
+On a Longhorn cluster this takes a few extra steps, because the node also holds replicas of your data. The next few sections show you how to move those replicas off, drain the node, and put it back into service.
+
+### Before you start
+
+To move the pods and replicas off, at least one other node must have room. If your cluster is at its minimum size, raise the node count and run `nic deploy`:
+
+- **AWS:** raise `min_nodes` on the node group.
+- **Hetzner:** raise `count` on the node group, or `autoscaling.min_instances` if autoscaling is on.
+
+Wait for the new node to reach `Ready` before continuing.
+
+### Steps
+
+To drain the node without losing data, run these four commands in order:
+
+1. Stop new pods landing on the node, so it does not fill up again while you drain it:
+
+   ```bash
+   kubectl cordon <NODE_NAME>
+   ```
+
+2. Move Longhorn's replicas off the node, so none are lost when the machine goes:
+
+   ```bash
+   kubectl patch nodes.longhorn.io <NODE_NAME> -n longhorn-system \
+     --type merge -p '{"spec":{"allowScheduling":false,"evictionRequested":true}}'
+   ```
+
+   Longhorn now rebuilds those replicas on other machines before it lets this one go.
+
+3. Watch until your node stops appearing in the `NODE` column:
+
+   ```bash
+   kubectl get replicas.longhorn.io -n longhorn-system \
+     -o custom-columns='NAME:.metadata.name,NODE:.spec.nodeID,STATE:.status.currentState'
+   ```
+
+4. Drain it. With no replicas left on the node, this now completes:
+
+   ```bash
+   kubectl drain <NODE_NAME> --ignore-daemonsets --delete-emptydir-data --timeout=120s
+   ```
+
+### Return the node to service
+
+To let the node take pods and replicas again, undo both changes from steps 1 and 2. The first command lets Longhorn store replicas on the node again, the second lets Kubernetes put pods back on it.
+
+```bash
+kubectl patch nodes.longhorn.io <NODE_NAME> -n longhorn-system \
+  --type merge -p '{"spec":{"allowScheduling":true,"evictionRequested":false}}'
+kubectl uncordon <NODE_NAME>
+```
+
+### If it goes wrong
+
+If the drain does not finish, it is usually one of these:
+
+| If you see | Do this |
+| --- | --- |
+| The drain sits waiting to evict an `instance-manager` pod | Replicas are still on the node. Go back to step 2, then wait for step 3 to come back empty. |
+| A replica never moves off the node | Check the destination node has free disk space, and that its Longhorn record shows `allowScheduling: true`. |
+
+## Check volumes after a node failure
+
+When a node disappears without being drained (a hardware fault, a reclaimed spot instance, or a zone outage), Kubernetes moves its pods to other machines and Longhorn rebuilds the lost copy from a surviving one. No action is needed, but it is worth confirming every volume came back healthy.
+
+To check, list every volume with its current state:
+
+```bash
+kubectl get volumes.longhorn.io -n longhorn-system \
+  -o custom-columns='NAME:.metadata.name,STATE:.status.state,ROBUSTNESS:.status.robustness,REPLICAS:.spec.numberOfReplicas'
+```
+
+The `ROBUSTNESS` column tells you whether a volume still has all its replicas:
+
+- `healthy`: every replica is running.
+- `degraded`: some replicas are missing, and Longhorn is replacing them.
+- `faulted`: no replicas are left.

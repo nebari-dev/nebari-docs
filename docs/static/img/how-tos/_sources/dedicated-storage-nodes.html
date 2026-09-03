@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dedicated Storage Nodes Diagram &mdash; Source</title>
+  <meta name="description" content="Editable source for the dedicated storage nodes diagram rendered at /img/how-tos/dedicated-storage-nodes.png. Plain HTML with inline styles, openable in any browser, re-importable into Paper via the write_html MCP tool.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
+    .artboard { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <div class="artboard" style="align-items: center; background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 26px; padding: 36px 40px; width: 860px; font-family: 'Poppins', system-ui, sans-serif;">
+
+    <!-- Default: replicas share the workload nodes, so nothing can scale down -->
+    <div style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; width: 100%; background-color: #FFFFFF; border: 3px dashed #EDA61D; border-radius: 18px; padding: 24px 22px;">
+      <div style="color: #EDA61D; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; line-height: 22px; text-transform: uppercase;">Default</div>
+      <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div style="box-sizing: border-box; display: flex; align-items: stretch; gap: 16px; width: 100%;">
+          <div style="align-items: center; box-sizing: border-box; color: #9A9AA3; display: flex; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Busy</div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #EDA61D;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node 1</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F6F6F8; border: 1px solid #E2E2E7;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">pod</div></div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #FEF8EB; border: 1px solid #EDA61D;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #EDA61D;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node 2</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F6F6F8; border: 1px solid #E2E2E7;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">pod</div></div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #FEF8EB; border: 1px solid #EDA61D;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+          <div style="align-items: center; box-sizing: border-box; display: flex; flex-basis: 0; flex-grow: 1; justify-content: center; border: 1.5px dashed #C9C9D1; border-radius: 12px; padding: 14px;"><div style="color: #9A9AA3; text-align: center; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">no storage node</div></div>
+        </div>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; width: 100%;">
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+          <div style="color: #1C1D26B3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; font-weight: 500; line-height: 24px; white-space: nowrap;">Demand drops</div>
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+        </div>
+        <div style="box-sizing: border-box; display: flex; align-items: stretch; gap: 16px; width: 100%;">
+          <div style="align-items: center; box-sizing: border-box; color: #9A9AA3; display: flex; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Idle</div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #EDA61D;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node 1</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #FEF8EB; border: 1px solid #EDA61D;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #EDA61D;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node 2</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #FEF8EB; border: 1px solid #EDA61D;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+          <div style="align-items: center; box-sizing: border-box; display: flex; flex-basis: 0; flex-grow: 1; justify-content: center; border: 1.5px dashed #C9C9D1; border-radius: 12px; padding: 14px;"><div style="color: #9A9AA3; text-align: center; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">no storage node</div></div>
+        </div>
+      </div>
+      <div style="align-self: center; box-sizing: border-box; display: flex; background-color: #FEF8EB; border: 2px solid #EDA61D; border-radius: 999px; padding: 12px 26px;">
+        <div style="color: #1C1D26; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 600; line-height: 28px; white-space: nowrap;">Both nodes keep running</div>
+      </div>
+    </div>
+
+    <!-- Dedicated: replicas live on their own node, workload nodes are disposable -->
+    <div style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; width: 100%; background-color: #FFFFFF; border: 3px dashed #2BD0C4; border-radius: 18px; padding: 24px 22px;">
+      <div style="color: #27CDC1; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; line-height: 22px; text-transform: uppercase;">Dedicated nodes</div>
+      <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div style="box-sizing: border-box; display: flex; align-items: stretch; gap: 16px; width: 100%;">
+          <div style="align-items: center; box-sizing: border-box; color: #9A9AA3; display: flex; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Busy</div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 1.5px solid #E2E2E7;">
+            <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Workload 1</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F6F6F8; border: 1px solid #E2E2E7;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">pod</div></div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 1.5px solid #E2E2E7;">
+            <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Workload 2</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F6F6F8; border: 1px solid #E2E2E7;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">pod</div></div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #2BD0C4;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Storage</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F4FDFB; border: 1px solid #2BD0C4;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+        </div>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; width: 100%;">
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+          <div style="color: #1C1D26B3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; font-weight: 500; line-height: 24px; white-space: nowrap;">Demand drops</div>
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+        </div>
+        <div style="box-sizing: border-box; display: flex; align-items: stretch; gap: 16px; width: 100%;">
+          <div style="align-items: center; box-sizing: border-box; color: #9A9AA3; display: flex; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Idle</div>
+          <div style="align-items: center; box-sizing: border-box; display: flex; flex-basis: 0; flex-grow: 1; justify-content: center; border: 1.5px dashed #C9C9D1; border-radius: 12px; padding: 14px;"><div style="color: #9A9AA3; text-align: center; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">removed</div></div>
+          <div style="align-items: center; box-sizing: border-box; display: flex; flex-basis: 0; flex-grow: 1; justify-content: center; border: 1.5px dashed #C9C9D1; border-radius: 12px; padding: 14px;"><div style="color: #9A9AA3; text-align: center; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">removed</div></div>
+          <div style="box-sizing: border-box; display: flex; flex-basis: 0; flex-direction: column; flex-grow: 1; gap: 8px; background-color: #FFFFFF; border-radius: 12px; padding: 14px; border: 2px solid #2BD0C4;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Storage</div>
+            <div style="align-items: center; box-sizing: border-box; display: flex; gap: 10px; border-radius: 8px; padding: 8px 12px; background-color: #F4FDFB; border: 1px solid #2BD0C4;"><div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">replica</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="align-self: center; box-sizing: border-box; display: flex; background-color: #F4FDFB; border: 2px solid #2BD0C4; border-radius: 999px; padding: 12px 26px;">
+        <div style="color: #1C1D26; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 600; line-height: 28px; white-space: nowrap;">Only the storage node remains</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
