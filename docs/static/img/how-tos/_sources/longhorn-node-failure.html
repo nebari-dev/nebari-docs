@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Longhorn Node Failure Diagram &mdash; Source</title>
+  <meta name="description" content="Editable source for the Longhorn node failure diagram rendered at /img/how-tos/longhorn-node-failure.png. Plain HTML with inline styles, openable in any browser, re-importable into Paper via the write_html MCP tool.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 24px; background: #f5f5f5; font-family: Poppins, system-ui, sans-serif; display: flex; justify-content: center; }
+    .artboard { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <div class="artboard" style="align-items: center; background-color: #FFFFFF; box-sizing: border-box; display: flex; flex-direction: column; gap: 26px; padding: 36px 40px; width: 760px; font-family: 'Poppins', system-ui, sans-serif;">
+
+    <!-- Cloud-native panel: one volume, in one zone -->
+    <div style="align-items: center; background-color: #FFFFFF; border: 3px dashed #EDA61D; border-radius: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; padding: 24px 22px; width: 100%;">
+      <div style="color: #EDA61D; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; line-height: 22px; text-transform: uppercase;">Cloud-native · across zones</div>
+      <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div style="box-sizing: border-box; display: flex; gap: 16px; width: 100%;">
+          <div style="align-content: center; color: #9A9AA3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Before</div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 2px solid #EDA61D;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node A · zone A</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; background-color: #FEF8EB; border: 1px solid #EDA61D;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#C7860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#C7860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#C7860B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">volume</div>
+            </div>
+          </div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 1.5px solid #E2E2E7;">
+            <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node B · zone B</div>
+            <div style="align-items: center; border: 1.5px dashed #C9C9D1; border-radius: 8px; box-sizing: border-box; display: flex; justify-content: center; padding: 8px 12px;">
+              <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">no volume</div>
+            </div>
+          </div>
+        </div>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; width: 100%;">
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+          <div style="color: #1C1D26B3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; font-weight: 500; line-height: 24px; width: max-content;">Node A fails</div>
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+        </div>
+        <div style="box-sizing: border-box; display: flex; gap: 16px; width: 100%;">
+          <div style="align-content: center; color: #9A9AA3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">After</div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 1.5px dashed #C9C9D1;">
+            <div style="color: #B4B4BC; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node A · failed</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; flex-grow: 1; background-color: #F6F6F8; border: 1px solid #E2E2E7;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">stranded</div>
+            </div>
+          </div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 1.5px solid #E2E2E7;">
+            <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node B · zone B</div>
+            <div style="align-items: center; border: 1.5px dashed #C9C9D1; border-radius: 8px; box-sizing: border-box; display: flex; justify-content: center; padding: 8px 12px;">
+              <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">no volume</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="align-self: center; background-color: #FEF8EB; border: 2px solid #EDA61D; border-radius: 999px; box-sizing: border-box; display: flex; padding: 12px 26px;">
+        <div style="color: #1C1D26; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 600; line-height: 28px; width: max-content;">Pod cannot start</div>
+      </div>
+    </div>
+
+    <!-- Longhorn panel: one replica per zone -->
+    <div style="align-items: center; background-color: #FFFFFF; border: 3px dashed #2BD0C4; border-radius: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; padding: 24px 22px; width: 100%;">
+      <div style="color: #27CDC1; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; line-height: 22px; text-transform: uppercase;">Longhorn</div>
+      <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <div style="box-sizing: border-box; display: flex; gap: 16px; width: 100%;">
+          <div style="align-content: center; color: #9A9AA3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">Before</div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 2px solid #2BD0C4;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node A · zone A</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; background-color: #F4FDFB; border: 1px solid #2BD0C4;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">volume replica</div>
+            </div>
+          </div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 2px solid #2BD0C4;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node B · zone B</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; background-color: #F4FDFB; border: 1px solid #2BD0C4;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">volume replica</div>
+            </div>
+          </div>
+        </div>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; width: 100%;">
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+          <div style="color: #1C1D26B3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; font-weight: 500; line-height: 24px; width: max-content;">Node A fails</div>
+          <div style="background-color: #E2E2E7; flex-grow: 1; height: 1px;"></div>
+        </div>
+        <div style="box-sizing: border-box; display: flex; gap: 16px; width: 100%;">
+          <div style="align-content: center; color: #9A9AA3; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase; width: 72px;">After</div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 1.5px dashed #C9C9D1;">
+            <div style="color: #B4B4BC; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node A · failed</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; flex-grow: 1; background-color: #F6F6F8; border: 1px solid #E2E2E7;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#B4B4BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #9A9AA3; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">lost</div>
+            </div>
+          </div>
+          <div style="background-color: #FFFFFF; border-radius: 12px; box-sizing: border-box; display: flex; flex-basis: 0px; flex-direction: column; flex-grow: 1; gap: 8px; padding: 14px; border: 2px solid #2BD0C4;">
+            <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.12em; line-height: 20px; text-transform: uppercase;">Node B · zone B</div>
+            <div style="align-items: center; border-radius: 8px; box-sizing: border-box; display: flex; gap: 10px; padding: 8px 12px; background-color: #F4FDFB; border: 1px solid #2BD0C4;">
+              <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 5V19A9 3 0 0 0 21 19V5" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /><path d="M3 12A9 3 0 0 0 21 12" fill="none" stroke="#17A79C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <div style="color: #1C1D26; font-family: 'Poppins', system-ui, sans-serif; font-size: 20px; line-height: 24px;">volume replica</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="align-self: center; background-color: #F4FDFB; border: 2px solid #2BD0C4; border-radius: 999px; box-sizing: border-box; display: flex; padding: 12px 26px;">
+        <div style="color: #1C1D26; flex-shrink: 0; font-family: 'Poppins', system-ui, sans-serif; font-size: 22px; font-weight: 600; line-height: 28px; width: max-content;">Pod starts</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -51,6 +51,7 @@ module.exports = {
         "how-tos/destroy-cluster",
         "how-tos/keycloak-auth",
         "how-tos/backup-restore",
+        "how-tos/longhorn-storage",
         "how-tos/debug-deployment",
         "how-tos/enterprise-tls-proxy",
         {
