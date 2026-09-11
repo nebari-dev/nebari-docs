@@ -226,6 +226,8 @@ export default defineConfig({
           title: 'Nebari blog',
           // The theme's header tabs already link to the blog.
           navigation: 'none',
+          // No feed, and no RSS icon next to GitHub in the header.
+          rss: false,
           authors: {
             'nebari-team': {
               name: 'Nebari team',
