@@ -2,7 +2,7 @@
 
 This is a short overview of the general architecture and structure of the repository, to help you orient yourself.
 
-This site is built using Docusaurus. For more details on setting your local development environment and building the site, visit the [Contributing to Nebari's documentation section in our community guidelines](https://www.nebari.dev/docs/community/doc-contributions).
+This site is built using [Astro](https://astro.build) and [Starlight](https://starlight.astro.build) with the shared [`@nebari/starlight`](https://github.com/nebari-dev/starlight) theme. For more details on setting your local development environment and building the site, visit the [docs README](docs/README.md) and the [Contributing to Nebari's documentation section in our community guidelines](https://www.nebari.dev/community/doc-contributions/).
 
 The structure of this repository is as follows:
 
@@ -10,23 +10,24 @@ The structure of this repository is as follows:
 .
 ├── .github
 ├── docs
-│   ├── docs
+│   ├── public
 │   ├── src
-│   ├── static
-│   ├── .eslintignore
-│   ├── .eslintrc.json
-│   ├── .prettierignore
-│   ├── .prettierc
-│   ├── .babel.config.js
-│   ├── docusaurus.config.js
+│   │   ├── components
+│   │   ├── content/docs
+│   │   ├── styles
+│   │   ├── content.config.ts
+│   │   └── routeData.ts
+│   ├── test
+│   ├── astro.config.mjs
+│   ├── bun.lock
 │   ├── package.json
 │   ├── README.md
-│   ├── sidebar.js
-│   └── yarn.lock
+│   ├── tsconfig.json
+│   └── wrangler.jsonc
 ├── .editorconfig
 ├── .gitignore
 ├── .gitpod.yml
-├── .pre-commit.yaml
+├── .pre-commit-config.yaml
 ├── ARCHITECTURE.md
 ├── CONTRIBUTING.md
 ├── LICENSE
@@ -39,84 +40,56 @@ This directory contains the following
 
 - `ISSUE_TEMPLATE`: the various issue templates for the repository
 - `PULL_REQUEST_TEMPLATE`: this project's pull request template
-- `workflows/`: GitHub actions workflows for this repository
+- `workflows/`: GitHub actions workflows for this repository. `docs.yml` builds, tests and deploys the site to Cloudflare.
 
 > **Note**
-> The issue and pull request templates are located in the (nebari-dev/.github)[https://github.com/nebari-dev/.github] repository and are synced across repositories through a GitHub action.
+> The issue and pull request templates are located in the [nebari-dev/.github](https://github.com/nebari-dev/.github) repository and are synced across repositories through a GitHub action.
 
 # `docs/`
 
-This is the top-level directory for the documentation. It contains the following files and directories.
+This is the top-level directory for the documentation site. It contains the following files and directories.
 
-## `docs`
+## `src/content/docs`
 
-The main content for the Nebari documentation. Since we follow the Diátaxis documentation framework the content is organized to follow the Diátaxis structure:
+All the pages of the site. The path of a file is its URL, so the directory names match the site's sections:
 
-- `tutorials`: Step-by-step tutorials that cover how to do a particular thing from beginning to end.
-- `how-tos`: How-tos that are intended to be used in the context of a particular project.
-- `references`: Reference sections of the documentation aimed to demonstrate the multiple capabilities of Nebari.
-- `explanations`: Explanations of the different features of Nebari.
-- `community`: our community-related content covering items like contribution guidelines and style guides
+- `docs/`: the current Nebari documentation, organized following the Diátaxis framework (`get-started`, `how-tos`, `explanations`, `references`) plus `software-packs`.
+- `classic/`: the Nebari Classic documentation (`get-started`, `tutorials`, `how-tos`, `explanations`, `references`, plus `troubleshooting`, `faq`, and `glossary`).
+- `community/`: our community-related content covering items like contribution guidelines and style guides.
+- `blog/`: blog posts, rendered by the `starlight-blog` plugin.
+- `index.mdx` and `404.md`: the landing page and the not-found page.
 
-Plus additional sections such as `glossary, troubleshooting, welcome, etc.`
+## `src/components`
 
-## src
+Astro components used from content pages (`PlannedProvider`, `MarkdownTable`, `SubpageCards`) and the Starlight component overrides (`Head` adds analytics and the cookie banner, `MarkdownContent` adds the Nebari Classic phase-out notice).
 
-This folder contains all the source files for the documentation theme:
-The team uses `scss` to work on the stylesheets to benefit from the syntactic sugar this offers over `css`. The stylesheets are organized as follows:
+## `src/routeData.ts`
 
-```bash
-.
-├── scss
-│   ├── utils
-│   │   └── _global_vars.scss
-│   ├── application.scss
-│   └── core.scss
-└── theme
-    └── components
-        ├── admonitions.scss
-        ├── footer.scss
-        ├── markdown.scss
-        ├── menu.scss
-        ├── navbar.scss
-        └── scrollbar.scss
-```
+A Starlight route middleware. The sidebar in `astro.config.mjs` is defined as three top-level groups (Nebari, Nebari Classic, Community) and this middleware shows only the group matching the current section, so each section keeps its own navigation like the previous multi-instance setup.
 
-Since we use the `Docusaurus scss plugin` there is no need to compile these files.
+## `src/styles`
 
-## `static`
+`custom.css` holds the landing-page styles. Everything else (colors, fonts, header, footer) comes from the `@nebari/starlight` theme.
 
-This directory contains all the static files for the documentation theme. Such as the Nebari logos, the favicon, and the images for the main documentation content.
+## `public`
 
-To keep things tidy the images are organized in the same way as the main documentation content:
+All the static files for the site, served from the root URL: the Nebari logos and favicon (`logo/`), the images for the documentation content (`img/`, organized like the content), the AWS IAM policy files (`policies/`), and `_redirects`, the Cloudflare redirect rules that keep legacy Docusaurus URLs working.
 
-- `tutorials`
-- `how-tos`
-- `references`
-- `explanations`
-- `community`
-- `get-started`: getting started sections of the documentation
-- `welcome`: our main page
+## Other files in `/docs`
 
-## Other miscellaneous files in `/docs`
-
-- `.eslintignore`: patterns and files to be ignored by our linter
-- `.eslintrc.json`: configuration file foe `eslint`
-- `.prettierignore`: patterns and files to be ignored by our prettier formatter
-- `.prettierc`: configuration file for the prettier formatter
-- `.babel.config.js`: `babel` configuration file
-- `docusaurus.config.js`: Docusaurus configuration file
-- `package.json`: set of dependencies for the documentation site and complementary scripts
+- `astro.config.mjs`: Astro and Starlight configuration, including the header tabs, the three sidebars, the blog and the links validator
+- `package.json` and `bun.lock`: dependencies and scripts (`bun run dev`, `bun run build`, `bun test`)
+- `test/build.test.ts`: build smoke tests, run in CI
+- `tsconfig.json`: TypeScript configuration for Astro
+- `wrangler.jsonc`: Cloudflare Worker configuration for deployment
 - `README.md`: detailed step-by-step instructions for using the documentation site and building it locally
-- `sidebar.js`: JavaScript file that generates the sidebar for the documentation site
-- `yarn.lock`: lock file for the dependencies
-- `.editorconfig`: configuration file to help everyone achieve style consistency
 
 ## Files in `./` - the root directory of this repository
 
 - `.gitignore`: `.git` configuration file with files and patterns not to be committed to version control
 - `.gitpod.yml`: gitpod configuration file
-- `.pre-commit.yaml`: configuration for the multiple non-JavaScript pre-commits used
+- `.pre-commit-config.yaml`: configuration for the multiple non-JavaScript pre-commits used
+- `.editorconfig`: configuration file to help everyone achieve style consistency
 - `CONTRIBUTING.md`: this project's contribution guidelines
 - `LICENSE`: BSD-3 OSI license file
 - `README.md`: top-level information page for this project's repository

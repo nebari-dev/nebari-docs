@@ -1,0 +1,44 @@
+---
+/**
+ * Composes the two `MarkdownContent` overrides this site needs:
+ * - starlight-blog's, which adds post metadata on blog post pages, and
+ * - the Nebari theme's, which adds table scrolling and TOC tracking everywhere else,
+ * and prepends the Nebari Classic phase-out notice on `/classic/*` pages.
+ */
+import { Aside } from '@astrojs/starlight/components';
+import ThemeContent from '@nebari/starlight/components/MarkdownContent.astro';
+import BlogContent from 'starlight-blog/components/MarkdownContent.astro';
+
+const { id } = Astro.locals.starlightRoute;
+const isBlogPost = /^blog\/(?!tags\/|authors\/)./.test(id);
+const isClassic = id.startsWith('classic/');
+---
+
+{
+  isBlogPost ? (
+    <BlogContent>
+      <slot />
+    </BlogContent>
+  ) : (
+    <ThemeContent>
+      {isClassic && (
+        <Aside type="danger" title="Phase out notice">
+          <p>
+            Nebari is evolving. <strong>The original Nebari project is now called Nebari Classic, and is in maintenance mode.</strong>
+          </p>
+          <p>
+            We'll continue to provide security updates and key bug fixes; however, no new features are planned at this time.
+            We're using the lessons learned from Nebari Classic to build a new Nebari ecosystem of tools, on a more robust
+            foundation with a modular architecture. Nebari Classic's maintenance window will remain open until the new
+            architecture reaches stability and feature parity, and current users are able to migrate, expected through the end
+            of 2026.
+          </p>
+          <p>
+            See the <a href="/docs/introduction/">current Nebari documentation</a> for details on the new platform.
+          </p>
+        </Aside>
+      )}
+      <slot />
+    </ThemeContent>
+  )
+}

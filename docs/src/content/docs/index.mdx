@@ -1,0 +1,115 @@
+---
+title: Nebari
+description: An open source stack for your AI. Core infrastructure, curated frameworks and apps, and everything in between.
+template: splash
+editUrl: false
+lastUpdated: false
+hero:
+  title: An open source stack for your AI.
+  tagline: Core infrastructure, curated frameworks and apps, and everything in between.
+  actions:
+    - text: Get started
+      link: /docs/get-started/install/
+      variant: primary
+    - text: Read the docs
+      link: /docs/introduction/
+      variant: secondary
+sidebar:
+  hidden: true
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<section class="nebari-section nbr-grid-3" aria-labelledby="ecosystem">
+  <h2 id="ecosystem">Ecosystem of tools</h2>
+  <p class="nebari-section__subtitle">Pick the pieces you need. Every project is open source and designed to work on its own or together.</p>
+
+  <CardGrid>
+    <Card title="Nebari Classic" icon="seti:config">
+      Cloud-agnostic data science platform with environment management, role-based access control, and curated app
+      integrations for application deployment, scalability, monitoring, and more.
+
+      [Read the Classic docs](/classic/welcome/)
+    </Card>
+    <Card title="Nebari core (early access)" icon="rocket">
+      New robust core infrastructure layer for platform deployment on popular cloud providers. Security, authentication,
+      role-based access, and observability built in by design.
+
+      [Install NIC](/docs/get-started/install/)
+    </Card>
+    <Card title="Nebi (early access)" icon="seti:git">
+      Tools to manage, share, and collaborate on the AI software lifecycle across your team. Includes future plans for
+      SBoM generation and compliance checking.
+
+      [Nebi on GitHub](https://github.com/nebari-dev/nebi)
+    </Card>
+    <Card title="Usage-specific UIs (coming soon)" icon="laptop">
+      Multiple UI options available: Jupyter/VSCode for developers, chat and dashboard interfaces for AI users, and more.
+    </Card>
+    <Card title="AI model serving pack (coming soon)" icon="cloud-download">
+      Serve and monitor different AI models for your development workflow or production applications.
+    </Card>
+    <Card title="Agentic AI pack (coming soon)" icon="puzzle">
+      Frameworks for building, deploying, evaluating, and monitoring AI agent-based workflows.
+    </Card>
+    <Card title="Data orchestration pack (coming soon)" icon="random">
+      Tools for building data engineering pipelines, and governance and provenance of data and AI assets.
+    </Card>
+    <Card title="Custom integrations" icon="setting">
+      All Nebari projects are developed on an open and extensible architecture that allows for quick integration of any
+      libraries you need.
+
+      [Build your own pack](/docs/software-packs/build-your-own/)
+    </Card>
+    <Card title="Community hub (coming soon)" icon="heart">
+      A space for community members to share their custom packs.
+
+      [Join the community](/community/introduction/)
+    </Card>
+  </CardGrid>
+</section>
+
+<section class="nebari-section" aria-labelledby="deploy-anywhere">
+  <h2 id="deploy-anywhere">Deploy anywhere</h2>
+  <p class="nebari-section__subtitle">
+    Deploy Nebari on your own infrastructure, on your local machine or the cloud of your choice. It is designed to be
+    flexible, extensible, and vendor-agnostic. AWS, Azure, and Hetzner are supported today, with Google Cloud on the way.
+  </p>
+
+  <ul class="nebari-providers">
+    <li><a href="/docs/how-tos/providers/aws/"><img src="/img/home/aws.svg" alt="Amazon Web Services" /></a></li>
+    <li><a href="/docs/how-tos/providers/azure/"><img src="/img/home/azure.svg" alt="Microsoft Azure" /></a></li>
+    <li><a href="/docs/how-tos/providers/gcp/"><img src="/img/home/gcloud.svg" alt="Google Cloud" /></a></li>
+    <li><a href="/docs/how-tos/providers/hetzner/"><img src="/img/home/hetzner.svg" alt="Hetzner" /></a></li>
+  </ul>
+</section>
+
+<section class="nebari-section nbr-grid-3" aria-labelledby="principles">
+  <h2 id="principles">Development principles</h2>
+
+  <CardGrid>
+    <Card title="Open source" icon="open-book">
+      All projects are developed under an open source license, and built using open source software.
+    </Card>
+    <Card title="Community-oriented" icon="comment-alt">
+      All projects welcome community contributions and engagement on various project spaces and community meetings.
+    </Card>
+    <Card title="Composable architecture" icon="list-format">
+      All projects have a modular design and integrate with each other, while also allowing for independent use and
+      extensibility.
+    </Card>
+  </CardGrid>
+</section>
+
+<section class="nebari-section nbr-cols-2" aria-labelledby="popular-pages">
+  <h2 id="popular-pages">Popular pages</h2>
+
+  - [Introduction](/docs/introduction/)
+  - [Install NIC](/docs/get-started/install/)
+  - [NKP architecture](/docs/explanations/nkp-architecture/)
+  - [Deploy a cluster](/docs/how-tos/deploy-cluster/)
+  - [Nebari Classic](/classic/welcome/)
+  - [Community guidelines](/community/introduction/)
+  - [Blog](/blog/)
+  - [Nebari roadmap](https://github.com/nebari-dev/governance/blob/main/roadmap.md)
+</section>
