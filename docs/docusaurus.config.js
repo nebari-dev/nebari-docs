@@ -168,11 +168,6 @@ const config = {
             to: "community/introduction",
           },
           {
-            label: "Nebari-classic (Sunsetting)",
-            position: "left",
-            to: "/classic/welcome",
-          },
-          {
             to: 'blog',
             label: 'Blog',
             position: 'right',
@@ -224,11 +219,11 @@ const config = {
             items: [
               {
                 label: "Get Started",
-                to: "classic/get-started/installing-nebari",
+                to: "/docs/introduction",
               },
               {
-                label: "Tutorials",
-                to: "classic/tutorials",
+                label: "How-to guides",
+                to: "/docs/how-tos",
               },
             ],
           },
@@ -242,6 +237,15 @@ const config = {
               {
                 label: "User forum",
                 href: customFields.githubForum,
+              },
+            ],
+          },
+          {
+            title: "Nebari Classic",
+            items: [
+              {
+                label: "Looking for Nebari Classic?",
+                to: "classic/welcome",
               },
             ],
           },

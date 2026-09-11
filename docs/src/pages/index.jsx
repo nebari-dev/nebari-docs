@@ -30,7 +30,7 @@ export default function HomePage() {
             </p>
             <p>
               <a
-                href="/classic/get-started"
+                href="/docs/introduction"
                 className={styles.getStartedLink}
               >
                 Get Started&nbsp;&nbsp;
