@@ -218,7 +218,6 @@ export default defineConfig({
           githubHref: 'https://github.com/nebari-dev/nebari-docs',
           nav: [
             { label: 'Docs', href: '/docs/introduction/' },
-            { label: 'Classic', href: '/classic/welcome/' },
             { label: 'Community', href: '/community/introduction/' },
             { label: 'Blog', href: '/blog/' },
           ],
