@@ -10,6 +10,7 @@ import ScissorStringSvg from "@site/static/img/home/scissor-string.svg";
 import AwsSvg from "@site/static/img/home/aws.svg";
 import AzureSvg from "@site/static/img/home/azure.svg";
 import GcloudSvg from "@site/static/img/home/gcloud.svg";
+import HetznerSvg from "@site/static/img/home/hetzner.svg";
 import styles from "./index.module.css";
 
 export default function HomePage() {
@@ -140,13 +141,13 @@ export default function HomePage() {
                   Deploy anywhere
                 </h2>
                 <p>
-                  Try Nebari classic on your local machine or deploy it on your cloud of
-                  choice. It is designed to be flexible, extensible, and
-                  vendor-agnostic.
+                  Deploy Nebari on your own infrastructure, on your local machine or
+                  the cloud of your choice. It is designed to be flexible,
+                  extensible, and vendor-agnostic.
                 </p>
                 <p>
-                  Nebari classic and new Nebari projects can be seamlessly deployed to the major public cloud
-                  providers, including AWS, Azure, and GCP.
+                  AWS, Azure, and Hetzner are supported today, with Google Cloud
+                  on the way.
                 </p>
               </div>
             </div>
@@ -161,34 +162,10 @@ export default function HomePage() {
                 <li className={styles.platformsItem}>
                   <GcloudSvg role="img" aria-label="Google Cloud" />
                 </li>
+                <li className={styles.platformsItem}>
+                  <HetznerSvg role="img" aria-label="Hetzner" />
+                </li>
               </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.getStartedSection}>
-          <div className={styles.sectionContent}>
-            <h2 className={styles.sectionHeading}>Quick look at Nebari classic</h2>
-            <p>
-              <a
-                href="/classic/get-started"
-                className={styles.getStartedLink2}
-              >
-                Deploy a Nebari classic instance&nbsp;&nbsp;
-                <RightArrowSvg aria-hidden="true" />
-              </a>
-            </p>
-            <div className={styles.videoContainer}>
-              <iframe
-                width="885"
-                height="500"
-                src="https://www.youtube.com/embed/sQTQ_fg2avA?si=cWwUp0pv_zM6jYP9"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              />
             </div>
           </div>
         </section>
