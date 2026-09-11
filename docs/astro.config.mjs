@@ -215,7 +215,7 @@ export default defineConfig({
       plugins: [
         nebari({
           logoHref: '/',
-          githubHref: 'https://github.com/nebari-dev/nebari-docs',
+          githubHref: 'https://github.com/nebari-dev/nebari',
           nav: [
             { label: 'Docs', href: '/docs/introduction/' },
             { label: 'Community', href: '/community/introduction/' },
