@@ -1,6 +1,9 @@
 # Contributing to the documentation 📝
 
-Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Nebari's documentation is built with [Astro](https://astro.build) and
+[Starlight](https://starlight.astro.build), using the shared
+[`@nebari/starlight`](https://github.com/nebari-dev/starlight) theme so every
+Nebari documentation site looks the same.
 
 - [Contributing to the documentation 📝](#contributing-to-the-documentation-)
   - [Setting your local development environment](#setting-your-local-development-environment)
@@ -9,13 +12,15 @@ Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a m
     - [Pre-commit hooks](#pre-commit-hooks)
     - [Working on the docs](#working-on-the-docs)
     - [Building the site locally](#building-the-site-locally)
-  - [Adding a New Dependency](#adding-a-new-dependency)
+    - [Running the tests](#running-the-tests)
+  - [Project layout](#project-layout)
+  - [Writing content](#writing-content)
+  - [Adding a new dependency](#adding-a-new-dependency)
   - [Deployment](#deployment)
-  - [Linting](#linting)
 
 ## Setting your local development environment
 
-1. Make a fork of the [`Nebari-docs` repository][nebari-docs-repo] to your GitHub account
+1. Make a fork of the [`nebari-docs` repository][nebari-docs-repo] to your GitHub account
 2. Clone the forked repository to your local machine:
 
    ```bash
@@ -24,32 +29,21 @@ Nebari's documentation is built with [Docusaurus 2](https://docusaurus.io/), a m
 
 ### Prerequisites
 
-To build the site you will need to have Node.js installed. To see if you already have Node.js installed, type the following command into your local command line terminal:
-
-```console
-$ node -v
-v14.17.0
-```
-
-If you see a version number, such as `v14.17.0` printed, you have Node.js installed. If you get a `command not found` error (or similar phrasing), please install Node.js before continuing.
-
-To install node visit [nodejs.org](https://nodejs.org/en/download/) or check any of these handy tutorials for [Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04), [Debian](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-10), or [macOS](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-and-create-a-local-development-environment-on-macos).
-
-Once you have Node.js installed you can proceed to install Yarn. Yarn has a unique way of installing and running itself in your JavaScript projects. First you install the yarn command globally, then you use the global yarn command to install a specific local version of Yarn into your project directory.
-
-The Yarn maintainers recommend installing Yarn globally by using the `NPM` package manager, which is included by default with all Node.js installations.
-Use the `-g` flag with `npm` install to do this:
+The site is built and tested with [Bun](https://bun.sh). Install it with:
 
 ```bash
-npm install -g yarn
+curl -fsSL https://bun.sh/install | bash
 ```
 
-After the package installs, have the yarn command print its own version number. This will let you verify it was installed properly:
+and check it works:
 
 ```console
-$ yarn --version
-1.22.11
+$ bun --version
+1.3.14
 ```
+
+Node.js 22 or newer also works for `npm run dev` / `npm run build`, but the
+lockfile and the test runner (`bun test`) assume Bun.
 
 ### Installing docs dependencies
 
@@ -62,7 +56,7 @@ $ yarn --version
 2. Install the necessary dependencies:
 
    ```bash
-   yarn install
+   bun install
    ```
 
 ### Pre-commit hooks
@@ -98,57 +92,93 @@ Once installed, the pre-commit hooks will run automatically when you make a comm
 
 ### Working on the docs
 
-Once you have the pre-commits and the dependencies installed, you can get started with the documentation.
-To see a live local version of the docs run the following command:
+To see a live local version of the docs run the following command from the `docs` directory:
 
 ```bash
-yarn start
+bun run dev
 ```
 
-This command starts a local development server and opens up a browser window.
-Most changes are reflected live without having to restart the server.
+This command starts a local development server with hot reload.
 
 > **Note**
-> By default, this will load your site at <http://localhost:3000/>.
+> By default, this will load your site at <http://localhost:4321/>.
 
 ### Building the site locally
 
 To build the static files of the documentation (and see how they would look once deployed to `www.nebari.dev`), run:
 
 ```bash
-yarn build
+bun run build
 ```
 
-This command generates static content into the `docs/build` directory and can be served using any static contents hosting service.
-You can check the new build site with the following command:
+This command generates static content into the `docs/dist` directory. The build
+also validates every internal link (including `#anchors`) with
+[`starlight-links-validator`](https://github.com/HiDeoo/starlight-links-validator)
+and fails on broken ones. You can check the built site with:
 
 ```bash
-yarn run serve
+bun run preview
 ```
 
-> **Note**
-> By default, this will load your site at <http://localhost:3000/>.
+### Running the tests
 
-## Adding a New Dependency
-
-Use the `add` sub command to add new dependencies:
+The smoke tests in `test/build.test.ts` build the site and then verify that
+every content page renders with its title, each section shows only its own
+sidebar, every internal `href` and image on every page resolves, the search
+index exists, and the legacy redirects in `public/_redirects` point at real
+pages. Run them with:
 
 ```bash
-yarn add package-name
+bun test
+```
+
+## Project layout
+
+```
+docs/
+├── astro.config.mjs        # Starlight config: theme plugin, header tabs, sidebars, blog
+├── public/                 # Static assets served at the site root (/img, /logo, /policies)
+│   └── _redirects          # Legacy URL redirects (Cloudflare format)
+├── src/
+│   ├── components/         # Astro components used by content and Starlight overrides
+│   ├── content/docs/       # All pages; the path of a file is its URL
+│   │   ├── index.mdx       # Landing page
+│   │   ├── docs/           # Current Nebari documentation   -> /docs/*
+│   │   ├── classic/        # Nebari Classic documentation   -> /classic/*
+│   │   ├── community/      # Community guidelines           -> /community/*
+│   │   └── blog/           # Blog posts (starlight-blog)    -> /blog/*
+│   ├── routeData.ts        # Shows one sidebar per section
+│   └── styles/custom.css   # Landing-page styles
+├── test/build.test.ts      # Build smoke tests
+└── wrangler.jsonc          # Cloudflare Worker (static assets) config
+```
+
+## Writing content
+
+- Every page needs a `title` in its frontmatter; Starlight renders it as the page heading, so don't repeat it as a `# Heading`.
+- Use root-relative links with a trailing slash, for example `/classic/how-tos/nebari-aws/`. Broken links fail the build.
+- Callouts use Starlight's syntax: `:::note`, `:::tip`, `:::caution`, `:::danger`, optionally with a title as `:::note[Title]`.
+- Files that use components (`<Tabs>`, `<TabItem>`, `<Aside>`, `<LinkCard>`, ...) must have the `.mdx` extension and import them from `@astrojs/starlight/components`. HTML comments are not valid in `.mdx`; use `{/* ... */}`.
+- New pages must be added to the matching sidebar in `astro.config.mjs` to appear in navigation.
+- Mermaid diagrams work in fenced ```` ```mermaid ```` blocks.
+
+## Adding a new dependency
+
+```bash
+bun add package-name
 ```
 
 ## Deployment
 
-The deployment is automatically handled by Netlify when content is merged into the `main` branch.
+The [Docs workflow](../.github/workflows/docs.yml) builds and tests the site on
+every pull request and push to `main`. Pushes to `main` deploy `docs/dist` to
+the `nebari-docs` Cloudflare Worker with
+[`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action);
+same-repository pull requests get a preview deployment whose URL is posted as a
+PR comment. The workflow needs these repository secrets:
 
-## Linting
-
-Before opening a PR, run the docs linter and formatter to ensure code consistency. From the `docs` directory, run:
-
-```bash
-yarn run lint
-yarn run format
-```
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
 
 <!-- links -->
 

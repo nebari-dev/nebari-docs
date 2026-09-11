@@ -132,9 +132,6 @@ dmypy.json
 /node_modules
 docs/node_modules
 dist
-yalc.lock
-/.yalc
-.eslintcache
 
 # Editor directories and files
 .idea
@@ -148,12 +145,10 @@ sync.js
 *.log
 
 # Generated files
-.docusaurus
-.cache-loader
-src/*.js
-src/*.js.map
+docs/.astro
+docs/.wrangler
 # Production
-docs/build
+docs/dist
 
 # Misc
 .DS_Store
@@ -167,11 +162,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Yarn leftovers
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
