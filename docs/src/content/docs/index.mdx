@@ -25,29 +25,27 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   <p class="nebari-section__subtitle">Pick the pieces you need. Every project is open source and designed to work on its own or together.</p>
 
   <CardGrid>
-    <Card title="Nebari Classic" icon="seti:config">
-      Cloud-agnostic data science platform with environment management, role-based access control, and curated app
-      integrations for application deployment, scalability, monitoring, and more.
-
-      [Read the Classic docs](/classic/welcome/)
-    </Card>
-    <Card title="Nebari core (early access)" icon="rocket">
+    <Card title="Nebari core" icon="rocket">
       New robust core infrastructure layer for platform deployment on popular cloud providers. Security, authentication,
       role-based access, and observability built in by design.
 
       [Install NIC](/docs/get-started/install/)
     </Card>
-    <Card title="Nebi (early access)" icon="seti:git">
+    <Card title="Nebi" icon="seti:git">
       Tools to manage, share, and collaborate on the AI software lifecycle across your team. Includes future plans for
       SBoM generation and compliance checking.
 
       [Nebi on GitHub](https://github.com/nebari-dev/nebi)
     </Card>
-    <Card title="Usage-specific UIs (coming soon)" icon="laptop">
+    <Card title="Usage-specific UIs" icon="laptop">
       Multiple UI options available: Jupyter/VSCode for developers, chat and dashboard interfaces for AI users, and more.
     </Card>
-    <Card title="AI model serving pack (coming soon)" icon="cloud-download">
+    <Card title="AI model serving pack" icon="cloud-download">
       Serve and monitor different AI models for your development workflow or production applications.
+    </Card>
+    <Card title="Chat assistant pack" icon="comment">
+      A ready-to-use chat interface for your teams, wired into platform login and connected to the models you serve on
+      Nebari.
     </Card>
     <Card title="Agentic AI pack (coming soon)" icon="puzzle">
       Frameworks for building, deploying, evaluating, and monitoring AI agent-based workflows.
@@ -61,7 +59,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
       [Build your own pack](/docs/software-packs/build-your-own/)
     </Card>
-    <Card title="Community hub (coming soon)" icon="heart">
+    <Card title="Community hub" icon="heart">
       A space for community members to share their custom packs.
 
       [Join the community](/community/introduction/)
@@ -108,8 +106,6 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   - [Install NIC](/docs/get-started/install/)
   - [NKP architecture](/docs/explanations/nkp-architecture/)
   - [Deploy a cluster](/docs/how-tos/deploy-cluster/)
-  - [Nebari Classic](/classic/welcome/)
   - [Community guidelines](/community/introduction/)
-  - [Blog](/blog/)
   - [Nebari roadmap](https://github.com/nebari-dev/governance/blob/main/roadmap.md)
 </section>
