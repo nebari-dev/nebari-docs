@@ -56,7 +56,6 @@ All the pages of the site. The path of a file is its URL, so the directory names
 - `docs/`: the current Nebari documentation, organized following the Diátaxis framework (`get-started`, `how-tos`, `explanations`, `references`) plus `software-packs`.
 - `classic/`: the Nebari Classic documentation (`get-started`, `tutorials`, `how-tos`, `explanations`, `references`, plus `troubleshooting`, `faq`, and `glossary`).
 - `community/`: our community-related content covering items like contribution guidelines and style guides.
-- `blog/`: blog posts, rendered by the `starlight-blog` plugin.
 - `index.mdx` and `404.md`: the landing page and the not-found page.
 
 ## `src/components`
@@ -77,7 +76,7 @@ All the static files for the site, served from the root URL: the Nebari logos an
 
 ## Other files in `/docs`
 
-- `astro.config.mjs`: Astro and Starlight configuration, including the header tabs, the three sidebars, the blog and the links validator
+- `astro.config.mjs`: Astro and Starlight configuration, including the header tabs, the three sidebars and the links validator
 - `package.json` and `bun.lock`: dependencies and scripts (`bun run dev`, `bun run build`, `bun test`)
 - `test/build.test.ts`: build smoke tests, run in CI
 - `tsconfig.json`: TypeScript configuration for Astro

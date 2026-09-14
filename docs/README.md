@@ -136,7 +136,7 @@ bun test
 
 ```
 docs/
-├── astro.config.mjs        # Starlight config: theme plugin, header tabs, sidebars, blog
+├── astro.config.mjs        # Starlight config: theme plugin, header tabs, sidebars
 ├── public/                 # Static assets served at the site root (/img, /logo, /policies)
 │   └── _redirects          # Legacy URL redirects (Cloudflare format)
 ├── src/
@@ -145,8 +145,7 @@ docs/
 │   │   ├── index.mdx       # Landing page
 │   │   ├── docs/           # Current Nebari documentation   -> /docs/*
 │   │   ├── classic/        # Nebari Classic documentation   -> /classic/*
-│   │   ├── community/      # Community guidelines           -> /community/*
-│   │   └── blog/           # Blog posts (starlight-blog)    -> /blog/*
+│   │   └── community/      # Community guidelines           -> /community/*
 │   ├── routeData.ts        # Shows one sidebar per section
 │   └── styles/custom.css   # Landing-page styles
 ├── test/build.test.ts      # Build smoke tests

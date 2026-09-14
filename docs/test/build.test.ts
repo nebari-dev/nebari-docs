@@ -71,12 +71,6 @@ test('each section shows only its own sidebar', () => {
   expect(community).not.toContain('Phase out notice');
 });
 
-test('the blog index lists both posts', () => {
-  const blog = readFileSync(pagePath('blog'), 'utf8');
-  expect(blog).toContain('href="/blog/introducing-blogs/"');
-  expect(blog).toContain('href="/blog/conda-pixi-nebi-reproducible-environments/"');
-});
-
 test('search index is generated', () => {
   expect(existsSync(join(DIST, 'pagefind', 'pagefind.js'))).toBe(true);
 });
