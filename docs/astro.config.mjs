@@ -218,6 +218,7 @@ export default defineConfig({
           nav: [
             { label: 'Docs', href: '/docs/introduction/' },
             { label: 'Community', href: '/community/introduction/' },
+            { label: 'Software Packs', href: 'https://packs.nebari.dev' },
           ],
         }),
         starlightLinksValidator({

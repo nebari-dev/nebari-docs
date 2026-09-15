@@ -8,7 +8,7 @@
         "@astrojs/markdown-satteri": "^0.4.1",
         "@astrojs/starlight": "^0.42.0",
         "@mermaid-js/layout-elk": "^0.2.3",
-        "@nebari/starlight": "^1.1.0",
+        "@nebari/starlight": "^1.2.0",
         "astro": "^7.3.2",
         "astro-mermaid": "^2.1.0",
         "marked": "^18.0.0",
@@ -254,7 +254,7 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.2.4", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.4", "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.4" } }, "sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g=="],
 
-    "@nebari/starlight": ["@nebari/starlight@1.1.0", "", { "peerDependencies": { "@astrojs/starlight": ">=0.33.0 <1.0.0", "astro": ">=7.0.6" } }, "sha512-Hmt9IoJzyXD1crDrzvxYQ/7YxPYMKLBPyeslvHvbi1xQ/Tb7ouTOHmTjGi4UkFj1aKhPTXket9d/qp5wAJD93g=="],
+    "@nebari/starlight": ["@nebari/starlight@1.2.0", "", { "peerDependencies": { "@astrojs/starlight": ">=0.33.0 <1.0.0", "astro": ">=7.0.6" } }, "sha512-yD0SVnF8aXPOiJR3cXkIzdsNisqPAhbS4nTE7+6Y7HtrREm8u95Xy4mhxnW7rnBuYDMCRoiNpr6VM4CQGq0egQ=="],
 
     "@oslojs/encoding": ["@oslojs/encoding@1.1.0", "", {}, "sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ=="],
 
