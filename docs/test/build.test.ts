@@ -41,7 +41,11 @@ const contentFiles = walk(CONTENT, (name) => /\.mdx?$/.test(name));
 const pages = contentFiles.map((file) => ({ file, slug: slugOf(file), title: frontmatterTitle(file) }));
 
 beforeAll(async () => {
-  await $`bun run build`.cwd(SITE);
+  // `bun test` sets NODE_ENV=test and child processes inherit it, which makes Vite treat the
+  // build as non-production: `import.meta.env.DEV` is true and Starlight renders its "search is
+  // only available in production builds" notice instead of the Pagefind UI. Force production so
+  // the `dist/` this suite builds is the same one CI deploys.
+  await $`bun run build`.cwd(SITE).env({ ...process.env, NODE_ENV: 'production' });
 });
 
 test('every content page is built and renders its title', () => {
@@ -73,6 +77,15 @@ test('each section shows only its own sidebar', () => {
 
 test('search index is generated', () => {
   expect(existsSync(join(DIST, 'pagefind', 'pagefind.js'))).toBe(true);
+  expect(existsSync(join(DIST, 'pagefind', 'pagefind-entry.json'))).toBe(true);
+});
+
+test('pages mount the search UI instead of the dev-only notice', () => {
+  for (const slug of ['', 'docs/introduction', 'classic/welcome', 'community/introduction']) {
+    const html = readFileSync(pagePath(slug), 'utf8');
+    expect(html).toContain('id="starlight__search"');
+    expect(html).not.toContain('Search is only available in production builds');
+  }
 });
 
 test('every internal href and image on every page resolves', () => {
