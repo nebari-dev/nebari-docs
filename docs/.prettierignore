@@ -1,8 +1,6 @@
 # build artifacts
-build
+dist
+.astro
 
 # Dependencies
-dist
 node_modules
-.docusaurus
-.yalc

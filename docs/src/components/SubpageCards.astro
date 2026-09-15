@@ -1,0 +1,46 @@
+---
+/**
+ * Renders a card for every other page in the current page's sidebar group.
+ * Replaces Docusaurus' `<DocCardList items={useCurrentSidebarCategory().items} />`
+ * on section index pages.
+ */
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { getCollection } from 'astro:content';
+
+type Sidebar = App.Locals['starlightRoute']['sidebar'];
+type Entry = Sidebar[number];
+
+const { sidebar } = Astro.locals.starlightRoute;
+
+function groupOfCurrent(entries: Sidebar): Sidebar | null {
+  for (const entry of entries) {
+    if (entry.type === 'link' && entry.isCurrent) return entries;
+    if (entry.type === 'group') {
+      const found = groupOfCurrent(entry.entries);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function firstLink(entry: Entry): { label: string; href: string } | null {
+  if (entry.type === 'link') return entry;
+  for (const child of entry.entries) {
+    const link = firstLink(child);
+    if (link) return { label: entry.label, href: link.href };
+  }
+  return null;
+}
+
+const docs = await getCollection('docs');
+const descriptions = new Map(docs.map((doc) => [`/${doc.id}/`, doc.data.description]));
+
+const cards = (groupOfCurrent(sidebar) ?? [])
+  .filter((entry) => !(entry.type === 'link' && entry.isCurrent))
+  .map(firstLink)
+  .filter((link): link is { label: string; href: string } => link !== null);
+---
+
+<CardGrid>
+  {cards.map((card) => <LinkCard title={card.label} href={card.href} description={descriptions.get(card.href)} />)}
+</CardGrid>

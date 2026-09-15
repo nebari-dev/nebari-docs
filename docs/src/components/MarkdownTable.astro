@@ -1,0 +1,26 @@
+---
+/**
+ * A table whose cells are Markdown. Each cell is a Markdown string or an array
+ * of Markdown lines (joined with newlines), so cells can hold lists.
+ */
+import { marked } from 'marked';
+
+interface Props {
+  headers: string[];
+  rows: Array<Array<string | string[]>>;
+}
+
+const { headers, rows } = Astro.props;
+
+const render = (cell: string | string[]) =>
+  marked.parse(Array.isArray(cell) ? cell.join('\n') : cell, { async: false }) as string;
+---
+
+<table>
+  <thead>
+    <tr>{headers.map((header) => <th>{header}</th>)}</tr>
+  </thead>
+  <tbody>
+    {rows.map((row) => <tr>{row.map((cell) => <td set:html={render(cell)} />)}</tr>)}
+  </tbody>
+</table>

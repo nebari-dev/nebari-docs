@@ -1,6 +1,6 @@
 tasks:
-  - init: cd docs && yarn install
-    command: yarn start
+  - init: curl -fsSL https://bun.sh/install | bash && cd docs && ~/.bun/bin/bun install
+    command: cd docs && ~/.bun/bin/bun run dev --host
 ports:
-  - port: 3000
+  - port: 4321
     onOpen: open-preview

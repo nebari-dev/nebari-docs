@@ -6,20 +6,22 @@ name: Auto-format imported RELEASE.md
 # run and may be removed once upstream sync activity stops entirely.
 #
 # When the upstream sync bot opens a PR that touches
-# docs/docs/references/RELEASE.md, the file often arrives with two
+# docs/src/content/docs/docs/references/RELEASE.md, the file often arrives with two
 # common problems that block CI:
 #
 #   1. Prettier formatting (missing blank lines after headings)
-#   2. Bare <foo> tokens in prose that the MDX parser treats as JSX tags
+#   2. Bare <foo> tokens in prose that the Markdown parser treats as HTML tags
+#   3. No `title` frontmatter, which Starlight requires (the upstream file
+#      starts with a `# Release notes` heading instead)
 #
 # This workflow runs on those PRs, applies both fixes, and pushes the
-# result back so the PR's downstream checks (Test Website, Netlify)
+# result back so the PR's downstream checks (the Docs workflow)
 # can pass without manual intervention.
 
 on:
   pull_request:
     paths:
-      - 'docs/docs/references/RELEASE.md'
+      - 'docs/src/content/docs/docs/references/RELEASE.md'
 
 permissions:
   contents: write
@@ -49,7 +51,7 @@ jobs:
               "del", "ins", "abbr", "sup", "sub", "small",
           }
 
-          path = Path("docs/docs/references/RELEASE.md")
+          path = Path("docs/src/content/docs/docs/references/RELEASE.md")
           text = path.read_text()
           pattern = re.compile(r"<([a-z][a-zA-Z0-9_-]*)>")
 
@@ -67,22 +69,27 @@ jobs:
                   for seg in segments
               )
 
-          path.write_text("".join(fix_line(line) for line in text.splitlines(keepends=True)))
+          text = "".join(fix_line(line) for line in text.splitlines(keepends=True))
+
+          # Starlight renders the frontmatter title as the page heading, so
+          # replace the upstream H1 with frontmatter.
+          if not text.startswith("---"):
+              text = re.sub(r"\A# Release notes\s*\n", "", text)
+              text = "---\ntitle: Release notes\n---\n\n" + text
+          path.write_text(text)
           EOF
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
-          node-version: '20'
+          bun-version: latest
 
       - name: Run Prettier on RELEASE.md
         working-directory: ./docs
-        run: |
-          yarn install --frozen-lockfile
-          npx prettier --write docs/references/RELEASE.md
+        run: bunx prettier@3 --write src/content/docs/docs/references/RELEASE.md
 
       - name: Commit changes back to the PR
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: auto-format imported RELEASE.md'
-          file_pattern: docs/docs/references/RELEASE.md
+          file_pattern: docs/src/content/docs/docs/references/RELEASE.md
