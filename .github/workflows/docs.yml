@@ -49,6 +49,11 @@ jobs:
         env:
           SITE: https://www.nebari.dev
           BASE: /
+          # `bun test` would otherwise set NODE_ENV=test for the build it runs, which
+          # makes Astro build in dev mode and drops the Pagefind search UI from every
+          # page. The test suite forces this too; set it here as well so the value is
+          # visible on the step that produces the deployed `dist/`.
+          NODE_ENV: production
 
       - name: Compute preview alias
         id: site
