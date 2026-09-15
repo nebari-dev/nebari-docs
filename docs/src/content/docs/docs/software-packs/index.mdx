@@ -1,0 +1,24 @@
+---
+title: Software Packs
+description: What a Software Pack is, where to browse the catalog, and how to build your own.
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+A **Software Pack** is an installable artifact, published to a git repository, that delivers a Capability on a Nebari cluster: a chat assistant, BI dashboards, a model-serving stack, and more.
+
+Each pack arrives with routing, TLS, and single sign-on already wired in, so once it's installed your users open it from the landing page and start working. Install only the packs your team needs, and upgrade each one on its own.
+
+## Browse the catalog
+
+The catalog of officially supported packs lives on its own site, **[packs.nebari.dev](https://packs.nebari.dev)**. Each entry lists what the pack does, the technologies behind it, its maturity level, and who maintains it.
+
+<CardGrid>
+  <LinkCard title="Pack architecture" href="/docs/explanations/software-packs/" description="How the NebariApp resource wires a pack into routing, login, and TLS." />
+  <LinkCard title="Build your own pack" href="/docs/software-packs/build-your-own/" description="Package your own workload using the pack template." />
+</CardGrid>
+
+## Where packs come from
+
+- **Official packs** are maintained by OpenTeams and published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization. These are the packs listed in the catalog.
+- **Community packs** can be built by anyone, whether that's an open-source maintainer or your own team. They follow the same structure as official packs, and they can stay private to your organization.
