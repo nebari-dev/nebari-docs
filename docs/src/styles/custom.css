@@ -54,3 +54,25 @@
   border: 0;
   box-shadow: none;
 }
+
+/* Cards in a row stretch to the height of the tallest one, so the theme pins a
+   card body's last child to the bottom to keep the "read more" links in line.
+   That drags plain body text down too, so space the body with a flex gap and
+   pin only the footer: a trailing link or a status badge. */
+.sl-markdown-content .card .body {
+  gap: 1rem;
+}
+.sl-markdown-content .card .body > * {
+  margin-block-start: 0;
+}
+.sl-markdown-content .card .body > :last-child:is(p:has(> a), .sl-badge) {
+  margin-block-start: auto;
+}
+
+/* A status badge in that footer slot: keep it pill-sized rather than stretched
+   across the card, and give the theme's muted fill a hairline so it reads
+   against the card in dark mode. */
+.sl-markdown-content .card .body > .sl-badge:last-child {
+  align-self: start;
+  border-color: var(--nbr-border);
+}

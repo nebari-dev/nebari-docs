@@ -18,7 +18,7 @@ sidebar:
   hidden: true
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
 
 <section class="nebari-section nbr-grid-3" aria-labelledby="ecosystem">
   <h2 id="ecosystem">Ecosystem of tools</h2>
@@ -39,19 +39,29 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
     </Card>
     <Card title="Usage-specific UIs" icon="laptop">
       Multiple UI options available: Jupyter/VSCode for developers, chat and dashboard interfaces for AI users, and more.
+
+      [Software packs dashboard](https://packs.nebari.dev/)
     </Card>
     <Card title="AI model serving pack" icon="cloud-download">
       Serve and monitor different AI models for your development workflow or production applications.
+
+      [LLM serving pack docs](https://packs.nebari.dev/llm-serving-pack/)
     </Card>
     <Card title="Chat assistant pack" icon="comment">
       A ready-to-use chat interface for your teams, wired into platform login and connected to the models you serve on
       Nebari.
+
+      [Chat pack docs](https://packs.nebari.dev/chat-pack/)
     </Card>
-    <Card title="Agentic AI pack (coming soon)" icon="puzzle">
+    <Card title="Agentic AI pack" icon="puzzle">
       Frameworks for building, deploying, evaluating, and monitoring AI agent-based workflows.
+
+      [Pi coding agent docs](https://packs.nebari.dev/pi-coding-agent-pack/)
     </Card>
-    <Card title="Data orchestration pack (coming soon)" icon="random">
+    <Card title="Data orchestration pack" icon="random">
       Tools for building data engineering pipelines, and governance and provenance of data and AI assets.
+
+      <Badge text="Coming soon" />
     </Card>
     <Card title="Custom integrations" icon="setting">
       All Nebari projects are developed on an open and extensible architecture that allows for quick integration of any
