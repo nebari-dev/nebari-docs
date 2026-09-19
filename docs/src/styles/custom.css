@@ -43,9 +43,42 @@
   border-radius: 0.75rem;
   background: var(--sl-color-bg-nav);
 }
-.nebari-providers img {
+.nebari-providers a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Block, not inline: an inline image sits on the text baseline and reserves
+   descender space under it, which would offset one variant against the other.
+   The margin reset undoes Starlight's sibling spacing, which would otherwise
+   push the second image in each tile down by 1rem. */
+.sl-markdown-content .nebari-providers img {
+  display: block;
+  margin: 0;
   max-height: 3rem;
   width: auto;
+}
+
+/* Each logo ships twice: the vendor's own artwork, and a variant whose
+   wordmark is white so it stays legible on the dark tile. Brand marks (the AWS
+   swoosh, the Azure squares, the Google "G") keep their colors in both.
+   These selectors repeat `img` so they outrank `.nebari-providers img` above. */
+.sl-markdown-content .nebari-providers img.nebari-providers__dark {
+  display: none;
+}
+:root[data-theme='dark'] .sl-markdown-content .nebari-providers img.nebari-providers__light {
+  display: none;
+}
+:root[data-theme='dark'] .sl-markdown-content .nebari-providers img.nebari-providers__dark {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .sl-markdown-content .nebari-providers img.nebari-providers__light {
+    display: none;
+  }
+  :root:not([data-theme='light']) .sl-markdown-content .nebari-providers img.nebari-providers__dark {
+    display: block;
+  }
 }
 
 /* Images in content sit inside a hairline frame by default; keep the icon
