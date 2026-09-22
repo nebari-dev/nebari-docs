@@ -121,11 +121,14 @@ certificate:
   acme:
     email: you@example.com  # required for Let's Encrypt; renewal notices go here
 
-git_repository:
-  url: "https://github.com/<your-org>/<your-gitops-repo>.git"
-  path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
-  auth:
-    token_env: GIT_TOKEN  # matches the GIT_TOKEN set in .env
+repository:
+  existing:  # the repository provider
+    url: "https://github.com/<your-org>/<your-gitops-repo>.git"
+    branch: main
+    path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
+    auth:
+      token:
+        env: GIT_TOKEN # matches the GIT_TOKEN set in .env
 
 cluster:
   aws:
