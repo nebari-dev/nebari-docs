@@ -26,28 +26,23 @@ import Feature from '../../components/Feature.astro';
   <p class="nebari-section__subtitle">Nebari runs the AI and data science tools your team needs on infrastructure you control.</p>
 
   <div class="nebari-bento">
-    <Feature icon="cloud" wide>
-      <h3>Run AI on infrastructure you own</h3>
+    <Feature icon="cloud" title="Run AI on infrastructure you own" wide>
       <p>Deploy into your own cloud account, or onto your own hardware. Your models, data, and prompts stay where you already keep them.</p>
       <a href="/docs/how-tos/providers/">Pick a provider</a>
     </Feature>
-    <Feature icon="rocket">
-      <h3>Go from prototype to something your team uses</h3>
+    <Feature icon="rocket" title="Go from prototype to something your team uses">
       <p>Package what you built as a Software Pack. It comes up with its own address, a login, and routing already wired in.</p>
       <a href="/docs/explanations/software-packs/">How packs work</a>
     </Feature>
-    <Feature icon="blocks">
-      <h3>Add capabilities as you need them</h3>
+    <Feature icon="blocks" title="Add capabilities as you need them">
       <p>Install only the packs you need today. Add serving, chat, or agent workflows later, and upgrade each one on its own.</p>
       <a href="https://packs.nebari.dev/">Browse the catalog</a>
     </Feature>
-    <Feature icon="branch">
-      <h3>Give every teammate the same setup</h3>
+    <Feature icon="branch" title="Give every teammate the same setup">
       <p>Everything on the platform is declared in a git repository and reconciled from it, so the cluster your teammate opens is the one you described.</p>
       <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
     </Feature>
-    <Feature icon="pulse">
-      <h3>Watch what your AI is doing</h3>
+    <Feature icon="pulse" title="Watch what your AI is doing">
       <p>Logs, metrics, and traces are collected from every running pack and forwarded to the observability backend of your choice.</p>
       <a href="/docs/explanations/nkp-architecture/#how-the-layers-fit-together">Platform architecture</a>
     </Feature>
@@ -58,29 +53,24 @@ import Feature from '../../components/Feature.astro';
   <h2 id="what-you-dont-have-to-do">What you don't have to do</h2>
   <p class="nebari-section__subtitle">Nebari runs the layer underneath your apps, so your team doesn't have to.</p>
 
-  <div class="nebari-skip">
-    <Feature icon="clock">
-      <h3>Wait on someone else to deploy it</h3>
+  <div class="nebari-bento nebari-bento--skip">
+    <Feature icon="clock" title="Wait on someone else to deploy it">
       <p>Install a pack and it comes up on its own address, behind the login your company already uses.</p>
       <a href="/docs/software-packs/">Software Packs</a>
     </Feature>
-    <Feature icon="lock">
-      <h3>Build a login for every internal app</h3>
+    <Feature icon="lock" title="Build a login for every internal app">
       <p>Colleagues sign in once with the account they already have, and you decide which groups reach which app.</p>
       <a href="/docs/how-tos/keycloak-auth/">Set up single sign-on</a>
     </Feature>
-    <Feature icon="chip">
-      <h3>Rent a GPU box on the side</h3>
+    <Feature icon="chip" title="Rent a GPU box on the side">
       <p>GPU machines are a node group in the same cluster, so your team uses the hardware it already pays for.</p>
       <a href="/docs/how-tos/update-cluster/">Change a running cluster</a>
     </Feature>
-    <Feature icon="database">
-      <h3>Back up your own work</h3>
+    <Feature icon="database" title="Back up your own work">
       <p>Turn backups on once, and the platform copies your notebooks and files to off-cluster storage every day.</p>
       <a href="/docs/how-tos/backup-restore/">Back up and restore</a>
     </Feature>
-    <Feature icon="layers">
-      <h3>Learn Kubernetes to ship your project</h3>
+    <Feature icon="layers" title="Learn Kubernetes to ship your project" wide>
       <p>The platform handles what runs underneath. You work with notebooks, apps, and models.</p>
       <a href="/docs/introduction/">What Nebari is</a>
     </Feature>
