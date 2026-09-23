@@ -1,12 +1,16 @@
 ---
 /**
- * One row of the landing page's benefit lists ("What can you do with Nebari?"
- * and "What you don't have to do"): an outline icon in a fixed gutter, then a
- * heading, a sentence, and a link to the page that backs the claim.
+ * One item in the landing page's benefit sections ("What can you do with
+ * Nebari?" and "What you don't have to do"): an outline icon in a tinted tile,
+ * then a heading, a sentence, and a link to the page that backs the claim.
  *
- * Starlight's own icon set is filled and reads heavier than these lists want,
- * so the outline glyphs (Lucide, ISC) live here rather than coming from
- * `<Icon>`. Sized in `em` so they track the row's font size.
+ * The layout is the parent's job. Inside `.nebari-bento` the item is a card in
+ * a bento grid (`wide` makes it span two columns); inside `.nebari-skip` it is
+ * a compact list item whose icon tile is struck through.
+ *
+ * Starlight's own icon set is filled and reads heavier than these sections
+ * want, so the outline glyphs (Lucide, ISC) live here rather than coming from
+ * `<Icon>`. Sized in `em` so they track the tile's font size.
  */
 const icons = {
   cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
@@ -32,22 +36,25 @@ const icons = {
 
 interface Props {
   icon: keyof typeof icons;
+  /** Span two columns of the bento grid. Ignored outside `.nebari-bento`. */
+  wide?: boolean;
 }
 
-const { icon } = Astro.props;
+const { icon, wide = false } = Astro.props;
 ---
 
-<div class="nebari-row">
-  <svg
-    class="nebari-row__icon"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-    set:html={icons[icon]}
-  />
-  <div class="nebari-row__text"><slot /></div>
+<div class:list={['nebari-feature', { 'nebari-feature--wide': wide }]}>
+  <span class="nebari-feature__tile" aria-hidden="true">
+    <svg
+      class="nebari-feature__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      set:html={icons[icon]}
+    />
+  </span>
+  <div class="nebari-feature__text"><slot /></div>
 </div>
