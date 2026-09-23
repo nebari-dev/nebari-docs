@@ -19,6 +19,73 @@ sidebar:
 ---
 
 import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+import FeatureRow from '../../components/FeatureRow.astro';
+
+<section class="nebari-section" aria-labelledby="what-you-can-do">
+  <h2 id="what-you-can-do">What can you do with Nebari?</h2>
+  <p class="nebari-section__subtitle">Nebari runs the AI and data science tools your team needs on infrastructure you control.</p>
+
+  <div class="nebari-rows nebari-rows--split">
+    <FeatureRow icon="cloud">
+      <h3>Run AI on infrastructure you own</h3>
+      <p>Deploy into your own cloud account, or onto your own hardware. Your models, data, and prompts stay where you already keep them.</p>
+      <a href="/docs/how-tos/providers/">Pick a provider</a>
+    </FeatureRow>
+    <FeatureRow icon="rocket">
+      <h3>Go from prototype to something your team uses</h3>
+      <p>Package what you built as a Software Pack. It comes up with its own address, a login, and routing already wired in.</p>
+      <a href="/docs/explanations/software-packs/">How packs work</a>
+    </FeatureRow>
+    <FeatureRow icon="blocks">
+      <h3>Add capabilities as you need them</h3>
+      <p>Install only the packs you need today. Add serving, chat, or agent workflows later, and upgrade each one on its own.</p>
+      <a href="https://packs.nebari.dev/">Browse the catalog</a>
+    </FeatureRow>
+    <FeatureRow icon="branch">
+      <h3>Give every teammate the same setup</h3>
+      <p>Everything on the platform is declared in a git repository and reconciled from it, so the cluster your teammate opens is the one you described.</p>
+      <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
+    </FeatureRow>
+    <FeatureRow icon="pulse">
+      <h3>Watch what your AI is doing</h3>
+      <p>Logs, metrics, and traces are collected from every running pack and forwarded to the observability backend of your choice.</p>
+      <a href="/docs/explanations/nkp-architecture/#how-the-layers-fit-together">Platform architecture</a>
+    </FeatureRow>
+  </div>
+</section>
+
+<section class="nebari-section" aria-labelledby="what-you-dont-have-to-do">
+  <h2 id="what-you-dont-have-to-do">What you don't have to do</h2>
+  <p class="nebari-section__subtitle">Nebari gives you the infrastructure layer. This work stops being yours.</p>
+
+  <div class="nebari-rows nebari-rows--two">
+    <FeatureRow icon="clock">
+      <h3>Wait on someone else to deploy it</h3>
+      <p>Install a pack and it comes up on its own address, behind the login your company already uses.</p>
+      <a href="/docs/software-packs/">Software Packs</a>
+    </FeatureRow>
+    <FeatureRow icon="lock">
+      <h3>Build a login for every internal app</h3>
+      <p>Colleagues sign in once with the account they already have, and you decide which groups reach which app.</p>
+      <a href="/docs/how-tos/keycloak-auth/">Set up single sign-on</a>
+    </FeatureRow>
+    <FeatureRow icon="chip">
+      <h3>Rent a GPU box on the side</h3>
+      <p>GPU machines are a node group in the same cluster, so your team uses the hardware it already pays for.</p>
+      <a href="/docs/how-tos/update-cluster/">Change a running cluster</a>
+    </FeatureRow>
+    <FeatureRow icon="database">
+      <h3>Back up your own work</h3>
+      <p>Turn backups on once, and the platform copies your notebooks and files to off-cluster storage every day.</p>
+      <a href="/docs/how-tos/backup-restore/">Back up and restore</a>
+    </FeatureRow>
+    <FeatureRow icon="layers">
+      <h3>Learn Kubernetes to ship your project</h3>
+      <p>The platform handles what runs underneath. You work with notebooks, apps, and models.</p>
+      <a href="/docs/introduction/">What Nebari is</a>
+    </FeatureRow>
+  </div>
+</section>
 
 <section class="nebari-section nbr-grid-3" aria-labelledby="ecosystem">
   <h2 id="ecosystem">Ecosystem of tools</h2>
