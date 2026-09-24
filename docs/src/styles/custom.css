@@ -110,72 +110,164 @@
   border-color: var(--nbr-border);
 }
 
-/* Benefit lists on the landing page ("What can you do with Nebari?" and "What
-   you don't have to do"). Rows separated by hairlines rather than boxed as
-   cards: the card grid below them is a catalog of products, and these two
-   sections are claims about the platform, so they read as a different kind of
-   content. `.nebari-rows--two` splits the second list into two columns on wide
-   screens; both collapse to one column on narrow ones. */
-.sl-markdown-content .nebari-rows {
-  margin-top: 2.5rem;
-  border-top: 1px solid var(--nbr-border, var(--sl-color-hairline));
+/* "What can you do with Nebari?": the heading and its subtitle hold a column of
+   their own on wide screens, with the claims listed beside them. The band runs
+   the full width of the viewport, which is what separates it from the ecosystem
+   grid further down. */
+.sl-markdown-content .nebari-section--muted {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  background: var(--nbr-muted, var(--sl-color-gray-7));
+}
+/* `100vw` counts the scrollbar, so the band would otherwise widen the page by a
+   scrollbar's width. `clip` stops that without breaking `position: sticky` the
+   way `hidden` would. */
+body:has(.nebari-section--muted) {
+  overflow-x: clip;
 }
 @media (min-width: 60rem) {
-  .sl-markdown-content .nebari-rows--two,
-  .sl-markdown-content .nebari-rows--split {
+  .sl-markdown-content .nebari-split {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 4rem;
+    grid-template-columns: 18rem 1fr;
+    gap: 3rem;
+    align-items: start;
   }
-  /* `--two` fills across, so a pair of short items sits side by side. `--split`
-     fills the left column first, so a reader goes down the list in order and
-     the leftovers start the right column. Three rows holds the five items in
-     that list; a sixth would sit beside the fifth. */
-  .sl-markdown-content .nebari-rows--split {
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, auto);
+  .sl-markdown-content .nebari-split > :first-child {
+    position: sticky;
+    top: 5rem;
   }
 }
-
-/* Fixed icon gutter so every heading in a list starts on the same vertical
-   line, whatever the glyph's width. */
-.sl-markdown-content .nebari-row {
-  display: grid;
-  grid-template-columns: 1.75rem 1fr;
-  column-gap: 1rem;
+.sl-markdown-content .nebari-split > * {
   margin: 0;
-  padding: 1.75rem 0;
+}
+
+/* Claims as hairline rows rather than cards: the ecosystem grid below is a
+   catalog of products, and these are statements about the platform. */
+.sl-markdown-content .nebari-rows {
+  border-top: 1px solid var(--nbr-border, var(--sl-color-hairline));
+}
+.sl-markdown-content .nebari-row {
+  /* The icon and the heading share the first line; the sentence and the link
+     below run the full width of the row. */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.625rem;
+  align-items: center;
+  margin: 0;
+  padding: 1.5rem 0;
   border-bottom: 1px solid var(--nbr-border, var(--sl-color-hairline));
 }
 .sl-markdown-content .nebari-row__icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-top: 0.4rem;
+  width: 1.125rem;
+  height: 1.125rem;
   color: var(--nbr-primary, var(--sl-color-text-accent));
 }
 .sl-markdown-content .nebari-row h3 {
   margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-size: 1.05rem;
+  line-height: 1.4;
   color: var(--nbr-foreground, var(--sl-color-white));
 }
-.sl-markdown-content .nebari-rows--two .nebari-row h3,
-.sl-markdown-content .nebari-rows--split .nebari-row h3 {
-  font-size: 1.25rem;
+.sl-markdown-content .nebari-row > :not(.nebari-row__icon, h3) {
+  grid-column: 1 / -1;
 }
 .sl-markdown-content .nebari-row p {
-  /* Around 46 characters short of the row's full width: these are single
-     sentences, and a full-bleed line would be hard to scan. */
-  max-width: 46ch;
   margin: 0.5rem 0 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   color: var(--nbr-muted-foreground-strong, var(--sl-color-gray-2));
 }
-.sl-markdown-content .nebari-row a {
-  display: inline-block;
-  margin-top: 0.6rem;
-  font-size: 0.875rem;
+
+/* "What you don't have to do": one row per job, so the reader sees who does it
+   today and what the platform does instead. Table chrome (the frame, the header
+   fill, the row rules) comes from the theme. */
+.sl-markdown-content .nebari-compare table {
+  margin-top: 1.75rem;
+}
+.sl-markdown-content .nebari-compare :is(th, td) {
+  vertical-align: top;
+}
+.sl-markdown-content .nebari-compare tbody th {
+  text-align: start;
+  background: none;
+}
+/* The theme clears the last row's rule on `td` only, and this table's first
+   column is a `th`. */
+.sl-markdown-content .nebari-compare tbody tr:last-child th {
+  border-bottom: 0;
+}
+@media (min-width: 60rem) {
+  .sl-markdown-content .nebari-compare tbody th {
+    width: 18%;
+  }
+  .sl-markdown-content .nebari-compare td:first-of-type {
+    width: 28%;
+  }
+}
+.sl-markdown-content .nebari-compare td:first-of-type {
+  color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
+}
+
+/* Narrow screens: three columns would push the one that answers the question
+   off the side of a phone. Stack each row into a block instead, with the column
+   names carried by `data-label`. The selectors here have to out-specify the
+   theme's own table rules, which set a minimum width per column count. */
+@media (max-width: 59.99rem) {
+  .sl-markdown-content .nebari-compare table:has(tr) {
+    min-width: 0;
+    table-layout: auto;
+  }
+  .sl-markdown-content .nebari-compare :is(table, tbody, tr) {
+    display: block;
+  }
+  .sl-markdown-content .nebari-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .sl-markdown-content .nebari-compare tbody :is(th, td) {
+    display: block;
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+  .sl-markdown-content .nebari-compare tr {
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid var(--nbr-border, var(--sl-color-hairline));
+  }
+  .sl-markdown-content .nebari-compare tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .sl-markdown-content .nebari-compare tbody td {
+    margin-top: 0.875rem;
+  }
+  .sl-markdown-content .nebari-compare tbody td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.125rem;
+    font-size: 0.75rem;
+    color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
+  }
+}
+
+/* Links out of either section: small, and marked with an arrow so they read as
+   a way on rather than as part of the sentence above them. */
+.sl-markdown-content :is(.nebari-row, .nebari-compare td) a {
+  /* Block, so the link starts its own line under the sentence instead of
+     trailing off the end of it. */
+  display: block;
+  width: fit-content;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
   font-weight: 500;
+  text-decoration: none;
+}
+.sl-markdown-content :is(.nebari-row, .nebari-compare td) a:hover {
+  text-decoration: underline;
+}
+.sl-markdown-content :is(.nebari-row, .nebari-compare td) a::after {
+  content: " \2192";
 }
