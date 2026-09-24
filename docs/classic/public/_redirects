@@ -1,0 +1,4 @@
+# Cloudflare static-asset redirects for classic.nebari.dev (evaluated before
+# assets are served). The site has no landing page of its own; start at the
+# welcome page, as /classic/ did on www.nebari.dev.
+/ /welcome/ 302

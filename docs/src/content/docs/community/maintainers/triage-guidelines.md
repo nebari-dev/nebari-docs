@@ -128,5 +128,5 @@ Support requests should be directed to the following channels:
 
 [code-contributions]: /community/code-contributions/
 [github-conventions]: /community/maintainers/github-conventions/
-[troubleshooting]: /classic/troubleshooting/
+[troubleshooting]: https://classic.nebari.dev/troubleshooting/
 [saved-replies]: /community/maintainers/saved-replies/

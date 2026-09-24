@@ -5,7 +5,14 @@ import mermaid from 'astro-mermaid';
 import { defineConfig } from 'astro/config';
 import starlightLinksValidator from 'starlight-links-validator';
 
-const site = process.env.SITE ?? 'https://www.nebari.dev';
+// `DOCS_SITE=classic` builds the Nebari Classic docs in `classic/` as a separate
+// site for classic.nebari.dev; otherwise this builds www.nebari.dev from `src/`.
+// Both share the components and styles in `src/`.
+const classic = process.env.DOCS_SITE === 'classic';
+const mainSite = 'https://www.nebari.dev';
+const classicSite = 'https://classic.nebari.dev';
+
+const site = process.env.SITE ?? (classic ? classicSite : mainSite);
 const base = process.env.BASE ?? '/';
 
 const overview = (slug) => ({ label: 'Overview', slug });
@@ -63,94 +70,94 @@ const docsSidebar = [
   },
 ];
 
-// Sidebar for Nebari Classic (`/classic/*`).
+// Sidebar for Nebari Classic (classic.nebari.dev).
 const classicSidebar = [
-  { label: 'Introduction', slug: 'classic/welcome' },
+  { label: 'Introduction', slug: 'welcome' },
   {
     label: 'Get Started',
     items: [
-      overview('classic/get-started'),
-      'classic/get-started/quickstart',
-      'classic/get-started/installing-nebari',
-      'classic/get-started/deploy',
-      'classic/get-started/cloud-providers',
+      overview('get-started'),
+      'get-started/quickstart',
+      'get-started/installing-nebari',
+      'get-started/deploy',
+      'get-started/cloud-providers',
     ],
   },
   {
     label: 'Tutorials',
     items: [
-      overview('classic/tutorials'),
-      'classic/tutorials/login-keycloak',
-      'classic/tutorials/using_dask',
-      'classic/tutorials/create-dashboard',
-      'classic/tutorials/creating-new-environments',
-      'classic/tutorials/create-alerts',
-      'classic/tutorials/jupyter-scheduler',
-      'classic/tutorials/argo-workflows-walkthrough',
+      overview('tutorials'),
+      'tutorials/login-keycloak',
+      'tutorials/using_dask',
+      'tutorials/create-dashboard',
+      'tutorials/creating-new-environments',
+      'tutorials/create-alerts',
+      'tutorials/jupyter-scheduler',
+      'tutorials/argo-workflows-walkthrough',
     ],
   },
   {
     label: 'How-to Guides',
     items: [
-      overview('classic/how-tos'),
-      'classic/how-tos/nebari-gcp',
-      'classic/how-tos/nebari-aws',
-      'classic/how-tos/nebari-azure',
-      'classic/how-tos/nebari-kubernetes',
-      'classic/how-tos/nebari-local',
-      'classic/how-tos/nebari-stages-directory',
-      'classic/how-tos/nebari-environment-management',
-      'classic/how-tos/nebari-destroy',
-      'classic/how-tos/domain-registry',
-      'classic/how-tos/debug-nebari',
-      'classic/how-tos/configuring-keycloak',
-      'classic/how-tos/configuring-smtp',
-      'classic/how-tos/using-vscode',
-      'classic/how-tos/manual-backup',
-      'classic/how-tos/nebari-upgrade',
-      'classic/how-tos/kubernetes-version-upgrade',
-      'classic/how-tos/setup-argo',
-      'classic/how-tos/using-argo',
-      'classic/how-tos/jhub-app-launcher',
-      'classic/how-tos/idle-culling',
-      'classic/how-tos/nebari-extension-system',
-      'classic/how-tos/telemetry',
-      'classic/how-tos/setup-monitoring',
-      'classic/how-tos/setup-healthcheck',
-      'classic/how-tos/access-logs-loki',
-      'classic/how-tos/use-gpus',
-      'classic/how-tos/develop-local-packages',
-      'classic/how-tos/install-pip-packages',
-      'classic/how-tos/fine-grained-permissions',
-      'classic/how-tos/connect-via-ssh',
-      'classic/how-tos/jupyter-gallery',
+      overview('how-tos'),
+      'how-tos/nebari-gcp',
+      'how-tos/nebari-aws',
+      'how-tos/nebari-azure',
+      'how-tos/nebari-kubernetes',
+      'how-tos/nebari-local',
+      'how-tos/nebari-stages-directory',
+      'how-tos/nebari-environment-management',
+      'how-tos/nebari-destroy',
+      'how-tos/domain-registry',
+      'how-tos/debug-nebari',
+      'how-tos/configuring-keycloak',
+      'how-tos/configuring-smtp',
+      'how-tos/using-vscode',
+      'how-tos/manual-backup',
+      'how-tos/nebari-upgrade',
+      'how-tos/kubernetes-version-upgrade',
+      'how-tos/setup-argo',
+      'how-tos/using-argo',
+      'how-tos/jhub-app-launcher',
+      'how-tos/idle-culling',
+      'how-tos/nebari-extension-system',
+      'how-tos/telemetry',
+      'how-tos/setup-monitoring',
+      'how-tos/setup-healthcheck',
+      'how-tos/access-logs-loki',
+      'how-tos/use-gpus',
+      'how-tos/develop-local-packages',
+      'how-tos/install-pip-packages',
+      'how-tos/fine-grained-permissions',
+      'how-tos/connect-via-ssh',
+      'how-tos/jupyter-gallery',
     ],
   },
   {
     label: 'Conceptual guides',
     items: [
-      overview('classic/explanations'),
-      'classic/explanations/advanced-configuration',
-      'classic/explanations/security-configuration',
-      'classic/explanations/provider-configuration',
-      'classic/explanations/profile-configuration',
-      'classic/explanations/customize-themes',
-      'classic/explanations/environments-configuration',
-      'classic/explanations/custom-overrides-configuration',
-      'classic/explanations/config-best-practices',
-      'classic/explanations/infrastructure-architecture',
+      overview('explanations'),
+      'explanations/advanced-configuration',
+      'explanations/security-configuration',
+      'explanations/provider-configuration',
+      'explanations/profile-configuration',
+      'explanations/customize-themes',
+      'explanations/environments-configuration',
+      'explanations/custom-overrides-configuration',
+      'explanations/config-best-practices',
+      'explanations/infrastructure-architecture',
     ],
   },
   {
     label: 'Reference',
     items: [
-      overview('classic/references'),
-      'classic/references/RELEASE',
-      'classic/references/personas',
+      overview('references'),
+      'references/RELEASE',
+      'references/personas',
     ],
   },
-  { label: 'Troubleshooting', slug: 'classic/troubleshooting' },
-  { label: 'FAQ', slug: 'classic/faq' },
+  { label: 'Troubleshooting', slug: 'troubleshooting' },
+  { label: 'FAQ', slug: 'faq' },
 ];
 
 // Sidebar for the community guidelines (`/community/*`).
@@ -181,9 +188,48 @@ const communitySidebar = [
   'community/plugins',
 ];
 
+const mainStarlight = {
+  title: 'Nebari',
+  logoHref: '/',
+  components: {},
+  // Shows only the current section's sidebar (docs / community).
+  routeMiddleware: './src/routeData.ts',
+  nav: [
+    { label: 'Docs', href: '/docs/introduction/' },
+    { label: 'Community', href: '/community/introduction/' },
+    { label: 'Software Packs', href: 'https://packs.nebari.dev' },
+  ],
+  sidebar: [
+    { label: 'Nebari', items: docsSidebar },
+    { label: 'Community', items: communitySidebar },
+  ],
+};
+
+const classicStarlight = {
+  title: 'Nebari Classic',
+  // The site root only redirects to the welcome page.
+  logoHref: '/welcome/',
+  components: {
+    // Adds the Nebari Classic phase-out notice above every page.
+    MarkdownContent: './src/components/MarkdownContent.astro',
+  },
+  nav: [
+    { label: 'Docs', href: `${mainSite}/docs/introduction/` },
+    { label: 'Community', href: `${mainSite}/community/introduction/` },
+    { label: 'Software Packs', href: 'https://packs.nebari.dev' },
+  ],
+  sidebar: classicSidebar,
+};
+
+const { title, logoHref, components, routeMiddleware, nav, sidebar } = classic ? classicStarlight : mainStarlight;
+
 export default defineConfig({
   site,
   base,
+  // The two sites build side by side, each with its own content, assets and output.
+  srcDir: classic ? './classic' : './src',
+  publicDir: classic ? './classic/public' : './public',
+  outDir: classic ? './dist-classic' : './dist',
   markdown: {
     // Keep quotes and dashes exactly as authored instead of converting them to typographic ones.
     processor: satteri({ features: { smartPunctuation: false } }),
@@ -194,7 +240,7 @@ export default defineConfig({
       enableLog: false,
     }),
     starlight({
-      title: 'Nebari',
+      title,
       description: 'An open source stack for your AI.',
       favicon: '/logo/favicon.ico',
       customCss: ['./src/styles/custom.css'],
@@ -202,35 +248,25 @@ export default defineConfig({
       components: {
         // Adds Google Analytics + the cookie-consent banner on top of the theme Head.
         Head: './src/components/Head.astro',
-        // Adds the Nebari Classic phase-out notice above `/classic/*` pages.
-        MarkdownContent: './src/components/MarkdownContent.astro',
+        ...components,
       },
-      // Shows only the current section's sidebar (docs / classic / community).
-      routeMiddleware: './src/routeData.ts',
+      routeMiddleware,
       editLink: {
         // Starlight appends src/content/docs/<file>, so this points at the Astro project root.
         baseUrl: 'https://github.com/nebari-dev/nebari-docs/edit/main/docs/',
       },
       plugins: [
         nebari({
-          logoHref: '/',
+          logoHref,
           githubHref: 'https://github.com/nebari-dev/nebari',
-          nav: [
-            { label: 'Docs', href: '/docs/introduction/' },
-            { label: 'Community', href: '/community/introduction/' },
-            { label: 'Software Packs', href: 'https://packs.nebari.dev' },
-          ],
+          nav,
         }),
         starlightLinksValidator({
           // Content legitimately mentions http://localhost URLs in setup instructions.
           errorOnLocalLinks: false,
         }),
       ],
-      sidebar: [
-        { label: 'Nebari', items: docsSidebar },
-        { label: 'Nebari Classic', items: classicSidebar },
-        { label: 'Community', items: communitySidebar },
-      ],
+      sidebar,
     }),
   ],
 });

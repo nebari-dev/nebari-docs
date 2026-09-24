@@ -101,4 +101,4 @@ For example: "To start JupyterLab, you run `jupyter lab`."
 
 <!-- Internal links -->
 
-[automatic-dns-provision]: /classic/how-tos/domain-registry/#automatic-dns-provision
+[automatic-dns-provision]: https://classic.nebari.dev/how-tos/domain-registry/#automatic-dns-provision

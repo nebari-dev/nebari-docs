@@ -10,7 +10,7 @@ import NebariHead from '@nebari/starlight/components/Head.astro';
      only injected on the production hostnames. -->
 <script is:inline>
   const analyticsId = 'G-NXNMX83GGS';
-  const productionHosts = ['nebari.dev', 'www.nebari.dev'];
+  const productionHosts = ['nebari.dev', 'www.nebari.dev', 'classic.nebari.dev'];
   const analyticsEnabled = productionHosts.includes(window.location.hostname);
 
   window.dataLayer = window.dataLayer || [];

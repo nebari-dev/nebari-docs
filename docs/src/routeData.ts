@@ -7,7 +7,6 @@ type Link = Extract<Entry, { type: 'link' }>;
 /** Top-level sidebar group shown for each URL section. Must match the labels in astro.config.mjs. */
 const SECTIONS: Record<string, string> = {
   docs: 'Nebari',
-  classic: 'Nebari Classic',
   community: 'Community',
 };
 
@@ -16,10 +15,11 @@ function links(entries: Sidebar): Link[] {
 }
 
 /**
- * The site has three independent documentation sets (current docs, Nebari
- * Classic, community guidelines), mirroring the old Docusaurus multi-instance
- * setup. Starlight has one sidebar, so it is configured as three top-level
- * groups and this middleware narrows it to the group for the current section.
+ * The site has two independent documentation sets (current docs, community
+ * guidelines), mirroring the old Docusaurus multi-instance setup. Starlight has
+ * one sidebar, so it is configured as two top-level groups and this middleware
+ * narrows it to the group for the current section. Nebari Classic is a separate
+ * site (classic.nebari.dev) with its own sidebar, so it doesn't use this.
  * Prev/next pagination is recomputed so it never crosses a section boundary.
  */
 export const onRequest = defineRouteMiddleware((context) => {
