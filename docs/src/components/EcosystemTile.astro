@@ -1,0 +1,85 @@
+---
+/**
+ * One tile in the landing page's "Ecosystem of tools" grid. Renders an `<li>`,
+ * so place it inside a `<ul class="nebari-tiles">`.
+ *
+ * The whole tile is the link (the link's `::before` stretches over it), so the
+ * target is the tile rather than a 20px line of text. A tile without `href` is
+ * a "coming soon" placeholder: not a link, dashed, and marked with a badge.
+ *
+ * Core products show their logo above the title; everything else shows an
+ * outline icon beside it. Logos sit next to the visible title, so they are
+ * decorative (`alt=""`).
+ */
+import { icons, type IconName } from './icons';
+
+interface Props {
+  title: string;
+  description: string;
+  href?: string;
+  linkText?: string;
+  icon?: IconName;
+  logo?: 'nebari' | 'nebi';
+}
+
+const { title, description, href, linkText, icon, logo } = Astro.props;
+const soon = !href;
+const external = href?.startsWith('http');
+---
+
+<li class:list={['nebari-tile', { 'nebari-tile--soon': soon }]}>
+  <div class="nebari-tile__top">
+    {
+      logo === 'nebari' && (
+        <span class="nebari-tile__logo">
+          <img class="nebari-tile__logo-light" src="/img/home/nebari-logo.svg" alt="" width="108" height="28" />
+          <img class="nebari-tile__logo-dark" src="/img/home/nebari-logo-dark.svg" alt="" width="108" height="28" />
+        </span>
+      )
+    }
+    {
+      logo === 'nebi' && (
+        <span class="nebari-tile__logo">
+          {/* The Nebi mark (nebari-dev/nebi, Apache-2.0), with the wordmark as
+              text so it takes the theme's foreground in light and dark. */}
+          <svg viewBox="15 6 555 206" height="28" aria-hidden="true">
+            <polygon points="110,18 187,62 110,106 33,62" fill="#9A3DCC" />
+            <polygon points="27,73 104,117 104,199 27,155" fill="#EAB54F" />
+            <polygon points="116,117 193,73 193,155 116,199" fill="#359D96" />
+            <text x="235" y="109" dominant-baseline="central" font-size="140" font-weight="700" fill="currentColor">
+              Nebi
+            </text>
+          </svg>
+        </span>
+      )
+    }
+    <div class="nebari-tile__title">
+      {
+        icon && (
+          <span class="nebari-tile__icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={icons[icon]}
+            />
+          </span>
+        )
+      }
+      <h4>{title}</h4>
+    </div>
+    <p>{description}</p>
+  </div>
+  {
+    soon ? (
+      <span class="nebari-badge">Coming soon</span>
+    ) : (
+      <a class="nebari-tile__link" href={href} {...(external ? { rel: 'noopener noreferrer' } : {})}>
+        {linkText}
+      </a>
+    )
+  }
+</li>

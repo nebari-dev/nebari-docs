@@ -1,44 +1,35 @@
 ---
 /**
- * One row of the landing page's "What can you do with Nebari?" list: an outline
- * icon, then a heading on the same line, with a sentence and a link to the page
- * that backs the claim below them.
- *
- * Starlight's own icon set is filled and reads heavier than these lists want,
- * so the outline glyphs (Lucide, ISC) live here rather than coming from
- * `<Icon>`. Sized in `em` so they track the row's font size.
+ * One item in the landing page's "What can you do with Nebari?" list: an
+ * outline icon on a tinted tile, then a heading on the same line, with a
+ * sentence and a link to the page that backs the claim below them. Renders an
+ * `<li>`, so place it inside the `<ul class="nebari-rows">`.
  */
-const icons = {
-  cloud: '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
-  rocket:
-    '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91 0z"/>' +
-    '<path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>' +
-    '<path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
-  blocks:
-    '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>' +
-    '<rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/>',
-  branch: '<path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
-  pulse: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-} as const;
+import { icons, type IconName } from './icons';
 
 interface Props {
-  icon: keyof typeof icons;
+  icon: IconName;
 }
 
 const { icon } = Astro.props;
+
+// `pathLength="1"` lets the stroke-draw in custom.css use the same dash length
+// for every shape, whatever its real length.
+const glyph = icons[icon].replace(/<(path|circle|rect)\b/g, '<$1 pathLength="1"');
 ---
 
-<div class="nebari-row">
-  <svg
-    class="nebari-row__icon"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-    set:html={icons[icon]}
-  />
+<li class="nebari-row" data-draw>
+  <span class="nebari-row__icon" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      set:html={glyph}
+    />
+  </span>
   <slot />
-</div>
+</li>
+

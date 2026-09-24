@@ -1,0 +1,37 @@
+---
+/**
+ * The landing page's one motion idea: a line drawn once, as its element
+ * scrolls into view. Include once per page; it marks every `[data-draw]`
+ * element with `.is-drawn` on arrival, and custom.css decides what draws (the
+ * outline icons in "What can you do", the line through each chore in "What
+ * you don't have to do").
+ *
+ * Nothing is hidden by default: the undrawn state only applies once this
+ * script sets `data-nebari-motion` on the root, and never under reduced
+ * motion, so without it everything renders in its finished state.
+ */
+---
+
+<script>
+  const items = document.querySelectorAll<HTMLElement>('[data-draw]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (items.length > 0 && !reduce.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const arriving = entries.filter((entry) => entry.isIntersecting);
+        arriving.forEach((entry, i) => {
+          const item = entry.target as HTMLElement;
+          // Items that arrive together (on load, or a fast scroll) draw one
+          // after another rather than all at once; cap the wait at 3 steps.
+          item.style.setProperty('--nebari-draw-delay', `${Math.min(i, 3) * 90}ms`);
+          item.classList.add('is-drawn');
+          observer.unobserve(item);
+        });
+      },
+      { rootMargin: '0px 0px -15% 0px' },
+    );
+    document.documentElement.dataset.nebariMotion = 'draw';
+    items.forEach((item) => observer.observe(item));
+  }
+</script>
