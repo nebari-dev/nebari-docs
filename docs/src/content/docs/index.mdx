@@ -82,41 +82,41 @@ import ProviderTile from '../../components/ProviderTile.astro';
         </tr>
       </thead>
       <tbody>
-        <tr data-draw>
+        <tr>
           <th scope="row">Deploying an internal app</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Repeat the same routing, login, and HTTPS setup for every service you deploy.</span></td>
+          <td data-label="Without Nebari">Repeat the same routing, login, and HTTPS setup for every service you deploy.</td>
           <td data-label="With Nebari">
             Everything that makes it a shared app comes with it: an address, HTTPS, the platform login, and a tile on the landing page.
             <a href="/docs/explanations/software-packs/">How packs work</a>
           </td>
         </tr>
-        <tr data-draw>
+        <tr>
           <th scope="row">Setting up sign-in for a new app</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Ask an admin to add every new app to your company's login system, and wait.</span></td>
+          <td data-label="Without Nebari">Ask an admin to add every new app to your company's login system, and wait.</td>
           <td data-label="With Nebari">
             Sign-in comes with the app. What's left for you is deciding who gets in, by group or role, rather than wiring up the login itself.
             <a href="/docs/how-tos/keycloak-auth/">Set up single sign-on</a>
           </td>
         </tr>
-        <tr data-draw>
+        <tr>
           <th scope="row">Tracking infrastructure config</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Keep configuration in sync across environments manually.</span></td>
+          <td data-label="Without Nebari">Keep configuration in sync across environments manually.</td>
           <td data-label="With Nebari">
             Every environment is built from the same git repository, and the platform keeps each cluster's setup matching it.
             <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
           </td>
         </tr>
-        <tr data-draw>
+        <tr>
           <th scope="row">Watching what your apps are doing</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Build and run your own pipeline for logs, metrics, and traces.</span></td>
+          <td data-label="Without Nebari">Build and run your own pipeline for logs, metrics, and traces.</td>
           <td data-label="With Nebari">
             Your apps send logs, metrics, and traces to the platform, and it passes them to the monitoring system you already use.
             <a href="https://packs.nebari.dev/lgtm-pack/">LGTM monitoring pack</a>
           </td>
         </tr>
-        <tr data-draw>
+        <tr>
           <th scope="row">Giving your team access to an LLM</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Build your own access rules, usage limits, and API keys around the model server.</span></td>
+          <td data-label="Without Nebari">Build your own access rules, usage limits, and API keys around the model server.</td>
           <td data-label="With Nebari">
             They come with each model, so two teams can have separate keys and limits.
             <a href="https://packs.nebari.dev/llm-serving-pack/">LLM serving pack</a>

@@ -303,24 +303,9 @@ body:has(.nebari-section--muted) {
   }
 }
 
-/* The line through each chore in "What you don't have to do": the column
-   says what you'd do without Nebari, and the page crosses it off. It is a
-   background, not text-decoration or <del>, so it wraps with the text
-   (box-decoration-break), stays out of the accessibility tree, and can be
-   drawn. The struck state is the default; DrawOnView only animates it in. */
-.sl-markdown-content .nebari-chore {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-position: 0 60%;
-  background-size: 100% 1px;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
 /* The page's one motion idea, a line drawn once as it scrolls into view
    (DrawOnView.astro marks each `[data-draw]` item `.is-drawn`): the outline
-   icons trace themselves, and each chore is struck through a beat after its
-   row appears. Nothing is undrawn until the script sets
+   icons trace themselves as their row appears. Nothing is undrawn until the script sets
    `data-nebari-motion`, and never under reduced motion or in print. */
 @media screen and (prefers-reduced-motion: no-preference) {
   :root[data-nebari-motion='draw'] .nebari-row__icon svg > * {
@@ -336,13 +321,6 @@ body:has(.nebari-section--muted) {
   :root[data-nebari-motion='draw'] .nebari-row:not(.is-drawn) .nebari-row__icon svg > * {
     stroke-dashoffset: 1;
     opacity: 0;
-  }
-  :root[data-nebari-motion='draw'] .nebari-chore {
-    transition: background-size calc(var(--nbr-duration-slow, 350ms) * 1.5) var(--nbr-ease-emphasized, ease-out)
-      calc(var(--nebari-draw-delay, 0ms) + var(--nbr-duration-slow, 350ms));
-  }
-  :root[data-nebari-motion='draw'] tr:not(.is-drawn) .nebari-chore {
-    background-size: 0% 1px;
   }
 }
 
