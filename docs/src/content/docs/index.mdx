@@ -40,29 +40,28 @@ import ProviderTile from '../../components/ProviderTile.astro';
 
     <ul class="nebari-rows" role="list">
       <FeatureRow icon="cloud">
-        <h3>Run AI on infrastructure you own</h3>
-        <p>Deploy into your own cloud account, or onto your own hardware. Your models, data, and prompts stay where you already keep them.</p>
+        <h3>Run it on infrastructure you own</h3>
+        <p>AWS, Google Cloud, Azure, Hetzner, or a Kubernetes cluster you already run, all from the same config file, including clusters with no internet access.</p>
         <a href="/docs/how-tos/providers/">Pick a provider</a>
       </FeatureRow>
-      <FeatureRow icon="rocket">
-        <h3>Go from prototype to something your team uses</h3>
-        <p>Package what you built as a Software Pack. It comes up with its own address, a login, and routing already wired in.</p>
-        <a href="/docs/explanations/software-packs/">How packs work</a>
-      </FeatureRow>
       <FeatureRow icon="package">
-        <h3>Add capabilities as you need them</h3>
-        <p>Install only the packs you need today. Add serving, chat, or agent workflows later, and upgrade each one on its own.</p>
+        <h3>Install only what you need</h3>
+        <p>Notebooks, dashboards, model serving, a chat assistant, a coding agent.</p>
         <a href="https://packs.nebari.dev/">Browse the catalog</a>
       </FeatureRow>
       <FeatureRow icon="git-branch">
-        <h3>Give every teammate the same setup</h3>
-        <p>Everything on the platform is declared in a git repository and reconciled from it, so the cluster your teammate opens is the one you described.</p>
+        <h3>Every change to the cluster is a commit</h3>
+        <p>Your team reviews changes the way it reviews code, and the history shows who changed what.</p>
         <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
       </FeatureRow>
-      <FeatureRow icon="activity">
-        <h3>Watch what your AI is doing</h3>
-        <p>Logs, metrics, and traces are collected from every running pack and forwarded to the observability backend of your choice.</p>
-        <a href="/docs/explanations/nkp-architecture/#how-the-layers-fit-together">Platform architecture</a>
+      <FeatureRow icon="bot">
+        <h3>Serve LLMs on your own hardware</h3>
+        <p>Your prompts and data never leave your network.</p>
+        <a href="https://packs.nebari.dev/llm-serving-pack/">LLM serving pack</a>
+      </FeatureRow>
+      <FeatureRow icon="file-check">
+        <h3>Know where every piece of software came from</h3>
+        <p>The platform checks everything running on the cluster and writes a dated report for compliance.</p>
       </FeatureRow>
     </ul>
   </div>
@@ -85,42 +84,42 @@ import ProviderTile from '../../components/ProviderTile.astro';
       <tbody>
         <tr data-draw>
           <th scope="row">Deploying an internal app</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Wait on someone else to deploy it.</span></td>
+          <td data-label="Without Nebari"><span class="nebari-chore">Repeat the same routing, login, and HTTPS setup for every service you deploy.</span></td>
           <td data-label="With Nebari">
-            Install a pack and it comes up on its own address, behind the login your company already uses.
-            <a href="/docs/software-packs/">Software Packs</a>
+            Everything that makes it a shared app comes with it: an address, HTTPS, the platform login, and a tile on the landing page.
+            <a href="/docs/explanations/software-packs/">How packs work</a>
           </td>
         </tr>
         <tr data-draw>
-          <th scope="row">Signing in</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Build a login for every internal app.</span></td>
+          <th scope="row">Setting up sign-in for a new app</th>
+          <td data-label="Without Nebari"><span class="nebari-chore">Ask an admin to add every new app to your company's login system, and wait.</span></td>
           <td data-label="With Nebari">
-            Colleagues sign in once with the account they already have, and you decide which groups reach which app.
+            Sign-in comes with the app. What's left for you is deciding who gets in, by group or role, rather than wiring up the login itself.
             <a href="/docs/how-tos/keycloak-auth/">Set up single sign-on</a>
           </td>
         </tr>
         <tr data-draw>
-          <th scope="row">Getting GPUs</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Rent a GPU box on the side.</span></td>
+          <th scope="row">Tracking infrastructure config</th>
+          <td data-label="Without Nebari"><span class="nebari-chore">Keep configuration in sync across environments manually.</span></td>
           <td data-label="With Nebari">
-            GPU machines are a node group in the same cluster, so your team uses the hardware it already pays for.
-            <a href="/docs/how-tos/update-cluster/">Change a running cluster</a>
+            Every environment is built from the same git repository, and the platform keeps each cluster's setup matching it.
+            <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
           </td>
         </tr>
         <tr data-draw>
-          <th scope="row">Backups</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Back up your own work by hand.</span></td>
+          <th scope="row">Watching what your apps are doing</th>
+          <td data-label="Without Nebari"><span class="nebari-chore">Build and run your own pipeline for logs, metrics, and traces.</span></td>
           <td data-label="With Nebari">
-            Turn backups on once, and the platform copies your notebooks and files to off-cluster storage every day.
-            <a href="/docs/how-tos/backup-restore/">Back up and restore</a>
+            Your apps send logs, metrics, and traces to the platform, and it passes them to the monitoring system you already use.
+            <a href="https://packs.nebari.dev/lgtm-pack/">LGTM monitoring pack</a>
           </td>
         </tr>
         <tr data-draw>
-          <th scope="row">Shipping a project</th>
-          <td data-label="Without Nebari"><span class="nebari-chore">Learn Kubernetes first.</span></td>
+          <th scope="row">Giving your team access to an LLM</th>
+          <td data-label="Without Nebari"><span class="nebari-chore">Build your own access rules, usage limits, and API keys around the model server.</span></td>
           <td data-label="With Nebari">
-            The platform handles what runs underneath. You work with notebooks, apps, and models.
-            <a href="/docs/introduction/">What Nebari is</a>
+            They come with each model, so two teams can have separate keys and limits.
+            <a href="https://packs.nebari.dev/llm-serving-pack/">LLM serving pack</a>
           </td>
         </tr>
       </tbody>
