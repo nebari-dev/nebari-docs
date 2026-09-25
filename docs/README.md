@@ -100,6 +100,13 @@ bun run dev
 
 This command starts a local development server with hot reload.
 
+The Nebari Classic docs are a separate site (classic.nebari.dev) built from
+the same project. To work on them, run:
+
+```bash
+bun run dev:classic
+```
+
 > **Note**
 > By default, this will load your site at <http://localhost:4321/>.
 
@@ -111,22 +118,26 @@ To build the static files of the documentation (and see how they would look once
 bun run build
 ```
 
-This command generates static content into the `docs/dist` directory. The build
+This command generates static content into the `docs/dist` directory.
+`bun run build:classic` does the same for the Nebari Classic site
+(classic.nebari.dev) into `docs/dist-classic`. The build
 also validates every internal link (including `#anchors`) with
 [`starlight-links-validator`](https://github.com/HiDeoo/starlight-links-validator)
 and fails on broken ones. You can check the built site with:
 
 ```bash
 bun run preview
+# or, for the Classic site
+bun run preview:classic
 ```
 
 ### Running the tests
 
-The smoke tests in `test/build.test.ts` build the site and then verify that
+The smoke tests in `test/build.test.ts` build both sites and then verify that
 every content page renders with its title, each section shows only its own
 sidebar, every internal `href` and image on every page resolves, the search
-index exists, and the legacy redirects in `public/_redirects` point at real
-pages. Run them with:
+index exists, no page links to the old `/classic/` path, and the redirects in
+both `_redirects` files point at real pages. Run them with:
 
 ```bash
 bun test
@@ -136,29 +147,34 @@ bun test
 
 ```
 docs/
-├── astro.config.mjs        # Starlight config: theme plugin, header tabs, sidebars
-├── public/                 # Static assets served at the site root (/img, /logo, /policies)
-│   └── _redirects          # Legacy URL redirects (Cloudflare format)
+├── astro.config.mjs        # Starlight config for both sites: theme plugin, header tabs, sidebars
+├── public/                 # www.nebari.dev static assets served at the site root (/img, /logo, /policies)
+│   └── _redirects          # Redirects /classic/* and legacy URLs to classic.nebari.dev (Cloudflare format)
 ├── src/
 │   ├── components/         # Astro components used by content and Starlight overrides
-│   ├── content/docs/       # All pages; the path of a file is its URL
+│   ├── content/docs/       # www.nebari.dev pages; the path of a file is its URL
 │   │   ├── index.mdx       # Landing page
 │   │   ├── docs/           # Current Nebari documentation   -> /docs/*
-│   │   ├── classic/        # Nebari Classic documentation   -> /classic/*
 │   │   └── community/      # Community guidelines           -> /community/*
 │   ├── routeData.ts        # Shows one sidebar per section
 │   └── styles/custom.css   # Landing-page styles
-├── test/build.test.ts      # Build smoke tests
-└── wrangler.jsonc          # Cloudflare Worker (static assets) config
+├── classic/                # Nebari Classic, built as classic.nebari.dev with DOCS_SITE=classic
+│   ├── content/docs/       # Classic pages, served from the site root -> classic.nebari.dev/*
+│   └── public/             # Classic static assets and _redirects
+├── test/build.test.ts      # Build smoke tests for both sites
+├── wrangler.jsonc          # Cloudflare Worker config for www.nebari.dev
+└── wrangler.classic.jsonc  # Cloudflare Worker config for classic.nebari.dev
 ```
 
 ## Writing content
 
 - Every page needs a `title` in its frontmatter; Starlight renders it as the page heading, so don't repeat it as a `# Heading`.
-- Use root-relative links with a trailing slash, for example `/classic/how-tos/nebari-aws/`. Broken links fail the build.
+- Use root-relative links with a trailing slash, for example `/docs/how-tos/deploy/`. Broken links fail the build.
+- Links between the two sites must be absolute: `https://classic.nebari.dev/how-tos/nebari-aws/` from the main docs, `https://www.nebari.dev/community/introduction/` from Classic.
 - Callouts use Starlight's syntax: `:::note`, `:::tip`, `:::caution`, `:::danger`, optionally with a title as `:::note[Title]`.
 - Files that use components (`<Tabs>`, `<TabItem>`, `<Aside>`, `<LinkCard>`, ...) must have the `.mdx` extension and import them from `@astrojs/starlight/components`. HTML comments are not valid in `.mdx`; use `{/* ... */}`.
 - New pages must be added to the matching sidebar in `astro.config.mjs` to appear in navigation.
+- Nebari Classic pages go under `classic/content/docs/` and their images under `classic/public/img/`.
 - Mermaid diagrams work in fenced ```` ```mermaid ```` blocks.
 
 ## Adding a new dependency
@@ -169,15 +185,21 @@ bun add package-name
 
 ## Deployment
 
-The [Docs workflow](../.github/workflows/docs.yml) builds and tests the site on
-every pull request and push to `main`. Pushes to `main` deploy `docs/dist` to
-the `nebari-docs` Cloudflare Worker with
+The [Docs workflow](../.github/workflows/docs.yml) builds and tests both sites
+on every pull request and push to `main`. Pushes to `main` deploy `docs/dist` to
+the `nebari-docs` Cloudflare Worker (www.nebari.dev) and `docs/dist-classic` to
+the `nebari-docs-classic` Worker (classic.nebari.dev) with
 [`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action);
-same-repository pull requests get a preview deployment whose URL is posted as a
-PR comment. The workflow needs these repository secrets:
+same-repository pull requests get a preview deployment of each, with both URLs
+posted as a PR comment. The workflow needs these repository secrets:
 
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
+
+The token must be able to deploy both Workers. `wrangler.classic.jsonc` also
+attaches `classic.nebari.dev` as a custom domain on deploy, which creates its
+DNS record and TLS certificate, so the token also needs DNS and Workers Routes
+edit access on the `nebari.dev` zone.
 
 <!-- links -->
 

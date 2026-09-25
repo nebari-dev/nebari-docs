@@ -3,7 +3,7 @@ title: Debug a deployment
 description: How to diagnose a stuck or failing NKP deployment, covering both the nic deploy phase and post-deploy cluster health.
 ---
 
-This guide covers debugging a stuck or failing Nebari Kubernetes Platform (NKP) deployment. It is scoped to NKP only. For Classic Nebari, see [Troubleshooting](/classic/troubleshooting/).
+This guide covers debugging a stuck or failing Nebari Kubernetes Platform (NKP) deployment. It is scoped to NKP only. For Classic Nebari, see [Troubleshooting](https://classic.nebari.dev/troubleshooting/).
 
 :::note
 The steps below that use `kubectl` require the CLI installed and `KUBECONFIG` set. See [Deploy a cluster](/docs/how-tos/deploy-cluster/#retrieve-the-kubeconfig) for how to retrieve the kubeconfig.
