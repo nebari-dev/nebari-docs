@@ -1,12 +1,17 @@
 /* Landing page (src/content/docs/index.mdx).
  *
- * The hero, card grid (.nbr-grid-3) and two-column link list (.nbr-cols-2)
- * come from @nebari/starlight. This file adds the landing-specific bands and
- * the "deploy anywhere" provider logo row. */
+ * The hero and the two-column link list (.nbr-cols-2) come from
+ * @nebari/starlight; this file fits them, and the landing page's own
+ * sections, to the homepage frame in the Docs Figma. */
+
+:root {
+  /* Lucide arrow-right (ISC), used as a mask so it takes the text color. */
+  --nebari-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E");
+}
 
 .sl-markdown-content .nebari-section {
   margin-top: 0;
-  padding-block: clamp(2rem, 5vw, 3.5rem);
+  padding-block: clamp(2rem, 5vw, 4rem);
 }
 .sl-markdown-content .nebari-section > h2 {
   margin: 0;
@@ -14,71 +19,13 @@
   color: var(--nbr-foreground, var(--sl-color-white));
 }
 .sl-markdown-content .nebari-section__subtitle {
-  margin: 0.375rem 0 0;
-  font-size: 1rem;
-  line-height: 1.75rem;
-  color: var(--nbr-muted-foreground-strong, var(--sl-color-gray-2));
+  margin: 0.5rem 0 0;
+  font-size: 1.125rem;
+  line-height: 1.875rem;
+  color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
 }
 .sl-markdown-content .nebari-section__subtitle + * {
   margin-top: 1.75rem;
-}
-
-/* Provider logos: a wrapping row of framed tiles. */
-.nebari-providers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 1.5rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.nebari-providers li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 10rem;
-  min-height: 6rem;
-  padding: 1rem 1.5rem;
-  border: 1px solid var(--sl-color-hairline);
-  border-radius: 0.75rem;
-  background: var(--sl-color-bg-nav);
-}
-.nebari-providers a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* Block, not inline: an inline image sits on the text baseline and reserves
-   descender space under it, which would offset one variant against the other.
-   The margin reset undoes Starlight's sibling spacing, which would otherwise
-   push the second image in each tile down by 1rem. */
-.sl-markdown-content .nebari-providers img {
-  display: block;
-  margin: 0;
-  max-height: 3rem;
-  width: auto;
-}
-
-/* Each logo ships twice: the vendor's own artwork, and a variant whose
-   wordmark is white so it stays legible on the dark tile. Brand marks (the AWS
-   swoosh, the Azure squares, the Google "G") keep their colors in both.
-   These selectors repeat `img` so they outrank `.nebari-providers img` above. */
-.sl-markdown-content .nebari-providers img.nebari-providers__dark {
-  display: none;
-}
-:root[data-theme='dark'] .sl-markdown-content .nebari-providers img.nebari-providers__light {
-  display: none;
-}
-:root[data-theme='dark'] .sl-markdown-content .nebari-providers img.nebari-providers__dark {
-  display: block;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .sl-markdown-content .nebari-providers img.nebari-providers__light {
-    display: none;
-  }
-  :root:not([data-theme='light']) .sl-markdown-content .nebari-providers img.nebari-providers__dark {
-    display: block;
-  }
 }
 
 /* Images in content sit inside a hairline frame by default; keep the icon
@@ -108,4 +55,691 @@
 .sl-markdown-content .card .body > .sl-badge:last-child {
   align-self: start;
   border-color: var(--nbr-border);
+}
+
+/* "What can you do with Nebari?": the heading and its subtitle hold a column of
+   their own on wide screens, with the claims listed beside them. The band runs
+   the full width of the viewport in the page-background tone, a step back from
+   the card surface the rest of the page sits on. */
+.sl-markdown-content .nebari-section--muted {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  background: var(--nbr-background, var(--sl-color-gray-7));
+}
+/* `100vw` counts the scrollbar, so the band would otherwise widen the page by a
+   scrollbar's width. `clip` stops that without breaking `position: sticky` the
+   way `hidden` would. */
+body:has(.nebari-section--muted) {
+  overflow-x: clip;
+}
+.sl-markdown-content .nebari-split {
+  display: grid;
+  gap: 2rem;
+}
+@media (min-width: 60rem) {
+  /* 360px and a 64px gap at full width, as in the Figma frame; both give way
+     near the breakpoint so the claims column is not squeezed under 500px. */
+  .sl-markdown-content .nebari-split {
+    grid-template-columns: min(22.5rem, 34%) 1fr;
+    gap: clamp(2rem, 4.5vw, 4rem);
+    align-items: start;
+  }
+  .sl-markdown-content .nebari-split > :first-child {
+    position: sticky;
+    top: 5rem;
+  }
+}
+.sl-markdown-content .nebari-split > * {
+  margin: 0;
+}
+.sl-markdown-content .nebari-split .nebari-section__subtitle {
+  margin-top: 0.75rem;
+}
+
+/* Claims as rows split by hairlines rather than cards: the ecosystem grid below
+   is a catalog of products, and these are statements about the platform. */
+.sl-markdown-content .nebari-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sl-markdown-content .nebari-row {
+  /* The icon and the heading share the first line; the sentence and the link
+     below run the full width of the row. */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.75rem;
+  row-gap: 0.5rem;
+  align-items: start;
+  margin: 0;
+  padding-bottom: 1.5rem;
+}
+/* `~`, not `+`, so a script or comment node Astro renders between rows
+   cannot break the rule. */
+.sl-markdown-content .nebari-row ~ .nebari-row {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nbr-border, var(--sl-color-hairline));
+}
+.sl-markdown-content .nebari-row__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--nbr-radius-md, 0.375rem);
+  background: var(--nbr-wash-1, var(--sl-color-accent-low));
+  color: var(--sl-color-text-accent);
+}
+.sl-markdown-content .nebari-row__icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+/* Top-aligned so the icon stays beside the first line when a heading wraps on a
+   phone; the 2px offset centers a single 28px line on the 32px tile. */
+.sl-markdown-content .nebari-row h3 {
+  margin: 0;
+  padding-top: 0.125rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: var(--nbr-foreground, var(--sl-color-white));
+}
+.sl-markdown-content .nebari-row > :not(.nebari-row__icon, h3) {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.sl-markdown-content .nebari-row p {
+  max-width: 37.5rem;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
+}
+
+/* "What you don't have to do": one row per job, so the reader sees who does it
+   today and what the platform does instead. The frame and row rules come from
+   the theme; type and spacing follow the homepage frame in the Docs Figma. */
+.sl-markdown-content .nebari-compare .nbr-table-scroll {
+  margin-top: 1.5rem;
+}
+.sl-markdown-content .nebari-compare table {
+  margin: 0;
+}
+.sl-markdown-content .nebari-compare table :is(th, td) {
+  padding: 1.25rem;
+  vertical-align: top;
+  text-align: start;
+}
+.sl-markdown-content .nebari-compare table thead th {
+  padding-block: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  /* The Figma frame has the muted foreground here, which is 4.2:1 on the muted
+     fill in light mode; the strong variant clears 4.5:1 in both themes. */
+  color: var(--nbr-muted-foreground-strong, var(--sl-color-gray-2));
+  background: var(--nbr-muted, var(--sl-color-gray-6));
+}
+.sl-markdown-content .nebari-compare table tbody th {
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  font-weight: 600;
+  color: var(--nbr-foreground, var(--sl-color-white));
+  background: none;
+}
+.sl-markdown-content .nebari-compare table td {
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--nbr-foreground, var(--sl-color-white));
+}
+.sl-markdown-content .nebari-compare table td:first-of-type {
+  color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
+}
+/* The theme clears the last row's rule on `td` only, and this table's first
+   column is a `th`. */
+.sl-markdown-content .nebari-compare tbody tr:last-child th {
+  border-bottom: 0;
+}
+@media (min-width: 60rem) {
+  /* The theme sets `table-layout: fixed`, which takes column widths from the
+     first row, so they go on the header cells. */
+  .sl-markdown-content .nebari-compare thead th:first-child {
+    width: 13.75rem;
+  }
+  .sl-markdown-content .nebari-compare thead th:nth-child(2) {
+    width: 18.75rem;
+  }
+}
+
+/* Narrow screens: three columns would push the one that answers the question
+   off the side of a phone. Stack each row into a block instead, with the column
+   names carried by `data-label`. The selectors here have to out-specify the
+   theme's own table rules, which set a minimum width per column count. */
+@media (max-width: 59.99rem) {
+  .sl-markdown-content .nebari-compare table:has(tr) {
+    min-width: 0;
+    table-layout: auto;
+  }
+  /* As blocks, `tbody` and each `tr` pick up Starlight's 1rem sibling margin. */
+  .sl-markdown-content .nebari-compare :is(table, tbody, tr) {
+    display: block;
+    margin: 0;
+  }
+  .sl-markdown-content .nebari-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .sl-markdown-content .nebari-compare table tbody :is(th, td) {
+    display: block;
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+  .sl-markdown-content .nebari-compare tr {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--nbr-border, var(--sl-color-hairline));
+  }
+  .sl-markdown-content .nebari-compare tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .sl-markdown-content .nebari-compare tbody td {
+    margin-top: 0.75rem;
+  }
+  .sl-markdown-content .nebari-compare tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: var(--nbr-muted-foreground, var(--sl-color-gray-3));
+  }
+}
+
+/* Links out of either section: on a line of their own under the sentence, with
+   a trailing arrow so they read as a way on rather than part of the sentence. */
+.sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: fit-content;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  color: var(--sl-color-text-accent);
+  text-decoration: none;
+}
+.sl-markdown-content .nebari-compare td a {
+  margin-top: 0.5rem;
+}
+.sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a:is(:hover, :focus-visible),
+.sl-markdown-content .nebari-tile:hover a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+/* The arrow, drawn in the link's own color. */
+.sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a::after {
+  content: '';
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: currentColor;
+  -webkit-mask: var(--nebari-arrow) center / contain no-repeat;
+  mask: var(--nebari-arrow) center / contain no-repeat;
+  transition: transform var(--nbr-duration-base, 200ms) var(--nbr-ease-emphasized, ease-out);
+}
+/* The arrow steps toward where the link goes, on hover and on keyboard focus. */
+.sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a:is(:hover, :focus-visible)::after,
+.sl-markdown-content .nebari-tile:hover a::after {
+  transform: translateX(0.1875rem);
+}
+/* High-contrast mode repaints backgrounds, which would erase a masked arrow. */
+@media (forced-colors: active) {
+  .sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a::after {
+    forced-color-adjust: none;
+    background-color: LinkText;
+  }
+}
+
+/* The page's one motion idea, a line drawn once as it scrolls into view
+   (DrawOnView.astro marks each `[data-draw]` item `.is-drawn`): the outline
+   icons trace themselves as their row appears. Nothing is undrawn until the script sets
+   `data-nebari-motion`, and never under reduced motion or in print. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  :root[data-nebari-motion='draw'] .nebari-row__icon svg > * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition:
+      stroke-dashoffset calc(var(--nbr-duration-slow, 350ms) * 2) var(--nbr-ease-emphasized, ease-out)
+        var(--nebari-draw-delay, 0ms),
+      opacity var(--nbr-duration-fast, 100ms) linear var(--nebari-draw-delay, 0ms);
+  }
+  /* Opacity as well as the offset: a round cap would otherwise leave a dot at
+     the end of each undrawn stroke. */
+  :root[data-nebari-motion='draw'] .nebari-row:not(.is-drawn) .nebari-row__icon svg > * {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a::after {
+    transition: none;
+  }
+  .sl-markdown-content :is(.nebari-row, .nebari-compare td, .nebari-tile) a:is(:hover, :focus-visible)::after {
+    transform: none;
+  }
+}
+
+/* Hero: the theme's centred hero, tightened to the Figma frame (24px between
+   every step, 144px above and 72px below) with the packs catalog screenshot
+   under the buttons. Starlight puts `hero.image` first in the DOM with
+   `order: 2`, and the theme's single-column grid stacks it under the copy.
+   The selectors carry `main .content-panel` to outrank the theme's hero
+   styles. */
+main .content-panel .hero {
+  row-gap: 1.5rem;
+}
+/* Starlight spaces the page content 1.5rem below the hero; here the first band
+   should meet the hero's edge. */
+main .content-panel .hero + .sl-markdown-content {
+  margin-top: 0;
+}
+@media (min-width: 50rem) {
+  main .content-panel .sl-container .hero {
+    padding-block: 9rem 4.5rem;
+  }
+}
+main .content-panel .hero :is(.stack, .copy) {
+  gap: 1.5rem;
+}
+main .content-panel .hero h1 {
+  max-width: none;
+  text-wrap: balance;
+}
+main .content-panel .hero .actions .sl-link-button {
+  gap: 0.5rem;
+  /* 32px tall with the 1px border, as the Figma button. */
+  padding: 0.3125rem 0.5625rem;
+}
+main .content-panel .hero .sl-link-button.primary::after {
+  content: '';
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: currentColor;
+  -webkit-mask: var(--nebari-arrow) center / contain no-repeat;
+  mask: var(--nebari-arrow) center / contain no-repeat;
+  transition: transform var(--nbr-duration-base, 200ms) var(--nbr-ease-emphasized, ease-out);
+}
+main .content-panel .hero .sl-link-button.primary:is(:hover, :focus-visible)::after {
+  transform: translateX(0.1875rem);
+}
+main .content-panel .hero > .hero-html {
+  /* Starlight orders the image last only above 50rem; keep it under the
+     buttons on phones too. */
+  order: 2;
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+/* No `display` here: Starlight's light:/dark:sl-hidden classes hide the other
+   theme's screenshot from a lower cascade layer, and any display value would
+   override them. */
+main .content-panel .hero > .hero-html img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  object-fit: cover;
+  object-position: left top;
+  border: 1px solid var(--nbr-border);
+  border-radius: var(--nbr-radius-lg, 0.5rem);
+  background: var(--nbr-card);
+  box-shadow: 0 12px 32px -8px rgb(26 20 51 / 0.12);
+}
+/* A phone shows the screenshot at a third of its size, so crop to the pack
+   cards rather than shrink the page chrome to an unreadable strip. */
+@media (max-width: 49.99rem) {
+  main .content-panel .hero > .hero-html img {
+    aspect-ratio: 1;
+    object-position: left bottom;
+  }
+}
+
+/* "Ecosystem of tools": three layers, each a heading with a one-line gloss and
+   a row of tiles. */
+.sl-markdown-content .nebari-layers {
+  display: grid;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+}
+.nebari-layer {
+  display: grid;
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+.nebari-layer__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+}
+.nebari-layer__heading h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: var(--nbr-foreground);
+}
+.nebari-layer__heading p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--nbr-muted-foreground);
+}
+
+/* Tile rows, shared by the ecosystem layers and the provider row. */
+.nebari-tiles {
+  display: grid;
+  grid-template-columns: repeat(var(--nebari-tile-cols, 1), minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 40rem) {
+  .nebari-tiles:is(.nebari-tiles--2, .nebari-tiles--4) {
+    --nebari-tile-cols: 2;
+  }
+}
+@media (min-width: 60rem) {
+  .nebari-tiles.nebari-tiles--3 {
+    --nebari-tile-cols: 3;
+  }
+  .nebari-tiles.nebari-tiles--4 {
+    --nebari-tile-cols: 4;
+  }
+}
+.nebari-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  /* 20px inside a 1px border: Figma draws the stroke inside the box. */
+  padding: calc(1.25rem - 1px);
+  border: 1px solid var(--nbr-border);
+  border-radius: var(--nbr-radius-lg, 0.5rem);
+  background: var(--nbr-card);
+  transition: border-color var(--nbr-duration-fast, 100ms) linear;
+}
+.nebari-tile:has(.nebari-tile__link:hover) {
+  border-color: var(--nbr-border-strong);
+}
+/* The link's `::before` covers the tile, so ring the tile, not the text. */
+.nebari-tile:has(.nebari-tile__link:focus-visible) {
+  outline: 2px solid var(--nbr-ring);
+  outline-offset: 2px;
+}
+.nebari-tile .nebari-tile__link:focus-visible {
+  outline: none;
+}
+.nebari-tile__link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.nebari-tile--soon {
+  border-style: dashed;
+  background: var(--nbr-background);
+}
+.nebari-tile__top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.nebari-tile__logo {
+  display: flex;
+  align-items: center;
+  height: 1.75rem;
+  color: var(--nbr-foreground);
+}
+.nebari-tile__logo :is(img, svg) {
+  display: block;
+  width: auto;
+  height: 1.75rem;
+}
+.nebari-tile__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nebari-tile__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--nbr-radius-md, 0.375rem);
+  background: var(--nbr-wash-1);
+  color: var(--sl-color-text-accent);
+}
+.nebari-tile__icon svg {
+  width: 0.9625rem;
+  height: 0.9625rem;
+}
+.nebari-tile h4 {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.625rem;
+  font-weight: 600;
+  color: var(--nbr-foreground);
+}
+.nebari-tile__top > p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--nbr-muted-foreground);
+}
+.nebari-tile--soon .nebari-tile__icon {
+  opacity: 0.6;
+}
+.nebari-tile--soon h4 {
+  color: var(--nbr-muted-foreground);
+}
+
+/* Status pill for work that is planned but not shipped. */
+.nebari-badge {
+  align-self: flex-start;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  background: var(--nbr-muted);
+  color: var(--nbr-muted-foreground-strong);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+}
+:root[data-theme='dark'] .nebari-badge {
+  box-shadow: inset 0 0 0 1px var(--nbr-border);
+}
+
+/* Logos ship as a light and a dark file; show the current theme's. */
+.nebari-tile__logo-dark {
+  display: none !important;
+}
+:root[data-theme='dark'] .nebari-tile__logo-light {
+  display: none !important;
+}
+:root[data-theme='dark'] .nebari-tile__logo-dark {
+  display: block !important;
+}
+
+/* "Deploy anywhere": provider tiles, logo on top and the guide link below. */
+.sl-markdown-content .nebari-deploy .nebari-section__subtitle {
+  max-width: 40rem;
+}
+.sl-markdown-content .nebari-deploy .nebari-tiles {
+  margin-top: 1.5rem;
+}
+.nebari-provider {
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.nebari-provider__logo {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+}
+/* Sized by the width/height attributes, so the box is right before it loads. */
+.nebari-provider__logo img {
+  max-width: 100%;
+  height: auto;
+}
+.nebari-provider.nebari-tile--soon {
+  justify-content: flex-start;
+}
+.nebari-provider.nebari-tile--soon .nebari-provider__logo {
+  opacity: 0.45;
+}
+.nebari-provider__status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.nebari-provider__status p {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--nbr-muted-foreground);
+}
+
+/* "Development principles": three statements under a heavier rule. */
+.sl-markdown-content .nebari-principles__list {
+  display: grid;
+  gap: 2rem 2.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 50rem) {
+  .sl-markdown-content .nebari-principles__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.nebari-principles__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 2px solid var(--nbr-border-strong);
+}
+.nebari-principles__list h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: var(--nbr-foreground);
+}
+.nebari-principles__list p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--nbr-muted-foreground);
+}
+
+/* "Popular pages": continues the principles band, so no top padding. */
+.sl-markdown-content .nebari-section.nebari-popular {
+  padding-block: 0 3.5rem;
+}
+.sl-markdown-content .nebari-popular ul {
+  margin-top: 1.25rem;
+}
+.sl-markdown-content .nebari-popular ul li {
+  min-height: 3rem;
+  margin: 0;
+  border-color: var(--nbr-border);
+}
+.sl-markdown-content .nebari-popular ul a {
+  font-size: 1rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+}
+/* The theme's "→" glyph becomes the arrow icon the rest of the page uses. */
+.sl-markdown-content .nebari-popular ul li::after {
+  content: '';
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--nbr-muted-foreground);
+  -webkit-mask: var(--nebari-arrow) center / contain no-repeat;
+  mask: var(--nebari-arrow) center / contain no-repeat;
+  transition: transform var(--nbr-duration-base, 200ms) var(--nbr-ease-emphasized, ease-out);
+}
+.sl-markdown-content .nebari-popular ul li:has(a:is(:hover, :focus-visible))::after {
+  transform: translateX(0.1875rem);
+}
+
+/* Footer: the theme's footer, spaced and typeset to the Figma frame. Link
+   targets get 2px of block padding so each is at least 24px tall (WCAG 2.5.8).
+   Worth moving into @nebari/starlight so every Nebari site gets it. */
+.nbr-footer[data-nebari-footer] {
+  padding-block: 3rem 2rem;
+  border-top-color: var(--nbr-border);
+  background-color: var(--nbr-background);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--nbr-muted-foreground);
+}
+/* On the homepage the last band runs straight into the footer: no margin, and
+   Starlight's page footer (edit link, pagination) is empty there but still
+   pads 32px. */
+body:has(.hero) .nbr-footer[data-nebari-footer] {
+  margin-top: 0;
+}
+body:has(.hero) main footer:has(> .meta:empty):has(> .pagination-links:empty) {
+  padding-top: 0;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__brand {
+  gap: 0.75rem;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__cols {
+  gap: 1.5rem 4rem;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__col {
+  min-width: 0;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__col-title {
+  margin: 0 0 0.625rem;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  color: var(--nbr-muted-foreground);
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__col ul {
+  gap: 0.375rem;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__col a {
+  display: inline-block;
+  padding-block: 0.125rem;
+}
+.nbr-footer[data-nebari-footer] .nbr-footer__bar {
+  margin-top: 2rem;
+  padding-block: 2rem 0;
+  border-top-color: var(--nbr-border);
+  font-size: 0.8125rem;
+  line-height: 1.125rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-markdown-content .nebari-tile:hover a::after,
+  main .content-panel .hero .sl-link-button.primary:is(:hover, :focus-visible)::after,
+  .sl-markdown-content .nebari-popular ul li:has(a:is(:hover, :focus-visible))::after {
+    transform: none;
+  }
 }

@@ -7,6 +7,14 @@ lastUpdated: false
 hero:
   title: An open source stack for your AI.
   tagline: Core infrastructure, curated frameworks and apps, and everything in between.
+  # Raw HTML rather than `light`/`dark` files: Starlight renders those at a
+  # fixed 400x400. Screenshots of packs.nebari.dev, captured 2026-09-23/24;
+  # refresh them when the catalog changes. Lazy, so only the visible theme's
+  # file downloads.
+  image:
+    html: |
+      <img class="dark:sl-hidden" src="/img/home/packs-catalog-light-1280.webp" srcset="/img/home/packs-catalog-light-1280.webp 1280w, /img/home/packs-catalog-light-2560.webp 2560w" sizes="(min-width: 76rem) 70rem, calc(100vw - 2.5rem)" width="1280" height="800" alt="The Nebari Software Packs catalog" loading="lazy" decoding="async" />
+      <img class="light:sl-hidden" src="/img/home/packs-catalog-dark-1280.webp" srcset="/img/home/packs-catalog-dark-1280.webp 1280w, /img/home/packs-catalog-dark-2560.webp 2560w" sizes="(min-width: 76rem) 70rem, calc(100vw - 2.5rem)" width="1280" height="800" alt="The Nebari Software Packs catalog" loading="lazy" decoding="async" />
   actions:
     - text: Get started
       link: /docs/get-started/install/
@@ -18,110 +26,234 @@ sidebar:
   hidden: true
 ---
 
-import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
+import DrawOnView from '../../components/DrawOnView.astro';
+import EcosystemTile from '../../components/EcosystemTile.astro';
+import FeatureRow from '../../components/FeatureRow.astro';
+import ProviderTile from '../../components/ProviderTile.astro';
 
-<section class="nebari-section nbr-grid-3" aria-labelledby="ecosystem">
+<section class="nebari-section nebari-section--muted" aria-labelledby="what-you-can-do">
+  <div class="nebari-split">
+    <div>
+      <h2 id="what-you-can-do">What can you do with Nebari?</h2>
+      <p class="nebari-section__subtitle">Nebari runs the AI and data science tools your team needs on infrastructure you control.</p>
+    </div>
+
+    <ul class="nebari-rows" role="list">
+      <FeatureRow icon="cloud">
+        <h3>Run it on infrastructure you own</h3>
+        <p>AWS, Google Cloud, Azure, Hetzner, or a Kubernetes cluster you already run, all from the same config file, including clusters with no internet access.</p>
+        <a href="/docs/how-tos/providers/">Pick a provider</a>
+      </FeatureRow>
+      <FeatureRow icon="package">
+        <h3>Install only what you need</h3>
+        <p>Notebooks, dashboards, model serving, a chat assistant, a coding agent.</p>
+        <a href="https://packs.nebari.dev/">Browse the catalog</a>
+      </FeatureRow>
+      <FeatureRow icon="git-branch">
+        <h3>Change the cluster with a commit</h3>
+        <p>Your team reviews changes the way it reviews code, and the history shows who changed what.</p>
+        <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
+      </FeatureRow>
+      <FeatureRow icon="bot">
+        <h3>Serve LLMs on your own hardware</h3>
+        <p>Your prompts and data never leave your network.</p>
+        <a href="https://packs.nebari.dev/llm-serving-pack/">LLM serving pack</a>
+      </FeatureRow>
+      <FeatureRow icon="file-check">
+        <h3>Know where every piece of software came from</h3>
+        <p>The platform checks everything running on the cluster and writes a dated report for compliance.</p>
+      </FeatureRow>
+    </ul>
+  </div>
+</section>
+
+<section class="nebari-section nebari-compare" aria-labelledby="what-you-dont-have-to-do">
+  <h2 id="what-you-dont-have-to-do">What you don't have to do</h2>
+  <p class="nebari-section__subtitle">Nebari runs the layer underneath your apps, so your team doesn't have to.</p>
+
+  <div class="nbr-table-scroll">
+    <table>
+      <caption class="sr-only">What each task takes without Nebari, and what the platform does instead</caption>
+      <thead>
+        <tr>
+          <th scope="col">Task</th>
+          <th scope="col">Without Nebari</th>
+          <th scope="col">With Nebari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Deploying an internal app</th>
+          <td data-label="Without Nebari">Repeat the same routing, login, and HTTPS setup for every service you deploy.</td>
+          <td data-label="With Nebari">
+            Everything that makes it a shared app comes with it: an address, HTTPS, the platform login, and a tile on the landing page.
+            <a href="/docs/explanations/software-packs/">How packs work</a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Setting up sign-in for a new app</th>
+          <td data-label="Without Nebari">Ask an admin to add every new app to your company's login system, and wait.</td>
+          <td data-label="With Nebari">
+            Sign-in comes with the app. What's left for you is deciding who gets in, by group or role, rather than wiring up the login itself.
+            <a href="/docs/how-tos/keycloak-auth/">Set up single sign-on</a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Tracking infrastructure config</th>
+          <td data-label="Without Nebari">Keep configuration in sync across environments manually.</td>
+          <td data-label="With Nebari">
+            Every environment is built from the same git repository, and the platform keeps each cluster's setup matching it.
+            <a href="/docs/explanations/nkp-architecture/#gitops-via-argocd">GitOps on Nebari</a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Watching what your apps are doing</th>
+          <td data-label="Without Nebari">Build and run your own pipeline for logs, metrics, and traces.</td>
+          <td data-label="With Nebari">
+            Your apps send logs, metrics, and traces to the platform, and it passes them to the monitoring system you already use.
+            <a href="https://packs.nebari.dev/lgtm-pack/">LGTM monitoring pack</a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Giving your team access to an LLM</th>
+          <td data-label="Without Nebari">Build your own access rules, usage limits, and API keys around the model server.</td>
+          <td data-label="With Nebari">
+            They come with each model, so two teams can have separate keys and limits.
+            <a href="https://packs.nebari.dev/llm-serving-pack/">LLM serving pack</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="nebari-section nebari-section--muted nebari-ecosystem" aria-labelledby="ecosystem">
   <h2 id="ecosystem">Ecosystem of tools</h2>
   <p class="nebari-section__subtitle">Pick the pieces you need. Every project is open source and designed to work on its own or together.</p>
 
-  <CardGrid>
-    <Card title="Nebari core" icon="rocket">
-      New robust core infrastructure layer for platform deployment on popular cloud providers. Security, authentication,
-      role-based access, and observability built in by design.
+  <div class="nebari-layers not-content">
+    <section class="nebari-layer" aria-labelledby="layer-core">
+      <div class="nebari-layer__heading">
+        <h3 id="layer-core">Core</h3>
+        <p>The platform, and the tools that manage what runs on it.</p>
+      </div>
+      <ul class="nebari-tiles nebari-tiles--2" role="list">
+        <EcosystemTile
+          logo="nebari"
+          title="Nebari core"
+          description="Core infrastructure for deploying the platform on popular cloud providers, with security, authentication, role-based access, and observability built in."
+          href="/docs/get-started/install/"
+          linkText="Install NIC"
+        />
+        <EcosystemTile
+          logo="nebi"
+          title="Nebi"
+          description="Manage, share, and collaborate on the AI software lifecycle across your team. SBoM generation and compliance checks are planned."
+          href="https://github.com/nebari-dev/nebi"
+          linkText="Nebi on GitHub"
+        />
+      </ul>
+    </section>
 
-      [Install NIC](/docs/get-started/install/)
-    </Card>
-    <Card title="Nebi" icon="seti:git">
-      Tools to manage, share, and collaborate on the AI software lifecycle across your team. Includes future plans for
-      SBoM generation and compliance checking.
+    <section class="nebari-layer" aria-labelledby="layer-packs">
+      <div class="nebari-layer__heading">
+        <h3 id="layer-packs">Software Packs</h3>
+        <p>Capabilities you install on top of the core, one at a time.</p>
+      </div>
+      <ul class="nebari-tiles nebari-tiles--4" role="list">
+        <EcosystemTile
+          icon="server"
+          title="AI model serving"
+          description="Serve and monitor AI models for development workflows or production applications."
+          href="https://packs.nebari.dev/llm-serving-pack/"
+          linkText="LLM serving pack docs"
+        />
+        <EcosystemTile
+          icon="message-square"
+          title="Chat assistant"
+          description="A ready-to-use chat interface, wired into platform login and connected to the models you serve."
+          href="https://packs.nebari.dev/chat-pack/"
+          linkText="Chat pack docs"
+        />
+        <EcosystemTile
+          icon="bot"
+          title="Agentic AI"
+          description="Frameworks for building, deploying, evaluating, and monitoring agent-based workflows."
+          href="https://packs.nebari.dev/pi-coding-agent-pack/"
+          linkText="Pi coding agent docs"
+        />
+        <EcosystemTile
+          icon="workflow"
+          title="Data orchestration"
+          description="Data engineering pipelines, plus governance and provenance of data and AI assets."
+        />
+      </ul>
+    </section>
 
-      [Nebi on GitHub](https://github.com/nebari-dev/nebi)
-    </Card>
-    <Card title="Usage-specific UIs" icon="laptop">
-      Multiple UI options available: Jupyter/VSCode for developers, chat and dashboard interfaces for AI users, and more.
-
-      [Software packs dashboard](https://packs.nebari.dev/)
-    </Card>
-    <Card title="AI model serving pack" icon="cloud-download">
-      Serve and monitor different AI models for your development workflow or production applications.
-
-      [LLM serving pack docs](https://packs.nebari.dev/llm-serving-pack/)
-    </Card>
-    <Card title="Chat assistant pack" icon="comment">
-      A ready-to-use chat interface for your teams, wired into platform login and connected to the models you serve on
-      Nebari.
-
-      [Chat pack docs](https://packs.nebari.dev/chat-pack/)
-    </Card>
-    <Card title="Agentic AI pack" icon="puzzle">
-      Frameworks for building, deploying, evaluating, and monitoring AI agent-based workflows.
-
-      [Pi coding agent docs](https://packs.nebari.dev/pi-coding-agent-pack/)
-    </Card>
-    <Card title="Data orchestration pack" icon="random">
-      Tools for building data engineering pipelines, and governance and provenance of data and AI assets.
-
-      <Badge text="Coming soon" />
-    </Card>
-    <Card title="Custom integrations" icon="setting">
-      All Nebari projects are developed on an open and extensible architecture that allows for quick integration of any
-      libraries you need.
-
-      [Build your own pack](/docs/software-packs/build-your-own/)
-    </Card>
-    <Card title="Community hub" icon="heart">
-      A space for community members to share their custom packs.
-
-      [Join the community](/community/introduction/)
-    </Card>
-  </CardGrid>
+    <section class="nebari-layer" aria-labelledby="layer-interfaces">
+      <div class="nebari-layer__heading">
+        <h3 id="layer-interfaces">Interfaces and extensions</h3>
+        <p>How your team works with the platform, and how you extend it.</p>
+      </div>
+      <ul class="nebari-tiles nebari-tiles--3" role="list">
+        <EcosystemTile
+          icon="layout-dashboard"
+          title="Usage-specific UIs"
+          description="Jupyter and VS Code for developers, chat and dashboards for AI users, and more."
+          href="https://packs.nebari.dev/"
+          linkText="Software packs dashboard"
+        />
+        <EcosystemTile
+          icon="plug"
+          title="Custom integrations"
+          description="An open, extensible architecture for integrating any library you need."
+          href="/docs/software-packs/build-your-own/"
+          linkText="Build your own pack"
+        />
+        <EcosystemTile
+          icon="users"
+          title="Community hub"
+          description="A space for community members to share their custom packs."
+          href="/community/introduction/"
+          linkText="Join the community"
+        />
+      </ul>
+    </section>
+  </div>
 </section>
 
-<section class="nebari-section" aria-labelledby="deploy-anywhere">
+<section class="nebari-section nebari-deploy" aria-labelledby="deploy-anywhere">
   <h2 id="deploy-anywhere">Deploy anywhere</h2>
-  <p class="nebari-section__subtitle">
-    Deploy Nebari on your own infrastructure, on your local machine or the cloud of your choice. It is designed to be
-    flexible, extensible, and vendor-agnostic. AWS, Azure, and Hetzner are supported today, with Google Cloud on the way.
-  </p>
+  <p class="nebari-section__subtitle">Deploy Nebari on your own infrastructure, on your local machine, or on the cloud of your choice. It is designed to be flexible, extensible, and vendor-agnostic.</p>
 
-  <ul class="nebari-providers">
-    <li><a href="/docs/how-tos/providers/aws/">
-      <img class="nebari-providers__light" src="/img/home/aws.svg" alt="Amazon Web Services" />
-      <img class="nebari-providers__dark" src="/img/home/aws-dark.svg" alt="Amazon Web Services" />
-    </a></li>
-    <li><a href="/docs/how-tos/providers/azure/">
-      <img class="nebari-providers__light" src="/img/home/azure.svg" alt="Microsoft Azure" />
-      <img class="nebari-providers__dark" src="/img/home/azure-dark.svg" alt="Microsoft Azure" />
-    </a></li>
-    <li><a href="/docs/how-tos/providers/gcp/">
-      <img class="nebari-providers__light" src="/img/home/gcloud.svg" alt="Google Cloud" />
-      <img class="nebari-providers__dark" src="/img/home/gcloud-dark.svg" alt="Google Cloud" />
-    </a></li>
-    <li><a href="/docs/how-tos/providers/hetzner/">
-      <img class="nebari-providers__light" src="/img/home/hetzner.svg" alt="Hetzner" />
-      <img class="nebari-providers__dark" src="/img/home/hetzner-dark.svg" alt="Hetzner" />
-    </a></li>
+  <ul class="nebari-tiles nebari-tiles--4 not-content" role="list">
+    <ProviderTile name="Amazon Web Services" label="AWS" logo="aws" width={62} height={38} href="/docs/how-tos/providers/aws/" />
+    <ProviderTile name="Microsoft Azure" label="Azure" logo="azure" width={112} height={32} href="/docs/how-tos/providers/azure/" />
+    <ProviderTile name="Hetzner" logo="hetzner" width={155} height={19} href="/docs/how-tos/providers/hetzner/" />
+    <ProviderTile name="Google Cloud" logo="gcloud" width={163} height={26} />
   </ul>
 </section>
 
-<section class="nebari-section nbr-grid-3" aria-labelledby="principles">
+<section class="nebari-section nebari-section--muted nebari-principles" aria-labelledby="principles">
   <h2 id="principles">Development principles</h2>
 
-  <CardGrid>
-    <Card title="Open source" icon="open-book">
-      All projects are developed under an open source license, and built using open source software.
-    </Card>
-    <Card title="Community-oriented" icon="comment-alt">
-      All projects welcome community contributions and engagement on various project spaces and community meetings.
-    </Card>
-    <Card title="Composable architecture" icon="list-format">
-      All projects have a modular design and integrate with each other, while also allowing for independent use and
-      extensibility.
-    </Card>
-  </CardGrid>
+  <ul class="nebari-principles__list not-content" role="list">
+    <li>
+      <h3>Open source</h3>
+      <p>All projects are developed under an open source license, and built using open source software.</p>
+    </li>
+    <li>
+      <h3>Community-oriented</h3>
+      <p>All projects welcome community contributions and engagement in project spaces and community meetings.</p>
+    </li>
+    <li>
+      <h3>Composable architecture</h3>
+      <p>All projects have a modular design and integrate with each other, while also allowing for independent use and extensibility.</p>
+    </li>
+  </ul>
 </section>
 
-<section class="nebari-section nbr-cols-2" aria-labelledby="popular-pages">
+<section class="nebari-section nebari-section--muted nebari-popular nbr-cols-2" aria-labelledby="popular-pages">
   <h2 id="popular-pages">Popular pages</h2>
 
   - [Introduction](/docs/introduction/)
@@ -131,3 +263,5 @@ import { Badge, Card, CardGrid } from '@astrojs/starlight/components';
   - [Community guidelines](/community/introduction/)
   - [Nebari roadmap](https://github.com/nebari-dev/governance/blob/main/roadmap.md)
 </section>
+
+<DrawOnView />

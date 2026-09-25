@@ -1,0 +1,46 @@
+---
+/**
+ * One provider in the landing page's "Deploy anywhere" row. Renders an `<li>`,
+ * so place it inside a `<ul class="nebari-tiles">`.
+ *
+ * A supported provider is a whole-tile link to its guide. One without `href`
+ * is not supported yet: not a link, dashed, logo dimmed, and it says so.
+ *
+ * Each logo ships twice (`<name>.svg` and `<name>-dark.svg` in
+ * /public/img/home) and only the current theme's copy is shown; `lazy` keeps
+ * the hidden one from downloading.
+ */
+interface Props {
+  /** Full provider name, used as the logo's alt text. */
+  name: string;
+  /** Short name for the link, if it differs ("AWS"). */
+  label?: string;
+  logo: string;
+  /** Logo size in px, from the Figma frame. Wordmarks differ in proportion,
+      and explicit dimensions keep the lazy image from shifting the row. */
+  width: number;
+  height: number;
+  href?: string;
+}
+
+const { name, label = name, logo, width, height, href } = Astro.props;
+---
+
+<li class:list={['nebari-tile', 'nebari-provider', { 'nebari-tile--soon': !href }]}>
+  <span class="nebari-provider__logo">
+    <img class="nebari-tile__logo-light" src={`/img/home/${logo}.svg`} alt={name} width={width} height={height} loading="lazy" />
+    <img class="nebari-tile__logo-dark" src={`/img/home/${logo}-dark.svg`} alt={name} width={width} height={height} loading="lazy" />
+  </span>
+  {
+    href ? (
+      <a class="nebari-tile__link" href={href}>
+        Deploy on {label}
+      </a>
+    ) : (
+      <div class="nebari-provider__status">
+        <span class="nebari-badge">Coming soon</span>
+        <p>Not available yet</p>
+      </div>
+    )
+  }
+</li>
