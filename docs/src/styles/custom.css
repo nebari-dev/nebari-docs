@@ -359,6 +359,58 @@ main .content-panel .hero h1 {
   max-width: none;
   text-wrap: balance;
 }
+/* The tagline names the three things that separate Nebari from other
+   platforms. Each gets its own chip so they read as three claims rather than
+   one phrase, one per accent in the palette. */
+main .content-panel .hero .tagline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  max-width: none;
+}
+main .content-panel .hero .nbr-trait {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--nbr-radius-full, 999px);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+main .content-panel .hero .nbr-trait--composable {
+  background: var(--nbr-primary-magenta-100, #f6e9ff);
+  color: var(--nbr-primary-magenta-700, #77399a);
+}
+main .content-panel .hero .nbr-trait--extensible {
+  background: var(--nbr-accent-teal-100, #d1f8f3);
+  color: var(--nbr-accent-teal-700, #236762);
+}
+main .content-panel .hero .nbr-trait--open {
+  background: var(--nbr-highlight-yellow-100, #fcedcc);
+  color: var(--nbr-highlight-yellow-700, #725600);
+}
+/* On dark the 100-step fills are far too light, so each chip drops to its
+   900 step with the 200 step for text. */
+:root[data-theme='dark'] main .content-panel .hero .nbr-trait--composable {
+  background: var(--nbr-primary-magenta-900, #442655);
+  color: var(--nbr-primary-magenta-200, #e7c4ff);
+}
+:root[data-theme='dark'] main .content-panel .hero .nbr-trait--extensible {
+  background: var(--nbr-accent-teal-900, #1b3c39);
+  color: var(--nbr-accent-teal-200, #a1e3dc);
+}
+:root[data-theme='dark'] main .content-panel .hero .nbr-trait--open {
+  background: var(--nbr-highlight-yellow-900, #413313);
+  color: var(--nbr-highlight-yellow-200, #eed190);
+}
+@media (max-width: 30rem) {
+  main .content-panel .hero .tagline {
+    gap: 0.5rem;
+  }
+  main .content-panel .hero .nbr-trait {
+    padding: 0.4375rem 1rem;
+    font-size: 1.0625rem;
+  }
+}
 main .content-panel .hero .actions .sl-link-button {
   gap: 0.5rem;
   /* 32px tall with the 1px border, as the Figma button. */
