@@ -138,6 +138,17 @@ test('the main site no longer includes Nebari Classic', () => {
   expect(built.filter((file) => file.startsWith('classic/'))).toEqual([]);
 });
 
+test('main site pages point to the Classic docs', () => {
+  for (const page of MAIN.pages) {
+    if (page.slug === '404') continue;
+    expect(html(MAIN, page.slug)).toContain('href="https://classic.nebari.dev/welcome/"');
+  }
+});
+
+test('Classic pages do not show the pointer to themselves', () => {
+  expect(html(CLASSIC, 'welcome')).not.toContain('Looking for Nebari Classic?');
+});
+
 test('Classic pages sit at the site root with their own sidebar and the phase-out notice', () => {
   const welcome = html(CLASSIC, 'welcome');
   expect(welcome).toContain('href="/how-tos/nebari-aws/"');

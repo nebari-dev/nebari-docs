@@ -191,7 +191,10 @@ const communitySidebar = [
 const mainStarlight = {
   title: 'Nebari',
   logoHref: '/',
-  components: {},
+  components: {
+    // Adds a small pointer to the Nebari Classic docs above every page.
+    Banner: './src/components/Banner.astro',
+  },
   // Shows only the current section's sidebar (docs / community).
   routeMiddleware: './src/routeData.ts',
   nav: [
