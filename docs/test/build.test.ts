@@ -158,7 +158,7 @@ test('Classic pages sit at the site root with their own sidebar and the phase-ou
     if (page.slug === '404') continue;
     const content = html(CLASSIC, page.slug);
     expect(content).toContain('Nebari Classic is in maintenance mode');
-    expect(content).toContain('href="https://www.nebari.dev/docs/introduction/"');
+    expect(content).toContain('go to the <a href="https://www.nebari.dev/docs/introduction/"');
   }
 });
 
