@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How Nebari Works (hero, dark) — Source</title>
+  <meta name="description" content="Editable source for /img/home/how-nebari-works-hero-dark.png. Plain HTML with inline styles and inline SVG, openable in any browser, re-importable into Paper via the write_html MCP tool.">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 24px; background: #1C1C20; font-family: Geist, system-ui, sans-serif; display: flex; justify-content: center; }
+    .artboard { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div class="artboard" style="width: 1312px; height: 1089px; box-sizing: border-box; display: flex; flex-direction: column; font-synthesis: none; --moz-osx-font-smoothing: grayscale; overflow: clip; overflow-wrap: anywhere; position: relative; --webkit-font-smoothing: antialiased">
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 483px; left: 15px; overflow: clip; position: absolute; top: 16px; width: 410px">
+        <svg width="410" height="483" viewBox="0 0 410 483" xmlns="http://www.w3.org/2000/svg" style="left: 0px; top: 0px; position: absolute">
+          <rect x="50" y="142" width="278" height="262" rx="9" fill="#262628" />
+          <rect x="47" y="138" width="278" height="262" rx="9" fill="#353538" />
+          <path d="M47 147 a9 9 0 0 1 9 -9 h260 a9 9 0 0 1 9 9 v20 h-278z" fill="#47474B" />
+          <circle cx="68" cy="153" r="5.5" fill="#FF5F57" />
+          <circle cx="85" cy="153" r="5.5" fill="#FEBC2E" />
+          <circle cx="102" cy="153" r="5.5" fill="#28C840" />
+          <text font-weight="500" x="128" y="159" font-family="Geist" font-size="15" fill="#EEEEEF">
+            nebari.yaml
+          </text>
+          <g style="stroke: rgb(157, 157, 166)">
+            <line x1="340" y1="160" x2="356" y2="138" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+            <line x1="346" y1="190" x2="366" y2="178" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+            <line x1="30" y1="252" x2="10" y2="250" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+            <line x1="32" y1="222" x2="13" y2="214" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+            <line x1="36" y1="192" x2="20" y2="180" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+            <line x1="340" y1="372" x2="356" y2="384" stroke="#9D9DA6" stroke-width="2.6" stroke-linecap="round" />
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              1
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Start with a config file
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">Define your platform in a simple
+config file (YAML).</div>
+        <div style="box-sizing: border-box; color: #6ECAC1; font-family: 'IBM Plex Mono', system-ui, sans-serif; font-size: 15px; left: 68px; line-height: 23px; position: absolute; top: 186px; white-space: pre; width: max-content">platform:
+  name:
+  region:
+
+services:</div>
+        <div style="box-sizing: border-box; color: #EEEEEF; font-family: 'IBM Plex Mono', system-ui, sans-serif; font-size: 15px; left: 68px; line-height: 23px; position: absolute; top: 186px; white-space: pre; width: max-content">
+        my-platform
+          us-west-2
+
+
+  - k8s
+  - storage
+  - networking
+  - monitoring</div>
+      </div>
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 483px; left: 440px; overflow: clip; position: absolute; top: 16px; width: 395px">
+        <svg width="395" height="483" viewBox="0 0 395 483" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 0px; top: 0px">
+          <defs><linearGradient id="_65m2rz0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B053E2"/><stop offset="1" stop-color="#77399A"/></linearGradient></defs>
+          <g transform="translate(18 0) rotate(-6 50 290)">
+            <path d="M6 222 h76 l14 14 v126 h-90z" fill="#FFFFFF" stroke="#5A5A61" stroke-width="2.4" stroke-linejoin="round" />
+            <path d="M82 222 v14 h14" fill="#EEEEEF" stroke="#5A5A61" stroke-width="2.4" stroke-linejoin="round" />
+            <g>
+              <line x1="20" y1="272" x2="78" y2="272" stroke="#9D9DA6" stroke-width="3" stroke-linecap="round" />
+              <line x1="20" y1="287" x2="70" y2="287" stroke="#9D9DA6" stroke-width="3" stroke-linecap="round" />
+              <line x1="20" y1="302" x2="76" y2="302" stroke="#9D9DA6" stroke-width="3" stroke-linecap="round" />
+              <line x1="20" y1="317" x2="56" y2="317" stroke="#9D9DA6" stroke-width="3" stroke-linecap="round" />
+            </g>
+          </g>
+          <ellipse cx="225" cy="405" rx="130" ry="18" fill="#2C817A" style="opacity: 0.35" />
+          <path d="M144 212 L156 202 H360 L348 212 Z" fill="#C575F4" />
+          <path d="M348 212 L360 202 V382 L348 392 Z" fill="#5D2F77" />
+          <rect x="144" y="212" width="204" height="180" rx="0" fill="#9547C0" />
+          <rect x="150" y="218" width="192" height="168" rx="5" fill="url(#_65m2rz0)" />
+          <ellipse cx="200" cy="262" rx="4" ry="6" fill="#3B1D4D" />
+          <ellipse cx="236" cy="262" rx="4" ry="6" fill="#3B1D4D" />
+          <path d="M203 284 q 15 12 30 0" fill="none" stroke="#3B1D4D" stroke-width="3.4" stroke-linecap="round" />
+          <g transform="translate(304 248)">
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(45)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(90)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(135)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(180)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(225)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(270)" fill="#EED190" />
+            <rect x="-2.86" y="-17.16" width="5.72" height="6.5" rx="1.5" transform="rotate(315)" fill="#EED190" />
+            <circle r="13" fill="#EED190" />
+            <circle r="5.46" fill="#A78001" />
+          </g>
+          <g transform="translate(282 276)">
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(45)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(90)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(135)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(180)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(225)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(270)" fill="#EED190" />
+            <rect x="-2.42" y="-14.52" width="4.84" height="5.5" rx="1.5" transform="rotate(315)" fill="#EED190" />
+            <circle r="11" fill="#EED190" />
+            <circle r="4.62" fill="#A78001" />
+          </g>
+          <g transform="translate(312 296)">
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(45)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(90)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(135)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(180)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(225)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(270)" fill="#EED190" />
+            <rect x="-2.64" y="-15.84" width="5.28" height="6" rx="1.5" transform="rotate(315)" fill="#EED190" />
+            <circle r="12" fill="#EED190" />
+            <circle r="5.04" fill="#A78001" />
+          </g>
+          <g>
+            <line x1="236.67" y1="190.25" x2="228.64" y2="178.78" stroke="#9547C0" stroke-width="3" stroke-linecap="round" />
+            <line x1="247" y1="187" x2="247" y2="173" stroke="#9547C0" stroke-width="3" stroke-linecap="round" />
+            <line x1="257.32" y1="190.25" x2="265.35" y2="178.78" stroke="#9547C0" stroke-width="3" stroke-linecap="round" />
+          </g>
+          <g>
+            <path d="M120 280 q 10 -1 20 0" fill="none" stroke="#EEEEEF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M131 272 L140 280 L131 288" fill="none" stroke="#EEEEEF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              2
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Nebari reads your config
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">It turns your config file into a
+running platform, with no manual setup.</div>
+        <div style="box-sizing: border-box; color: #353538; font-family: 'IBM Plex Mono', system-ui, sans-serif; font-size: 10.5px; font-weight: 500; left: 30px; line-height: 18px; position: absolute; rotate: -6deg; top: 238px; transform-origin: 0% 0%; width: max-content">
+          config.yaml
+        </div>
+        <div style="box-sizing: border-box; color: #FFFFFF; display: flex; flex-wrap: wrap; font-family: 'Geist', system-ui, sans-serif; font-size: 40px; font-weight: 800; justify-content: center; left: 150px; letter-spacing: -0.02em; line-height: 48px; position: absolute; text-align: center; top: 316px; width: 192px">
+          Nebari
+        </div>
+      </div>
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 483px; left: 850px; overflow: clip; position: absolute; top: 16px; width: 450px">
+        <svg width="450" height="483" viewBox="0 0 450 483" xmlns="http://www.w3.org/2000/svg" style="left: 0px; top: 0px; position: absolute">
+          <rect x="24" y="132" width="182" height="190" rx="22" fill="#FFFFFF" stroke="#A1E3DC" stroke-width="2" />
+          <text font-weight="500" x="115" y="164" font-family="Geist" font-size="18" text-anchor="middle" fill="#353538">
+            Public Cloud
+          </text>
+          <g transform="translate(140 206)">
+            <path d="M14 0 h12 l-16 44 h-12z" fill="#0A4FA8" />
+            <path d="M26 0 l20 44 h-30 l9 -8 h9 l-12 -26z" fill="#2E9BEF" />
+          </g>
+          <line x1="236" y1="140" x2="236" y2="205" stroke="#A1E3DC" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6" />
+          <circle cx="236" cy="234" r="21" fill="#B053E2" />
+          <text x="236" y="240" font-family="Geist" font-weight="700" font-size="15" text-anchor="middle" fill="#FFFFFF">
+            OR
+          </text>
+          <rect x="262" y="128" width="172" height="194" rx="22" fill="#FFFFFF" stroke="#A1E3DC" stroke-width="2" />
+          <text font-weight="500" x="335" y="164" font-family="Geist" font-size="18" text-anchor="middle" fill="#353538">
+            On-Prem
+          </text>
+          <path d="M56 400 l40 -30 h300 l-40 30z" fill="#A1E3DC" />
+          <path d="M56 400 h300 v32 h-300z" fill="#45B2A9" />
+          <path d="M356 400 l40 -30 v32 l-40 30z" fill="#2C817A" />
+          <path d="M104 384 l28 -22 h190 l-28 22z" fill="#EDFCFA" style="opacity: 0.9" />
+          <path d="M104 384 h190 v18 h-190z" fill="#D1F8F3" style="opacity: 0.9" />
+          <path d="M294 384 l28 -22 v18 l-28 22z" fill="#A1E3DC" style="opacity: 0.9" />
+          <g transform="translate(46 190) scale(0.70)">
+            <path d="M26.37 20.95C26.37 22.09 26.49 23.01 26.71 23.69C26.95 24.37 27.26 25.11 27.69 25.91C27.85 26.16 27.91 26.40 27.91 26.62C27.91 26.93 27.72 27.24 27.32 27.54L25.38 28.84C25.10 29.02 24.83 29.120 24.58 29.12C24.27 29.12 23.96 28.96 23.65 28.68C23.22 28.22 22.85 27.73 22.55 27.24C22.24 26.71 21.93 26.13 21.59 25.42C19.18 28.25 16.16 29.67 12.53 29.67C9.94 29.67 7.87 28.93 6.36 27.45C4.85 25.97 4.08 24.00 4.08 21.53C4.08 18.91 5.00 16.78 6.88 15.18C8.77 13.58 11.26 12.78 14.44 12.78C15.49 12.78 16.56 12.87 17.71 13.02C18.85 13.18 20.02 13.42 21.25 13.70V11.45C21.25 9.11 20.76 7.48 19.80 6.52C18.81 5.56 17.15 5.10 14.78 5.10C13.70 5.10 12.59 5.22 11.45 5.50C10.31 5.78 9.20 6.12 8.12 6.55C7.62 6.77 7.25 6.89 7.04 6.95C6.82 7.01 6.67 7.04 6.55 7.04C6.11 7.04 5.90 6.74 5.90 6.09V4.58C5.90 4.08 5.96 3.71 6.11 3.50C6.27 3.28 6.55 3.07 6.98 2.85C8.06 2.30 9.35 1.83 10.86 1.46C12.37 1.06 13.98 0.88 15.67 0.88C19.34 0.88 22.02 1.71 23.75 3.38C25.44 5.04 26.31 7.57 26.31 10.96V20.95H26.37ZM13.85 25.63C14.87 25.63 15.92 25.45 17.03 25.08C18.14 24.71 19.12 24.03 19.96 23.10C20.45 22.52 20.82 21.87 21.00 21.13C21.19 20.39 21.31 19.50 21.31 18.45V17.15C20.42 16.94 19.46 16.75 18.48 16.63C17.49 16.51 16.53 16.45 15.58 16.45C13.51 16.45 12.00 16.85 10.98 17.68C9.97 18.51 9.47 19.68 9.47 21.22C9.47 22.67 9.84 23.75 10.61 24.49C11.35 25.26 12.43 25.63 13.85 25.63ZM38.61 28.96C38.05 28.96 37.68 28.87 37.43 28.65C37.19 28.47 36.97 28.04 36.79 27.45L29.54 3.62C29.36 3.01 29.27 2.60 29.27 2.39C29.27 1.90 29.51 1.62 30.01 1.62H33.03C33.61 1.62 34.01 1.71 34.23 1.93C34.48 2.11 34.66 2.54 34.85 3.13L40.02 23.54L44.83 3.13C44.99 2.51 45.17 2.11 45.42 1.93C45.67 1.74 46.10 1.62 46.65 1.62H49.12C49.70 1.62 50.10 1.71 50.35 1.93C50.60 2.11 50.81 2.54 50.94 3.13L55.81 23.78L61.14 3.13C61.33 2.51 61.54 2.11 61.76 1.93C62.00 1.74 62.40 1.62 62.96 1.62H65.83C66.32 1.62 66.60 1.86 66.60 2.39C66.60 2.54 66.57 2.70 66.54 2.88C66.50 3.07 66.44 3.31 66.32 3.65L58.89 27.48C58.71 28.10 58.49 28.50 58.24 28.68C58.00 28.87 57.60 28.99 57.07 28.99H54.42C53.83 28.99 53.43 28.90 53.19 28.68C52.94 28.47 52.72 28.07 52.60 27.45L47.82 7.57L43.08 27.42C42.92 28.04 42.74 28.44 42.49 28.65C42.24 28.87 41.81 28.96 41.26 28.96H38.61ZM78.22 29.79C76.62 29.79 75.01 29.61 73.47 29.24C71.93 28.87 70.73 28.47 69.93 28.01C69.43 27.73 69.09 27.42 68.97 27.14C68.85 26.87 68.79 26.56 68.79 26.28V24.71C68.79 24.06 69.03 23.75 69.49 23.75C69.68 23.75 69.86 23.78 70.05 23.84C70.23 23.91 70.51 24.03 70.82 24.15C71.87 24.61 73.01 24.98 74.21 25.23C75.44 25.48 76.65 25.60 77.88 25.60C79.82 25.60 81.33 25.26 82.38 24.58C83.43 23.91 83.98 22.92 83.98 21.66C83.98 20.79 83.71 20.08 83.15 19.50C82.60 18.91 81.55 18.39 80.04 17.89L75.57 16.51C73.32 15.80 71.65 14.75 70.64 13.36C69.62 12.01 69.09 10.50 69.09 8.89C69.09 7.60 69.37 6.46 69.93 5.47C70.48 4.48 71.22 3.62 72.15 2.94C73.07 2.23 74.12 1.71 75.35 1.34C76.58 0.97 77.88 0.82 79.24 0.82C79.91 0.82 80.62 0.85 81.30 0.94C82.01 1.03 82.66 1.16 83.31 1.28C83.92 1.43 84.51 1.59 85.06 1.77C85.62 1.96 86.05 2.14 86.36 2.33C86.79 2.57 87.10 2.82 87.28 3.10C87.47 3.34 87.56 3.68 87.56 4.11V5.56C87.56 6.21 87.31 6.55 86.85 6.55C86.60 6.55 86.20 6.43 85.68 6.18C83.92 5.38 81.95 4.98 79.76 4.98C78.00 4.98 76.62 5.26 75.66 5.84C74.70 6.43 74.21 7.32 74.21 8.58C74.21 9.45 74.52 10.19 75.14 10.77C75.75 11.36 76.89 11.95 78.53 12.47L82.90 13.86C85.12 14.57 86.73 15.55 87.68 16.82C88.64 18.08 89.10 19.53 89.10 21.13C89.10 22.46 88.82 23.66 88.30 24.71C87.74 25.76 87.00 26.68 86.05 27.42C85.09 28.19 83.95 28.75 82.63 29.15C81.24 29.58 79.79 29.79 78.22 29.79Z" fill="#252F3E" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M84.05 44.78C73.90 52.27 59.17 56.24 46.50 56.24C28.74 56.24 12.74 49.68 0.66 38.76C-0.29 37.90 0.57 36.73 1.71 37.41C14.78 44.99 30.90 49.58 47.58 49.58C58.83 49.58 71.19 47.24 82.57 42.43C84.26 41.66 85.71 43.54 84.05 44.78Z" fill="#FF9900" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M88.27 39.97C86.97 38.30 79.70 39.17 76.40 39.57C75.41 39.69 75.26 38.83 76.15 38.18C81.95 34.11 91.47 35.28 92.58 36.64C93.69 38.02 92.28 47.55 86.85 52.11C86.02 52.82 85.22 52.45 85.59 51.53C86.82 48.48 89.56 41.60 88.27 39.97Z" fill="#FF9900" />
+          </g>
+          <g transform="translate(70 254) scale(1.12)">
+            <path d="M24.04 8.64H25.17L28.39 5.42L28.55 4.05C26.70 2.42 24.47 1.29 22.07 0.76C19.66 0.23 17.16 0.33 14.80 1.03C12.45 1.74 10.31 3.04 8.59 4.80C6.87 6.57 5.63 8.74 4.98 11.12C5.34 10.97 5.74 10.95 6.12 11.05L12.56 9.99C12.560 9.99 12.89 9.44 13.06 9.48C14.44 7.96 16.35 7.03 18.39 6.87C20.44 6.72 22.47 7.35 24.06 8.64H24.04Z" fill="#EA4335" />
+            <path d="M32.98 11.12C32.24 8.39 30.72 5.94 28.61 4.06L24.08 8.58C25.03 9.35 25.78 10.33 26.29 11.43C26.80 12.54 27.06 13.74 27.04 14.96V15.76C27.56 15.76 28.09 15.87 28.58 16.07C29.06 16.27 29.51 16.57 29.88 16.94C30.26 17.32 30.55 17.76 30.75 18.25C30.96 18.74 31.06 19.26 31.06 19.79C31.06 20.32 30.96 20.84 30.75 21.33C30.55 21.82 30.26 22.26 29.88 22.64C29.51 23.01 29.06 23.31 28.58 23.51C28.09 23.71 27.56 23.82 27.04 23.82H18.98L18.18 24.63V29.46L18.98 30.26H27.04C29.28 30.28 31.48 29.57 33.29 28.25C35.11 26.92 36.45 25.04 37.12 22.90C37.78 20.75 37.74 18.45 37.00 16.32C36.25 14.20 34.85 12.38 32.98 11.12Z" fill="#4285F4" />
+            <path d="M10.92 30.22H18.97V23.77H10.92C10.35 23.77 9.78 23.65 9.26 23.41L8.13 23.76L4.88 26.98L4.60 28.11C6.42 29.49 8.64 30.23 10.92 30.22Z" fill="#34A853" />
+            <path d="M10.92 9.31C8.74 9.32 6.62 10.01 4.85 11.29C3.08 12.57 1.76 14.37 1.06 16.44C0.36 18.50 0.33 20.74 0.97 22.83C1.60 24.91 2.87 26.75 4.60 28.08L9.27 23.41C8.68 23.14 8.16 22.73 7.76 22.22C7.36 21.71 7.08 21.10 6.97 20.46C6.85 19.82 6.89 19.16 7.08 18.54C7.28 17.92 7.62 17.35 8.08 16.89C8.54 16.43 9.11 16.09 9.73 15.90C10.35 15.70 11.01 15.66 11.65 15.78C12.29 15.90 12.89 16.17 13.41 16.57C13.92 16.97 14.33 17.49 14.60 18.08L19.27 13.41C18.29 12.13 17.02 11.09 15.58 10.38C14.13 9.67 12.53 9.30 10.92 9.31Z" fill="#FBBC05" />
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              3
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Deploy a platform
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">Nebari sets up a full platform on
+the infrastructure you choose.</div>
+        <svg width="112" height="136" viewBox="0 0 112 136" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 294px; top: 180px">
+          <ellipse cx="52" cy="128" rx="50" ry="6" fill="#D1F8F3" />
+          <polygon points="84,22 108,8 108,114 84,128" fill="#262628" />
+          <polygon points="4,22 28,8 108,8 84,22" fill="#5A5A61" />
+          <rect x="4" y="22" width="80" height="106" fill="#353538" />
+          <rect x="11" y="30" width="66" height="26" rx="2" fill="#47474B" />
+          <rect x="11" y="62" width="66" height="26" rx="2" fill="#47474B" />
+          <rect x="11" y="94" width="66" height="26" rx="2" fill="#47474B" />
+          <g>
+            <line x1="18" y1="39" x2="44" y2="39" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+            <line x1="18" y1="47" x2="38" y2="47" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+            <line x1="18" y1="71" x2="44" y2="71" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+            <line x1="18" y1="79" x2="38" y2="79" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+            <line x1="18" y1="103" x2="44" y2="103" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+            <line x1="18" y1="111" x2="38" y2="111" stroke="#262628" stroke-width="2" stroke-linecap="round" />
+          </g>
+          <circle cx="62" cy="43" r="3" fill="#6ECAC1" />
+          <circle cx="70" cy="43" r="3" fill="#6ECAC1" />
+          <circle cx="62" cy="75" r="3" fill="#6ECAC1" />
+          <circle cx="70" cy="75" r="3" fill="#DBB14E" />
+          <circle cx="62" cy="107" r="3" fill="#6ECAC1" />
+          <circle cx="70" cy="107" r="3" fill="#6ECAC1" />
+        </svg>
+        <svg width="170" height="56" viewBox="0 0 170 56" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 121px; top: 342px">
+          <g>
+            <circle cx="30" cy="28" r="20" fill="#9547C0" />
+            <circle cx="84" cy="28" r="20" fill="#9547C0" />
+            <circle cx="138" cy="28" r="20" fill="#9547C0" />
+          </g>
+          <g transform="translate(30 28)">
+            <circle r="9" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <circle r="3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="0" y1="-3" x2="0" y2="-12" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="2.6" y1="-1.6" x2="9.4" y2="-7.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="3" y1="0.7" x2="11.7" y2="2.7" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="1.4" y1="2.7" x2="5.2" y2="10.8" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="-1.4" y1="2.7" x2="-5.2" y2="10.8" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="-3" y1="0.7" x2="-11.7" y2="2.7" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+            <line x1="-2.6" y1="-1.6" x2="-9.4" y2="-7.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+          </g>
+          <g transform="translate(84 28)">
+            <ellipse cx="0" cy="-7" rx="9" ry="3.5" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M-9 -7 v14 a9 3.5 0 0 0 18 0 v-14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M-9 0 a9 3.5 0 0 0 18 0" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <g transform="translate(138 28)">
+            <rect x="-4" y="-10" width="8" height="6" rx="1.2" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="-11" y="4" width="8" height="6" rx="1.2" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="3" y="4" width="8" height="6" rx="1.2" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M0 -4 v4 M-7 4 v-4 h14 v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+      </div>
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 557px; left: 15px; overflow: clip; position: absolute; top: 516px; width: 445px">
+        <svg width="445" height="557" viewBox="0 0 445 557" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 0px; top: 0px">
+          <g>
+            <line x1="82.8" y1="255.5" x2="62.2" y2="248.0" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+            <line x1="97.2" y1="227.3" x2="79.0" y2="215.0" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+            <line x1="118.0" y1="203.4" x2="103.3" y2="187.0" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+            <line x1="144.0" y1="185.2" x2="133.6" y2="165.8" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+          </g>
+          <g>
+            <line x1="395.8" y1="396.1" x2="414.6" y2="389.2" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+            <line x1="399.7" y1="426.1" x2="419.7" y2="427.8" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+            <line x1="390.6" y1="455.0" x2="407.9" y2="465.0" stroke="#DBB14E" stroke-width="3.2" stroke-linecap="round" />
+          </g>
+          <polygon points="120,348 356,348 370,286 128,278" fill="#D99A52" />
+          <polygon points="44,392 120,348 356,348 280,392" fill="#7A4F22" />
+          <g transform="rotate(-21 136.5 352.8)">
+            <polygon points="155.5,341.8 167.5,334.8 167.5,356.8 155.5,363.8" fill="#1848D2" />
+            <polygon points="117.5,341.8 129.5,334.8 167.5,334.8 155.5,341.8" fill="#719BF7" />
+            <ellipse cx="133.0" cy="338.3" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="128.2" y="331.3" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="133.0" cy="331.3" rx="4.8" ry="3.0" fill="#719BF7" />
+            <ellipse cx="152.0" cy="338.3" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="147.2" y="331.3" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="152.0" cy="331.3" rx="4.8" ry="3.0" fill="#719BF7" />
+            <rect x="117.5" y="341.8" width="38" height="22" fill="#4B7EF6" />
+          </g>
+          <g transform="rotate(-22 183.9 353.4)">
+            <polygon points="202.9,342.4 214.9,335.4 214.9,357.4 202.9,364.4" fill="#236762" />
+            <polygon points="164.9,342.4 176.9,335.4 214.9,335.4 202.9,342.4" fill="#45B2A9" />
+            <ellipse cx="180.4" cy="338.9" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="175.7" y="331.9" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="180.4" cy="331.9" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <ellipse cx="199.4" cy="338.9" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="194.7" y="331.9" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="199.4" cy="331.9" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <rect x="164.9" y="342.4" width="38" height="22" fill="#319890" />
+          </g>
+          <g transform="rotate(2 226.2 352.2)">
+            <polygon points="245.2,341.2 257.2,334.2 257.2,356.2 245.2,363.2" fill="#1848D2" />
+            <polygon points="207.2,341.2 219.2,334.2 257.2,334.2 245.2,341.2" fill="#719BF7" />
+            <ellipse cx="222.7" cy="337.7" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="217.9" y="330.7" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="222.7" cy="330.7" rx="4.8" ry="3.0" fill="#719BF7" />
+            <ellipse cx="241.7" cy="337.7" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="236.9" y="330.7" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="241.7" cy="330.7" rx="4.8" ry="3.0" fill="#719BF7" />
+            <rect x="207.2" y="341.2" width="38" height="22" fill="#4B7EF6" />
+          </g>
+          <g transform="rotate(2 261.3 351.9)">
+            <polygon points="280.3,340.9 292.3,333.9 292.3,355.9 280.3,362.9" fill="#236762" />
+            <polygon points="242.3,340.9 254.3,333.9 292.3,333.9 280.3,340.9" fill="#45B2A9" />
+            <ellipse cx="257.8" cy="337.4" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="253.1" y="330.4" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="257.8" cy="330.4" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <ellipse cx="276.8" cy="337.4" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="272.1" y="330.4" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="276.8" cy="330.4" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <rect x="242.3" y="340.9" width="38" height="22" fill="#319890" />
+          </g>
+          <g transform="rotate(15 298.0 348.7)">
+            <polygon points="317.0,337.7 329.0,330.7 329.0,352.7 317.0,359.7" fill="#006E2E" />
+            <polygon points="279.0,337.7 291.0,330.7 329.0,330.7 317.0,337.7" fill="#28BC5C" />
+            <ellipse cx="294.5" cy="334.2" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="289.8" y="327.2" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="294.5" cy="327.2" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <ellipse cx="313.5" cy="334.2" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="308.8" y="327.2" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="313.5" cy="327.2" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <rect x="279.0" y="337.7" width="38" height="22" fill="#00A148" />
+          </g>
+          <g transform="rotate(12 114.9 359.5)">
+            <polygon points="133.9,348.5 145.9,341.5 145.9,363.5 133.9,370.5" fill="#236762" />
+            <polygon points="95.9,348.5 107.9,341.5 145.9,341.5 133.9,348.5" fill="#45B2A9" />
+            <ellipse cx="111.4" cy="345.0" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="106.7" y="338.0" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="111.4" cy="338.0" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <ellipse cx="130.4" cy="345.0" rx="4.8" ry="3.0" fill="#236762" />
+            <rect x="125.7" y="338.0" width="9.5" height="7" fill="#319890" />
+            <ellipse cx="130.4" cy="338.0" rx="4.8" ry="3.0" fill="#45B2A9" />
+            <rect x="95.9" y="348.5" width="38" height="22" fill="#319890" />
+          </g>
+          <g transform="rotate(10 153.3 359.2)">
+            <polygon points="172.3,348.2 184.3,341.2 184.3,363.2 172.3,370.2" fill="#1848D2" />
+            <polygon points="134.3,348.2 146.3,341.2 184.3,341.2 172.3,348.2" fill="#719BF7" />
+            <ellipse cx="149.8" cy="344.7" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="145.1" y="337.7" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="149.8" cy="337.7" rx="4.8" ry="3.0" fill="#719BF7" />
+            <ellipse cx="168.8" cy="344.7" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="164.1" y="337.7" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="168.8" cy="337.7" rx="4.8" ry="3.0" fill="#719BF7" />
+            <rect x="134.3" y="348.2" width="38" height="22" fill="#4B7EF6" />
+          </g>
+          <g transform="rotate(9 200.2 366.1)">
+            <polygon points="219.2,355.1 231.2,348.1 231.2,370.1 219.2,377.1" fill="#006E2E" />
+            <polygon points="181.2,355.1 193.2,348.1 231.2,348.1 219.2,355.1" fill="#28BC5C" />
+            <ellipse cx="196.7" cy="351.6" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="191.9" y="344.6" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="196.7" cy="344.6" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <ellipse cx="215.7" cy="351.6" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="210.9" y="344.6" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="215.7" cy="344.6" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <rect x="181.2" y="355.1" width="38" height="22" fill="#00A148" />
+          </g>
+          <g transform="rotate(-19 232.2 365.9)">
+            <polygon points="251.2,354.9 263.2,347.9 263.2,369.9 251.2,376.9" fill="#006E2E" />
+            <polygon points="213.2,354.9 225.2,347.9 263.2,347.9 251.2,354.9" fill="#28BC5C" />
+            <ellipse cx="228.7" cy="351.4" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="223.9" y="344.4" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="228.7" cy="344.4" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <ellipse cx="247.7" cy="351.4" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="242.9" y="344.4" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="247.7" cy="344.4" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <rect x="213.2" y="354.9" width="38" height="22" fill="#00A148" />
+          </g>
+          <g transform="rotate(-19 279.2 362.6)">
+            <polygon points="298.2,351.6 310.2,344.6 310.2,366.6 298.2,373.6" fill="#A78001" />
+            <polygon points="260.2,351.6 272.2,344.6 310.2,344.6 298.2,351.6" fill="#EED190" />
+            <ellipse cx="275.7" cy="348.1" rx="4.8" ry="3.0" fill="#A78001" />
+            <rect x="270.9" y="341.1" width="9.5" height="7" fill="#DBB14E" />
+            <ellipse cx="275.7" cy="341.1" rx="4.8" ry="3.0" fill="#EED190" />
+            <ellipse cx="294.7" cy="348.1" rx="4.8" ry="3.0" fill="#A78001" />
+            <rect x="289.9" y="341.1" width="9.5" height="7" fill="#DBB14E" />
+            <ellipse cx="294.7" cy="341.1" rx="4.8" ry="3.0" fill="#EED190" />
+            <rect x="260.2" y="351.6" width="38" height="22" fill="#DBB14E" />
+          </g>
+          <g transform="rotate(14 88.6 383.0)">
+            <polygon points="107.6,372.0 119.6,365.0 119.6,387.0 107.6,394.0" fill="#1848D2" />
+            <polygon points="69.6,372.0 81.6,365.0 119.6,365.0 107.6,372.0" fill="#719BF7" />
+            <ellipse cx="85.1" cy="368.5" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="80.3" y="361.5" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="85.1" cy="361.5" rx="4.8" ry="3.0" fill="#719BF7" />
+            <ellipse cx="104.1" cy="368.5" rx="4.8" ry="3.0" fill="#1848D2" />
+            <rect x="99.3" y="361.5" width="9.5" height="7" fill="#4B7EF6" />
+            <ellipse cx="104.1" cy="361.5" rx="4.8" ry="3.0" fill="#719BF7" />
+            <rect x="69.6" y="372.0" width="38" height="22" fill="#4B7EF6" />
+          </g>
+          <g transform="rotate(24 125.6 376.9)">
+            <polygon points="144.6,365.9 156.6,358.9 156.6,380.9 144.6,387.9" fill="#77399A" />
+            <polygon points="106.6,365.9 118.6,358.9 156.6,358.9 144.6,365.9" fill="#C575F4" />
+            <ellipse cx="122.1" cy="362.4" rx="4.8" ry="3.0" fill="#77399A" />
+            <rect x="117.3" y="355.4" width="9.5" height="7" fill="#B053E2" />
+            <ellipse cx="122.1" cy="355.4" rx="4.8" ry="3.0" fill="#C575F4" />
+            <ellipse cx="141.1" cy="362.4" rx="4.8" ry="3.0" fill="#77399A" />
+            <rect x="136.3" y="355.4" width="9.5" height="7" fill="#B053E2" />
+            <ellipse cx="141.1" cy="355.4" rx="4.8" ry="3.0" fill="#C575F4" />
+            <rect x="106.6" y="365.9" width="38" height="22" fill="#B053E2" />
+          </g>
+          <g transform="rotate(-2 168.1 377.8)">
+            <polygon points="187.1,366.8 199.1,359.8 199.1,381.8 187.1,388.8" fill="#77399A" />
+            <polygon points="149.1,366.8 161.1,359.8 199.1,359.8 187.1,366.8" fill="#C575F4" />
+            <ellipse cx="164.6" cy="363.3" rx="4.8" ry="3.0" fill="#77399A" />
+            <rect x="159.8" y="356.3" width="9.5" height="7" fill="#B053E2" />
+            <ellipse cx="164.6" cy="356.3" rx="4.8" ry="3.0" fill="#C575F4" />
+            <ellipse cx="183.6" cy="363.3" rx="4.8" ry="3.0" fill="#77399A" />
+            <rect x="178.8" y="356.3" width="9.5" height="7" fill="#B053E2" />
+            <ellipse cx="183.6" cy="356.3" rx="4.8" ry="3.0" fill="#C575F4" />
+            <rect x="149.1" y="366.8" width="38" height="22" fill="#B053E2" />
+          </g>
+          <g transform="rotate(-20 209.2 375.7)">
+            <polygon points="228.2,364.7 240.2,357.7 240.2,379.7 228.2,386.7" fill="#006E2E" />
+            <polygon points="190.2,364.7 202.2,357.7 240.2,357.7 228.2,364.7" fill="#28BC5C" />
+            <ellipse cx="205.7" cy="361.2" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="200.9" y="354.2" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="205.7" cy="354.2" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <ellipse cx="224.7" cy="361.2" rx="4.8" ry="3.0" fill="#006E2E" />
+            <rect x="219.9" y="354.2" width="9.5" height="7" fill="#00A148" />
+            <ellipse cx="224.7" cy="354.2" rx="4.8" ry="3.0" fill="#28BC5C" />
+            <rect x="190.2" y="364.7" width="38" height="22" fill="#00A148" />
+          </g>
+          <g transform="rotate(21 253.7 378.4)">
+            <polygon points="272.7,367.4 284.7,360.4 284.7,382.4 272.7,389.4" fill="#A78001" />
+            <polygon points="234.7,367.4 246.7,360.4 284.7,360.4 272.7,367.4" fill="#EED190" />
+            <ellipse cx="250.2" cy="363.9" rx="4.8" ry="3.0" fill="#A78001" />
+            <rect x="245.4" y="356.9" width="9.5" height="7" fill="#DBB14E" />
+            <ellipse cx="250.2" cy="356.9" rx="4.8" ry="3.0" fill="#EED190" />
+            <ellipse cx="269.2" cy="363.9" rx="4.8" ry="3.0" fill="#A78001" />
+            <rect x="264.4" y="356.9" width="9.5" height="7" fill="#DBB14E" />
+            <ellipse cx="269.2" cy="356.9" rx="4.8" ry="3.0" fill="#EED190" />
+            <rect x="234.7" y="367.4" width="38" height="22" fill="#DBB14E" />
+          </g>
+          <polygon points="44,392 120,348 84,292 8,336" fill="#F0B56B" />
+          <polygon points="280,392 356,348 356,488 280,532" fill="#C9853D" />
+          <rect x="44" y="392" width="236" height="140" fill="#E9A85B" />
+          <line x1="44" y1="392" x2="280" y2="392" stroke="#F6C887" stroke-width="3" />
+          <g transform="translate(84 446) scale(0.145) translate(-380.6 -107.5)">
+            <rect x="690.6" y="252.36" width="98.12" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="691.81" y="340.35" width="78.69" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="451.52" y="256.25" width="211.04" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="436.14" y="215.14" width="153.58" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="400.48" y="297.32" width="72.3" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="530.98" y="173.9" width="90.32" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <rect x="570.33" y="297.22" width="178.95" height="32.11" rx="16.05" ry="16.05" fill="#20AAA1" />
+            <path d="M652.89,461.02c28.69-6.6,48.29-18.08,61.71-36.15,7.49-10.09,12.41-22.03,15.79-38.45l-37.8,.03c-3.12,13.55-11.43,23.92-24.73,30.85-15.65,8.16-32.85,10-49.49,11.79-1.29,.14-2.59,.28-3.88,.42-4.88,.54-5.76-3.250-6.18-5.07-4.09-17.61-14.18-30.91-29.98-39.54-1.25-.68-2.95-1.81-3.31-3.71-.35-1.85,.74-3.45,1.73-4.63,7.9-9.45,12.43-20.79,15.73-31.02l-39.22,.02c-5.01,10.56-13.38,18.22-25.55,23.39-17.74,7.54-36.29,8.5-55.13,2.87-14.18-4.24-22.72-13.05-25.4-26.2l-37.08-.06c4.68,33.7,24.52,54.98,59.01,63.28,16.47,3.96,33.66,3.71,50.28,3.48l2.59-.04c1.75-.02,3.5-.07,5.25-.11,2.56-.07,5.16-.13,7.76-.13,5.49,0,11.05,.3,16.57,1.52,14.1,3.11,21.39,11.99,21.66,26.38,.23,12.12-4.14,23.26-13.37,34.07-7.34,8.59-16.3,15.36-24.96,21.91-1.34,1.01-2.7,2.04-4.05,3.07l55.93-.07c7.93-9.1,13.5-18,17.01-27.16,1.73-4.52,4.78-5.3,7.83-5.48,12.34-.73,26.9-1.92,41.29-5.23Z" fill="#BA18DD" />
+            <path d="M690.1,235.97c25.65,.12,46.51-20.07,46.71-45.22,.21-25.66-20.26-46.65-45.65-46.81-25.63-.16-46.74,20.49-46.77,45.75-.03,25.42,20.46,46.17,45.71,46.29Z" fill="#EAB54E" />
+          </g>
+          <text font-weight="600" x="156" y="468" font-family="Geist" font-size="21" fill="#5A3A14">
+            Software
+          </text>
+          <text font-weight="600" x="156" y="493" font-family="Geist" font-size="21" fill="#5A3A14">
+            Packs
+          </text>
+          <g transform="rotate(-6 282.0 168.0)">
+            <polygon points="366,148 392,133 392,173 366,188" fill="#1848D2" />
+            <polygon points="198,148 224,133 392,133 366,148" fill="#719BF7" />
+            <rect x="224.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="231.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="252.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="259.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="280.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="287.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="308.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="315.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="336.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="343.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="364.5" y="129.8" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="371.5" cy="129.8" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="218.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="211.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="218.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="246.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="239.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="246.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="274.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="267.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="274.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="302.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="295.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="302.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="330.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="323.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="330.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <ellipse cx="358.5" cy="144.2" rx="7.0" ry="4.5" fill="#1848D2" />
+            <rect x="351.5" y="137.2" width="14.0" height="7" fill="#4B7EF6" />
+            <ellipse cx="358.5" cy="137.2" rx="7.0" ry="4.5" fill="#719BF7" />
+            <rect x="198" y="148" width="168" height="40" fill="#4B7EF6" />
+            <g transform="translate(222.8 168.0) scale(0.91)">
+              <rect x="-11" y="2" width="5" height="9" fill="#FFFFFF" />
+              <rect x="-3" y="-4" width="5" height="15" fill="#FFFFFF" />
+              <rect x="5" y="-11" width="5" height="22" fill="#FFFFFF" />
+            </g>
+            <text font-weight="600" x="246.8" y="173.9" font-family="Geist" font-size="17" fill="#FFFFFF">
+              Observability
+            </text>
+          </g>
+          <g transform="rotate(-3 260.0 242.0)">
+            <polygon points="344,222 370,207 370,247 344,262" fill="#006E2E" />
+            <polygon points="176,222 202,207 370,207 344,222" fill="#28BC5C" />
+            <rect x="202.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="209.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="230.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="237.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="258.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="265.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="286.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="293.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="314.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="321.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="342.5" y="203.8" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="349.5" cy="203.8" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="196.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="189.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="196.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="224.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="217.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="224.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="252.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="245.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="252.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="280.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="273.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="280.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="308.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="301.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="308.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <ellipse cx="336.5" cy="218.2" rx="7.0" ry="4.5" fill="#006E2E" />
+            <rect x="329.5" y="211.2" width="14.0" height="7" fill="#00A148" />
+            <ellipse cx="336.5" cy="211.2" rx="7.0" ry="4.5" fill="#28BC5C" />
+            <rect x="176" y="222" width="168" height="40" fill="#00A148" />
+            <g transform="translate(200.8 242.0) scale(0.91)">
+              <ellipse cx="0" cy="-8" rx="11" ry="4.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -8 v16 a11 4.5 0 0 0 22 0 v-16" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -2.5 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 3 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="224.8" y="247.9" font-family="Geist" font-size="17" fill="#FFFFFF">
+              Data Science
+            </text>
+          </g>
+          <g transform="rotate(4 331.0 312.0)">
+            <polygon points="410,292 436,277 436,317 410,332" fill="#77399A" />
+            <polygon points="252,292 278,277 436,277 410,292" fill="#C575F4" />
+            <rect x="278.1" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="284.7" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="304.4" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="311.0" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="330.8" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="337.3" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="357.1" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="363.7" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="383.4" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="390.0" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="409.8" y="273.8" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="416.3" cy="273.8" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="271.7" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="265.1" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="271.7" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="298.0" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="291.4" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="298.0" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="324.3" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="317.8" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="324.3" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="350.7" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="344.1" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="350.7" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="377.0" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="370.4" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="377.0" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <ellipse cx="403.3" cy="288.2" rx="6.6" ry="4.2" fill="#77399A" />
+            <rect x="396.8" y="281.2" width="13.2" height="7" fill="#B053E2" />
+            <ellipse cx="403.3" cy="281.2" rx="6.6" ry="4.2" fill="#C575F4" />
+            <rect x="252" y="292" width="158" height="40" fill="#B053E2" />
+            <g transform="translate(276.8 312.0) scale(0.91)">
+              <circle r="9" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <circle r="3.2" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="0" y1="-3.5" x2="0" y2="-12" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="2.73" y1="-2.18" x2="9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="3.41" y1="0.77" x2="11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="1.51" y1="3.15" x2="5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="-1.51" y1="3.15" x2="-5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="-3.41" y1="0.77" x2="-11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+              <line x1="-2.73" y1="-2.18" x2="-9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" />
+            </g>
+            <text font-weight="600" x="300.8" y="317.6" font-family="Geist" font-size="16" fill="#FFFFFF" style="translate: -4px">
+              Model Serving
+            </text>
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              4
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Open the software packs
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">Choose from a library of pre-built
+software packs.</div>
+      </div>
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 557px; left: 475px; overflow: clip; position: absolute; top: 516px; width: 400px">
+        <svg width="400" height="557" viewBox="0 0 400 557" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 0px; top: 0px">
+          <g>
+            <polygon points="300,450 370,408 370,468 300,510" fill="#262628" />
+            <polygon points="30,450 100,408 370,408 300,450" fill="#5A5A61" />
+            <rect x="30" y="450" width="270" height="60" fill="#47474B" />
+            <circle cx="72.0" cy="480.0" r="18.0" fill="#FFFFFF" />
+            <g transform="translate(72.0 480.0) scale(1.29)">
+              <circle r="9" fill="none" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <circle r="3.2" fill="none" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="0" y1="-3.5" x2="0" y2="-12" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="2.73" y1="-2.18" x2="9.38" y2="-7.48" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="3.41" y1="0.77" x2="11.69" y2="2.67" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="1.51" y1="3.15" x2="5.2" y2="10.81" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-1.51" y1="3.15" x2="-5.2" y2="10.81" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-3.41" y1="0.77" x2="-11.69" y2="2.67" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-2.73" y1="-2.18" x2="-9.38" y2="-7.48" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="108.0" y="487.0" font-family="Geist" font-size="20" fill="#FFFFFF">
+              Kubernetes
+            </text>
+          </g>
+          <g>
+            <polygon points="283.0,387.4 323.0,363.4 323.0,413.4 283.0,437.4" fill="#236762" />
+            <polygon points="69.0,387.4 109.0,363.4 323.0,363.4 283.0,387.4" fill="#45B2A9" />
+            <rect x="69.0" y="387.4" width="214" height="50" fill="#319890" />
+            <g transform="translate(100.0 412.4) scale(1.14)">
+              <rect x="-10" y="-9" width="20" height="13" rx="1.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-14 8 h28" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="130.0" y="419.0" font-family="Geist" font-size="19" fill="#FFFFFF">
+              Notebooks
+            </text>
+          </g>
+          <g>
+            <polygon points="283.0,337.4 323.0,313.4 323.0,363.4 283.0,387.4" fill="#A78001" />
+            <polygon points="69.0,337.4 109.0,313.4 323.0,313.4 283.0,337.4" fill="#EED190" />
+            <rect x="69.0" y="337.4" width="214" height="50" fill="#DBB14E" />
+            <g transform="translate(100.0 362.4) scale(1.14)">
+              <circle r="11" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-12 -3 q 12 -9 24 0" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-12 3 q 12 9 24 0" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="130.0" y="369.0" font-family="Geist" font-size="19" fill="#FFFFFF">
+              Jupyter
+            </text>
+          </g>
+          <g>
+            <polygon points="283.0,287.4 323.0,263.4 323.0,313.4 283.0,337.4" fill="#77399A" />
+            <polygon points="69.0,287.4 109.0,263.4 323.0,263.4 283.0,287.4" fill="#C575F4" />
+            <rect x="69.0" y="287.4" width="214" height="50" fill="#B053E2" />
+            <g transform="translate(100.0 312.4) scale(1.14)">
+              <circle r="9" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <circle r="3.2" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="0" y1="-3.5" x2="0" y2="-12" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="2.73" y1="-2.18" x2="9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="3.41" y1="0.77" x2="11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="1.51" y1="3.15" x2="5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-1.51" y1="3.15" x2="-5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-3.41" y1="0.77" x2="-11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-2.73" y1="-2.18" x2="-9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="130.0" y="319.0" font-family="Geist" font-size="19" fill="#FFFFFF">
+              Model Serving
+            </text>
+          </g>
+          <g>
+            <polygon points="283.0,237.4 323.0,213.4 323.0,263.4 283.0,287.4" fill="#006E2E" />
+            <polygon points="69.0,237.4 109.0,213.4 323.0,213.4 283.0,237.4" fill="#28BC5C" />
+            <rect x="69.0" y="237.4" width="214" height="50" fill="#00A148" />
+            <g transform="translate(100.0 262.4) scale(1.14)">
+              <ellipse cx="0" cy="-8" rx="11" ry="4.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -8 v16 a11 4.5 0 0 0 22 0 v-16" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -2.5 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 3 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="130.0" y="269.0" font-family="Geist" font-size="19" fill="#FFFFFF">
+              Data Science
+            </text>
+          </g>
+          <g>
+            <polygon points="283.0,187.4 323.0,163.4 323.0,213.4 283.0,237.4" fill="#1848D2" />
+            <polygon points="69.0,187.4 109.0,163.4 323.0,163.4 283.0,187.4" fill="#719BF7" />
+            <rect x="107.9" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="116.8" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="143.6" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="152.5" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="179.3" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="188.2" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="214.9" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="223.8" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="250.6" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="259.5" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="286.2" y="162.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="295.2" cy="162.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="96.8" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="87.9" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="96.8" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="132.5" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="123.6" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="132.5" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="168.2" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="159.3" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="168.2" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="203.8" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="194.9" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="203.8" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="239.5" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="230.6" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="239.5" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <ellipse cx="275.2" cy="181.4" rx="8.9" ry="5.7" fill="#1848D2" />
+            <rect x="266.2" y="174.4" width="17.8" height="7" fill="#4B7EF6" />
+            <ellipse cx="275.2" cy="174.4" rx="8.9" ry="5.7" fill="#719BF7" />
+            <rect x="69.0" y="187.4" width="214" height="50" fill="#4B7EF6" />
+            <g transform="translate(100.0 212.4) scale(1.14)">
+              <rect x="-11" y="2" width="5" height="9" fill="#FFFFFF" />
+              <rect x="-3" y="-4" width="5" height="15" fill="#FFFFFF" />
+              <rect x="5" y="-11" width="5" height="22" fill="#FFFFFF" />
+            </g>
+            <text font-weight="600" x="130.0" y="219.1" font-family="Geist" font-size="19" fill="#FFFFFF">
+              Observability
+            </text>
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              5
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Stack your building blocks
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">Add the packs you need, and Nebari
+assembles them into your application.</div>
+      </div>
+      <div style="background-image: linear-gradient(in oklab 180deg, oklab(29.5% 0.002 -0.009) 0%, oklab(25.8% 0.002 -0.007) 100%); border-radius: 18px; box-shadow: #FFFFFF0F 0px 0px 0px 1px inset; box-sizing: border-box; height: 557px; left: 890px; overflow: clip; position: absolute; top: 516px; width: 410px">
+        <svg width="410" height="557" viewBox="0 0 410 557" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 0px; top: 0px">
+          <path d="M14 452 l44 -34 h236 l-44 34z" fill="#A1E3DC" />
+          <path d="M14 452 h236 v30 h-236z" fill="#45B2A9" />
+          <path d="M250 452 l44 -34 v30 l-44 34z" fill="#2C817A" />
+          <text font-weight="600" x="330" y="196" font-family="Geist" font-size="20" text-anchor="middle" fill="#EEEEEF">
+            Build
+          </text>
+          <text font-weight="600" x="330" y="222" font-family="Geist" font-size="20" text-anchor="middle" fill="#EEEEEF">
+            Ship
+          </text>
+          <text font-weight="600" x="330" y="248" font-family="Geist" font-size="20" text-anchor="middle" fill="#EEEEEF">
+            Iterate
+          </text>
+          <g style="stroke: rgb(157, 157, 166)">
+            <line x1="282" y1="196" x2="270" y2="190" stroke="#9D9DA6" stroke-width="2.4" stroke-linecap="round" />
+            <line x1="282" y1="226" x2="268" y2="226" stroke="#9D9DA6" stroke-width="2.4" stroke-linecap="round" />
+            <line x1="378" y1="196" x2="390" y2="190" stroke="#9D9DA6" stroke-width="2.4" stroke-linecap="round" />
+            <line x1="378" y1="226" x2="392" y2="226" stroke="#9D9DA6" stroke-width="2.4" stroke-linecap="round" />
+          </g>
+        </svg>
+        <div style="align-items: center; box-sizing: border-box; display: flex; gap: 14px; left: 18px; position: absolute; top: 22px">
+          <div style="align-items: center; background-color: #9547C0; border-radius: 21px; box-sizing: border-box; display: flex; flex-shrink: 0; height: 42px; justify-content: center; width: 42px">
+            <div style="box-sizing: border-box; color: #FFFFFF; font-family: 'Geist', system-ui, sans-serif; font-size: 22px; font-weight: 700; line-height: 28px">
+              6
+            </div>
+          </div>
+          <div style="box-sizing: border-box; color: #F1F1F6; font-family: 'Geist', system-ui, sans-serif; font-size: 25px; font-weight: 600; letter-spacing: -0.02em; line-height: 32px; width: max-content">
+            Your application is ready
+          </div>
+        </div>
+        <div style="box-sizing: border-box; color: #B7B7BB; font-family: 'Geist', system-ui, sans-serif; font-size: 17px; left: 74px; line-height: 24px; position: absolute; top: 70px; white-space: pre; width: max-content">A powerful, flexible, and secure
+platform, ready for your team.</div>
+        <svg width="300" height="470" viewBox="0 0 300 470" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 24px; top: 0px">
+          <g>
+            <polygon points="202,404 254,372 254,416 202,448" fill="#262628" />
+            <polygon points="6,404 58,372 254,372 202,404" fill="#5A5A61" />
+            <rect x="6" y="404" width="196" height="44" fill="#47474B" />
+            <circle cx="36.8" cy="426.0" r="13.2" fill="#FFFFFF" />
+            <g transform="translate(36.8 426.0) scale(0.94)">
+              <circle r="9" fill="none" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <circle r="3.2" fill="none" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="0" y1="-3.5" x2="0" y2="-12" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="2.73" y1="-2.18" x2="9.38" y2="-7.48" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="3.41" y1="0.77" x2="11.69" y2="2.67" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="1.51" y1="3.15" x2="5.2" y2="10.81" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-1.51" y1="3.15" x2="-5.2" y2="10.81" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-3.41" y1="0.77" x2="-11.69" y2="2.67" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-2.73" y1="-2.18" x2="-9.38" y2="-7.48" stroke="#47474B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="63.2" y="431.2" font-family="Geist" font-size="15" fill="#FFFFFF">
+              Kubernetes
+            </text>
+          </g>
+          <g>
+            <polygon points="185.6,358.4 215.6,340.4 215.6,376.4 185.6,394.4" fill="#236762" />
+            <polygon points="33.6,358.4 63.6,340.4 215.6,340.4 185.6,358.4" fill="#45B2A9" />
+            <rect x="33.6" y="358.4" width="152" height="36" fill="#319890" />
+            <g transform="translate(55.9 376.4) scale(0.82)">
+              <rect x="-10" y="-9" width="20" height="13" rx="1.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-14 8 h28" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="77.5" y="381.3" font-family="Geist" font-size="14" fill="#FFFFFF">
+              Notebooks
+            </text>
+          </g>
+          <g>
+            <polygon points="185.6,322.4 215.6,304.4 215.6,340.4 185.6,358.4" fill="#A78001" />
+            <polygon points="33.6,322.4 63.6,304.4 215.6,304.4 185.6,322.4" fill="#EED190" />
+            <rect x="33.6" y="322.4" width="152" height="36" fill="#DBB14E" />
+            <g transform="translate(55.9 340.4) scale(0.82)">
+              <circle r="11" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-12 -3 q 12 -9 24 0" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-12 3 q 12 9 24 0" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="77.5" y="345.3" font-family="Geist" font-size="14" fill="#FFFFFF">
+              Jupyter
+            </text>
+          </g>
+          <g>
+            <polygon points="185.6,286.4 215.6,268.4 215.6,304.4 185.6,322.4" fill="#77399A" />
+            <polygon points="33.6,286.4 63.6,268.4 215.6,268.4 185.6,286.4" fill="#C575F4" />
+            <rect x="33.6" y="286.4" width="152" height="36" fill="#B053E2" />
+            <g transform="translate(55.9 304.4) scale(0.82)">
+              <circle r="9" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <circle r="3.2" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="0" y1="-3.5" x2="0" y2="-12" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="2.73" y1="-2.18" x2="9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="3.41" y1="0.77" x2="11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="1.51" y1="3.15" x2="5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-1.51" y1="3.15" x2="-5.2" y2="10.81" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-3.41" y1="0.77" x2="-11.69" y2="2.67" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="-2.73" y1="-2.18" x2="-9.38" y2="-7.48" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="77.5" y="309.3" font-family="Geist" font-size="14" fill="#FFFFFF">
+              Model Serving
+            </text>
+          </g>
+          <g>
+            <polygon points="185.6,250.4 215.6,232.4 215.6,268.4 185.6,286.4" fill="#006E2E" />
+            <polygon points="33.6,250.4 63.6,232.4 215.6,232.4 185.6,250.4" fill="#28BC5C" />
+            <rect x="33.6" y="250.4" width="152" height="36" fill="#00A148" />
+            <g transform="translate(55.9 268.4) scale(0.82)">
+              <ellipse cx="0" cy="-8" rx="11" ry="4.5" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -8 v16 a11 4.5 0 0 0 22 0 v-16" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 -2.5 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M-11 3 a11 4.5 0 0 0 22 0" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <text font-weight="600" x="77.5" y="273.3" font-family="Geist" font-size="14" fill="#FFFFFF">
+              Data Science
+            </text>
+          </g>
+          <g>
+            <polygon points="185.6,214.4 215.6,196.4 215.6,232.4 185.6,250.4" fill="#1848D2" />
+            <polygon points="33.6,214.4 63.6,196.4 215.6,196.4 185.6,214.4" fill="#719BF7" />
+            <rect x="62.4" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="68.8" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="87.8" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="94.1" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="113.1" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="119.4" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="138.4" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="144.8" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="163.8" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="170.1" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="189.1" y="193.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="195.4" cy="193.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="53.8" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="47.4" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="53.8" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="79.1" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="72.8" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="79.1" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="104.4" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="98.1" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="104.4" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="129.8" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="123.4" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="129.8" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="155.1" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="148.8" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="155.1" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <ellipse cx="180.4" cy="209.9" rx="6.3" ry="4.1" fill="#1848D2" />
+            <rect x="174.1" y="202.9" width="12.7" height="7" fill="#4B7EF6" />
+            <ellipse cx="180.4" cy="202.9" rx="6.3" ry="4.1" fill="#719BF7" />
+            <rect x="33.6" y="214.4" width="152" height="36" fill="#4B7EF6" />
+            <g transform="translate(55.9 232.4) scale(0.82)">
+              <rect x="-11" y="2" width="5" height="9" fill="#FFFFFF" />
+              <rect x="-3" y="-4" width="5" height="15" fill="#FFFFFF" />
+              <rect x="5" y="-11" width="5" height="22" fill="#FFFFFF" />
+            </g>
+            <text font-weight="600" x="77.5" y="237.3" font-family="Geist" font-size="14" fill="#FFFFFF">
+              Observability
+            </text>
+          </g>
+        </svg>
+        <svg width="100" height="76" viewBox="0 0 100 76" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 280px; top: 268px">
+          <g style="stroke: rgb(238, 238, 239); fill: rgb(40, 40, 44)">
+            <path d="M10 58 q0 -21 16 -21 q16 0 16 21 z" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+            <circle cx="26" cy="23" r="9" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+            <path d="M58 58 q0 -21 16 -21 q16 0 16 21 z" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+            <circle cx="74" cy="23" r="9" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+            <path d="M31 70 q0 -24 19 -24 q19 0 19 24 z" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+            <circle cx="50" cy="30" r="10.5" fill="#28282C" stroke="#EEEEEF" stroke-width="2.6" stroke-linejoin="round" />
+          </g>
+        </svg>
+      </div>
+      <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 413px; top: 277px">
+        <circle cx="20" cy="20" r="18" fill="#353538" stroke="#5A5A61" stroke-width="2" />
+        <g style="stroke: rgb(238, 238, 239)">
+          <path d="M11 20 h17" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 14 L28 20 L22 26" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+      <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 822px; top: 277px">
+        <circle cx="20" cy="20" r="18" fill="#353538" stroke="#5A5A61" stroke-width="2" />
+        <g style="stroke: rgb(238, 238, 239)">
+          <path d="M11 20 h17" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 14 L28 20 L22 26" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+      <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 447px; top: 896px">
+        <circle cx="20" cy="20" r="18" fill="#353538" stroke="#5A5A61" stroke-width="2" />
+        <g style="stroke: rgb(238, 238, 239)">
+          <path d="M11 20 h17" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 14 L28 20 L22 26" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+      <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="position: absolute; left: 862px; top: 896px">
+        <circle cx="20" cy="20" r="18" fill="#353538" stroke="#5A5A61" stroke-width="2" />
+        <g style="stroke: rgb(238, 238, 239)">
+          <path d="M11 20 h17" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M22 14 L28 20 L22 26" fill="none" stroke="#EEEEEF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+    </div>
+</body>
+</html>
