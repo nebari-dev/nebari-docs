@@ -3,6 +3,7 @@
 
 # Production
 /dist
+/dist-classic
 
 # Generated files
 /.astro

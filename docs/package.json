@@ -17,11 +17,15 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:classic": "DOCS_SITE=classic astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "build:classic": "DOCS_SITE=classic astro build",
     "preview": "astro preview",
+    "preview:classic": "DOCS_SITE=classic astro preview",
     "test": "bun test test",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "deploy:classic": "wrangler deploy --config wrangler.classic.jsonc"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.1",

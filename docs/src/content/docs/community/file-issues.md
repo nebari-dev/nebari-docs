@@ -67,7 +67,7 @@ The following actions are typically useful:
 
 <!-- Internal links -->
 
-[troubleshooting]: /classic/troubleshooting/
+[troubleshooting]: https://classic.nebari.dev/troubleshooting/
 
 <!-- External Links -->
 

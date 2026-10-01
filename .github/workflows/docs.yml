@@ -22,6 +22,7 @@ concurrency:
 
 env:
   CF_WORKER: nebari-docs
+  CF_CLASSIC_WORKER: nebari-docs-classic
 
 jobs:
   docs:
@@ -43,11 +44,11 @@ jobs:
         run: bun install --frozen-lockfile
         working-directory: docs
 
-      - name: Test (builds the site into dist/)
+      - name: Test (builds both sites into dist/ and dist-classic/)
         run: bun test test
         working-directory: docs
         env:
-          SITE: https://www.nebari.dev
+          # Each site sets its own SITE (www.nebari.dev / classic.nebari.dev) in astro.config.mjs.
           BASE: /
           # `bun test` would otherwise set NODE_ENV=test for the build it runs, which
           # makes Astro build in dev mode and drops the Pagefind search UI from every
@@ -111,12 +112,45 @@ jobs:
           workingDirectory: docs
           command: deploy
 
+      - name: Upload preview version to the nebari-docs-classic Worker
+        id: classic-preview-deploy
+        if: ${{ github.ref != 'refs/heads/main' && steps.candeploy.outputs.ok == 'true' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: docs
+          # Same one-time seeding as the main Worker above.
+          preCommands: npx wrangler deployments list --config wrangler.classic.jsonc > /dev/null 2>&1 || npx wrangler deploy --config wrangler.classic.jsonc
+          command: versions upload --config wrangler.classic.jsonc --preview-alias ${{ steps.site.outputs.alias }}
+
+      - name: Extract Classic preview URL
+        id: classic-preview
+        if: ${{ steps.classic-preview-deploy.outcome == 'success' }}
+        env:
+          WRANGLER_OUTPUT: ${{ steps.classic-preview-deploy.outputs.command-output }}
+        run: |
+          URL=$(printf '%s\n' "$WRANGLER_OUTPUT" | grep -Eo 'https://[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.workers\.dev' | tail -n1)
+          echo "url=${URL}" >> "$GITHUB_OUTPUT"
+          echo "::notice::Classic preview URL: ${URL}"
+
+      - name: Deploy production to the nebari-docs-classic Worker
+        id: classic-deploy
+        if: ${{ github.ref == 'refs/heads/main' && steps.candeploy.outputs.ok == 'true' }}
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: docs
+          command: deploy --config wrangler.classic.jsonc
+
       - name: Comment preview URL
-        if: ${{ github.event_name == 'pull_request' && steps.preview-deploy.outcome == 'success' }}
+        if: ${{ github.event_name == 'pull_request' && steps.preview-deploy.outcome == 'success' && steps.classic-preview-deploy.outcome == 'success' }}
         uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
         with:
           header: docs-preview
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           message: |
-            **Docs preview** for `${{ github.event.pull_request.head.ref }}` (via the `${{ env.CF_WORKER }}` Worker):
-            ${{ steps.preview.outputs.url }}
+            **Docs preview** for `${{ github.event.pull_request.head.ref }}`:
+            - Nebari (via the `${{ env.CF_WORKER }}` Worker): ${{ steps.preview.outputs.url }}
+            - Nebari Classic (via the `${{ env.CF_CLASSIC_WORKER }}` Worker): ${{ steps.classic-preview.outputs.url }}

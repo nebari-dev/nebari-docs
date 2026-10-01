@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Nebari Classic docs, built with `bun run build:classic`.
+  // Deploy with `wrangler deploy --config wrangler.classic.jsonc`.
+  "name": "nebari-docs-classic",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist-classic",
+    "not_found_handling": "404-page"
+  },
+  // Creates the DNS record and TLS certificate for the subdomain on deploy.
+  // Needs the nebari.dev zone in the same Cloudflare account as the Worker.
+  "routes": [{ "pattern": "classic.nebari.dev", "custom_domain": true }],
+  "preview_urls": true
+}
