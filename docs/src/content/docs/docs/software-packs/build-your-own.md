@@ -27,7 +27,7 @@ If your app already has a Helm chart, adding a `NebariApp` resource is all it ta
        version: ">=0.1.1"
    ```
 
-2. Set any `NebariApp` `spec` field under `nebariapp:` in `values.yaml`:
+2. Set any `NebariApp` `spec` field under `nebariapp:` in `values.yaml`. Replace `my-pack` with your chart's name:
 
    ```yaml
    nebariapp:
@@ -53,8 +53,6 @@ If your app already has a Helm chart, adding a `NebariApp` resource is all it ta
    ) -}}
    {{- end }}
    ```
-
-Replace `my-pack` with your chart's name. `helm create` adds the `fullname` and `labels` helpers to `templates/_helpers.tpl`.
 
 When a `{{ ... }}` value renders a string, add `| toJson` at the end. It wraps the string in quotes so it's valid JSON:
 
