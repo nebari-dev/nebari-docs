@@ -18,7 +18,7 @@ To start building a pack:
 
 If your app already has a Helm chart, adding a `NebariApp` resource is all it takes. To add it, use the official [`nebari-app` library chart](https://github.com/nebari-dev/nebari-operator/tree/main/charts/nebari-app):
 
-1. Add it as a dependency in `Chart.yaml`, then run `helm dependency build`:
+1. Add it as a dependency in `Chart.yaml`, then run `helm dependency build`. The library chart needs Helm 3.17.0 or later:
 
    ```yaml
    dependencies:
@@ -36,6 +36,9 @@ If your app already has a Helm chart, adding a `NebariApp` resource is all it ta
      service:
        name: '{{ include "my-pack.fullname" . | toJson }}'
        port: '{{ .Values.service.port }}'
+     routing:
+       routes:
+         - pathPrefix: /
    ```
 
 3. Render it in `templates/nebariapp.yaml`. The `if` makes the `NebariApp` optional, so the chart works both standalone and on Nebari:
