@@ -9,11 +9,64 @@ If a workload you'd like to run on Nebari isn't already in the catalog, you can 
 
 A software pack is a Kubernetes application bundled with a `NebariApp` custom resource. The Nebari Operator reads the `NebariApp` to wire up routing, TLS, and authentication for your app.
 
-If your app already runs on Kubernetes (via Helm, Kustomize, or plain YAML), adding a `NebariApp` resource is all it takes.
+To start building a pack:
+
+- **From an existing Helm chart:** follow [Add the NebariApp to a Helm chart](#add-the-nebariapp-to-a-helm-chart).
+- **From scratch:** follow [Start from the template](#start-from-the-template).
+
+## Add the NebariApp to a Helm chart
+
+If your app already has a Helm chart, adding a `NebariApp` resource is all it takes. To add it, use the official [`nebari-app` library chart](https://github.com/nebari-dev/nebari-operator/tree/main/charts/nebari-app):
+
+1. Add it as a dependency in `Chart.yaml`, then run `helm dependency build`. The library chart needs Helm 3.17.0 or later:
+
+   ```yaml
+   dependencies:
+     - name: nebari-app
+       repository: oci://quay.io/nebari/charts
+       version: ">=0.1.1"
+   ```
+
+2. Set any `NebariApp` `spec` field under `nebariapp:` in `values.yaml`. Replace `my-pack` with your chart's name:
+
+   ```yaml
+   nebariapp:
+     enabled: false
+     hostname: '{{ fail "nebariapp.hostname is required when nebariapp.enabled is true" }}'
+     service:
+       name: '{{ include "my-pack.fullname" . | toJson }}'
+       port: '{{ .Values.service.port }}'
+     routing:
+       routes:
+         - pathPrefix: /
+   ```
+
+3. Render it in `templates/nebariapp.yaml`. The `if` makes the `NebariApp` optional, so the chart works both standalone and on Nebari:
+
+   ```yaml
+   {{- if .Values.nebariapp.enabled }}
+   {{- include "nebari-app.nebariApp" (dict
+       "metadata" (dict
+         "name"      (include "my-pack.fullname" .)
+         "namespace" .Release.Namespace
+         "labels"    (include "my-pack.labels" . | fromYaml)
+       )
+       "spec"   (omit .Values.nebariapp "enabled")
+       "tplCtx" .
+   ) -}}
+   {{- end }}
+   ```
+
+When a `{{ ... }}` value renders a string, add `| toJson` at the end. It wraps the string in quotes so it's valid JSON:
+
+```yaml
+name: '{{ include "my-pack.fullname" . | toJson }}'   # works
+name: '{{ include "my-pack.fullname" . }}'            # fails to render
+```
 
 ## Start from the template
 
-The easiest way to create a pack is to use the [Software Pack template](https://github.com/nebari-dev/nebari-software-pack-template).
+If you're building a pack from scratch, start from the [Software Pack template](https://github.com/nebari-dev/software-pack-template).
 
 To use the template:
 
