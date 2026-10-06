@@ -131,11 +131,22 @@ test('the main site no longer includes Nebari Classic', () => {
   for (const slug of ['docs/introduction', 'community/introduction']) {
     const page = html(MAIN, slug);
     expect(page).not.toContain('Nebari Classic</');
-    expect(page).not.toContain('Phase out notice');
+    expect(page).not.toContain('Nebari Classic is in maintenance mode');
   }
   // Pagefind indexes every built page, so no Classic pages means none in search either.
   const built = walk(MAIN.dist, (name) => name.endsWith('.html')).map((file) => relative(MAIN.dist, file));
   expect(built.filter((file) => file.startsWith('classic/'))).toEqual([]);
+});
+
+test('main site pages point to the Classic docs', () => {
+  for (const page of MAIN.pages) {
+    if (page.slug === '404') continue;
+    expect(html(MAIN, page.slug)).toContain('href="https://classic.nebari.dev/welcome/"');
+  }
+});
+
+test('Classic pages do not show the pointer to themselves', () => {
+  expect(html(CLASSIC, 'welcome')).not.toContain('Looking for Nebari Classic?');
 });
 
 test('Classic pages sit at the site root with their own sidebar and the phase-out notice', () => {
@@ -146,8 +157,8 @@ test('Classic pages sit at the site root with their own sidebar and the phase-ou
   for (const page of CLASSIC.pages) {
     if (page.slug === '404') continue;
     const content = html(CLASSIC, page.slug);
-    expect(content).toContain('Phase out notice');
-    expect(content).toContain('href="https://www.nebari.dev/docs/introduction/"');
+    expect(content).toContain('Nebari Classic is in maintenance mode');
+    expect(content).toContain('go to the <a href="https://www.nebari.dev/docs/introduction/"');
   }
 });
 
