@@ -71,4 +71,5 @@ All applications should reach `Healthy`. Any that are briefly `Progressing` afte
 - [Deploy lifecycle](/docs/how-tos/deploy/) — full deploy, update, and destroy reference
 - [Update a cluster](/docs/how-tos/update-cluster/) — other config changes you can make to a running cluster
 - [AWS provider](/docs/how-tos/providers/aws/) — EKS-specific upgrade constraints and mechanics
+- [Azure provider](/docs/how-tos/providers/azure/) — AKS-specific upgrade constraints, including upgrading node pools after the control plane
 - [Hetzner provider](/docs/how-tos/providers/hetzner/) — k3s-specific upgrade constraints and mechanics

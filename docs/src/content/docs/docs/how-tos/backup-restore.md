@@ -26,7 +26,7 @@ Longhorn backs up whole volumes at the block level, so you cannot exclude indivi
 
 Add a `backups.longhorn` block to your cluster config and re-run `nic deploy`. This minimal example enables backups to a new S3 bucket on AWS:
 
-:::note[Azure is not yet functional]
+:::note[Azure backups are not yet available]
 The schema includes an `azure:` target, but Azure backups do not work today: NKP does not currently install Longhorn on Azure clusters (their storage layer is `managed-csi`, not Longhorn), so enabling `backups.longhorn` on Azure fails `nic validate`. The `azure:` block is forward-looking scaffolding for a future release.
 :::
 
