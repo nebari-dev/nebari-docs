@@ -39,6 +39,8 @@ These steps are the same for all providers.
    nic deploy -f <config-file>
    ```
 
+   On Azure, `nic deploy` upgrades only the AKS control plane. Upgrade the node pools as described on the [Azure provider page](/docs/how-tos/providers/azure/#upgrade-kubernetes-version) before you verify.
+
 ## Operator and pack considerations
 
 During node rolling, pods on the node being replaced are evicted and rescheduled elsewhere:

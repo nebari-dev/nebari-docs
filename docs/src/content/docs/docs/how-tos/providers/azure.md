@@ -20,6 +20,8 @@ When `nic deploy` finishes, your team will have all [standard NKP services](/doc
 
 :::note
 Longhorn is not installed on Azure, so there is no NKP-managed shared (read-write-many) storage class, and [Longhorn backups](/docs/how-tos/backup-restore/) are not available. Software Packs that need shared volumes may need extra configuration on Azure.
+
+If your network re-signs TLS through a corporate proxy, note that `nic` does not yet install a `trust_bundle` CA into the node OS trust store on Azure; see [Enterprise TLS proxy](/docs/how-tos/enterprise-tls-proxy/).
 :::
 
 ## Prerequisites
@@ -30,12 +32,12 @@ You will need an Azure subscription you can deploy into. If you don't have one, 
 
 - **Region:** pick a [region where AKS is available](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=kubernetes-service). The example uses `eastus`.
 - **Role:** the identity that runs `nic deploy` (your `az login` user or a service principal) needs **Owner**, or **Contributor** plus **Role Based Access Control Administrator**, on the subscription. `nic` creates role assignments for the cluster's managed identities, which Contributor alone cannot do.
-- **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. The example below needs 12 Dv3-family vCPUs at its minimum size (52 at full scale), which is more than many new subscriptions allow, and `nic` does not check quota before it starts provisioning.
+- **Quotas:** confirm your subscription has enough [regional vCPU quota](https://learn.microsoft.com/azure/quotas/view-quotas) for the VM sizes in your node pools. The example below needs 12 Dv3-family vCPUs at its minimum size (52 at full scale, or 72 if you keep the starter config's `worker` pool), which is more than many new subscriptions allow, and `nic` does not check quota before it starts provisioning.
 - **Cost:** see [Cost considerations](#cost-considerations) for what bills.
 
 ### Azure authentication
 
-`nic` needs one value from you directly, your **subscription ID**, and finds your identity through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/sdk/authentication/authentication-overview). It tries environment-variable credentials first, then workload identity and managed identity, then the Azure CLI.
+`nic` needs one value from you directly, your **subscription ID**, and finds your identity through the standard Azure credential chain, [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/go/sdk/authentication/credential-chains). It tries environment-variable credentials first, then workload identity and managed identity, then the Azure CLI.
 
 For most people the simplest path is the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli):
 
@@ -102,7 +104,7 @@ A NKP deployment provisions several Azure services that bill from day one. Check
 - **[AKS control plane](https://azure.microsoft.com/pricing/details/kubernetes-service/):** the `Free` tier (the default) has no control-plane charge; setting `sku_tier` to `Standard` or `Premium` adds a per-cluster hourly fee for an uptime SLA.
 - **[Virtual machines](https://azure.microsoft.com/pricing/details/virtual-machines/linux/)** in your node pools: per-hour cost for each running node.
 - **[Managed disks](https://azure.microsoft.com/pricing/details/managed-disks/):** an OS disk on each node (128 GB unless you set `os_disk_size_gb`) plus any `managed-csi` persistent volumes your workloads request.
-- **[Load balancer](https://azure.microsoft.com/pricing/details/load-balancer/):** the Standard Load Balancer and public IP that AKS creates for ingress.
+- **[Load balancer](https://azure.microsoft.com/pricing/details/load-balancer/):** the Standard Load Balancer that AKS creates for outbound traffic and ingress, and its public IP addresses.
 - **[Bandwidth](https://azure.microsoft.com/pricing/details/bandwidth/):** outbound data transfer.
 
 :::note[Shared state storage]
@@ -159,7 +161,7 @@ cluster:
         max_nodes: 5
 ```
 
-The starter config authenticates to Git with an SSH key (`auth.ssh.env: GIT_SSH_PRIVATE_KEY`) instead. Either works as long as you set exactly one: replace its `auth.ssh` block with the `auth.token` block above, or keep it and set `GIT_SSH_PRIVATE_KEY` in `.env` (see the [repository reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/repository-existing.md)).
+The starter config authenticates to Git with an SSH key (`auth.ssh.env: GIT_SSH_PRIVATE_KEY`) instead. Either works as long as you set exactly one: replace its `auth.ssh` block with the `auth.token` block above, or keep it (with an SSH `git@…` URL) and set `GIT_SSH_PRIVATE_KEY` in `.env` (see the [repository reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/repository-existing.md)).
 
 Every AKS cluster needs one **System** node pool to run cluster services. Set `mode: System` on the pool you want to play that role; pools without a `mode` are **User** pools. At most one pool may be `System`. If none is, the pool whose name sorts first alphabetically becomes the System pool, so set it explicitly rather than relying on the order of your pool names.
 
@@ -176,7 +178,7 @@ By default `nic` creates a resource group named `<project_name>-rg`. Set `resour
 
 Networking uses [Azure CNI Overlay](https://learn.microsoft.com/azure/aks/azure-cni-overlay), with the `azure` (default) or `cilium` dataplane set by `network.dataplane`, and the cluster runs under user-assigned managed identities that `nic` creates.
 
-For the full schema (custom networking and existing VNets, `network.dataplane`, private clusters, authorized IP ranges, `sku_tier`, Node Auto Provisioning, per-pool disks, labels, taints, and zones), see the [Azure provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/azure.md).
+For the full schema (custom networking and existing VNets, `network.dataplane`, private clusters, authorized IP ranges, `sku_tier`, Node Auto Provisioning, per-pool disks, labels, taints, and zones), see the [Azure provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/azure.md). If you enable `private_cluster_enabled` or `authorized_ip_ranges`, run `nic` from a network that can reach the cluster's API server: after provisioning, `nic` installs Argo CD and the foundational services through it.
 
 ## Deploy and verify
 
@@ -203,8 +205,9 @@ To change something about a running cluster (scale a node pool, add a pool, chan
 :::caution
 Some fields cannot be changed in place:
 
-- **Recreates the cluster:** `region`, `resource_group_name`, `network.pod_cidr`, `network.service_cidr`, `network.dns_service_ip`, or switching `network.dataplane` from `cilium` back to `azure`. (Switching from `azure` to `cilium` updates the cluster in place and reimages every node.)
+- **Recreates the cluster:** `region`, `resource_group_name`, `private_cluster_enabled`, `network.pod_cidr`, `network.service_cidr`, `network.dns_service_ip`, renaming the System pool or moving `mode: System` to a different pool, or switching `network.dataplane` from `cilium` back to `azure`. (Switching from `azure` to `cilium` updates the cluster in place and reimages every node.)
 - **Fails at apply:** changing an existing node pool's `instance`, `os_disk_size_gb`, or `zones`, or the cluster's subnet. To move a pool to a new VM size, add a pool under a new name and remove the old one.
+- **Cannot be undone by `nic`:** setting `node_provisioning_mode: Auto`. Setting it back to `Manual` leaves Node Auto Provisioning enabled on the cluster.
 - **Deploys a second cluster:** changing `project_name`. `nic` treats it as a new cluster and leaves the original running (and billing).
 
 Adding a pool is safe as long as one pool sets `mode: System`. Without that, a new pool whose name sorts first alphabetically becomes the System pool, which recreates the cluster. Treat all of these as one-way decisions.
@@ -225,7 +228,8 @@ cluster:
 A re-deploy upgrades the AKS **control plane only**; your node pools keep their Kubernetes version until you upgrade them. After the re-deploy, upgrade the node pools to match, either all at once or one pool at a time:
 
 ```bash
-# All node pools (the control plane is already on this version)
+# All node pools. The CLI warns that the cluster is already on this version;
+# the node pools still upgrade.
 az aks upgrade --resource-group <project_name>-rg --name <project_name>-aks \
   --kubernetes-version 1.36
 
@@ -234,9 +238,9 @@ az aks nodepool upgrade --resource-group <project_name>-rg --cluster-name <proje
   --name <pool> --kubernetes-version 1.36
 ```
 
-Use your `resource_group_name` instead of `<project_name>-rg` if you set one. Node pools can lag the control plane by at most three minor versions, so do not skip this step. For how AKS rolls the nodes, see [Upgrade an AKS cluster](https://learn.microsoft.com/azure/aks/upgrade-aks-cluster).
+Use your `resource_group_name` instead of `<project_name>-rg` if you set one. Both commands ask for confirmation unless you add `--yes`. Node pools can lag the control plane by at most three minor versions, so do not skip this step. For the control-plane-first workflow and node-pool upgrade options, see [Upgrade the AKS cluster control plane](https://learn.microsoft.com/azure/aks/upgrade-aks-cluster).
 
-See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/) for the upgrade commands and post-upgrade verification steps.
+See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/) for the `nic` commands and the post-upgrade checks; run the node-pool upgrade above before you verify.
 
 ## Destroy
 
