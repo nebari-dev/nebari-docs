@@ -9,6 +9,8 @@ This page covers NKP clusters managed by `nic`. Classic clusters are not covered
 
 NKP supports in-place Kubernetes version upgrades via `nic deploy`. Edit the `kubernetes_version` field in your config and re-run deploy — `nic` handles the rest.
 
+Local (kind) clusters are the exception: they have no `kubernetes_version` field and no in-place upgrade. See [Change a local cluster](/docs/how-tos/providers/local/#change-a-local-cluster).
+
 ## Before you upgrade
 
 Version constraints and accepted formats vary by provider — see your [provider's page](/docs/how-tos/providers/) before upgrading.
@@ -72,3 +74,4 @@ All applications should reach `Healthy`. Any that are briefly `Progressing` afte
 - [Update a cluster](/docs/how-tos/update-cluster/) — other config changes you can make to a running cluster
 - [AWS provider](/docs/how-tos/providers/aws/) — EKS-specific upgrade constraints and mechanics
 - [Hetzner provider](/docs/how-tos/providers/hetzner/) — k3s-specific upgrade constraints and mechanics
+- [Local provider](/docs/how-tos/providers/local/#change-a-local-cluster) — upgrading a kind cluster by recreating it with a newer node image

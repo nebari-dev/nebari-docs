@@ -37,8 +37,8 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 **Where it all runs**
 
-- **Managed Kubernetes cluster**: hosts every container above. EKS for AWS, AKS for Azure, K3s for Hetzner, and kind (Kubernetes in Docker) for local development.
-- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, Azure, Hetzner, or your own machine for development.
+- **Managed Kubernetes cluster**: hosts every container above. EKS for AWS, K3s for Hetzner, and kind (Kubernetes in Docker) for local development.
+- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, Hetzner, or your own machine for development.
 
 <details>
 <summary>**What's in the foundational layer**</summary>
@@ -106,7 +106,7 @@ For providers that use OpenTofu under the hood (AWS today), `nic` keeps a state 
 
 - **Catches manual changes:** When someone makes a manual change in the cloud (resizing a node group in the console, editing an IAM policy by hand), running `nic deploy --dry-run` shows the difference, and `nic deploy` applies the correction.
 
-Providers that don't use OpenTofu (Hetzner today) take a different provisioning path and don't rely on this state file.
+Providers that don't use OpenTofu (Hetzner and local today) take a different provisioning path and don't rely on this state file.
 
 ## Where to go next
 

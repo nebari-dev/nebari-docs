@@ -13,7 +13,7 @@ Provider-specific prerequisites, configuration, and cost notes are on each [prov
 
 Regardless of provider, when `nic deploy` finishes your cluster will have:
 
-- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/) + Let's Encrypt).
+- **Automatic TLS** for every service you publish ([cert-manager](https://cert-manager.io/), with Let's Encrypt or self-signed certificates).
 - **Single sign-on** across all services ([Keycloak](https://www.keycloak.org/)).
 - **Ingress routing** for any service you expose ([Envoy Gateway](https://gateway.envoyproxy.io/)).
 - **GitOps-driven updates:** roll out or roll back apps by committing to your GitOps repo — ArgoCD reconciles the cluster to match ([ArgoCD](https://argo-cd.readthedocs.io/)).
