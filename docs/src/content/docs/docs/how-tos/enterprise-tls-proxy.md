@@ -108,7 +108,7 @@ The install is OS-aware, selected per node group by AMI type:
 When `trust_bundle` is unset, no user-data hooks are rendered and launch templates are unchanged.
 
 :::note[AWS only, for now]
-Node-level trust installation is implemented for AWS. The GCP and Azure providers are not yet built, so per-provider node bootstrap for them is deferred. For the **local** and **existing-cluster** paths, see [Operator responsibilities](#operator-responsibilities-local-and-existing-clusters).
+Node-level trust installation is implemented for AWS only. The Azure provider does not yet install the bundle into node OS trust stores (in-cluster trust-manager, below, still applies), and the GCP provider is not yet built. For the **local** and **existing-cluster** paths, see [Operator responsibilities](#operator-responsibilities-local-and-existing-clusters).
 :::
 
 ### In-pod trust: trust-manager
