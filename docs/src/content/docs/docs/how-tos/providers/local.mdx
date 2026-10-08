@@ -5,17 +5,11 @@ description: Deploy NKP on your own machine with nic and kind, to develop and te
 
 This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account.
 
-The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a whole Kubernetes cluster inside a Docker container. `nic` has kind built in and creates the cluster for you, so you don't need to install kind separately.
+The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a Kubernetes cluster inside Docker containers. `nic` ships with kind as a dependency so you don't need to install it separately.
 
 ## What you get
 
-When `nic deploy` finishes, you have the [standard NKP services](/docs/how-tos/deploy/#what-every-deployment-includes) running on your laptop:
-
-- **kind:** a single-node Kubernetes cluster running inside Docker.
-- **Keycloak:** sign-in for the platform and every pack you install.
-- **Envoy Gateway:** routes each hostname, like `keycloak.nebari.local`, to the right service.
-- **ArgoCD:** installs and syncs apps from a GitOps repository on your disk.
-- **Landing page:** links to every installed pack.
+When `nic deploy` finishes, you have all [standard NKP services](/docs/how-tos/deploy/#what-every-deployment-includes) on a single-node kind cluster, with a self-signed certificate, local-only storage (no backups), and a GitOps repository on your disk.
 
 ## Prerequisites
 
@@ -32,7 +26,7 @@ Set the CPU and memory Docker can use under **Settings → Resources** in Docker
 
 ### Install nic and kubectl
 
-1. Follow [Install NIC](/docs/get-started/install/) to install `nic` v0.14.0 or later.
+1. Follow [Install NIC](/docs/get-started/install/) to install `nic` v0.14.0.
 2. Install [`kubectl`](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool. You'll use it to verify the deploy and to open the platform in your browser.
 
 ## Configuration
@@ -49,7 +43,9 @@ The defaults work as is. To use hostnames other than `*.nebari.local`, change `d
 domain: packs.local  # gives packs.local, keycloak.packs.local, ...
 ```
 
-For multi-node clusters, extra mounts, and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/local.md).
+Set it before your first deploy. To change it later, run `nic deploy -f local-config.yaml --regen-apps`.
+
+For extra mounts and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/local.md).
 
 ## Deploy and verify
 
@@ -95,7 +91,7 @@ Every app should show `Healthy` within a few minutes. Some may stay `OutOfSync`,
 
 ## Open the platform
 
-The platform runs inside Docker, so your browser can't reach it directly. To open it, forward the gateway to your machine and map the hostnames to it.
+On `nic` v0.14.0 the gateway's address isn't reachable from your machine, so your browser can't open the platform directly. To open it, forward the gateway to your machine and map the hostnames to it.
 
 1. Find the gateway service:
 
@@ -129,9 +125,19 @@ The platform runs inside Docker, so your browser can't reach it directly. To ope
 
 See [Keycloak authentication](/docs/how-tos/keycloak-auth/) to get the admin credentials and create your first user.
 
+To open Argo CD at `https://argocd.nebari.local`, sign in as `admin`, not through Keycloak (which doesn't work locally yet). Get the password with:
+
+```bash
+nic outputs -f local-config.yaml --show-secrets
+```
+
 ## Add your software pack
 
-With the platform running, install the pack you're building. See [Build your own software pack](/docs/software-packs/build-your-own/).
+With the platform running, install the pack you're building. See [Deploy a pack](/docs/software-packs/deploy-a-pack/).
+
+:::caution
+On a local cluster, sign-in only works for packs that use the platform's sign-in. If your pack talks to Keycloak directly, test sign-in on a real cluster for now. Track the fix in [nebari-infrastructure-core#613](https://github.com/nebari-dev/nebari-infrastructure-core/issues/613).
+:::
 
 If your pack has its own hostname (for example `hub.nebari.local`), add it to `/etc/hosts` the same way:
 
@@ -141,10 +147,7 @@ echo "127.0.0.1 hub.nebari.local" | sudo tee -a /etc/hosts
 
 ## Destroy
 
-To delete the cluster and everything in it, run:
+To delete the cluster, follow [Destroy a cluster](/docs/how-tos/destroy-cluster/). On a local cluster, two things stay behind:
 
-```bash
-nic destroy -f local-config.yaml
-```
-
-This removes the kind cluster. To start over, run `nic deploy` again. Remove the `/etc/hosts` line if you no longer need it.
+- The GitOps repository at `~/.nic/gitops/<project_name>`. The next `nic deploy` reuses it, so delete it for a clean start.
+- The `/etc/hosts` line. Remove it if you no longer need it.
