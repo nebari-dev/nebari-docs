@@ -73,11 +73,11 @@ See [GitOps repository](/docs/how-tos/prepare-to-deploy/#gitops-repository) in t
 
 ### Secrets and credentials
 
-From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
+From inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/.env.example):
 
 ```bash
 cd /path/to/your-gitops-repo
-curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
+curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/.env.example
 ```
 
 Then fill in the GitOps tokens and your subscription ID. The template has a commented-out `AZURE_SUBSCRIPTION_ID` line under its Azure DNS heading; uncomment and set that one, or add the block below (not both). The template has no `ARM_*` lines, so add them yourself if you use a service principal. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/prepare-to-deploy/#secrets-and-credentials) in the Prepare to deploy guide.
@@ -113,12 +113,12 @@ A NKP deployment provisions several Azure services that bill from day one. Check
 
 ## Configuration
 
-Download the starter config from `nebari-infrastructure-core` into the same directory as your `.env`, which is the directory you will deploy from:
+Download the starter config from the `nebari-infrastructure-core` v0.14.0 release into the same directory as your `.env`, which is the directory you will deploy from:
 
-- **[`azure-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/azure-config.yaml)**.
+- **[`azure-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/examples/azure-config.yaml)**.
 
 ```bash
-curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/azure-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/azure-config.yaml
 ```
 
 :::note
@@ -161,7 +161,7 @@ cluster:
         max_nodes: 5
 ```
 
-The starter config authenticates to Git with an SSH key (`auth.ssh.env: GIT_SSH_PRIVATE_KEY`) instead. Either works as long as you set exactly one: replace its `auth.ssh` block with the `auth.token` block above, or keep it (with an SSH `git@…` URL) and set `GIT_SSH_PRIVATE_KEY` in `.env` (see the [repository reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/repository-existing.md)).
+The starter config authenticates to Git with an SSH key (`auth.ssh.env: GIT_SSH_PRIVATE_KEY`) instead. Either works as long as you set exactly one: replace its `auth.ssh` block with the `auth.token` block above, or keep it (with an SSH `git@…` URL) and set `GIT_SSH_PRIVATE_KEY` in `.env` (see the [repository reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/repository-existing.md)).
 
 Every AKS cluster needs one **System** node pool to run cluster services. Set `mode: System` on the pool you want to play that role; pools without a `mode` are **User** pools. At most one pool may be `System`. If none is, the pool whose name sorts first alphabetically becomes the System pool, so set it explicitly rather than relying on the order of your pool names.
 
@@ -178,7 +178,7 @@ By default `nic` creates a resource group named `<project_name>-rg`. Set `resour
 
 Networking uses [Azure CNI Overlay](https://learn.microsoft.com/azure/aks/azure-cni-overlay), with the `azure` (default) or `cilium` dataplane set by `network.dataplane`, and the cluster runs under user-assigned managed identities that `nic` creates.
 
-For the full schema (custom networking and existing VNets, `network.dataplane`, private clusters, authorized IP ranges, `sku_tier`, Node Auto Provisioning, per-pool disks, labels, taints, and zones), see the [Azure provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/azure.md). If you enable `private_cluster_enabled` or `authorized_ip_ranges`, run `nic` from a network that can reach the cluster's API server: after provisioning, `nic` installs Argo CD and the foundational services through it.
+For the full schema (custom networking and existing VNets, `network.dataplane`, private clusters, authorized IP ranges, `sku_tier`, Node Auto Provisioning, per-pool disks, labels, taints, and zones), see the [Azure provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/azure.md). If you enable `private_cluster_enabled` or `authorized_ip_ranges`, run `nic` from a network that can reach the cluster's API server: after provisioning, `nic` installs Argo CD and the foundational services through it.
 
 ## Deploy and verify
 
@@ -186,7 +186,7 @@ Follow [Deploy a cluster](/docs/how-tos/deploy-cluster/) to deploy and verify. E
 
 On Azure, `nic` does not write a kubeconfig to a local path. Retrieve one with `nic kubeconfig`, as [Deploy a cluster](/docs/how-tos/deploy-cluster/#retrieve-the-kubeconfig) shows; it returns cluster-admin credentials directly from Azure, so you do not need the `az` CLI for `kubectl` to work.
 
-Once the platform has converged, [`nic outputs`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/reference/cli/nic_outputs.md) prints its entry points, including the gateway's public IP address, which you need for DNS:
+Once the platform has converged, [`nic outputs`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/reference/cli/nic_outputs.md) prints its entry points, including the gateway's public IP address, which you need for DNS:
 
 ```bash
 nic outputs -f <config-file> --wait
