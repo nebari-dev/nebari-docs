@@ -51,12 +51,12 @@ Unlike the cloud providers, a local deployment does not need a remote GitOps rep
 
 ## Configuration
 
-Download the starter config from `nebari-infrastructure-core`:
+Download the starter config from the `nebari-infrastructure-core` v0.14.0 release:
 
-- **[`local-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/local-config.yaml)**.
+- **[`local-config.yaml`](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/examples/local-config.yaml)**.
 
 ```bash
-curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/local-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
 ```
 
 :::note
@@ -98,7 +98,7 @@ cluster:
       address_pool: 172.18.255.100-172.18.255.110   # default: derived from the kind network
 ```
 
-For every field, see the [local provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/local.md).
+For every field, see the [local provider configuration reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/local.md).
 
 :::caution
 Unknown keys under `cluster.local` are silently ignored rather than rejected, so a typo such as `node_iamge` passes `nic validate` and has no effect. If a setting does not seem to take effect, check the field name against the reference.
