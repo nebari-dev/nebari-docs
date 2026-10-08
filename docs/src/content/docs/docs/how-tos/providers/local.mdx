@@ -1,8 +1,111 @@
 ---
-title: Local (K3s)
-description: Planned local K3s NKP support for development and testing.
+title: Local (kind)
+description: Deploy NKP on your own machine with nic and kind, to develop and test software packs before you ship them to a real cluster.
 ---
 
-import PlannedProvider from '../../../../../components/PlannedProvider.astro';
+This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account. For a cluster your team will use, deploy to [Hetzner](/docs/how-tos/providers/hetzner/) or [AWS](/docs/how-tos/providers/aws/) instead.
 
-<PlannedProvider stub="local" />
+The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a whole Kubernetes cluster inside a Docker container. `nic` has kind built in and creates the cluster for you, so you don't need to install kind separately.
+
+## What you get
+
+When `nic deploy` finishes, you have the [standard NKP services](/docs/how-tos/deploy/#what-every-deployment-includes) running in a single-node kind cluster on your machine, with:
+
+- **A self-signed certificate** for HTTPS. Your browser will warn about it; that is expected locally.
+- **A GitOps repository on your disk** at `~/.nic/gitops/<project_name>`. ArgoCD, the tool that keeps the cluster in sync with that repository, reads it directly, so you don't need a GitHub repo or token.
+
+## Prerequisites
+
+### Docker
+
+Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or Docker Engine (Linux), and make sure it is running.
+
+On Docker Desktop, the cluster can only use the CPU and memory you give Docker under **Settings → Resources**. Plan for at least **8 CPUs and 16 GB of memory**, which runs the platform with several software packs. Packs that serve LLMs on CPU need far more.
+
+### Install nic and kubectl
+
+1. Follow [Install NIC](/docs/get-started/install/) to install `nic` v0.14.0 or later.
+2. Install [`kubectl`](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool. You'll use it to reach the platform and check on it.
+
+## Configuration
+
+Download the starter config into the directory you'll deploy from:
+
+```bash
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
+```
+
+The defaults work as is. The fields that matter:
+
+```yaml
+project_name: my-nebari-local  # also names the kind cluster
+domain: nebari.local  # hostnames you'll map to your machine below
+
+certificate:
+  type: selfsigned
+
+cluster:
+  local: {}  # all kind settings are optional
+
+repository:
+  local: {}  # nic creates and mounts ~/.nic/gitops/<project_name>
+```
+
+For multi-node clusters, extra mounts, and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/local.md).
+
+## Deploy and verify
+
+To create the cluster and install the platform, run:
+
+```bash
+nic deploy -f local-config.yaml
+```
+
+`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. Then follow [Deploy a cluster](/docs/how-tos/deploy-cluster/#retrieve-the-kubeconfig) from **Retrieve the kubeconfig** onward to point `kubectl` at the cluster and confirm the ArgoCD applications reach `Healthy`.
+
+## Open the platform
+
+The platform's gateway, the single entry point that routes each hostname to the right service, gets an address inside Docker's network. To reach it from your browser, forward it to your machine and map the hostnames to it.
+
+1. Find the gateway service:
+
+   ```bash
+   kubectl get svc -n envoy-gateway-system \
+     -l gateway.envoyproxy.io/owning-gateway-name=nebari-gateway
+   ```
+
+2. Forward port 443 to it, using the name from step 1. Leave this running in its own terminal:
+
+   ```bash
+   sudo kubectl port-forward -n envoy-gateway-system svc/<gateway-service-name> 443:443
+   ```
+
+   `sudo` is needed because 443 is a privileged port. If `sudo` can't find your kubeconfig, pass it with `--kubeconfig`.
+
+3. Map the platform's hostnames to your machine by adding this line to `/etc/hosts`:
+
+   ```
+   127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local
+   ```
+
+   `/etc/hosts` has no wildcards, so when a software pack adds its own hostname (for example `hub.nebari.local`), append it to the same line.
+
+4. Open `https://nebari.local` and accept the browser's certificate warning.
+
+## First sign-in
+
+See [Keycloak authentication](/docs/how-tos/keycloak-auth/) to get the admin credentials and create your first user.
+
+## Add your software pack
+
+With the platform running, install the pack you're building. See [Build your own software pack](/docs/software-packs/build-your-own/).
+
+## Destroy
+
+To delete the cluster and everything in it, run:
+
+```bash
+nic destroy -f local-config.yaml
+```
+
+This removes the kind cluster. To start over, run `nic deploy` again. Remove the `/etc/hosts` line if you no longer need it.
