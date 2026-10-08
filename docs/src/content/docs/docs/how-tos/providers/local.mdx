@@ -1,8 +1,153 @@
 ---
-title: Local (K3s)
-description: Planned local K3s NKP support for development and testing.
+title: Local (kind)
+description: Deploy NKP on your own machine with nic and kind, to develop and test software packs before you ship them to a real cluster.
 ---
 
-import PlannedProvider from '../../../../../components/PlannedProvider.astro';
+This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account.
 
-<PlannedProvider stub="local" />
+The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a Kubernetes cluster inside Docker containers. `nic` ships with kind as a dependency so you don't need to install it separately.
+
+## What you get
+
+When `nic deploy` finishes, you have all [standard NKP services](/docs/how-tos/deploy/#what-every-deployment-includes) on a single-node kind cluster, with a self-signed certificate, local-only storage (no backups), and a GitOps repository on your disk.
+
+## Prerequisites
+
+### Docker
+
+Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or Docker Engine (Linux), and make sure it is running.
+
+Set the CPU and memory Docker can use under **Settings → Resources** in Docker Desktop:
+
+| Use | CPUs | Memory |
+|---|---|---|
+| Platform only | 8 | 8 GB |
+| Platform with software packs | 8 | 16 GB or more |
+
+### Install nic and kubectl
+
+1. Follow [Install NIC](/docs/get-started/install/) to install `nic` v0.14.0.
+2. Install [`kubectl`](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool. You'll use it to verify the deploy and to open the platform in your browser.
+
+## Configuration
+
+Download the [starter config](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/examples/local-config.yaml) into the directory you'll deploy from:
+
+```bash
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
+```
+
+The defaults work as is. To use hostnames other than `*.nebari.local`, change `domain`:
+
+```yaml
+domain: packs.local  # gives packs.local, keycloak.packs.local, ...
+```
+
+Set it before your first deploy. To change it later, run `nic deploy -f local-config.yaml --regen-apps`.
+
+For extra mounts and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/local.md).
+
+## Deploy and verify
+
+To create the cluster and install the platform, run:
+
+```bash
+nic deploy -f local-config.yaml
+```
+
+`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. It takes a few minutes.
+
+At the end, `nic` prints DNS records like these:
+
+```text
+  No DNS provider is configured. To access your services, you must manually
+  configure the following DNS records with your DNS provider:
+
+  Type  : A
+  Name  : nebari.local
+  Value : 192.168.1.100
+
+  Type  : A
+  Name  : *.nebari.local
+  Value : 192.168.1.100
+```
+
+Skip this step. You'll map the hostnames in the next section.
+
+To point `kubectl` at the cluster you just created, write its kubeconfig (the file that tells `kubectl` how to connect) and use it:
+
+```bash
+nic kubeconfig -f local-config.yaml -o kubeconfig.yaml
+export KUBECONFIG=$(pwd)/kubeconfig.yaml
+```
+
+Then check that the platform's apps are running:
+
+```bash
+kubectl get applications -n argocd
+```
+
+Every app should show `Healthy` within a few minutes. Some may stay `OutOfSync`, which is normal.
+
+## Open the platform
+
+On `nic` v0.14.0 the gateway's address isn't reachable from your machine, so your browser can't open the platform directly. To open it, forward the gateway to your machine and map the hostnames to it.
+
+1. Find the gateway service:
+
+   ```bash
+   kubectl get svc -n envoy-gateway-system \
+     -l gateway.envoyproxy.io/owning-gateway-name=nebari-gateway
+   ```
+
+   You should see one service, named like this:
+
+   ```text
+   NAME                                                 TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+   envoy-envoy-gateway-system-nebari-gateway-be66687c   LoadBalancer   10.96.249.26   192.168.1.100   80:31541/TCP,443:30152/TCP   10m
+   ```
+
+2. Copy the value in the `NAME` column from step 1, then forward port 443 to it. Leave this running in its own terminal:
+
+   ```bash
+   sudo kubectl --kubeconfig kubeconfig.yaml port-forward -n envoy-gateway-system svc/<NAME> 443:443
+   ```
+
+3. To open the platform's hostnames on your machine, add them to `/etc/hosts`:
+
+   ```bash
+   echo "127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local" | sudo tee -a /etc/hosts
+   ```
+
+4. Open `https://nebari.local`. Skip past the browser's privacy warning (the cluster uses a self-signed certificate) by choosing **Advanced**, then continuing.
+
+## First sign-in
+
+See [Keycloak authentication](/docs/how-tos/keycloak-auth/) to get the admin credentials and create your first user.
+
+To open Argo CD at `https://argocd.nebari.local`, sign in as `admin`, not through Keycloak (which doesn't work locally yet). Get the password with:
+
+```bash
+nic outputs -f local-config.yaml --show-secrets
+```
+
+## Add your software pack
+
+With the platform running, install the pack you're building. See [Deploy a pack](/docs/software-packs/deploy-a-pack/).
+
+:::caution
+On a local cluster, sign-in only works for packs that use the platform's sign-in. If your pack talks to Keycloak directly, test sign-in on a real cluster for now. Track the fix in [nebari-infrastructure-core#613](https://github.com/nebari-dev/nebari-infrastructure-core/issues/613).
+:::
+
+If your pack has its own hostname (for example `hub.nebari.local`), add it to `/etc/hosts` the same way:
+
+```bash
+echo "127.0.0.1 hub.nebari.local" | sudo tee -a /etc/hosts
+```
+
+## Destroy
+
+To delete the cluster, follow [Destroy a cluster](/docs/how-tos/destroy-cluster/). On a local cluster, two things stay behind:
+
+- The GitOps repository at `~/.nic/gitops/<project_name>`. The next `nic deploy` reuses it, so delete it for a clean start.
+- The `/etc/hosts` line. Remove it if you no longer need it.
