@@ -37,8 +37,8 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 
 **Where it all runs**
 
-- **Managed Kubernetes cluster**: hosts every container above. EKS for AWS, K3s for Hetzner and local development.
-- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, Hetzner, or your own machine for development.
+- **Managed Kubernetes cluster**: hosts every container above. EKS for AWS, AKS for Azure, K3s for Hetzner and local development.
+- **Cloud or bare-metal provider**: the physical infrastructure underneath. AWS, Azure, Hetzner, or your own machine for development.
 
 <details>
 <summary>**What's in the foundational layer**</summary>
@@ -87,7 +87,7 @@ A few properties follow from this:
 
 ## State and locking
 
-For providers that use OpenTofu under the hood (AWS today), `nic` keeps a state record of everything it builds. This record gives `nic` two abilities on those providers:
+For providers that use OpenTofu under the hood (AWS and Azure today), `nic` keeps a state record of everything it builds. This record gives `nic` two abilities on those providers:
 
 - **Locking:** If two engineers run `nic deploy` at the same time, the second one waits until the first one finishes, so they can't make conflicting changes.
 
