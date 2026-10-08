@@ -20,7 +20,7 @@ When `nic deploy` finishes, you have the [standard NKP services](/docs/how-tos/d
 
 Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or Docker Engine (Linux), and make sure it is running.
 
-On Docker Desktop, the cluster can only use the CPU and memory you give Docker under **Settings → Resources**. Plan for at least **8 CPUs and 16 GB of memory**, which runs the platform with several software packs. Packs that serve LLMs on CPU need far more.
+On Docker Desktop, the cluster can only use the CPU and memory you give Docker under **Settings → Resources**. The platform alone runs with **8 CPUs and 8 GB of memory**. Plan for 16 GB or more once you add software packs, and far more for packs that serve LLMs on CPU.
 
 ### Install nic and kubectl
 
@@ -35,7 +35,7 @@ Download the starter config into the directory you'll deploy from:
 curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
 ```
 
-The defaults work as is. The fields that matter:
+The defaults work as is. These are the fields you're most likely to change:
 
 ```yaml
 project_name: my-nebari-local  # also names the kind cluster
@@ -45,7 +45,8 @@ certificate:
   type: selfsigned
 
 cluster:
-  local: {}  # all kind settings are optional
+  local:
+    ...  # keep the node_selectors block as downloaded; kind settings are optional
 
 repository:
   local: {}  # nic creates and mounts ~/.nic/gitops/<project_name>
@@ -61,7 +62,11 @@ To create the cluster and install the platform, run:
 nic deploy -f local-config.yaml
 ```
 
-`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. Then follow [Deploy a cluster](/docs/how-tos/deploy-cluster/#retrieve-the-kubeconfig) from **Retrieve the kubeconfig** onward to point `kubectl` at the cluster and confirm the ArgoCD applications reach `Healthy`.
+`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. It takes a few minutes.
+
+At the end, `nic` prints DNS records to create for the gateway's address. You can ignore them: on your machine, the next section maps the hostnames instead.
+
+Then follow [Deploy a cluster](/docs/how-tos/deploy-cluster/#retrieve-the-kubeconfig) from **Retrieve the kubeconfig** onward to point `kubectl` at the cluster and confirm the ArgoCD applications reach `Healthy`.
 
 ## Open the platform
 
@@ -80,7 +85,7 @@ The platform's gateway, the single entry point that routes each hostname to the 
    sudo kubectl port-forward -n envoy-gateway-system svc/<gateway-service-name> 443:443
    ```
 
-   `sudo` is needed because 443 is a privileged port. If `sudo` can't find your kubeconfig, pass it with `--kubeconfig`.
+   You need `sudo` because 443 is a privileged port. If `sudo` can't find your kubeconfig, pass it with `--kubeconfig`.
 
 3. Map the platform's hostnames to your machine by adding this line to `/etc/hosts`:
 
