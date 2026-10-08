@@ -66,7 +66,7 @@ const docsSidebar = [
   },
   {
     label: 'Software packs',
-    items: [overview('docs/software-packs'), 'docs/software-packs/build-your-own'],
+    items: [overview('docs/software-packs'), 'docs/software-packs/build-your-own', 'docs/software-packs/deploy-a-pack'],
   },
 ];
 
