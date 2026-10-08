@@ -75,24 +75,9 @@ To use the template:
 3. Pick the example closest to your application.
 4. Follow the instructions in the README to deploy your pack to a Nebari cluster.
 
-## Deploying a pack
+## Deploy your pack
 
-To deploy a pack, commit an **ArgoCD Application** to your gitops repo. This Application is a small YAML file that tells ArgoCD which pack to deploy and how to configure it. From there, ArgoCD:
-
-- Reads the Application.
-- Pulls in the pack.
-- Applies the Application's values to the pack.
-- Applies the resulting resources to the cluster.
-
-```mermaid
-flowchart TB
-    GitOps["gitops repo
-    ArgoCD Application"] --> Argo["ArgoCD"]
-    Pack["pack repo
-    manifests + NebariApp"] --> Argo
-    Argo -- applies --> Cluster["Cluster
-    Deployment + NebariApp resource"]
-```
+Once your pack is built, see [Deploy a pack](/docs/software-packs/deploy-a-pack/) to install it on a cluster.
 
 ## Private and internal packs
 
