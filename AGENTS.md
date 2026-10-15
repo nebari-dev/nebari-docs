@@ -1,7 +1,8 @@
 # AGENTS.md
 
-Guidance for AI coding agents working in this repository. For humans, the same information lives in
-[`docs/README.md`](docs/README.md) and [`ARCHITECTURE.md`](ARCHITECTURE.md).
+Guidance for AI coding agents working in this repository, and the canonical home of the Nebari vs. Nebari Classic
+rules below. Setup, layout and content conventions are also covered for humans in [`docs/README.md`](docs/README.md)
+and [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## What this repo is
 
@@ -21,7 +22,8 @@ Components and styles in `docs/src/` are shared by both builds.
 There are two different products documented here. Do not mix them up.
 
 - **Nebari** (the new one) is the current product: a composable ecosystem of **Software Packs** installed onto
-  Kubernetes by **Deploy Targets** (Nebari Infrastructure Core / NKP). Its docs live in `docs/src/content/docs/docs/`
+  Kubernetes by **Deploy Targets** (today the Nebari Kubernetes Platform, NKP, set up with the `nic` CLI). Its docs
+  live in `docs/src/content/docs/docs/`
   and are served at `https://www.nebari.dev/docs/...`.
 - **Nebari Classic** is the older, JupyterHub-centric `nebari` CLI distribution (`nebari init` / `nebari deploy`,
   `nebari-config.yaml`, Terraform stages, conda-store, Dask, Argo, etc.). It is in **maintenance mode**: security
@@ -40,7 +42,7 @@ There are two different products documented here. Do not mix them up.
 3. **Don't port Classic content blindly.** Classic concepts (`nebari-config.yaml`, `nebari deploy`, Terraform stages,
    conda-store environments, Classic provider guides) do not apply to new Nebari. Never copy Classic instructions into
    the new docs without verifying they're true for the current product. When unsure whether a Classic feature exists
-   in new Nebari, ask rather than guess.
+   in new Nebari, check the [sources of truth](#sources-of-truth) first, and ask rather than guess.
 4. **Link to the new docs.** When pointing readers somewhere, prefer `/docs/...` pages on www.nebari.dev. Link to
    Classic only when the reader specifically needs Classic information (e.g. "Looking for the Classic AWS guide?").
 5. **Keep the boundary visible.** Classic pages get a maintenance-mode notice from
@@ -50,6 +52,18 @@ There are two different products documented here. Do not mix them up.
    "old Nebari", "Nebari v1", or "legacy Nebari". Don't reintroduce the `/classic/` path on www.nebari.dev; those URLs
    redirect to classic.nebari.dev via `docs/public/_redirects`.
 
+### Sources of truth
+
+The new Nebari docs describe code that lives in other repositories. Check these before documenting behavior:
+
+- [`nebari-dev/nebari-infrastructure-core`](https://github.com/nebari-dev/nebari-infrastructure-core): the `nic` CLI
+  that installs NKP
+- [`nebari-dev/nebari-operator`](https://github.com/nebari-dev/nebari-operator): the `NebariApp` CRD and the
+  `nebari-app` library chart
+- [`nebari-dev/software-pack-template`](https://github.com/nebari-dev/software-pack-template): the starting point for
+  new Software Packs
+- [packs.nebari.dev](https://packs.nebari.dev): the Software Pack catalog
+
 ## Layout
 
 ```
@@ -58,7 +72,7 @@ docs/
 ├── src/
 │   ├── content/docs/
 │   │   ├── index.mdx       # Landing page (www.nebari.dev)
-│   │   ├── docs/           # New Nebari docs -> /docs/* (Diátaxis: get-started, explanations, how-tos, references, software-packs)
+│   │   ├── docs/           # New Nebari docs -> /docs/* (Diátaxis: get-started, explanations, how-tos, references, software-packs, plus nkp/)
 │   │   └── community/      # Contributor/maintainer guidelines -> /community/*
 │   ├── components/         # Content components + Starlight overrides (shared by both sites)
 │   ├── routeData.ts        # Shows one sidebar per section on www.nebari.dev
