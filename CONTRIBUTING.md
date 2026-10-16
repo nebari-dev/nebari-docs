@@ -16,6 +16,9 @@ and apply all learnings to your own projects.
 > Our detailed contribution guidelines can be found [on Nebari's main documentation site][nebari-community].
 > Make sure to check the guidelines before you start contributing.
 
+Contributing to the docs in this repository? Read [`AGENTS.md`](AGENTS.md) too: it covers which changes belong in the
+current Nebari docs and which in the Nebari Classic docs, which are in maintenance mode.
+
 ## Reporting issues
 
 When reporting issues please include as much detail as possible about your operating system, Nebari version, and dependencies version.
