@@ -7,13 +7,11 @@ lastUpdated: false
 hero:
   title: Enterprise-ready AI Platform
   tagline: Composable. Extensible. Open Source.
-  # Raw HTML rather than `light`/`dark` files: Starlight renders those at a
-  # fixed 400x400. Rendered at 1x and 2x of the 70rem display width (lossless) from
-  # /img/home/_sources/. Lazy, so only the visible theme's file downloads.
+  # src/routeData.ts swaps this marker for the inline SVG in
+  # src/components/diagrams/how-nebari-works.svg, so its text uses the site
+  # font and its colors follow the theme.
   image:
-    html: |
-      <img class="dark:sl-hidden" src="/img/home/how-nebari-works-hero-light-1120.webp" srcset="/img/home/how-nebari-works-hero-light-1120.webp 1120w, /img/home/how-nebari-works-hero-light-2240.webp 2240w" sizes="(min-width: 76rem) 70rem, calc(100vw - 2.5rem)" width="1120" height="930" alt="How Nebari works in six steps: write a config file, Nebari reads it, it deploys a platform on public cloud or on-prem, you pick software packs, they stack on Kubernetes, and your application is ready." loading="lazy" decoding="async" />
-      <img class="light:sl-hidden" src="/img/home/how-nebari-works-hero-dark-1120.webp" srcset="/img/home/how-nebari-works-hero-dark-1120.webp 1120w, /img/home/how-nebari-works-hero-dark-2240.webp 2240w" sizes="(min-width: 76rem) 70rem, calc(100vw - 2.5rem)" width="1120" height="930" alt="How Nebari works in six steps: write a config file, Nebari reads it, it deploys a platform on public cloud or on-prem, you pick software packs, they stack on Kubernetes, and your application is ready." loading="lazy" decoding="async" />
+    html: <!-- how-nebari-works -->
   actions:
     - text: Get started
       link: /docs/get-started/install/

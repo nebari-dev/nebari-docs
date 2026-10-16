@@ -1,0 +1,157 @@
+---
+/**
+ * NKP architecture split into pack work (landing page and Software Pack,
+ * shipped via Git) and cluster work (Nebari Operator and foundational
+ * software, provisioned by the nic CLI). It always uses the light palette on
+ * a white card, in both light and dark mode.
+ */
+---
+
+<svg
+  class="diagram"
+  viewBox="-16 -16 848 770"
+  width="100%"
+  role="img"
+  aria-label="NKP architecture annotated to show the split between pack work and cluster work. Pack work, shipped via Git: the Software Pack, which is shown on the landing page. Cluster work, provisioned by the nic CLI: foundational software powers the Nebari Operator, which deploys the Software Pack. Both sit inside a managed Kubernetes cluster on a cloud or bare-metal provider. The two halves can change independently."
+>
+  <title>NKP architecture: pack work and cluster work</title>
+
+  <!-- Cloud or bare-metal provider -->
+  <rect x="8" y="8" width="800" height="730" rx="18" class="box-cloud" />
+  <text x="32" y="44" class="eyebrow">CLOUD OR BARE-METAL PROVIDER</text>
+  <text x="784" y="44" class="sub" text-anchor="end">AWS · GCP · Azure · Hetzner · …</text>
+
+  <!-- Managed Kubernetes cluster -->
+  <rect x="28" y="66" width="760" height="652" rx="14" class="box-k8s" />
+  <text x="52" y="100" class="eyebrow">MANAGED KUBERNETES CLUSTER</text>
+  <text x="764" y="100" class="sub" text-anchor="end">EKS · GKE · AKS · K3s</text>
+
+  <!-- Pack work banner -->
+  <line x1="52" y1="128" x2="340" y2="128" class="rule-pack" />
+  <line x1="476" y1="128" x2="764" y2="128" class="rule-pack" />
+  <text x="408" y="132" class="banner banner-pack" text-anchor="middle">PACK WORK</text>
+  <text x="408" y="152" class="note" text-anchor="middle">shipped via Git</text>
+
+  <!-- Landing page -->
+  <rect x="258" y="176" width="300" height="76" rx="12" class="box-pack" />
+  <text x="408" y="208" class="title" text-anchor="middle">Landing page</text>
+  <text x="408" y="234" class="sub" text-anchor="middle">page for installed Capabilities</text>
+
+  <line x1="408" y1="292" x2="408" y2="260" class="arrow" />
+  <path d="M402 266 L408 260 L414 266" class="arrowhead" />
+  <text x="424" y="281" class="sub">shown on</text>
+
+  <!-- Software Pack -->
+  <rect x="258" y="298" width="300" height="76" rx="12" class="box-pack" />
+  <text x="408" y="330" class="title" text-anchor="middle">Software Pack</text>
+  <text x="408" y="356" class="sub" text-anchor="middle">e.g. chat assistant, code review</text>
+
+  <line x1="408" y1="414" x2="408" y2="382" class="arrow" />
+  <path d="M402 388 L408 382 L414 388" class="arrowhead" />
+  <text x="424" y="403" class="sub">deploys</text>
+
+  <!-- Cluster work banner -->
+  <line x1="52" y1="440" x2="322" y2="440" class="rule-cluster" />
+  <line x1="494" y1="440" x2="764" y2="440" class="rule-cluster" />
+  <text x="408" y="444" class="banner banner-cluster" text-anchor="middle">CLUSTER WORK</text>
+  <text x="408" y="464" class="note" text-anchor="middle">provisioned by nic CLI</text>
+
+  <!-- Nebari Operator -->
+  <rect x="258" y="488" width="300" height="76" rx="12" class="box-cluster" />
+  <text x="408" y="520" class="title" text-anchor="middle">Nebari Operator</text>
+  <text x="408" y="546" class="sub" text-anchor="middle">automation that runs in the cluster</text>
+
+  <line x1="408" y1="606" x2="408" y2="572" class="arrow" />
+  <path d="M402 578 L408 572 L414 578" class="arrowhead" />
+  <text x="424" y="594" class="sub">powers</text>
+
+  <!-- Foundational software -->
+  <rect x="52" y="612" width="712" height="90" rx="12" class="box-cluster" />
+  <text x="408" y="646" class="title" text-anchor="middle">Foundational software</text>
+  <text x="408" y="678" class="sub" text-anchor="middle">secure connections · login · traffic routing · monitoring · continuous delivery</text>
+</svg>
+
+<style>
+  .diagram {
+    display: block;
+    height: auto;
+    margin-block: 1.5rem;
+    font-family: var(--sl-font);
+    background: #ffffff;
+    border-radius: 12px;
+  }
+  .box-cloud {
+    fill: #fcedcc;
+    fill-opacity: 0.35;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .box-k8s {
+    fill: #fcedcc;
+    fill-opacity: 0.5;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+  }
+  .box-pack {
+    fill: #d1f8f3;
+    stroke: #2c817a;
+    stroke-width: 1.5;
+  }
+  .box-cluster {
+    fill: #f6e9ff;
+    stroke: #9547c0;
+    stroke-width: 1.5;
+  }
+  .rule-pack {
+    stroke: #2c817a;
+    stroke-width: 1.5;
+    stroke-opacity: 0.5;
+  }
+  .rule-cluster {
+    stroke: #9547c0;
+    stroke-width: 1.5;
+    stroke-opacity: 0.5;
+  }
+  .eyebrow {
+    fill: #262628;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .banner {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .banner-pack {
+    fill: #2c817a;
+  }
+  .banner-cluster {
+    fill: #9547c0;
+  }
+  .title {
+    fill: #262628;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .sub {
+    fill: #70707a;
+    font-size: 15px;
+  }
+  .note {
+    fill: #70707a;
+    font-size: 13px;
+  }
+  .arrow {
+    stroke: #262628;
+    stroke-width: 1.5;
+  }
+  .arrowhead {
+    fill: none;
+    stroke: #262628;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

@@ -398,15 +398,6 @@ main .content-panel .hero > .hero-html {
   max-width: 70rem;
   margin: 0 auto;
 }
-/* The how-it-works diagram is shown whole, never cropped: every panel is a step.
-   Its canvas is transparent and each panel carries its own rounded background,
-   so no frame here. No `display` either: Starlight's light:/dark:sl-hidden
-   classes hide the other theme's image from a lower cascade layer, and any
-   display value would override them. */
-main .content-panel .hero > .hero-html img {
-  width: 100%;
-  height: auto;
-}
 
 /* "Ecosystem of tools": three layers, each a heading with a one-line gloss and
    a row of tiles. */

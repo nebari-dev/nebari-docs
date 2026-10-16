@@ -3,6 +3,9 @@ title: NKP architecture
 description: A conceptual tour of how Nebari Kubernetes Platform is layered, what the nic CLI does and doesn't do, and how applications reach the cluster via GitOps.
 ---
 
+import NkpArchitecture from '../../../../components/diagrams/NkpArchitecture.astro';
+import NkpArchitectureSplit from '../../../../components/diagrams/NkpArchitectureSplit.astro';
+
 Nebari Kubernetes Platform (NKP) is how end users get to AI capabilities like chat assistants, document analyzers, and code review tools, without their team having to assemble a platform first.
 
 Developers package each capability as a **Software Pack**. NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
@@ -16,10 +19,7 @@ Software Packs come from two places:
 
 NKP is a stack of layers, each doing one job. Because the layers connect through stable, well-defined interfaces, you can change one layer without rewriting the others.
 
-{/* Diagram source: docs/static/img/explanations/_sources/nkp-architecture.html
-    (open in a browser to view, or import the JSX into Paper / any React renderer to edit) */}
-
-![NKP architecture: layered diagram with Cloud and Kubernetes containers wrapping the Landing page, Software Pack, Nebari Operator, and Foundational software components. A user browses the Landing page; a developer builds the Software Pack. Upward arrows show that the Software Pack is shown on the Landing page, the Nebari Operator deploys the Software Pack, and the Foundational software powers the Nebari Operator.](/img/explanations/nkp-architecture.png)
+<NkpArchitecture />
 
 **Used by end users**
 
@@ -67,9 +67,7 @@ The `nic` CLI (short for **Nebari Infrastructure Core**) is the command-line too
 
 This split keeps cluster work (the bottom of the stack) and pack work (the top) from blocking each other. Updating the cluster's underlying machines doesn't affect the running packs, and rolling out a new pack version doesn't require a `nic` deploy.
 
-{/* Diagram source: docs/static/img/explanations/_sources/nkp-architecture-split.html
-    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
-![NKP architecture annotated to show the split between pack work (Landing page and Software Pack, shipped via Git) and cluster work (Nebari Operator and Foundational software, provisioned by the nic CLI). The two halves can change independently.](/img/explanations/nkp-architecture-split.png)
+<NkpArchitectureSplit />
 
 ## GitOps via ArgoCD
 

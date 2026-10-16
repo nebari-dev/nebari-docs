@@ -1,0 +1,124 @@
+---
+/**
+ * Pack lifecycle: the pack's git repo is synced by ArgoCD inside the cluster,
+ * which deploys the pack workloads and NebariApp; the Nebari Operator picks up
+ * the NebariApp and creates its route, certificate, and Keycloak client, and
+ * the app appears on the landing page. It always uses the light palette on a
+ * white card, in both light and dark mode.
+ */
+---
+
+<svg
+  class="diagram"
+  viewBox="-16 -16 848 806"
+  width="100%"
+  role="img"
+  aria-label="Pack lifecycle: the pack's git repo is synced by ArgoCD in the managed Kubernetes cluster. ArgoCD deploys the pack workloads and NebariApp, which is picked up by the Nebari Operator. The Operator creates an HTTPRoute, a certificate, and a Keycloak client, and the app appears on the landing page. A legend marks the git repo and pack workloads as from the pack author, and the rest as platform automation."
+>
+  <title>Pack lifecycle</title>
+
+  <!-- Pack's git repo -->
+  <rect x="8" y="8" width="800" height="66" rx="12" class="box-author" />
+  <text x="408" y="48" class="title" text-anchor="middle">Pack's git repo</text>
+
+  <line x1="408" y1="86" x2="408" y2="124" class="line" />
+  <path d="M402 118 L408 124 L414 118" class="arrowhead" />
+  <text x="424" y="110" class="sub">is synced by</text>
+
+  <!-- Managed Kubernetes cluster -->
+  <rect x="8" y="138" width="800" height="582" rx="14" class="box-k8s" />
+  <text x="48" y="178" class="eyebrow">MANAGED KUBERNETES CLUSTER</text>
+
+  <rect x="48" y="196" width="720" height="64" rx="12" class="box-platform" />
+  <text x="408" y="235" class="title" text-anchor="middle">ArgoCD</text>
+
+  <line x1="408" y1="268" x2="408" y2="296" class="line" />
+  <path d="M402 290 L408 296 L414 290" class="arrowhead" />
+  <text x="424" y="287" class="sub">deploys</text>
+
+  <rect x="48" y="304" width="720" height="64" rx="12" class="box-author" />
+  <text x="408" y="343" class="title" text-anchor="middle">Pack workloads + NebariApp</text>
+
+  <line x1="408" y1="376" x2="408" y2="404" class="line" />
+  <path d="M402 398 L408 404 L414 398" class="arrowhead" />
+  <text x="424" y="395" class="sub">is picked up by</text>
+
+  <rect x="48" y="412" width="720" height="64" rx="12" class="box-platform" />
+  <text x="408" y="451" class="title" text-anchor="middle">Nebari Operator</text>
+
+  <line x1="408" y1="484" x2="408" y2="512" class="line" />
+  <path d="M402 506 L408 512 L414 506" class="arrowhead" />
+  <text x="424" y="503" class="sub">creates</text>
+
+  <rect x="48" y="520" width="720" height="64" rx="12" class="box-platform" />
+  <text x="408" y="559" class="title" text-anchor="middle">HTTPRoute · Certificate · Keycloak client</text>
+
+  <line x1="408" y1="592" x2="408" y2="620" class="line" />
+  <path d="M402 614 L408 620 L414 614" class="arrowhead" />
+  <text x="424" y="611" class="sub">appears on</text>
+
+  <rect x="48" y="628" width="720" height="64" rx="12" class="box-platform" />
+  <text x="408" y="667" class="title" text-anchor="middle">Landing page</text>
+
+  <!-- Legend -->
+  <rect x="218" y="746" width="16" height="16" rx="4" class="box-author" />
+  <text x="242" y="759" class="legend">From the pack author</text>
+  <rect x="428" y="746" width="16" height="16" rx="4" class="box-platform" />
+  <text x="452" y="759" class="legend">Platform automation</text>
+</svg>
+
+<style>
+  .diagram {
+    display: block;
+    height: auto;
+    margin-block: 1.5rem;
+    font-family: var(--sl-font);
+    background: #ffffff;
+    border-radius: 12px;
+  }
+  .box-author {
+    fill: #f6e9ff;
+    stroke: #9547c0;
+    stroke-width: 1.5;
+  }
+  .box-platform {
+    fill: #fcedcc;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .box-k8s {
+    fill: #fcedcc;
+    fill-opacity: 0.35;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .eyebrow {
+    fill: #262628;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .title {
+    fill: #262628;
+    font-size: 20px;
+  }
+  .sub {
+    fill: #70707a;
+    font-size: 16px;
+  }
+  .legend {
+    fill: #262628;
+    font-size: 15px;
+  }
+  .line {
+    stroke: #262628;
+    stroke-width: 1.5;
+  }
+  .arrowhead {
+    fill: none;
+    stroke: #262628;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>
