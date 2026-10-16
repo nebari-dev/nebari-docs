@@ -1,0 +1,101 @@
+---
+/**
+ * One pack repo referenced by two ArgoCD Applications with different values
+ * (prod and staging), each deploying its own instance. It always uses the
+ * light palette on a white card, in both light and dark mode.
+ */
+---
+
+<svg
+  class="diagram"
+  viewBox="-16 -16 848 560"
+  width="100%"
+  role="img"
+  aria-label="Same pack, many deployments: a single pack repo, with manifests plus NebariApp, is referenced by two ArgoCD Applications, one with values for prod and one with values for staging. Each Application deploys the pack to its own instance in the cluster. A legend marks the pack repo and Applications as declared in Git, and the instances as running in the cluster."
+>
+  <title>Same pack, many deployments</title>
+
+  <!-- Pack repo -->
+  <rect x="268" y="8" width="280" height="96" rx="12" class="box-git" />
+  <text x="408" y="48" class="title" text-anchor="middle">Pack repo</text>
+  <text x="408" y="80" class="sub" text-anchor="middle">manifests + NebariApp</text>
+
+  <!-- Fork to the two Applications -->
+  <path d="M408 104 V124 M240 124 H576 M240 124 V148 M576 124 V148" class="line" />
+  <text x="240" y="172" class="sub" text-anchor="middle">referenced by</text>
+  <text x="576" y="172" class="sub" text-anchor="middle">referenced by</text>
+  <path d="M240 184 V212 M576 184 V212" class="line" />
+  <path d="M234 206 L240 212 L246 206 M570 206 L576 212 L582 206" class="arrowhead" />
+
+  <!-- Applications -->
+  <rect x="100" y="220" width="280" height="96" rx="12" class="box-git" />
+  <text x="240" y="262" class="title" text-anchor="middle">Application A</text>
+  <text x="240" y="294" class="sub" text-anchor="middle">values: prod</text>
+  <rect x="436" y="220" width="280" height="96" rx="12" class="box-git" />
+  <text x="576" y="262" class="title" text-anchor="middle">Application B</text>
+  <text x="576" y="294" class="sub" text-anchor="middle">values: staging</text>
+
+  <!-- deploys -->
+  <path d="M240 316 V340 M576 316 V340" class="line" />
+  <text x="240" y="364" class="sub" text-anchor="middle">deploys</text>
+  <text x="576" y="364" class="sub" text-anchor="middle">deploys</text>
+  <path d="M240 376 V402 M576 376 V402" class="line" />
+  <path d="M234 396 L240 402 L246 396 M570 396 L576 402 L582 396" class="arrowhead" />
+
+  <!-- Instances -->
+  <rect x="100" y="408" width="280" height="66" rx="12" class="box-cluster" />
+  <text x="240" y="448" class="title" text-anchor="middle">prod instance</text>
+  <rect x="436" y="408" width="280" height="66" rx="12" class="box-cluster" />
+  <text x="576" y="448" class="title" text-anchor="middle">staging instance</text>
+
+  <!-- Legend -->
+  <rect x="241" y="506" width="16" height="16" rx="4" class="box-git" />
+  <text x="265" y="519" class="legend">Declared in Git</text>
+  <rect x="416" y="506" width="16" height="16" rx="4" class="box-cluster" />
+  <text x="440" y="519" class="legend">Running in cluster</text>
+</svg>
+
+<style>
+  .diagram {
+    display: block;
+    height: auto;
+    margin-block: 1.5rem;
+    font-family: var(--sl-font);
+    background: #ffffff;
+    border-radius: 12px;
+  }
+  .box-git {
+    fill: #f6e9ff;
+    stroke: #9547c0;
+    stroke-width: 1.5;
+  }
+  .box-cluster {
+    fill: #fcedcc;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .title {
+    fill: #262628;
+    font-size: 21px;
+  }
+  .sub {
+    fill: #70707a;
+    font-size: 16px;
+  }
+  .legend {
+    fill: #262628;
+    font-size: 15px;
+  }
+  .line {
+    fill: none;
+    stroke: #262628;
+    stroke-width: 1.5;
+  }
+  .arrowhead {
+    fill: none;
+    stroke: #262628;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

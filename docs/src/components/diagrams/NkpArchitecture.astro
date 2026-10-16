@@ -1,0 +1,136 @@
+---
+/**
+ * NKP architecture: the cloud provider wraps a managed Kubernetes cluster,
+ * which holds the landing page, a Software Pack, the Nebari Operator, and the
+ * foundational software, stacked bottom to top. It always uses the light
+ * palette on a white card, in both light and dark mode.
+ */
+---
+
+<svg
+  class="diagram"
+  viewBox="-16 -16 848 732"
+  width="100%"
+  role="img"
+  aria-label="NKP architecture: a cloud or bare-metal provider wraps a managed Kubernetes cluster. Inside it, from bottom to top: foundational software powers the Nebari Operator, which deploys the Software Pack, which is shown on the landing page. A legend marks the landing page as used by end users, the Software Pack as built by developers, and the Operator and foundational software as managed by platform engineers."
+>
+  <title>NKP architecture</title>
+  <!-- Cloud or bare-metal provider -->
+  <rect x="8" y="8" width="800" height="620" rx="18" class="box-cloud" />
+  <text x="32" y="44" class="eyebrow">CLOUD OR BARE-METAL PROVIDER</text>
+  <text x="784" y="44" class="sub" text-anchor="end">AWS · GCP · Azure · Hetzner · …</text>
+
+  <!-- Managed Kubernetes cluster -->
+  <rect x="28" y="66" width="760" height="542" rx="14" class="box-k8s" />
+  <text x="52" y="100" class="eyebrow">MANAGED KUBERNETES CLUSTER</text>
+  <text x="764" y="100" class="sub" text-anchor="end">EKS · GKE · AKS · K3s</text>
+
+  <!-- Landing page: used by end users -->
+  <rect x="258" y="124" width="300" height="76" rx="12" class="box-user" />
+  <text x="408" y="156" class="title" text-anchor="middle">Landing page</text>
+  <text x="408" y="182" class="sub" text-anchor="middle">page for installed Capabilities</text>
+
+  <line x1="408" y1="240" x2="408" y2="208" class="arrow" />
+  <path d="M402 214 L408 208 L414 214" class="arrowhead" />
+  <text x="424" y="229" class="sub">shown on</text>
+
+  <!-- Software Pack: built by developers -->
+  <rect x="258" y="246" width="300" height="76" rx="12" class="box-dev" />
+  <text x="408" y="278" class="title" text-anchor="middle">Software Pack</text>
+  <text x="408" y="304" class="sub" text-anchor="middle">e.g. chat assistant, code review</text>
+
+  <line x1="408" y1="362" x2="408" y2="330" class="arrow" />
+  <path d="M402 336 L408 330 L414 336" class="arrowhead" />
+  <text x="424" y="351" class="sub">deploys</text>
+
+  <!-- Nebari Operator: managed by platform engineers -->
+  <rect x="258" y="368" width="300" height="76" rx="12" class="box-platform" />
+  <text x="408" y="400" class="title" text-anchor="middle">Nebari Operator</text>
+  <text x="408" y="426" class="sub" text-anchor="middle">automation that runs in the cluster</text>
+
+  <line x1="408" y1="486" x2="408" y2="452" class="arrow" />
+  <path d="M402 458 L408 452 L414 458" class="arrowhead" />
+  <text x="424" y="474" class="sub">powers</text>
+
+  <!-- Foundational software: managed by platform engineers -->
+  <rect x="52" y="492" width="712" height="96" rx="12" class="box-platform" />
+  <text x="408" y="528" class="title" text-anchor="middle">Foundational software</text>
+  <text x="408" y="562" class="sub" text-anchor="middle">secure connections · login · traffic routing · monitoring · continuous delivery</text>
+
+  <!-- Legend -->
+  <rect x="93" y="658" width="16" height="16" rx="4" class="box-user" />
+  <text x="117" y="671" class="legend">Used by end users</text>
+  <rect x="283" y="658" width="16" height="16" rx="4" class="box-dev" />
+  <text x="307" y="671" class="legend">Built by developers</text>
+  <rect x="483" y="658" width="16" height="16" rx="4" class="box-platform" />
+  <text x="507" y="671" class="legend">Managed by platform engineers</text>
+</svg>
+
+<style>
+  .diagram {
+    display: block;
+    height: auto;
+    margin-block: 1.5rem;
+    font-family: var(--sl-font);
+    background: #ffffff;
+    border-radius: 12px;
+  }
+  .box-cloud {
+    fill: #fcedcc;
+    fill-opacity: 0.35;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .box-k8s {
+    fill: #fcedcc;
+    fill-opacity: 0.5;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+  }
+  .box-user {
+    fill: #d1f8f3;
+    stroke: #2c817a;
+    stroke-width: 1.5;
+  }
+  .box-dev {
+    fill: #f6e9ff;
+    stroke: #9547c0;
+    stroke-width: 1.5;
+  }
+  .box-platform {
+    fill: #fcedcc;
+    stroke: #8e6c03;
+    stroke-width: 1.5;
+  }
+  .eyebrow {
+    fill: #262628;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  .title {
+    fill: #262628;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .sub {
+    fill: #70707a;
+    font-size: 15px;
+  }
+  .legend {
+    fill: #262628;
+    font-size: 15px;
+  }
+  .arrow {
+    stroke: #262628;
+    stroke-width: 1.5;
+  }
+  .arrowhead {
+    fill: none;
+    stroke: #262628;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>
