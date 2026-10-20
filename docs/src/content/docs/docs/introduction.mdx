@@ -4,6 +4,7 @@ description: An overview of Nebari, its key features and components.
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import EcosystemDiagram from '../../../components/diagrams/EcosystemDiagram.astro';
 
 ## What is Nebari?
 
@@ -35,9 +36,7 @@ Nebari has two parts that work together:
 - **Software Packs** package **Capabilities** and publish them on GitHub.
 - **Deploy Targets** install those packs onto your infrastructure and run them.
 
-{/* Diagram source: docs/static/img/welcome/_sources/ecosystem-diagram.html
-    (open in a browser to view, or import the HTML into Paper via the write_html MCP tool) */}
-![The Nebari ecosystem: Software Packs publish Capabilities on GitHub; Deploy Targets install them onto your infrastructure.](/img/welcome/ecosystem-diagram.png)
+<EcosystemDiagram />
 
 ### Software Packs
 

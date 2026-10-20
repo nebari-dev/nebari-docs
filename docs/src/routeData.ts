@@ -1,4 +1,8 @@
 import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
+import howNebariWorks from './components/diagrams/how-nebari-works.svg?raw';
+
+/** Frontmatter can't import files, so the homepage hero names its diagram with this marker. */
+const HERO_MARKER = '<!-- how-nebari-works -->';
 
 type Sidebar = App.Locals['starlightRoute']['sidebar'];
 type Entry = Sidebar[number];
@@ -24,6 +28,8 @@ function links(entries: Sidebar): Link[] {
  */
 export const onRequest = defineRouteMiddleware((context) => {
   const route = context.locals.starlightRoute;
+  const image = route.entry.data.hero?.image;
+  if (image && 'html' in image && image.html.trim() === HERO_MARKER) image.html = howNebariWorks;
   const section = route.id.split('/')[0];
   const label = SECTIONS[section];
   if (!label) return;
