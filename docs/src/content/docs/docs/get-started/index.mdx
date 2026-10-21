@@ -1,0 +1,35 @@
+---
+title: Get started
+description: Install the nic CLI, deploy your first Nebari Kubernetes Platform cluster, and find the how-to guides for running it in production.
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+The **Nebari Kubernetes Platform (NKP)** gives your team a place to run AI and data science work: a Kubernetes cluster with the pieces every team needs already wired together, including single sign-on, TLS certificates, ingress routing, and GitOps-driven updates.
+
+You deploy it with **`nic`**, a command-line tool that reads one configuration file and provisions the whole thing on the cloud provider you choose. Once the platform is running, you add [Software Packs](/docs/software-packs/) for the capabilities your team actually wants, such as notebooks, dashboards, or model serving.
+
+## Who this is for
+
+You'll be the person who deploys and operates the platform for your team. You don't need Kubernetes experience to follow the quickstart, but you will need:
+
+- Docker running on your machine
+- comfort running commands in a terminal
+
+To run the platform for your team, you'll also need an account with a supported cloud provider and a Git repository you control, which `nic` uses to track what's installed.
+
+## Start here
+
+<CardGrid>
+  <LinkCard title="Install nic" href="/docs/get-started/install/" description="Download the CLI for your platform and confirm it runs." />
+  <LinkCard title="Quickstart" href="/docs/get-started/quickstart/" description="Run a cluster on your own machine for free, open it in a browser, then tear it down." />
+  <LinkCard title="Supported providers" href="/docs/how-tos/providers/" description="See which cloud providers NKP supports today." />
+</CardGrid>
+
+## Where to go next
+
+The quickstart gets you a working cluster and then removes it, so you can see the whole cycle before committing to anything.
+
+When you're ready to run a cluster your team will actually use, work through your [provider's how-to guide](/docs/how-tos/providers/) instead. Those cover the parts the quickstart skips: sizing your nodes, cost planning, DNS, creating user accounts, and backups.
+
+To understand what `nic` builds and why, read [NKP architecture](/docs/explanations/nkp-architecture/).
