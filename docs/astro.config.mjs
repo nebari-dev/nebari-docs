@@ -62,7 +62,7 @@ const docsSidebar = [
   },
   {
     label: 'References',
-    items: [overview('docs/references'), 'docs/references/personas'],
+    items: [overview('docs/references'), 'docs/references/glossary', 'docs/references/personas'],
   },
   {
     label: 'Software packs',
