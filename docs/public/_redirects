@@ -6,8 +6,6 @@
 
 /docs/welcome https://classic.nebari.dev/welcome/ 301
 /docs/welcome/ https://classic.nebari.dev/welcome/ 301
-/docs/get-started/quickstart https://classic.nebari.dev/get-started/quickstart/ 301
-/docs/get-started/quickstart/ https://classic.nebari.dev/get-started/quickstart/ 301
 /docs/get-started/installing-nebari https://classic.nebari.dev/get-started/installing-nebari/ 301
 /docs/get-started/installing-nebari/ https://classic.nebari.dev/get-started/installing-nebari/ 301
 /docs/get-started/deploy https://classic.nebari.dev/get-started/deploy/ 301
