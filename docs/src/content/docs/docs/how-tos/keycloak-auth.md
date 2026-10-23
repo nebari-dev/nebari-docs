@@ -25,7 +25,7 @@ To sign in to the admin console:
    kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
    ```
 
-2. Open `https://keycloak.<your-domain>/auth/admin/` and sign in with those credentials.
+2. Open `https://keycloak.<your-domain>/admin/` and sign in with those credentials.
 3. Switch the realm dropdown (top-left) from `master` to `nebari`.
 
 ## Create your first user
