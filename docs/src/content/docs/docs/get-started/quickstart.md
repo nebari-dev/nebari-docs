@@ -10,15 +10,15 @@ This quickstart takes you from a single config file to a full [Nebari Kubernetes
 You'll need:
 
 1. [Docker](https://docs.docker.com/get-docker/), which runs the cluster on your machine. Start it before you deploy.
-2. [`nic`](/docs/get-started/install/) v0.14.0, which creates the cluster and installs the platform.
-3. [`kubectl`](https://kubernetes.io/docs/tasks/tools/), which lets you check the cluster and open the platform in your browser.
+2. [`nic`](/docs/get-started/install/), which creates the cluster and installs the platform.
+3. [`kubectl`](https://kubernetes.io/docs/tasks/tools/), which lets you check that the cluster is healthy.
 
 ## Step 1: Get the configuration
 
-`nic` deploys from a single YAML file, and there's a [starter file for each provider](https://github.com/nebari-dev/nebari-infrastructure-core/tree/v0.14.0/examples), such as AWS, Hetzner, or your own machine. This quickstart uses the local one. Download it into an empty directory:
+`nic` deploys from a single YAML file, and there's a [starter file for each provider](https://github.com/nebari-dev/nebari-infrastructure-core/tree/main/examples), such as AWS, Hetzner, or your own machine. This quickstart uses the local one. Download it into an empty directory:
 
 ```bash
-curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/local-config.yaml
 ```
 
 The defaults work as is, so you don't need to edit anything. To change settings such as the domain, see the [local guide](/docs/how-tos/providers/local/#configuration).
@@ -51,9 +51,23 @@ While it runs, `nic`:
 
 - creates a Kubernetes cluster inside Docker
 - sets up a Git repository on your disk at `~/.nic/gitops/my-nebari-local`
-- starts ArgoCD, which installs sign-in, routing (through a gateway), and certificates from the Git repository
+- starts ArgoCD, which installs sign-in, routing, and certificates from the Git repository
 
-At the end, `nic` prints a box asking you to configure DNS records for your domain. Skip it. This runs on your machine, so you'll open the landing page another way in Step 5.
+At the end, `nic` prints a line to add to `/etc/hosts`, the file that tells your computer where to find a hostname:
+
+```text
+  HOSTS FILE CONFIGURATION REQUIRED
+
+  Point the platform hostnames at it by adding this line to /etc/hosts:
+
+    127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local
+```
+
+To add it on macOS or Linux, run:
+
+```bash
+echo "127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local" | sudo tee -a /etc/hosts
+```
 
 ## Step 4: Confirm it worked
 
@@ -76,7 +90,7 @@ You should see something like this:
 NAME                      SYNC STATUS   HEALTH STATUS
 cert-manager              Synced        Healthy
 gateway-config            OutOfSync     Healthy
-keycloak                  Synced        Healthy
+keycloak                  OutOfSync     Healthy
 nebari-landingpage        Synced        Healthy
 ...
 ```
@@ -87,37 +101,7 @@ Within a few minutes, every application should show `Healthy`. Some may stay `Ou
 
 The landing page is where your team will sign in and find every app you add to the platform. Right now it's empty, since no apps are installed yet.
 
-To open the landing page, forward the cluster to your machine and map its hostnames to a local address:
-
-1. Find the name of the cluster's gateway, the entry point for all web traffic:
-
-   ```bash
-   kubectl get svc -n envoy-gateway-system \
-     -l gateway.envoyproxy.io/owning-gateway-name=nebari-gateway
-   ```
-
-   You should see one row for the gateway. Its name starts with `envoy-envoy-gateway-system-nebari-gateway-`:
-
-   ```text
-   NAME                                                 TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)                      AGE
-   envoy-envoy-gateway-system-nebari-gateway-be66687c   LoadBalancer   10.96.107.235   192.168.1.100   80:32570/TCP,443:30941/TCP   10m
-   ```
-
-   Copy the value in the `NAME` column.
-
-2. In a new terminal window, go to the folder where you ran the previous steps, then forward your machine's port 443 to the gateway, replacing `<NAME>` with the name you copied. Keep this window open while you use the platform:
-
-   ```bash
-   sudo kubectl --kubeconfig kubeconfig.yaml port-forward -n envoy-gateway-system svc/<NAME> 443:443
-   ```
-
-3. Map the platform's hostnames to your machine:
-
-   ```bash
-   echo "127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local" | sudo tee -a /etc/hosts
-   ```
-
-4. Open `https://nebari.local`. Skip past the browser's privacy warning (the cluster uses a self-signed certificate) by choosing **Advanced**, then continuing.
+Open `https://nebari.local`. Skip past the browser's privacy warning by choosing **Advanced**, then continuing.
 
 You'll see your platform's sign-in page:
 
@@ -128,7 +112,7 @@ To create a user and sign in, see [Keycloak authentication](/docs/how-tos/keyclo
 ## Step 6: Tear it down
 
 When you're done exploring, delete the cluster to free up your machine's memory and CPU. You can redeploy it anytime with Step 3.
-To tear it down, stop the port-forward with `Ctrl+C`, then delete the cluster:
+To tear it down, delete the cluster:
 
 ```bash
 nic destroy -f local-config.yaml
@@ -137,7 +121,7 @@ nic destroy -f local-config.yaml
 `nic` asks for confirmation, then deletes the cluster. Two things stay on your machine:
 
 - The GitOps repository `nic` created at `~/.nic/gitops/my-nebari-local`. The next deploy reuses its files, including any packs you added. Delete it to start from scratch.
-- The `/etc/hosts` line from Step 5, which points the `nebari.local` hostnames at your machine. Keep it if you'll deploy locally again. Otherwise, run `sudo nano /etc/hosts` and delete that line.
+- The `/etc/hosts` line from Step 3, which points the `nebari.local` hostnames at your machine. Keep it if you'll deploy locally again. Otherwise, run `sudo nano /etc/hosts` and delete that line.
 
 ## Ready for the cloud?
 
