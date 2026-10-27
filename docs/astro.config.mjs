@@ -22,7 +22,11 @@ const docsSidebar = [
   'docs/introduction',
   {
     label: 'Get started',
-    items: [overview('docs/get-started'), 'docs/get-started/install'],
+    items: [
+      overview('docs/get-started'),
+      'docs/get-started/install',
+      'docs/get-started/quickstart',
+    ],
   },
   {
     label: 'Explanations',
@@ -233,6 +237,12 @@ export default defineConfig({
   srcDir: classic ? './classic' : './src',
   publicDir: classic ? './classic/public' : './public',
   outDir: classic ? './dist-classic' : './dist',
+  redirects: classic
+    ? {}
+    : {
+        // The NKP get-started stub was merged into the Get started section overview.
+        '/docs/nkp/get-started': '/docs/get-started/',
+      },
   markdown: {
     // Keep quotes and dashes exactly as authored instead of converting them to typographic ones.
     processor: satteri({ features: { smartPunctuation: false } }),
