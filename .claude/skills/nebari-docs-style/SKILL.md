@@ -41,7 +41,7 @@ Start with why the page matters, not with commands.
 - **Link to the term's anchor**, such as `/docs/references/glossary/#nkp`, and confirm it exists.
 - **Prefer the page that does the job.** When pointing readers onward, link to the page that performs the action (for example "install a Software Pack" goes to `/docs/software-packs/deploy-a-pack/`), not only to an overview or catalog.
 - **A quickstart links to its full guide.** Say which guide covers the same path in depth, and point there for other options.
-- **Pin links and downloads to a release tag**, not `main`, so readers get files that match the version the page describes.
+- **Link to `main`, not a release tag**, and don't name a `nic` version, until the docs are versioned. Pinned links go stale between releases.
 
 ## 6. Leave out
 
