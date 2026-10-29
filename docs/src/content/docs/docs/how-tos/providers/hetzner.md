@@ -9,7 +9,7 @@ Hetzner is the recommended starting point for most teams: it is the cheapest pro
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have all [standard NKP services](/docs/how-tos/deploy/#what-every-deployment-includes) plus:
+When `nic deploy` finishes, your team will have the standard NKP services (single sign-on, routing, TLS, and GitOps) plus:
 
 - **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
 - **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
@@ -122,7 +122,7 @@ For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NI
 
 ## Deploy
 
-Run the deploy commands as described in [Deploy and verify](/docs/how-tos/deploy/#deploy-and-verify) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
+Run the deploy commands as described in [Deploy a cluster](/docs/how-tos/deploy-cluster/#deploy). Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
 
 
 See [Cloudflare DNS](/docs/how-tos/cloudflare-dns/) for DNS setup (Cloudflare or manual A record).
@@ -135,7 +135,7 @@ See [Cloudflare DNS](/docs/how-tos/cloudflare-dns/) for DNS setup (Cloudflare or
 export KUBECONFIG=~/.cache/nic/hetzner-k3s/<project_name>/kubeconfig
 ```
 
-Then follow the [Deploy and verify](/docs/how-tos/deploy/#deploy-and-verify) steps in the deploy lifecycle guide to check the cluster and ArgoCD applications.
+Then follow the [Verify](/docs/how-tos/deploy-cluster/#verify) steps to check the cluster and ArgoCD applications.
 
 
 ## First sign-in
@@ -160,7 +160,7 @@ See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/) for the upgr
 
 ## Destroy
 
-Run the destroy commands as described in [Destroy](/docs/how-tos/deploy/#destroy) in the deploy lifecycle guide.
+Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster/).
 
 `nic destroy` removes the k3s cluster (all servers), the Hetzner load balancer, and automatically cleans up orphaned Longhorn/CSI block volumes and any load balancers left behind by in-cluster controllers.
 
