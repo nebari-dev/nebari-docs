@@ -9,9 +9,10 @@ Hetzner is the recommended starting point for most teams: it is the cheapest pro
 
 ## What your team gets
 
-When `nic deploy` finishes, your team will have the standard NKP services (single sign-on, routing, TLS, and GitOps) plus:
+When `nic deploy` finishes, your team will have:
 
 - **A k3s Kubernetes cluster** ready for workloads (single-node or multi-node, your choice).
+- **NKP running on the cluster**, with single sign-on, routing, TLS, and GitOps.
 - **Shared RWX storage** that pods on any node can mount ([Longhorn](https://longhorn.io/), installed automatically — Hetzner's native CSI is read-write-once only).
 
 ## Prerequisites
