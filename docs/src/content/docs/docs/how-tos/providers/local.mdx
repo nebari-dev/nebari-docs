@@ -3,6 +3,8 @@ title: Local (kind)
 description: Deploy NKP on your own machine with nic and kind, to develop and test software packs before you ship them to a real cluster.
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account.
 
 The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a Kubernetes cluster inside Docker containers. `nic` ships with kind as a dependency so you don't need to install it separately.
@@ -13,16 +15,28 @@ When `nic deploy` finishes, you have the standard NKP services (single sign-on, 
 
 ## Prerequisites
 
-### Docker
+### Docker or Colima
 
-Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or Docker Engine (Linux), and make sure it is running.
+<Tabs syncKey="docker-runtime">
+<TabItem label="Docker">
 
-Set the CPU and memory Docker can use under **Settings → Resources** in Docker Desktop:
+Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux), and make sure it is running.
 
-| Use | CPUs | Memory |
-|---|---|---|
-| Platform only | 8 | 8 GB |
-| Platform with software packs | 8 | 16 GB or more |
+On macOS, the cluster needs ports 80 and 443. To allow this, turn on **Allow privileged port mapping** under **Settings → Advanced** in Docker Desktop.
+
+</TabItem>
+<TabItem label="Colima (macOS)">
+
+If you use [Colima](https://github.com/abiosoft/colima) on macOS, install [Colima and the Docker CLI](https://github.com/abiosoft/colima#installation), then start it:
+
+```bash
+colima start --cpu 8 --memory 16
+```
+
+If you also have Docker Desktop, `docker` commands now run on Colima instead. To switch back to Docker Desktop, run `docker context use desktop-linux`.
+
+</TabItem>
+</Tabs>
 
 ### Install nic and kubectl
 
