@@ -107,7 +107,28 @@ You'll see your platform's sign-in page:
 
 ![The Nebari sign-in page, with fields for username or email and password, and a Sign In button.](/img/get-started/quickstart-sign-in.webp)
 
-To create a user and sign in, see [Keycloak authentication](/docs/how-tos/keycloak-auth/).
+`nic` created an `admin` account for you during the deploy. To get its password, run:
+
+```bash
+nic outputs -f local-config.yaml --show-secrets
+```
+
+You should see something like this:
+
+```text
+Domain                         nebari.local
+Keycloak issuer URL            https://keycloak.nebari.local
+Gateway address                127.0.0.1
+Keycloak admin password        <password>
+Keycloak realm admin password  <password>
+Argo CD admin password         <password>
+```
+
+Sign in with the username `admin` and the **Keycloak realm admin password**.
+
+After you sign in, you'll see the landing page. It shows "No services found" until you add apps.
+
+To add accounts for your team, see [Keycloak authentication](/docs/how-tos/keycloak-auth/).
 
 ## Step 6: Tear it down
 
