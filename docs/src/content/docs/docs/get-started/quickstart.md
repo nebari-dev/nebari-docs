@@ -9,7 +9,7 @@ This quickstart takes you from a single config file to a full [Nebari Kubernetes
 
 You'll need:
 
-1. [Docker](https://docs.docker.com/get-docker/), which runs the cluster on your machine. Start it before you deploy.
+1. [Docker](https://docs.docker.com/get-docker/), which runs the cluster on your machine. Start it before you deploy. On macOS, turn on **Allow privileged port mapping** in Docker Desktop, or [use Colima](/docs/how-tos/providers/local/#docker-or-colima) instead.
 2. [`nic`](/docs/get-started/install/), which creates the cluster and installs the platform.
 3. [`kubectl`](https://kubernetes.io/docs/tasks/tools/), which lets you check that the cluster is healthy.
 

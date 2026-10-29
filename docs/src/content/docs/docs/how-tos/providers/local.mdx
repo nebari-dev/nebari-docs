@@ -3,6 +3,8 @@ title: Local (kind)
 description: Deploy NKP on your own machine with nic and kind, to develop and test software packs before you ship them to a real cluster.
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account.
 
 The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a Kubernetes cluster inside Docker containers. `nic` ships with kind as a dependency so you don't need to install it separately.
@@ -13,28 +15,40 @@ When `nic deploy` finishes, you have all [standard NKP services](/docs/how-tos/d
 
 ## Prerequisites
 
-### Docker
+### Docker or Colima
 
-Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or Docker Engine (Linux), and make sure it is running.
+<Tabs syncKey="docker-runtime">
+<TabItem label="Docker">
 
-Set the CPU and memory Docker can use under **Settings → Resources** in Docker Desktop:
+Install [Docker Desktop](https://docs.docker.com/get-docker/) (macOS, Windows) or [Docker Engine](https://docs.docker.com/engine/install/) (Linux), and make sure it is running.
 
-| Use | CPUs | Memory |
-|---|---|---|
-| Platform only | 8 | 8 GB |
-| Platform with software packs | 8 | 16 GB or more |
+On macOS, the cluster needs ports 80 and 443. To allow this, turn on **Allow privileged port mapping** under **Settings → Advanced** in Docker Desktop.
+
+</TabItem>
+<TabItem label="Colima (macOS)">
+
+If you use [Colima](https://github.com/abiosoft/colima) on macOS, install [Colima and the Docker CLI](https://github.com/abiosoft/colima#installation), then start it:
+
+```bash
+colima start --cpu 8 --memory 16
+```
+
+If you also have Docker Desktop, `docker` commands now run on Colima instead. To switch back to Docker Desktop, run `docker context use desktop-linux`.
+
+</TabItem>
+</Tabs>
 
 ### Install nic and kubectl
 
-1. Follow [Install NIC](/docs/get-started/install/) to install `nic` v0.14.0.
-2. Install [`kubectl`](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool. You'll use it to verify the deploy and to open the platform in your browser.
+1. Follow [Install NIC](/docs/get-started/install/) to install `nic`.
+2. Install [`kubectl`](https://kubernetes.io/docs/tasks/tools/), the Kubernetes command-line tool. You'll use it to check that the platform is healthy.
 
 ## Configuration
 
-Download the [starter config](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/examples/local-config.yaml) into the directory you'll deploy from:
+Download the [starter config](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/examples/local-config.yaml) into the directory you'll deploy from:
 
 ```bash
-curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/v0.14.0/examples/local-config.yaml
+curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/local-config.yaml
 ```
 
 The defaults work as is. To use hostnames other than `*.nebari.local`, change `domain`:
@@ -45,7 +59,7 @@ domain: packs.local  # gives packs.local, keycloak.packs.local, ...
 
 Set it before your first deploy. To change it later, run `nic deploy -f local-config.yaml --regen-apps`.
 
-For extra mounts and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/v0.14.0/docs/configuration/local.md).
+For extra mounts and other kind options, see the comments in the config file and the [local provider reference](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/docs/configuration/local.md).
 
 ## Deploy and verify
 
@@ -56,23 +70,6 @@ nic deploy -f local-config.yaml
 ```
 
 `nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. It takes a few minutes.
-
-At the end, `nic` prints DNS records like these:
-
-```text
-  No DNS provider is configured. To access your services, you must manually
-  configure the following DNS records with your DNS provider:
-
-  Type  : A
-  Name  : nebari.local
-  Value : 192.168.1.100
-
-  Type  : A
-  Name  : *.nebari.local
-  Value : 192.168.1.100
-```
-
-Skip this step. You'll map the hostnames in the next section.
 
 To point `kubectl` at the cluster you just created, write its kubeconfig (the file that tells `kubectl` how to connect) and use it:
 
@@ -91,35 +88,23 @@ Every app should show `Healthy` within a few minutes. Some may stay `OutOfSync`,
 
 ## Open the platform
 
-On `nic` v0.14.0 the gateway's address isn't reachable from your machine, so your browser can't open the platform directly. To open it, forward the gateway to your machine and map the hostnames to it.
+At the end of the deploy, `nic` prints a line to add to `/etc/hosts`, the file that tells your computer where to find a hostname:
 
-1. Find the gateway service:
+```text
+  HOSTS FILE CONFIGURATION REQUIRED
 
-   ```bash
-   kubectl get svc -n envoy-gateway-system \
-     -l gateway.envoyproxy.io/owning-gateway-name=nebari-gateway
-   ```
+  Point the platform hostnames at it by adding this line to /etc/hosts:
 
-   You should see one service, named like this:
+    127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local
+```
 
-   ```text
-   NAME                                                 TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-   envoy-envoy-gateway-system-nebari-gateway-be66687c   LoadBalancer   10.96.249.26   192.168.1.100   80:31541/TCP,443:30152/TCP   10m
-   ```
-
-2. Copy the value in the `NAME` column from step 1, then forward port 443 to it. Leave this running in its own terminal:
-
-   ```bash
-   sudo kubectl --kubeconfig kubeconfig.yaml port-forward -n envoy-gateway-system svc/<NAME> 443:443
-   ```
-
-3. To open the platform's hostnames on your machine, add them to `/etc/hosts`:
+1. To add the line, run:
 
    ```bash
    echo "127.0.0.1 nebari.local keycloak.nebari.local argocd.nebari.local" | sudo tee -a /etc/hosts
    ```
 
-4. Open `https://nebari.local`. Skip past the browser's privacy warning (the cluster uses a self-signed certificate) by choosing **Advanced**, then continuing.
+2. Open `https://nebari.local`. Skip past the browser's privacy warning (the cluster uses a self-signed certificate) by choosing **Advanced**, then continuing.
 
 ## First sign-in
 
