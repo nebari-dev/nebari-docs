@@ -19,18 +19,29 @@ The admin account has full control over Keycloak: create and manage users, organ
 
 To sign in to the admin console:
 
-1. Get the Keycloak admin credentials:
+1. Get the Keycloak admin password from the **Keycloak admin password** line:
 
    ```bash
-   kubectl -n keycloak get secret keycloak-admin-credentials -o json | jq '.data | map_values(@base64d)'
+   nic outputs -f <your-config>.yaml --show-secrets
    ```
 
-2. Open `https://keycloak.<your-domain>/admin/` and sign in with those credentials.
+   You should see something like this:
+
+   ```text
+   Domain                         <your-domain>
+   Keycloak issuer URL            https://keycloak.<your-domain>
+   Gateway address                <gateway-address>
+   Keycloak admin password        <password>
+   Keycloak realm admin password  <password>
+   Argo CD admin password         <password>
+   ```
+
+2. Open `https://keycloak.<your-domain>/admin/` and sign in with the username `admin` and that password.
 3. Switch the realm dropdown (top-left) from `master` to `nebari`.
 
-## Create your first user
+## Add users
 
-`nic` does not create an end-user account, so create one before you can sign in:
+`nic` also creates an `admin` account for signing in to the platform. To add accounts for your team:
 
 1. In the `nebari` realm, go to **Users → Add user**, set a username and email, and save.
 2. On the user's **Credentials** tab, click **Set password**, enter one, and uncheck **Temporary**.
