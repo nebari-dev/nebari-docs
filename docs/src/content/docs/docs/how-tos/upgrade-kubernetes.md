@@ -68,7 +68,6 @@ All applications should reach `Healthy`. Any that are briefly `Progressing` afte
 ## See also
 
 - [NKP architecture](/docs/explanations/nkp-architecture/) — conceptual overview of how the platform layers fit together
-- [Deploy lifecycle](/docs/how-tos/deploy/) — full deploy, update, and destroy reference
 - [Update a cluster](/docs/how-tos/update-cluster/) — other config changes you can make to a running cluster
 - [AWS provider](/docs/how-tos/providers/aws/) — EKS-specific upgrade constraints and mechanics
 - [Hetzner provider](/docs/how-tos/providers/hetzner/) — k3s-specific upgrade constraints and mechanics
