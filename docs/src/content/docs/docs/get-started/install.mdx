@@ -3,24 +3,45 @@ title: Install NIC
 description: Learn to install the Nebari kubernetes platform
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 Nebari Infrastructure Core (NIC) is a CLI that sets up a production-grade Kubernetes cluster and installs the platform essentials that run on top of it.
 It is the foundational layer of the Nebari ecosystem, that includes platform essentials like authentication (SSO), user management, observability, TLS certification, and more.
 
 You can set up software packs (like the data science pack for specific tools like JupyterLab) on top of this layer.
 Learn more about how different Nebari projects and components interact in [NKP architecture](/docs/explanations/nkp-architecture/).
 
-## Download
+## Install
 
-From the [NIC release assets](https://github.com/nebari-dev/nebari-infrastructure-core/releases), download the appropriate binary for your platform.
+Each option below installs the latest release.
 
-## Extract & add to PATH
+<Tabs syncKey="nic-install">
+<TabItem label="pixi">
 
-### Linux/MacOS
-
-Extract the tarball:
+If you use [pixi](https://pixi.sh) on macOS, Linux, or Windows, run:
 
 ```sh
-tar -xzf nebari-infrastructure-core_0.7.0_linux_x86_64.tar.gz
+pixi global install -c https://prefix.dev/github-releases nebari-infrastructure-core
+```
+
+</TabItem>
+<TabItem label="Homebrew (macOS)">
+
+If you use [Homebrew](https://brew.sh), run:
+
+```sh
+brew install nebari-dev/tap/nic
+```
+
+</TabItem>
+<TabItem label="Manual download">
+
+From the [latest NIC release](https://github.com/nebari-dev/nebari-infrastructure-core/releases/latest), download the archive for your platform.
+
+**Linux/MacOS:** extract the tarball, replacing the file name with the one you downloaded:
+
+```sh
+tar -xzf nebari-infrastructure-core_<version>_<os>_<arch>.tar.gz
 ```
 
 Move it to an appropriate folder on PATH:
@@ -41,11 +62,12 @@ If you see a message `Apple could not verify "nic" is free of malware that may h
 
 :::
 
-### Windows
-
-Extract the zip file, and add `nic.exe` to your PATH.
+**Windows:** extract the zip file, and add `nic.exe` to your PATH.
 
 To add to PATH, search for "Edit environment variables for your account" on the system settings page.
+
+</TabItem>
+</Tabs>
 
 ## Verify the installation
 
@@ -69,6 +91,7 @@ Available Commands:
   destroy     Destroy cloud infrastructure
   help        Help about any command
   kubeconfig  Generate kubeconfig for the deployed Nebari cluster
+  outputs     Print the deployed platform's entry points
   validate    Validate configuration file
   version     Show version information
 
