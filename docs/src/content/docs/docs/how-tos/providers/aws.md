@@ -216,6 +216,6 @@ See [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/) for the upgr
 
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster/).
 
-`nic destroy` removes EKS, node groups, EFS, VPC components, and the state bucket. If a resource fails to delete (commonly, a leftover load balancer from the cluster's ingress), remove it manually in the AWS console before retrying with `--force`.
+`nic destroy` removes EKS, node groups, EFS, EBS volumes, VPC components, and the state bucket. If a resource fails to delete (commonly, a leftover load balancer from the cluster's ingress), remove it manually in the AWS console before retrying with `--force`.
 
 Always confirm in the AWS console that no orphan resources remain. NAT gateways, load balancers, and EBS volumes can keep billing if they're not cleaned up.
