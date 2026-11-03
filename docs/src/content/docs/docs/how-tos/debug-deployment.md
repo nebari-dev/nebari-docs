@@ -38,7 +38,7 @@ This emits span data for every internal step, including provider API calls and A
 
 ## Post-deploy phase
 
-After `nic deploy` returns, the cluster still needs ArgoCD to sync and start all foundational services. This section covers debugging that process in dependency order.
+After `nic deploy` returns, the cluster still needs ArgoCD to sync and start all foundational software. This section covers debugging that process in dependency order.
 
 ### ArgoCD applications
 

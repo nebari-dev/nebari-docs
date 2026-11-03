@@ -6,9 +6,9 @@ description: A conceptual tour of how Nebari Kubernetes Platform is layered, wha
 import NkpArchitecture from '../../../../components/diagrams/NkpArchitecture.astro';
 import NkpArchitectureSplit from '../../../../components/diagrams/NkpArchitectureSplit.astro';
 
-Nebari Kubernetes Platform (NKP) is how end users get to AI capabilities like chat assistants, document analyzers, and code review tools, without their team having to assemble a platform first.
+Nebari Kubernetes Platform (NKP) is how end users get to AI [Capabilities](/docs/references/glossary/#capability) like chat assistants, document analyzers, and code review tools, without their team having to assemble a platform first.
 
-Developers package each capability as a **Software Pack**. NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
+Developers publish these tools as [Software Packs](/docs/references/glossary/#software-pack). NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
 
 Software Packs come from two places:
 
@@ -24,7 +24,7 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 **Used by end users**
 
 - **Capabilities**: the AI features end users actually rely on (chat assistants, document analyzers, code review tools, and so on).
-- **Landing page**: the home page where users sign in and open each installed Capability.
+- **Landing page**: the home page where users sign in and open each installed [Service](/docs/references/glossary/#service).
 
 **Built by developers**
 

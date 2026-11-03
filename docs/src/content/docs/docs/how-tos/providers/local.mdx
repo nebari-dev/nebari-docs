@@ -1,11 +1,11 @@
 ---
 title: Local (kind)
-description: Deploy NKP on your own machine with nic and kind, to develop and test software packs before you ship them to a real cluster.
+description: Deploy NKP on your own machine with nic and kind, to develop and test Software Packs before you ship them to a real cluster.
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a software pack, or to try NKP without a cloud account.
+This guide walks through deploying NKP on your laptop with `nic` (the Nebari Infrastructure Core CLI). Use it to build and test a [Software Pack](/docs/references/glossary/#software-pack), or to try NKP without a cloud account.
 
 The `local` provider uses [kind](https://kind.sigs.k8s.io/) ("Kubernetes in Docker"), which runs a Kubernetes cluster inside Docker containers. `nic` ships with kind as a dependency so you don't need to install it separately.
 
@@ -69,7 +69,7 @@ To create the cluster and install the platform, run:
 nic deploy -f local-config.yaml
 ```
 
-`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational services. It takes a few minutes.
+`nic` creates the kind cluster, bootstraps ArgoCD, and installs the foundational software. It takes a few minutes.
 
 To point `kubectl` at the cluster you just created, write its kubeconfig (the file that tells `kubectl` how to connect) and use it:
 
@@ -116,7 +116,7 @@ To open Argo CD at `https://argocd.nebari.local`, sign in as `admin`, not throug
 nic outputs -f local-config.yaml --show-secrets
 ```
 
-## Add your software pack
+## Add your Software Pack
 
 With the platform running, install the pack you're building. See [Deploy a pack](/docs/software-packs/deploy-a-pack/).
 

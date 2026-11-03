@@ -1,9 +1,9 @@
 ---
 title: Providers
-description: Provider support matrix for NKP, covering supported and planned deploy targets.
+description: Provider support matrix for NKP, covering supported and planned providers.
 ---
 
-NKP supports two production deploy targets today, plus a local provider for developing and testing on your own machine. The other providers are partially built but not yet usable; their pages describe the current state and how to follow progress.
+NKP supports two production providers today, plus a local provider for developing and testing on your own machine. The other providers are partially built but not yet usable; their pages describe the current state and how to follow progress.
 
 | Provider | Status |
 | --- | --- |

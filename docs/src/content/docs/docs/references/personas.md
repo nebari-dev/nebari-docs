@@ -18,8 +18,8 @@ Nebari Kubernetes Platform (NKP) organizes its work around three primary roles. 
 **What they do:**
 
 - Provision clusters across cloud providers (AWS, GCP, Azure, Hetzner), or connect to an existing on-premises cluster, using the `nic` CLI
-- Manage the foundational services bundled with every deployment: identity (Keycloak), API gateway (Envoy), TLS certificates (cert-manager), telemetry (OpenTelemetry), and GitOps (ArgoCD)
-- Install, update, and remove software packs to extend the platform's capabilities
+- Manage the foundational software bundled with every deployment: identity (Keycloak), API gateway (Envoy), TLS certificates (cert-manager), telemetry (OpenTelemetry), and GitOps (ArgoCD)
+- Install, update, and remove [Software Packs](/docs/references/glossary/#software-pack) to extend the platform's [Capabilities](/docs/references/glossary/#capability)
 - Control user access, quotas, and security policies
 - Monitor cluster health, costs, and resource utilization
 
@@ -29,7 +29,7 @@ Nebari Kubernetes Platform (NKP) organizes its work around three primary roles. 
 - Reliable upgrade paths with minimal manual intervention
 - Clear visibility into cluster health, resource consumption, and costs
 - Fine-grained access controls and policy enforcement
-- The ability to integrate packs with foundational services such as SSO, routing, and telemetry without manual configuration
+- The ability to integrate packs with foundational software such as SSO, routing, and telemetry without manual configuration
 
 ---
 
@@ -37,7 +37,7 @@ Nebari Kubernetes Platform (NKP) organizes its work around three primary roles. 
 
 **Who they are:**
 
-- Software engineers or platform specialists who build and publish reusable capabilities for the platform
+- Software engineers or platform specialists who build and publish reusable Software Packs for the platform
 - Familiar with Kubernetes custom resources, Helm charts, and how the Nebari Operator works
 - May be internal to an organization building proprietary tooling, or open source contributors publishing packs for the broader community
 
