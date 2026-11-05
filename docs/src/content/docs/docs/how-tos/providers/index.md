@@ -1,9 +1,9 @@
 ---
 title: Providers
-description: Provider support matrix for NKP, covering supported and planned providers.
+description: Provider support matrix for NKP, covering supported and planned Cluster Providers.
 ---
 
-NKP supports two production providers today, plus a local provider for developing and testing on your own machine. The other providers are partially built but not yet usable; their pages describe the current state and how to follow progress.
+The table below shows which Cluster Providers NKP supports today. The local provider is for developing and testing on your own machine. Providers marked Planned are partially built but not yet usable. Their pages describe the current state and how to follow progress.
 
 | Provider | Status |
 | --- | --- |

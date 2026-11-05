@@ -8,7 +8,7 @@ import EcosystemDiagram from '../../../components/diagrams/EcosystemDiagram.astr
 
 ## What is Nebari?
 
-**Nebari is an open-source ecosystem for AI platforms.** Teams choose ready-made AI tools from a shared catalog, such as chat assistants, document analysis, image generation, and code review, and install them on a platform they control.
+**Nebari is an open-source ecosystem for AI platforms.** Teams add AI [Capabilities](/docs/references/glossary/#capability), such as chat assistants, document analysis, image generation, and code review, by installing ready-made packages on a platform they control.
 
 Teams pick only the components they need, keeping their stack lightweight, cost-effective, and simple to maintain.
 
@@ -23,9 +23,9 @@ Nebari combines both: ready-made building blocks to design your platform, with t
 
 ## Key features
 
-- **Composable**: install only the tools your team needs, and add more over time.
+- **Composable**: install only the Software Packs your team needs, and add more over time.
 - **Open ecosystem**: no single vendor controls what you can install. Choose Software Packs from OpenTeams, your own team, or the open-source community.
-- **Built-in foundations**: every tool is automatically secured, connected, and made accessible through the [landing page](/docs/references/glossary/#landing-page). No wiring required.
+- **Built-in foundations**: every [Service](/docs/references/glossary/#service) is automatically secured, connected, and made accessible through the [landing page](/docs/references/glossary/#landing-page). No wiring required.
 - **Runs on your infrastructure**: your own cloud account, such as AWS or Hetzner, or your laptop for testing.
 - **Open source**: every part of Nebari is open for inspection, modification, and contribution.
 
@@ -37,7 +37,7 @@ Nebari has two parts: **Software Packs**, which add the Services your team uses,
 
 ### Software Packs
 
-A **Software Pack** is an installable artifact published to a GitHub repository. Each pack is self-contained, so teams can browse what's available and install only the ones they need. Packs come from two channels:
+A **Software Pack** is what you install on your platform to add one or more Services. Each pack is self-contained, so teams can browse what's available and install only the ones they need. Packs come from two channels:
 
 - **Official packs** by OpenTeams: enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization.
 - **Community packs** by open-source contributors: published on GitHub by individual maintainers or by businesses building on Nebari.
@@ -57,7 +57,7 @@ A **Capability** is something a team can do with the platform once a Software Pa
 
 A **Deploy Target** is a kind of environment Nebari can be deployed to.
 
-Today, Nebari runs on Kubernetes through **Nebari Kubernetes Platform (NKP)**. NKP sets up a Kubernetes cluster with the foundational software that Software Packs build on. You set it up with [NIC](/docs/references/glossary/#nic), Nebari's command-line tool.
+Today, Nebari runs on Kubernetes through **Nebari Kubernetes Platform (NKP)**: a Kubernetes cluster plus the [foundational software](/docs/references/glossary/#foundational-software) that Software Packs build on. You set it up with [NIC](/docs/references/glossary/#nic), Nebari's command-line tool.
 
 Additional targets are planned:
 
@@ -69,6 +69,6 @@ Additional targets are planned:
 
 <CardGrid>
   <LinkCard title="Get Started with NKP" href="/docs/get-started/" description="Install NIC and deploy your first cluster." />
-  <LinkCard title="Browse Software Packs" href="/docs/software-packs/" description="See the current catalog of Capabilities." />
+  <LinkCard title="Browse Software Packs" href="/docs/software-packs/" description="See the current catalog of Software Packs." />
   <LinkCard title="Build a Pack" href="/docs/software-packs/build-your-own/" description="Author your own Software Pack using the pack template." />
 </CardGrid>

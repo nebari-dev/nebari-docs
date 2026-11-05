@@ -8,7 +8,7 @@ import NkpArchitectureSplit from '../../../../components/diagrams/NkpArchitectur
 
 Nebari Kubernetes Platform (NKP) is how end users get to AI [Capabilities](/docs/references/glossary/#capability) like chat assistants, document analyzers, and code review tools, without their team having to assemble a platform first.
 
-Developers publish these tools as [Software Packs](/docs/references/glossary/#software-pack). NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
+Each Capability comes from a [Service](/docs/references/glossary/#service), an app your users open, and developers publish Services as [Software Packs](/docs/references/glossary/#software-pack). NKP wires in login, routing, TLS, and observability, so users just open the landing page and click in.
 
 Software Packs come from two places:
 
@@ -24,15 +24,15 @@ NKP is a stack of layers, each doing one job. Because the layers connect through
 **Used by end users**
 
 - **Capabilities**: the AI features end users actually rely on (chat assistants, document analyzers, code review tools, and so on).
-- **Landing page**: the home page where users sign in and open each installed [Service](/docs/references/glossary/#service).
+- **Landing page**: the home page where users sign in and open each installed Service.
 
 **Built by developers**
 
-- **Software Pack**: an installable Capability (chat assistant, document analyzer, code review tool, and so on).
+- **Software Pack**: what you install to add one or more Services, such as a chat assistant, document analyzer, or code review tool.
 
 **Managed by platform engineers**
 
-- **Nebari Operator**: the automation that deploys each Software Pack and connects it to the Foundational software.
+- **Nebari Operator**: the automation that connects each Software Pack to the foundational software once ArgoCD has deployed it.
 - **Foundational software**: shared services (secure connections, login, traffic routing, monitoring, continuous delivery from Git) that power the operator and every running pack.
 
 **Where it all runs**

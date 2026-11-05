@@ -7,7 +7,7 @@ If a workload you'd like to run on Nebari isn't already in the catalog, you can 
 
 ## What's in a pack?
 
-A software pack is a Kubernetes application bundled with a `NebariApp` custom resource. The Nebari Operator reads the `NebariApp` to wire up routing, TLS, and authentication for your app.
+A Software Pack is a Kubernetes application bundled with a `NebariApp` custom resource. The Nebari Operator reads the `NebariApp` to wire up routing, TLS, and authentication for your app.
 
 To start building a pack:
 
