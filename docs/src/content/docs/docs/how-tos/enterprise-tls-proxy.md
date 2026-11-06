@@ -45,7 +45,7 @@ If your network does _not_ re-sign TLS — egress is open, or the proxy is a pla
 NIC reads `trust_bundle` once and drives both mechanisms from it:
 
 1. **Node OS trust store** — the org CA is installed into the operating-system trust store on every worker node, before the kubelet starts. This is what lets the node pull container images and reach the control plane at all.
-2. **In-pod trust** — [cert-manager's trust-manager](https://cert-manager.io/docs/trust/trust-manager/) is deployed as a foundational app and projects the org CA as a ConfigMap into every namespace. Foundational apps and software packs that ship their own trust store (ArgoCD, Keycloak, Python/Node/JVM workloads) mount that ConfigMap and point their TLS clients at it.
+2. **In-pod trust** — [cert-manager's trust-manager](https://cert-manager.io/docs/trust/trust-manager/) is deployed as part of the foundational software and projects the org CA as a ConfigMap into every namespace. Foundational software and Software Packs that ship their own trust store (ArgoCD, Keycloak, Python/Node/JVM workloads) mount that ConfigMap and point their TLS clients at it.
 
 Both halves are necessary. Without node trust, the cluster never bootstraps (images cannot be pulled). Without in-pod trust, the cluster comes up but applications like Keycloak, ArgoCD, and user notebooks still fail on their own outbound TLS calls.
 

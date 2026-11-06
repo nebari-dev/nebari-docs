@@ -44,7 +44,7 @@ These steps are the same for all providers.
 During node rolling, pods on the node being replaced are evicted and rescheduled elsewhere:
 
 - The **Nebari Operator** may be briefly unavailable while the node it runs on is replaced.
-- **Software Packs**, ArgoCD, Keycloak, and other foundational apps may be briefly unavailable during the rollout of the node they run on.
+- **Software Packs**, ArgoCD, Keycloak, and other foundational software may be briefly unavailable during the rollout of the node they run on.
 - Once **ArgoCD's replacement pod is ready**, any apps that fell out of sync during the rollout are restored automatically.
 
 Multi-replica workloads tolerate rolling node replacement without downtime, provided their replicas are spread across nodes. Single-replica packs will have a brief interruption while their pod is rescheduled.

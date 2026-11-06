@@ -27,6 +27,14 @@ OTEL_EXPORTER=console nic deploy -f config.yaml
 
 This emits span data for every internal step, including provider API calls and ArgoCD bootstrap.
 
+To view traces as a timeline, send them to a tool that accepts OpenTelemetry traces, such as [Jaeger](https://www.jaegertracing.io/), running on your machine. Set `OTEL_EXPORTER=otlp`, or `both` to also print them:
+
+```bash
+OTEL_EXPORTER=otlp nic deploy -f config.yaml
+```
+
+`nic` sends traces to `localhost:4317`. To send them to another address, set `OTEL_ENDPOINT`.
+
 ### Common `nic deploy` failures
 
 | Symptom | Cause | Fix |
@@ -38,7 +46,7 @@ This emits span data for every internal step, including provider API calls and A
 
 ## Post-deploy phase
 
-After `nic deploy` returns, the cluster still needs ArgoCD to sync and start all foundational services. This section covers debugging that process in dependency order.
+After `nic deploy` returns, the cluster still needs ArgoCD to sync and start all foundational software. This section covers debugging that process in dependency order.
 
 ### ArgoCD applications
 

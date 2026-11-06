@@ -8,7 +8,7 @@ import EcosystemDiagram from '../../../components/diagrams/EcosystemDiagram.astr
 
 ## What is Nebari?
 
-**Nebari is an open-source ecosystem for AI platforms.** It's similar to HuggingFace Hub, but for infrastructure: teams browse and install capabilities (document analysis, image generation, chat assistants, code review, and more) onto a platform they control.
+**Nebari is an open-source ecosystem for AI platforms.** Teams add AI [Capabilities](/docs/references/glossary/#capability), such as chat assistants, document analysis, image generation, and code review, by installing [Software Packs](/docs/references/glossary/#software-pack) on a platform they control.
 
 Teams pick only the components they need, keeping their stack lightweight, cost-effective, and simple to maintain.
 
@@ -23,24 +23,21 @@ Nebari combines both: ready-made building blocks to design your platform, with t
 
 ## Key features
 
-- **Composable**: install only the capabilities your team needs; add more over time.
-- **Open ecosystem**: no single vendor controls what you can install. Choose packs from OpenTeams, your own team, or the open-source community.
-- **Built-in foundations**: every pack is automatically secured, connected, and made accessible through the platform UI. No wiring required.
-- **Runs on your infrastructure**: Kubernetes today; cloud-native, bare metal, and edge are on the roadmap.
-- **Open source**: every piece, from infrastructure to packs, is open for inspection, modification, and contribution.
+- **Composable**: install only the Software Packs your team needs, and add more over time.
+- **Open ecosystem**: no single vendor controls what you can install. Choose Software Packs from OpenTeams, your own team, or the open-source community.
+- **Built-in foundations**: every [Service](/docs/references/glossary/#service) is automatically secured, connected, and made accessible through the [landing page](/docs/references/glossary/#landing-page). No wiring required.
+- **Runs on your infrastructure**: your own cloud account, such as AWS or Hetzner, or your laptop for testing.
+- **Open source**: every part of Nebari is open for inspection, modification, and contribution.
 
 ## How Nebari works
 
-Nebari has two parts that work together:
-
-- **Software Packs** package **Capabilities** and publish them on GitHub.
-- **Deploy Targets** install those packs onto your infrastructure and run them.
+Nebari has two parts: **Software Packs**, which add the Services your team uses, and **Deploy Targets**, the environments they run on.
 
 <EcosystemDiagram />
 
 ### Software Packs
 
-A **Software Pack** is an installable artifact published to a GitHub repository. Each pack is self-contained, so teams can browse what's available and install only the ones they need. Packs come from two channels:
+A **Software Pack** is what you install on your platform to add one or more Services. Each pack is self-contained, so teams can browse what's available and install only the ones they need. Packs come from two channels:
 
 - **Official packs** by OpenTeams: enterprise-grade and curated, published under the [`nebari-dev`](https://github.com/nebari-dev) GitHub organization.
 - **Community packs** by open-source contributors: published on GitHub by individual maintainers or by businesses building on Nebari.
@@ -58,20 +55,20 @@ A **Capability** is something a team can do with the platform once a Software Pa
 
 ### Deploy Targets
 
-A **Deploy Target** is the infrastructure that hosts your platform.
+A **Deploy Target** is a kind of environment Nebari can be deployed to.
 
-Today, Nebari runs on Kubernetes via **Nebari Kubernetes Platform (NKP)**, the first platform in the Nebari ecosystem. NKP provides the Kubernetes cluster along with the core services that Software Packs build on.
+Today, Nebari runs on Kubernetes through **Nebari Kubernetes Platform (NKP)**: a Kubernetes cluster plus the [foundational software](/docs/references/glossary/#foundational-software) that Software Packs build on. You set it up with [NIC](/docs/references/glossary/#nic), Nebari's command-line tool.
 
 Additional targets are planned:
 
-- Cloud-native
 - Bare metal
-- Edge
+- Edge devices
+- HPC clusters
 
 ## Next steps
 
 <CardGrid>
-  <LinkCard title="Get Started with NKP" href="/docs/get-started/" description="Install the platform and run your first cluster." />
-  <LinkCard title="Browse Software Packs" href="/docs/software-packs/" description="See the current catalog of Capabilities." />
-  <LinkCard title="Build a Pack" href="/docs/software-packs/build-your-own/" description="Author your own Capability using the pack template." />
+  <LinkCard title="Get Started with NKP" href="/docs/get-started/" description="Install NIC and deploy your first cluster." />
+  <LinkCard title="Browse Software Packs" href="/docs/software-packs/" description="See the current catalog of Software Packs." />
+  <LinkCard title="Build a Pack" href="/docs/software-packs/build-your-own/" description="Author your own Software Pack using the pack template." />
 </CardGrid>
