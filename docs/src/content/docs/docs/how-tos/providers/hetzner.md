@@ -122,7 +122,7 @@ For the full schema (autoscaling, `persist_data`, Longhorn options), see the [NI
 
 ## Deploy
 
-Run the deploy commands as described in [Deploy and verify](/docs/how-tos/deploy/#deploy-and-verify) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational services.
+Run the deploy commands as described in [Deploy and verify](/docs/how-tos/deploy/#deploy-and-verify) in the deploy lifecycle guide. Allow 10–15 minutes for the first deployment — k3s cluster creation followed by ArgoCD syncing foundational software.
 
 
 See [Cloudflare DNS](/docs/how-tos/cloudflare-dns/) for DNS setup (Cloudflare or manual A record).
