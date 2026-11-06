@@ -51,7 +51,7 @@ A pack takes four steps to get from a git repo to the landing page:
 1. **The pack is installed onto a cluster via ArgoCD.** An ArgoCD `Application` manifest points at the pack's repo, and ArgoCD syncs from there.
 2. **ArgoCD deploys the pack's workloads and the `NebariApp` into the cluster.**
 3. **The Nebari Operator picks up the `NebariApp`** and creates the routing, certificate, and Keycloak client that the pack needs.
-4. **The pack appears on the [landing page](https://github.com/nebari-dev/nebari-landing)** as an available Service.
+4. **The pack's Services appear on the [landing page](https://github.com/nebari-dev/nebari-landing).**
 
 <PackLifecycle />
 

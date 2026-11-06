@@ -7,7 +7,7 @@ These are the core terms used across the Nebari docs.
 
 ## Capability
 
-Useful work your users can do, such as chatting with an LLM or analyzing documents. Different tools can provide the same Capability.
+Useful work your users can do, such as chatting with an LLM or analyzing documents. Different [Services](#service) can provide the same Capability.
 
 Learn more: [Software Packs catalog](/docs/software-packs/)
 
