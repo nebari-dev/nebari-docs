@@ -41,7 +41,6 @@ const docsSidebar = [
     items: [
       overview('docs/how-tos'),
       'docs/how-tos/prepare-to-deploy',
-      'docs/how-tos/deploy',
       'docs/how-tos/deploy-cluster',
       'docs/how-tos/cloudflare-dns',
       'docs/how-tos/update-cluster',
@@ -242,6 +241,8 @@ export default defineConfig({
     : {
         // The NKP get-started stub was merged into the Get started section overview.
         '/docs/nkp/get-started': '/docs/get-started/',
+        // The deploy lifecycle page was split into one page per topic.
+        '/docs/how-tos/deploy': '/docs/how-tos/deploy-cluster/',
       },
   markdown: {
     // Keep quotes and dashes exactly as authored instead of converting them to typographic ones.
