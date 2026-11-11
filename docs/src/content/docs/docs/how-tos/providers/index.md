@@ -10,5 +10,5 @@ The table below shows which Cluster Providers NKP supports today. The local prov
 | [Hetzner](/docs/how-tos/providers/hetzner/) | ✅ Supported (recommended starter) |
 | [AWS](/docs/how-tos/providers/aws/) | ✅ Supported |
 | [Google Cloud Platform (GCP)](/docs/how-tos/providers/gcp/) | 🚧 Planned |
-| [Microsoft Azure](/docs/how-tos/providers/azure/) | 🚧 Planned |
+| [Microsoft Azure](/docs/how-tos/providers/azure/) | ✅ Supported |
 | [Local (kind)](/docs/how-tos/providers/local/) | ✅ Supported (development only) |
