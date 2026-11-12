@@ -12,6 +12,11 @@ When `nic deploy` finishes, your team will have:
 - **A managed Kubernetes cluster** ready for workloads ([Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/), or AKS).
 - **NKP running on the cluster**, with single sign-on, routing, TLS, and GitOps.
 
+:::note[Not yet available on Azure]
+- [Longhorn backups](/docs/how-tos/backup-restore/)
+- [Enterprise TLS trust bundles](/docs/how-tos/enterprise-tls-proxy/) on nodes
+:::
+
 ## Prerequisites
 
 ### Azure subscription
@@ -21,7 +26,7 @@ You'll need an [Azure subscription](https://azure.microsoft.com/en-us/free/) and
 ### Install nic and the Azure CLI
 
 1. Follow the [Install NIC](/docs/get-started/install/) guide to install the `nic` CLI.
-2. Install the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli). `nic` uses it to sign in to Azure.
+2. Install the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli). `nic` uses it to sign in to Azure, so keep it installed for every deploy and destroy.
 
 ### GitOps repository
 
@@ -35,6 +40,8 @@ To let `nic` create resources in your subscription, sign in with the Azure CLI:
 az login
 ```
 
+In CI, where no one can run `az login`, set `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` instead.
+
 Then, from inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
 
 ```bash
@@ -42,11 +49,21 @@ cd /path/to/your-gitops-repo
 curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/.env.example
 ```
 
-Then uncomment and fill in the GitOps tokens and `AZURE_SUBSCRIPTION_ID`. For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/prepare-to-deploy/#secrets-and-credentials) in the Prepare to deploy guide.
+Then edit `.env` so the Azure and GitOps lines look like this:
 
 ```bash
-AZURE_SUBSCRIPTION_ID=<your-subscription-id>
+# Leave these three commented unless you sign in from CI:
+# AZURE_CLIENT_ID=your_client_id
+# AZURE_CLIENT_SECRET=your_client_secret
+# AZURE_TENANT_ID=your_tenant_id
+
+AZURE_SUBSCRIPTION_ID=<your-subscription-id>   # required
+
+GIT_TOKEN=github_pat_...
+ARGOCD_GIT_TOKEN=github_pat_...   # optional
 ```
+
+For `.gitignore` setup and GitOps token configuration, see [Secrets and credentials](/docs/how-tos/prepare-to-deploy/#secrets-and-credentials) in the Prepare to deploy guide.
 
 To find your subscription ID, run:
 
@@ -61,7 +78,7 @@ A NKP deployment provisions several Azure resources that bill from day one. Chec
 - **[AKS cluster management](https://azure.microsoft.com/en-us/pricing/details/kubernetes-service/):** free on the Free tier, which `nic` uses by default. Azure recommends the Free tier only for development and testing. For production, set `sku_tier: Standard`, which adds an hourly charge per cluster and an uptime SLA.
 - **[Virtual machines](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/)** in your node groups: per-hour billing for each running node.
 - **[Managed disks](https://azure.microsoft.com/en-us/pricing/details/managed-disks/):** the OS disk on each node.
-- **[Load balancer](https://azure.microsoft.com/en-us/pricing/details/load-balancer/)** and **[public IP address](https://azure.microsoft.com/en-us/pricing/details/ip-addresses/):** created for cluster ingress.
+- **[Load balancer](https://azure.microsoft.com/en-us/pricing/details/load-balancer/)** and **[public IP addresses](https://azure.microsoft.com/en-us/pricing/details/ip-addresses/):** one IP for the cluster's outbound traffic, and one for incoming traffic to your apps.
 - **[Storage account](https://azure.microsoft.com/en-us/pricing/details/storage/blobs/):** stores a record of what `nic` deployed, so it can update or remove it later.
 
 ## Configuration
@@ -72,10 +89,10 @@ Download the starter config into the directory you'll deploy from:
 curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/azure-config.yaml
 ```
 
-At minimum, edit these fields:
+At minimum, edit these fields, and replace the starter's `ssh` block with `token`:
 
 ```yaml
-project_name: my-cluster  # lowercase alphanumeric
+project_name: my-cluster  # letters, digits and hyphens; becomes the AKS DNS prefix
 domain: nebari.example.com  # a hostname you own
 
 certificate:
@@ -88,6 +105,8 @@ repository:
     branch: main
     path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
     auth:
+      # ssh:                        # comment out the starter's ssh block
+      #   env: GIT_SSH_PRIVATE_KEY
       token:
         env: GIT_TOKEN  # matches the GIT_TOKEN set in .env
 
@@ -122,6 +141,4 @@ Then follow [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/).
 
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster/).
 
-`nic destroy` removes the resources it created for the cluster, then lists any resources tagged for the cluster that are still running. Delete those in the Azure portal so they don't keep billing.
-
-`nic destroy` keeps the `nic-tfstate-rg` resource group, since other clusters in the subscription may use it.
+`nic destroy` removes the resources it created for the cluster, but it may leave some behind. To clean them up, run `az resource delete --ids <resource-ids>` with the IDs from the `nic destroy` output.
