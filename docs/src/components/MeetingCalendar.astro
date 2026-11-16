@@ -1,0 +1,79 @@
+---
+/**
+ * Embeds the public Nebari community Google Calendar.
+ *
+ * The default view is Google's agenda (list) mode, so readers see the next few
+ * meetings at a glance. The month view sits behind a toggle for anyone who
+ * wants the full calendar.
+ *
+ * Both iframes get an explicit height here: Starlight's markdown styles set
+ * `height: auto` on iframes, which collapses a plain `height` attribute.
+ */
+interface Props {
+  /** Google Calendar ID (the `src` value of the embed URL). */
+  calendarId: string;
+}
+
+const { calendarId } = Astro.props;
+
+const base = 'https://calendar.google.com/calendar/embed';
+const shared = {
+  src: calendarId,
+  showTitle: '0',
+  showPrint: '0',
+  showTabs: '0',
+  showCalendars: '0',
+};
+const agendaUrl = `${base}?${new URLSearchParams({ ...shared, mode: 'AGENDA' })}`;
+const monthUrl = `${base}?${new URLSearchParams({ ...shared, mode: 'MONTH' })}`;
+const publicUrl = `${base}?${new URLSearchParams({ src: calendarId })}`;
+---
+
+<div class="nebari-calendar not-content">
+  <iframe
+    class="nebari-calendar__agenda"
+    src={agendaUrl}
+    title="Upcoming Nebari community meetings"
+    loading="lazy"></iframe>
+
+  <details class="nebari-calendar__full">
+    <summary>Show full calendar view</summary>
+    <iframe
+      class="nebari-calendar__month"
+      src={monthUrl}
+      title="Nebari community meetings, month view"
+      loading="lazy"></iframe>
+    <a href={publicUrl} target="_blank" rel="noopener">Open the calendar in Google Calendar ↗</a>
+  </details>
+</div>
+
+<style>
+  .nebari-calendar {
+    margin-block: 1.5rem;
+  }
+  .nebari-calendar iframe {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+  .nebari-calendar .nebari-calendar__agenda {
+    height: 22rem;
+  }
+  .nebari-calendar .nebari-calendar__month {
+    height: 38rem;
+    margin-block: 0.75rem;
+  }
+  .nebari-calendar__full {
+    margin-top: 1rem;
+  }
+  .nebari-calendar__full summary {
+    cursor: pointer;
+    color: var(--sl-color-text-accent);
+    font-weight: 600;
+  }
+  .nebari-calendar__full a {
+    color: var(--sl-color-text-accent);
+  }
+</style>

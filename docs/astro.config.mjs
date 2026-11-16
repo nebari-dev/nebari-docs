@@ -188,6 +188,7 @@ const communitySidebar = [
   },
   'community/team-structure',
   'community/decision-making',
+  'community/meetings',
   'community/plugins',
 ];
 
