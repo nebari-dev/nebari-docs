@@ -40,7 +40,7 @@ To let `nic` create resources in your subscription, sign in with the Azure CLI:
 az login
 ```
 
-In CI, where no one can run `az login`, set `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` instead.
+In CI, where no one can run `az login`, set your service principal under both names: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_CLIENT_SECRET` for `nic`, and `ARM_CLIENT_ID`, `ARM_TENANT_ID`, and `ARM_CLIENT_SECRET` for OpenTofu.
 
 Then, from inside your GitOps repo clone, download the [template](https://github.com/nebari-dev/nebari-infrastructure-core/blob/main/.env.example):
 
@@ -52,10 +52,14 @@ curl -o .env https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-
 Then edit `.env` so the Azure and GitOps lines look like this:
 
 ```bash
-# Leave these three commented unless you sign in from CI:
+# Leave these six commented unless you sign in from CI.
+# nic reads the AZURE_ names, OpenTofu reads the ARM_ names:
 # AZURE_CLIENT_ID=your_client_id
 # AZURE_CLIENT_SECRET=your_client_secret
 # AZURE_TENANT_ID=your_tenant_id
+# ARM_CLIENT_ID=your_client_id
+# ARM_CLIENT_SECRET=your_client_secret
+# ARM_TENANT_ID=your_tenant_id
 
 AZURE_SUBSCRIPTION_ID=<your-subscription-id>   # required
 
@@ -89,7 +93,7 @@ Download the starter config into the directory you'll deploy from:
 curl -O https://raw.githubusercontent.com/nebari-dev/nebari-infrastructure-core/main/examples/azure-config.yaml
 ```
 
-At minimum, edit these fields, and replace the starter's `ssh` block with `token`:
+At minimum, edit these fields:
 
 ```yaml
 project_name: my-cluster  # letters, digits and hyphens; becomes the AKS DNS prefix
@@ -105,8 +109,6 @@ repository:
     branch: main
     path: clusters/my-cluster  # subdirectory in the repo; conventionally matches project_name
     auth:
-      # ssh:                        # comment out the starter's ssh block
-      #   env: GIT_SSH_PRIVATE_KEY
       token:
         env: GIT_TOKEN  # matches the GIT_TOKEN set in .env
 
@@ -142,3 +144,5 @@ Then follow [Upgrade Kubernetes version](/docs/how-tos/upgrade-kubernetes/).
 Run the destroy commands as described in [Destroy a cluster](/docs/how-tos/destroy-cluster/).
 
 `nic destroy` removes the resources it created for the cluster, but it may leave some behind. To clean them up, run `az resource delete --ids <resource-ids>` with the IDs from the `nic destroy` output.
+
+`nic destroy` keeps the `nic-tfstate-rg` resource group, since other clusters in the subscription may use it. Its storage account keeps billing until you delete it.
