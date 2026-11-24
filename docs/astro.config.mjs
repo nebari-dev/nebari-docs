@@ -39,7 +39,6 @@ const docsSidebar = [
   {
     label: 'How-to guides',
     items: [
-      overview('docs/how-tos'),
       'docs/how-tos/prepare-to-deploy',
       'docs/how-tos/deploy-cluster',
       'docs/how-tos/cloudflare-dns',
@@ -65,7 +64,7 @@ const docsSidebar = [
   },
   {
     label: 'References',
-    items: [overview('docs/references'), 'docs/references/glossary', 'docs/references/personas'],
+    items: ['docs/references/glossary', 'docs/references/personas'],
   },
   {
     label: 'Software packs',
@@ -243,6 +242,9 @@ export default defineConfig({
         '/docs/nkp/get-started': '/docs/get-started/',
         // The deploy lifecycle page was split into one page per topic.
         '/docs/how-tos/deploy': '/docs/how-tos/deploy-cluster/',
+        // The How-to guides and References sections have no overview page.
+        '/docs/how-tos': '/docs/how-tos/prepare-to-deploy/',
+        '/docs/references': '/docs/references/glossary/',
       },
   markdown: {
     // Keep quotes and dashes exactly as authored instead of converting them to typographic ones.
