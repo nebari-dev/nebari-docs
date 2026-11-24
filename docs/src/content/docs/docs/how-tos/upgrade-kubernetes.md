@@ -71,3 +71,4 @@ All applications should reach `Healthy`. Any that are briefly `Progressing` afte
 - [Update a cluster](/docs/how-tos/update-cluster/) — other config changes you can make to a running cluster
 - [AWS provider](/docs/how-tos/providers/aws/) — EKS-specific upgrade constraints and mechanics
 - [Hetzner provider](/docs/how-tos/providers/hetzner/) — k3s-specific upgrade constraints and mechanics
+- [Azure provider](/docs/how-tos/providers/azure/) — AKS-specific upgrade constraints
